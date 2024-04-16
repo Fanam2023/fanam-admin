@@ -1,0 +1,70 @@
+{
+  "name": "fintech-crm",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/fintech-crm",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project fintech-crm --web",
+  "targets": {
+    "build": {
+      "cache": true,
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "root": "apps/fintech-crm",
+        "outputPath": "dist/apps/fintech-crm"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/fintech-crm"
+        },
+        "staging": {
+          "outputPath": "apps/fintech-crm"
+        },
+        "production": {
+          "outputPath": "apps/fintech-crm"
+        }
+      }
+    },
+    "serve": {
+      "cache": true,
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "fintech-crm:build",
+        "dev": true,
+        "port": 7002
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "fintech-crm:build:development",
+          "dev": true
+        },
+        "staging": {
+          "buildTarget": "fintech-crm:build:staging",
+          "dev": false
+        },
+        "production": {
+          "buildTarget": "fintech-crm:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "fintech-crm:build:production"
+      }
+    },
+    "test": {},
+    "lint": {
+      "cache": true,
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/fintech-crm/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}

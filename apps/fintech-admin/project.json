@@ -1,0 +1,70 @@
+{
+  "name": "fintech-admin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/fintech-admin",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project fintech-admin --web",
+  "targets": {
+    "build": {
+      "cache": true,
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "root": "apps/fintech-admin",
+        "outputPath": "dist/apps/fintech-admin"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/fintech-admin"
+        },
+        "staging": {
+          "outputPath": "apps/fintech-admin"
+        },
+        "production": {
+          "outputPath": "apps/fintech-admin"
+        }
+      }
+    },
+    "serve": {
+      "cache": true,
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "fintech-admin:build",
+        "dev": true,
+        "port": 7001
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "fintech-admin:build:development",
+          "dev": true
+        },
+        "staging": {
+          "buildTarget": "fintech-admin:build:staging",
+          "dev": false
+        },
+        "production": {
+          "buildTarget": "fintech-admin:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "fintech-admin:build:production"
+      }
+    },
+    "test": {},
+    "lint": {
+      "cache": true,
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/fintech-admin/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}
