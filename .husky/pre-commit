@@ -1,1 +1,1 @@
-pnpm format && pnpm lint && pnpm lint:sass
+pnpm lint && pnpm lint:sass && pnpm format
