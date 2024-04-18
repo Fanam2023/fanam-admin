@@ -34,7 +34,7 @@
       "options": {
         "buildTarget": "fintech-admin:build",
         "dev": true,
-        "port": 7001
+        "port": 4001
       },
       "configurations": {
         "development": {

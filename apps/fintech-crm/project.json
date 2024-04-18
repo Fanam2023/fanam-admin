@@ -34,7 +34,7 @@
       "options": {
         "buildTarget": "fintech-crm:build",
         "dev": true,
-        "port": 7002
+        "port": 4002
       },
       "configurations": {
         "development": {

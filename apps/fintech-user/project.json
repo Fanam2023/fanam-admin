@@ -34,7 +34,7 @@
       "options": {
         "buildTarget": "fintech-user:build",
         "dev": true,
-        "port": 7000
+        "port": 4000
       },
       "configurations": {
         "development": {

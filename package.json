@@ -13,7 +13,7 @@
     "lint": "nx run-many -t lint",
     "lint:sass": "stylelint \"**/**/*.{sass, scss}\"  --allow-empty-input",
     "format": "nx format:write --uncommitted=true",
-    "prepare": "husky"
+    "prepare": "husky init"
   },
   "private": true,
   "dependencies": {
