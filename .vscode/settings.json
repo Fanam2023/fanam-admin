@@ -155,7 +155,7 @@
     "custom-utils": "lib",
     "fanam-pay-admin": "next",
     "fanam-pay-user": "next",
-    "fanam-pay-vendor": "next"
+    "fanam-pay-crm": "next"
   },
   "material-icon-theme.files.associations": {},
   "material-icon-theme.activeIconPack": "react",
