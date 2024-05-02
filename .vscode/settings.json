@@ -83,7 +83,12 @@
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "always"
   },
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
   "eslint.options": {
     "env": {
       "browser": true,
@@ -137,7 +142,7 @@
     "textMateRules": []
   },
   "emmet.triggerExpansionOnTab": true,
-  "material-icon-theme.folders.color": "#EB880B",
+  "material-icon-theme.folders.color": "#42a5f5",
   "material-icon-theme.files.color": "#42a5f5",
   "material-icon-theme.folders.theme": "specific",
   "material-icon-theme.folders.associations": {
@@ -147,13 +152,14 @@
     "molecules": "shared",
     "props": "typescript",
     "model": "typescript",
-    "fintech-admin": "next",
-    "fintech-user": "next",
-    "fintech-crm": "next"
+    "custom-utils": "lib",
+    "fanam-pay-admin": "next",
+    "fanam-pay-user": "next",
+    "fanam-pay-vendor": "next"
   },
   "material-icon-theme.files.associations": {},
   "material-icon-theme.activeIconPack": "react",
-  "cSpell.words": ["Razorpay", "tanstack", "fintech"],
+  "cSpell.words": ["fanam", "fintech", "Razorpay", "tanstack"],
   "[sass]": {
     "editor.defaultFormatter": "syler.sass-indented"
   }

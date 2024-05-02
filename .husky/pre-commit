@@ -1,1 +1,1 @@
-pnpm lint && pnpm lint:sass && pnpm format
+pnpm lint && pnpm styles && pnpm prettier

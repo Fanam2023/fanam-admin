@@ -1,0 +1,48 @@
+{
+  "name": "fanam-pay-admin",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "env-cmd -f ../../packages/env/.env.development next dev --port 3001",
+    "build-dev": "env-cmd -f ../../packages/env/.env.staging next build",
+    "build": "env-cmd -f ../../packages/env/.env.production next build",
+    "start": "next start --port 3001",
+    "prettier": "prettier --write \"src/**/*.{ts,tsx,json}\"",
+    "lint": "next lint",
+    "exports-usage": "ts-prune",
+    "eslint": "eslint \"src/**/*.{ts,tsx}\" --fix --ext .ts,.tsx .",
+    "styles": "stylelint \"**/**/*.{sass, scss}\"  --allow-empty-input",
+    "rimraf": "rimraf node_modules"
+  },
+  "private": true,
+  "dependencies": {
+    "@cd-pkg/core-ui-sass": "^1.0.16",
+    "@cd-pkg/core-utils": "^1.1.16",
+    "@custom/utils": "workspace:*",
+    "@tanstack/react-query": "^5.29.2",
+    "env-cmd": "^10.1.0",
+    "next": "^14.2.0",
+    "next-pwa": "^5.6.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sharp": "^0.33.3"
+  },
+  "devDependencies": {
+    "@cd-pkg/eslint": "^1.1.6",
+    "@cd-pkg/prettier": "^1.1.1",
+    "@cd-pkg/style-lint": "^1.1.4",
+    "@cd-pkg/ts-config": "^1.0.0",
+    "@types/google.maps": "^3.55.7",
+    "@types/js-cookie": "^3.0.6",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.12.7",
+    "@types/react": "^18.2.77",
+    "@types/react-dom": "^18.2.25",
+    "eslint": "^8.56.0",
+    "husky": "^9.0.11",
+    "prettier": "^3.2.5",
+    "sass": "^1.75.0",
+    "stylelint": "^16.3.1",
+    "typescript": "^5.4.5"
+  }
+}
