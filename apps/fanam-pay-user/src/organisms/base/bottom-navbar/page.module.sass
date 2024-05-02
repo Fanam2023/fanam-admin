@@ -1,0 +1,26 @@
+@use "../../../styles/index" as*
+
+.bottom_bar
+  background-color: var(--primary)
+  width: 100%
+  align-items: center
+  padding: $size-16px
+
+.icon
+  display: block
+  margin: 0 auto
+
+.options
+  font-size: $size-12px
+  color: $white
+  text-align: center
+
+@include mixin-responsive
+  .bottom_bar
+    position: fixed
+    bottom: 0
+    left: 0
+    transform: translateY(0)
+
+  .options
+    font-size: $size-12px
