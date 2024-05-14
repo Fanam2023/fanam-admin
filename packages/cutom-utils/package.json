@@ -3,12 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "env-cmd -f ../../packages/env/.env.development next dev --port 3000",
-    "build-dev": "env-cmd -f ../../packages/env/.env.staging next build",
-    "build": "env-cmd -f ../../packages/env/.env.production next build",
-    "start": "next start --port 3000",
     "prettier": "prettier --write \"src/**/*.{ts,tsx,json}\"",
-    "lint": "next lint",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --fix --ext .ts,.tsx .",
     "exports-usage": "ts-prune",
     "eslint": "eslint \"src/**/*.{ts,tsx}\" --fix --ext .ts,.tsx .",
     "styles": "stylelint \"**/**/*.{sass, scss}\"  --allow-empty-input",
