@@ -1,6 +1,6 @@
+import {ImageView} from "@fanam-pkg/core-ui-sass"
 import Link from "next/link"
 import {usePathname} from "next/navigation"
-import {ImageView} from "@cd-pkg/core-ui-sass"
 import {BottomNavbarProps} from "props"
 import {BOTTOM_TABS} from "utils"
 import styles from "./page.module.sass"

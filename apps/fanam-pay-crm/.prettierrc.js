@@ -1,3 +1,3 @@
 module.exports = {
-  ...require("@cd-pkg/prettier"),
+  ...require("@fanam-pkg/prettier"),
 }

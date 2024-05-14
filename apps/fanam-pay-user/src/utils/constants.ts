@@ -1,4 +1,4 @@
-import {assets} from "@cd-pkg/core-ui-sass"
+import {assets} from "@fanam-pkg/core-ui-sass"
 import {BottomNavbarProps} from "props"
 import {ROUTE_HISTORY, ROUTE_HOME, ROUTE_PROFILE} from "./route"
 

@@ -1,4 +1,4 @@
-import {Button, TextField} from "@cd-pkg/core-ui-sass"
+import {Button, TextField} from "@fanam-pkg/core-ui-sass"
 import styles from "./page.module.sass"
 
 export default function Index() {
