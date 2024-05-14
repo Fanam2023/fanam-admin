@@ -1,3 +1,3 @@
 module.exports = {
-  ...require("@cd-pkg/eslint"),
+  ...require("@fanam-pkg/eslint"),
 }

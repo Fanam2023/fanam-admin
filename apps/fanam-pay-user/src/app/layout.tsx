@@ -1,5 +1,5 @@
+import "@fanam-pkg/core-ui-sass/src/styles/style.sass"
 import {Nunito, Poppins} from "next/font/google"
-import "@cd-pkg/core-ui-sass/src/styles/style.sass"
 import "../styles/index.css"
 
 const primaryFont = Poppins({

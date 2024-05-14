@@ -11,7 +11,7 @@ const withPWA = require("next-pwa")({
 module.exports = withPWA({
   reactStrictMode: false /* Changed to false due react 18 is restarting the page twice */,
   basePath: process.env.NEXT_PUBLIC_SCOPE,
-  transpilePackages: ["@cd-pkg/core-ui-sass", "@cd-pkg/core-utils", "@custom/utils"],
+  transpilePackages: ["@fanam-pkg/core-ui-sass", "@fanam-pkg/core-utils", "@custom/utils"],
   images: {
     remotePatterns: [
       {

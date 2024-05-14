@@ -1,3 +1,3 @@
 module.exports = {
-  ...require("@cd-pkg/style-lint"),
+  ...require("@fanam-pkg/style-lint"),
 }

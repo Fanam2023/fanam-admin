@@ -1,5 +1,5 @@
 {
-  "extends": "@cd-pkg/ts-config/nextjs.json",
+  "extends": "@fanam-pkg/ts-config/nextjs.json",
   "compilerOptions": {
     "plugins": [{"name": "next"}],
     "baseUrl": "./src/"
