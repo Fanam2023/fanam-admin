@@ -1,0 +1,26 @@
+@use "../../styles/index" as *
+
+@include mixin-responsive
+.footer_wrapper
+  position: relative
+  width: 100vw
+  height: 100vh
+
+.button_wrapper
+  width: 75%
+  position: absolute
+  bottom: $size-48px
+
+.btn_shadow
+  width: 50%
+  height: $size-4px
+  position: absolute
+  bottom: $size-10px
+  background: $primary
+  border-radius: $size-20px
+
+.receipt_text
+  position: absolute
+  bottom: $size-24px
+  color: $primary
+  text-decoration: underline
