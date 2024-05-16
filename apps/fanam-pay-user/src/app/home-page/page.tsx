@@ -1,8 +1,7 @@
 "use client"
 
-import {DropDown, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
+import {DropDown, ImageView, RadioButton, TextField} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
-import {RadioToggle} from "organisms"
 import styles from "./page.module.sass"
 
 const HomePage = () => {
@@ -14,12 +13,11 @@ const HomePage = () => {
       <section className={styles.container_wrapper}>
         <h4>Select recipient type</h4>
         <section className={`flex ${styles.button_container}`}>
-          <RadioToggle label={"Business"} />
-          <RadioToggle label={"Individual"} />
+          <RadioButton />
+          <RadioButton />
         </section>
         <DropDown
           options={["dfjd", "dfdj"]}
-          onChangeData={() => undefined}
           wrapperClass={styles.drop_down_wrapper}
           label={"Purpose of Sending Money"}
         />
