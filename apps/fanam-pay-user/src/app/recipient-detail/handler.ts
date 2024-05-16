@@ -60,7 +60,7 @@ const useCreateReciptent = (onSuccess: (message: string) => void, onFailure: (me
     if (isClicked) setErrState(prev => ({...prev, ...onValidate()}))
   }, [data, isClicked])
 
-  const onChangeData = (value: JSONObject) => setData(prev => ({...prev, ...value}))
+  const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
 
   const onSubmit = () => {
     const errState = {...onValidate(), isClicked: true}
@@ -72,7 +72,7 @@ const useCreateReciptent = (onSuccess: (message: string) => void, onFailure: (me
 
   return {
     errState,
-    onChangeData,
+    onChangeValue,
     onSubmit,
     data,
   }
