@@ -1,7 +1,8 @@
 import {assets as projectAssets} from "@fanam-pkg/core-ui-sass"
 import ic_back from "./icons/ic_back.svg"
-import ic_home from "./icons/ic_home.svg"
+import ic_checkbox from "./icons/ic_checkbox.svg"
+import ic_edit from "./icons/ic_edit.svg"
 
-const assets = {...projectAssets, ic_home, ic_back}
+const asset = {...projectAssets, ic_back, ic_edit, ic_checkbox}
 
-export default assets
+export default asset
