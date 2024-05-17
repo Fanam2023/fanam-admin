@@ -1,3 +1,4 @@
 export interface footerProps {
-  buttonName?: string
+  footerBtnText?: string
+  onClick?: () => void
 }
