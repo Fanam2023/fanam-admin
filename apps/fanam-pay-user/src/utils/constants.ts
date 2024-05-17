@@ -1,5 +1,5 @@
 import {assets} from "@fanam-pkg/core-ui-sass"
-import {BottomNavbarProps, RecepiantAccountProps, RecepiantProps} from "props"
+import {BottomNavbarProps, RecepiantPreviewProps} from "props"
 import {ROUTE_HISTORY, ROUTE_HOME, ROUTE_PROFILE} from "./route"
 
 export const BOTTOM_TABS: BottomNavbarProps[] = [
@@ -9,7 +9,7 @@ export const BOTTOM_TABS: BottomNavbarProps[] = [
   {icon: assets.ic_profile, name: "Profile", path: ROUTE_PROFILE},
 ]
 
-export const RECIPIENTDETAILS: RecepiantProps[] = [
+export const RECIPIENTDETAILS: RecepiantPreviewProps[] = [
   {name: "Name", data: "Ragul"},
   {name: "E-mail Address", data: "ragul@gmail.com"},
   {name: "Country", data: "India"},
@@ -19,7 +19,7 @@ export const RECIPIENTDETAILS: RecepiantProps[] = [
   {name: "Phone Number", data: "6383xxxx28"},
 ]
 
-export const ACCOUNTDETAILS: RecepiantAccountProps[] = [
+export const ACCOUNTDETAILS: RecepiantPreviewProps[] = [
   {name: "Account Number", data: "Varshini"},
   {name: "IBAN Number", data: "varshini@gmail.com"},
   {name: "Swift Code", data: "8884121455"},

@@ -1,9 +1,4 @@
-export interface RecepiantProps {
-  name: string
-  data: string
-}
-
-export interface RecepiantAccountProps {
+export interface RecepiantPreviewProps {
   name: string
   data: string
 }
