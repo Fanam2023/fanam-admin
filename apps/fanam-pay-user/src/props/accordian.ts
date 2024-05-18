@@ -6,8 +6,8 @@ export interface AccordianProps {
   description?: string
   children?: ReactNode
   isFrequent?: boolean
-  leading_icon: string
-  tailing_icon: boolean
+  leadingIcon: string
+  tailingIcon: boolean
 }
 
 export interface BankListProps {
@@ -18,4 +18,9 @@ export interface BankListProps {
 
 export interface BankCartProps extends BankListProps {
   cartType?: string
+}
+
+export interface PaymentDataProps {
+  label: string
+  value: string
 }
