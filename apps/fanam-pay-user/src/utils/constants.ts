@@ -1,5 +1,5 @@
 import {assets} from "@fanam-pkg/core-ui-sass"
-import {BottomNavbarProps, RecepiantPreviewProps} from "props"
+import {BottomNavbarProps, RecipientPreviewProps} from "props"
 import {ROUTE_HISTORY, ROUTE_HOME, ROUTE_PROFILE} from "./route"
 
 export const BOTTOM_TABS: BottomNavbarProps[] = [
@@ -9,22 +9,22 @@ export const BOTTOM_TABS: BottomNavbarProps[] = [
   {icon: assets.ic_profile, name: "Profile", path: ROUTE_PROFILE},
 ]
 
-export const RECIPIENTDETAILS: RecepiantPreviewProps[] = [
-  {name: "Name", data: "Ragul"},
-  {name: "E-mail Address", data: "ragul@gmail.com"},
-  {name: "Country", data: "India"},
-  {name: "State", data: "Tamil Nadu"},
-  {name: "City", data: "Coimbatore"},
-  {name: "Zip Code", data: "641023"},
-  {name: "Phone Number", data: "6383xxxx28"},
+export const RECIPIENTDETAILS: RecipientPreviewProps[] = [
+  {label: "Name", value: "Ragul"},
+  {label: "E-mail Address", value: "ragul@gmail.com"},
+  {label: "Country", value: "India"},
+  {label: "State", value: "Tamil Nadu"},
+  {label: "City", value: "Coimbatore"},
+  {label: "Zip Code", value: "641023"},
+  {label: "Phone Number", value: "6383xxxx28"},
 ]
 
-export const ACCOUNTDETAILS: RecepiantPreviewProps[] = [
-  {name: "Account Number", data: "Varshini"},
-  {name: "IBAN Number", data: "varshini@gmail.com"},
-  {name: "Swift Code", data: "8884121455"},
-  {name: "Routing Code", data: "55574545855"},
-  {name: "Recipient Address", data: "Toranto"},
-  {name: "Bank Name", data: "Bank of America"},
-  {name: "Branch Address", data: "Toranto"},
+export const ACCOUNTDETAILS: RecipientPreviewProps[] = [
+  {label: "Account Number", value: "Varshini"},
+  {label: "IBAN Number", value: "varshini@gmail.com"},
+  {label: "Swift Code", value: "8884121455"},
+  {label: "Routing Code", value: "55574545855"},
+  {label: "Recipient Address", value: "Toranto"},
+  {label: "Bank Name", value: "Bank of America"},
+  {label: "Branch Address", value: "Toranto"},
 ]

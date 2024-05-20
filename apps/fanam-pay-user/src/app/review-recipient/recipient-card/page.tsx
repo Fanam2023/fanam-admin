@@ -1,14 +1,14 @@
 import {ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
-import {RecepiantPreviewProps} from "props"
+import {RecipientPreviewProps} from "props"
 import {ACCOUNTDETAILS, RECIPIENTDETAILS} from "utils"
 import styles from "./card.module.sass"
 
 const RecipientCard = () => {
-  const renderRecipentDetails = ({name, data}: RecepiantPreviewProps, index: number) => (
+  const renderRecipentDetails = ({label, value}: RecipientPreviewProps, index: number) => (
     <section className={`flex-sb-center ${styles.data_wrapper}`} key={index}>
-      <h5 className={styles.field_wrapper}>{name}</h5>
-      <h5 className={styles.field_wrapper}>{data}</h5>
+      <h5 className={styles.field_wrapper}>{label}</h5>
+      <h5 className={styles.field_wrapper}>{value}</h5>
     </section>
   )
   return (

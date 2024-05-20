@@ -1,4 +1,4 @@
-export interface RecepiantPreviewProps {
-  name: string
-  data: string
+export interface RecipientPreviewProps {
+  label: string
+  value: string
 }
