@@ -1,8 +1,8 @@
 import {Button} from "@fanam-pkg/core-ui-sass"
-import {ChildProps} from "props/basecontainer"
+import {PaymentFooterProps} from "props/basecontainer"
 import styles from "./footer.module.sass"
 
-export const PaymentFooter = ({senderAmount, recivableAmt, reciverName, button, onSubmit}: ChildProps) => {
+export const PaymentFooter = ({senderAmount, recivableAmt, reciverName, button, onSubmit}: PaymentFooterProps) => {
   return (
     <footer className={styles.footer_wrapper}>
       <section className={`flex-sb-center`}>
