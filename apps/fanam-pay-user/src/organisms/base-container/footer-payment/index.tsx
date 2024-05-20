@@ -2,7 +2,7 @@ import {Button} from "@fanam-pkg/core-ui-sass"
 import {FooterPaymentProps} from "props"
 import styles from "./footer.module.sass"
 
-export const PaymentFooter = ({senderAmount, recivableAmt, reciverName, button}: FooterPaymentProps) => {
+export const FooterPayment = ({senderAmount, recivableAmt, reciverName, button}: FooterPaymentProps) => {
   const handleSubmit = () => {}
 
   return (
