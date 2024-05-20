@@ -5,10 +5,9 @@ export interface BaseConatinerProps {
   onClick?: () => void
 }
 
-export interface PaymentFooterProps {
+export interface FooterPaymentProps {
   senderAmount: string
   reciverName: string
   recivableAmt: string
   button: string
-  onSubmit?: () => void
 }
