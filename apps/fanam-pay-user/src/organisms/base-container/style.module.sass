@@ -1,3 +1,4 @@
+@use "../../styles/index" as *
 @include mixin-responsive
 
 .header_wrapper
@@ -8,12 +9,10 @@
 .add_btn
   background: $white
   color: $primary
-  font-weight: $bold
 
 .footer_wrapper
   position: fixed
   width: 100vw
-  height: 100vh
   bottom: 0
   left: 0
   z-index: 100
@@ -23,9 +22,3 @@
   position: absolute
   bottom: $size-48px
   box-shadow: $size-6px $size-6px $size-10px $medium-grey
-
-.receipt_text
-  position: absolute
-  bottom: $size-24px
-  color: $primary
-  text-decoration: underline

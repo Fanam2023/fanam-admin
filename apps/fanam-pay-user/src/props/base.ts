@@ -1,4 +1,5 @@
 import {StaticImageData} from "next/image"
+import {ReactNode} from "react"
 
 export interface BottomNavbarProps {
   icon: string | StaticImageData
@@ -7,7 +8,9 @@ export interface BottomNavbarProps {
 }
 
 export interface BaseConatinerProps {
-  attach: string
+  children?: ReactNode
+  footerChild?: ReactNode
+  addButton: string
   header: string
   buttonText?: string
   onClick?: () => void
