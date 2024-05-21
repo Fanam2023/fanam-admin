@@ -92,7 +92,7 @@ const PaymentStatus = () => {
       <section className={`flex-sb-center ${styles.payment_helper_wrapper}`}>
         <ImageView src={assets.ic_help} alt={"help-icon"} imgSize={48} />
         <section className={`flex-col ${styles.helper_wrapper}`}>
-          <h4 className={styles.trouble_text}>Trouble With Your Payment?</h4>
+          <h4>Trouble With Your Payment?</h4>
           <h5>Let us know on help center now!</h5>
         </section>
         <ImageView src={assets.ic_arrow_theme} alt={"right-arrow"} imgSize={20} />

@@ -1,8 +1,9 @@
 import {StaticImageData} from "next/image"
-import {PaymentDataProps} from "./accordian"
 
 export type StatusType = "pending" | "success" | "failure"
 
-export interface PaymentDetailsProps extends PaymentDataProps {
+export interface PaymentDetailsProps {
+  label: string
+  value: string
   icon?: string | StaticImageData
 }
