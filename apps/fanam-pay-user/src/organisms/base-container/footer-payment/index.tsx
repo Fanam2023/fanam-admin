@@ -1,10 +1,8 @@
 import {Button} from "@fanam-pkg/core-ui-sass"
 import {FooterPaymentProps} from "props"
-import styles from "./footer.module.sass"
+import styles from "./index.module.sass"
 
 export const FooterPayment = ({senderAmount, recivableAmt, reciverName, button}: FooterPaymentProps) => {
-  const handleSubmit = () => {}
-
   return (
     <footer className={`flex-sb-center ${styles.footer_wrapper}`}>
       <section>
@@ -15,7 +13,7 @@ export const FooterPayment = ({senderAmount, recivableAmt, reciverName, button}:
         <h5>{reciverName}</h5>
         <h5 className={styles.amt_wrapper}>{recivableAmt}</h5>
       </section>
-      <Button onSubmit={handleSubmit}>{button}</Button>
+      <Button onClick={onClick}>{button}</Button>
     </footer>
   )
 }
