@@ -1,5 +1,5 @@
 import {assets} from "@fanam-pkg/core-ui-sass"
-import {BottomNavbarProps} from "props"
+import {BottomNavbarProps, RecipientPreviewProps} from "props"
 import {ROUTE_HISTORY, ROUTE_HOME, ROUTE_PROFILE} from "./route"
 
 export const BOTTOM_TABS: BottomNavbarProps[] = [
@@ -7,4 +7,24 @@ export const BOTTOM_TABS: BottomNavbarProps[] = [
   {icon: assets.ic_camera, name: "History", path: ROUTE_HISTORY},
   {icon: assets.ic_location, name: "Setting", path: ""},
   {icon: assets.ic_profile, name: "Profile", path: ROUTE_PROFILE},
+]
+
+export const RECIPIENTDETAILS: RecipientPreviewProps[] = [
+  {label: "Name", value: "Ragul"},
+  {label: "E-mail Address", value: "ragul@gmail.com"},
+  {label: "Country", value: "India"},
+  {label: "State", value: "Tamil Nadu"},
+  {label: "City", value: "Coimbatore"},
+  {label: "Zip Code", value: "641023"},
+  {label: "Phone Number", value: "6383xxxx28"},
+]
+
+export const ACCOUNTDETAILS: RecipientPreviewProps[] = [
+  {label: "Account Number", value: "Varshini"},
+  {label: "IBAN Number", value: "varshini@gmail.com"},
+  {label: "Swift Code", value: "8884121455"},
+  {label: "Routing Code", value: "55574545855"},
+  {label: "Recipient Address", value: "Toranto"},
+  {label: "Bank Name", value: "Bank of America"},
+  {label: "Branch Address", value: "Toranto"},
 ]
