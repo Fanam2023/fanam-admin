@@ -1,5 +1,5 @@
-export * from "./accordian"
 export * from "./base"
 export * from "./footer"
 export * from "./header"
 export * from "./payment"
+export * from "./recipient"

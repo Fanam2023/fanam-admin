@@ -2,7 +2,9 @@ import {assets as projectAssets} from "@fanam-pkg/core-ui-sass"
 import ic_account from "./icons/ic_account.svg"
 import ic_arrow_theme from "./icons/ic_arrow_theme.svg"
 import ic_back from "./icons/ic_back.svg"
+import ic_checkbox from "./icons/ic_checkbox.svg"
 import ic_debit_card from "./icons/ic_debit_card.svg"
+import ic_edit from "./icons/ic_edit.svg"
 import ic_failure from "./icons/ic_failure.svg"
 import ic_failure_small from "./icons/ic_failure_small.svg"
 import ic_help from "./icons/ic_help.svg"
@@ -18,10 +20,10 @@ import img_bank from "./images/img_bank.webp"
 
 const assets = {
   ...projectAssets,
-  ic_back,
   ic_account,
   ic_star,
   ic_up_arrow,
+  ic_back,
   ic_debit_card,
   img_bank,
   ic_lend_money,
@@ -34,6 +36,8 @@ const assets = {
   ic_help,
   ic_arrow_theme,
   ic_home,
+  ic_edit,
+  ic_checkbox,
 }
 
 export default assets
