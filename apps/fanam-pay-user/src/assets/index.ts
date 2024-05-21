@@ -12,10 +12,10 @@ import img_bank from "./images/img_bank.webp"
 
 const assets = {
   ...projectAssets,
-  ic_back,
   ic_account,
   ic_star,
   ic_up_arrow,
+  ic_back,
   ic_debit_card,
   img_bank,
   ic_lend_money,
