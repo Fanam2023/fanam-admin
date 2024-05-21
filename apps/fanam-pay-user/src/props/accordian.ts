@@ -24,7 +24,3 @@ export interface PaymentDataProps {
   label: string
   value: string
 }
-
-export interface PaymentDetailsProps extends PaymentDataProps {
-  icon?: string | StaticImageData
-}

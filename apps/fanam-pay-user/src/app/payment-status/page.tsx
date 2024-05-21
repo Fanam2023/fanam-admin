@@ -4,34 +4,40 @@ import {ImageView} from "@fanam-pkg/core-ui-sass"
 import {useSearchParams} from "next/navigation"
 import {Fragment} from "react"
 import assets from "assets"
-import {PaymentDetailsProps} from "props"
+import {PaymentDetailsProps, StatusType} from "props"
 import styles from "./page.module.sass"
 
-type StatusType = "pending" | "success" | "failure"
-
-const getStatusIcon = (status: StatusType) => {
+const getStatusData = (status: StatusType) => {
   switch (status) {
-    case "pending":
-      return assets.ic_pending_large
     case "success":
-      return assets.ic_success_large
+      return {
+        bigIcon: assets.ic_success,
+        smallIcon: assets.ic_success_small,
+        title: "Payment Success!",
+        statusText: "Success",
+      }
     case "failure":
-      return assets.ic_unsuccess_large
-    default:
-      return assets.ic_pending_large
-  }
-}
+      return {
+        bigIcon: assets.ic_failure,
+        smallIcon: assets.ic_failure_small,
+        title: "Payment Unsuccessful!",
+        statusText: "Unsuccessful",
+      }
+    case "pending":
+      return {
+        bigIcon: assets.ic_pending,
+        smallIcon: assets.ic_pending_small,
+        title: "Payment Processing!",
+        statusText: "Processing",
+      }
 
-const getSmallStatusIcon = (status: StatusType) => {
-  switch (status) {
-    case "pending":
-      return assets.ic_pending_small
-    case "success":
-      return assets.ic_success_small
-    case "failure":
-      return assets.ic_unsuccess_small
     default:
-      return assets.ic_pending_small
+      return {
+        bigIcon: assets.ic_pending,
+        smallIcon: assets.ic_pending_small,
+        title: "Payment Processing!",
+        statusText: "processing",
+      }
   }
 }
 
@@ -40,6 +46,8 @@ const PaymentStatus = () => {
 
   const status = searchParams.get("status") as StatusType
 
+  const {bigIcon, smallIcon, title, statusText} = getStatusData(status)
+
   const PAYMENT_DETAILS: PaymentDetailsProps[] = [
     {
       label: "Ref Number",
@@ -47,8 +55,8 @@ const PaymentStatus = () => {
     },
     {
       label: "Payment Status",
-      value: status === "failure" ? "Unsuccessful!" : status === "success" ? "Success" : "Processing",
-      icon: getSmallStatusIcon(status),
+      value: statusText,
+      icon: smallIcon,
     },
     {
       label: "Payment Time",
@@ -60,14 +68,8 @@ const PaymentStatus = () => {
     <section className={`flex-sb-center ${styles.content}`} key={index}>
       <h5>{label}</h5>
       <section className={`flex ${styles.img_section}`}>
-        {icon ? (
-          <Fragment>
-            <ImageView src={icon} alt="" imgSize={20} />
-            <h5>{value}</h5>
-          </Fragment>
-        ) : (
-          <h5>{value}</h5>
-        )}
+        {!!icon && <ImageView src={icon} alt="status-icon" imgSize={20}></ImageView>}
+        <h5>{value}</h5>
       </section>
     </section>
   )
@@ -75,14 +77,8 @@ const PaymentStatus = () => {
   return (
     <Fragment>
       <section className={`flex-col-center ${styles.payment_status_wrapper}`}>
-        <ImageView src={getStatusIcon(status)} alt={"status-icon"} imgSize={56} />
-        <h4 className={styles.payment_text}>
-          {status === "success"
-            ? "Payment Success!"
-            : status === "failure"
-              ? "Payment Unsuccessful!"
-              : "Payment Processing!"}
-        </h4>
+        <ImageView src={bigIcon} alt={"status-icon"} imgSize={56} />
+        <h4 className={styles.payment_text}>{title}</h4>
         <h2 className={styles.currency_text}>{"$ 707"}</h2>
       </section>
       <section className={`flex-col ${styles.payment_details_wrapper}`}>
@@ -99,7 +95,7 @@ const PaymentStatus = () => {
           <h4 className={styles.trouble_text}>Trouble With Your Payment?</h4>
           <h5>Let us know on help center now!</h5>
         </section>
-        <ImageView src={assets.ic_blue_right_arrow} alt={"right-arrow"} imgSize={20} />
+        <ImageView src={assets.ic_arrow_theme} alt={"right-arrow"} imgSize={20} />
       </section>
     </Fragment>
   )
