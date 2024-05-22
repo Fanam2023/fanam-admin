@@ -1,6 +1,7 @@
 "use client"
 
-import {Button, FormSectionProps, GroupForm, ImageView, assets} from "@fanam-pkg/core-ui-sass"
+import {FormSectionProps, GroupForm} from "@fanam-pkg/core-ui-sass"
+import {BaseContainer} from "organisms"
 import styles from "./beneficiary.module.sass"
 import useBeneficiary from "./handler"
 
@@ -84,16 +85,9 @@ const BenificiaryDetail = () => {
   ]
 
   return (
-    <section>
-      <section className={`flex ${styles.header_wrapper}`}>
-        <ImageView className={styles.icon} src={assets.ic_black_arrow} alt="" imgSize={24} />
-        <h5 className={styles.tittle_wrapper}>Benificiary Details</h5>
-      </section>
+    <BaseContainer buttonText="Submit" header="Benificiary Details">
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-      <Button onClick={onSubmit} wrapperClass={styles.button_wrapper}>
-        Submit
-      </Button>
-    </section>
+    </BaseContainer>
   )
 }
 
