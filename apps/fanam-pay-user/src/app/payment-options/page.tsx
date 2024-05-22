@@ -80,14 +80,9 @@ const renderCart = ({icon, bankName, cartType}: BankCartProps, index: number) =>
 const PaymentOptions = () => {
   return (
     <BaseContainer
-      header={"Payment options"}
+      header="Payment options"
       footerChild={
-        <FooterPayment
-          senderAmount={"Rs. 5388.00"}
-          reciverName={"Varshini receives"}
-          recivableAmt={"$707.00"}
-          button={"Pay"}
-        />
+        <FooterPayment senderAmount="Rs. 5388.00" reciverName="Varshini receives" recivableAmt="$707.00" button="Pay" />
       }>
       <Accordian
         title={"Bank Account"}
