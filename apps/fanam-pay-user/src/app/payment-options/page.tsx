@@ -1,8 +1,9 @@
 "use client"
 
-import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
+import {ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
 import {Accordian, BaseContainer} from "organisms"
+import {FooterPayment} from "organisms/base-container/footer-payment"
 import {BankCartProps, BankListProps, PaymentDataProps} from "props"
 import styles from "./page.module.sass"
 
@@ -76,26 +77,18 @@ const renderCart = ({icon, bankName, cartType}: BankCartProps, index: number) =>
   </section>
 )
 
-const footerContent = () => (
-  <section className={`flex-center ${styles.footer_container}`}>
-    <section className={`flex-col ${styles.footer_content}`}>
-      <h4>You pay</h4>
-      <h5 className={styles.amount_text}>{"Rs. 5388.00"}</h5>
-    </section>
-    <section className={`flex-col ${styles.footer_content}`}>
-      <h4>Varshini receives</h4>
-      <h5 className={styles.amount_text}>{"Rs. 5388.00"}</h5>
-    </section>
-    <section className={`flex-col ${styles.footer_content}`}>
-      <Button wrapperClass={styles.pay_button}>Pay</Button>
-      <h5 className={styles.label_text}>5-6 Business Days</h5>
-    </section>
-  </section>
-)
-
 const PaymentOptions = () => {
   return (
-    <BaseContainer header={"Payment options"} footerChild={footerContent()}>
+    <BaseContainer
+      header={"Payment options"}
+      footerChild={
+        <FooterPayment
+          senderAmount={"Rs. 5388.00"}
+          reciverName={"Varshini receives"}
+          recivableAmt={"$707.00"}
+          button={"Pay"}
+        />
+      }>
       <Accordian
         title={"Bank Account"}
         leadingIcon={assets.ic_account}
