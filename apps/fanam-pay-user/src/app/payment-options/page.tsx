@@ -1,9 +1,8 @@
 "use client"
 
 import {ImageView} from "@fanam-pkg/core-ui-sass"
-import {Fragment} from "react"
 import assets from "assets"
-import {Accordian, Header} from "organisms"
+import {Accordian, BaseContainer} from "organisms"
 import {BankCartProps, BankListProps, PaymentDataProps} from "props"
 import styles from "./page.module.sass"
 
@@ -79,8 +78,7 @@ const renderCart = ({icon, bankName, cartType}: BankCartProps, index: number) =>
 
 const PaymentOptions = () => {
   return (
-    <Fragment>
-      <Header title={"Payment options"}></Header>
+    <BaseContainer header={"Payment options"}>
       <Accordian
         title={"Bank Account"}
         leadingIcon={assets.ic_account}
@@ -104,7 +102,7 @@ const PaymentOptions = () => {
         </section>
         <ul className={`flex-col ${styles.content_wrapper}`}>{PAYMENT_DATA.map(renderPayment)}</ul>
       </section>
-    </Fragment>
+    </BaseContainer>
   )
 }
 

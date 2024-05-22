@@ -10,8 +10,8 @@ export interface BottomNavbarProps {
 export interface BaseConatinerProps {
   children?: ReactNode
   footerChild?: ReactNode
-  addButton: string
-  header: string
+  addButton?: string
+  header?: string
   buttonText?: string
   onClick?: () => void
 }

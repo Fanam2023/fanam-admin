@@ -1,6 +1,7 @@
 "use client"
 
-import {Button, FormSectionProps, GroupForm, ImageView, assets} from "@fanam-pkg/core-ui-sass"
+import {FormSectionProps, GroupForm} from "@fanam-pkg/core-ui-sass"
+import {BaseContainer} from "organisms"
 import useReciptentDetails from "./handler"
 import styles from "./recipient.module.sass"
 
@@ -93,16 +94,9 @@ const RecipientAccountDetail = () => {
   ]
 
   return (
-    <section>
-      <section className={`flex ${styles.header_wrapper}`}>
-        <ImageView className={styles.icon} src={assets.ic_black_arrow} alt="" imgSize={24} />
-        <h5 className={styles.tittle_wrapper}>Reciptent Account Details</h5>
-      </section>
+    <BaseContainer buttonText="Continue" header="Reciptent Account Details">
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-      <Button onClick={onSubmit} wrapperClass={styles.button_wrapper}>
-        Continue
-      </Button>
-    </section>
+    </BaseContainer>
   )
 }
 

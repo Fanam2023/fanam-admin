@@ -2,8 +2,8 @@
 
 import {ImageView} from "@fanam-pkg/core-ui-sass"
 import {useSearchParams} from "next/navigation"
-import {Fragment} from "react"
 import assets from "assets"
+import {BaseContainer} from "organisms"
 import {PaymentDetailsProps, StatusType} from "props"
 import styles from "./page.module.sass"
 
@@ -74,8 +74,10 @@ const PaymentStatus = () => {
     </section>
   )
 
+  const DownloadReceipt = () => <h6 className={styles.receipt_text}>Download Receipt</h6>
+
   return (
-    <Fragment>
+    <BaseContainer buttonText={"Done"} footerChild={DownloadReceipt()}>
       <section className={`flex-col-center ${styles.payment_status_wrapper}`}>
         <ImageView src={bigIcon} alt={"status-icon"} imgSize={56} />
         <h4 className={styles.payment_text}>{title}</h4>
@@ -97,7 +99,7 @@ const PaymentStatus = () => {
         </section>
         <ImageView src={assets.ic_arrow_theme} alt={"right-arrow"} imgSize={20} />
       </section>
-    </Fragment>
+    </BaseContainer>
   )
 }
 

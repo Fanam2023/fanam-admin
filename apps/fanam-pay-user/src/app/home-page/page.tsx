@@ -2,11 +2,12 @@
 
 import {DropDown, ImageView, RadioButton, TextField} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
+import {BaseContainer} from "organisms"
 import styles from "./page.module.sass"
 
 const HomePage = () => {
   return (
-    <section>
+    <BaseContainer header={"Cross Border Remittance"} buttonText={"Confirm"}>
       <section className={`flex ${styles.title_container}`}>
         <h3>Cross Border Remittance</h3>
       </section>
@@ -43,7 +44,7 @@ const HomePage = () => {
           </section>
         </section>
       </section>
-    </section>
+    </BaseContainer>
   )
 }
 export default HomePage
