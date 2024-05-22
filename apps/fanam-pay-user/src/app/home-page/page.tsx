@@ -7,7 +7,7 @@ import styles from "./page.module.sass"
 
 const HomePage = () => {
   return (
-    <BaseContainer header={"Cross Border Remittance"} buttonText={"Confirm"}>
+    <BaseContainer header="Cross Border Remittance" buttonText="Confirm">
       <section className={`flex ${styles.title_container}`}>
         <h3>Cross Border Remittance</h3>
       </section>
