@@ -7,9 +7,14 @@ const useBeneficiary = (onSuccess: (message: string) => void, onFailure: (messag
     phone_number: "",
     email: "",
     relationship: "",
+    address: "",
+    country_name: "",
+    state: "",
+    city: "",
+    zip_code: "",
   })
 
-  const {benificiary_name, phone_number, email, relationship} = data
+  const {benificiary_name, phone_number, email, relationship, address, country_name, state, city, zip_code} = data
 
   const [errState, setErrState] = useState({
     isClicked: false,
@@ -18,6 +23,11 @@ const useBeneficiary = (onSuccess: (message: string) => void, onFailure: (messag
     errEmail: "",
     errRelation: "",
     errNumber: "",
+    errAddress: "",
+    errCountryName: "",
+    errStateName: "",
+    errCity: "",
+    errZipCode: "",
   })
 
   const {isClicked} = errState
@@ -28,6 +38,11 @@ const useBeneficiary = (onSuccess: (message: string) => void, onFailure: (messag
       errEmail: "",
       errRelation: "",
       errNumber: "",
+      errAddress: "",
+      errCountryName: "",
+      errStateName: "",
+      errCity: "",
+      errZipCode: "",
       isValid: true,
     }
     if (!benificiary_name) errState = {...errState, errName: "Please enter Benificiary Name", isValid: false}
@@ -38,6 +53,16 @@ const useBeneficiary = (onSuccess: (message: string) => void, onFailure: (messag
 
     if (!relationship)
       errState = {...errState, errRelation: "Please enter Your Relationship with sender", isValid: false}
+
+    if (!address) errState = {...errState, errAddress: "Please enter Benificiary Address", isValid: false}
+
+    if (!country_name) errState = {...errState, errCountryName: "Please enter Country Name", isValid: false}
+
+    if (!state) errState = {...errState, errStateName: "Please enter Sate Name", isValid: false}
+
+    if (!city) errState = {...errState, errCity: "Please enter Your City/District", isValid: false}
+
+    if (!zip_code) errState = {...errState, errZipCode: "Please enter Your ZipCode", isValid: false}
 
     return errState
   }
