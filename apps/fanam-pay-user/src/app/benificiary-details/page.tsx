@@ -11,7 +11,8 @@ const BenificiaryDetail = () => {
     message => console.log(message)
   )
 
-  const {errName, errEmail, errNumber, errRelation} = errState
+  const {errName, errEmail, errNumber, errRelation, errAddress, errCountryName, errStateName, errCity, errZipCode} =
+    errState
 
   const formElements: FormSectionProps[] = [
     {
@@ -42,6 +43,41 @@ const BenificiaryDetail = () => {
           label: "Enter Relationship with Sender",
           name: "relation",
           error: errRelation,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Benificiary Address",
+          name: "address",
+          error: errAddress,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Country",
+          name: "country_name",
+          error: errCountryName,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter State",
+          name: "state_name",
+          error: errStateName,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter City/District",
+          name: "city/district",
+          error: errCity,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Zip Code",
+          name: "zip_code",
+          error: errZipCode,
           onChangeValue,
         },
       ],
