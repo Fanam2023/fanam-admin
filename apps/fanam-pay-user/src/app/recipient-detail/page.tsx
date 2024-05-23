@@ -70,7 +70,7 @@ const RecipientDetail = () => {
   ]
 
   return (
-    <BaseContainer buttonText="Continue" header="Reciptent Details">
+    <BaseContainer buttonText="Submit" header="Reciptent Details">
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
     </BaseContainer>
   )
