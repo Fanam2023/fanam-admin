@@ -1,4 +1,5 @@
 export * from "./accordian"
+export * from "./attachment"
 export * from "./base"
 export * from "./footer"
 export * from "./header"
