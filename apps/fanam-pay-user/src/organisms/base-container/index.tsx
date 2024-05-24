@@ -10,17 +10,17 @@ export const BaseContainer = ({
   header,
   buttonText,
   onClick,
-  childWrapper,
+  childWrapper = "",
 }: BaseConatinerProps) => (
   <section>
     <header className={`flex-sb-center ${styles.header_wrapper}`}>
       <section className={`flex ${styles.label_wrapper}`}>
-        <ImageView src={assets.ic_black_arrow} alt="back_icon" imgSize={24} />
+        <ImageView src={assets.ic_back} alt="back_icon" imgSize={24} />
         <h3>{header}</h3>
       </section>
       {!!addButton && <h3>{addButton}</h3>}
     </header>
-    <section className={`${childWrapper}`}>{children}</section>
+    <section className={childWrapper}>{children}</section>
     {(buttonText || footerChild) && (
       <footer className={`flex-col-center ${styles.footer_wrapper}`}>
         {!!buttonText && (

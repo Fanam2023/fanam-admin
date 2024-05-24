@@ -5,6 +5,7 @@ import ic_back from "./icons/ic_back.svg"
 import ic_checkbox from "./icons/ic_checkbox.svg"
 import ic_debit_card from "./icons/ic_debit_card.svg"
 import ic_edit from "./icons/ic_edit.svg"
+import ic_edit_theme from "./icons/ic_edit_theme.svg"
 import ic_failure from "./icons/ic_failure.svg"
 import ic_failure_small from "./icons/ic_failure_small.svg"
 import ic_help from "./icons/ic_help.svg"
@@ -12,7 +13,6 @@ import ic_home from "./icons/ic_home.svg"
 import ic_lend_money from "./icons/ic_lend_money.svg"
 import ic_pending from "./icons/ic_pending.svg"
 import ic_pending_small from "./icons/ic_pending_small.svg"
-import ic_profile_edit from "./icons/ic_profile_edit.svg"
 import ic_search from "./icons/ic_search.svg"
 import ic_star from "./icons/ic_star.svg"
 import ic_success from "./icons/ic_success.svg"
@@ -28,7 +28,6 @@ const assets = {
   ic_up_arrow,
   ic_back,
   ic_debit_card,
-
   img_bank,
   ic_lend_money,
   ic_pending,
@@ -44,7 +43,7 @@ const assets = {
   ic_checkbox,
   ic_search,
   ic_user,
-  ic_profile_edit,
+  ic_edit_theme,
 }
 
 export default assets
