@@ -3,28 +3,25 @@
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
 import {BaseContainer} from "organisms"
+import {AddAttachmentProps} from "props"
 import {useAddAttachment} from "./handler"
 import styles from "./style.module.sass"
 
 const AddAttachment = () => {
-  const {fileUploaded, uploadedFiles, fileInputRef, handleRemoveClick, onBrowseClick, onFileChange} = useAddAttachment()
+  const {selFiles, fileInputRef, onRemove, onBrowseClick, onFileChange} = useAddAttachment()
 
-  const renderAddAttachments = ({name, size}, index: number) => {
+  const renderAddAttachments = ({name, size}: AddAttachmentProps, index: number) => {
     return (
-      <section key={index}>
-        {fileUploaded && (
-          <ul className={`flex-sb-center ${styles.file_wrapper}`}>
-            <section className="flex">
-              <ImageView src={assets.ic_file} alt="File_icon" imgSize={32} />
-              <section>
-                <h5>{name}</h5>
-                <h6>{size}</h6>
-              </section>
-            </section>
-            <ImageView src={assets.ic_remove} alt="Remove_icon" imgSize={16} onClick={() => handleRemoveClick(index)} />
-          </ul>
-        )}
-      </section>
+      <li className={`flex-sb-center ${styles.file_wrapper}`} key={index}>
+        <section className="flex">
+          <ImageView src={assets.ic_file} alt="File_icon" imgSize={32} />
+          <section>
+            <h5>{name}</h5>
+            <h6>{size}</h6>
+          </section>
+        </section>
+        <ImageView src={assets.ic_remove} alt="Remove_icon" imgSize={16} onClick={onRemove.bind(null, index)} />
+      </li>
     )
   }
 
@@ -40,9 +37,9 @@ const AddAttachment = () => {
         <Button onClick={onBrowseClick} className={styles.button_wrapper}>
           Browse
         </Button>
-        <input type="file" ref={fileInputRef} onChange={onFileChange} style={{display: "none"}} />
+        <input type="file" ref={fileInputRef} onChange={onFileChange} className={styles.input_wrapper} />
       </section>
-      <ul>{uploadedFiles.map(renderAddAttachments)}</ul>
+      <ul>{selFiles.map(renderAddAttachments)}</ul>
     </BaseContainer>
   )
 }
