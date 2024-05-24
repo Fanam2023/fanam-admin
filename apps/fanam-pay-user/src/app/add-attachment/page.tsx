@@ -8,22 +8,20 @@ import {useAddAttachment} from "./handler"
 import styles from "./style.module.sass"
 
 const AddAttachment = () => {
-  const {selFiles, fileInputRef, onRemove, onBrowseClick, onFileChange} = useAddAttachment()
+  const {selFiles, fileInputRef, onRemove, onBrowse, onAttachment} = useAddAttachment()
 
-  const renderAddAttachments = ({name, size}: AddAttachmentProps, index: number) => {
-    return (
-      <li className={`flex-sb-center ${styles.file_wrapper}`} key={index}>
-        <section className="flex">
-          <ImageView src={assets.ic_file} alt="File_icon" imgSize={32} />
-          <section>
-            <h5>{name}</h5>
-            <h6>{size}</h6>
-          </section>
+  const renderAddAttachments = ({name, size}: AddAttachmentProps, index: number) => (
+    <li className={`flex-sb-center ${styles.file_wrapper}`} key={index}>
+      <section className="flex">
+        <ImageView src={assets.ic_file} alt="File_icon" imgSize={32} />
+        <section className={styles.name_wrapper}>
+          <h4>{name}</h4>
+          <h6>{size}</h6>
         </section>
-        <ImageView src={assets.ic_remove} alt="Remove_icon" imgSize={16} onClick={onRemove.bind(null, index)} />
-      </li>
-    )
-  }
+      </section>
+      <ImageView src={assets.ic_remove} alt="Remove_icon" imgSize={16} onClick={onRemove.bind(null, index)} />
+    </li>
+  )
 
   return (
     <BaseContainer header="Transaction Details Upload" buttonText="Continue">
@@ -34,10 +32,10 @@ const AddAttachment = () => {
       <section className={`flex-col-center ${styles.card_wrapper}`}>
         <ImageView src={assets.ic_upload} alt={"Upload_icon"} imgSize={45} />
         <h4>Browse file from your device</h4>
-        <Button onClick={onBrowseClick} className={styles.button_wrapper}>
+        <Button onClick={onBrowse} className={styles.button_wrapper}>
           Browse
         </Button>
-        <input type="file" ref={fileInputRef} onChange={onFileChange} className={styles.input_wrapper} />
+        <input type="file" ref={fileInputRef} onChange={onAttachment} className={styles.input_wrapper} />
       </section>
       <ul>{selFiles.map(renderAddAttachments)}</ul>
     </BaseContainer>
