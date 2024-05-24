@@ -13,6 +13,7 @@ export interface BaseConatinerProps {
   addButton?: string
   header?: string
   buttonText?: string
+  childWrapper?: string
   onClick?: () => void
 }
 
