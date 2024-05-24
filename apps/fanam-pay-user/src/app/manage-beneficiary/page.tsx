@@ -1,5 +1,3 @@
-"use client"
-
 import {BaseContainer, ManageMembers} from "organisms"
 import {BENEFICIARY_LIST} from "utils"
 import styles from "./page.module.sass"
