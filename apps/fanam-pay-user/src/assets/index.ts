@@ -8,16 +8,18 @@ import ic_edit from "./icons/ic_edit.svg"
 import ic_edit_theme from "./icons/ic_edit_theme.svg"
 import ic_failure from "./icons/ic_failure.svg"
 import ic_failure_small from "./icons/ic_failure_small.svg"
+import ic_file from "./icons/ic_file.svg"
 import ic_help from "./icons/ic_help.svg"
-import ic_home from "./icons/ic_home.svg"
 import ic_lend_money from "./icons/ic_lend_money.svg"
 import ic_pending from "./icons/ic_pending.svg"
 import ic_pending_small from "./icons/ic_pending_small.svg"
+import ic_remove from "./icons/ic_remove.svg"
 import ic_search from "./icons/ic_search.svg"
 import ic_star from "./icons/ic_star.svg"
 import ic_success from "./icons/ic_success.svg"
 import ic_success_small from "./icons/ic_success_small.svg"
 import ic_up_arrow from "./icons/ic_up_arrow.svg"
+import ic_upload from "./icons/ic_upload.svg"
 import ic_user from "./icons/ic_user.svg"
 import img_bank from "./images/img_bank.webp"
 
@@ -38,7 +40,9 @@ const assets = {
   ic_failure_small,
   ic_help,
   ic_arrow_theme,
-  ic_home,
+  ic_upload,
+  ic_file,
+  ic_remove,
   ic_edit,
   ic_checkbox,
   ic_search,

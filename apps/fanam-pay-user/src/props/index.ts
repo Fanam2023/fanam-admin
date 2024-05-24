@@ -1,5 +1,6 @@
 export * from "./accordian"
 export * from "./base"
+export * from "./common"
 export * from "./footer"
 export * from "./header"
 export * from "./member"
