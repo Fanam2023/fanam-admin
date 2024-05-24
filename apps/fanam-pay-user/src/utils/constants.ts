@@ -1,4 +1,5 @@
-import {assets} from "@fanam-pkg/core-ui-sass"
+import assets from "assets"
+import {IBeneficiary, IRecipients} from "model"
 import {BottomNavbarProps, RecipientPreviewProps} from "props"
 import {ROUTE_HISTORY, ROUTE_HOME, ROUTE_PROFILE} from "./route"
 
@@ -27,4 +28,16 @@ export const ACCOUNTDETAILS: RecipientPreviewProps[] = [
   {label: "Recipient Address", value: "Toranto"},
   {label: "Bank Name", value: "Bank of America"},
   {label: "Branch Address", value: "Toranto"},
+]
+
+export const BENEFICIARY_LIST: IBeneficiary[] = [
+  {email: "roshini@gmail.com", name: "Roshini", profileIcon: assets.ic_user},
+  {email: "alex@gmail.com", name: "Alex", profileIcon: assets.ic_user},
+  {email: "taylor@gmail.com", name: "Taylor", profileIcon: assets.ic_user},
+]
+
+export const RECIPIENT_LIST: IRecipients[] = [
+  {accountNumber: "xxxx xxxxx x6790", name: "Rithick", profileIcon: assets.ic_user},
+  {accountNumber: "yyyy yyyyy y1234", name: "Alex", profileIcon: assets.ic_user},
+  {accountNumber: "zzzz zzzzz z5678", name: "Taylor", profileIcon: assets.ic_user},
 ]
