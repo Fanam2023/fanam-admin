@@ -3,7 +3,15 @@ import assets from "assets"
 import {BaseConatinerProps} from "props"
 import styles from "./style.module.sass"
 
-export const BaseContainer = ({children, footerChild, addButton, header, buttonText, onClick}: BaseConatinerProps) => (
+export const BaseContainer = ({
+  children,
+  footerChild,
+  addButton,
+  header,
+  buttonText,
+  onClick,
+  childWrapper = "",
+}: BaseConatinerProps) => (
   <section>
     <header className={`flex-sb-center ${styles.header_wrapper}`}>
       <section className={`flex ${styles.label_wrapper}`}>
@@ -12,14 +20,16 @@ export const BaseContainer = ({children, footerChild, addButton, header, buttonT
       </section>
       {!!addButton && <h3>{addButton}</h3>}
     </header>
-    <section>{children}</section>
-    <footer className={`flex-col-center ${styles.footer_wrapper}`}>
-      {!!buttonText && (
-        <Button onClick={onClick} wrapperClass={styles.button_wrapper}>
-          {buttonText}
-        </Button>
-      )}
-      {footerChild}
-    </footer>
+    <section className={childWrapper}>{children}</section>
+    {(buttonText || footerChild) && (
+      <footer className={`flex-col-center ${styles.footer_wrapper}`}>
+        {!!buttonText && (
+          <Button onClick={onClick} wrapperClass={styles.button_wrapper}>
+            {buttonText}
+          </Button>
+        )}
+        {footerChild}
+      </footer>
+    )}
   </section>
 )
