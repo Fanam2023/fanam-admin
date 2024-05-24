@@ -1,27 +1,22 @@
 import {ImageView, TextField} from "@fanam-pkg/core-ui-sass"
 import {Fragment} from "react"
 import assets from "assets"
-import {IBeneficiary, IRecipients} from "model"
-import {ManageMembersProps} from "props"
+import {ManageMembersProps, MemberProps} from "props"
 import styles from "./style.module.sass"
 
 export const ManageMembers = ({title, recipients, placeHolderName, onChangeSearch}: ManageMembersProps) => {
-  const renderUserData = (recipient: IRecipients | IBeneficiary, index: number) => {
-    const {name, profileIcon} = recipient
-
-    return (
-      <section className={`flex ${styles.beneficiary_wrapper}`} key={index}>
-        <ImageView src={profileIcon} alt={"user-profile"} imgSize={46} />
-        <section className={`flex-sb-center ${styles.user_wrapper}`}>
-          <section className={`flex-col ${styles.user_details}`}>
-            <h3>{name}</h3>
-            {"email" in recipient ? <h5>{recipient.email}</h5> : <h5>{recipient.accountNumber}</h5>}
-          </section>
-          <ImageView src={assets.ic_edit_theme} alt={"edit-icon"} imgSize={24} />
+  const renderUserData = ({title, description}: MemberProps, index: number) => (
+    <section className={`flex ${styles.beneficiary_wrapper}`} key={index}>
+      <ImageView src={assets.ic_user} alt={"user-profile"} imgSize={46} />
+      <section className={`flex-sb-center ${styles.user_wrapper}`}>
+        <section className={`flex-col ${styles.user_details}`}>
+          <h3>{title}</h3>
+          <h5>{description}</h5>
         </section>
+        <ImageView src={assets.ic_edit_theme} alt={"edit-icon"} imgSize={24} />
       </section>
-    )
-  }
+    </section>
+  )
 
   return (
     <Fragment>

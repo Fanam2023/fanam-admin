@@ -30,13 +30,13 @@ export const ACCOUNTDETAILS: RecipientPreviewProps[] = [
   {label: "Branch Address", value: "Toranto"},
 ]
 
-export const beneficiaryDetails: IBeneficiary[] = [
+export const BENEFICIARY_LIST: IBeneficiary[] = [
   {email: "roshini@gmail.com", name: "Roshini", profileIcon: assets.ic_user},
   {email: "alex@gmail.com", name: "Alex", profileIcon: assets.ic_user},
   {email: "taylor@gmail.com", name: "Taylor", profileIcon: assets.ic_user},
 ]
 
-export const recipientsDetails: IRecipients[] = [
+export const RECIPIENT_LIST: IRecipients[] = [
   {accountNumber: "xxxx xxxxx x6790", name: "Rithick", profileIcon: assets.ic_user},
   {accountNumber: "yyyy yyyyy y1234", name: "Alex", profileIcon: assets.ic_user},
   {accountNumber: "zzzz zzzzz z5678", name: "Taylor", profileIcon: assets.ic_user},

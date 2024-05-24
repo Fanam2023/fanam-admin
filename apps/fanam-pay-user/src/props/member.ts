@@ -1,8 +1,11 @@
-import {IManageMembers} from "model"
-
 export interface ManageMembersProps {
   title: string
-  recipients: IManageMembers[]
+  recipients: MemberProps[]
   placeHolderName: string
   onChangeSearch?: () => void
+}
+
+export interface MemberProps {
+  title: string
+  description: string
 }

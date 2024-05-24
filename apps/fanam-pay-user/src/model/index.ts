@@ -1,1 +1,2 @@
-export * from "./manage-member"
+export * from "./beneficiary"
+export * from "./recipient"

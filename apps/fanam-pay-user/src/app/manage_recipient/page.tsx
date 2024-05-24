@@ -1,12 +1,14 @@
-"use client"
-
 import {BaseContainer, ManageMembers} from "organisms"
-import {recipientsDetails} from "utils"
+import {RECIPIENT_LIST} from "utils"
 import styles from "./page.module.sass"
 
 const ManageRecipient = () => (
   <BaseContainer header={"Manage Recipients"} addButton="Add" childWrapper={styles.page_container}>
-    <ManageMembers recipients={recipientsDetails} title="Saved Recipients" placeHolderName="Search Recipients..." />
+    <ManageMembers
+      recipients={RECIPIENT_LIST.map(({name, accountNumber}) => ({title: name, description: accountNumber}))}
+      title="Saved Recipients"
+      placeHolderName="Search Recipients..."
+    />
   </BaseContainer>
 )
 
