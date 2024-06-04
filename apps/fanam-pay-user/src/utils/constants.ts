@@ -1,6 +1,6 @@
 import assets from "assets"
-import {IBeneficiary, IRecipients} from "model"
-import {BottomNavbarProps, IStepper, RecipientPreviewProps} from "props"
+import {IBeneficiary, IRecipients, IStepper} from "model"
+import {BottomNavbarProps, RecipientPreviewProps} from "props"
 import {ROUTE_HISTORY, ROUTE_HOME, ROUTE_PROFILE} from "./route"
 
 export const BOTTOM_TABS: BottomNavbarProps[] = [
