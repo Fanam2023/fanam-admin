@@ -24,20 +24,24 @@ const AddAttachment = () => {
   )
 
   return (
-    <BaseContainer header="Transaction Details Upload" buttonText="Continue">
-      <section className={styles.title_wrapper}>
-        <h4>Upload Supporting Documents(optional)</h4>
-        <h5 className={styles.type_wrapper}>JPG, PNG and PDF Files Up to 1MB</h5>
+    <BaseContainer header="Upload Documents" buttonText="Continue">
+      <section className={`flex-col-center`}>
+        <ul>
+          <section className={styles.title_wrapper}>
+            <h4>Upload Supporting Documents(optional)</h4>
+            <h5 className={styles.type_wrapper}>JPG, PNG and PDF Files Up to 1MB</h5>
+          </section>
+          <section className={`flex-col-center ${styles.card_wrapper}`}>
+            <ImageView src={assets.ic_upload} alt={"Upload_icon"} imgSize={45} />
+            <h4>Browse file from your device</h4>
+            <Button onClick={onBrowse} className={styles.button_wrapper}>
+              Browse
+            </Button>
+            <input type="file" ref={fileInputRef} onChange={onAttachment} className={styles.input_wrapper} />
+          </section>
+          <ul>{selFiles.map(renderAddAttachments)}</ul>
+        </ul>
       </section>
-      <section className={`flex-col-center ${styles.card_wrapper}`}>
-        <ImageView src={assets.ic_upload} alt={"Upload_icon"} imgSize={45} />
-        <h4>Browse file from your device</h4>
-        <Button onClick={onBrowse} className={styles.button_wrapper}>
-          Browse
-        </Button>
-        <input type="file" ref={fileInputRef} onChange={onAttachment} className={styles.input_wrapper} />
-      </section>
-      <ul>{selFiles.map(renderAddAttachments)}</ul>
     </BaseContainer>
   )
 }
