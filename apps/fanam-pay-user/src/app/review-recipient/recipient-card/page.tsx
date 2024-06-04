@@ -8,7 +8,7 @@ const RecipientCard = () => {
   const renderRecipentDetails = ({label, value}: RecipientPreviewProps, index: number) => (
     <section className={`flex-sb-center ${styles.data_wrapper}`} key={index}>
       <h5 className={styles.field_wrapper}>{label}</h5>
-      <h5 className={styles.field_wrapper}>{value}</h5>
+      <h5 className={styles.value_wrapper}>{value}</h5>
     </section>
   )
   return (
