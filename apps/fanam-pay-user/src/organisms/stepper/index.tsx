@@ -8,14 +8,6 @@ import styles from "./style.module.sass"
 export const Stepper = () => {
   const [selIndex, setSelIndex] = useState(3)
 
-  const onNext = () => {
-    setSelIndex(prev => Math.min(prev + 1, SIDE_BAR.length - 1))
-  }
-
-  const onPrevious = () => {
-    setSelIndex(prev => Math.max(prev - 1, 0))
-  }
-
   const renderSideBar = ({title, description}: IStepper, index: number) => {
     const isLastStep = index < SIDE_BAR.length - 1
     const isActive = index === selIndex
