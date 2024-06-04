@@ -23,8 +23,3 @@ export interface FooterPaymentProps {
   recivableAmt: string
   button: string
 }
-
-export interface SideBarProp {
-  title: string
-  description: string
-}

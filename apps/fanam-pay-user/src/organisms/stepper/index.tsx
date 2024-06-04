@@ -1,22 +1,22 @@
 "use client"
 
 import {useState} from "react"
-import {SideBarProp} from "props"
+import {IStepper} from "props"
 import {SIDE_BAR} from "utils"
 import styles from "./style.module.sass"
 
 export const Stepper = () => {
   const [currentStep, setCurrentStep] = useState(3)
 
-  const handleNext = () => {
+  const onNext = () => {
     setCurrentStep(prev => Math.min(prev + 1, SIDE_BAR.length - 1))
   }
 
-  const handlePrevious = () => {
+  const onPrevious = () => {
     setCurrentStep(prev => Math.max(prev - 1, 0))
   }
 
-  const renderSideBar = ({title, description}: SideBarProp, index: number) => {
+  const renderSideBar = ({title, description}: IStepper, index: number) => {
     const isLastStep = index < SIDE_BAR.length - 1
     const isActive = index === currentStep
     const isCompleted = index < currentStep
@@ -30,20 +30,16 @@ export const Stepper = () => {
           <h5 className={`${styles.stepper} ${isActive || isCompleted ? styles.active : ""}`}>{index + 1}</h5>
         </section>
         <section className={`flex-col ${styles.content}`}>
-          <h5 className={`${isActive || isCompleted ? styles.active_title_text : styles.inactive_title_text}`}>
-            {title}
-          </h5>
-          <h6 className={`${isActive || isCompleted ? styles.active_desc_text : styles.inactive_desc_text} `}>
-            {description}
-          </h6>
+          <h5 className={`${isActive || isCompleted ? styles.active_title : styles.inactive_title}`}>{title}</h5>
+          <h6 className={`${isActive || isCompleted ? styles.active_desc : styles.inactive_desc} `}>{description}</h6>
         </section>
       </section>
     )
   }
 
   return (
-    <section className={`flex ${styles.main_container}`}>
+    <nav className={`flex ${styles.main_container}`}>
       <nav className={styles.navbar}>{SIDE_BAR.map(renderSideBar)}</nav>
-    </section>
+    </nav>
   )
 }

@@ -1,6 +1,6 @@
 import assets from "assets"
 import {IBeneficiary, IRecipients} from "model"
-import {BottomNavbarProps, RecipientPreviewProps, SideBarProp} from "props"
+import {BottomNavbarProps, IStepper, RecipientPreviewProps} from "props"
 import {ROUTE_HISTORY, ROUTE_HOME, ROUTE_PROFILE} from "./route"
 
 export const BOTTOM_TABS: BottomNavbarProps[] = [
@@ -42,7 +42,7 @@ export const RECIPIENT_LIST: IRecipients[] = [
   {accountNumber: "zzzz zzzzz z5678", name: "Taylor", profileIcon: assets.ic_user},
 ]
 
-export const SIDE_BAR: SideBarProp[] = [
+export const SIDE_BAR: IStepper[] = [
   {
     title: "Cross Border Remittance",
     description:
