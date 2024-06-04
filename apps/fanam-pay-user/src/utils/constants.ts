@@ -1,6 +1,6 @@
 import assets from "assets"
 import {IBeneficiary, IRecipients} from "model"
-import {BottomNavbarProps, RecipientPreviewProps} from "props"
+import {BottomNavbarProps, RecipientPreviewProps, SideBarProp} from "props"
 import {ROUTE_HISTORY, ROUTE_HOME, ROUTE_PROFILE} from "./route"
 
 export const BOTTOM_TABS: BottomNavbarProps[] = [
@@ -40,4 +40,36 @@ export const RECIPIENT_LIST: IRecipients[] = [
   {accountNumber: "xxxx xxxxx x6790", name: "Rithick", profileIcon: assets.ic_user},
   {accountNumber: "yyyy yyyyy y1234", name: "Alex", profileIcon: assets.ic_user},
   {accountNumber: "zzzz zzzzz z5678", name: "Taylor", profileIcon: assets.ic_user},
+]
+
+export const SIDE_BAR: SideBarProp[] = [
+  {
+    title: "Cross Border Remittance",
+    description:
+      "Get your conversion estimate. Provide sender and recipient type along with the purpose of sending money.",
+  },
+  {
+    title: "Upload Document",
+    description: "Upload the supporting document related to the purpose of sending money.",
+  },
+  {
+    title: "Recipient Details",
+    description: "Enter the Recipient details and their account details.",
+  },
+  {
+    title: "Recipient Review Details",
+    description: "Review the details of the recipient details and their account details.",
+  },
+  {
+    title: "Beneficiary Details",
+    description: "If your recipient and beneficiary are different, enter the beneficiary details.",
+  },
+  {
+    title: "Mode of Payment",
+    description: "Choose the payment option from the list.",
+  },
+  {
+    title: "Payment Status",
+    description: "Get the payment status after sending the money.",
+  },
 ]
