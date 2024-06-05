@@ -8,10 +8,12 @@ import styles from "./review.module.sass"
 
 const ReviewDetails = () => (
   <BaseContainer header="Review Recipient Details" buttonText="Confirm">
-    <RecipientCard />
-    <section className={`flex`}>
-      <ImageView className={styles.check_icon} src={assets.ic_checkbox} alt="" imgSize={24} />
-      <h5 className={styles.detail_wrapper}>Are the recipient and benificiary same</h5>
+    <section className={`flex-col-center`}>
+      <RecipientCard />
+      <section className={`flex`}>
+        <ImageView className={styles.check_icon} src={assets.ic_checkbox} alt="" imgSize={24} />
+        <h5 className={styles.detail_wrapper}>Are the recipient and benificiary same</h5>
+      </section>
     </section>
   </BaseContainer>
 )

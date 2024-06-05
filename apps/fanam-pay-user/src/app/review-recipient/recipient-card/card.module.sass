@@ -1,6 +1,5 @@
 @use "../../../styles/index" as *
 
-@include mixin-responsive
 .border_wrapper
   margin: $size-24px
   padding: $size-8px
@@ -19,6 +18,10 @@
   color: $white
 
 .data_wrapper
-  margin: $size-16px
+  column-gap: $size-32px
+  padding: $size-6px $size-18px
 
-.field_wrapper
+.value_wrapper
+  text-align: left
+
+@include mixin-responsive
