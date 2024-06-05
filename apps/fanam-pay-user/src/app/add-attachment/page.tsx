@@ -25,7 +25,7 @@ const AddAttachment = () => {
 
   return (
     <BaseContainer header="Upload Documents" buttonText="Continue" childWrapper={`flex-col-center`}>
-      <ul>
+      <section>
         <section className={styles.title_wrapper}>
           <h4>Upload Supporting Documents(optional)</h4>
           <h5 className={styles.type_wrapper}>JPG, PNG and PDF Files Up to 1MB</h5>
@@ -39,7 +39,7 @@ const AddAttachment = () => {
           <input type="file" ref={fileInputRef} onChange={onAttachment} className={styles.input_wrapper} />
         </section>
         <ul>{selFiles.map(renderAddAttachments)}</ul>
-      </ul>
+      </section>
     </BaseContainer>
   )
 }
