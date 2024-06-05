@@ -1,8 +1,18 @@
 @use "../../styles/index" as *
 
+@mixin common-styles
+  width: 100%
+
+.container
+  margin-top: $size-48px
+
+.search_wrapper
+  width: 90%
+
 .beneficiary_container
   margin-top: $size-28px
   gap: $size-20px
+  width: 40%
 
 .beneficiary_wrapper
   border: $size-1px solid $dark-border-grey
@@ -11,7 +21,40 @@
   gap: $size-12px
 
 .user_wrapper
-  width: 100%
+  @include common-styles
 
-.user_details
-  gap: $size-4px
+.edit_icon
+  cursor: pointer
+
+.search_container
+  width: 40%
+
+.add_text
+  color: $primary
+  font-weight: $semi-bold
+  cursor: pointer
+
+@include mixin-responsive
+  .container
+    margin-top: 0
+
+  .search_wrapper
+    @include common-styles
+    margin-left: 0
+
+  .beneficiary_container
+    @include common-styles
+    margin-top: $size-28px
+    gap: $size-20px
+
+  .beneficiary_wrapper
+    border: $size-1px solid $dark-border-grey
+    border-radius: $size-10px
+    padding: $size-16px
+    gap: $size-12px
+
+  .user_details
+    gap: $size-4px
+
+  .search_container
+    @include common-styles
