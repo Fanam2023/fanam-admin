@@ -24,7 +24,7 @@ const AddAttachment = () => {
   )
 
   return (
-    <BaseContainer header="Upload Documents" buttonText="Continue" childWrapper={`flex-col-center`}>
+    <BaseContainer header="Upload Documents" buttonText="Continue" childWrapper={`flex-col-center`} backIcon>
       <section>
         <section className={styles.title_wrapper}>
           <h4>Upload Supporting Documents(optional)</h4>
