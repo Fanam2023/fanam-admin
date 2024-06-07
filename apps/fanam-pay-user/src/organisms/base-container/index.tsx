@@ -11,11 +11,12 @@ export const BaseContainer = ({
   buttonText,
   onClick,
   childWrapper = "",
+  backIcon,
 }: BaseConatinerProps) => (
   <section>
     <header className={`flex-sb-center ${styles.header_wrapper}`}>
       <section className={`flex ${styles.label_wrapper}`}>
-        <ImageView src={assets.ic_back} alt="back_icon" imgSize={24} />
+        {!!backIcon && <ImageView src={assets.ic_back} alt="back_icon" imgSize={24} />}
         <h3>{header}</h3>
       </section>
       {!!addButton && <h3>{addButton}</h3>}

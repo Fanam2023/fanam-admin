@@ -83,7 +83,8 @@ const PaymentOptions = () => {
       header="Payment options"
       footerChild={
         <FooterPayment senderAmount="Rs. 5388.00" reciverName="Varshini receives" recivableAmt="$707.00" button="Pay" />
-      }>
+      }
+      backIcon>
       <Accordian
         title={"Bank Account"}
         leadingIcon={assets.ic_account}

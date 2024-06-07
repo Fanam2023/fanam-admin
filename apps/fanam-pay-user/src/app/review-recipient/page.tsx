@@ -7,7 +7,7 @@ import RecipientCard from "./recipient-card/page"
 import styles from "./review.module.sass"
 
 const ReviewDetails = () => (
-  <BaseContainer header="Review Recipient Details" buttonText="Confirm">
+  <BaseContainer header="Review Recipient Details" buttonText="Confirm" backIcon>
     <section className={`flex-col-center`}>
       <RecipientCard />
       <section className={`flex`}>

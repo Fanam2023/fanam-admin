@@ -94,7 +94,7 @@ const RecipientAccountDetail = () => {
   ]
 
   return (
-    <BaseContainer buttonText="Continue" header="Reciptent Account Details">
+    <BaseContainer buttonText="Continue" header="Reciptent Account Details" backIcon>
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
     </BaseContainer>
   )

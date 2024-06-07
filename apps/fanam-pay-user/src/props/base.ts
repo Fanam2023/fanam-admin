@@ -15,6 +15,7 @@ export interface BaseConatinerProps {
   buttonText?: string
   childWrapper?: string
   onClick?: () => void
+  backIcon?: boolean
 }
 
 export interface FooterPaymentProps {

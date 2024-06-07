@@ -80,7 +80,8 @@ const PaymentStatus = () => {
     <BaseContainer
       buttonText="Done"
       footerChild={DownloadReceipt()}
-      childWrapper={`flex-col-center ${styles.page_container}`}>
+      childWrapper={`flex-col-center ${styles.page_container}`}
+      backIcon>
       <section className={`flex-col-center ${styles.payment_status_wrapper}`}>
         <ImageView src={bigIcon} alt={"status-icon"} imgSize={56} />
         <h4 className={styles.payment_text}>{title}</h4>
