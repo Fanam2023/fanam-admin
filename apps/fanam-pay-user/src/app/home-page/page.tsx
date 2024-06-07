@@ -25,7 +25,7 @@ const HomePage = () => {
             <section>
               <h4>You Send</h4>
               <section className={`flex ${styles.input_container}`}>
-                <ImageView src={assets.ic_delete} alt="country_flag" imgSize={40} />
+                <ImageView src={assets.ic_india_flag} alt="country_flag" imgSize={40} />
                 <h4>INR</h4>
                 <TextField wrapperClass={styles.text_field_wrapper} />
               </section>
@@ -33,7 +33,7 @@ const HomePage = () => {
             <section>
               <h4>Recipient receives</h4>
               <section className={`flex ${styles.input_container}`}>
-                <ImageView src={assets.ic_delete} alt="country_flag" imgSize={40} />
+                <ImageView src={assets.ic_us_flag} alt="country_flag" imgSize={40} />
                 <h4>USD</h4>
                 <TextField wrapperClass={styles.text_field_wrapper} />
               </section>
