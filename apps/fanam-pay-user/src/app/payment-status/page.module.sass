@@ -5,21 +5,25 @@
 @mixin mobile_width
   width: 100%
 
+@mixin common-styles
+  padding: $size-20px $size-18px
+  border: $size-1px solid $black
+  border-radius: $size-24px
+
+@mixin common-margin
+  margin-top: $size-8px
+
 .page_container
   margin: $size-56px 0
   gap: $size-16px
 
 .payment_status_wrapper
   @include desktop_width
-  padding: $size-20px $size-18px
-  border: $size-1px solid $black
-  border-radius: $size-24px
+  @include common-styles
 
 .payment_details_wrapper
   @include desktop_width
-  border: $size-1px solid $black
-  border-radius: $size-24px
-  padding: $size-20px $size-18px
+  @include common-styles
 
 .content
   margin-top: $size-20px
@@ -29,9 +33,7 @@
 
 .payment_helper_wrapper
   @include desktop_width
-  border: $size-1px solid $black
-  border-radius: $size-24px
-  padding: $size-20px $size-18px
+  @include common-styles
 
 .helper_wrapper
   gap: $size-10px
@@ -40,10 +42,10 @@
   gap: $size-6px
 
 .payment_text
-  margin-top: $size-8px
+  @include common-margin
 
 .currency_text
-  margin-top: $size-8px
+  @include common-margin
 
 .receipt_text
   text-decoration: underline
