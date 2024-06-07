@@ -1,19 +1,22 @@
 @use "../../styles/index" as *
+@mixin desktop_width
+  width: 30%
+
+@mixin mobile_width
+  width: 100%
+
+.page_container
+  margin: $size-56px 0
+  gap: $size-16px
 
 .payment_status_wrapper
-  margin: $size-56px $size-24px $size-24px $size-24px
+  @include desktop_width
   padding: $size-20px $size-18px
   border: $size-1px solid $black
   border-radius: $size-24px
 
-.payment_text
-  margin-top: $size-8px
-
-.currency_text
-  margin-top: $size-8px
-
 .payment_details_wrapper
-  margin: $size-24px $size-24px
+  @include desktop_width
   border: $size-1px solid $black
   border-radius: $size-24px
   padding: $size-20px $size-18px
@@ -25,7 +28,7 @@
   margin-top: $size-32px
 
 .payment_helper_wrapper
-  margin: $size-24px $size-24px
+  @include desktop_width
   border: $size-1px solid $black
   border-radius: $size-24px
   padding: $size-20px $size-18px
@@ -36,6 +39,26 @@
 .img_section
   gap: $size-6px
 
+.payment_text
+  margin-top: $size-8px
+
+.currency_text
+  margin-top: $size-8px
+
 .receipt_text
   text-decoration: underline
   color: $primary
+
+@include mixin-responsive
+  .page_container
+    padding: 0 $size-32px $size-32px $size-32px
+    gap: $size-20px
+
+  .payment_status_wrapper
+    @include mobile_width
+
+  .payment_details_wrapper
+    @include mobile_width
+
+  .payment_helper_wrapper
+    @include mobile_width
