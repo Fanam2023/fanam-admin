@@ -3,7 +3,7 @@
 import {ImageView} from "@fanam-pkg/core-ui-sass"
 import {useSearchParams} from "next/navigation"
 import assets from "assets"
-import {BaseContainer} from "organisms"
+import {BaseContainer, Stepper} from "organisms"
 import {PaymentDetailsProps, StatusType} from "props"
 import styles from "./page.module.sass"
 
@@ -77,32 +77,32 @@ const PaymentStatus = () => {
   const DownloadReceipt = () => <h6 className={styles.receipt_text}>Download Receipt</h6>
 
   return (
-    <BaseContainer
-      buttonText="Done"
-      footerChild={DownloadReceipt()}
-      childWrapper={`flex-col-center ${styles.page_container}`}
-      backIcon>
-      <section className={`flex-col-center ${styles.payment_status_wrapper}`}>
-        <ImageView src={bigIcon} alt={"status-icon"} imgSize={56} />
-        <h4 className={styles.payment_text}>{title}</h4>
-        <h2 className={styles.currency_text}>{"$ 707"}</h2>
-      </section>
-      <section className={`flex-col ${styles.payment_details_wrapper}`}>
-        <h4>Payment Details</h4>
-        <ul>{PAYMENT_DETAILS.map(renderPaymentDetails)}</ul>
-        <section className={`flex-sb-center ${styles.total}`}>
-          <h5>Total Payment</h5>
-          <h5>{"$ 707"}</h5>
+    <BaseContainer buttonText="Done" footerChild={DownloadReceipt()} backIcon>
+      <Stepper>
+        <section className={`flex-col-center ${styles.page_container}`}>
+          <section className={`flex-col-center ${styles.payment_status_wrapper}`}>
+            <ImageView src={bigIcon} alt={"status-icon"} imgSize={56} />
+            <h4 className={styles.payment_text}>{title}</h4>
+            <h2 className={styles.currency_text}>{"$ 707"}</h2>
+          </section>
+          <section className={`flex-col ${styles.payment_details_wrapper}`}>
+            <h4>Payment Details</h4>
+            <ul>{PAYMENT_DETAILS.map(renderPaymentDetails)}</ul>
+            <section className={`flex-sb-center ${styles.total}`}>
+              <h5>Total Payment</h5>
+              <h5>{"$ 707"}</h5>
+            </section>
+          </section>
+          <section className={`flex-sb-center ${styles.payment_helper_wrapper}`}>
+            <ImageView src={assets.ic_help} alt={"help-icon"} imgSize={48} />
+            <section className={`flex-col ${styles.helper_wrapper}`}>
+              <h4>Trouble With Your Payment?</h4>
+              <h5>Let us know on help center now!</h5>
+            </section>
+            <ImageView src={assets.ic_arrow_theme} alt={"right-arrow"} imgSize={20} />
+          </section>
         </section>
-      </section>
-      <section className={`flex-sb-center ${styles.payment_helper_wrapper}`}>
-        <ImageView src={assets.ic_help} alt={"help-icon"} imgSize={48} />
-        <section className={`flex-col ${styles.helper_wrapper}`}>
-          <h4>Trouble With Your Payment?</h4>
-          <h5>Let us know on help center now!</h5>
-        </section>
-        <ImageView src={assets.ic_arrow_theme} alt={"right-arrow"} imgSize={20} />
-      </section>
+      </Stepper>
     </BaseContainer>
   )
 }

@@ -1,12 +1,15 @@
 "use client"
 
-import {useState} from "react"
+import {useResize} from "@fanam-pkg/core-utils"
+import {Fragment, useState} from "react"
 import {IStepper} from "model"
+import {StepperProps} from "props"
 import {SIDE_BAR} from "utils"
 import styles from "./style.module.sass"
 
-export const Stepper = () => {
+export const Stepper = ({children}: StepperProps) => {
   const [selIndex, setSelIndex] = useState(3)
+  const {isDesktop} = useResize()
 
   const renderSideBar = ({title, description}: IStepper, index: number) => {
     const isLastStep = index < SIDE_BAR.length - 1
@@ -29,5 +32,16 @@ export const Stepper = () => {
     )
   }
 
-  return <nav className={`flex-col ${styles.nav_container}`}>{SIDE_BAR.map(renderSideBar)}</nav>
+  return (
+    <Fragment>
+      {isDesktop ? (
+        <section className={`${styles.wrapper}`}>
+          <nav className={`flex-col ${styles.nav_container}`}>{SIDE_BAR.map(renderSideBar)}</nav>
+          <section style={{width: "70%"}}>{children}</section>
+        </section>
+      ) : (
+        <section>{children}</section>
+      )}
+    </Fragment>
+  )
 }
