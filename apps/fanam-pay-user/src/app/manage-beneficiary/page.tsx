@@ -9,7 +9,7 @@ import styles from "./page.module.sass"
 const ManageBeneficiary = () => {
   const {push} = useRouter()
   const onNav = () => push(ROUTE_ADD_BENEFICIARY)
-  const beneficiaryDeatil = useBeneficiary(BENEFICIARY_LIST)
+  const beneficiaries = useBeneficiary(BENEFICIARY_LIST)
 
   return (
     <BaseContainer
@@ -18,7 +18,7 @@ const ManageBeneficiary = () => {
       childWrapper={styles.page_container}
       onClick={onNav}
       backIcon>
-      <ManageMembers recipients={beneficiaryDeatil} title="Saved Recipients" placeHolderName="Search beneficiary..." />
+      <ManageMembers recipients={beneficiaries} title="Saved Recipients" placeHolderName="Search beneficiary..." />
     </BaseContainer>
   )
 }
