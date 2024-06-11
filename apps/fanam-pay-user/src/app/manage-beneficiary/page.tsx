@@ -1,15 +1,12 @@
 "use client"
 
-import {useRouter} from "next/navigation"
 import {BaseContainer, ManageMembers} from "organisms"
-import {BENEFICIARY_LIST, ROUTE_ADD_BENEFICIARY} from "utils"
+import {BENEFICIARY_LIST} from "utils"
 import {useBeneficiary} from "./handler"
 import styles from "./page.module.sass"
 
 const ManageBeneficiary = () => {
-  const {push} = useRouter()
-  const onNav = () => push(ROUTE_ADD_BENEFICIARY)
-  const beneficiaries = useBeneficiary(BENEFICIARY_LIST)
+  const {beneficiaries, onNav} = useBeneficiary(BENEFICIARY_LIST)
 
   return (
     <BaseContainer

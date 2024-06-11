@@ -1,15 +1,12 @@
 "use client"
 
-import {useRouter} from "next/navigation"
 import {BaseContainer, ManageMembers} from "organisms"
-import {RECIPIENT_LIST, ROUTE_ADD_RECEPIENT} from "utils"
+import {RECIPIENT_LIST} from "utils"
 import {useRecipient} from "./handler"
 import styles from "./page.module.sass"
 
 const ManageRecipient = () => {
-  const {push} = useRouter()
-  const onNav = () => push(ROUTE_ADD_RECEPIENT)
-  const {manageRecipients} = useRecipient(RECIPIENT_LIST)
+  const {recipients, onNav} = useRecipient(RECIPIENT_LIST)
 
   return (
     <BaseContainer
@@ -18,7 +15,7 @@ const ManageRecipient = () => {
       onClick={onNav}
       childWrapper={styles.page_container}
       backIcon>
-      <ManageMembers recipients={manageRecipients} title="Saved Recipients" placeHolderName="Search Recipients..." />
+      <ManageMembers recipients={recipients} title="Saved Recipients" placeHolderName="Search Recipients..." />
     </BaseContainer>
   )
 }
