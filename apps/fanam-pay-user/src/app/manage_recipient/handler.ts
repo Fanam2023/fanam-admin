@@ -1,10 +1,10 @@
 import {useMemo} from "react"
 
 export const useRecipient = RECIPIENT_LIST => {
-  const recipients = useMemo(
+  const manageRecipients = useMemo(
     () => RECIPIENT_LIST.map(({name, accountNumber}) => ({title: name, description: accountNumber})),
     [RECIPIENT_LIST]
   )
 
-  return recipients
+  return manageRecipients
 }

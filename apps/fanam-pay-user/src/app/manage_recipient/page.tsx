@@ -9,7 +9,7 @@ import styles from "./page.module.sass"
 const ManageRecipient = () => {
   const {push} = useRouter()
   const onNav = () => push(ROUTE_ADD_RECEPIENT)
-  const {recipients} = useRecipient(RECIPIENT_LIST)
+  const {manageRecipients} = useRecipient(RECIPIENT_LIST)
 
   return (
     <BaseContainer
@@ -18,7 +18,7 @@ const ManageRecipient = () => {
       onClick={onNav}
       childWrapper={styles.page_container}
       backIcon>
-      <ManageMembers recipients={recipients} title="Saved Recipients" placeHolderName="Search Recipients..." />
+      <ManageMembers recipients={manageRecipients} title="Saved Recipients" placeHolderName="Search Recipients..." />
     </BaseContainer>
   )
 }
