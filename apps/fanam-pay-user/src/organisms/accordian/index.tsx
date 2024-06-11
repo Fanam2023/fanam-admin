@@ -1,3 +1,5 @@
+"use client"
+
 import {ImageView} from "@fanam-pkg/core-ui-sass"
 import {useState} from "react"
 import assets from "assets"

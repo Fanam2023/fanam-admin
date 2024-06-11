@@ -1,4 +1,8 @@
 @use "../../styles/index" as *
+.page_container
+  margin-left: 20%
+  overflow-y: scroll
+
 .title_wrapper
   margin-top: $size-24px
 
@@ -25,5 +29,10 @@
   display: none
 
 @include mixin-responsive
-.card_wrapper
-  gap: $size-12px
+  .page_container
+    margin: 0 12% 0 12%
+    width: 100%
+    overflow-y: scroll
+
+  .card_wrapper
+    gap: $size-12px
