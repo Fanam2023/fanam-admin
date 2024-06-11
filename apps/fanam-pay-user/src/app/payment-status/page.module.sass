@@ -14,6 +14,9 @@
   margin-top: $size-8px
 
 .page_container
+  width: 80%
+
+.page_wrapper
   margin: $size-56px 0
   gap: $size-16px
 
@@ -50,9 +53,16 @@
 .receipt_text
   text-decoration: underline
   color: $primary
+  cursor: pointer
+  margin:
+    left: 25%
+    top: $size-10px
 
 @include mixin-responsive
   .page_container
+    @include mobile_width
+
+  .page_wrapper
     padding: 0 $size-32px $size-32px $size-32px
     gap: $size-20px
 

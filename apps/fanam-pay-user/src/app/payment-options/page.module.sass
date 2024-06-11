@@ -1,4 +1,5 @@
 @use "../../styles/index" as *
+
 .page_wrapper
   margin-left: $size-32px
   max-height: 100vh
@@ -37,6 +38,9 @@
   color: $primary
 
 @include mixin-responsive
+  .page_container
+    width: 100%
+
   .page_wrapper
     margin-left: 0
 

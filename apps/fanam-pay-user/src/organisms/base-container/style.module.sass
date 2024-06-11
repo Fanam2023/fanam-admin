@@ -1,5 +1,6 @@
 @use "../../styles/index" as *
-@include mixin-responsive
+@mixin common-style
+  color: $dark-border-grey
 
 .header_wrapper
   padding: $size-14px $size-14px
@@ -22,6 +23,87 @@
 
 .button_wrapper
   width: 75%
-  position: absolute
   bottom: $size-16px
   box-shadow: $size-6px $size-6px $size-10px $medium-grey
+
+.main_wrapper
+  display: flex
+  height: 100vh
+
+.wrapper
+  display: flex
+
+.nav_container
+  width: 18%
+  max-height: 100vh
+  background: $primary-fill
+  overflow-y: scroll
+  padding: $size-48px $size-24px
+  z-index: 1
+
+.content_wrapper
+  display: flex
+  gap: $size-16px
+
+.content
+  gap: $size-2px
+  margin-bottom: $size-28px
+
+.progress_bar
+  width: $size-2px
+  height: 100%
+  background: $dark-border-grey
+  position: absolute
+  top: 0
+  left: 50%
+  transform: translateX(-50%,-50%)
+  transition: height 0.8s ease-in-out, background-color 0.8s ease-in-out
+
+.stepper_container
+  position: relative
+
+.stepper
+  color: $white
+  border-radius: 50%
+  padding: $size-6px $size-6px
+  width: $size-20px
+  height: $size-20px
+  background: $dark-border-grey
+  text-align: center
+  z-index: 1
+  transition: height 0.8s ease-in-out, background-color 0.8s ease-in-out
+
+.active
+  background: $primary
+  color: $white
+
+.progress_bar_completed
+  background: $primary
+
+.active_title
+  color: $black
+  font-weight: $semi-bold
+
+.inactive_title
+  @include common-style
+
+.active_desc
+  color: $black
+
+.inactive_desc
+  @include common-style
+
+@include mixin-responsive
+
+  .footer_wrapper
+    position: fixed
+    bottom: 0
+    left: 0
+    padding: $size-14px $size-48px $size-14px $size-48px
+    border-top: $size-1px solid $dark-border-grey
+    box-shadow: 0 -1px $size-6px $dark-border-grey
+    background: $white
+
+  .button_wrapper
+    width: 75%
+    box-shadow: $size-6px $size-6px $size-10px $medium-grey
