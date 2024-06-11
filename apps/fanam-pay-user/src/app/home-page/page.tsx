@@ -9,9 +9,9 @@ import styles from "./page.module.sass"
 
 const HomePage = () => {
   const {push} = useRouter()
-  const goToAddAttachment = () => push(ROUTE_ATTACHMENT)
+  const onAdd = () => push(ROUTE_ATTACHMENT)
   return (
-    <BaseContainer header="Cross Border Remittance" buttonText="Confirm" onClick={goToAddAttachment}>
+    <BaseContainer header="Cross Border Remittance" buttonText="Confirm" onClick={onAdd}>
       <section className={styles.container_wrapper}>
         <h4>Select recipient type</h4>
         <section className={`flex ${styles.button_container}`}>

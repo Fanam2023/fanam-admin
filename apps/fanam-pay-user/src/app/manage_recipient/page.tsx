@@ -2,17 +2,18 @@
 
 import {useRouter} from "next/navigation"
 import {BaseContainer, ManageMembers} from "organisms"
-import {RECIPIENT_LIST, ROUTE_RECIPIENT} from "utils"
+import {RECIPIENT_LIST, ROUTE_ADD_RECEPIENT} from "utils"
 import styles from "./page.module.sass"
 
 const ManageRecipient = () => {
   const {push} = useRouter()
-  const goToRecipientDetails = () => push(ROUTE_RECIPIENT)
+  const onNav = () => push(ROUTE_ADD_RECEPIENT)
+
   return (
     <BaseContainer
       header={"Manage Recipients"}
       addButton="Add"
-      onClick={goToRecipientDetails}
+      onClick={onNav}
       childWrapper={styles.page_container}
       backIcon>
       <ManageMembers

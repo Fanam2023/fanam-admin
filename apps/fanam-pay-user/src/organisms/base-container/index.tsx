@@ -17,12 +17,10 @@ export const BaseContainer = ({
 }: BaseConatinerProps) => {
   const {back} = useRouter()
   const goBack = () => {
-    if (onBack) {
-      onBack()
-    } else {
-      back()
-    }
+    if (onBack) onBack()
+    else back()
   }
+
   return (
     <section>
       <header className={`flex-sb-center ${styles.header_wrapper}`}>

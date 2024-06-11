@@ -4,16 +4,16 @@ import {ImageView} from "@fanam-pkg/core-ui-sass"
 import {useRouter} from "next/navigation"
 import assets from "assets"
 import {BaseContainer} from "organisms"
-import {ROUTE_PAYMENTOPTIONS} from "utils"
+import {ROUTE_PAYMENT} from "utils"
 import RecipientCard from "./recipient-card/page"
 import styles from "./review.module.sass"
 
 const ReviewDetails = () => {
   const {push} = useRouter()
-  const goToPaymentOptions = () => push(ROUTE_PAYMENTOPTIONS)
+  const onPayment = () => push(ROUTE_PAYMENT)
 
   return (
-    <BaseContainer header="Review Recipient Details" buttonText="Confirm" onClick={goToPaymentOptions} backIcon>
+    <BaseContainer header="Review Recipient Details" buttonText="Confirm" onClick={onPayment} backIcon>
       <section className={`flex-col-center`}>
         <RecipientCard />
         <section className={`flex`}>

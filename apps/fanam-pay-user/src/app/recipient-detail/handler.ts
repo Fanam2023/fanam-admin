@@ -1,7 +1,12 @@
 import {JSONObject} from "@fanam-pkg/core-utils"
+import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
+import {ROUTE_BENEFICIARIES} from "utils"
 
 const useCreateReciptent = (onSuccess: (message: string) => void, onFailure: (message: string) => void) => {
+  const {push} = useRouter()
+  const goToManageBeneficiary = () => push(ROUTE_BENEFICIARIES)
+
   const [data, setData] = useState({
     name: "",
     country_name: "",
@@ -74,6 +79,7 @@ const useCreateReciptent = (onSuccess: (message: string) => void, onFailure: (me
     errState,
     onChangeValue,
     onSubmit,
+    goToManageBeneficiary,
     data,
   }
 }

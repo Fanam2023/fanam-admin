@@ -1,18 +1,14 @@
 "use client"
 
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
-import {useRouter} from "next/navigation"
 import assets from "assets"
 import {BaseContainer} from "organisms"
 import {AddAttachmentProps} from "props"
-import {ROUTE_MRECIPIENT} from "utils"
 import {useAddAttachment} from "./handler"
 import styles from "./style.module.sass"
 
 const AddAttachment = () => {
-  const {selFiles, fileInputRef, onRemove, onBrowse, onAttachment} = useAddAttachment()
-  const {push} = useRouter()
-  const goToManageRecipient = () => push(ROUTE_MRECIPIENT)
+  const {selFiles, fileInputRef, onRemove, onBrowse, onAttachment, onUpload} = useAddAttachment()
 
   const renderAddAttachments = ({name, size}: AddAttachmentProps, index: number) => (
     <li className={`flex-sb-center ${styles.file_wrapper}`} key={index}>
@@ -28,7 +24,7 @@ const AddAttachment = () => {
   )
 
   return (
-    <BaseContainer header="Upload Documents" buttonText="Continue" onClick={goToManageRecipient} backIcon>
+    <BaseContainer header="Upload Documents" buttonText="Continue" onClick={onUpload} backIcon>
       <section className={`flex-col-center ${styles.layout_wrapper}`}>
         <section>
           <section className={styles.title_wrapper}>

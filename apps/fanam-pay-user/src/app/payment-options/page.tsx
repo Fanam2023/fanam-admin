@@ -6,7 +6,7 @@ import assets from "assets"
 import {Accordian, BaseContainer} from "organisms"
 import {FooterPayment} from "organisms/base-container/footer-payment"
 import {BankCartProps, BankListProps, PaymentDataProps} from "props"
-import {ROUTE_PAYMENTSTATUS} from "utils"
+import {ROUTE_PAYMENT_STATUS} from "utils"
 import styles from "./page.module.sass"
 
 const LIST_OF_BANK: BankListProps[] = [
@@ -81,7 +81,8 @@ const renderCart = ({icon, bankName, cartType}: BankCartProps, index: number) =>
 
 const PaymentOptions = () => {
   const {push} = useRouter()
-  const goToPaymentStatus = () => push(ROUTE_PAYMENTSTATUS)
+  const onSuccess = () => push(ROUTE_PAYMENT_STATUS)
+
   return (
     <BaseContainer
       header="Payment options"
@@ -89,7 +90,7 @@ const PaymentOptions = () => {
         <FooterPayment senderAmount="Rs. 5388.00" reciverName="Varshini receives" recivableAmt="$707.00" button="Pay" />
       }
       backIcon
-      onClick={goToPaymentStatus}>
+      onClick={onSuccess}>
       <Accordian
         title={"Bank Account"}
         leadingIcon={assets.ic_account}

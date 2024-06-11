@@ -1,17 +1,12 @@
 "use client"
 
 import {FormSectionProps, GroupForm} from "@fanam-pkg/core-ui-sass"
-import {useRouter} from "next/navigation"
 import {BaseContainer} from "organisms"
-import {ROUTE_REVIEW} from "utils"
 import styles from "./beneficiary.module.sass"
 import useBeneficiary from "./handler"
 
 const BenificiaryDetail = () => {
-  const {push} = useRouter()
-  const goToReview = () => push(ROUTE_REVIEW)
-
-  const {errState, onChangeValue, data, onSubmit} = useBeneficiary(
+  const {errState, onChangeValue, data, onReview, onSubmit} = useBeneficiary(
     message => console.log(message),
     message => console.log(message)
   )
@@ -90,7 +85,7 @@ const BenificiaryDetail = () => {
   ]
 
   return (
-    <BaseContainer buttonText="Submit" header="Benificiary Details" onClick={goToReview} backIcon>
+    <BaseContainer buttonText="Submit" header="Benificiary Details" onClick={onReview} backIcon>
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
     </BaseContainer>
   )
