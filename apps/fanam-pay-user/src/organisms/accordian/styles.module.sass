@@ -1,17 +1,13 @@
 @use "../../styles/index" as *
-
-@include mixin-responsive
-
 .container
   position: relative
-  width: 100%
   height: auto
-  padding: $size-40px 0
+  padding: $size-40px
 
 .tag_wrapper
   position: absolute
-  top: $size-16px
-  right: $size-20px
+  top: 27%
+  left: 27%
   background: $primary
   padding: $size-4px
   color: $white
@@ -33,4 +29,13 @@
 
 .open
   max-height: 50%
-  overflow-x: scroll
+  overflow-y: scroll
+
+@include mixin-responsive
+  .container
+    width: 100%
+    padding: $size-40px 0
+
+  .tag_wrapper
+    top: $size-16px
+    left: 66%

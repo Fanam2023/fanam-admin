@@ -1,4 +1,8 @@
 @use "../../styles/index" as *
-
 .page_container
   padding: $size-12px $size-24px
+  width: 80%
+
+@include mixin-responsive
+  .page_container
+    width: 100%

@@ -48,4 +48,5 @@ const HomePage = () => {
     </BaseContainer>
   )
 }
+
 export default HomePage

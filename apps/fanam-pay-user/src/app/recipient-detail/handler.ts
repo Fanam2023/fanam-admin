@@ -5,7 +5,7 @@ import {ROUTE_BENEFICIARIES} from "utils"
 
 const useCreateReciptent = (onSuccess: (message: string) => void, onFailure: (message: string) => void) => {
   const {push} = useRouter()
-  const goToManageBeneficiary = () => push(ROUTE_BENEFICIARIES)
+  const onAdd = () => push(ROUTE_BENEFICIARIES)
 
   const [data, setData] = useState({
     name: "",
@@ -79,7 +79,7 @@ const useCreateReciptent = (onSuccess: (message: string) => void, onFailure: (me
     errState,
     onChangeValue,
     onSubmit,
-    goToManageBeneficiary,
+    onAdd,
     data,
   }
 }

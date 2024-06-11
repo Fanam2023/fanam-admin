@@ -86,6 +86,7 @@ const PaymentOptions = () => {
   return (
     <BaseContainer
       header="Payment options"
+      childWrapper={styles.page_container}
       footerChild={
         <FooterPayment senderAmount="Rs. 5388.00" reciverName="Varshini receives" recivableAmt="$707.00" button="Pay" />
       }
