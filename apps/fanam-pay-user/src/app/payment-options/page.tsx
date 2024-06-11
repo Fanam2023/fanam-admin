@@ -1,10 +1,12 @@
 "use client"
 
 import {ImageView} from "@fanam-pkg/core-ui-sass"
+import {useRouter} from "next/navigation"
 import assets from "assets"
 import {Accordian, BaseContainer} from "organisms"
 import {FooterPayment} from "organisms/base-container/footer-payment"
 import {BankCartProps, BankListProps, PaymentDataProps} from "props"
+import {ROUTE_PAYMENTSTATUS} from "utils"
 import styles from "./page.module.sass"
 
 const LIST_OF_BANK: BankListProps[] = [
@@ -78,13 +80,16 @@ const renderCart = ({icon, bankName, cartType}: BankCartProps, index: number) =>
 )
 
 const PaymentOptions = () => {
+  const {push} = useRouter()
+  const goToPaymentStatus = () => push(ROUTE_PAYMENTSTATUS)
   return (
     <BaseContainer
       header="Payment options"
       footerChild={
         <FooterPayment senderAmount="Rs. 5388.00" reciverName="Varshini receives" recivableAmt="$707.00" button="Pay" />
       }
-      backIcon>
+      backIcon
+      onClick={goToPaymentStatus}>
       <Accordian
         title={"Bank Account"}
         leadingIcon={assets.ic_account}
@@ -101,13 +106,6 @@ const PaymentOptions = () => {
         <ul>{LIST_OF_CART.map(renderCart)}</ul>
       </Accordian>
       <Accordian title={"Borrow Money"} leadingIcon={assets.ic_lend_money} tailingIcon={false} />
-      <section className={styles.payment_container}>
-        <hr></hr>
-        <section className={`flex-center ${styles.payment_wrapper}`}>
-          <h4 className={styles.payment_text}>Payment Summary</h4>
-        </section>
-        <ul className={`flex-col ${styles.content_wrapper}`}>{PAYMENT_DATA.map(renderPayment)}</ul>
-      </section>
     </BaseContainer>
   )
 }

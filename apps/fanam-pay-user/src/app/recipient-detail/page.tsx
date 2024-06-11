@@ -1,11 +1,16 @@
 "use client"
 
 import {FormSectionProps, GroupForm} from "@fanam-pkg/core-ui-sass"
+import {useRouter} from "next/navigation"
 import {BaseContainer} from "organisms"
+import {ROUTE_MBENEFICIARY} from "utils"
 import useCreateReciptent from "./handler"
 import styles from "./page.module.sass"
 
 const RecipientDetail = () => {
+  const {push} = useRouter()
+  const goToManageBeneficiary = () => push(ROUTE_MBENEFICIARY)
+
   const {errState, onChangeValue, data, onSubmit} = useCreateReciptent(
     message => console.log(message),
     message => console.log(message)
@@ -70,7 +75,7 @@ const RecipientDetail = () => {
   ]
 
   return (
-    <BaseContainer buttonText="Submit" header="Reciptent Details" backIcon>
+    <BaseContainer buttonText="Submit" header="Reciptent Details" onClick={goToManageBeneficiary} backIcon>
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
     </BaseContainer>
   )

@@ -1,14 +1,6 @@
 import assets from "assets"
 import {IBeneficiary, IRecipients, IStepper} from "model"
-import {BottomNavbarProps, RecipientPreviewProps} from "props"
-import {ROUTE_HISTORY, ROUTE_HOME, ROUTE_PROFILE} from "./route"
-
-export const BOTTOM_TABS: BottomNavbarProps[] = [
-  {icon: assets.ic_calendar, name: "Home", path: ROUTE_HOME},
-  {icon: assets.ic_camera, name: "History", path: ROUTE_HISTORY},
-  {icon: assets.ic_location, name: "Setting", path: ""},
-  {icon: assets.ic_profile, name: "Profile", path: ROUTE_PROFILE},
-]
+import {RecipientPreviewProps} from "props"
 
 export const RECIPIENTDETAILS: RecipientPreviewProps[] = [
   {label: "Name", value: "Ragul"},
