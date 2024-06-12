@@ -1,16 +1,14 @@
 "use client"
 
 import {ImageView} from "@fanam-pkg/core-ui-sass"
-import {useRouter} from "next/navigation"
 import assets from "assets"
 import {BaseContainer} from "organisms"
-import {ROUTE_PAYMENT} from "utils"
+import {useReviewRecipient} from "./handler"
 import RecipientCard from "./recipient-card/page"
 import styles from "./review.module.sass"
 
 const ReviewDetails = () => {
-  const {push} = useRouter()
-  const onPayment = () => push(ROUTE_PAYMENT)
+  const {onPayment} = useReviewRecipient()
 
   return (
     <BaseContainer header="Review Recipient Details" buttonText="Confirm" onClick={onPayment} backIcon>
