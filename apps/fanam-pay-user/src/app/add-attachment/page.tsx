@@ -42,7 +42,6 @@ const AddAttachment = () => {
           <ul>{selFiles.map(renderAddAttachments)}</ul>
         </section>
       </section>
-      <ul>{selFiles.map(renderAddAttachments)}</ul>
     </BaseContainer>
   )
 }
