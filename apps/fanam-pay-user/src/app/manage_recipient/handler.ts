@@ -1,4 +1,4 @@
-import {useRouter} from "next/router"
+import {useRouter} from "next/navigation"
 import {useMemo} from "react"
 import {ROUTE_ADD_RECEPIENT} from "utils"
 
