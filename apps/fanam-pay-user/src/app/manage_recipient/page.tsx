@@ -1,12 +1,11 @@
 "use client"
 
 import {BaseContainer, ManageMembers} from "organisms"
-import {RECIPIENT_LIST} from "utils"
 import {useRecipient} from "./handler"
 import styles from "./page.module.sass"
 
 const ManageRecipient = () => {
-  const {recipients, onNav} = useRecipient(RECIPIENT_LIST)
+  const {recipients, onNav} = useRecipient()
 
   return (
     <BaseContainer
