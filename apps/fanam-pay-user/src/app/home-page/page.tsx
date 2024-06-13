@@ -1,15 +1,14 @@
 "use client"
 
 import {DropDown, ImageView, RadioButton, TextField} from "@fanam-pkg/core-ui-sass"
-import {useRouter} from "next/navigation"
 import assets from "assets"
 import {BaseContainer} from "organisms"
-import {ROUTE_ATTACHMENT} from "utils"
+import {useHome} from "./handler"
 import styles from "./page.module.sass"
 
 const HomePage = () => {
-  const {push} = useRouter()
-  const onAdd = () => push(ROUTE_ATTACHMENT)
+  const {onAdd} = useHome()
+
   return (
     <BaseContainer header="Cross Border Remittance" buttonText="Confirm" onClick={onAdd}>
       <section className={styles.container_wrapper}>

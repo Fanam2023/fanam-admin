@@ -1,8 +1,8 @@
 import {useRouter} from "next/navigation"
 import {useMemo} from "react"
-import {ROUTE_ADD_RECEPIENT} from "utils"
+import {RECIPIENT_LIST, ROUTE_ADD_RECEPIENT} from "utils"
 
-export const useRecipient = RECIPIENT_LIST => {
+export const useRecipient = () => {
   const {push} = useRouter()
   const onNav = () => push(ROUTE_ADD_RECEPIENT)
 

@@ -1,12 +1,11 @@
 "use client"
 
 import {ImageView} from "@fanam-pkg/core-ui-sass"
-import {useRouter} from "next/navigation"
 import assets from "assets"
 import {Accordian, BaseContainer} from "organisms"
 import {FooterPayment} from "organisms/base-container/footer-payment"
 import {BankCartProps, BankListProps, PaymentDataProps} from "props"
-import {ROUTE_PAYMENT_STATUS} from "utils"
+import {usePayment} from "./handler"
 import styles from "./page.module.sass"
 
 const LIST_OF_BANK: BankListProps[] = [
@@ -80,8 +79,7 @@ const renderCart = ({icon, bankName, cartType}: BankCartProps, index: number) =>
 )
 
 const PaymentOptions = () => {
-  const {push} = useRouter()
-  const onSuccess = () => push(ROUTE_PAYMENT_STATUS)
+  const {onSuccess} = usePayment()
 
   return (
     <BaseContainer
