@@ -17,6 +17,7 @@ export interface BaseConatinerProps {
   onClick?: () => void
   backIcon?: boolean
   onBack?: () => void
+  skipBtn?: string
 }
 
 export interface FooterPaymentProps {

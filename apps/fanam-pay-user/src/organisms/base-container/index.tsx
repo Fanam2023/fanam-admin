@@ -20,6 +20,7 @@ export const BaseContainer = ({
   onBack,
   childWrapper = "",
   backIcon,
+  skipBtn,
 }: BaseConatinerProps) => {
   const {back} = useRouter()
   const goBack = () => {
@@ -62,12 +63,21 @@ export const BaseContainer = ({
       </header>
       <section className={`${childWrapper} ${styles.container_wrapper}`}>{children}</section>
       {(buttonText || footerChild) && (
-        <footer className={`flex-col-center ${styles.footer_wrapper}`}>
-          {!!buttonText && (
-            <Button onClick={onClick} wrapperClass={styles.button_wrapper}>
-              {buttonText}
-            </Button>
-          )}
+        <footer className={styles.footer_wrapper}>
+          <section className={`flex ${styles.footer_content}`}>
+            {!!buttonText && (
+              <>
+                {skipBtn && (
+                  <Button onClick={onClick} wrapperClass={styles.skip_btn} buttonType="primary-outlined">
+                    {skipBtn}
+                  </Button>
+                )}
+                <Button onClick={onClick} wrapperClass={styles.button_wrapper}>
+                  {buttonText}
+                </Button>
+              </>
+            )}
+          </section>
           {footerChild}
         </footer>
       )}

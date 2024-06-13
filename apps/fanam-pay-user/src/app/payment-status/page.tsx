@@ -77,7 +77,12 @@ const PaymentStatus = () => {
   const DownloadReceipt = () => <h6 className={styles.receipt_text}>Download Receipt</h6>
 
   return (
-    <BaseContainer buttonText="Done" footerChild={DownloadReceipt()} childWrapper={styles.page_container} backIcon>
+    <BaseContainer
+      buttonText="Done"
+      footerChild={DownloadReceipt()}
+      childWrapper={styles.page_container}
+      backIcon
+      skipBtn="Download Receipt">
       <section className={`flex-col-center ${styles.page_wrapper}`}>
         <section className={`flex-col-center ${styles.payment_status_wrapper}`}>
           <ImageView src={bigIcon} alt={"status-icon"} imgSize={56} />
