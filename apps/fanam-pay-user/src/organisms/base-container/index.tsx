@@ -2,12 +2,11 @@
 
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils/src/hooks"
-import {useRouter} from "next/navigation"
-import {useState} from "react"
 import assets from "assets"
 import {IStepper} from "model"
 import {BaseConatinerProps} from "props"
 import {SIDE_BAR} from "utils"
+import {useBaseContainer} from "./handler"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({
@@ -22,13 +21,7 @@ export const BaseContainer = ({
   backIcon,
   skipBtn,
 }: BaseConatinerProps) => {
-  const {back} = useRouter()
-  const goBack = () => {
-    if (onBack) onBack()
-    else back()
-  }
-
-  const [selIndex, setSelIndex] = useState(3)
+  const {goBack, selIndex} = useBaseContainer()
   const {isDesktop} = useResize()
 
   const renderSideBar = ({title, description}: IStepper, index: number) => {
@@ -56,7 +49,7 @@ export const BaseContainer = ({
     <section>
       <header className={`flex-sb-center ${styles.header_wrapper}`}>
         <section className={`flex ${styles.label_wrapper}`}>
-          {!!backIcon && <ImageView src={assets.ic_back} alt="back_icon" imgSize={24} onClick={goBack} />}
+          {!!backIcon && <ImageView src={assets.ic_back} alt="back_icon" imgSize={24} onClick={goBack || onBack} />}
           <h3>{header}</h3>
         </section>
         {!!addButton && <h3 onClick={onClick}>{addButton}</h3>}

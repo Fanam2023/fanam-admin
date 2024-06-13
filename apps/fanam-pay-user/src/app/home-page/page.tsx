@@ -25,13 +25,11 @@ const HomePage = () => {
         <h4 className={styles.conversion_text}>Conversion Estimate</h4>
         <section className={styles.conversion_container}>
           <section className={`flex-col ${styles.container}`}>
-            <section>
-              <h4>You Send</h4>
-              <section className={`flex ${styles.input_container}`}>
-                <ImageView src={assets.ic_india_flag} alt="country_flag" imgSize={40} />
-                <h3>INR</h3>
-                <TextField wrapperClass={styles.text_field_wrapper} />
-              </section>
+            <h4>You Send</h4>
+            <section className={`flex ${styles.input_container}`}>
+              <ImageView src={assets.ic_india_flag} alt="country_flag" imgSize={40} />
+              <h3>INR</h3>
+              <TextField wrapperClass={styles.text_field_wrapper} />
             </section>
             <section>
               <h4>Recipient receives</h4>
