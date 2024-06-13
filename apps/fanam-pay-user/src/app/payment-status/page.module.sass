@@ -15,6 +15,7 @@
 
 .page_container
   width: 80%
+  overflow-y: scroll
 
 .page_wrapper
   margin: $size-56px 0
@@ -51,12 +52,7 @@
   @include common-margin
 
 .receipt_text
-  text-decoration: underline
-  color: $primary
-  cursor: pointer
-  margin:
-    left: 25%
-    top: $size-10px
+  display: none
 
 @include mixin-responsive
   .page_container
@@ -74,3 +70,12 @@
 
   .payment_helper_wrapper
     @include mobile_width
+
+  .receipt_text
+    display: block
+    text-decoration: underline
+    color: $primary
+    cursor: pointer
+    margin:
+      left: 34%
+      top: $size-10px

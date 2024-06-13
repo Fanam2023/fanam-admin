@@ -1,15 +1,33 @@
 @use "../../../styles/index" as *
-@include mixin-responsive
 
 .footer_wrapper
-  padding: $size-16px
+  padding:
+    left: 28%
   background-color: $white
-  box-shadow: $size-8px 0 $size-24px $medium-grey
-  position: fixed
-  bottom: 0
-  left: 0
-  width: 100vw
-  z-index: 100
+  width: 65vw
+
+  section
+    display: flex
+    flex-direction: column
+    align-items: center
+
+  &::after
+    content: ''
+    position: absolute
+    top: 50%
+    left: 48%
+    transform: translateY(-50%)
+    height: 80%
+    background-color: transparent
+    border-right: $size-2px dotted $darker-grey
 
 .amt_wrapper
   color: var(--primary)
+
+@include mixin-responsive
+  .footer_wrapper
+    padding-left: 0
+    width: 93vw
+
+    &::after
+      left: calc(50% - 24%)

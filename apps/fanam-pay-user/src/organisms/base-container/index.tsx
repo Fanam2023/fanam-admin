@@ -18,6 +18,7 @@ export const BaseContainer = ({
   onClick,
   childWrapper = "",
   backIcon,
+  skipBtn,
 }: BaseConatinerProps) => {
   const [selIndex, setSelIndex] = useState(3)
   const {isDesktop} = useResize()
@@ -64,11 +65,20 @@ export const BaseContainer = ({
       </section>
       {(buttonText || footerChild) && (
         <footer className={styles.footer_wrapper}>
-          {!!buttonText && (
-            <Button onClick={onClick} wrapperClass={styles.button_wrapper}>
-              {buttonText}
-            </Button>
-          )}
+          <section className={`flex ${styles.footer_content}`}>
+            {!!buttonText && (
+              <>
+                {skipBtn && (
+                  <Button onClick={onClick} wrapperClass={styles.skip_btn} buttonType="primary-outlined">
+                    {skipBtn}
+                  </Button>
+                )}
+                <Button onClick={onClick} wrapperClass={styles.button_wrapper}>
+                  {buttonText}
+                </Button>
+              </>
+            )}
+          </section>
           {footerChild}
         </footer>
       )}
