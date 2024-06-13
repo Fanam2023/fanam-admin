@@ -15,16 +15,25 @@
   position: fixed
   width: 100vw
   bottom: 0
-  left: 0
-  height: 10%
   border-top: $size-1px solid $dark-border-grey
   box-shadow: 0 -1px $size-6px $dark-border-grey
   background: $white
+  padding: $size-16px $size-16px
+
+.footer_content
+  justify-content: flex-end
 
 .button_wrapper
-  width: 75%
-  bottom: $size-16px
+  width: 8%
   box-shadow: $size-6px $size-6px $size-10px $medium-grey
+  margin-right: $size-32px
+  height: $size-40px
+
+.skip_btn
+  width: 8%
+  box-shadow: $size-6px $size-6px $size-10px $medium-grey
+  margin-right: $size-32px
+  height: $size-40px
 
 .main_wrapper
   display: flex
@@ -99,11 +108,18 @@
     position: fixed
     bottom: 0
     left: 0
-    padding: $size-14px $size-48px $size-14px $size-48px
     border-top: $size-1px solid $dark-border-grey
     box-shadow: 0 -1px $size-6px $dark-border-grey
     background: $white
 
+  .footer_content
+    justify-content: center
+    align-items: center
+
+  .skip_btn
+    display: none
+
   .button_wrapper
+    display: block
     width: 75%
     box-shadow: $size-6px $size-6px $size-10px $medium-grey
