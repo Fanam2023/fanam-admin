@@ -6,7 +6,7 @@ import useCreateReciptent from "./handler"
 import styles from "./page.module.sass"
 
 const RecipientDetail = () => {
-  const {errState, onChangeValue, data, onSubmit} = useCreateReciptent(
+  const {errState, onChangeValue, onAdd, data, onSubmit} = useCreateReciptent(
     message => console.log(message),
     message => console.log(message)
   )
@@ -70,7 +70,7 @@ const RecipientDetail = () => {
   ]
 
   return (
-    <BaseContainer buttonText="Submit" header="Reciptent Details" backIcon>
+    <BaseContainer buttonText="Submit" header="Reciptent Details" onClick={onAdd} backIcon>
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
     </BaseContainer>
   )

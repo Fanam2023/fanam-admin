@@ -8,7 +8,7 @@ import {useAddAttachment} from "./handler"
 import styles from "./style.module.sass"
 
 const AddAttachment = () => {
-  const {selFiles, fileInputRef, onRemove, onBrowse, onAttachment} = useAddAttachment()
+  const {selFiles, fileInputRef, onRemove, onBrowse, onAttachment, onUpload} = useAddAttachment()
 
   const renderAddAttachments = ({name, size}: AddAttachmentProps, index: number) => (
     <li className={`flex-sb-center ${styles.file_wrapper}`} key={index}>
@@ -27,9 +27,9 @@ const AddAttachment = () => {
     <BaseContainer
       header="Upload Documents"
       buttonText="Continue"
-      childWrapper={`${styles.page_container}`}
+      onClick={onUpload}
       backIcon
-      skipBtn="skip">
+      childWrapper={`flex-col-center ${styles.layout_wrapper}`}>
       <section className={styles.title_wrapper}>
         <h4>Upload Supporting Documents(optional)</h4>
         <h5 className={styles.type_wrapper}>JPG, PNG and PDF Files Up to 1MB</h5>

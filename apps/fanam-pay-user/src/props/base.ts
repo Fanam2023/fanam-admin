@@ -16,6 +16,7 @@ export interface BaseConatinerProps {
   childWrapper?: string
   onClick?: () => void
   backIcon?: boolean
+  onBack?: () => void
   skipBtn?: string
 }
 

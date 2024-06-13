@@ -6,7 +6,7 @@ import styles from "./beneficiary.module.sass"
 import useBeneficiary from "./handler"
 
 const BenificiaryDetail = () => {
-  const {errState, onChangeValue, data, onSubmit} = useBeneficiary(
+  const {errState, onChangeValue, data, onReview, onSubmit} = useBeneficiary(
     message => console.log(message),
     message => console.log(message)
   )
@@ -85,7 +85,7 @@ const BenificiaryDetail = () => {
   ]
 
   return (
-    <BaseContainer buttonText="Submit" header="Benificiary Details" backIcon>
+    <BaseContainer buttonText="Submit" header="Benificiary Details" onClick={onReview} backIcon>
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
     </BaseContainer>
   )
