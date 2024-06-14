@@ -3,6 +3,7 @@ export interface ManageMembersProps {
   recipients: MemberProps[]
   placeHolderName: string
   onChangeSearch?: () => void
+  onAddButton: () => void
 }
 
 export interface MemberProps {
