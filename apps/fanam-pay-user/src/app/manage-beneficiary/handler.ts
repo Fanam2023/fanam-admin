@@ -12,14 +12,9 @@ export const useBeneficiary = () => {
     [BENEFICIARY_LIST]
   )
 
-  const handleAddButtonClick = () => {
-    setIsSliderVisible(true)
-  }
-
   return {
     beneficiaries,
     onNav,
-    handleAddButtonClick,
     isSliderVisible,
     setIsSliderVisible,
   }

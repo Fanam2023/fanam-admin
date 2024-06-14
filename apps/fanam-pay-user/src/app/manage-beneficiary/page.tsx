@@ -6,7 +6,7 @@ import {useBeneficiary} from "./handler"
 import styles from "./page.module.sass"
 
 const ManageBeneficiary = () => {
-  const {beneficiaries, onNav, handleAddButtonClick, isSliderVisible, setIsSliderVisible} = useBeneficiary()
+  const {beneficiaries, onNav, isSliderVisible, setIsSliderVisible} = useBeneficiary()
 
   return (
     <BaseContainer
@@ -22,7 +22,7 @@ const ManageBeneficiary = () => {
         recipients={beneficiaries}
         title="Saved Recipients"
         placeHolderName="Search beneficiary..."
-        onAddButton={handleAddButtonClick}
+        onAddButton={() => setIsSliderVisible(true)}
       />
     </BaseContainer>
   )

@@ -12,14 +12,9 @@ export const useRecipient = () => {
     [RECIPIENT_LIST]
   )
 
-  const handleAddButtonClick = () => {
-    setIsSliderVisible(true)
-  }
-
   return {
     recipients,
     onNav,
-    handleAddButtonClick,
     isSliderVisible,
     setIsSliderVisible,
   }
