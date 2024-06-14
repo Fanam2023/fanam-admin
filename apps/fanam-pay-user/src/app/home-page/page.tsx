@@ -10,7 +10,12 @@ const HomePage = () => {
   const {onAdd} = useHome()
 
   return (
-    <BaseContainer header="Cross Border Remittance" buttonText="Confirm" onClick={onAdd}>
+    <BaseContainer
+      header="Cross Border Remittance"
+      buttonText="Confirm"
+      onClick={onAdd}
+      childWrapper={styles.page_container}
+      backIcon={false}>
       <section className={styles.container_wrapper}>
         <h4>Select recipient type</h4>
         <section className={`flex ${styles.button_container}`}>

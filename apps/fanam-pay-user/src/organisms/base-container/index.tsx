@@ -18,7 +18,7 @@ export const BaseContainer = ({
   onClick,
   onBack,
   childWrapper = "",
-  backIcon,
+  backIcon = true,
   skipBtn,
 }: BaseConatinerProps) => {
   const {goBack, selIndex} = useBaseContainer()
@@ -49,12 +49,21 @@ export const BaseContainer = ({
     <section>
       <header className={`flex-sb-center ${styles.header_wrapper}`}>
         <section className={`flex ${styles.label_wrapper}`}>
-          {!!backIcon && <ImageView src={assets.ic_back} alt="back_icon" imgSize={24} onClick={goBack || onBack} />}
+          {backIcon && <ImageView src={assets.ic_back} alt="back_icon" imgSize={24} onClick={goBack || onBack} />}
           <h3>{header}</h3>
         </section>
         {!!addButton && <h3 onClick={onClick}>{addButton}</h3>}
       </header>
-      <section className={`${childWrapper} ${styles.container_wrapper}`}>{children}</section>
+      <section className={styles.main_wrapper}>
+        {isDesktop ? (
+          <>
+            <nav className={`flex-col ${styles.nav_container}`}>{SIDE_BAR.map(renderSideBar)}</nav>
+            <section className={childWrapper}>{children}</section>
+          </>
+        ) : (
+          <section className={childWrapper}>{children}</section>
+        )}
+      </section>
       {(buttonText || footerChild) && (
         <footer className={styles.footer_wrapper}>
           <section className={`flex ${styles.footer_content}`}>

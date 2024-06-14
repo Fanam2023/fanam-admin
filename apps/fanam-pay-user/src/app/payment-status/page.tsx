@@ -79,9 +79,9 @@ const PaymentStatus = () => {
   return (
     <BaseContainer
       buttonText="Done"
+      header="Payment Status"
       footerChild={DownloadReceipt()}
       childWrapper={styles.page_container}
-      backIcon
       skipBtn="Download Receipt">
       <section className={`flex-col-center ${styles.page_wrapper}`}>
         <section className={`flex-col-center ${styles.payment_status_wrapper}`}>
