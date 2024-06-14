@@ -1,6 +1,6 @@
 import assets from "assets"
 import {IBeneficiary, IRecipients, IStepper} from "model"
-import {RecipientPreviewProps} from "props"
+import {BankCartProps, BankListProps, RecipientPreviewProps} from "props"
 
 export const RECIPIENTDETAILS: RecipientPreviewProps[] = [
   {label: "Name", value: "Ragul"},
@@ -63,5 +63,41 @@ export const SIDE_BAR: IStepper[] = [
   {
     title: "Payment Status",
     description: "Get the payment status after sending the money.",
+  },
+]
+
+export const LIST_OF_BANK: BankListProps[] = [
+  {
+    icon: assets.img_bank,
+    bankName: "Axis Bank",
+    accountType: "Savings Account",
+  },
+  {
+    icon: assets.img_bank,
+    bankName: "Indian Bank",
+    accountType: "Savings Account",
+  },
+  {
+    icon: assets.img_bank,
+    bankName: "SBI",
+    accountType: "Current Account",
+  },
+]
+
+export const LIST_OF_CART: BankCartProps[] = [
+  {
+    icon: assets.img_bank,
+    bankName: "Axis Bank",
+    cartType: "Debit Card",
+  },
+  {
+    icon: assets.img_bank,
+    bankName: "Indian Bank",
+    cartType: "Debit Card",
+  },
+  {
+    icon: assets.img_bank,
+    bankName: "SBI",
+    cartType: "Credit Card",
   },
 ]
