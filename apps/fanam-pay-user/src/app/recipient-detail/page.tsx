@@ -1,11 +1,13 @@
 "use client"
 
 import {FormSectionProps, GroupForm} from "@fanam-pkg/core-ui-sass"
+import {useResize} from "@fanam-pkg/core-utils"
 import {BaseContainer} from "organisms"
 import useCreateReciptent from "./handler"
 import styles from "./page.module.sass"
 
 const RecipientDetail = () => {
+  const {isDesktop} = useResize()
   const {errState, onChangeValue, onAdd, data, onSubmit} = useCreateReciptent(
     message => console.log(message),
     message => console.log(message)
@@ -70,9 +72,13 @@ const RecipientDetail = () => {
   ]
 
   return (
-    <BaseContainer buttonText="Submit" header="Reciptent Details" onClick={onAdd}>
-      <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-    </BaseContainer>
+    <section>
+      {(isDesktop && <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />) || (
+        <BaseContainer buttonText="Submit" header="Reciptent Details" onClick={onAdd} backIcon>
+          <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
+        </BaseContainer>
+      )}
+    </section>
   )
 }
 
