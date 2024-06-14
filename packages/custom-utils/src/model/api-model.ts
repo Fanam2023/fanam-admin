@@ -20,11 +20,6 @@ export interface IFanamApiError<R> extends IFanamApiResponse<R> {
   error: string
 }
 
-// export interface IFanamResponse<D = null, M = null> {
-//   data: D
-//   meta: M
-// }
-
 export interface IFanamApiManager extends IApiManagerData {
   refreshToken: string | null
   refreshTokenEndpoint: string
