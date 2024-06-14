@@ -2,6 +2,8 @@
   "name": "@custom/utils",
   "version": "1.0.0",
   "license": "MIT",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "scripts": {
     "prettier": "prettier --write \"src/**/*.{ts,tsx,json}\"",
     "lint": "eslint \"src/**/*.{ts,tsx}\" --fix --ext .ts,.tsx .",
@@ -12,6 +14,8 @@
   },
   "private": true,
   "dependencies": {
+    "@fanam-pkg/core-utils": "^1.0.2",
+    "axios": "^1.7.2",
     "react": "^18.2.0"
   },
   "devDependencies": {
