@@ -11,7 +11,7 @@ const ReviewDetails = () => {
   const {onPayment} = useReviewRecipient()
 
   return (
-    <BaseContainer header="Review Recipient Details" buttonText="Confirm" onClick={onPayment} backIcon>
+    <BaseContainer header="Review Recipient Details" buttonText="Confirm" onClick={onPayment}>
       <section className={`flex-col-center`}>
         <RecipientCard />
         <section className={`flex`}>

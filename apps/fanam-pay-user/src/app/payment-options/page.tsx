@@ -62,8 +62,8 @@ const renderAccount = ({icon, bankName, accountType}: BankListProps, index: numb
   <section className={`flex ${styles.bank_wrapper}`} key={index}>
     <ImageView src={icon} alt={"bank-icon"} imgSize={40}></ImageView>
     <section className={`flex-col ${styles.desc_wrapper}`}>
-      <h4>{bankName}</h4>
-      <h5>{accountType}</h5>
+      <h4 className="semi-bold">{bankName}</h4>
+      <h6 className="semi-bold">{accountType}</h6>
     </section>
   </section>
 )
@@ -72,8 +72,8 @@ const renderCart = ({icon, bankName, cartType}: BankCartProps, index: number) =>
   <section className={`flex ${styles.bank_wrapper}`} key={index}>
     <ImageView src={icon} alt={"bank-icon"} imgSize={40}></ImageView>
     <section className={`flex-col ${styles.desc_wrapper}`}>
-      <h4>{bankName}</h4>
-      <h5>{cartType}</h5>
+      <h4 className="semi-bold">{bankName}</h4>
+      <h6 className="semi-bold">{cartType}</h6>
     </section>
   </section>
 )
@@ -88,24 +88,34 @@ const PaymentOptions = () => {
       footerChild={
         <FooterPayment senderAmount="Rs. 5388.00" reciverName="Varshini receives" recivableAmt="$707.00" button="Pay" />
       }
-      backIcon
       onClick={onSuccess}>
-      <Accordian
-        title={"Bank Account"}
-        leadingIcon={assets.ic_account}
-        tailingIcon={assets.ic_black_arrow}
-        description={"Pay Money using Bank Account"}
-        isFrequent={true}>
-        <ul>{LIST_OF_BANK.map(renderAccount)}</ul>
-      </Accordian>
-      <Accordian
-        title={"Debit/Credit Card"}
-        description="Pay Money using Credit/ Debit Card"
-        leadingIcon={assets.ic_debit_card}
-        tailingIcon={true}>
-        <ul>{LIST_OF_CART.map(renderCart)}</ul>
-      </Accordian>
-      <Accordian title={"Borrow Money"} leadingIcon={assets.ic_lend_money} tailingIcon={false} />
+      <section className={styles.page_wrapper}>
+        <section className={styles.card}>
+          <Accordian
+            title={"Bank Account"}
+            leadingIcon={assets.ic_account}
+            tailingIcon={assets.ic_black_arrow}
+            description={"Pay Money using Bank Account"}
+            isFrequent={true}>
+            <ul>{LIST_OF_BANK.map(renderAccount)}</ul>
+          </Accordian>
+          <Accordian
+            title={"Debit/Credit Card"}
+            description="Pay Money using Credit/ Debit Card"
+            leadingIcon={assets.ic_debit_card}
+            tailingIcon={true}>
+            <ul>{LIST_OF_CART.map(renderCart)}</ul>
+          </Accordian>
+          <Accordian title={"Borrow Money"} leadingIcon={assets.ic_lend_money} tailingIcon={false} />
+        </section>
+        <section className={styles.payment_container}>
+          <hr></hr>
+          <section className={`flex-center ${styles.payment_wrapper}`}>
+            <h4 className={styles.payment_text}>Payment Summary</h4>
+          </section>
+          <ul className={`flex-col ${styles.content_wrapper}`}>{PAYMENT_DATA.map(renderPayment)}</ul>
+        </section>
+      </section>
     </BaseContainer>
   )
 }

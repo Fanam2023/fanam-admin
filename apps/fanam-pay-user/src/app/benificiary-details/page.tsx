@@ -85,7 +85,7 @@ const BenificiaryDetail = () => {
   ]
 
   return (
-    <BaseContainer buttonText="Submit" header="Benificiary Details" onClick={onReview} backIcon>
+    <BaseContainer buttonText="Submit" header="Benificiary Details" onClick={onReview}>
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
     </BaseContainer>
   )

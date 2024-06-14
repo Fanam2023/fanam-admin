@@ -8,12 +8,7 @@ const ManageRecipient = () => {
   const {recipients, onNav} = useRecipient()
 
   return (
-    <BaseContainer
-      header={"Manage Recipients"}
-      addButton="Add"
-      onClick={onNav}
-      childWrapper={styles.page_container}
-      backIcon>
+    <BaseContainer header={"Manage Recipients"} addButton="Add" onClick={onNav} childWrapper={styles.page_container}>
       <ManageMembers recipients={recipients} title="Saved Recipients" placeHolderName="Search Recipients..." />
     </BaseContainer>
   )
