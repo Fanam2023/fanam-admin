@@ -2,6 +2,5 @@
   "extends": "@fanam-pkg/ts-config/nextjs.json",
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"],
-  "compilerOptions": {
-  }
+  "compilerOptions": {}
 }

@@ -26,3 +26,8 @@ export const DATE_PICKER_FORMAT = "dd-MM-yyyy"
 export const API_HEADER_FORM_DATA = {
   "Content-Type": "multipart/form-data",
 }
+
+export const CUISINES = ["American", "Andhra", "Arabian", "Asian", "Bakery"]
+export const CATERING_FORMAT = ["Dine-In", "Takeaway", "Delivery"]
+export const DIETARY_OPTIONS = ["Vegetarian", "Vegan", "Gluten-Free", "Keto"]
+export const SELECT_STATES = ["TamilNadu", "Kerala", "Kanniyakumari"]

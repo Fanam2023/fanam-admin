@@ -34,10 +34,10 @@ export const useFanamApi = ({
             )
             const apiResult = response.data?.result
             if (apiResult) {
-              const {accessToken, refreshToken} = apiResult as IResponseLogin
-              updateToken(accessToken)
-              updateRefreshToken(refreshToken)
-              err.config.headers["Authorization"] = `Bearer ${accessToken}`
+              const {access_token, refresh_token} = apiResult as IResponseLogin
+              updateToken(access_token)
+              updateRefreshToken(refresh_token)
+              err.config.headers["Authorization"] = `Bearer ${access_token}`
 
               return await apiInstance.request(err.config)
             } else {

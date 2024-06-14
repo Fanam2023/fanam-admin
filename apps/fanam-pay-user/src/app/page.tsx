@@ -1,7 +1,12 @@
+"use client"
+
 import {Button, TextField} from "@fanam-pkg/core-ui-sass"
+import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
-export default function Index() {
+export default function Dashboard() {
+  const handler = useHandler()
+
   /*
    * Replace the elements below with your own.
    *
