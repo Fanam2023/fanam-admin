@@ -73,7 +73,9 @@ const RecipientDetail = () => {
 
   return (
     <section>
-      {(isDesktop && <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />) || (
+      {isDesktop ? (
+        <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
+      ) : (
         <BaseContainer buttonText="Submit" header="Reciptent Details" onClick={onAdd} backIcon>
           <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
         </BaseContainer>
