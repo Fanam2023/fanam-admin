@@ -28,7 +28,7 @@ const AddAttachment = () => {
       header="Upload Documents"
       buttonText="Continue"
       onClick={onUpload}
-      childWrapper={`${styles.page_container}`}>
+      childWrapper={styles.page_container}>
       <section className={styles.title_wrapper}>
         <h4>Upload Supporting Documents(optional)</h4>
         <h5 className={styles.type_wrapper}>JPG, PNG and PDF Files Up to 1MB</h5>

@@ -4,59 +4,10 @@ import {ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
 import {Accordian, BaseContainer} from "organisms"
 import {FooterPayment} from "organisms/base-container/footer-payment"
-import {BankCartProps, BankListProps, PaymentDataProps} from "props"
+import {BankCartProps, BankListProps} from "props"
+import {LIST_OF_BANK, LIST_OF_CART} from "utils"
 import {usePayment} from "./handler"
 import styles from "./page.module.sass"
-
-const LIST_OF_BANK: BankListProps[] = [
-  {
-    icon: assets.img_bank,
-    bankName: "Axis Bank",
-    accountType: "Savings Account",
-  },
-  {
-    icon: assets.img_bank,
-    bankName: "Indian Bank",
-    accountType: "Savings Account",
-  },
-  {
-    icon: assets.img_bank,
-    bankName: "SBI",
-    accountType: "Current Account",
-  },
-]
-
-const LIST_OF_CART: BankCartProps[] = [
-  {
-    icon: assets.img_bank,
-    bankName: "Axis Bank",
-    cartType: "Debit Card",
-  },
-  {
-    icon: assets.img_bank,
-    bankName: "Indian Bank",
-    cartType: "Debit Card",
-  },
-  {
-    icon: assets.img_bank,
-    bankName: "SBI",
-    cartType: "Credit Card",
-  },
-]
-
-const PAYMENT_DATA: PaymentDataProps[] = [
-  {label: "Payment Duration", value: "5-6 Business Days"},
-  {label: "Beneficiary Name", value: "Sheela"},
-  {label: "Mode of Payment", value: "Debit Card"},
-  {label: "Total", value: "$4545"},
-]
-
-const renderPayment = ({label, value}: PaymentDataProps, index: number) => (
-  <section className={`flex-sb-center ${styles.content}`} key={index}>
-    <h4 className={styles.label_text}>{label}</h4>
-    <h4>{value}</h4>
-  </section>
-)
 
 const renderAccount = ({icon, bankName, accountType}: BankListProps, index: number) => (
   <section className={`flex ${styles.bank_wrapper}`} key={index}>
@@ -107,13 +58,6 @@ const PaymentOptions = () => {
             <ul>{LIST_OF_CART.map(renderCart)}</ul>
           </Accordian>
           <Accordian title={"Borrow Money"} leadingIcon={assets.ic_lend_money} tailingIcon={false} />
-        </section>
-        <section className={styles.payment_container}>
-          <hr></hr>
-          <section className={`flex-center ${styles.payment_wrapper}`}>
-            <h4 className={styles.payment_text}>Payment Summary</h4>
-          </section>
-          <ul className={`flex-col ${styles.content_wrapper}`}>{PAYMENT_DATA.map(renderPayment)}</ul>
         </section>
       </section>
     </BaseContainer>

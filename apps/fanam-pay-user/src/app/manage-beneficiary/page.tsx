@@ -8,7 +8,7 @@ const ManageBeneficiary = () => {
   const {beneficiaries, onNav} = useBeneficiary()
 
   return (
-    <BaseContainer header={"Manage Beneficiary"} addButton="Add" childWrapper={styles.page_container} onClick={onNav}>
+    <BaseContainer header="Manage Beneficiary" addButton="Add" childWrapper={styles.page_container} onClick={onNav}>
       <ManageMembers recipients={beneficiaries} title="Saved Recipients" placeHolderName="Search beneficiary..." />
     </BaseContainer>
   )
