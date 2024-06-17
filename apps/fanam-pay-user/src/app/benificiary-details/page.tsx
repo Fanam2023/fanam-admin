@@ -1,11 +1,13 @@
 "use client"
 
 import {FormSectionProps, GroupForm} from "@fanam-pkg/core-ui-sass"
+import {useResize} from "@fanam-pkg/core-utils"
 import {BaseContainer} from "organisms"
 import styles from "./beneficiary.module.sass"
 import useBeneficiary from "./handler"
 
 const BenificiaryDetail = () => {
+  const {isDesktop} = useResize()
   const {errState, onChangeValue, data, onReview, onSubmit} = useBeneficiary(
     message => console.log(message),
     message => console.log(message)
@@ -85,9 +87,15 @@ const BenificiaryDetail = () => {
   ]
 
   return (
-    <BaseContainer buttonText="Submit" header="Benificiary Details" onClick={onReview}>
-      <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-    </BaseContainer>
+    <section>
+      {isDesktop ? (
+        <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
+      ) : (
+        <BaseContainer buttonText="Submit" header="Reciptent Details" onClick={onReview} backIcon>
+          <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
+        </BaseContainer>
+      )}
+    </section>
   )
 }
 

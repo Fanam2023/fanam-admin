@@ -52,7 +52,7 @@ export const BaseContainer = ({
           {backIcon && <ImageView src={assets.ic_back} alt="back_icon" imgSize={24} onClick={goBack || onBack} />}
           <h3>{header}</h3>
         </section>
-        {!!addButton && <h3 onClick={onClick}>{addButton}</h3>}
+        {isDesktop ? <></> : !!addButton && <h3 onClick={onClick}>{addButton}</h3>}
       </header>
       <section className={styles.main_wrapper}>
         {isDesktop ? (
