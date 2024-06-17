@@ -2,7 +2,7 @@ import {useRouter} from "next/navigation"
 import {useMemo, useState} from "react"
 import {RECIPIENT_LIST, ROUTE_ADD_RECEPIENT} from "utils"
 
-export const useRecipient = () => {
+export const useRecipientHandler = () => {
   const {push} = useRouter()
   const onNav = () => push(ROUTE_ADD_RECEPIENT)
   const [isSliderVisible, setIsSliderVisible] = useState(false)

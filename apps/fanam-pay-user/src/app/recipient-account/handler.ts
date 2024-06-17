@@ -1,7 +1,10 @@
 import {JSONObject} from "@fanam-pkg/core-utils"
 import {useEffect, useState} from "react"
 
-const useReciptentDetails = (onSuccess: (message: string) => void, onFailure: (message: string) => void) => {
+export const useReciptentDetailsHandler = (
+  onSuccess: (message: string) => void,
+  onFailure: (message: string) => void
+) => {
   const [data, setData] = useState({
     account_name: "",
     confirm_account: "",
@@ -97,5 +100,3 @@ const useReciptentDetails = (onSuccess: (message: string) => void, onFailure: (m
     data,
   }
 }
-
-export default useReciptentDetails

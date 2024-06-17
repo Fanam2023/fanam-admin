@@ -2,11 +2,11 @@
 
 import RecipientDetail from "app/recipient-detail/page"
 import {BaseContainer, ManageMembers, Slider} from "organisms"
-import {useRecipient} from "./handler"
+import {useRecipientHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const ManageRecipient = () => {
-  const {recipients, onNav, isSliderVisible, setIsSliderVisible} = useRecipient()
+  const {recipients, onNav, isSliderVisible, setIsSliderVisible} = useRecipientHandler()
 
   return (
     <BaseContainer

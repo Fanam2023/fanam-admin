@@ -2,11 +2,11 @@
 
 import {FormSectionProps, GroupForm} from "@fanam-pkg/core-ui-sass"
 import {BaseContainer} from "organisms"
-import useReciptentDetails from "./handler"
+import {useReciptentDetailsHandler} from "./handler"
 import styles from "./recipient.module.sass"
 
 const RecipientAccountDetail = () => {
-  const {errState, onChangeValue, data, onSubmit} = useReciptentDetails(
+  const {errState, onChangeValue, data, onSubmit} = useReciptentDetailsHandler(
     message => console.log(message),
     message => console.log(message)
   )

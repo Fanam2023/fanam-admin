@@ -4,11 +4,11 @@ import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
 import {BaseContainer} from "organisms"
 import {AddAttachmentProps} from "props"
-import {useAddAttachment} from "./handler"
+import {useAddAttachmentHandler} from "./handler"
 import styles from "./style.module.sass"
 
 const AddAttachment = () => {
-  const {selFiles, fileInputRef, onRemove, onBrowse, onAttachment, onUpload} = useAddAttachment()
+  const {selFiles, fileInputRef, onRemove, onBrowse, onAttachment, onUpload} = useAddAttachmentHandler()
 
   const renderAddAttachments = ({name, size}: AddAttachmentProps, index: number) => (
     <li className={`flex-sb-center ${styles.file_wrapper}`} key={index}>

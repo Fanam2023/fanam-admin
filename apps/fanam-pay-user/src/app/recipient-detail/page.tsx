@@ -3,12 +3,12 @@
 import {FormSectionProps, GroupForm} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import {BaseContainer} from "organisms"
-import useCreateReciptent from "./handler"
+import {useCreateReciptentHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const RecipientDetail = () => {
   const {isDesktop} = useResize()
-  const {errState, onChangeValue, onAdd, data, onSubmit} = useCreateReciptent(
+  const {errState, onChangeValue, onAdd, data, onSubmit} = useCreateReciptentHandler(
     message => console.log(message),
     message => console.log(message)
   )

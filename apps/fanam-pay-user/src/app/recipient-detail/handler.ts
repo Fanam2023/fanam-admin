@@ -3,7 +3,10 @@ import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {ROUTE_BENEFICIARIES} from "utils"
 
-const useCreateReciptent = (onSuccess: (message: string) => void, onFailure: (message: string) => void) => {
+export const useCreateReciptentHandler = (
+  onSuccess: (message: string) => void,
+  onFailure: (message: string) => void
+) => {
   const {push} = useRouter()
   const onAdd = () => push(ROUTE_BENEFICIARIES)
 
@@ -83,5 +86,3 @@ const useCreateReciptent = (onSuccess: (message: string) => void, onFailure: (me
     data,
   }
 }
-
-export default useCreateReciptent
