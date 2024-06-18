@@ -12,7 +12,7 @@ const RecipientCard = () => {
     </section>
   )
   return (
-    <section>
+    <section className={`flex-col ${styles.container_wrapper}`}>
       <section className={styles.border_wrapper}>
         <section className={`flex-sb-center ${styles.card_wrapper}`}>
           <h5 className={styles.tittle_wrapper}>Recipient Details</h5>

@@ -3,11 +3,11 @@
 import {DropDown, ImageView, RadioButton, TextField} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
 import {BaseContainer} from "organisms"
-import {useHome} from "./handler"
+import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const HomePage = () => {
-  const {onAdd} = useHome()
+  const {onAdd, recipientType, onSelectRecipientType, senderType, onSelectSenderType} = useHandler()
 
   return (
     <BaseContainer
@@ -17,33 +17,48 @@ const HomePage = () => {
       childWrapper={styles.page_container}
       backIcon={false}>
       <section className={styles.container_wrapper}>
-        <h4>Select recipient type</h4>
-        <section className={`flex ${styles.button_container}`}>
-          <RadioButton />
-          <RadioButton />
+        <section className={`flex-col ${styles.button_container}`}>
+          <h4 className="semi-bold">Sender type</h4>
+          <RadioButton
+            items={senderType}
+            onSelectItems={onSelectSenderType}
+            wrapperClass={styles.radio_button}
+            radioGroupName="senderTypeGroup"
+          />
+        </section>
+        <section className={`flex-col ${styles.button_container}`}>
+          <h4 className="semi-bold"> Recipient type</h4>
+          <RadioButton
+            items={recipientType}
+            onSelectItems={onSelectRecipientType}
+            wrapperClass={styles.radio_button}
+            radioGroupName="recipientTypeGroup"
+          />
         </section>
         <DropDown
           options={["dfjd", "dfdj"]}
           wrapperClass={styles.drop_down_wrapper}
           label={"Purpose of Sending Money"}
         />
-        <h4 className={styles.conversion_text}>Conversion Estimate</h4>
+        <h4 className={`semi-bold ${styles.conversion_text}`}>Conversion Estimate</h4>
         <section className={styles.conversion_container}>
-          <section className={`flex-col ${styles.container}`}>
-            <h4>You Send</h4>
-            <section className={`flex ${styles.input_container}`}>
+          <h5 className={`bold ${styles.send_text}`}>You Send</h5>
+          <section className={`flex ${styles.input_container}`}>
+            <section className={`flex ${styles.flag_wrapper}`}>
               <ImageView src={assets.ic_india_flag} alt="country_flag" imgSize={40} />
-              <h3>INR</h3>
-              <TextField wrapperClass={styles.text_field_wrapper} />
+              <h3 className={styles.currency_text}>INR</h3>
             </section>
-            <section>
-              <h4>Recipient receives</h4>
-              <section className={`flex ${styles.input_container}`}>
-                <ImageView src={assets.ic_us_flag} alt="country_flag" imgSize={40} />
-                <h3>USD</h3>
-                <TextField wrapperClass={styles.text_field_wrapper} />
-              </section>
+            <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
+            <TextField wrapperClass={styles.text_field_wrapper} />
+          </section>
+          <h5 className={`bold ${styles.recipient_text}`}>Recipient receives</h5>
+          <section className={`flex ${styles.input_container}`}>
+            <section className={`flex ${styles.flag_wrapper}`}>
+              <ImageView src={assets.ic_us_flag} alt="country_flag" imgSize={40} />
+              <h3 className={styles.currency_text}>USD</h3>
             </section>
+            <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
+            <TextField wrapperClass={styles.text_field_wrapper} />
           </section>
         </section>
       </section>

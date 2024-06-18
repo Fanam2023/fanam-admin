@@ -1,9 +1,9 @@
 import {useRouter} from "next/navigation"
-import {ROUTE_PAYMENT} from "utils"
+import {ROUTE_BENEFICIARIES} from "utils"
 
-export const useReviewRecipient = () => {
+export const useHandler = () => {
   const {push} = useRouter()
-  const onPayment = () => push(ROUTE_PAYMENT)
+  const onPayment = () => push(ROUTE_BENEFICIARIES)
 
   return {
     onPayment,

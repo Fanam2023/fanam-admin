@@ -2,11 +2,11 @@
 
 import BenificiaryDetail from "app/benificiary-details/page"
 import {BaseContainer, ManageMembers, Slider} from "organisms"
-import {useBeneficiary} from "./handler"
+import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const ManageBeneficiary = () => {
-  const {beneficiaries, onNav, isSliderVisible, setIsSliderVisible} = useBeneficiary()
+  const {beneficiaries, onNav, isSliderVisible, setIsSliderVisible, onRouteToOptions} = useHandler()
 
   return (
     <BaseContainer
@@ -15,7 +15,11 @@ const ManageBeneficiary = () => {
       childWrapper={styles.page_container}
       onClick={onNav}
       backIcon>
-      <Slider isVisible={isSliderVisible} setIsVisible={setIsSliderVisible} title="Add New Benificiary">
+      <Slider
+        isVisible={isSliderVisible}
+        setIsVisible={setIsSliderVisible}
+        title="Add New Benificiary"
+        onClick={onRouteToOptions}>
         <BenificiaryDetail />
       </Slider>
       <ManageMembers

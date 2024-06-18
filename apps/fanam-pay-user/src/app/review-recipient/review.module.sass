@@ -1,4 +1,12 @@
 @use "../../styles/index" as *
+.page_wrapper
+  max-height: 100vh
+  overflow-y: scroll
+  margin:
+    top: $size-24px
+    left: 25%
+    bottom: 5%
+
 .input_wrapper
   margin: $size-40px
 
@@ -8,4 +16,12 @@
 .detail_wrapper
   margin-left: $size-8px
 
+.check_box_wrapper
+  margin-top: $size-20px
+
 @include mixin-responsive
+  .page_wrapper
+    width: 100vw
+    overflow-y: scroll
+    margin:
+      left: $size-10px

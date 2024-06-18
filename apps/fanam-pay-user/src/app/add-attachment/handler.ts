@@ -3,7 +3,7 @@ import {useRef, useState} from "react"
 import {AddAttachmentProps} from "props"
 import {ROUTE_RECEPIENTS} from "utils"
 
-export const useAddAttachment = () => {
+export const useHandler = () => {
   const [selFiles, setSelFiles] = useState<AddAttachmentProps[]>([])
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 

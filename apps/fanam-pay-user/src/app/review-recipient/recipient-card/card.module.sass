@@ -1,9 +1,12 @@
 @use "../../../styles/index" as *
 
+.container_wrapper
+  gap: $size-20px
+  overflow-y: scroll
+
 .border_wrapper
-  margin: $size-24px
-  padding: $size-8px
-  border-radius: $size-16px
+  padding: $size-20px $size-24px
+  border-radius: $size-10px
   border: $size-1px solid $dark-grey
 
 .card_wrapper
@@ -19,9 +22,11 @@
 
 .data_wrapper
   column-gap: $size-32px
-  padding: $size-6px $size-18px
+  padding: $size-6px $size-6px
 
 .value_wrapper
   text-align: left
 
 @include mixin-responsive
+  .border_wrapper
+    border-radius: $size-16px

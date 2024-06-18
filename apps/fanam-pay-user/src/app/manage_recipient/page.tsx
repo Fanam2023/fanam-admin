@@ -2,11 +2,11 @@
 
 import RecipientDetail from "app/recipient-detail/page"
 import {BaseContainer, ManageMembers, Slider} from "organisms"
-import {useRecipient} from "./handler"
+import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const ManageRecipient = () => {
-  const {recipients, onNav, isSliderVisible, setIsSliderVisible} = useRecipient()
+  const {recipients, onNav, isSliderVisible, setIsSliderVisible, onRouteToReview} = useHandler()
 
   return (
     <BaseContainer
@@ -15,7 +15,11 @@ const ManageRecipient = () => {
       onClick={onNav}
       childWrapper={styles.page_container}
       backIcon>
-      <Slider isVisible={isSliderVisible} setIsVisible={setIsSliderVisible} title="Add New Recipient">
+      <Slider
+        isVisible={isSliderVisible}
+        setIsVisible={setIsSliderVisible}
+        title="Add New Recipient"
+        onClick={onRouteToReview}>
         {<RecipientDetail />}
       </Slider>
       <ManageMembers

@@ -3,7 +3,7 @@ import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {ROUTE_REVIEW} from "utils"
 
-const useBeneficiary = (onSuccess: (message: string) => void, onFailure: (message: string) => void) => {
+export const useHandler = (onSuccess: (message: string) => void, onFailure: (message: string) => void) => {
   const {push} = useRouter()
   const onReview = () => push(ROUTE_REVIEW)
 
@@ -94,5 +94,3 @@ const useBeneficiary = (onSuccess: (message: string) => void, onFailure: (messag
     data,
   }
 }
-
-export default useBeneficiary
