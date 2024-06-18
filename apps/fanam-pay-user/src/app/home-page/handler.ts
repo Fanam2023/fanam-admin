@@ -3,7 +3,7 @@ import {useRouter} from "next/navigation"
 import {useState} from "react"
 import {ROUTE_ATTACHMENT} from "utils"
 
-export const useHomeHandler = () => {
+export const useHandler = () => {
   const {push} = useRouter()
   const [senderType, setSenderType] = useState<IFormData[]>([
     {label: "Individual", isSelected: false},
@@ -15,11 +15,11 @@ export const useHomeHandler = () => {
     {label: "Business", isSelected: false},
   ])
 
-  const handleSelectSenderType = (selectedItems: IFormData[]) => {
+  const onSelectSenderType = (selectedItems: IFormData[]) => {
     setSenderType(selectedItems)
   }
 
-  const handleSelectRecipientType = (selectedItems: IFormData[]) => {
+  const onSelectRecipientType = (selectedItems: IFormData[]) => {
     setRecipientType(selectedItems)
   }
 
@@ -30,7 +30,7 @@ export const useHomeHandler = () => {
     onAdd,
     senderType,
     recipientType,
-    handleSelectRecipientType,
-    handleSelectSenderType,
+    onSelectRecipientType,
+    onSelectSenderType,
   }
 }

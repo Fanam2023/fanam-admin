@@ -3,12 +3,12 @@
 import {ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
 import {BaseContainer} from "organisms"
-import {useReviewRecipientHandler} from "./handler"
+import {useHandler} from "./handler"
 import RecipientCard from "./recipient-card/page"
 import styles from "./review.module.sass"
 
 const ReviewDetails = () => {
-  const {onPayment} = useReviewRecipientHandler()
+  const {onPayment} = useHandler()
 
   return (
     <BaseContainer

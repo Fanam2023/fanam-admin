@@ -3,10 +3,7 @@ import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {ROUTE_BENEFICIARIES} from "utils"
 
-export const useCreateReciptentHandler = (
-  onSuccess: (message: string) => void,
-  onFailure: (message: string) => void
-) => {
+export const useHandler = (onSuccess: (message: string) => void, onFailure: (message: string) => void) => {
   const {push} = useRouter()
   const onAdd = () => push(ROUTE_BENEFICIARIES)
 

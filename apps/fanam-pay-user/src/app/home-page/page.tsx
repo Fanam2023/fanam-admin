@@ -3,11 +3,11 @@
 import {DropDown, ImageView, RadioButton, TextField} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
 import {BaseContainer} from "organisms"
-import {useHomeHandler} from "./handler"
+import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const HomePage = () => {
-  const {onAdd, recipientType, handleSelectRecipientType, senderType, handleSelectSenderType} = useHomeHandler()
+  const {onAdd, recipientType, onSelectRecipientType, senderType, onSelectSenderType} = useHandler()
 
   return (
     <BaseContainer
@@ -21,7 +21,7 @@ const HomePage = () => {
           <h4 className="semi-bold">Sender type</h4>
           <RadioButton
             items={senderType}
-            onSelectItems={handleSelectSenderType}
+            onSelectItems={onSelectSenderType}
             wrapperClass={styles.radio_button}
             radioGroupName="senderTypeGroup"
           />
@@ -30,7 +30,7 @@ const HomePage = () => {
           <h4 className="semi-bold"> Recipient type</h4>
           <RadioButton
             items={recipientType}
-            onSelectItems={handleSelectRecipientType}
+            onSelectItems={onSelectRecipientType}
             wrapperClass={styles.radio_button}
             radioGroupName="recipientTypeGroup"
           />

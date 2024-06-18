@@ -5,4 +5,5 @@ export interface SliderProps {
   isVisible: boolean
   setIsVisible: (show: boolean) => void
   title: string
+  onClick?: () => void
 }

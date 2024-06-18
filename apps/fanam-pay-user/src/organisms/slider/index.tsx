@@ -3,7 +3,7 @@ import assets from "assets"
 import {SliderProps} from "props"
 import styles from "./styles.module.sass"
 
-export const Slider = ({children, isVisible, setIsVisible, title}: SliderProps) =>
+export const Slider = ({children, isVisible, setIsVisible, title, onClick}: SliderProps) =>
   isVisible && (
     <section className={`blur ${styles.slider_wrapper}`}>
       <section className={`flex-col ${styles.main_container}`}>
@@ -16,7 +16,9 @@ export const Slider = ({children, isVisible, setIsVisible, title}: SliderProps) 
           <Button buttonType="primary-outlined" wrapperClass={styles.btn_wrapper}>
             Back
           </Button>
-          <Button wrapperClass={styles.btn_wrapper}>Continue</Button>
+          <Button wrapperClass={styles.btn_wrapper} onClick={onClick}>
+            Continue
+          </Button>
         </footer>
       </section>
     </section>

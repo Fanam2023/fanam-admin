@@ -6,7 +6,7 @@ import {Accordian, BaseContainer} from "organisms"
 import {FooterPayment} from "organisms/base-container/footer-payment"
 import {BankCartProps, BankListProps} from "props"
 import {LIST_OF_BANK, LIST_OF_CART} from "utils"
-import {usePaymentHandler} from "./handler"
+import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const renderAccount = ({icon, bankName, accountType}: BankListProps, index: number) => (
@@ -30,7 +30,7 @@ const renderCart = ({icon, bankName, cartType}: BankCartProps, index: number) =>
 )
 
 const PaymentOptions = () => {
-  const {onSuccess} = usePaymentHandler()
+  const {onSuccess} = useHandler()
 
   return (
     <BaseContainer

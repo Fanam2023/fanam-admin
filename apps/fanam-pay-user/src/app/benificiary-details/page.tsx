@@ -4,11 +4,11 @@ import {FormSectionProps, GroupForm} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import {BaseContainer} from "organisms"
 import styles from "./beneficiary.module.sass"
-import {useBeneficiaryHandler} from "./handler"
+import {useHandler} from "./handler"
 
 const BenificiaryDetail = () => {
   const {isDesktop} = useResize()
-  const {errState, onChangeValue, data, onReview, onSubmit} = useBeneficiaryHandler(
+  const {errState, onChangeValue, data, onReview, onSubmit} = useHandler(
     message => console.log(message),
     message => console.log(message)
   )
