@@ -14,7 +14,8 @@ const ManageRecipient = () => {
       addButton="Add"
       onClick={onNav}
       childWrapper={styles.page_container}
-      backIcon>
+      backIcon
+      stepIndex={2}>
       <Slider
         isVisible={isSliderVisible}
         setIsVisible={setIsSliderVisible}

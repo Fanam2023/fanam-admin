@@ -8,7 +8,7 @@ export const useAuthController = () => {
   const {updateToken, updateRefreshToken} = useSingleton()
 
   const login = async () => {
-    const {result, errorData} = await postRequest<IResponseLogin>(API_LOGIN, {})
+    const {result, errorData} = await postRequest<IResponseLogin>(API_LOGIN, {email: "user2@gmail.com"})
 
     if (result) {
       const {access_token, refresh_token} = result

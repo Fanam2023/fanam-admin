@@ -1,23 +1,21 @@
-import {useCookies, useFirebase, useReactQuery, useStorage} from "@fanam-pkg/core-utils"
-import {PropsWithChildren, useEffect, useState} from "react"
-import {useQuery} from "@tanstack/react-query"
+import {useCookies, useReactQuery, useStorage} from "@fanam-pkg/core-utils"
+import {PropsWithChildren, useState} from "react"
 import {ILogOutPayload} from "@custom/utils"
 import {SingletonContext} from "../contexts"
 import {useAuthController} from "../controller"
 import {ISingleton, IUser} from "../model"
-import {COOKIE_ACCESS_TOKEN, COOKIE_FCM, COOKIE_REFRESH_TOKEN, QUERY_USER} from "../utils"
+import {COOKIE_ACCESS_TOKEN, COOKIE_FCM, COOKIE_REFRESH_TOKEN} from "../utils"
 
 export const SingletonProvider = ({children}: PropsWithChildren) => {
   const {setCookie, getCookie, removeCookie} = useCookies()
-  const {getUser, logout} = useAuthController()
+  const {/*getUser,*/ logout} = useAuthController()
   // const {decodeJwtToken} = useJWT()
   const {clearQueryCache} = useReactQuery()
   const {clearAllStorage} = useStorage()
-  const {onSignOut} = useFirebase()
   const [user, setUser] = useState<IUser | null>(null)
   const [token, setToken] = useState<string | null>(getCookie<string>(COOKIE_ACCESS_TOKEN))
   const [refreshToken, setRefreshToken] = useState<string | null>(getCookie<string>(COOKIE_REFRESH_TOKEN))
-  const {data: userRes} = useQuery({enabled: !!token && !user, queryKey: [QUERY_USER], queryFn: getUser})
+  // const {data: userRes} = useQuery({enabled: !!token && !user, queryKey: [QUERY_USER], queryFn: getUser})
 
   const updateUserData = (user: IUser) => setUser(user)
 
@@ -31,9 +29,9 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     setRefreshToken(token)
   }
 
-  useEffect(() => {
-    if (userRes) setUser(userRes)
-  }, [userRes])
+  // useEffect(() => {
+  //   if (userRes) setUser(userRes)
+  // }, [userRes])
 
   const singOutUser = async () => {
     const fcmToken = getCookie(COOKIE_FCM)
@@ -47,7 +45,6 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     setUser(null)
     setRefreshToken(null)
     clearQueryCache()
-    onSignOut()
     clearAllStorage()
   }
 

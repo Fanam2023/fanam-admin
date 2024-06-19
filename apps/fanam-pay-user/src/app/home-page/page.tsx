@@ -15,7 +15,8 @@ const HomePage = () => {
       buttonText="Confirm"
       onClick={onAdd}
       childWrapper={styles.page_container}
-      backIcon={false}>
+      backIcon={false}
+      stepIndex={0}>
       <section className={styles.container_wrapper}>
         <section className={`flex-col ${styles.button_container}`}>
           <h4 className="semi-bold">Sender type</h4>

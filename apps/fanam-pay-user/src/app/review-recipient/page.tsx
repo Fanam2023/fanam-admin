@@ -15,7 +15,8 @@ const ReviewDetails = () => {
       header="Review Recipient Details"
       buttonText="Confirm"
       onClick={onPayment}
-      childWrapper={styles.page_wrapper}>
+      childWrapper={styles.page_wrapper}
+      stepIndex={3}>
       <section className={`flex-col-center`}>
         <RecipientCard />
         <section className={`flex ${styles.check_box_wrapper}`}>

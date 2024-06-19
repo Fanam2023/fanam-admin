@@ -1,16 +1,12 @@
 import {useRouter} from "next/navigation"
-import {useState} from "react"
 
-export const useBaseContainer = () => {
+export const useHandler = () => {
   const {back} = useRouter()
   const goBack = () => {
     if (back) back()
   }
 
-  const [selIndex, setSelIndex] = useState(3)
-
   return {
     goBack,
-    selIndex,
   }
 }

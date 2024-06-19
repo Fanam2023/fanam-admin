@@ -14,7 +14,8 @@ const ManageBeneficiary = () => {
       addButton="Add"
       childWrapper={styles.page_container}
       onClick={onNav}
-      backIcon>
+      backIcon
+      stepIndex={4}>
       <Slider
         isVisible={isSliderVisible}
         setIsVisible={setIsSliderVisible}
@@ -24,7 +25,7 @@ const ManageBeneficiary = () => {
       </Slider>
       <ManageMembers
         recipients={beneficiaries}
-        title="Saved Recipients"
+        title="Saved Beneficiary"
         placeHolderName="Search beneficiary..."
         onAddButton={() => setIsSliderVisible(true)}
       />

@@ -39,7 +39,8 @@ const PaymentOptions = () => {
       footerChild={
         <FooterPayment senderAmount="Rs. 5388.00" reciverName="Varshini receives" recivableAmt="$707.00" button="Pay" />
       }
-      onClick={onSuccess}>
+      onClick={onSuccess}
+      stepIndex={5}>
       <section className={styles.page_wrapper}>
         <section className={styles.card}>
           <Accordian

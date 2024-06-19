@@ -4,9 +4,9 @@ import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils/src/hooks"
 import assets from "assets"
 import {IStepper} from "model"
-import {BaseConatinerProps} from "props"
+import {BaseContainerProps} from "props"
 import {SIDE_BAR} from "utils"
-import {useBaseContainer} from "./handler"
+import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({
@@ -20,14 +20,15 @@ export const BaseContainer = ({
   childWrapper = "",
   backIcon = true,
   skipBtn,
-}: BaseConatinerProps) => {
-  const {goBack, selIndex} = useBaseContainer()
+  stepIndex,
+}: BaseContainerProps) => {
+  const {goBack} = useHandler()
   const {isDesktop} = useResize()
 
   const renderSideBar = ({title, description}: IStepper, index: number) => {
     const isLastStep = index < SIDE_BAR.length - 1
-    const isActive = index === selIndex
-    const isCompleted = index < selIndex
+    const isActive = index === stepIndex
+    const isCompleted = typeof stepIndex === "number" ? index < stepIndex : SIDE_BAR.length - 1 === index
 
     return (
       <section className={styles.content_wrapper} key={index}>
