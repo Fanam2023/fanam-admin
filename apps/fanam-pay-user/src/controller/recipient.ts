@@ -2,7 +2,7 @@ import {API_RECIPIENT, IRecipient, apiRecipient} from "@custom/utils"
 import {useApi} from "./api"
 
 export const useRecipientController = () => {
-  const {getRequest, postRequest, putRequest, deleteRequest} = useApi()
+  const {getRequest, postRequest, putRequest} = useApi()
 
   const getAllRecipient = async () => {
     const {result} = await getRequest<IRecipient[]>(API_RECIPIENT)
@@ -14,11 +14,6 @@ export const useRecipientController = () => {
     return {result, errorData}
   }
 
-  const deleteRecipient = async (recipient_id: string) => {
-    const {result, errorData} = await deleteRequest(apiRecipient(recipient_id))
-    return {result, errorData}
-  }
-
   const updateRecipient = async (payload: any) => {
     const recipientId = payload.id
     const {result, errorData} = await putRequest(apiRecipient(recipientId), payload)
@@ -27,13 +22,12 @@ export const useRecipientController = () => {
 
   const getByRecipientId = async (recipient_id: string) => {
     const {result} = await getRequest(apiRecipient(recipient_id))
-    return {result}
+    return result
   }
 
   return {
     getAllRecipient,
     getByRecipientId,
-    deleteRecipient,
     updateRecipient,
     createRecipient,
   }

@@ -9,9 +9,9 @@ export const useHandler = () => {
   const [isSliderVisible, setIsSliderVisible] = useState(false)
   const {getAllRecipient} = useRecipientController()
 
-  const {data: getRecipients} = useQuery({
+  const {data: recipient} = useQuery({
     queryKey: [QUERY_RECIPIENT],
-    queryFn: () => getAllRecipient(),
+    queryFn: getAllRecipient,
   })
 
   const onNav = () => push(ROUTE_ADD_RECEPIENT)
@@ -29,6 +29,6 @@ export const useHandler = () => {
     isSliderVisible,
     setIsSliderVisible,
     onRouteToReview,
-    getRecipients,
+    recipient,
   }
 }

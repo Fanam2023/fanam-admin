@@ -91,7 +91,7 @@ const BenificiaryDetail = () => {
       {isDesktop ? (
         <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
       ) : (
-        <BaseContainer buttonText="Submit" header="Reciptent Details" onClick={onReview} backIcon>
+        <BaseContainer buttonText="Submit" header="Beneficiary Details" onClick={onReview} backIcon>
           <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
         </BaseContainer>
       )}

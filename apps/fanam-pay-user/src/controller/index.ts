@@ -1,3 +1,3 @@
 export * from "./api"
 export * from "./auth"
-export * from "./manage-recipient"
+export * from "./recipient"

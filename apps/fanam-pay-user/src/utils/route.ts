@@ -1,6 +1,6 @@
 export const ROUTE_HOME = "/home-page"
 export const ROUTE_ATTACHMENT = "/add-attachment"
-export const ROUTE_RECEPIENTS = "/manage_recipient"
+export const ROUTE_RECEPIENTS = "/manage-recipient"
 export const ROUTE_ADD_RECEPIENT = "/recipient-detail"
 export const ROUTE_BENEFICIARIES = "/manage-beneficiary"
 export const ROUTE_ADD_BENEFICIARY = "/benificiary-details"

@@ -36,6 +36,7 @@ const HomePage = () => {
             radioGroupName="recipientTypeGroup"
           />
         </section>
+        <h4 className="semi-bold">Purpose of sending money</h4>
         <DropDown
           options={["dfjd", "dfdj"]}
           wrapperClass={styles.drop_down_wrapper}
@@ -48,17 +49,17 @@ const HomePage = () => {
             <section className={`flex ${styles.flag_wrapper}`}>
               <ImageView src={assets.ic_india_flag} alt="country_flag" imgSize={40} />
               <h3 className={styles.currency_text}>INR</h3>
+              <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
             </section>
-            <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
             <TextField wrapperClass={styles.text_field_wrapper} />
           </section>
           <h5 className={`bold ${styles.recipient_text}`}>Recipient receives</h5>
           <section className={`flex ${styles.input_container}`}>
-            <section className={`flex ${styles.flag_wrapper}`}>
+            <section className={`flex ${styles.flag_wrapper} ${styles.usd_wrapper}`}>
               <ImageView src={assets.ic_us_flag} alt="country_flag" imgSize={40} />
-              <h3 className={styles.currency_text}>USD</h3>
+              <h3 className={styles.receiver_text}>USD</h3>
+              <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
             </section>
-            <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
             <TextField wrapperClass={styles.text_field_wrapper} />
           </section>
         </section>

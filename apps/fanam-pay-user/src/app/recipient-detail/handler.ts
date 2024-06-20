@@ -1,11 +1,11 @@
 import {JSONObject} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
-import {ROUTE_BENEFICIARIES} from "utils"
+import {ROUTE_REVIEW} from "utils"
 
 export const useHandler = (onSuccess: (message: string) => void, onFailure: (message: string) => void) => {
   const {push} = useRouter()
-  const onAdd = () => push(ROUTE_BENEFICIARIES)
+  const onAdd = () => push(ROUTE_REVIEW)
 
   const [data, setData] = useState({
     name: "",
