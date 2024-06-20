@@ -6,7 +6,7 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const ManageRecipient = () => {
-  const {recipients, onNav, isSliderVisible, setIsSliderVisible, onRouteToReview} = useHandler()
+  const {recipientList, onNav, isSliderVisible, setIsSliderVisible, onRouteToReview} = useHandler()
 
   return (
     <BaseContainer
@@ -24,7 +24,7 @@ const ManageRecipient = () => {
         {<RecipientDetail />}
       </Slider>
       <ManageMembers
-        recipients={recipients}
+        recipients={recipientList}
         title="Saved Recipients"
         placeHolderName="Search Recipients..."
         onAddButton={() => setIsSliderVisible(true)}
