@@ -8,21 +8,93 @@ import styles from "./page.module.sass"
 
 const RecipientDetail = () => {
   const {isDesktop} = useResize()
-  const {errState, onChangeValue, onAdd, data, onSubmit} = useHandler(
+  const {errState, onChangeValue, data, onSubmit} = useHandler(
     message => console.log(message),
     message => console.log(message)
   )
 
-  const {errName, errCountryName, errCity, errEmail, errPhone, errPincode, errStateName} = errState
+  const {
+    errName,
+    errAcNumber,
+    errAddress,
+    errBankName,
+    errBranch,
+    errConfirmAc,
+    errIBANNumber,
+    errRoutingcode,
+    errSwiftCode,
+    errCountryName,
+    errCity,
+    errEmail,
+    errPhone,
+    errPincode,
+    errStateName,
+  } = errState
 
   const formElements: FormSectionProps[] = [
     {
       childElements: [
         {
           elementType: "input",
-          label: "Enter Recipient Name",
+          label: "Enter Account Holder Name",
           name: "name",
           error: errName,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Account Number",
+          name: "email",
+          error: errAcNumber,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Confirm Account Number",
+          name: "account_number",
+          error: errConfirmAc,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter IBAN Number",
+          name: "iban_number",
+          error: errIBANNumber,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Swift Code",
+          name: "swift_code",
+          error: errSwiftCode,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Routing Code",
+          name: "routing_code",
+          error: errRoutingcode,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Recipient Address",
+          name: "recipient_address",
+          error: errAddress,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Bank Name",
+          name: "bank_name",
+          error: errBankName,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Branch Address",
+          name: "Branch_address",
+          error: errBranch,
           onChangeValue,
         },
         {
@@ -76,7 +148,7 @@ const RecipientDetail = () => {
       {isDesktop ? (
         <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
       ) : (
-        <BaseContainer buttonText="Submit" header="Reciptent Details" onClick={onAdd} backIcon>
+        <BaseContainer buttonText="Submit" header="Reciptent Details" onClick={onSubmit} backIcon>
           <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
         </BaseContainer>
       )}

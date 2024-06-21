@@ -8,7 +8,7 @@ import {useHandler} from "./handler"
 
 const BenificiaryDetail = () => {
   const {isDesktop} = useResize()
-  const {errState, onChangeValue, data, onReview, onSubmit} = useHandler(
+  const {errState, onChangeValue, data, onSubmit} = useHandler(
     message => console.log(message),
     message => console.log(message)
   )
@@ -91,7 +91,7 @@ const BenificiaryDetail = () => {
       {isDesktop ? (
         <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
       ) : (
-        <BaseContainer buttonText="Submit" header="Reciptent Details" onClick={onReview} backIcon>
+        <BaseContainer buttonText="Submit" header="Reciptent Details" onClick={onSubmit} backIcon>
           <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
         </BaseContainer>
       )}

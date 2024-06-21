@@ -1,5 +1,7 @@
-@use "../../styles/index" as *
-
-@include mixin-responsive
+@use "../../styles/index" as *  
 .input_wrapper
   margin: $size-40px
+
+@include mixin-responsive
+  .input_wrapper
+    width: 100%

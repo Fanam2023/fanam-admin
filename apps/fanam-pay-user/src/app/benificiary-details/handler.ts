@@ -1,11 +1,10 @@
 import {JSONObject} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
-import {ROUTE_REVIEW} from "utils"
+import {ROUTE_PAYMENT} from "utils"
 
 export const useHandler = (onSuccess: (message: string) => void, onFailure: (message: string) => void) => {
   const {push} = useRouter()
-  const onReview = () => push(ROUTE_REVIEW)
 
   const [data, setData] = useState({
     benificiary_name: "",
@@ -82,15 +81,16 @@ export const useHandler = (onSuccess: (message: string) => void, onFailure: (mes
     const errState = {...onValidate(), isClicked: true}
     const {isValid} = errState
     setErrState(errState)
-    if (isValid) onSuccess("Form submitted successfully!")
-    else onFailure("Form submission failed. Please check your inputs.")
+    if (isValid) {
+      onSuccess("Form submitted successfully!")
+      push(ROUTE_PAYMENT)
+    } else onFailure("Form submission failed. Please check your inputs.")
   }
 
   return {
     errState,
     onChangeValue,
     onSubmit,
-    onReview,
     data,
   }
 }
