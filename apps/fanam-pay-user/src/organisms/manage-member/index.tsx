@@ -23,7 +23,13 @@ export const ManageMembers = ({
           <h3>{title}</h3>
           <h5>{description}</h5>
         </section>
-        <ImageView src={assets.ic_edit_theme} alt={"edit-icon"} imgSize={24} wrapperClass={styles.edit_icon} />
+        <ImageView
+          src={assets.ic_edit_theme}
+          alt={"edit-icon"}
+          imgSize={24}
+          wrapperClass={styles.edit_icon}
+          onClick={onAddButton}
+        />
       </section>
     </section>
   )

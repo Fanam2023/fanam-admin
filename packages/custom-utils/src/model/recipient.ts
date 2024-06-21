@@ -1,5 +1,5 @@
 export interface IRecipient {
-  recipient_id: string
+  recipient_id?: string
   recipient_name: string
   email: string
   country_code: string

@@ -2,7 +2,7 @@ export interface ManageMembersProps {
   title: string
   recipients: MemberProps[]
   placeHolderName: string
-  onChangeSearch?: () => void
+  onChangeSearch?: (value: string) => void
   onAddButton: () => void
 }
 

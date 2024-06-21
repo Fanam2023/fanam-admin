@@ -8,6 +8,7 @@ export const useHandler = () => {
   const {push} = useRouter()
   const [isSliderVisible, setIsSliderVisible] = useState(false)
   const {getAllRecipient} = useRecipientController()
+  const [searchQuery, setSearchQuery] = useState("")
 
   const {data: recipients} = useQuery({
     queryKey: [QUERY_RECIPIENT],
@@ -18,16 +19,22 @@ export const useHandler = () => {
 
   const onRouteToReview = () => push(ROUTE_REVIEW)
 
+  const onChangeSearch = (value: string) => setSearchQuery(value)
+
   const recipientList = useMemo(
-    () => recipients?.map(({recipient_name, phone_no}) => ({title: recipient_name, description: phone_no})),
-    [recipients]
+    () =>
+      recipients
+        ?.filter(({recipient_name}) => recipient_name.toLowerCase().includes(searchQuery.toLowerCase()))
+        ?.map(({recipient_name, email}) => ({title: recipient_name, description: email})),
+    [recipients, searchQuery]
   )
 
   return {
-    onNav,
     isSliderVisible,
+    recipientList,
+    onNav,
     setIsSliderVisible,
     onRouteToReview,
-    recipientList,
+    onChangeSearch,
   }
 }

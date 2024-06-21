@@ -14,8 +14,8 @@ export const useRecipientController = () => {
     return {result, errorData}
   }
 
-  const updateRecipient = async (payload: any) => {
-    const recipientId = payload.id
+  const updateRecipient = async (payload: IRecipient) => {
+    const recipientId = payload.recipient_id
     const {result, errorData} = await putRequest(apiRecipient(recipientId), payload)
     return {result, errorData}
   }

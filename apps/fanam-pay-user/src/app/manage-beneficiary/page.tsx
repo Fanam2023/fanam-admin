@@ -1,12 +1,11 @@
 "use client"
 
-import BenificiaryDetail from "app/benificiary-details/page"
-import {BaseContainer, ManageMembers, Slider} from "organisms"
+import {BaseContainer, CreateBeneficiary, ManageMembers} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const ManageBeneficiary = () => {
-  const {beneficiaries, onNav, isSliderVisible, setIsSliderVisible, onRouteToOptions} = useHandler()
+  const {beneficiaryList, onNav, isSliderVisible, setIsSliderVisible, onRouteToOptions, onChangeSearch} = useHandler()
 
   return (
     <BaseContainer
@@ -16,17 +15,12 @@ const ManageBeneficiary = () => {
       onClick={onNav}
       backIcon
       stepIndex={4}>
-      <Slider
-        isVisible={isSliderVisible}
-        setIsVisible={setIsSliderVisible}
-        title="Add New Benificiary"
-        onClick={onRouteToOptions}>
-        <BenificiaryDetail />
-      </Slider>
+      <CreateBeneficiary isVisible={isSliderVisible} setIsVisible={setIsSliderVisible} title="Add New Benificiary" />
       <ManageMembers
-        recipients={beneficiaries}
+        recipients={beneficiaryList}
         title="Saved Beneficiary"
         placeHolderName="Search beneficiary..."
+        onChangeSearch={onChangeSearch}
         onAddButton={() => setIsSliderVisible(true)}
       />
     </BaseContainer>

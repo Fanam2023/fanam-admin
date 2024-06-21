@@ -1,12 +1,11 @@
 "use client"
 
-import RecipientDetail from "app/recipient-detail/page"
-import {BaseContainer, ManageMembers, Slider} from "organisms"
+import {BaseContainer, CreateRecipient, ManageMembers} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const ManageRecipient = () => {
-  const {recipientList, onNav, isSliderVisible, setIsSliderVisible, onRouteToReview} = useHandler()
+  const {recipientList, onNav, isSliderVisible, setIsSliderVisible, onRouteToReview, onChangeSearch} = useHandler()
 
   return (
     <BaseContainer
@@ -16,17 +15,12 @@ const ManageRecipient = () => {
       childWrapper={styles.page_container}
       backIcon
       stepIndex={2}>
-      <Slider
-        isVisible={isSliderVisible}
-        setIsVisible={setIsSliderVisible}
-        title="Add New Recipient"
-        onClick={onRouteToReview}>
-        {<RecipientDetail />}
-      </Slider>
+      <CreateRecipient isVisible={isSliderVisible} setIsVisible={setIsSliderVisible} title="Add New Benificiary" />
       <ManageMembers
         recipients={recipientList}
         title="Saved Recipients"
         placeHolderName="Search Recipients..."
+        onChangeSearch={onChangeSearch}
         onAddButton={() => setIsSliderVisible(true)}
       />
     </BaseContainer>

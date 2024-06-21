@@ -1,6 +1,7 @@
 /* Query Storage Constants here */
 export const QUERY_USER = "__FANAM_OPPTRR__"
 export const QUERY_RECIPIENT = "__FANAM_ACTRYG__"
+export const QUERY_BENEFICIARY = "__FANAM_BCFGGQ__"
 
 /* Cookie Storage Constant Keys here */
 export const COOKIE_ACCESS_TOKEN = "__FANAM_YTGUYG__"
