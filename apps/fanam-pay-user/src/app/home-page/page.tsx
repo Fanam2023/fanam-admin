@@ -1,14 +1,31 @@
 "use client"
 
 import {DropDown, ImageView, RadioButton, TextField} from "@fanam-pkg/core-ui-sass"
+import {useState} from "react"
 import assets from "assets"
-import {BaseContainer} from "organisms"
+import {BaseContainer, Slider} from "organisms"
+import CountryList from "organisms/pop-up"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const HomePage = () => {
-  const {onAdd, recipientType, onSelectRecipientType, senderType, onSelectSenderType} = useHandler()
+  const [selectedCountryId, setSelectedCountryId] = useState<string | null>(null)
+  const {
+    onAdd,
+    recipientType,
+    onSelectRecipientType,
+    senderType,
+    onSelectSenderType,
+    isSliderVisible,
+    setIsSliderVisible,
+    data,
+  } = useHandler(selectedCountryId)
+  console.log(">>>>>", data)
 
+  const handleClick = (country_id: string) => {
+    setSelectedCountryId(country_id)
+    setIsSliderVisible(false)
+  }
   return (
     <BaseContainer
       header="Cross Border Remittance"
@@ -55,13 +72,21 @@ const HomePage = () => {
           <section className={`flex ${styles.input_container}`}>
             <section className={`flex ${styles.flag_wrapper}`}>
               <ImageView src={assets.ic_us_flag} alt="country_flag" imgSize={40} />
-              <h3 className={styles.currency_text}>USD</h3>
+              <h3 className={styles.currency_text}>{`${data?.currency || "USD"}`}</h3>
             </section>
-            <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
+            <ImageView
+              src={assets.ic_grey_arrow}
+              alt="down-arrow"
+              onClick={() => setIsSliderVisible(true)}
+              imgSize={15}
+            />
             <TextField wrapperClass={styles.text_field_wrapper} />
           </section>
         </section>
       </section>
+      <Slider isVisible={isSliderVisible} setIsVisible={setIsSliderVisible} title="Countries">
+        <CountryList onClick={handleClick} />
+      </Slider>
     </BaseContainer>
   )
 }
