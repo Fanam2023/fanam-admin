@@ -1,6 +1,6 @@
 export * from "./accordian"
 export * from "./base-container"
-export * from "./create-beneficiary"
+export * from "./create-beneficiary-details"
 export * from "./create-recipient"
 export * from "./footer"
 export * from "./header"

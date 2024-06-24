@@ -19,6 +19,7 @@ export interface BaseContainerProps {
   onBack?: () => void
   skipBtn?: string
   stepIndex?: number | "success" | "pending" | "failed"
+  containerClass?: string
 }
 
 export interface FooterPaymentProps {

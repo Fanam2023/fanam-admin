@@ -1,27 +1,36 @@
-import {FormSectionProps, GroupForm, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
+import {FormSectionProps, GroupForm} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
+import {useEffect} from "react"
+import {IBeneficiary} from "@custom/utils"
 import {BaseContainer, Slider} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 interface DetailsProp {
-  isVisible: boolean
-  setIsVisible: (show: boolean) => void
+  isVisible?: boolean
+  setIsVisible?: (show: boolean) => void
   title: string
+  wrapperClass?: string
+  onClickCreate?: (payload: IBeneficiary) => void
+  beneficiaryDetails?: IBeneficiary
+  onBack?: () => void
 }
 
-export const CreateBeneficiary = ({isVisible, setIsVisible, title}: DetailsProp) => {
+export const CreateBeneficiaryDetails = ({
+  isVisible,
+  setIsVisible,
+  title,
+  wrapperClass,
+  onClickCreate,
+  beneficiaryDetails,
+  onBack,
+}: DetailsProp) => {
   const {isDesktop} = useResize()
-  const {toggleNotify} = useNotifyPopup()
-  const {errState, onChangeValue, data, onReview, onSubmit} = useHandler(onSuccess, () => {})
+  const {errState, onChangeValue, data, onSubmit, onRouteToOptions} = useHandler()
 
-  function onSuccess() {
-    toggleNotify({
-      type: "success",
-      title: "Beneficiary added",
-      description: "Beneficiary added successfully",
-    })
-  }
+  useEffect(() => {
+    onChangeValue({...beneficiaryDetails})
+  }, [beneficiaryDetails])
 
   const {beneficiary_name, email, relationship, address, country, city, zip_code, phone_no, state, country_code} = data
 
@@ -126,17 +135,32 @@ export const CreateBeneficiary = ({isVisible, setIsVisible, title}: DetailsProp)
     },
   ]
 
+  const onClickSubmit = () => {
+    const payload = onSubmit()
+    if (payload) {
+      onClickCreate(payload)
+      onRouteToOptions()
+    }
+  }
+
   return (
-    <Slider isVisible={isVisible} setIsVisible={setIsVisible} title={title} onClick={onSubmit}>
-      <section>
-        {isDesktop ? (
+    <section>
+      {isDesktop ? (
+        <Slider isVisible={isVisible} setIsVisible={setIsVisible} title={title} onClick={onClickSubmit}>
           <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-        ) : (
-          <BaseContainer buttonText="Submit" header="Beneficiary Details" onClick={onReview} backIcon>
-            <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-          </BaseContainer>
-        )}
-      </section>
-    </Slider>
+        </Slider>
+      ) : (
+        <BaseContainer
+          buttonText="Submit"
+          header="Beneficiary Details"
+          onClick={onClickSubmit}
+          backIcon
+          containerClass={wrapperClass}
+          onBack={onBack}
+          childWrapper={styles.child_wrapper}>
+          <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
+        </BaseContainer>
+      )}
+    </section>
   )
 }

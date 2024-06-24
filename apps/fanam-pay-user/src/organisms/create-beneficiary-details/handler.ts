@@ -1,29 +1,13 @@
-import {JSONObject, useReactQuery} from "@fanam-pkg/core-utils"
+import {JSONObject} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
-import {useMutation} from "@tanstack/react-query"
 import {IBeneficiary} from "@custom/utils"
-import {useBeneficiaryController} from "controller"
-import {QUERY_BENEFICIARY, ROUTE_PAYMENT} from "utils"
+import {ROUTE_PAYMENT_OPTIONS} from "utils"
 
-export const useHandler = (onSuccess: (message: string) => void, onFailure: (message: string) => void) => {
+export const useHandler = () => {
   const {push} = useRouter()
-  const {createBeneficiary} = useBeneficiaryController()
-  const {refreshQuery} = useReactQuery()
 
-  const onRouteToOptions = () => push(ROUTE_PAYMENT)
-
-  const {mutate} = useMutation({
-    mutationKey: [QUERY_BENEFICIARY],
-    mutationFn: createBeneficiary,
-    onSuccess: ({result, errorData}) => {
-      refreshQuery(QUERY_BENEFICIARY)
-      if (result) onSuccess("Beneficiary Successfully created")
-      else onFailure(errorData.message)
-    },
-  })
-
-  const onReview = () => push(ROUTE_PAYMENT)
+  const onRouteToOptions = () => push(ROUTE_PAYMENT_OPTIONS)
 
   const [data, setData] = useState({
     beneficiary_name: "",
@@ -117,18 +101,15 @@ export const useHandler = (onSuccess: (message: string) => void, onFailure: (mes
       zip_code,
       country_code,
     }
-    if (isValid) {
-      mutate(payload)
-      onSuccess("Form submitted successfully!")
-      onRouteToOptions()
-    } else onFailure("Form submission failed. Please check your inputs.")
+
+    return isValid ? payload : null
   }
 
   return {
     errState,
     onChangeValue,
     onSubmit,
-    onReview,
     data,
+    onRouteToOptions,
   }
 }

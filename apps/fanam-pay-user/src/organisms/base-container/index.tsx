@@ -21,6 +21,7 @@ export const BaseContainer = ({
   backIcon = true,
   skipBtn,
   stepIndex,
+  containerClass = "",
 }: BaseContainerProps) => {
   const {goBack} = useHandler()
   const {isDesktop} = useResize()
@@ -47,10 +48,12 @@ export const BaseContainer = ({
   }
 
   return (
-    <section>
+    <section className={containerClass}>
       <header className={`flex-sb-center ${styles.header_wrapper}`}>
         <section className={`flex ${styles.label_wrapper}`}>
-          {backIcon && <ImageView src={assets.ic_back} alt="back_icon" imgSize={24} onClick={goBack || onBack} />}
+          {backIcon && (
+            <ImageView src={assets.ic_back} alt="back_icon" imgSize={24} onClick={onBack ? onBack : goBack} />
+          )}
           <h3>{header}</h3>
         </section>
         {isDesktop ? <></> : !!addButton && <h3 onClick={onClick}>{addButton}</h3>}

@@ -1,11 +1,14 @@
 import {useRouter} from "next/navigation"
-import {ROUTE_PAYMENT_STATUS} from "utils"
+import {ROUTE_BENEFICIARIES, ROUTE_PAYMENT_STATUS} from "utils"
 
 export const useHandler = () => {
   const {push} = useRouter()
-  const onSuccess = () => push(ROUTE_PAYMENT_STATUS)
+  const paymentStatus = () => push(ROUTE_PAYMENT_STATUS)
+
+  const onBack = () => push(ROUTE_BENEFICIARIES)
 
   return {
-    onSuccess,
+    paymentStatus,
+    onBack,
   }
 }
