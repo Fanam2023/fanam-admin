@@ -3,6 +3,7 @@
 import {UIProvider} from "@fanam-pkg/core-ui-sass"
 import "@fanam-pkg/core-ui-sass/src/styles/style.sass"
 import {Nunito, Poppins} from "next/font/google"
+import {CustomProvider} from "@custom/ui"
 import {LibProvider} from "provider"
 import "../../../../packages/custom-ui/src/styles/index.css"
 
@@ -27,7 +28,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="en">
       <body className={`${secondaryFont.variable}  ${primaryFont.variable}`}>
         <LibProvider>
-          <UIProvider>{children}</UIProvider>
+          <UIProvider>
+            <CustomProvider>{children}</CustomProvider>
+          </UIProvider>
         </LibProvider>
       </body>
     </html>

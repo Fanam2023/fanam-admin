@@ -9,7 +9,11 @@ export const SliderProvider = ({children}: PropsWithChildren) => {
     title: "",
   })
 
-  const toggleSlider = (content?: ISlider) => setSlider(content ? content : {children: null})
+  const toggleSlider = (content?: ISlider) => {
+    console.log(">>>>>>>>>>>>>>>>")
+
+    setSlider(content ? content : {children: null})
+  }
 
   const value: SliderProps = {slider, toggleSlider}
 

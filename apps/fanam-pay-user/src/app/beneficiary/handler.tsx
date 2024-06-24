@@ -5,6 +5,7 @@ import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {IBeneficiary} from "@custom/utils"
 import {useBeneficiaryController} from "controller"
+import {CreateBeneficiaryDetails} from "organisms"
 import {QUERY_BENEFICIARY, ROUTE_ADD_BENEFICIARY} from "utils"
 
 export const useHandler = (onSuccess: (message: string) => void, onFailure: (message: string) => void) => {
@@ -53,8 +54,11 @@ export const useHandler = (onSuccess: (message: string) => void, onFailure: (mes
   })
 
   const onNav = () => {
-    if (isDesktop) toggleSlider()
-    else push(ROUTE_ADD_BENEFICIARY)
+    if (isDesktop) {
+      console.log("INSIDE")
+
+      toggleSlider({children: <CreateBeneficiaryDetails title="Add Beneficiary" onClickCreate={addBeneficiary} />})
+    } else push(ROUTE_ADD_BENEFICIARY)
   }
 
   const filteredBeneficiaries = beneficiaries?.filter(
