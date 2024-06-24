@@ -20,7 +20,7 @@ const BeneficiaryDetail = () => {
 
   return (
     <CreateBeneficiaryDetails
-      title={"Add Beneficiary Details"}
+      title="Add Beneficiary Details"
       onClickCreate={payload => payload && mutate({...payload, beneficiary_id: beneficiaryId as string})}
       beneficiaryDetails={beneficiaryDetails}
       onBack={goToBack}

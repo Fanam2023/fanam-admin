@@ -4,7 +4,7 @@ import {UIProvider} from "@fanam-pkg/core-ui-sass"
 import "@fanam-pkg/core-ui-sass/src/styles/style.sass"
 import {Nunito, Poppins} from "next/font/google"
 import {LibProvider} from "provider"
-import "../styles/index.css"
+import "../../../../packages/custom-ui/src/styles/index.css"
 
 const primaryFont = Poppins({
   weight: ["400"],

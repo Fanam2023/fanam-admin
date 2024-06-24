@@ -4,12 +4,12 @@ import {CreateBeneficiaryDetails} from "organisms"
 import {useHandler} from "./handler"
 
 const CreateBeneficiary = () => {
-  const {mutate} = useHandler(
+  const {addBeneficiary} = useHandler(
     message => console.log(message),
     message => console.log(message)
   )
 
-  return <CreateBeneficiaryDetails title={"Add Beneficiary Details"} onClickCreate={mutate} />
+  return <CreateBeneficiaryDetails title="Add Beneficiary Details" onClickCreate={addBeneficiary} />
 }
 
 export default CreateBeneficiary

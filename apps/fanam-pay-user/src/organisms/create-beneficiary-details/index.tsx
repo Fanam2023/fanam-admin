@@ -1,8 +1,7 @@
 import {FormSectionProps, GroupForm} from "@fanam-pkg/core-ui-sass"
-import {useResize} from "@fanam-pkg/core-utils"
 import {useEffect} from "react"
 import {IBeneficiary} from "@custom/utils"
-import {BaseContainer, Slider} from "organisms"
+import {BaseContainer} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
@@ -16,16 +15,7 @@ interface DetailsProp {
   onBack?: () => void
 }
 
-export const CreateBeneficiaryDetails = ({
-  isVisible,
-  setIsVisible,
-  title,
-  wrapperClass,
-  onClickCreate,
-  beneficiaryDetails,
-  onBack,
-}: DetailsProp) => {
-  const {isDesktop} = useResize()
+export const CreateBeneficiaryDetails = ({wrapperClass, onClickCreate, beneficiaryDetails, onBack}: DetailsProp) => {
   const {errState, onChangeValue, data, onSubmit, onRouteToOptions} = useHandler()
 
   useEffect(() => {
@@ -144,23 +134,15 @@ export const CreateBeneficiaryDetails = ({
   }
 
   return (
-    <section>
-      {isDesktop ? (
-        <Slider isVisible={isVisible} setIsVisible={setIsVisible} title={title} onClick={onClickSubmit}>
-          <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-        </Slider>
-      ) : (
-        <BaseContainer
-          buttonText="Submit"
-          header="Beneficiary Details"
-          onClick={onClickSubmit}
-          backIcon
-          containerClass={wrapperClass}
-          onBack={onBack}
-          childWrapper={styles.child_wrapper}>
-          <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-        </BaseContainer>
-      )}
-    </section>
+    <BaseContainer
+      buttonText="Submit"
+      header="Beneficiary Details"
+      onClick={onClickSubmit}
+      backIcon
+      containerClass={wrapperClass}
+      onBack={onBack}
+      childWrapper={styles.child_wrapper}>
+      <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
+    </BaseContainer>
   )
 }

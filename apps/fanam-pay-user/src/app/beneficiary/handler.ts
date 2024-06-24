@@ -1,7 +1,8 @@
-import {useReactQuery} from "@fanam-pkg/core-utils"
+import {useReactQuery, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
+import {useSlider} from "@custom/ui"
 import {IBeneficiary} from "@custom/utils"
 import {useBeneficiaryController} from "controller"
 import {QUERY_BENEFICIARY, ROUTE_ADD_BENEFICIARY} from "utils"
@@ -13,6 +14,18 @@ export const useHandler = (onSuccess: (message: string) => void, onFailure: (mes
   const [currentBeneficiary, setCurrentBeneficiary] = useState(null)
   const {getAllBeneficiary, createBeneficiary, updateBeneficiary} = useBeneficiaryController()
   const {refreshQuery} = useReactQuery()
+  const {isDesktop} = useResize()
+  const {toggleSlider} = useSlider()
+
+  const {mutate: addBeneficiary} = useMutation({
+    mutationKey: [QUERY_BENEFICIARY],
+    mutationFn: createBeneficiary,
+    onSuccess: ({result, errorData}) => {
+      refreshQuery(QUERY_BENEFICIARY)
+      if (result) onSuccess("Beneficiary Successfully updated")
+      else onFailure(errorData.message)
+    },
+  })
 
   const {data: beneficiaries} = useQuery({
     queryKey: [QUERY_BENEFICIARY],
@@ -39,7 +52,10 @@ export const useHandler = (onSuccess: (message: string) => void, onFailure: (mes
     },
   })
 
-  const onNav = () => push(ROUTE_ADD_BENEFICIARY)
+  const onNav = () => {
+    if (isDesktop) toggleSlider()
+    else push(ROUTE_ADD_BENEFICIARY)
+  }
 
   const filteredBeneficiaries = beneficiaries?.filter(
     beneficiary =>
@@ -47,9 +63,7 @@ export const useHandler = (onSuccess: (message: string) => void, onFailure: (mes
       beneficiary.email.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
-  const onChangeSearch = (value: string) => {
-    setSearchTerm(value)
-  }
+  const onChangeSearch = (value: string) => setSearchTerm(value)
 
   const onEditBeneficiary = (beneficiary: IBeneficiary) => {
     setCurrentBeneficiary(beneficiary)

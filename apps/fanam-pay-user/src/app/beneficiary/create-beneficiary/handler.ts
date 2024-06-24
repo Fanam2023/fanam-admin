@@ -7,7 +7,7 @@ export const useHandler = (onSuccess: (message: string) => void, onFailure: (mes
   const {createBeneficiary} = useBeneficiaryController()
   const {refreshQuery} = useReactQuery()
 
-  const {mutate} = useMutation({
+  const {mutate: addBeneficiary} = useMutation({
     mutationKey: [QUERY_BENEFICIARY],
     mutationFn: createBeneficiary,
     onSuccess: ({result, errorData}) => {
@@ -18,6 +18,6 @@ export const useHandler = (onSuccess: (message: string) => void, onFailure: (mes
   })
 
   return {
-    mutate,
+    addBeneficiary,
   }
 }

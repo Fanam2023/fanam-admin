@@ -5,7 +5,7 @@ import {useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {IBeneficiary} from "@custom/utils"
 import assets from "assets"
-import {BaseContainer, CreateBeneficiaryDetails, ManageMembers} from "organisms"
+import {BaseContainer, ManageMembers} from "organisms"
 import {routeToBeneficiaryDetails} from "utils"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
@@ -57,14 +57,6 @@ const Beneficiary = () => {
       onClick={onNav}
       backIcon
       stepIndex={4}>
-      <CreateBeneficiaryDetails
-        isVisible={isSliderVisible}
-        setIsVisible={setIsSliderVisible}
-        title="Add New Beneficiary"
-        wrapperClass={styles.slider_card}
-        onClickCreate={currentBeneficiary ? updateApi : mutate}
-        beneficiaryDetails={currentBeneficiary}
-      />
       <section className={`flex ${styles.search_container}`}>
         <TextField
           type="text"
