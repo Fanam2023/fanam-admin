@@ -1,4 +1,4 @@
-export interface IBeneficiary {
+export type IBeneficiary = {
   beneficiary_id?: string
   beneficiary_name?: string
   email?: string
