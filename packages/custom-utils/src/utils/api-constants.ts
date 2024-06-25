@@ -7,3 +7,5 @@ export const API_USER = `${API_AUTH}/me`
 export const API_LOCATION = "/location"
 export const API_COUNTRIES = `${API_LOCATION}/all-countries`
 export const apiCountries = (country_id: string) => `${API_LOCATION}/countries/${country_id}`
+export const API_PAYMENT = "/payment"
+export const API_FXRATE = `${API_PAYMENT}/fx-rate`

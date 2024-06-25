@@ -19,6 +19,9 @@ const HomePage = () => {
     isSliderVisible,
     setIsSliderVisible,
     data,
+    handleSourceAmountChange,
+    sourceAmount,
+    destinationAmount,
   } = useHandler(selectedCountryId)
   console.log(">>>>>", data)
 
@@ -66,7 +69,11 @@ const HomePage = () => {
               <h3 className={styles.currency_text}>INR</h3>
             </section>
             <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
-            <TextField wrapperClass={styles.text_field_wrapper} />
+            <TextField
+              wrapperClass={styles.text_field_wrapper}
+              value={sourceAmount}
+              onChange={e => handleSourceAmountChange(e.target.value)}
+            />
           </section>
           <h5 className={`bold ${styles.recipient_text}`}>Recipient receives</h5>
           <section className={`flex ${styles.input_container}`}>
@@ -80,7 +87,7 @@ const HomePage = () => {
               onClick={() => setIsSliderVisible(true)}
               imgSize={15}
             />
-            <TextField wrapperClass={styles.text_field_wrapper} />
+            <TextField wrapperClass={styles.text_field_wrapper} value={destinationAmount} />
           </section>
         </section>
       </section>

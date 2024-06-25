@@ -9,20 +9,18 @@ const CountryList = ({onClick}) => {
   if (error) return <div>Error loading countries</div>
 
   const renderCountries = ({country_id, country_name}: ICountry) => (
-    <ul
+    <li
       key={country_id}
       className={`${styles.country_wrapper} ${country_id === selectedCountryId ? styles.selected : ""}`}
       onClick={() => onClick(country_id)}>
       {country_name}
-    </ul>
+    </li>
   )
 
   return (
     <section>
       <h3>Select a country</h3>
-      <section className={styles.layout_wrapper}>
-        {countries?.length ? countries.map((country: ICountry) => renderCountries(country)) : <></>}
-      </section>
+      <section className={styles.layout_wrapper}>{countries?.map(renderCountries)}</section>
     </section>
   )
 }
