@@ -27,11 +27,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body className={`${secondaryFont.variable}  ${primaryFont.variable}`}>
-        <LibProvider>
-          <UIProvider>
-            <CustomProvider>{children}</CustomProvider>
-          </UIProvider>
-        </LibProvider>
+        <CustomProvider>
+          <LibProvider>
+            <UIProvider>{children}</UIProvider>
+          </LibProvider>
+        </CustomProvider>
       </body>
     </html>
   )

@@ -1,18 +1,9 @@
 import {FormSectionProps, GroupForm, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {useResize} from "@fanam-pkg/core-utils"
 import {BaseContainer} from "organisms/base-container"
-import {Slider} from "organisms/slider"
 import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
-interface DetailsProp {
-  isVisible: boolean
-  setIsVisible: (show: boolean) => void
-  title: string
-}
-
-export const CreateRecipient = ({isVisible, setIsVisible, title}: DetailsProp) => {
-  const {isDesktop} = useResize()
+export const CreateRecipient = () => {
   const {toggleNotify} = useNotifyPopup()
   const {errState, onChangeValue, data, onSubmit} = useHandler(onSuccess, () => {})
 
@@ -110,16 +101,8 @@ export const CreateRecipient = ({isVisible, setIsVisible, title}: DetailsProp) =
   ]
 
   return (
-    <Slider isVisible={isVisible} setIsVisible={setIsVisible} title={title} onClick={onSubmit}>
-      <section>
-        {isDesktop ? (
-          <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-        ) : (
-          <BaseContainer buttonText="Submit" header="Beneficiary Details" backIcon>
-            <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-          </BaseContainer>
-        )}
-      </section>
-    </Slider>
+    <BaseContainer buttonText="Submit" header="Beneficiary Details" backIcon>
+      <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
+    </BaseContainer>
   )
 }

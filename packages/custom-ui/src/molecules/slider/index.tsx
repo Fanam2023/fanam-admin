@@ -1,10 +1,9 @@
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {assets} from "../../assets"
-import {useSlider} from "../../hooks"
+import {SliderProps} from "../../props"
 import styles from "./styles.module.sass"
 
-export const Slider = () => {
-  const {slider, toggleSlider} = useSlider()
+export const Slider = ({slider, toggleSlider}: SliderProps) => {
   const {children, title, onSubmit} = slider
 
   return (
@@ -17,7 +16,10 @@ export const Slider = () => {
           </header>
           <section className={styles.child_wrapper}>{children}</section>
           <footer className={`flex ${styles.footer_wrapper}`}>
-            <Button buttonType="primary-outlined" wrapperClass={styles.btn_wrapper}>
+            <Button
+              buttonType="primary-outlined"
+              wrapperClass={styles.btn_wrapper}
+              onClick={toggleSlider.bind(null, null)}>
               Back
             </Button>
             <Button wrapperClass={styles.btn_wrapper} onClick={onSubmit}>

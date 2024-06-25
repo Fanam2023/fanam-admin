@@ -55,16 +55,14 @@ export const useHandler = (onSuccess: (message: string) => void, onFailure: (mes
 
   const onNav = () => {
     if (isDesktop) {
-      console.log("INSIDE")
-
-      toggleSlider({children: <CreateBeneficiaryDetails title="Add Beneficiary" onClickCreate={addBeneficiary} />})
+      toggleSlider({children: <CreateBeneficiaryDetails onClickCreate={addBeneficiary} />, title: "Add Beneficiary"})
     } else push(ROUTE_ADD_BENEFICIARY)
   }
 
   const filteredBeneficiaries = beneficiaries?.filter(
-    beneficiary =>
-      beneficiary.beneficiary_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      beneficiary.email.toLowerCase().includes(searchTerm.toLowerCase())
+    ({beneficiary_name, email}) =>
+      beneficiary_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      email.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   const onChangeSearch = (value: string) => setSearchTerm(value)

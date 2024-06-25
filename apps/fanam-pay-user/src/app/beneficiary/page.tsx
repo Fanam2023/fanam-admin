@@ -65,7 +65,7 @@ const Beneficiary = () => {
           leadingIcon={assets.ic_search}
           onChangeData={onChangeSearch}></TextField>
         {isDesktop && (
-          <h4 className={styles.add_text} onClick={setIsSliderVisible.bind(null, true)}>
+          <h4 className={styles.add_text} onClick={onNav}>
             Add
           </h4>
         )}
