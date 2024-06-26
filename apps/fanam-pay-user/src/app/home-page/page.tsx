@@ -1,7 +1,6 @@
 "use client"
 
 import {DropDown, ImageView, RadioButton, TextField} from "@fanam-pkg/core-ui-sass"
-import {useState} from "react"
 import assets from "assets"
 import {BaseContainer, Slider} from "organisms"
 import CountryList from "organisms/pop-up"
@@ -9,7 +8,6 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const HomePage = () => {
-  const [selectedCountryId, setSelectedCountryId] = useState<string | null>(null)
   const {
     onAdd,
     recipientType,
@@ -19,15 +17,12 @@ const HomePage = () => {
     isSliderVisible,
     setIsSliderVisible,
     data,
-    onChangeAmount,
+    setSourceAmount,
     sourceAmount,
     destinationAmount,
-  } = useHandler(selectedCountryId)
+    handleClick,
+  } = useHandler()
 
-  const handleClick = (country_id: string) => {
-    setSelectedCountryId(country_id)
-    setIsSliderVisible(false)
-  }
   return (
     <BaseContainer
       header="Cross Border Remittance"
@@ -46,7 +41,7 @@ const HomePage = () => {
           />
         </section>
         <section className={`flex-col ${styles.button_container}`}>
-          <h4 className="semi-bold"> Recipient type</h4>
+          <h4 className="semi-bold">Recipient type</h4>
           <RadioButton
             items={recipientType}
             onSelectItems={onSelectRecipientType}
@@ -71,7 +66,7 @@ const HomePage = () => {
             <TextField
               wrapperClass={styles.text_field_wrapper}
               value={sourceAmount}
-              onChange={e => onChangeAmount(e.target.value)}
+              onChange={e => setSourceAmount(e.target.value)}
             />
           </section>
           <h5 className={`bold ${styles.recipient_text}`}>Recipient receives</h5>

@@ -3,7 +3,7 @@ import {useQuery} from "@tanstack/react-query"
 import {useLocationController} from "controller/location"
 import {QUERY_COUNTRIES} from "utils"
 
-const useCountries = () => {
+const useHandler = () => {
   const {getAllCountries} = useLocationController()
   const [selectedCountryId, setSelectedCountryId] = useState<number | null>(null)
 
@@ -29,4 +29,4 @@ const useCountries = () => {
   }
 }
 
-export default useCountries
+export default useHandler

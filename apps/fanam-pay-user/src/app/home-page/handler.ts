@@ -1,19 +1,20 @@
 import {IFormData, useReactQuery} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import {usePaymentController} from "controller"
 import {useLocationController} from "controller/location"
 import {QUERY_COUNTRIES, QUERY_EXCHANGE, ROUTE_ATTACHMENT} from "utils"
 
-export const useHandler = (country_id: string | null) => {
+export const useHandler = () => {
   const {push} = useRouter()
   const {getFxRate} = usePaymentController()
   const {refreshQuery} = useReactQuery()
   const {getByCountryId} = useLocationController()
+  const [selectedCountryId, setSelectedCountryId] = useState<string | null>(null)
   const [sourceAmount, setSourceAmount] = useState("")
   const [destinationAmount, setDestinationAmount] = useState("")
-  const [datta, setDatta] = useState({
+  const [formData, setFormData] = useState({
     product_code: "BANK",
     source_currency: "INR",
     destination_currency: "",
@@ -39,13 +40,12 @@ export const useHandler = (country_id: string | null) => {
     setRecipientType(selectedItems)
   }
 
-  //route to attachment-page
   const onAdd = () => push(ROUTE_ATTACHMENT)
 
   const {data} = useQuery({
-    queryKey: [QUERY_COUNTRIES, country_id],
-    queryFn: () => getByCountryId(country_id),
-    enabled: !!country_id,
+    queryKey: [QUERY_COUNTRIES, selectedCountryId],
+    queryFn: () => getByCountryId(selectedCountryId),
+    enabled: !!selectedCountryId,
   })
 
   const currency = data?.currency
@@ -53,7 +53,7 @@ export const useHandler = (country_id: string | null) => {
   const {mutate: checkFxRate} = useMutation({
     mutationKey: [QUERY_EXCHANGE],
     mutationFn: getFxRate,
-    onSuccess: ({result, errorData}) => {
+    onSuccess: ({result}) => {
       refreshQuery(QUERY_EXCHANGE)
       if (result) {
         const {destination_amount} = result
@@ -62,21 +62,24 @@ export const useHandler = (country_id: string | null) => {
     },
   })
 
-  const onChangeAmount = (amount: string) => {
-    const parsedAmount = parseFloat(amount)
-    if (!isNaN(parsedAmount)) {
-      setSourceAmount(parsedAmount.toString())
+  useEffect(() => {
+    const parsedAmount = parseFloat(sourceAmount)
+    const isValidAmount = !isNaN(parsedAmount)
+    setSourceAmount(isValidAmount ? parsedAmount.toString() : "")
+    setDestinationAmount(isValidAmount ? formData.destination_amount : "")
+    if (isValidAmount)
       checkFxRate({
-        source_currency: datta.source_currency,
+        source_currency: formData.source_currency,
         source_amount: parsedAmount.toString(),
         destination_currency: currency || "USD",
-        product_code: datta.product_code,
-        destination_amount: datta.destination_amount,
+        product_code: formData.product_code,
+        destination_amount: formData.destination_amount,
       })
-    } else {
-      setSourceAmount("")
-      setDestinationAmount("")
-    }
+  }, [sourceAmount, formData, currency, checkFxRate])
+
+  const handleClick = (country_id: string) => {
+    setSelectedCountryId(country_id)
+    setIsSliderVisible(false)
   }
 
   return {
@@ -88,8 +91,9 @@ export const useHandler = (country_id: string | null) => {
     isSliderVisible,
     setIsSliderVisible,
     data,
-    onChangeAmount,
+    setSourceAmount,
     sourceAmount,
     destinationAmount,
+    handleClick,
   }
 }
