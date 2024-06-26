@@ -1,14 +1,11 @@
 "use client"
 
 import {ImageView} from "@fanam-pkg/core-ui-sass"
-import {useResize} from "@fanam-pkg/core-utils"
 import assets from "assets"
 import {ManageMembersProps} from "props"
 import styles from "./style.module.sass"
 
 export const ManageMembers = ({title, onEdit, description}: ManageMembersProps) => {
-  const {isDesktop} = useResize()
-
   return (
     <section className={`flex-col-center ${styles.container}`}>
       <section className={`flex-col ${styles.beneficiary_container}`}>
