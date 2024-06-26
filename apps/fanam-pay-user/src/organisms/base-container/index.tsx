@@ -1,7 +1,7 @@
 "use client"
 
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
-import {useResize} from "@fanam-pkg/core-utils/src/hooks"
+import {useResize} from "@fanam-pkg/core-utils"
 import assets from "assets"
 import {IStepper} from "model"
 import {BaseContainerProps} from "props"
