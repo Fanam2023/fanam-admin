@@ -1,10 +1,10 @@
 import {useCookies, useReactQuery, useStorage} from "@fanam-pkg/core-utils"
 import {PropsWithChildren, useState} from "react"
-import {ILogOutPayload} from "@custom/utils"
+import {ILogOutPayload, ITransaction, IUser} from "@custom/utils"
 import {SingletonContext} from "../contexts"
 import {useAuthController} from "../controller"
-import {ISingleton, IUser} from "../model"
-import {COOKIE_ACCESS_TOKEN, COOKIE_FCM, COOKIE_REFRESH_TOKEN} from "../utils"
+import {ISingleton} from "../model"
+import {COOKIE_ACCESS_TOKEN, COOKIE_FCM, COOKIE_REFRESH_TOKEN, COOKIE_TRANSACTION_ID} from "../utils"
 
 export const SingletonProvider = ({children}: PropsWithChildren) => {
   const {setCookie, getCookie, removeCookie} = useCookies()
@@ -13,11 +13,21 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   const {clearQueryCache} = useReactQuery()
   const {clearAllStorage} = useStorage()
   const [user, setUser] = useState<IUser | null>(null)
+  const [transData, setTransData] = useState<ITransaction | null>(null)
   const [token, setToken] = useState<string | null>(getCookie<string>(COOKIE_ACCESS_TOKEN))
+  const [transId, setTransId] = useState<string | null>(getCookie<string>(COOKIE_TRANSACTION_ID))
   const [refreshToken, setRefreshToken] = useState<string | null>(getCookie<string>(COOKIE_REFRESH_TOKEN))
   // const {data: userRes} = useQuery({enabled: !!token && !user, queryKey: [QUERY_USER], queryFn: getUser})
+  // const {data: transRes} = useQuery({enabled: !!transId && !transData, queryKey: [QUERY_TRANSACTION], queryFn: getTransaction})
 
   const updateUserData = (user: IUser) => setUser(user)
+
+  const updateTransData = (data: ITransaction) => setTransData(data)
+
+  const updateTransId = (transId: string) => {
+    setCookie(COOKIE_TRANSACTION_ID, transId)
+    setTransId(transId)
+  }
 
   const updateToken = (accessToken: string) => {
     setCookie(COOKIE_ACCESS_TOKEN, accessToken)
@@ -32,6 +42,10 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   // useEffect(() => {
   //   if (userRes) setUser(userRes)
   // }, [userRes])
+
+  // useEffect(() => {
+  //   if (transRes) updateTransData(transRes)
+  // }, [transRes])
 
   const singOutUser = async () => {
     const fcmToken = getCookie(COOKIE_FCM)
@@ -51,9 +65,13 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   const value: ISingleton = {
     // user,
     token,
+    transId,
+    transData,
     updateUserData,
     singOutUser,
     updateToken,
+    updateTransId,
+    updateTransData,
     // isValidator,
     // isEditor,
     // isSuperAdmin,

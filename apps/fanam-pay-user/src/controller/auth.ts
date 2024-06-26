@@ -1,6 +1,5 @@
-import {API_LOGIN, API_LOGOUT, API_USER, ILogOutPayload, IResponseLogin} from "@custom/utils"
+import {API_LOGIN, API_LOGOUT, API_USER, ILogOutPayload, IResponseLogin, IUser} from "@custom/utils"
 import {useSingleton} from "hooks"
-import {IUser} from "model"
 import {useApi} from "./api"
 
 export const useAuthController = () => {

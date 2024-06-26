@@ -3,8 +3,9 @@
 import {UIProvider} from "@fanam-pkg/core-ui-sass"
 import "@fanam-pkg/core-ui-sass/src/styles/style.sass"
 import {Nunito, Poppins} from "next/font/google"
+import {CustomProvider} from "@custom/ui"
 import {LibProvider} from "provider"
-import "../styles/index.css"
+import "../../../../packages/custom-ui/src/styles/index.css"
 
 const primaryFont = Poppins({
   weight: ["400"],
@@ -26,9 +27,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body className={`${secondaryFont.variable}  ${primaryFont.variable}`}>
-        <LibProvider>
-          <UIProvider>{children}</UIProvider>
-        </LibProvider>
+        <CustomProvider>
+          <LibProvider>
+            <UIProvider>{children}</UIProvider>
+          </LibProvider>
+        </CustomProvider>
       </body>
     </html>
   )

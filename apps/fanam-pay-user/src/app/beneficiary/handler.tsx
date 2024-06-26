@@ -3,8 +3,10 @@ import {useReactQuery, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
+import {useSlider} from "@custom/ui"
 import {IBeneficiary} from "@custom/utils"
 import {useBeneficiaryController} from "controller"
+import {CreateBeneficiaryDetails} from "organisms"
 import {QUERY_BENEFICIARY, ROUTE_ADD_BENEFICIARY, routeToBeneficiaryDetails} from "utils"
 
 export const useHandler = () => {
@@ -12,6 +14,7 @@ export const useHandler = () => {
   const {push} = useRouter()
   const {toggleNotify} = useNotifyPopup()
   const {refreshQuery} = useReactQuery()
+  const {toggleSlider} = useSlider()
   const [isSliderVisible, setIsSliderVisible] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [currentBeneficiary, setCurrentBeneficiary] = useState(null)
@@ -32,19 +35,19 @@ export const useHandler = () => {
     })
   }
 
-  const {data: beneficiaries} = useQuery({
-    queryKey: [QUERY_BENEFICIARY],
-    queryFn: getAllBeneficiary,
-  })
-
-  const {mutate} = useMutation({
+  const {mutate: addBeneficiary} = useMutation({
     mutationKey: [QUERY_BENEFICIARY],
     mutationFn: createBeneficiary,
     onSuccess: ({result, errorData}) => {
       refreshQuery(QUERY_BENEFICIARY)
-      if (result) onSuccess("Beneficiary Successfully created")
+      if (result) onSuccess("Beneficiary Successfully updated")
       else onFailure(errorData.message)
     },
+  })
+
+  const {data: beneficiaries} = useQuery({
+    queryKey: [QUERY_BENEFICIARY],
+    queryFn: getAllBeneficiary,
   })
 
   const {mutate: updateApi} = useMutation({
@@ -57,13 +60,22 @@ export const useHandler = () => {
     },
   })
 
-  const onChangeSearch = (value: string) => setSearchTerm(value)
+  const onNav = () => {
+    if (isDesktop) {
+      toggleSlider({
+        children: <CreateBeneficiaryDetails onClickCreate={addBeneficiary} title={"Add Beneficiary"} />,
+        title: "Add Beneficiary",
+      })
+    } else push(ROUTE_ADD_BENEFICIARY)
+  }
 
   const filteredBeneficiaries = beneficiaries?.filter(
-    beneficiary =>
-      beneficiary.beneficiary_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      beneficiary.email.toLowerCase().includes(searchTerm.toLowerCase())
+    ({beneficiary_name, email}) =>
+      beneficiary_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      email.toLowerCase().includes(searchTerm.toLowerCase())
   )
+
+  const onChangeSearch = (value: string) => setSearchTerm(value)
 
   const onEditBeneficiary = (beneficiary: IBeneficiary) => {
     setCurrentBeneficiary(beneficiary)
@@ -79,13 +91,11 @@ export const useHandler = () => {
     }
   }
 
-  const onNav = () => push(ROUTE_ADD_BENEFICIARY)
-
   return {
     onNav,
     isSliderVisible,
     setIsSliderVisible,
-    mutate,
+    addBeneficiary,
     beneficiaries: filteredBeneficiaries,
     onChangeSearch,
     currentBeneficiary,

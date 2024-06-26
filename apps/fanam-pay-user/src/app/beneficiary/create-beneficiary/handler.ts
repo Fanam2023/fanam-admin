@@ -24,7 +24,7 @@ export const useHandler = () => {
     })
   }
 
-  const {mutate} = useMutation({
+  const {mutate: addBeneficiary} = useMutation({
     mutationKey: [QUERY_BENEFICIARY],
     mutationFn: createBeneficiary,
     onSuccess: ({result, errorData}) => {
@@ -35,6 +35,6 @@ export const useHandler = () => {
   })
 
   return {
-    mutate,
+    addBeneficiary,
   }
 }
