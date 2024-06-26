@@ -2,30 +2,24 @@ import {IFormData, useReactQuery} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
-import {useFxController} from "controller"
-import {useCountryController} from "controller/country"
-import {QUERY_COUNTRY, QUERY_CURRENCY, ROUTE_ATTACHMENT} from "utils"
+import {usePaymentController} from "controller"
+import {useLocationController} from "controller/location"
+import {QUERY_COUNTRIES, QUERY_EXCHANGE, ROUTE_ATTACHMENT} from "utils"
 
-export const useHandler = (
-  country_id: string | null,
-  onSuccess: (message: string) => void,
-  onFailure: (message: string) => void
-) => {
+export const useHandler = (country_id: string | null) => {
   const {push} = useRouter()
-  const {createCurrency} = useFxController()
+  const {getFxRate} = usePaymentController()
   const {refreshQuery} = useReactQuery()
-  const {getByCountryId} = useCountryController()
+  const {getByCountryId} = useLocationController()
   const [sourceAmount, setSourceAmount] = useState("")
   const [destinationAmount, setDestinationAmount] = useState("")
-  const [state, setState] = useState({
+  const [datta, setDatta] = useState({
     product_code: "BANK",
     source_currency: "INR",
     destination_currency: "",
     destination_amount: "1",
     source_amount: "",
   })
-  console.log(">>", sourceAmount, destinationAmount)
-
   const [isSliderVisible, setIsSliderVisible] = useState(false)
   const [senderType, setSenderType] = useState<IFormData[]>([
     {label: "Individual", isSelected: false},
@@ -49,43 +43,36 @@ export const useHandler = (
   const onAdd = () => push(ROUTE_ATTACHMENT)
 
   const {data} = useQuery({
-    queryKey: [QUERY_COUNTRY, country_id],
+    queryKey: [QUERY_COUNTRIES, country_id],
     queryFn: () => getByCountryId(country_id),
     enabled: !!country_id,
   })
 
   const currency = data?.currency
-  console.log("currency", currency)
 
-  const {mutate} = useMutation({
-    mutationKey: [QUERY_CURRENCY],
-    mutationFn: createCurrency,
+  const {mutate: checkFxRate} = useMutation({
+    mutationKey: [QUERY_EXCHANGE],
+    mutationFn: getFxRate,
     onSuccess: ({result, errorData}) => {
-      refreshQuery(QUERY_CURRENCY)
+      refreshQuery(QUERY_EXCHANGE)
       if (result) {
         const {destination_amount} = result
         setDestinationAmount(destination_amount || "")
-        console.log("sdhds", destination_amount)
-
-        onSuccess("Successfully Converted")
-      } else {
-        onFailure(errorData.message)
       }
     },
   })
 
-  const handleSourceAmountChange = (amount: string) => {
+  const onChangeAmount = (amount: string) => {
     const parsedAmount = parseFloat(amount)
     if (!isNaN(parsedAmount)) {
       setSourceAmount(parsedAmount.toString())
-      if (sourceAmount)
-        mutate({
-          source_currency: state.source_currency,
-          source_amount: parsedAmount.toString(),
-          destination_currency: currency || "USD",
-          product_code: state.product_code,
-          destination_amount: state.destination_amount,
-        })
+      checkFxRate({
+        source_currency: datta.source_currency,
+        source_amount: parsedAmount.toString(),
+        destination_currency: currency || "USD",
+        product_code: datta.product_code,
+        destination_amount: datta.destination_amount,
+      })
     } else {
       setSourceAmount("")
       setDestinationAmount("")
@@ -101,7 +88,7 @@ export const useHandler = (
     isSliderVisible,
     setIsSliderVisible,
     data,
-    handleSourceAmountChange,
+    onChangeAmount,
     sourceAmount,
     destinationAmount,
   }

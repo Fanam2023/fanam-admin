@@ -19,11 +19,10 @@ const HomePage = () => {
     isSliderVisible,
     setIsSliderVisible,
     data,
-    handleSourceAmountChange,
+    onChangeAmount,
     sourceAmount,
     destinationAmount,
   } = useHandler(selectedCountryId)
-  console.log(">>>>>", data)
 
   const handleClick = (country_id: string) => {
     setSelectedCountryId(country_id)
@@ -72,7 +71,7 @@ const HomePage = () => {
             <TextField
               wrapperClass={styles.text_field_wrapper}
               value={sourceAmount}
-              onChange={e => handleSourceAmountChange(e.target.value)}
+              onChange={e => onChangeAmount(e.target.value)}
             />
           </section>
           <h5 className={`bold ${styles.recipient_text}`}>Recipient receives</h5>

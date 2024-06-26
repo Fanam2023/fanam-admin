@@ -1,7 +1,7 @@
 /* Query Storage Constants here */
 export const QUERY_USER = "__FANAM_OPPTRR__"
-export const QUERY_COUNTRY = "__FANAM_AAPTTR"
-export const QUERY_CURRENCY = "__FANAM_PPRRTT"
+export const QUERY_COUNTRIES = "__FANAM_AAPTTR"
+export const QUERY_EXCHANGE = "__FANAM_PPRRTT"
 
 /* Cookie Storage Constant Keys here */
 export const COOKIE_ACCESS_TOKEN = "__FANAM_YTGUYG__"

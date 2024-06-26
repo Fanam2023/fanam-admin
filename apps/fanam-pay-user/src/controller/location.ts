@@ -1,7 +1,7 @@
 import {API_COUNTRIES, ICountries, ICountry, apiCountries} from "@custom/utils"
 import {useApi} from "./api"
 
-export const useCountryController = () => {
+export const useLocationController = () => {
   const {getRequest} = useApi()
 
   const getAllCountries = async () => {

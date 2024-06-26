@@ -20,7 +20,7 @@ const CountryList = ({onClick}) => {
   return (
     <section>
       <h3>Select a country</h3>
-      <section className={styles.layout_wrapper}>{countries?.map(renderCountries)}</section>
+      <ul className={styles.layout_wrapper}>{countries?.map(renderCountries)}</ul>
     </section>
   )
 }

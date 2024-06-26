@@ -1,10 +1,10 @@
 import {useState} from "react"
 import {useQuery} from "@tanstack/react-query"
-import {useCountryController} from "controller/country"
-import {QUERY_COUNTRY} from "utils"
+import {useLocationController} from "controller/location"
+import {QUERY_COUNTRIES} from "utils"
 
 const useCountries = () => {
-  const {getAllCountries} = useCountryController()
+  const {getAllCountries} = useLocationController()
   const [selectedCountryId, setSelectedCountryId] = useState<number | null>(null)
 
   const {
@@ -12,11 +12,11 @@ const useCountries = () => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: [QUERY_COUNTRY],
+    queryKey: [QUERY_COUNTRIES],
     queryFn: getAllCountries,
   })
 
-  const handleClick = (countryId: number) => {
+  const onSelect = (countryId: number) => {
     setSelectedCountryId(prevId => (prevId === countryId ? null : countryId))
   }
 
@@ -24,7 +24,7 @@ const useCountries = () => {
     countries,
     isLoading,
     error,
-    handleClick,
+    onSelect,
     selectedCountryId,
   }
 }
