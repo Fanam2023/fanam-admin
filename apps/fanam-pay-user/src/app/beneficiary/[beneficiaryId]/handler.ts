@@ -1,13 +1,12 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {useReactQuery} from "@fanam-pkg/core-utils"
-import {useParams, useRouter} from "next/navigation"
+import {useParams} from "next/navigation"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import {useBeneficiaryController} from "controller"
-import {QUERY_BENEFICIARY, ROUTE_BENEFICIARIES} from "utils"
+import {QUERY_BENEFICIARY} from "utils"
 
 export const useHandler = () => {
   const {beneficiaryId} = useParams()
-  const {push} = useRouter()
   const {toggleNotify} = useNotifyPopup()
   const {refreshQuery} = useReactQuery()
   const {getByBeneficiaryId, updateBeneficiary} = useBeneficiaryController()
@@ -42,12 +41,9 @@ export const useHandler = () => {
     queryFn: () => getByBeneficiaryId(beneficiaryId as string),
   })
 
-  const onBack = () => push(ROUTE_BENEFICIARIES)
-
   return {
     onUpdate,
     beneficiary,
-    onBack,
     beneficiaryId,
   }
 }
