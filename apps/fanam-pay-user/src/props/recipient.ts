@@ -5,7 +5,7 @@ export interface RecipientPreviewProps {
   value: string
 }
 
-export interface RecipientDetailsProps {
+export interface RecipientDetailsProp {
   isVisible?: boolean
   setIsVisible?: (show: boolean) => void
   title: string
