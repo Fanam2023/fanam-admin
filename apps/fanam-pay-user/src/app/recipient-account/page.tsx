@@ -6,7 +6,7 @@ import {useHandler} from "./handler"
 import styles from "./recipient.module.sass"
 
 const RecipientAccountDetail = () => {
-  const {errState, onChangeValue, data, onSubmit} = useHandler(
+  const {errState, onChangeValue} = useHandler(
     message => console.log(message),
     message => console.log(message)
   )

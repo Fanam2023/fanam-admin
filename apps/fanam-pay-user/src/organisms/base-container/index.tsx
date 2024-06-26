@@ -1,12 +1,12 @@
 "use client"
 
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
-import {useResize} from "@fanam-pkg/core-utils/src/hooks"
+import {useResize} from "@fanam-pkg/core-utils"
 import assets from "assets"
 import {IStepper} from "model"
-import {BaseConatinerProps} from "props"
+import {BaseContainerProps} from "props"
 import {SIDE_BAR} from "utils"
-import {useBaseContainer} from "./handler"
+import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({
@@ -20,14 +20,18 @@ export const BaseContainer = ({
   childWrapper = "",
   backIcon = true,
   skipBtn,
-}: BaseConatinerProps) => {
-  const {goBack, selIndex} = useBaseContainer()
+  stepIndex,
+  containerClass = "",
+  onSubmit,
+  onAdd,
+}: BaseContainerProps) => {
+  const {goBack} = useHandler()
   const {isDesktop} = useResize()
 
   const renderSideBar = ({title, description}: IStepper, index: number) => {
     const isLastStep = index < SIDE_BAR.length - 1
-    const isActive = index === selIndex
-    const isCompleted = index < selIndex
+    const isActive = index === stepIndex
+    const isCompleted = typeof stepIndex === "number" ? index < stepIndex : SIDE_BAR.length - 1 === index
 
     return (
       <section className={styles.content_wrapper} key={index}>
@@ -46,13 +50,15 @@ export const BaseContainer = ({
   }
 
   return (
-    <section>
+    <section className={containerClass}>
       <header className={`flex-sb-center ${styles.header_wrapper}`}>
         <section className={`flex ${styles.label_wrapper}`}>
-          {backIcon && <ImageView src={assets.ic_back} alt="back_icon" imgSize={24} onClick={goBack || onBack} />}
+          {backIcon && (
+            <ImageView src={assets.ic_back} alt="back_icon" imgSize={24} onClick={onBack ? onBack : goBack} />
+          )}
           <h3>{header}</h3>
         </section>
-        {isDesktop ? <></> : !!addButton && <h3 onClick={onClick}>{addButton}</h3>}
+        {isDesktop ? <></> : !!addButton && <h3 onClick={onAdd}>{addButton}</h3>}
       </header>
       <section className={styles.main_wrapper}>
         {isDesktop ? (
@@ -74,7 +80,7 @@ export const BaseContainer = ({
                     {skipBtn}
                   </Button>
                 )}
-                <Button onClick={onClick} wrapperClass={styles.button_wrapper}>
+                <Button onClick={onSubmit} wrapperClass={styles.button_wrapper}>
                   {buttonText}
                 </Button>
               </>

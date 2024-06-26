@@ -1,0 +1,36 @@
+@use "../../styles/index" as *
+.page_container
+  padding: $size-12px $size-24px
+  width: 80%
+  overflow-y: scroll
+
+.search_container
+  width: 40%
+  margin:
+    top: $size-20px
+    left: 30%
+  gap: $size-20px
+
+.add_text
+  color: $primary
+  font-weight: $semi-bold
+  cursor: pointer
+
+.save_text
+  margin:
+    left: 30%
+    top: $size-24px
+
+@include mixin-responsive
+  .page_container
+    width: 100%
+
+  .slider_card
+    display: none
+
+  .search_container
+    width: 100%
+    margin-left: 0
+
+  .save_text
+    margin-left: 0

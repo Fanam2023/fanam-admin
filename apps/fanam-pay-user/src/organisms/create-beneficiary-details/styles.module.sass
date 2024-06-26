@@ -1,0 +1,18 @@
+@use "../../styles/index" as *
+
+@mixin grid-3
+  display: grid
+
+.beneficiary_address_wrapper
+  @include grid-3
+  gap: $size-24px
+  margin: $size-24px 0
+
+@include mixin-responsive
+  .input_wrapper
+    margin: $size-40px
+
+  .child_wrapper
+    height: 100vh
+    overflow-y: scroll
+    padding-bottom: 15%

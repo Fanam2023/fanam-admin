@@ -7,7 +7,7 @@ export interface BottomNavbarProps {
   path: string
 }
 
-export interface BaseConatinerProps {
+export interface BaseContainerProps {
   children?: ReactNode
   footerChild?: ReactNode
   addButton?: string
@@ -18,6 +18,10 @@ export interface BaseConatinerProps {
   backIcon?: boolean
   onBack?: () => void
   skipBtn?: string
+  stepIndex?: number | "success" | "pending" | "failed"
+  containerClass?: string
+  onSubmit?: () => void
+  onAdd?: () => void
 }
 
 export interface FooterPaymentProps {
