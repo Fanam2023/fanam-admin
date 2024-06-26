@@ -6,7 +6,7 @@ import {useHandler} from "./handler"
 const CreateBeneficiary = () => {
   const {addBeneficiary} = useHandler()
 
-  return <CreateBeneficiaryDetails title="Add Beneficiary Details" onClickCreate={addBeneficiary} />
+  return <CreateBeneficiaryDetails onClickCreate={addBeneficiary} />
 }
 
 export default CreateBeneficiary

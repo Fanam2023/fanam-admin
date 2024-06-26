@@ -1,7 +1,6 @@
 "use client"
 
 import {TextField} from "@fanam-pkg/core-ui-sass"
-import {useResize} from "@fanam-pkg/core-utils"
 import {IBeneficiary} from "@custom/utils"
 import assets from "assets"
 import {BaseContainer, ManageMembers} from "organisms"
@@ -9,17 +8,7 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const Beneficiary = () => {
-  const {isDesktop} = useResize()
-  const {
-    onNav,
-    isSliderVisible,
-    setIsSliderVisible,
-    beneficiaries,
-    onChangeSearch,
-    currentBeneficiary,
-    routeToDetails,
-    updateApi,
-  } = useHandler()
+  const {onNav, beneficiaries, onChangeSearch, routeToDetails, isDesktop} = useHandler()
 
   const renderBeneficiary = ({beneficiary_name, email, beneficiary_id}: IBeneficiary) => (
     <ManageMembers description={email} title={beneficiary_name} onEdit={routeToDetails.bind(null, beneficiary_id)} />
@@ -27,7 +16,7 @@ const Beneficiary = () => {
 
   return (
     <BaseContainer
-      header={"Manage Beneficiary"}
+      header="Manage Beneficiary"
       addButton="Add"
       childWrapper={styles.page_container}
       onAdd={onNav}
@@ -41,7 +30,7 @@ const Beneficiary = () => {
           leadingIcon={assets.ic_search}
           onChangeData={onChangeSearch}></TextField>
         {isDesktop && (
-          <h4 className={styles.add_text} onClick={setIsSliderVisible.bind(null, true)}>
+          <h4 className={styles.add_text} onClick={onNav}>
             Add
           </h4>
         )}

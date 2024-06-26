@@ -27,22 +27,15 @@
   box-shadow: $size-1px $size-4px $size-16px $size-1px rgb($dark-border-grey, $alpha-three)
 
 .child_wrapper
-  margin: $size-32px $size-24px
+  margin:
+    right: $size-24px
+    left: $size-24px
+    bottom: 10%
   max-height: 100vh
   overflow-y: scroll
 
 .title
   font-weight: $semi-bold
-
-.footer_wrapper
-  justify-content: flex-end
-  gap: $size-20px
-  box-shadow: 0 -5px 5px -5px $dark-border-grey
-  padding: $size-10px
-
-.btn_wrapper
-  height: $size-40px
-  margin-top: $size-10px
 
 @keyframes rightAligned
   0%

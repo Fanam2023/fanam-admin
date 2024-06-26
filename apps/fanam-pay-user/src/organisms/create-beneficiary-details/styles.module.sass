@@ -8,6 +8,20 @@
   gap: $size-24px
   margin: $size-24px 0
 
+.footer_wrapper
+  position: absolute
+  bottom: 0
+  justify-content: flex-end
+  gap: $size-20px
+  box-shadow: 0 -5px 5px -5px $dark-border-grey
+  padding: $size-8px
+  width: 95%
+  background: $white
+
+.btn_wrapper
+  height: $size-40px
+  margin-top: $size-10px
+
 @include mixin-responsive
   .input_wrapper
     margin: $size-40px
@@ -16,3 +30,4 @@
     height: 100vh
     overflow-y: scroll
     padding-bottom: 15%
+    width: 100%

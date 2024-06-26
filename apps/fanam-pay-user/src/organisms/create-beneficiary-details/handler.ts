@@ -1,13 +1,16 @@
 import {FormSectionProps} from "@fanam-pkg/core-ui-sass"
-import {JSONObject} from "@fanam-pkg/core-utils"
+import {JSONObject, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
+import {useSlider} from "@custom/ui"
 import {IBeneficiary} from "@custom/utils"
 import {ROUTE_PAYMENT_OPTIONS} from "utils"
 import styles from "./styles.module.sass"
 
 export const useHandler = () => {
   const {push} = useRouter()
+  const {isDesktop} = useResize()
+  const {toggleSlider} = useSlider()
 
   const onRouteToOptions = () => push(ROUTE_PAYMENT_OPTIONS)
 
@@ -211,9 +214,11 @@ export const useHandler = () => {
   ]
 
   return {
+    formElements,
+    isDesktop,
     onChangeValue,
     onSubmit,
     onRouteToOptions,
-    formElements,
+    toggleSlider,
   }
 }

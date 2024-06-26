@@ -1,10 +1,9 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {useReactQuery, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
-import {useState} from "react"
+import {useMemo, useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
-import {IBeneficiary} from "@custom/utils"
 import {useBeneficiaryController} from "controller"
 import {CreateBeneficiaryDetails} from "organisms"
 import {QUERY_BENEFICIARY, ROUTE_ADD_BENEFICIARY, routeToBeneficiaryDetails} from "utils"
@@ -15,10 +14,9 @@ export const useHandler = () => {
   const {toggleNotify} = useNotifyPopup()
   const {refreshQuery} = useReactQuery()
   const {toggleSlider} = useSlider()
-  const [isSliderVisible, setIsSliderVisible] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
-  const [currentBeneficiary, setCurrentBeneficiary] = useState(null)
-  const {getAllBeneficiary, createBeneficiary, updateBeneficiary} = useBeneficiaryController()
+  const [beneficiaryId, setBeneficiaryId] = useState<string | null>(null)
+  const {getAllBeneficiary, createBeneficiary, updateBeneficiary, getByBeneficiaryId} = useBeneficiaryController()
 
   function onSuccess(message: string) {
     toggleNotify({
@@ -50,7 +48,7 @@ export const useHandler = () => {
     queryFn: getAllBeneficiary,
   })
 
-  const {mutate: updateApi} = useMutation({
+  const {mutate: onUpdate} = useMutation({
     mutationKey: [QUERY_BENEFICIARY],
     mutationFn: updateBeneficiary,
     onSuccess: ({result, errorData}) => {
@@ -60,46 +58,53 @@ export const useHandler = () => {
     },
   })
 
+  const {data: beneficiary} = useQuery({
+    queryKey: [QUERY_BENEFICIARY],
+    queryFn: () => getByBeneficiaryId(beneficiaryId as string),
+  })
+
   const onNav = () => {
     if (isDesktop) {
       toggleSlider({
-        children: <CreateBeneficiaryDetails onClickCreate={addBeneficiary} title={"Add Beneficiary"} />,
+        children: <CreateBeneficiaryDetails onClickCreate={addBeneficiary} />,
         title: "Add Beneficiary",
       })
     } else push(ROUTE_ADD_BENEFICIARY)
   }
 
-  const filteredBeneficiaries = beneficiaries?.filter(
-    ({beneficiary_name, email}) =>
-      beneficiary_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      email.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  const filteredBeneficiaries = useMemo(() => {
+    return beneficiaries?.filter(
+      ({beneficiary_name, email}) =>
+        beneficiary_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        email.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  }, [beneficiaries, searchTerm])
 
   const onChangeSearch = (value: string) => setSearchTerm(value)
 
-  const onEditBeneficiary = (beneficiary: IBeneficiary) => {
-    setCurrentBeneficiary(beneficiary)
-    setIsSliderVisible(true)
-  }
-
   const routeToDetails = (beneficiaryId: string) => {
-    const beneficiary = beneficiaries.find(b => b.beneficiary_id === beneficiaryId)
+    setBeneficiaryId(beneficiaryId)
     if (isDesktop) {
-      onEditBeneficiary(beneficiary)
+      toggleSlider({
+        children: (
+          <CreateBeneficiaryDetails
+            onClickCreate={payload => payload && onUpdate({...payload, beneficiary_id: beneficiaryId as string})}
+            beneficiaryDetails={beneficiary}
+          />
+        ),
+        title: "Add Beneficiary",
+      })
     } else {
       push(routeToBeneficiaryDetails(beneficiaryId))
     }
   }
 
   return {
-    onNav,
-    isSliderVisible,
-    setIsSliderVisible,
-    addBeneficiary,
     beneficiaries: filteredBeneficiaries,
+    isDesktop,
+    onNav,
+    addBeneficiary,
     onChangeSearch,
-    currentBeneficiary,
     routeToDetails,
-    updateApi,
   }
 }
