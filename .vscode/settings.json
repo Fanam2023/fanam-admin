@@ -152,6 +152,7 @@
     "molecules": "shared",
     "props": "typescript",
     "model": "typescript",
+    "custom-ui": "lib",
     "custom-utils": "lib",
     "fanam-pay-admin": "next",
     "fanam-pay-user": "next",

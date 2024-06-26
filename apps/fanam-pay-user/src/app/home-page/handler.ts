@@ -16,7 +16,12 @@ export const useHandler = () => {
   ])
 
   const onSelectSenderType = (selectedItems: IFormData[]) => {
+    const updatedLabels = selectedItems
+      .map(({isSelected, label}) => (isSelected === true ? label : ""))
+      .filter(label => label !== "")
+      .toString()
     setSenderType(selectedItems)
+    console.log(updatedLabels)
   }
 
   const onSelectRecipientType = (selectedItems: IFormData[]) => {
