@@ -9,4 +9,5 @@ export interface IBeneficiary {
   state?: string
   city?: string
   zip_code?: string
+  relationship?: string
 }

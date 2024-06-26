@@ -22,6 +22,8 @@ export const BaseContainer = ({
   skipBtn,
   stepIndex,
   containerClass = "",
+  onSubmit,
+  onAdd,
 }: BaseContainerProps) => {
   const {goBack} = useHandler()
   const {isDesktop} = useResize()
@@ -56,7 +58,7 @@ export const BaseContainer = ({
           )}
           <h3>{header}</h3>
         </section>
-        {isDesktop ? <></> : !!addButton && <h3 onClick={onClick}>{addButton}</h3>}
+        {isDesktop ? <></> : !!addButton && <h3 onClick={onAdd}>{addButton}</h3>}
       </header>
       <section className={styles.main_wrapper}>
         {isDesktop ? (
@@ -78,7 +80,7 @@ export const BaseContainer = ({
                     {skipBtn}
                   </Button>
                 )}
-                <Button onClick={onClick} wrapperClass={styles.button_wrapper}>
+                <Button onClick={onSubmit} wrapperClass={styles.button_wrapper}>
                   {buttonText}
                 </Button>
               </>

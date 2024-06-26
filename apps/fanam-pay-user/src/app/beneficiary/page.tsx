@@ -1,18 +1,15 @@
 "use client"
 
-import {TextField, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
+import {TextField} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
-import {useRouter} from "next/navigation"
 import {IBeneficiary} from "@custom/utils"
 import assets from "assets"
 import {BaseContainer, CreateBeneficiaryDetails, ManageMembers} from "organisms"
-import {routeToBeneficiaryDetails} from "utils"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const Beneficiary = () => {
-  const {toggleNotify} = useNotifyPopup()
-  const {push} = useRouter()
+  const {isDesktop} = useResize()
   const {
     onNav,
     isSliderVisible,
@@ -21,29 +18,9 @@ const Beneficiary = () => {
     beneficiaries,
     onChangeSearch,
     currentBeneficiary,
-    onEditBeneficiary,
+    routeToDetails,
     updateApi,
-  } = useHandler(onSuccess, () => {})
-  const {isDesktop} = useResize()
-
-  // const routeToDetails = (beneficiaryId: string) => push(routeToBeneficiaryDetails(beneficiaryId))
-
-  const routeToDetails = (beneficiaryId: string) => {
-    const beneficiary = beneficiaries.find(b => b.beneficiary_id === beneficiaryId)
-    if (isDesktop) {
-      onEditBeneficiary(beneficiary)
-    } else {
-      push(routeToBeneficiaryDetails(beneficiaryId))
-    }
-  }
-
-  function onSuccess() {
-    toggleNotify({
-      type: "success",
-      title: "Beneficiary added",
-      description: "Beneficiary added successfully",
-    })
-  }
+  } = useHandler()
 
   const renderBeneficiary = ({beneficiary_name, email, beneficiary_id}: IBeneficiary) => (
     <ManageMembers description={email} title={beneficiary_name} onEdit={routeToDetails.bind(null, beneficiary_id)} />
@@ -54,7 +31,7 @@ const Beneficiary = () => {
       header={"Manage Beneficiary"}
       addButton="Add"
       childWrapper={styles.page_container}
-      onClick={onNav}
+      onAdd={onNav}
       backIcon
       stepIndex={4}>
       <CreateBeneficiaryDetails

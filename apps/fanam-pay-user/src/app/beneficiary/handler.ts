@@ -1,18 +1,36 @@
-import {useReactQuery} from "@fanam-pkg/core-utils"
+import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
+import {useReactQuery, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import {IBeneficiary} from "@custom/utils"
 import {useBeneficiaryController} from "controller"
-import {QUERY_BENEFICIARY, ROUTE_ADD_BENEFICIARY} from "utils"
+import {QUERY_BENEFICIARY, ROUTE_ADD_BENEFICIARY, routeToBeneficiaryDetails} from "utils"
 
-export const useHandler = (onSuccess: (message: string) => void, onFailure: (message: string) => void) => {
+export const useHandler = () => {
+  const {isDesktop} = useResize()
   const {push} = useRouter()
+  const {toggleNotify} = useNotifyPopup()
+  const {refreshQuery} = useReactQuery()
   const [isSliderVisible, setIsSliderVisible] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [currentBeneficiary, setCurrentBeneficiary] = useState(null)
   const {getAllBeneficiary, createBeneficiary, updateBeneficiary} = useBeneficiaryController()
-  const {refreshQuery} = useReactQuery()
+
+  function onSuccess(message: string) {
+    toggleNotify({
+      type: "success",
+      title: message,
+      description: "Beneficiary added successfully",
+    })
+  }
+
+  function onFailure(message: string) {
+    toggleNotify({
+      type: "error",
+      title: message,
+    })
+  }
 
   const {data: beneficiaries} = useQuery({
     queryKey: [QUERY_BENEFICIARY],
@@ -39,7 +57,7 @@ export const useHandler = (onSuccess: (message: string) => void, onFailure: (mes
     },
   })
 
-  const onNav = () => push(ROUTE_ADD_BENEFICIARY)
+  const onChangeSearch = (value: string) => setSearchTerm(value)
 
   const filteredBeneficiaries = beneficiaries?.filter(
     beneficiary =>
@@ -47,14 +65,21 @@ export const useHandler = (onSuccess: (message: string) => void, onFailure: (mes
       beneficiary.email.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
-  const onChangeSearch = (value: string) => {
-    setSearchTerm(value)
-  }
-
   const onEditBeneficiary = (beneficiary: IBeneficiary) => {
     setCurrentBeneficiary(beneficiary)
     setIsSliderVisible(true)
   }
+
+  const routeToDetails = (beneficiaryId: string) => {
+    const beneficiary = beneficiaries.find(b => b.beneficiary_id === beneficiaryId)
+    if (isDesktop) {
+      onEditBeneficiary(beneficiary)
+    } else {
+      push(routeToBeneficiaryDetails(beneficiaryId))
+    }
+  }
+
+  const onNav = () => push(ROUTE_ADD_BENEFICIARY)
 
   return {
     onNav,
@@ -64,7 +89,7 @@ export const useHandler = (onSuccess: (message: string) => void, onFailure: (mes
     beneficiaries: filteredBeneficiaries,
     onChangeSearch,
     currentBeneficiary,
-    onEditBeneficiary,
+    routeToDetails,
     updateApi,
   }
 }

@@ -83,7 +83,7 @@ const PaymentStatus = () => {
       footerChild={DownloadReceipt()}
       childWrapper={styles.page_container}
       skipBtn="Download Receipt"
-      stepIndex={"pending"}>
+      stepIndex="pending">
       <section className={`flex-col-center ${styles.page_wrapper}`}>
         <section className={`flex-col-center ${styles.payment_status_wrapper}`}>
           <ImageView src={bigIcon} alt={"status-icon"} imgSize={56} />

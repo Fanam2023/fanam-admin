@@ -1,19 +1,33 @@
+import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {useReactQuery} from "@fanam-pkg/core-utils"
-import {useRouter} from "next/navigation"
+import {useParams, useRouter} from "next/navigation"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import {useBeneficiaryController} from "controller"
-import {QUERY_BENEFICIARY} from "utils"
+import {QUERY_BENEFICIARY, ROUTE_BENEFICIARIES} from "utils"
 
-export const useHandler = (
-  onSuccess: (message: string) => void,
-  onFailure: (message: string) => void,
-  beneficiaryId: string
-) => {
+export const useHandler = () => {
+  const {beneficiaryId} = useParams()
   const {push} = useRouter()
-  const {getByBeneficiaryId, updateBeneficiary} = useBeneficiaryController()
+  const {toggleNotify} = useNotifyPopup()
   const {refreshQuery} = useReactQuery()
+  const {getByBeneficiaryId, updateBeneficiary} = useBeneficiaryController()
 
-  const {mutate} = useMutation({
+  function onSuccess(message: string) {
+    toggleNotify({
+      type: "success",
+      title: message,
+      description: "Beneficiary Details has been updated.",
+    })
+  }
+
+  function onFailure(message: string) {
+    toggleNotify({
+      type: "error",
+      title: message,
+    })
+  }
+
+  const {mutate: onUpdate} = useMutation({
     mutationKey: [QUERY_BENEFICIARY],
     mutationFn: updateBeneficiary,
     onSuccess: ({result, errorData}) => {
@@ -23,13 +37,17 @@ export const useHandler = (
     },
   })
 
-  const {data: beneficiaryDetails} = useQuery({
+  const {data: beneficiary} = useQuery({
     queryKey: [QUERY_BENEFICIARY],
-    queryFn: () => getByBeneficiaryId(beneficiaryId),
+    queryFn: () => getByBeneficiaryId(beneficiaryId as string),
   })
 
+  const onBack = () => push(ROUTE_BENEFICIARIES)
+
   return {
-    mutate,
-    beneficiaryDetails,
+    onUpdate,
+    beneficiary,
+    onBack,
+    beneficiaryId,
   }
 }
