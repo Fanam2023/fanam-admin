@@ -1,6 +1,6 @@
 import {IFormData, JSONObject, useReactQuery} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {usePaymentController} from "controller"
@@ -11,7 +11,6 @@ export const useHandler = () => {
   const {push} = useRouter()
   const {getFxRate} = usePaymentController()
   const {refreshQuery} = useReactQuery()
-  const [sourceAmount, setSourceAmount] = useState("")
   const [destinationAmount, setDestinationAmount] = useState("")
   const [data, setData] = useState({
     product_code: "BANK",
@@ -47,7 +46,6 @@ export const useHandler = () => {
     setRecipientType(selectedItems)
   }
 
-  //route to attachment-page
   const onAdd = () => push(ROUTE_ATTACHMENT)
 
   const {mutate: checkFxRate} = useMutation({
@@ -62,20 +60,17 @@ export const useHandler = () => {
     },
   })
 
-  const onChangeAmount = (amount: string) => {
-    const parsedAmount = parseFloat(amount)
-    if (!isNaN(parsedAmount)) {
-      setSourceAmount(parsedAmount.toString())
+  useEffect(() => {
+    const parsedAmount = parseFloat(source_amount)
+    const isValidAmount = !isNaN(parsedAmount)
+    // setDestinationAmount(isValidAmount ? formData.destination_amount : "")
+    if (isValidAmount)
       checkFxRate({
         source_currency,
         source_amount: parsedAmount.toString(),
         destination_currency,
       })
-    } else {
-      setSourceAmount("")
-      setDestinationAmount("")
-    }
-  }
+  }, [source_amount, checkFxRate])
 
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
 
@@ -93,8 +88,6 @@ export const useHandler = () => {
     isSliderVisible,
     setIsSliderVisible,
     data,
-    onChangeAmount,
-    sourceAmount,
     destinationAmount,
     showCountries,
     onChangeValue,

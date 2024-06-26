@@ -14,8 +14,6 @@ const HomePage = () => {
     senderType,
     onSelectSenderType,
     data,
-    onChangeAmount,
-    sourceAmount,
     destinationAmount,
     showCountries,
     onChangeValue,
@@ -42,7 +40,7 @@ const HomePage = () => {
           />
         </section>
         <section className={`flex-col ${styles.button_container}`}>
-          <h4 className="semi-bold"> Recipient type</h4>
+          <h4 className="semi-bold">Recipient type</h4>
           <RadioButton
             items={recipientType}
             onSelectItems={onSelectRecipientType}
