@@ -3,7 +3,7 @@ import {useResize} from "@fanam-pkg/core-utils"
 import {useEffect} from "react"
 import {BaseContainer} from "organisms/base-container"
 import {Slider} from "organisms/slider"
-import {RecipientDetailsProps} from "props"
+import {RecipientDetailsProp} from "props"
 import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
@@ -15,7 +15,7 @@ export const CreateRecipientDetails = ({
   recipientDetails,
   wrapperClass,
   onBack,
-}: RecipientDetailsProps) => {
+}: RecipientDetailsProp) => {
   const {isDesktop} = useResize()
   const {formElements, onChangeValue, onSubmit} = useHandler()
 
