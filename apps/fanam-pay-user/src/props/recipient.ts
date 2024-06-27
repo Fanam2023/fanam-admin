@@ -14,3 +14,7 @@ export interface RecipientDetailsProp {
   recipientDetails?: IRecipient
   onBack?: () => void
 }
+
+export interface RecipientCardProps {
+  onEdit?: (id?: string) => void
+}
