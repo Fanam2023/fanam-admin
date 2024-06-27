@@ -21,28 +21,19 @@ const useHandler = (onSuccess: (message: string) => void, onFailure: (message: s
     const file = event.target.files[0]
     if (file) {
       const fileSizeInKB = (file.size / 1024).toFixed(2)
-      if (type === "front") {
-        setFrontFile({name: file.name, size: `${fileSizeInKB} KB`})
-      } else if (type === "back") {
-        setBackFile({name: file.name, size: `${fileSizeInKB} KB`})
-      }
+      if (type === "front") setFrontFile({name: file.name, size: `${fileSizeInKB} KB`})
+      else if (type === "back") setBackFile({name: file.name, size: `${fileSizeInKB} KB`})
     }
   }
 
   const onRemove = type => {
-    if (type === "front") {
-      setFrontFile(null)
-    } else if (type === "back") {
-      setBackFile(null)
-    }
+    if (type === "front") setFrontFile(null)
+    else if (type === "back") setBackFile(null)
   }
 
   const onBrowse = type => {
-    if (type === "front") {
-      frontFileInputRef.current.click()
-    } else if (type === "back") {
-      backFileInputRef.current.click()
-    }
+    if (type === "front") frontFileInputRef.current.click()
+    else if (type === "back") backFileInputRef.current.click()
   }
 
   const uploadSections = [
