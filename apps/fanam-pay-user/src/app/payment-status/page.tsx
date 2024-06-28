@@ -93,6 +93,7 @@ const PaymentStatus = () => {
         <section className={`flex-col ${styles.payment_details_wrapper}`}>
           <h4>Payment Details</h4>
           <ul>{PAYMENT_DETAILS.map(renderPaymentDetails)}</ul>
+          <hr className={styles.separator} />
           <section className={`flex-sb-center ${styles.total}`}>
             <h5>Total Payment</h5>
             <h5>{"$ 707"}</h5>
