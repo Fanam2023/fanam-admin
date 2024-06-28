@@ -3,6 +3,7 @@ import ic_account from "./icons/ic_account.svg"
 import ic_arrow_theme from "./icons/ic_arrow_theme.svg"
 import ic_back from "./icons/ic_back.svg"
 import ic_checkbox from "./icons/ic_checkbox.svg"
+import ic_cloudUpload from "./icons/ic_cloudUpload.svg"
 import ic_debit_card from "./icons/ic_debit_card.svg"
 import ic_edit from "./icons/ic_edit.svg"
 import ic_edit_theme from "./icons/ic_edit_theme.svg"
@@ -52,6 +53,7 @@ const assets = {
   ic_edit_theme,
   ic_india_flag,
   ic_us_flag,
+  ic_cloudUpload,
 }
 
 export default assets
