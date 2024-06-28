@@ -7,7 +7,19 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const HomePage = () => {
-  const {onAdd, recipientType, onSelectRecipientType, senderType, onSelectSenderType} = useHandler()
+  const {
+    onAdd,
+    recipientType,
+    onSelectRecipientType,
+    senderType,
+    onSelectSenderType,
+    data,
+    destinationAmount,
+    showCountries,
+    onChangeValue,
+  } = useHandler()
+
+  const {destination_currency, source_currency, source_amount} = data
 
   return (
     <BaseContainer
@@ -28,7 +40,7 @@ const HomePage = () => {
           />
         </section>
         <section className={`flex-col ${styles.button_container}`}>
-          <h4 className="semi-bold"> Recipient type</h4>
+          <h4 className="semi-bold">Recipient type</h4>
           <RadioButton
             items={recipientType}
             onSelectItems={onSelectRecipientType}
@@ -40,7 +52,8 @@ const HomePage = () => {
         <DropDown
           options={["dfjd", "dfdj"]}
           wrapperClass={styles.drop_down_wrapper}
-          label={"Purpose of Sending Money"}
+          label="Purpose of Sending Money"
+          onChangeData={() => {}}
         />
         <h4 className={`semi-bold ${styles.conversion_text}`}>Conversion Estimate</h4>
         <section className={styles.conversion_container}>
@@ -48,19 +61,25 @@ const HomePage = () => {
           <section className={`flex ${styles.input_container}`}>
             <section className={`flex ${styles.flag_wrapper} ${styles.sender_wrapper}`}>
               <ImageView src={assets.ic_india_flag} alt="country_flag" imgSize={40} />
-              <h3 className={styles.currency_text}>INR</h3>
+              <h3 className={styles.currency_text}>{source_currency}</h3>
               <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
             </section>
-            <TextField wrapperClass={styles.text_field_wrapper} />
+            <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
+            <TextField
+              wrapperClass={styles.text_field_wrapper}
+              value={source_amount}
+              name="source_amount"
+              onChangeData={onChangeValue}
+            />
           </section>
           <h5 className={`bold ${styles.recipient_text}`}>Recipient receives</h5>
           <section className={`flex ${styles.input_container}`}>
             <section className={`flex ${styles.flag_wrapper} `}>
               <ImageView src={assets.ic_us_flag} alt="country_flag" imgSize={40} />
-              <h3 className={styles.receiver_text}>USD</h3>
-              <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
+              <h3 className={styles.currency_text}>{destination_currency}</h3>
             </section>
-            <TextField wrapperClass={styles.text_field_wrapper} />
+            <ImageView src={assets.ic_grey_arrow} alt="down-arrow" onClick={showCountries} imgSize={15} />
+            <TextField wrapperClass={styles.text_field_wrapper} value={destinationAmount} />
           </section>
         </section>
       </section>

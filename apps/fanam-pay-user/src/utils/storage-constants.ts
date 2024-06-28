@@ -1,5 +1,7 @@
 /* Query Storage Constants here */
 export const QUERY_USER = "__FANAM_OPPTRR__"
+export const QUERY_COUNTRIES = "__FANAM_AAPTTR"
+export const QUERY_EXCHANGE = "__FANAM_PPRRTT"
 export const QUERY_TRANSACTION = "__FANAM_VGYBHU__"
 export const QUERY_RECIPIENT = "__FANAM_ACTRYG__"
 export const QUERY_BENEFICIARY = "__FANAM_BCFGGQ__"
