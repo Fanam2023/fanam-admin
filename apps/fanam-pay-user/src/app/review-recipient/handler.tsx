@@ -13,11 +13,10 @@ export const useHandler = () => {
   const onToggle = (id: string) => {
     if (isDesktop) {
       toggleSlider({
-        children: <CreateRecipientDetails title={"Edit Recipient Details"} />,
+        children: <CreateRecipientDetails />,
         title: "Edit Recipient Details",
       })
-    }
-    push(routeToRecipientDetails(id))
+    } else push(routeToRecipientDetails(id))
   }
 
   return {

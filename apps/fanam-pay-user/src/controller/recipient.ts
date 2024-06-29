@@ -21,7 +21,7 @@ export const useRecipientController = () => {
   }
 
   const getByRecipientId = async (recipient_id: string) => {
-    const {result} = await getRequest(apiRecipient(recipient_id))
+    const {result} = await getRequest<IRecipient>(apiRecipient(recipient_id))
     return result
   }
 

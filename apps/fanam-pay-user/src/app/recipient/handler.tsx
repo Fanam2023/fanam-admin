@@ -3,9 +3,11 @@ import {useReactQuery, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
+import {useSlider} from "@custom/ui"
 import {IRecipient} from "@custom/utils"
 import {useRecipientController} from "controller"
-import {QUERY_RECIPIENT, ROUTE_ADD_RECIPIENT, ROUTE_REVIEW, routeToRecipientDetails} from "utils"
+import {CreateRecipientDetails} from "organisms"
+import {QUERY_RECIPIENT, ROUTE_ADD_RECIPIENT, ROUTE_RECIPIENTS, ROUTE_REVIEW, routeToRecipientDetails} from "utils"
 
 export const useHandler = () => {
   const {isDesktop} = useResize()
@@ -16,6 +18,7 @@ export const useHandler = () => {
   const [currentRecipient, setCurrentRecipient] = useState(null)
   const [searchQuery, setSearchQuery] = useState("")
   const {getAllRecipient, createRecipient} = useRecipientController()
+  const {toggleSlider} = useSlider()
 
   function onSuccess(message: string) {
     toggleNotify({
@@ -73,6 +76,15 @@ export const useHandler = () => {
 
   const onRouteToReview = () => push(ROUTE_REVIEW)
 
+  const onAdd = () => {
+    if (isDesktop) {
+      toggleSlider({
+        children: <CreateRecipientDetails />,
+        title: "Edit Recipient Details",
+      })
+    } else push(ROUTE_RECIPIENTS)
+  }
+
   return {
     isSliderVisible,
     recipients: filteredRecipients,
@@ -83,5 +95,6 @@ export const useHandler = () => {
     mutate,
     currentRecipient,
     routeToDetails,
+    onAdd,
   }
 }
