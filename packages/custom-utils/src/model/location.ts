@@ -16,3 +16,8 @@ export interface IState {
   state_id: number
   state_name: string
 }
+
+export interface ICity {
+  city_id: number
+  city_name: string
+}

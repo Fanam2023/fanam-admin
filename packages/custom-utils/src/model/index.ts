@@ -1,6 +1,7 @@
 export * from "./api-model"
 export * from "./auth"
 export * from "./beneficiary"
+export * from "./common"
 export * from "./enum"
 export * from "./location"
 export * from "./recipient"

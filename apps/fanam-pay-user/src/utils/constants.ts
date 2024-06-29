@@ -117,3 +117,5 @@ export const DEFAULT_DESTINATION_COUNTRY: ICountry = {
 export const PURPOSES_INDIVIDUAL = ["Tuition Fee", "Rent", "Family Expense", "Medical", "Travel", "Insurance", "Others"]
 
 export const PURPOSES_BUSINESS = ["Working Capital", "Rent", "Salary", "Others"]
+
+export const ID_PROOFS = ["Passport", "Driving License", "Aadhaar"]

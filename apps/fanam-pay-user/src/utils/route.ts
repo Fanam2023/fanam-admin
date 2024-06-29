@@ -1,4 +1,5 @@
 export const ROUTE_HOME = "/home-page"
+export const ROUTE_SENDER = "/sender-form"
 export const ROUTE_ATTACHMENT = "/add-attachment"
 export const ROUTE_RECEPIENTS = "/manage-recipient"
 export const ROUTE_BENEFICIARIES = "/beneficiary"

@@ -1,9 +1,19 @@
-import {API_LOGIN, API_LOGOUT, API_USER, ILogOutPayload, IPayloadLogin, IResponseLogin, IUser} from "@custom/utils"
+import {
+  API_LOGIN,
+  API_LOGOUT,
+  API_SYNC_USER,
+  API_USER,
+  ILogOutPayload,
+  IPayloadLogin,
+  IPayloadSyncUser,
+  IResponseLogin,
+  IUser,
+} from "@custom/utils"
 import {useSingleton} from "hooks"
 import {useApi} from "./api"
 
 export const useAuthController = () => {
-  const {postRequest, getRequest} = useApi()
+  const {postRequest, getRequest, putRequest} = useApi()
   const {updateToken, updateRefreshToken} = useSingleton()
 
   const login = async (payload: IPayloadLogin) => {
@@ -19,8 +29,13 @@ export const useAuthController = () => {
   }
 
   const getUser = async () => {
-    const {result} = await getRequest<IUser>(API_USER, {})
+    const {result} = await getRequest<IUser>(API_USER)
     return result
+  }
+
+  const syncUser = async (payload: IPayloadSyncUser) => {
+    const {result, errorData} = await putRequest<IUser>(API_SYNC_USER, payload)
+    return {result, errorData}
   }
 
   const logout = async (payload: ILogOutPayload) => {
@@ -32,5 +47,6 @@ export const useAuthController = () => {
     login,
     getUser,
     logout,
+    syncUser,
   }
 }

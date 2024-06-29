@@ -3,10 +3,12 @@ export const API_LOGIN = `${API_AUTH}/login`
 export const API_REFRESH_TOKEN = "/refresh-token"
 export const API_LOGOUT = `${API_AUTH}/logOut`
 export const API_USER_FCM = `${API_AUTH}/fcm`
-export const API_USER = `${API_AUTH}/me`
+export const API_USER = `user/me`
+export const API_SYNC_USER = `user/sync`
 export const API_LOCATION = "/location"
 export const API_COUNTRIES = `${API_LOCATION}/all-countries`
-export const apiCountries = (country_id: string) => `${API_LOCATION}/countries/${country_id}`
+export const apiStates = (countryId: string) => `${API_LOCATION}/countries/${countryId}`
+export const apiCities = (stateId: string) => `${API_LOCATION}/states/${stateId}`
 export const API_PAYMENT = "/payment"
 export const API_FXRATE = `${API_PAYMENT}/fx-rate`
 export const API_RECIPIENT = "/recipient"

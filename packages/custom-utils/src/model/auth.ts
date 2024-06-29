@@ -1,3 +1,4 @@
+import {IFormData} from "@fanam-pkg/core-utils"
 import {TypeUserRole} from "./enum"
 
 export interface IResponseLogin {
@@ -30,4 +31,32 @@ export interface IUser {
   email?: string
   imageUrl?: string
   role?: TypeUserRole
+}
+
+export interface IBaseSyncUser {
+  first_name: string
+  last_name: string
+  email: string
+  phone_no: string
+  address_line1: string
+  address_line2: string
+  zip_code: string
+  account_number: string
+  id_type: string
+}
+
+export interface ISyncUserData extends IBaseSyncUser {
+  country: IFormData | null
+  id_issued_country: IFormData | null
+  state: IFormData | null
+  city: IFormData | null
+  account_type: IFormData[]
+}
+
+export interface IPayloadSyncUser extends IBaseSyncUser {
+  country_code: string
+  id_issued_country: string
+  state: string
+  city: string
+  account_type: string
 }

@@ -9,8 +9,6 @@ export default function Dashboard() {
   const {email} = data
   const {errEmail} = errState
 
-  console.log(">>>>>>>>>>>>>>>: ", errEmail)
-
   return (
     <section className={styles.page_container}>
       <TextField

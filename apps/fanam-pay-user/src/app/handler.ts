@@ -5,7 +5,7 @@ import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import {IPayloadLogin} from "@custom/utils"
 import {useAuthController} from "controller"
-import {ROUTE_HOME} from "utils"
+import {ROUTE_SENDER} from "utils"
 
 const DEFAULT_ERR_STATE = {
   errEmail: "",
@@ -30,7 +30,7 @@ export const useHandler = () => {
     if (signInRes) {
       const {result, errorData} = signInRes
 
-      if (result) replace(ROUTE_HOME)
+      if (result) replace(ROUTE_SENDER)
       else
         toggleNotify({title: "Login Error", description: errorData?.message || "Something went wrong", type: "error"})
     }
@@ -41,7 +41,7 @@ export const useHandler = () => {
   }, [data, isClicked])
 
   const onValidate = () => {
-    let errState = {...DEFAULT_ERR_STATE, isValid: true}
+    let errState = {...DEFAULT_ERR_STATE, isValid: true, isClicked: true}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please enter valid email address", isValid: false}
