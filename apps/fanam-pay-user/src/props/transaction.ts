@@ -1,4 +1,6 @@
+import {ICountry} from "@custom/utils"
+
 export interface CountryPopupProps {
-  onSelect: (currencyCode: string) => void
-  selCurrency: string
+  onSelect: (currencyCode: ICountry) => void
+  selCountry: ICountry
 }

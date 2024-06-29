@@ -1,4 +1,4 @@
-import {API_LOGIN, API_LOGOUT, API_USER, ILogOutPayload, IResponseLogin, IUser} from "@custom/utils"
+import {API_LOGIN, API_LOGOUT, API_USER, ILogOutPayload, IPayloadLogin, IResponseLogin, IUser} from "@custom/utils"
 import {useSingleton} from "hooks"
 import {useApi} from "./api"
 
@@ -6,8 +6,8 @@ export const useAuthController = () => {
   const {postRequest, getRequest} = useApi()
   const {updateToken, updateRefreshToken} = useSingleton()
 
-  const login = async () => {
-    const {result, errorData} = await postRequest<IResponseLogin>(API_LOGIN, {email: "user2@gmail.com"})
+  const login = async (payload: IPayloadLogin) => {
+    const {result, errorData} = await postRequest<IResponseLogin>(API_LOGIN, payload)
 
     if (result) {
       const {access_token, refresh_token} = result

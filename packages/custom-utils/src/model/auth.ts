@@ -19,6 +19,10 @@ export interface ILogOutPayload {
   device?: string
 }
 
+export interface IPayloadLogin {
+  email: string
+}
+
 export interface IUser {
   countryCode?: string
   mobile?: string
