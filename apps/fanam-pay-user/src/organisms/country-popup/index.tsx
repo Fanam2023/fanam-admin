@@ -3,17 +3,20 @@ import {CountryPopupProps} from "props"
 import styles from "./country.module.sass"
 import useHandler from "./handler"
 
-export const CountryPopup = ({onSelect, selCurrency}: CountryPopupProps) => {
+export const CountryPopup = ({onSelect, selCountry}: CountryPopupProps) => {
   const {countries} = useHandler()
 
-  const renderCountries = ({country_id, country_name, currency}: ICountry) => (
-    <li
-      key={country_id}
-      className={`${styles.country_wrapper} ${currency === selCurrency ? styles.selected : ""}`}
-      onClick={onSelect.bind(null, currency)}>
-      {country_name}
-    </li>
-  )
+  const renderCountries = (country: ICountry) => {
+    const {country_id, country_name, iso2} = country
+    return (
+      <li
+        key={country_id}
+        className={`${styles.country_wrapper} ${iso2 === selCountry.iso2 ? styles.selected : ""}`}
+        onClick={onSelect.bind(null, country)}>
+        {country_name}
+      </li>
+    )
+  }
 
   return (
     <section>

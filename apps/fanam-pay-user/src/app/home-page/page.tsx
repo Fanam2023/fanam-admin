@@ -1,25 +1,15 @@
 "use client"
 
-import {DropDown, ImageView, RadioButton, TextField} from "@fanam-pkg/core-ui-sass"
+import {DropDown, ImageView, RadioButton, TextArea, TextField} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
 import {BaseContainer} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const HomePage = () => {
-  const {
-    onAdd,
-    recipientType,
-    onSelectRecipientType,
-    senderType,
-    onSelectSenderType,
-    data,
-    destinationAmount,
-    showCountries,
-    onChangeValue,
-  } = useHandler()
+  const {onAdd, data, showCountries, PURPOSES, onChangeValue, onSelectType} = useHandler()
 
-  const {destination_currency, source_currency, source_amount} = data
+  const {source_amount, destination_amount, recipient_type, source_country, destination_country, purpose, reason} = data
 
   return (
     <BaseContainer
@@ -31,37 +21,31 @@ const HomePage = () => {
       stepIndex={0}>
       <section className={styles.container_wrapper}>
         <section className={`flex-col ${styles.button_container}`}>
-          <h4 className="semi-bold">Sender type</h4>
-          <RadioButton
-            items={senderType}
-            onSelectItems={onSelectSenderType}
-            wrapperClass={styles.radio_button}
-            radioGroupName="senderTypeGroup"
-          />
-        </section>
-        <section className={`flex-col ${styles.button_container}`}>
           <h4 className="semi-bold">Recipient type</h4>
           <RadioButton
-            items={recipientType}
-            onSelectItems={onSelectRecipientType}
+            items={recipient_type}
+            onSelectItems={onSelectType}
             wrapperClass={styles.radio_button}
-            radioGroupName="recipientTypeGroup"
+            name="recipientTypeGroup"
           />
         </section>
         <h4 className="semi-bold">Purpose of sending money</h4>
         <DropDown
-          options={["dfjd", "dfdj"]}
+          options={PURPOSES}
           wrapperClass={styles.drop_down_wrapper}
           label="Purpose of Sending Money"
-          onChangeData={() => {}}
+          selected={purpose}
+          name="purpose"
+          onChangeData={onChangeValue}
         />
+        <TextArea wrapperClass={styles.text_field_wrapper} value={reason} name="reason" onChangeData={onChangeValue} />
         <h4 className={`semi-bold ${styles.conversion_text}`}>Conversion Estimate</h4>
         <section className={styles.conversion_container}>
           <h5 className={`bold ${styles.send_text}`}>You Send</h5>
           <section className={`flex ${styles.input_container}`}>
             <section className={`flex ${styles.flag_wrapper} ${styles.sender_wrapper}`}>
               <ImageView src={assets.ic_india_flag} alt="country_flag" imgSize={40} />
-              <h3 className={styles.currency_text}>{source_currency}</h3>
+              <h3 className={styles.currency_text}>{source_country.iso2}</h3>
               <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
             </section>
             <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
@@ -76,10 +60,15 @@ const HomePage = () => {
           <section className={`flex ${styles.input_container}`}>
             <section className={`flex ${styles.flag_wrapper} `}>
               <ImageView src={assets.ic_us_flag} alt="country_flag" imgSize={40} />
-              <h3 className={styles.currency_text}>{destination_currency}</h3>
+              <h3 className={styles.currency_text}>{destination_country.iso2}</h3>
             </section>
             <ImageView src={assets.ic_grey_arrow} alt="down-arrow" onClick={showCountries} imgSize={15} />
-            <TextField wrapperClass={styles.text_field_wrapper} value={destinationAmount} />
+            <TextField
+              wrapperClass={styles.text_field_wrapper}
+              value={destination_amount}
+              name="destination_amount"
+              onChangeData={onChangeValue}
+            />
           </section>
         </section>
       </section>

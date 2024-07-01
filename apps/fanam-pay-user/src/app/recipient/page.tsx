@@ -4,22 +4,13 @@ import {TextField} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import {IRecipient} from "@custom/utils"
 import assets from "assets"
-import {BaseContainer, CreateRecipientDetails, ManageMembers} from "organisms"
+import {BaseContainer, ManageMembers} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const Recipient = () => {
   const {isDesktop} = useResize()
-  const {
-    recipients,
-    onNav,
-    isSliderVisible,
-    setIsSliderVisible,
-    onChangeSearch,
-    mutate,
-    currentRecipient,
-    routeToDetails,
-  } = useHandler()
+  const {recipients, onNav, onChangeSearch, routeToDetails, onAdd} = useHandler()
 
   const renderRecipients = ({recipient_name, email, recipient_id}: IRecipient) => (
     <ManageMembers description={email} title={recipient_name} onEdit={routeToDetails.bind(null, recipient_id)} />
@@ -33,14 +24,6 @@ const Recipient = () => {
       childWrapper={styles.page_container}
       backIcon
       stepIndex={2}>
-      <CreateRecipientDetails
-        isVisible={isSliderVisible}
-        setIsVisible={setIsSliderVisible}
-        title="Add New Recipients"
-        onClickCreate={mutate}
-        wrapperClass={styles.slider_card}
-        recipientDetails={currentRecipient}
-      />
       <section className={`flex ${styles.search_container}`}>
         <TextField
           type="text"
@@ -49,7 +32,7 @@ const Recipient = () => {
           leadingIcon={assets.ic_search}
           onChangeData={onChangeSearch}></TextField>
         {isDesktop && (
-          <h4 className={styles.add_text} onClick={setIsSliderVisible.bind(null, true)}>
+          <h4 className={styles.add_text} onClick={onAdd}>
             Add
           </h4>
         )}

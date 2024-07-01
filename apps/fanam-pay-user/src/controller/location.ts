@@ -1,4 +1,4 @@
-import {API_COUNTRIES, ICountry, apiCountries} from "@custom/utils"
+import {API_COUNTRIES, ICity, ICountry, IState, apiCities, apiStates} from "@custom/utils"
 import {useApi} from "./api"
 
 export const useLocationController = () => {
@@ -6,16 +6,22 @@ export const useLocationController = () => {
 
   const getAllCountries = async () => {
     const {result} = await getRequest<ICountry[]>(API_COUNTRIES)
-    return result
+    return result || []
   }
 
-  const getByCountryId = async (country_id: string) => {
-    const {result} = await getRequest<ICountry>(apiCountries(country_id))
-    return result
+  const getStates = async (countryId: string) => {
+    const {result} = await getRequest<IState[]>(apiStates(countryId))
+    return result || []
+  }
+
+  const getCities = async (stateId: string) => {
+    const {result} = await getRequest<ICity[]>(apiCities(stateId))
+    return result || []
   }
 
   return {
     getAllCountries,
-    getByCountryId,
+    getStates,
+    getCities,
   }
 }

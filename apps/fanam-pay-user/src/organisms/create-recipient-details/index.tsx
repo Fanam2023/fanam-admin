@@ -1,16 +1,12 @@
 import {GroupForm} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import {useEffect} from "react"
-import {BaseContainer} from "organisms/base-container"
-import {Slider} from "organisms/slider"
+import {BaseContainer} from "organisms"
 import {RecipientDetailsProp} from "props"
 import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const CreateRecipientDetails = ({
-  isVisible,
-  setIsVisible,
-  title,
   onClickCreate,
   recipientDetails,
   wrapperClass,
@@ -33,9 +29,7 @@ export const CreateRecipientDetails = ({
   return (
     <section>
       {isDesktop ? (
-        <Slider isVisible={isVisible} setIsVisible={setIsVisible} title={title} onClick={onClickSubmit}>
-          <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-        </Slider>
+        <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
       ) : (
         <BaseContainer
           buttonText="Submit"

@@ -6,7 +6,7 @@ import {useHandler} from "./handler"
 const CreateRecipient = () => {
   const {mutate} = useHandler()
 
-  return <CreateRecipientDetails title={"Add Recipient Details"} onClickCreate={mutate} />
+  return <CreateRecipientDetails onClickCreate={mutate} />
 }
 
 export default CreateRecipient

@@ -1,4 +1,5 @@
-import {IBeneficiary, IRecipient, IUser, TypeAccount, TypePurpose, TypeTransactionStatus} from "../model"
+import {IFormData} from "@fanam-pkg/core-utils"
+import {IBeneficiary, ICountry, IRecipient, IUser, TypeAccount, TypePurpose, TypeTransactionStatus} from "../model"
 
 export interface ITransaction {
   transaction_id: string
@@ -40,4 +41,30 @@ export interface IBankAccount {
   recipient_transaction: ITransaction[]
   created_at: string
   updated_at: string
+}
+
+export interface IPayloadFxRate {
+  source_amount: number
+  source_country: string
+  destination_country: string
+}
+
+export interface IPayloadTransaction {
+  source_amount: number
+  destination_amount: number
+  source_country: string
+  destination_country: string
+  recipient_type: string
+  purpose: string
+  reason: string
+}
+
+export interface ITransactionData {
+  source_amount: string
+  destination_amount: string
+  source_country: ICountry
+  destination_country: ICountry
+  recipient_type: IFormData[]
+  purpose: string
+  reason: string
 }

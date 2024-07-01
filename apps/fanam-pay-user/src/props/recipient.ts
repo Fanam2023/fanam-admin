@@ -6,12 +6,9 @@ export interface RecipientPreviewProps {
 }
 
 export interface RecipientDetailsProp {
-  isVisible?: boolean
-  setIsVisible?: (show: boolean) => void
-  title: string
   wrapperClass?: string
   onClickCreate?: (payload: IRecipient) => void
-  recipientDetails?: IRecipient
+  recipient?: IRecipient
   onBack?: () => void
 }
 

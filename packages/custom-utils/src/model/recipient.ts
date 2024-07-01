@@ -1,6 +1,6 @@
 export interface IRecipient {
-  first_name?: string
-  last_name?: string
+  recipient_id: string
+  recipient_name: string
   account_name?: string
   account_no?: string
   sender_type?: string
