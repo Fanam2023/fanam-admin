@@ -114,7 +114,8 @@ export const useHandler = () => {
   })
 
   useEffect(() => {
-    if (isClicked)
+    const {isValid} = onValidateFxRate()
+    if (isClicked && isValid)
       checkFxRate({
         source_country: source_country.iso2,
         source_amount: parseFloat(source_amount),
