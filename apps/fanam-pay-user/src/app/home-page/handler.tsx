@@ -66,7 +66,7 @@ export const useHandler = () => {
       isValid: true,
     }
 
-    if (isNaN(parseFloat(source_amount)) || parseFloat(source_amount) <= 0)
+    if (isNaN(parseFloat(source_amount)))
       errState = {...errState, errSourceAmount: "Please enter valid source amount", isValid: false}
 
     if (!source_country?.iso2) errState = {...errState, errSourceCountry: "Choose valid country", isValid: false}
@@ -86,7 +86,7 @@ export const useHandler = () => {
 
     errState = {...errState, ...onValidateFxRate()}
 
-    if (isNaN(parseFloat(destination_amount)) || parseFloat(destination_amount) <= 0)
+    if (isNaN(parseFloat(destination_amount)))
       errState = {...errState, errDestinationAmount: "Please enter valid destination amount", isValid: false}
 
     if (!recipient_type?.some(({isSelected}) => isSelected))
