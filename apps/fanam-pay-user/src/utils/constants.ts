@@ -6,13 +6,6 @@ import {BankCartProps, BankListProps, RecipientPreviewProps} from "props"
 export const RECIPIENT_DETAILS: RecipientPreviewProps[] = [
   {label: "First Name", value: "Ragul"},
   {label: "Last Name", value: "ragul@gmail.com"},
-  {label: "Account Number", value: "India"},
-  {label: "Account Type", value: "Tamil Nadu"},
-  {label: "Bank Name", value: "Coimbatore"},
-  {label: "Bank Code", value: "641023"},
-  {label: "Bank Code Type", value: "6383xxxx28"},
-  {label: "Branch", value: "6383xxxx28"},
-  {label: "BIC", value: "6383xxxx28"},
   {label: "Recipient Address Line 1", value: "6383xxxx28"},
   {label: "Email", value: "6383xxxx28"},
   {label: "Phone Number", value: "6383xxxx28"},
@@ -20,6 +13,16 @@ export const RECIPIENT_DETAILS: RecipientPreviewProps[] = [
   {label: "State", value: "6383xxxx28"},
   {label: "City", value: "6383xxxx28"},
   {label: "ZIP Code", value: "6383xxxx28"},
+]
+
+export const RECIPIENT_ACCOUNT_DETAILS: RecipientPreviewProps[] = [
+  {label: "Account Number", value: "India"},
+  {label: "Account Type", value: "Tamil Nadu"},
+  {label: "Bank Name", value: "Coimbatore"},
+  {label: "Bank Code", value: "641023"},
+  {label: "Bank Code Type", value: "6383xxxx28"},
+  {label: "Branch", value: "6383xxxx28"},
+  {label: "BIC", value: "6383xxxx28"},
 ]
 
 export const SIDE_BAR: IStepper[] = [

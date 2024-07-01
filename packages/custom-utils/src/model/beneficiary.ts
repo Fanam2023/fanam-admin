@@ -5,9 +5,11 @@ export type IBeneficiary = {
   country_code?: string
   phone_no?: string
   country?: string
-  address?: string
+  address_line1?: string
+  address_line2?: string
   state?: string
   city?: string
   zip_code?: string
   relationship?: string
+  transaction_id?: string
 }

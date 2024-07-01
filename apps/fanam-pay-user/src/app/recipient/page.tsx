@@ -1,7 +1,6 @@
 "use client"
 
 import {TextField} from "@fanam-pkg/core-ui-sass"
-import {useResize} from "@fanam-pkg/core-utils"
 import {IRecipient} from "@custom/utils"
 import assets from "assets"
 import {BaseContainer, ManageMembers} from "organisms"
@@ -9,8 +8,7 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const Recipient = () => {
-  const {isDesktop} = useResize()
-  const {recipients, onNav, onChangeSearch, routeToDetails, onAdd} = useHandler()
+  const {recipients, onChangeSearch, routeToDetails, onAdd, isDesktop} = useHandler()
 
   const renderRecipients = ({recipient_name, email, recipient_id}: IRecipient) => (
     <ManageMembers description={email} title={recipient_name} onEdit={routeToDetails.bind(null, recipient_id)} />
@@ -20,7 +18,7 @@ const Recipient = () => {
     <BaseContainer
       header={"Manage Recipients"}
       addButton="Add"
-      onAdd={onNav}
+      onAdd={onAdd}
       childWrapper={styles.page_container}
       backIcon
       stepIndex={2}>

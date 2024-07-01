@@ -1,30 +1,30 @@
-export interface IRecipient {
-  recipient_id: string
-  recipient_name: string
-  account_name?: string
-  account_no?: string
-  sender_type?: string
-  account_type?: string
-  bank_name?: string
-  bank_code?: string
-  bank_code_type?: string
-  branch?: string
-  bic?: string
-  address?: string
-  email?: string
-  phone_no?: string
-  country?: string
-  state?: string
-  city?: string
-  zip_code?: string
-  id?: string
+import {JSONValues} from "@fanam-pkg/core-utils"
+
+interface IBankAccount {
+  account_no: string
+  swift_code: string
+  routing_code?: string
+  bank_name: string
+  branch_code: string
+  branch_address: string
+  account_type: string
+  account_purpose?: string
+  [key: string]: JSONValues
 }
 
-export interface IRecipientDetails extends IRecipient {
-  account_holder?: string
-  account_no?: string
-  confirm_account_no?: string
-  iban_no?: string
-  swift_code?: string
-  routing_code?: string
+export interface IRecipient {
+  recipient_name: string
+  email: string
+  country_code: string
+  phone_no: string
+  sender_type?: string
+  address_line1: string
+  address_line2: string
+  state: string
+  city: string
+  zip_code: string
+  transaction_id: string
+  id: string
+  recipient_id?: string
+  bank_account: IBankAccount
 }

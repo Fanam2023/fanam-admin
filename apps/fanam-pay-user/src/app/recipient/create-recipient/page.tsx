@@ -4,9 +4,9 @@ import {CreateRecipientDetails} from "organisms"
 import {useHandler} from "./handler"
 
 const CreateRecipient = () => {
-  const {mutate} = useHandler()
+  const {addRecipient} = useHandler()
 
-  return <CreateRecipientDetails onClickCreate={mutate} />
+  return <CreateRecipientDetails onClickCreate={addRecipient} />
 }
 
 export default CreateRecipient
