@@ -24,7 +24,7 @@ export const useHandler = () => {
     })
   }
 
-  const {mutate} = useMutation({
+  const {mutate: addRecipient} = useMutation({
     mutationKey: [QUERY_RECIPIENT],
     mutationFn: createRecipient,
     onSuccess: ({result, errorData}) => {
@@ -35,6 +35,6 @@ export const useHandler = () => {
   })
 
   return {
-    mutate,
+    addRecipient,
   }
 }

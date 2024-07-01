@@ -1,125 +1,145 @@
 import {FormSectionProps} from "@fanam-pkg/core-ui-sass"
-import {JSONObject} from "@fanam-pkg/core-utils"
+import {JSONObject, useCookies, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
+import {useSlider} from "@custom/ui"
 import {IRecipient} from "@custom/utils"
-import {ROUTE_REVIEW} from "utils"
+import {COOKIE_TRANSACTION_ID, ROUTE_REVIEW} from "utils"
 import styles from "./styles.module.sass"
 
 export const useHandler = () => {
   const {push} = useRouter()
+  const {isDesktop} = useResize()
+  const {toggleSlider} = useSlider()
+  const {getCookie} = useCookies()
   const onAdd = () => push(ROUTE_REVIEW)
+  const transId = getCookie(COOKIE_TRANSACTION_ID)
 
   const [data, setData] = useState({
     recipient_name: "",
-    country: "",
+    account_no: "",
+    sender_type: "",
+    account_type: "",
+    bank_name: "",
+    bank_code: "",
+    bank_code_type: "",
+    branch: "",
+    bic: "",
+    address_line1: "",
+    address_line2: "",
     email: "",
+    phone_no: "",
+    country: "",
     state: "",
     city: "",
-    address: "",
     zip_code: "",
-    phone_no: "",
-    country_code: "",
-    // account_holder: "",
-    // account_no: "",
-    // confirm_account_no: "",
-    // iban_no: "",
-    // swift_code: "",
-    // routing_code: "",
+    id: "",
   })
 
   const {
     recipient_name,
-    country,
+    account_no,
+    sender_type,
+    account_type,
+    bank_name,
+    bank_code,
+    bank_code_type,
+    branch,
+    bic,
+    address_line1,
+    address_line2,
     email,
+    phone_no,
+    country,
     state,
     city,
     zip_code,
-    phone_no,
-    country_code,
-    address,
-    // account_holder,
-    // account_no,
-    // confirm_account_no,
-    // iban_no,
-    // swift_code,
-    // routing_code,
+    id,
   } = data
 
   const [errState, setErrState] = useState({
     isClicked: false,
     isValid: false,
-    errName: "",
-    errCountryName: "",
-    errStateName: "",
+    errRecipientName: "",
+    errAccountNo: "",
+    errSenderType: "",
+    errAccountType: "",
+    errBankName: "",
+    errBankCode: "",
+    errBankCodeType: "",
+    errBranch: "",
+    errBic: "",
+    errAddressLine1: "",
+    errAddressLine2: "",
+    errPhone: "",
+    errCountry: "",
     errEmail: "",
+    errStateName: "",
     errCity: "",
     errZipCode: "",
-    errPhone: "",
-    errCountryCode: "",
-    errAddress: "",
-    // errAccount_holder: "",
-    // errAccount_no: "",
-    // errConfirm_account_no: "",
-    // errIban_no: "",
-    // errSwift_code: "",
-    // errRouting_code: "",
+    errId: "",
   })
 
   const {isClicked} = errState
 
   const onValidate = () => {
     let errState = {
-      errName: "",
-      errCountryName: "",
-      errStateName: "",
-      errEmail: "",
-      errCity: "",
-      errAddress: "",
-      errZipCode: "",
+      errRecipientName: "",
+      errAccountNo: "",
+      errSenderType: "",
+      errAccountType: "",
+      errBankName: "",
+      errBankCode: "",
+      errBankCodeType: "",
+      errBranch: "",
+      errBic: "",
+      errAddressLine1: "",
+      errAddressLine2: "",
       errPhone: "",
-      errCountryCode: "",
-      // errAccount_holder: "",
-      // errAccount_no: "",
-      // errConfirm_account_no: "",
-      // errIban_no: "",
-      // errSwift_code: "",
-      // errRouting_code: "",
+      errCountry: "",
+      errEmail: "",
+      errStateName: "",
+      errCity: "",
+      errZipCode: "",
+      errId: "",
       isValid: true,
     }
-    if (!recipient_name) errState = {...errState, errName: "Please enter Your Name", isValid: false}
+
+    if (!recipient_name) errState = {...errState, errRecipientName: "Please enter RecipientName", isValid: false}
+
+    if (!account_no) errState = {...errState, errAccountNo: "Please enter your AccountNumber", isValid: false}
+
+    if (!sender_type) errState = {...errState, errSenderType: "Please enter your SenderType", isValid: false}
+
+    if (!account_type) errState = {...errState, errAccountType: "Please enter your AccountType", isValid: false}
+
+    if (!bank_name) errState = {...errState, errBankName: "Please enter your BankName", isValid: false}
+
+    if (!bank_code) errState = {...errState, errBankCode: "Please enter your BankCode", isValid: false}
+
+    if (!bank_code_type) errState = {...errState, errBankCodeType: "Please enter your BankCodeType", isValid: false}
+
+    if (!branch) errState = {...errState, errBranch: "Please enter your Branch", isValid: false}
+
+    if (!bic) errState = {...errState, errBic: "Please enter your Bic", isValid: false}
+
+    if (!address_line1) errState = {...errState, errAddressLine1: "Please enter Your Address", isValid: false}
+
+    if (!address_line2) errState = {...errState, errAddressLine2: "Please enter Your Address", isValid: false}
+
+    if (!country) errState = {...errState, errCountry: "Please enter Country Name", isValid: false}
+
+    if (!phone_no) errState = {...errState, errPhone: "Please enter PhoneNumber", isValid: false}
 
     if (!email) errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
-
-    if (!country) errState = {...errState, errCountryName: "Please enter Country Name", isValid: false}
 
     if (!state) errState = {...errState, errStateName: "Please enter State Name", isValid: false}
 
     if (!city) errState = {...errState, errCity: "Please enter Your City/District", isValid: false}
 
-    if (!zip_code) errState = {...errState, errZipCode: "Please enter Your Pincode", isValid: false}
+    if (!zip_code) errState = {...errState, errZipCode: "Please enter Your PinCode", isValid: false}
 
-    if (!phone_no) errState = {...errState, errPhone: "Please enter Your Phone Number", isValid: false}
-
-    if (!address) errState = {...errState, errPhone: "Please enter Your Address", isValid: false}
-
-    if (!country_code) errState = {...errState, errCountryCode: "Please enter Country Code", isValid: false}
-
-    //recipient account Details
-
-    // if (!account_holder)
-    //   errState = {...errState, errCountryCode: "Please enter the account holder name", isValid: false}
-
-    // if (!account_no) errState = {...errState, errCountryCode: "Please enter your account number", isValid: false}
-
-    // if (!confirm_account_no)
-    //   errState = {...errState, errCountryCode: "Please enter the confirm account number", isValid: false}
-
-    // if (!swift_code) errState = {...errState, errCountryCode: "Please enter the swift code", isValid: false}
-
-    // if (!iban_no) errState = {...errState, errCountryCode: "Please enter the iban number", isValid: false}
-
-    // if (!routing_code) errState = {...errState, errCountryCode: "Please enter the routing code", isValid: false}
+    if (!id) errState = {...errState, errId: "Please your id", isValid: false}
 
     return errState
   }
@@ -136,35 +156,49 @@ export const useHandler = () => {
     setErrState(errState)
     const payload: IRecipient = {
       recipient_name,
+      sender_type,
+      address_line1,
+      address_line2,
       email,
       phone_no,
-      address,
-      country,
+      country_code: country,
       state,
       city,
       zip_code,
-      country_code,
+      id: "Aadhaar",
+      transaction_id: transId,
+      bank_account: {
+        account_no: account_no,
+        swift_code: bic,
+        bank_name: bank_name,
+        branch_code: bank_code,
+        branch_address: branch,
+        account_type: account_type,
+      },
     }
 
     return isValid ? payload : null
   }
 
   const {
-    errName,
-    errEmail,
+    errRecipientName,
+    errAccountNo,
+    errSenderType,
+    errAccountType,
+    errBankName,
+    errBankCode,
+    errBankCodeType,
+    errBranch,
+    errBic,
+    errAddressLine1,
+    errAddressLine2,
     errPhone,
-    errAddress,
-    errCountryName,
+    errCountry,
+    errEmail,
     errStateName,
     errCity,
     errZipCode,
-    errCountryCode,
-    // errAccount_holder,
-    // errAccount_no,
-    // errIban_no,
-    // errConfirm_account_no,
-    // errRouting_code,
-    // errSwift_code,
+    errId,
   } = errState
 
   const formElements: FormSectionProps[] = [
@@ -176,20 +210,92 @@ export const useHandler = () => {
           label: "Enter Recipient Name",
           name: "recipient_name",
           value: recipient_name,
-          error: errName,
+          error: errRecipientName,
           onChangeValue,
         },
         {
           elementType: "input",
-          label: "Enter E-Mail ID",
-          name: "email",
-          value: email,
-          error: errEmail,
+          label: "Enter Account Number",
+          name: "account_no",
+          value: account_no,
+          error: errAccountNo,
           onChangeValue,
         },
         {
           elementType: "input",
-          label: "Enter Phone Number",
+          label: "Enter your SenderType(Savings/Current)",
+          name: "sender_type",
+          value: sender_type,
+          error: errSenderType,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter your AccountType",
+          name: "account_type",
+          value: account_type,
+          error: errAccountType,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter your BankName",
+          name: "bank_name",
+          value: bank_name,
+          error: errBankName,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter BankCode",
+          name: "bank_code",
+          value: bank_code,
+          error: errBankCode,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter BankCodeType ",
+          name: "bank_code_type",
+          value: bank_code_type,
+          error: errBankCodeType,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Branch ",
+          name: "branch",
+          value: branch,
+          error: errBranch,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter bic",
+          name: "bic",
+          value: bic,
+          error: errBic,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter your AddressLine1",
+          name: "address_line1",
+          value: address_line1,
+          error: errAddressLine1,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter your AddressLine2",
+          name: "address_line2",
+          value: address_line2,
+          error: errAddressLine2,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter your PhoneNumber",
           name: "phone_no",
           value: phone_no,
           error: errPhone,
@@ -198,23 +304,23 @@ export const useHandler = () => {
         },
         {
           elementType: "input",
-          label: "Enter Recipient Address",
-          name: "address",
-          value: address,
-          error: errAddress,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Enter Country",
+          label: "Enter your country",
           name: "country",
           value: country,
-          error: errCountryName,
+          error: errCountry,
           onChangeValue,
         },
         {
           elementType: "input",
-          label: "Enter State",
+          label: "Enter your Email",
+          name: "email",
+          value: email,
+          error: errEmail,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter your State",
           name: "state",
           value: state,
           error: errStateName,
@@ -222,7 +328,7 @@ export const useHandler = () => {
         },
         {
           elementType: "input",
-          label: "Enter City/District",
+          label: "Enter your City",
           name: "city",
           value: city,
           error: errCity,
@@ -230,7 +336,7 @@ export const useHandler = () => {
         },
         {
           elementType: "input",
-          label: "Enter Zip Code",
+          label: "Enter your ZipCode",
           name: "zip_code",
           value: zip_code,
           error: errZipCode,
@@ -238,69 +344,14 @@ export const useHandler = () => {
         },
         {
           elementType: "input",
-          label: "Enter your countryCode",
-          name: "country_code",
-          value: country_code,
-          error: errCountryCode,
+          label: "Enter your Id",
+          name: "id",
+          value: id,
+          error: errId,
           onChangeValue,
         },
       ],
     },
-    // {
-    //   wrapperClass: styles.wrapper,
-    //   wrapperClassGrid: styles.wrapper,
-    //   title: "Add Recipient Account Details",
-    //   childElements: [
-    //     {
-    //       elementType: "input",
-    //       label: "Enter Name of the Account Holder ",
-    //       name: "account_holder",
-    //       value: account_holder,
-    //       error: errAccount_holder,
-    //       onChangeValue,
-    //     },
-    //     {
-    //       elementType: "input",
-    //       label: "Enter Account Number",
-    //       name: "account_no",
-    //       value: account_no,
-    //       error: errAccount_no,
-    //       onChangeValue,
-    //     },
-    //     {
-    //       elementType: "input",
-    //       label: "Confirm Account Number",
-    //       name: "confirm_account_no",
-    //       value: confirm_account_no,
-    //       error: errConfirm_account_no,
-    //       onChangeValue,
-    //     },
-    //     {
-    //       elementType: "input",
-    //       label: "Enter IBAN Number",
-    //       name: "iban_no",
-    //       value: iban_no,
-    //       error: errIban_no,
-    //       onChangeValue,
-    //     },
-    //     {
-    //       elementType: "input",
-    //       label: "Enter Swift Code",
-    //       name: "swift_code",
-    //       value: swift_code,
-    //       error: errSwift_code,
-    //       onChangeValue,
-    //     },
-    //     {
-    //       elementType: "input",
-    //       label: "Enter Routing Code",
-    //       name: "routing_code",
-    //       value: routing_code,
-    //       error: errRouting_code,
-    //       onChangeValue,
-    //     },
-    //   ],
-    // },
   ]
 
   return {
@@ -308,5 +359,8 @@ export const useHandler = () => {
     onSubmit,
     onAdd,
     formElements,
+    isDesktop,
+    toggleSlider,
+    transId,
   }
 }

@@ -1,16 +1,18 @@
 import {FormSectionProps} from "@fanam-pkg/core-ui-sass"
-import {JSONObject, useResize} from "@fanam-pkg/core-utils"
+import {JSONObject, useCookies, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useSlider} from "@custom/ui"
 import {IBeneficiary} from "@custom/utils"
-import {ROUTE_PAYMENT_OPTIONS} from "utils"
+import {COOKIE_TRANSACTION_ID, ROUTE_PAYMENT_OPTIONS} from "utils"
 import styles from "./styles.module.sass"
 
 export const useHandler = () => {
-  const {push} = useRouter()
   const {isDesktop} = useResize()
+  const {push} = useRouter()
   const {toggleSlider} = useSlider()
+  const {getCookie} = useCookies()
+  const transId = getCookie(COOKIE_TRANSACTION_ID)
 
   const onRouteToOptions = () => push(ROUTE_PAYMENT_OPTIONS)
 
@@ -19,7 +21,8 @@ export const useHandler = () => {
     phone_no: "",
     email: "",
     relationship: "",
-    address: "",
+    address_line1: "",
+    address_line2: "",
     country: "",
     state: "",
     city: "",
@@ -27,7 +30,19 @@ export const useHandler = () => {
     country_code: "",
   })
 
-  const {beneficiary_name, phone_no, email, relationship, address, country, state, city, zip_code, country_code} = data
+  const {
+    beneficiary_name,
+    phone_no,
+    email,
+    relationship,
+    address_line1,
+    address_line2,
+    country,
+    state,
+    city,
+    zip_code,
+    country_code,
+  } = data
 
   const [errState, setErrState] = useState({
     isClicked: false,
@@ -36,7 +51,8 @@ export const useHandler = () => {
     errEmail: "",
     errRelation: "",
     errNumber: "",
-    errAddress: "",
+    errAddressLine1: "",
+    errAddressLine2: "",
     errCountry: "",
     errStateName: "",
     errCity: "",
@@ -52,7 +68,8 @@ export const useHandler = () => {
       errEmail: "",
       errRelation: "",
       errNumber: "",
-      errAddress: "",
+      errAddressLine1: "",
+      errAddressLine2: "",
       errCountry: "",
       errStateName: "",
       errCity: "",
@@ -60,7 +77,7 @@ export const useHandler = () => {
       errCountryCode: "",
       isValid: true,
     }
-    if (!beneficiary_name) errState = {...errState, errName: "Please enter Benificiary Name", isValid: false}
+    if (!beneficiary_name) errState = {...errState, errName: "Please enter Beneficiary Name", isValid: false}
 
     if (!email) errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
 
@@ -69,7 +86,9 @@ export const useHandler = () => {
     if (!relationship)
       errState = {...errState, errRelation: "Please enter Your Relationship with sender", isValid: false}
 
-    if (!address) errState = {...errState, errAddress: "Please enter Benificiary Address", isValid: false}
+    if (!address_line1) errState = {...errState, errAddressLine1: "Please enter Beneficiary Address", isValid: false}
+
+    if (!address_line2) errState = {...errState, errAddressLine2: "Please enter Beneficiary Address", isValid: false}
 
     if (!country) errState = {...errState, errCountry: "Please enter Country Name", isValid: false}
 
@@ -99,13 +118,15 @@ export const useHandler = () => {
       beneficiary_name,
       email,
       phone_no,
-      address,
+      address_line1,
+      address_line2,
       country,
       state,
       city,
       zip_code,
       country_code,
       relationship,
+      transaction_id: transId,
     }
 
     return isValid ? payload : null
@@ -116,7 +137,8 @@ export const useHandler = () => {
     errEmail,
     errNumber,
     errRelation,
-    errAddress,
+    errAddressLine1,
+    errAddressLine2,
     errCountry,
     errStateName,
     errCity,
@@ -163,10 +185,18 @@ export const useHandler = () => {
         },
         {
           elementType: "input",
-          label: "Enter Benificiary Address",
-          name: "address",
-          value: address,
-          error: errAddress,
+          label: "Enter Address line1",
+          name: "address_line1",
+          value: address_line1,
+          error: errAddressLine1,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Address Line2",
+          name: "address_line2",
+          value: address_line2,
+          error: errAddressLine2,
           onChangeValue,
         },
         {

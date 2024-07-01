@@ -1,13 +1,12 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {useReactQuery} from "@fanam-pkg/core-utils"
-import {useParams, useRouter} from "next/navigation"
+import {useParams} from "next/navigation"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import {useRecipientController} from "controller"
 import {QUERY_RECIPIENT} from "utils"
 
 export const useHandler = () => {
   const {recipientId} = useParams()
-  const {push} = useRouter()
   const {toggleNotify} = useNotifyPopup()
   const {getByRecipientId, updateRecipient} = useRecipientController()
   const {refreshQuery} = useReactQuery()

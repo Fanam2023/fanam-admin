@@ -1,7 +1,7 @@
 import {ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
 import {RecipientCardProps, RecipientPreviewProps} from "props"
-import {RECIPIENT_DETAILS} from "utils"
+import {RECIPIENT_ACCOUNT_DETAILS, RECIPIENT_DETAILS} from "utils"
 import styles from "./styles.module.sass"
 
 export const RecipientCard = ({onEdit}: RecipientCardProps) => {
@@ -13,18 +13,33 @@ export const RecipientCard = ({onEdit}: RecipientCardProps) => {
   )
 
   return (
-    <section className={`flex-col ${styles.container_wrapper}`}>
-      <section className={`flex-sb-center ${styles.card_wrapper}`}>
-        <h5 className={styles.title_wrapper}>Recipient Details</h5>
-        <ImageView
-          wrapperClass={styles.edit_icon}
-          src={assets.ic_edit}
-          alt="edit-icon"
-          imgSize={24}
-          onClick={onEdit.bind(null, null)}
-        />
+    <>
+      <section className={`flex-col ${styles.details_wrapper}`}>
+        <section className={`flex-sb-center ${styles.card_wrapper}`}>
+          <h5 className={styles.title_wrapper}>Recipient Details</h5>
+          <ImageView
+            wrapperClass={styles.edit_icon}
+            src={assets.ic_edit}
+            alt="edit-icon"
+            imgSize={24}
+            onClick={onEdit.bind(null, null)}
+          />
+        </section>
+        <ul>{RECIPIENT_DETAILS.map(renderRecipientDetails)}</ul>
       </section>
-      <ul>{RECIPIENT_DETAILS.map(renderRecipientDetails)}</ul>
-    </section>
+      <section className={`flex-col ${styles.account_wrapper}`}>
+        <section className={`flex-sb-center ${styles.card_wrapper}`}>
+          <h5 className={styles.title_wrapper}>Recipient Account Details</h5>
+          <ImageView
+            wrapperClass={styles.edit_icon}
+            src={assets.ic_edit}
+            alt="edit-icon"
+            imgSize={24}
+            onClick={onEdit.bind(null, null)}
+          />
+        </section>
+        <ul>{RECIPIENT_ACCOUNT_DETAILS.map(renderRecipientDetails)}</ul>
+      </section>
+    </>
   )
 }

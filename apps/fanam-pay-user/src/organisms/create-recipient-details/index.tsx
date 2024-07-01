@@ -1,23 +1,16 @@
-import {GroupForm} from "@fanam-pkg/core-ui-sass"
-import {useResize} from "@fanam-pkg/core-utils"
+import {Button, GroupForm} from "@fanam-pkg/core-ui-sass"
 import {useEffect} from "react"
 import {BaseContainer} from "organisms"
 import {RecipientDetailsProp} from "props"
 import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
-export const CreateRecipientDetails = ({
-  onClickCreate,
-  recipientDetails,
-  wrapperClass,
-  onBack,
-}: RecipientDetailsProp) => {
-  const {isDesktop} = useResize()
-  const {formElements, onChangeValue, onSubmit} = useHandler()
+export const CreateRecipientDetails = ({onClickCreate, recipient}: RecipientDetailsProp) => {
+  const {formElements, onChangeValue, onSubmit, isDesktop, toggleSlider} = useHandler()
 
   useEffect(() => {
-    onChangeValue({...recipientDetails})
-  }, [recipientDetails])
+    onChangeValue({...recipient})
+  }, [recipient])
 
   const onClickSubmit = () => {
     const payload = onSubmit()
@@ -26,22 +19,27 @@ export const CreateRecipientDetails = ({
     }
   }
 
-  return (
+  return isDesktop ? (
     <section>
-      {isDesktop ? (
-        <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-      ) : (
-        <BaseContainer
-          buttonText="Submit"
-          header="Recipient Details"
-          onSubmit={onClickSubmit}
-          backIcon
-          containerClass={wrapperClass}
-          onBack={onBack}
-          childWrapper={styles.child_wrapper}>
-          <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-        </BaseContainer>
-      )}
+      <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
+      <footer className={`flex ${styles.footer_wrapper}`}>
+        <Button buttonType="primary-outlined" wrapperClass={styles.btn_wrapper} onClick={() => toggleSlider()}>
+          Back
+        </Button>
+        <Button wrapperClass={styles.btn_wrapper} onClick={onClickSubmit}>
+          Continue
+        </Button>
+      </footer>
     </section>
+  ) : (
+    <BaseContainer
+      buttonText="Submit"
+      header="Recipient Details"
+      backIcon
+      addButton="Add"
+      childWrapper={styles.child_wrapper}
+      onSubmit={onClickSubmit}>
+      <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
+    </BaseContainer>
   )
 }
