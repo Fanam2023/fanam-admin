@@ -119,3 +119,25 @@ export const PURPOSES_INDIVIDUAL = ["Tuition Fee", "Rent", "Family Expense", "Me
 export const PURPOSES_BUSINESS = ["Working Capital", "Rent", "Salary", "Others"]
 
 export const ID_PROOFS = ["Passport", "Driving License", "Aadhaar"]
+export const RELATION_SHIP = [
+  "Father",
+  "Mother",
+  "Son",
+  "Bother",
+  "Sister",
+  "Others",
+  "Cousin",
+  "Daughter",
+  "Friend",
+  "Uncle",
+  "Aunty",
+  "GrandMother",
+  "GrandFather",
+  "Sister in law",
+  "Father in law",
+  " Mother in law",
+  "Brother in law",
+  "Nephew",
+  "Niece",
+  " Not Applicable",
+]
