@@ -18,8 +18,12 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   const [token, setToken] = useState<string | null>(getCookie<string>(COOKIE_ACCESS_TOKEN))
   const [transId, setTransId] = useState<string | null>(getCookie<string>(COOKIE_TRANSACTION_ID))
   const [refreshToken, setRefreshToken] = useState<string | null>(getCookie<string>(COOKIE_REFRESH_TOKEN))
-  const {data: userRes} = useQuery({enabled: !!token && !user, queryKey: [QUERY_USER], queryFn: getUser})
-  // const {data: transRes} = useQuery({enabled: !!transId && !transData, queryKey: [QUERY_TRANSACTION], queryFn: getTransaction})
+  const {data: userRes, refetch: refetchUser} = useQuery({
+    enabled: !!token && !user,
+    queryKey: [QUERY_USER],
+    queryFn: getUser,
+  })
+  // const {data: transRes, refetch: refetchToken} = useQuery({enabled: !!transId && !transData, queryKey: [QUERY_TRANSACTION], queryFn: getTransaction})
 
   const updateUserData = (user: IUser) => setUser(user)
 
@@ -33,6 +37,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   const updateToken = (accessToken: string) => {
     setCookie(COOKIE_ACCESS_TOKEN, accessToken)
     setToken(accessToken)
+    setUser(null)
   }
 
   const updateRefreshToken = (token: string) => {

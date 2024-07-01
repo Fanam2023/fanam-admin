@@ -46,9 +46,10 @@ const useHandler = (styles: IStyle) => {
     state: null,
     zip_code: "",
     city: null,
-    account_number: "",
+    account_no: "",
     id_type: "",
     id_issued_country: null,
+    id_number: "",
     account_type: [
       {label: "Individual", isSelected: true},
       {label: "Business", isSelected: false},
@@ -60,7 +61,7 @@ const useHandler = (styles: IStyle) => {
     first_name,
     last_name,
     email,
-    account_number,
+    account_no,
     phone_no,
     country,
     state,
@@ -71,6 +72,7 @@ const useHandler = (styles: IStyle) => {
     zip_code,
     id_type,
     id_issued_country,
+    id_number,
   } = data
 
   const {
@@ -143,10 +145,8 @@ const useHandler = (styles: IStyle) => {
   useEffect(() => {
     if (user) {
       const {
-        account_number,
         address_line1,
         address_line2,
-        account_type,
         city,
         country,
         first_name,
@@ -155,34 +155,74 @@ const useHandler = (styles: IStyle) => {
         phone_no,
         state,
         zip_code,
+        user_accounts,
+        id_issued_country,
+        id_number,
+        id_type,
       } = user
-      const {iso2, country_name} = country
 
-      setData({
+      let payloadData: ISyncUserData = {
         ...data,
-        account_number,
         address_line1,
         address_line2,
-        account_type: data.account_type.map(({label, isSelected}) => ({label, isSelected: label === account_type})),
-        // city,
         first_name,
         last_name,
         email,
         phone_no,
-        // state,
         zip_code,
-        // country: {label: country_name, key: iso2, isSelected: true},
-      })
+        id_number,
+        id_type,
+      }
+
+      if (country) {
+        const {country_id, country_name} = country
+
+        payloadData = {
+          ...payloadData,
+          country: {label: country_name, key: country_id, isSelected: true},
+        }
+      }
+
+      if (state) {
+        const {state_id, state_name} = state
+
+        payloadData = {
+          ...payloadData,
+          state: {label: state_name, key: state_id, isSelected: true},
+        }
+      }
+
+      if (city) {
+        const {city_id, city_name} = city
+
+        payloadData = {
+          ...payloadData,
+          city: {label: city_name, key: city_id, isSelected: true},
+        }
+      }
+
+      if (id_issued_country) {
+        const {country_id, country_name} = id_issued_country
+
+        payloadData = {
+          ...payloadData,
+          id_issued_country: {label: country_name, key: country_id, isSelected: true},
+        }
+      }
+
+      if (user_accounts?.length) {
+        const {account_no, account_type} = user_accounts[0]
+
+        payloadData = {
+          ...payloadData,
+          account_no,
+          account_type: data.account_type.map(({label, isSelected}) => ({label, isSelected: label === account_type})),
+        }
+      }
+
+      setData(payloadData)
     }
   }, [user])
-
-  useEffect(() => {
-    onChangeValue({state: null, city: null})
-  }, [country])
-
-  useEffect(() => {
-    onChangeValue({city: null})
-  }, [state])
 
   const onValidate = () => {
     let errState = {
@@ -195,7 +235,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!last_name) errState = {...errState, errLastName: "Please enter Last Name", isValid: false}
 
-    if (!account_number) errState = {...errState, errAccountNo: "Please enter Account Number", isValid: false}
+    if (!account_no) errState = {...errState, errAccountNo: "Please enter Account Number", isValid: false}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please Confirm Your E-mail", isValid: false}
@@ -229,6 +269,10 @@ const useHandler = (styles: IStyle) => {
 
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
 
+  const onChangeCountry = (value: JSONObject) => onChangeValue({...value, state: null, city: null})
+
+  const onChangeState = (value: JSONObject) => onChangeValue({...value, city: null})
+
   const formElements: FormSectionProps[] = [
     {
       wrapperClassGrid: styles.sender_input_wrapper,
@@ -260,9 +304,10 @@ const useHandler = (styles: IStyle) => {
         {
           elementType: "input",
           label: "Enter Account Number",
-          name: "account_number",
+          name: "account_no",
+          disabled: !!user,
           error: errAccountNo,
-          value: account_number,
+          value: account_no,
           onChangeValue,
         },
         {
@@ -271,6 +316,7 @@ const useHandler = (styles: IStyle) => {
           name: "email",
           value: email,
           error: errEmail,
+          disabled: !!user,
           onChangeValue,
         },
         {
@@ -304,7 +350,7 @@ const useHandler = (styles: IStyle) => {
           options: countries,
           error: errCountry,
           value: country,
-          onChangeValue,
+          onChangeValue: onChangeCountry,
         },
         {
           elementType: "drop-down",
@@ -314,7 +360,7 @@ const useHandler = (styles: IStyle) => {
           error: errState,
           disabled: !country,
           value: state,
-          onChangeValue,
+          onChangeValue: onChangeState,
         },
         {
           elementType: "drop-down",
@@ -330,6 +376,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "input",
           label: "Enter Zip Code",
           name: "zip_code",
+          value: zip_code,
           error: errZipCode,
           onChangeValue,
         },
@@ -349,6 +396,14 @@ const useHandler = (styles: IStyle) => {
           options: ID_PROOFS,
           error: errIdType,
           value: id_type,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter ID number",
+          name: "id_number",
+          error: errIdType,
+          value: id_number,
           onChangeValue,
         },
         {
@@ -383,17 +438,17 @@ const useHandler = (styles: IStyle) => {
         first_name,
         last_name,
         email,
-        account_number,
         phone_no,
-        country_code: allCountries.find(({country_id}) => country.key === country_id)?.iso2,
-        state: state.label,
+        country_id: country.key as number,
+        state_id: state.key as number,
         address_line1,
         address_line2,
-        city: city.label,
-        account_type: account_type?.find(({isSelected}) => isSelected).label,
+        city_id: city.key as number,
         zip_code,
         id_type,
-        id_issued_country: allCountries.find(({country_id}) => country.key === country_id)?.iso2,
+        id_issued_country_id: id_issued_country.key as number,
+        id_number,
+        bank_account: {account_no, account_type: account_type?.find(({isSelected}) => isSelected).label},
       })
     }
   }

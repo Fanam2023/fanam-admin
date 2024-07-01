@@ -1,6 +1,6 @@
 import {IFormData} from "@fanam-pkg/core-utils"
 import {TypeUserRole} from "./enum"
-import {ICountry} from "./location"
+import {ICity, ICountry, IState} from "./location"
 
 export interface IResponseLogin {
   access_token: string
@@ -33,12 +33,14 @@ export interface IUser {
   address_line1: string
   address_line2: string
   zip_code: string
-  account_number: string
   role?: TypeUserRole
   country: ICountry
-  state: string
-  city: string
-  account_type: string
+  state: IState
+  city: ICity
+  id_issued_country: ICountry
+  id_number: string
+  id_type: string
+  user_accounts: IResponseBankAccount[]
 }
 
 export interface IBaseSyncUser {
@@ -49,7 +51,7 @@ export interface IBaseSyncUser {
   address_line1: string
   address_line2: string
   zip_code: string
-  account_number: string
+  id_number: string
   id_type: string
 }
 
@@ -59,12 +61,22 @@ export interface ISyncUserData extends IBaseSyncUser {
   state: IFormData | null
   city: IFormData | null
   account_type: IFormData[]
+  account_no: string
 }
 
 export interface IPayloadSyncUser extends IBaseSyncUser {
-  country_code: string
-  id_issued_country: string
-  state: string
-  city: string
+  country_id: number
+  id_issued_country_id: number
+  state_id: number
+  city_id: number
+  bank_account: IPayloadUserBankAccount
+}
+
+export interface IPayloadUserBankAccount {
+  account_no: string
   account_type: string
+}
+
+export interface IResponseBankAccount extends IPayloadUserBankAccount {
+  account_id: string
 }

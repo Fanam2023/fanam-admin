@@ -20,7 +20,4 @@ export interface ISingleton extends ISingletonData {
   updateTransId: (transactionId?: string) => void
   updateRefreshToken: (token?: string) => void
   singOutUser: () => void
-  isValidator?: boolean
-  isEditor?: boolean
-  isSuperAdmin?: boolean
 }
