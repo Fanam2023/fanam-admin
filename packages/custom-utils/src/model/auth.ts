@@ -1,5 +1,6 @@
 import {IFormData} from "@fanam-pkg/core-utils"
 import {TypeUserRole} from "./enum"
+import {ICountry} from "./location"
 
 export interface IResponseLogin {
   access_token: string
@@ -25,12 +26,19 @@ export interface IPayloadLogin {
 }
 
 export interface IUser {
-  countryCode?: string
-  mobile?: string
-  name?: string
-  email?: string
-  imageUrl?: string
+  first_name: string
+  last_name: string
+  email: string
+  phone_no: string
+  address_line1: string
+  address_line2: string
+  zip_code: string
+  account_number: string
   role?: TypeUserRole
+  country: ICountry
+  state: string
+  city: string
+  account_type: string
 }
 
 export interface IBaseSyncUser {

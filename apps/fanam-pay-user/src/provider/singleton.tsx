@@ -64,7 +64,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   }
 
   const value: ISingleton = {
-    // user,
+    user,
     token,
     transId,
     transData,
@@ -73,9 +73,6 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     updateToken,
     updateTransId,
     updateTransData,
-    // isValidator,
-    // isEditor,
-    // isSuperAdmin,
     refreshToken,
     updateRefreshToken,
   }

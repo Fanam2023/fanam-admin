@@ -34,7 +34,7 @@ const useHandler = (styles: IStyle) => {
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {syncUser} = useAuthController()
   const {toggleNotify} = useNotifyPopup()
-  const {updateUserData} = useSingleton()
+  const {updateUserData, user} = useSingleton()
   const [data, setData] = useState<ISyncUserData>({
     first_name: "",
     last_name: "",
@@ -139,6 +139,41 @@ const useHandler = (styles: IStyle) => {
         })
     }
   }, [userRes])
+
+  useEffect(() => {
+    if (user) {
+      const {
+        account_number,
+        address_line1,
+        address_line2,
+        account_type,
+        city,
+        country,
+        first_name,
+        last_name,
+        email,
+        phone_no,
+        state,
+        zip_code,
+      } = user
+      const {iso2, country_name} = country
+
+      onChangeValue({
+        account_number,
+        address_line1,
+        address_line2,
+        account_type,
+        city,
+        first_name,
+        last_name,
+        email,
+        phone_no,
+        state,
+        zip_code,
+        country_code: {label: country_name, key: iso2, isSelected: true},
+      })
+    }
+  }, [user])
 
   useEffect(() => {
     onChangeValue({state: null, city: null})
