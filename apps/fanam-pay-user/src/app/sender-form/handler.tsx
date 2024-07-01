@@ -158,19 +158,20 @@ const useHandler = (styles: IStyle) => {
       } = user
       const {iso2, country_name} = country
 
-      onChangeValue({
+      setData({
+        ...data,
         account_number,
         address_line1,
         address_line2,
-        account_type,
-        city,
+        account_type: data.account_type.map(({label, isSelected}) => ({label, isSelected: label === account_type})),
+        // city,
         first_name,
         last_name,
         email,
         phone_no,
-        state,
+        // state,
         zip_code,
-        country_code: {label: country_name, key: iso2, isSelected: true},
+        // country: {label: country_name, key: iso2, isSelected: true},
       })
     }
   }, [user])
