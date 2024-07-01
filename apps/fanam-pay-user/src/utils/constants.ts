@@ -88,3 +88,26 @@ export const LIST_OF_CART: BankCartProps[] = [
     cartType: "Credit Card",
   },
 ]
+
+export const RELATION_SHIP = [
+  "Father",
+  "Mother",
+  "Son",
+  "Bother",
+  "Sister",
+  "Others",
+  "Cousin",
+  "Daughter",
+  "Friend",
+  "Uncle",
+  "Aunty",
+  "GrandMother",
+  "GrandFather",
+  "Sister in law",
+  "Father in law",
+  " Mother in law",
+  "Brother in law",
+  "Nephew",
+  "Niece",
+  " Not Applicable",
+]

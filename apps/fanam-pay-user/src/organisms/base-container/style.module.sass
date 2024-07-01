@@ -5,7 +5,10 @@
 .header_wrapper
   padding: $size-14px $size-14px
   background: $white
-  border-bottom: $size-1px solid $medium-grey
+  position: fixed
+  width: 100vw
+  z-index: 2
+  box-shadow: 0px $size-1px $size-20px 0px rgba(0, 0, 0, $alpha-two)
 
 .label_wrapper
   gap: $size-20px
@@ -52,6 +55,7 @@
   overflow-y: scroll
   padding: $size-48px $size-24px
   z-index: 1
+  margin-top: 3%
 
 .content_wrapper
   display: flex
@@ -126,3 +130,6 @@
     display: block
     width: 75%
     box-shadow: $size-6px $size-6px $size-10px $medium-grey
+
+  .add_text
+    margin-right: $size-20px
