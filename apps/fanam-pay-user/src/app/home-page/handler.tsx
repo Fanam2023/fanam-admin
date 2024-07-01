@@ -66,7 +66,7 @@ export const useHandler = () => {
       isValid: true,
     }
 
-    if (!isNaN(parseFloat(source_amount)))
+    if (isNaN(parseFloat(source_amount)))
       errState = {...errState, errSourceAmount: "Please enter valid source amount", isValid: false}
 
     if (!source_country?.iso2) errState = {...errState, errSourceCountry: "Choose valid country", isValid: false}
@@ -86,7 +86,7 @@ export const useHandler = () => {
 
     errState = {...errState, ...onValidateFxRate()}
 
-    if (!isNaN(parseFloat(destination_amount)))
+    if (isNaN(parseFloat(destination_amount)))
       errState = {...errState, errDestinationAmount: "Please enter valid destination amount", isValid: false}
 
     if (!recipient_type?.some(({isSelected}) => isSelected))
@@ -94,7 +94,7 @@ export const useHandler = () => {
 
     if (!purpose) errState = {...errState, errPurpose: "Please choose valid purpose", isValid: false}
 
-    if (!reason) errState = {...errState, errPurpose: "Please choose valid reason", isValid: false}
+    if (!reason) errState = {...errState, errReason: "Please choose valid reason", isValid: false}
 
     return errState
   }
@@ -108,18 +108,18 @@ export const useHandler = () => {
       refreshQuery(QUERY_EXCHANGE)
       if (result) {
         const {destination_amount} = result
-        setDestinationAmount(destination_amount)
+        setDestinationAmount(`${destination_amount || 0}`)
       }
     },
   })
 
   useEffect(() => {
     const {isValid} = onValidateFxRate()
-    if (isClicked && isValid)
+    if (isValid)
       checkFxRate({
-        source_country: source_country.iso2,
-        source_amount: parseFloat(source_amount),
-        destination_country: destination_country.iso2,
+        source_country_code: source_country.iso2,
+        destination_country_code: destination_country.iso2,
+        source_amount: source_amount,
       })
   }, [source_amount, checkFxRate, destination_country])
 

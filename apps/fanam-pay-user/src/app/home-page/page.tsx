@@ -7,7 +7,7 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const HomePage = () => {
-  const {onAdd, data, showCountries, PURPOSES, onChangeValue, onSelectType} = useHandler()
+  const {onAdd, data, showCountries, PURPOSES, onChangeValue, onSelectType, destinationAmount} = useHandler()
 
   const {source_amount, destination_amount, recipient_type, source_country, destination_country, purpose, reason} = data
 
@@ -65,7 +65,7 @@ const HomePage = () => {
             <ImageView src={assets.ic_grey_arrow} alt="down-arrow" onClick={showCountries} imgSize={15} />
             <TextField
               wrapperClass={styles.text_field_wrapper}
-              value={destination_amount}
+              value={destinationAmount}
               name="destination_amount"
               onChangeData={onChangeValue}
             />
