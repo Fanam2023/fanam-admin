@@ -5,8 +5,8 @@ export interface ITransaction {
   transaction_id: string
   sender_account_type: TypeAccount
   recipient_account_type: TypeAccount
-  source_currency: string
-  destination_currency: string
+  source_country: ICountry
+  destination_country: ICountry
   source_amount: number
   destination_amount: number
   markup_fee: number
@@ -57,22 +57,21 @@ export interface IResponseFxRate {
   destination_amount: number | null
 }
 
-export interface IPayloadTransaction {
-  source_amount: number
-  destination_amount: number
-  source_country: string
-  destination_country: string
-  recipient_type: string
+export interface IBaseTransactionData {
+  source_amount: string
+  destination_amount: string
   purpose: string
   reason: string
 }
 
-export interface ITransactionData {
-  source_amount: string
-  destination_amount: string
-  source_country: ICountry
-  destination_country: ICountry
-  recipient_type: IFormData[]
-  purpose: string
-  reason: string
+export interface IPayloadTransaction extends IBaseTransactionData {
+  source_country_id: number
+  destination_country_id: number
+  sender_account_type: string
+  recipient_account_type: string
+}
+
+export interface ITransactionData extends IBaseTransactionData {
+  destination_country: ICountry | null
+  recipient_account_type: IFormData[]
 }

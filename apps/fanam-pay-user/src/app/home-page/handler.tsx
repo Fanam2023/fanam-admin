@@ -1,18 +1,20 @@
+import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {IFormData, JSONObject, useReactQuery} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
-import {useMutation} from "@tanstack/react-query"
+import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {ICountry, ITransactionData} from "@custom/utils"
-import {usePaymentController} from "controller"
+import {useLocationController, usePaymentController, useTransactionController} from "controller"
+import {useSingleton} from "hooks"
 import {CountryPopup} from "organisms"
 import {
-  DEFAULT_DESTINATION_COUNTRY,
-  DEFAULT_SOURCE_COUNTRY,
   PURPOSES_BUSINESS,
   PURPOSES_INDIVIDUAL,
+  QUERY_COUNTRIES,
   QUERY_EXCHANGE,
-  ROUTE_ATTACHMENT,
+  QUERY_TRANSACTION,
+  ROUTE_INVOICE,
 } from "utils"
 
 const DEFAULT_ERR_STATE = {
@@ -27,20 +29,24 @@ const DEFAULT_ERR_STATE = {
   isValid: false,
 }
 
+let debounceTimer: null | NodeJS.Timeout = null
+
 export const useHandler = () => {
   const {push} = useRouter()
   const {getFxRate} = usePaymentController()
+  const {getAllCountries} = useLocationController()
+  const {createTransaction} = useTransactionController()
   const {refreshQuery} = useReactQuery()
-  const [destinationAmount, setDestinationAmount] = useState("")
+  const {toggleNotify} = useNotifyPopup()
+  const {user, updateTransData, updateTransId} = useSingleton()
   const [data, setData] = useState<ITransactionData>({
     source_amount: "",
     destination_amount: "",
-    recipient_type: [
+    recipient_account_type: [
       {label: "Individual", isSelected: false},
       {label: "Business", isSelected: false},
     ],
-    source_country: DEFAULT_SOURCE_COUNTRY,
-    destination_country: DEFAULT_DESTINATION_COUNTRY,
+    destination_country: null,
     purpose: "",
     reason: "",
   })
@@ -48,13 +54,58 @@ export const useHandler = () => {
 
   const {toggleSlider} = useSlider()
 
-  const {source_country, source_amount, destination_country, destination_amount, recipient_type, purpose, reason} = data
+  const {country: sourceCountry, user_accounts = []} = user || {}
 
-  const isIndividual = recipient_type.find(({label, isSelected}) => isSelected && label === "Individual")
+  const {source_amount, destination_country, destination_amount, recipient_account_type, purpose, reason} = data
+
+  const isIndividual = recipient_account_type.find(({label, isSelected}) => isSelected && label === "Individual")
 
   const PURPOSES = isIndividual ? PURPOSES_INDIVIDUAL : PURPOSES_BUSINESS
 
   const {isClicked} = errState
+
+  const {data: allCountries = []} = useQuery({queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries})
+
+  const {mutate: checkFxRate} = useMutation({
+    mutationKey: [QUERY_EXCHANGE],
+    mutationFn: getFxRate,
+    onSuccess: ({result}) => {
+      refreshQuery(QUERY_EXCHANGE)
+      if (result) {
+        const {destination_amount} = result
+        onChangeValue({destination_amount})
+      }
+    },
+  })
+
+  const {mutate: onCreate} = useMutation({
+    mutationKey: [QUERY_TRANSACTION],
+    mutationFn: createTransaction,
+    onSuccess: ({result, errorData}) => {
+      if (result) {
+        const {transaction_id} = result
+        updateTransId(transaction_id)
+        updateTransData(result)
+        push(ROUTE_INVOICE)
+      } else
+        toggleNotify({
+          title: "Error - Initiate transaction",
+          description: errorData?.message || "Something went wrong",
+          type: "error",
+        })
+    },
+  })
+
+  useEffect(() => {
+    if (allCountries.length) {
+      setData({
+        ...data,
+        destination_country: allCountries.find(({iso2}) =>
+          sourceCountry?.iso2 === "IN" ? iso2 === "US" : iso2 === "IN"
+        ),
+      })
+    }
+  }, [allCountries])
 
   useEffect(() => {
     if (isClicked) setErrState(prev => ({...prev, ...onValidate()}))
@@ -68,8 +119,6 @@ export const useHandler = () => {
 
     if (isNaN(parseFloat(source_amount)))
       errState = {...errState, errSourceAmount: "Please enter valid source amount", isValid: false}
-
-    if (!source_country?.iso2) errState = {...errState, errSourceCountry: "Choose valid country", isValid: false}
 
     if (!destination_country?.iso2)
       errState = {...errState, errDestinationCountry: "Choose valid destination country", isValid: false}
@@ -89,7 +138,7 @@ export const useHandler = () => {
     if (isNaN(parseFloat(destination_amount)))
       errState = {...errState, errDestinationAmount: "Please enter valid destination amount", isValid: false}
 
-    if (!recipient_type?.some(({isSelected}) => isSelected))
+    if (!recipient_account_type?.some(({isSelected}) => isSelected))
       errState = {...errState, errRecipientType: "Choose valid recipient type", isValid: false}
 
     if (!purpose) errState = {...errState, errPurpose: "Please choose valid purpose", isValid: false}
@@ -99,46 +148,55 @@ export const useHandler = () => {
     return errState
   }
 
-  const onAdd = () => push(ROUTE_ATTACHMENT)
-
-  const {mutate: checkFxRate} = useMutation({
-    mutationKey: [QUERY_EXCHANGE],
-    mutationFn: getFxRate,
-    onSuccess: ({result}) => {
-      refreshQuery(QUERY_EXCHANGE)
-      if (result) {
-        const {destination_amount} = result
-        setDestinationAmount(`${destination_amount || 0}`)
-      }
-    },
-  })
-
   useEffect(() => {
     const {isValid} = onValidateFxRate()
-    if (isValid)
-      checkFxRate({
-        source_country_code: source_country.iso2,
-        destination_country_code: destination_country.iso2,
-        source_amount: source_amount,
-      })
-  }, [source_amount, checkFxRate, destination_country])
+    if (isValid) {
+      if (debounceTimer) clearTimeout(debounceTimer)
+      debounceTimer = setTimeout(() => {
+        checkFxRate({
+          source_country_code: sourceCountry.iso2,
+          destination_country_code: destination_country.iso2,
+          source_amount: source_amount,
+        })
+      }, 500)
+    }
+  }, [source_amount, checkFxRate, destination_country, user])
 
   const onChangeValue = (value: JSONObject) => setData({...data, ...value})
 
   const onSelectCountry = (destination_country: ICountry) => setData({...data, destination_country})
 
   const showCountries = () =>
-    toggleSlider({children: <CountryPopup onSelect={onSelectCountry} selCountry={destination_country} />})
+    toggleSlider({
+      children: <CountryPopup countries={allCountries} onSelect={onSelectCountry} selCountry={destination_country} />,
+    })
 
-  const onSelectType = (recipient_type: IFormData[]) => setData({...data, recipient_type, purpose: ""})
+  const onSelectType = (value: Record<string, IFormData[]>) => onChangeValue({...value, purpose: ""})
+
+  const onSubmit = () => {
+    const {isValid} = onValidate()
+
+    if (isValid) {
+      onCreate({
+        destination_amount,
+        source_amount,
+        recipient_account_type: recipient_account_type.find(({isSelected}) => isSelected)?.label,
+        destination_country_id: destination_country?.country_id,
+        source_country_id: sourceCountry?.country_id,
+        sender_account_type: user_accounts?.[0]?.account_type,
+        reason,
+        purpose,
+      })
+    }
+  }
 
   return {
-    onAdd,
     data,
-    destinationAmount,
     PURPOSES,
     showCountries,
     onChangeValue,
     onSelectType,
+    onSubmit,
+    sourceCountry,
   }
 }
