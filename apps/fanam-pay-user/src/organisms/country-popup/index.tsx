@@ -1,11 +1,8 @@
 import {ICountry} from "@custom/utils"
 import {CountryPopupProps} from "props"
 import styles from "./country.module.sass"
-import useHandler from "./handler"
 
-export const CountryPopup = ({onSelect, selCountry}: CountryPopupProps) => {
-  const {countries} = useHandler()
-
+export const CountryPopup = ({onSelect, selCountry, countries}: CountryPopupProps) => {
   const renderCountries = (country: ICountry) => {
     const {country_id, country_name, iso2} = country
     return (

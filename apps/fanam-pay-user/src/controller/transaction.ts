@@ -1,4 +1,4 @@
-import {API_TRANSACTION, apiTransaction} from "@custom/utils"
+import {API_TRANSACTION, apiTransaction, IPayloadTransaction, ITransaction} from "@custom/utils"
 import {useApi} from "./api"
 
 export const useTransactionController = () => {
@@ -9,10 +9,11 @@ export const useTransactionController = () => {
     return result
   }
 
-  const createTransaction = async (user: any) => {
-    const {result, errorData} = await postRequest(API_TRANSACTION, user)
+  const createTransaction = async (payload: IPayloadTransaction) => {
+    const {result, errorData} = await postRequest<ITransaction>(API_TRANSACTION, payload)
     return {result, errorData}
   }
+
   const updateTransaction = async (payload: any) => {
     const transactionId = payload.transaction_id
     const {result, errorData} = await putRequest(API_TRANSACTION, transactionId)
