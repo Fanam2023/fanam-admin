@@ -2,11 +2,11 @@ import {Button, GroupForm} from "@fanam-pkg/core-ui-sass"
 import {useEffect} from "react"
 import {BaseContainer} from "organisms"
 import {RecipientDetailsProp} from "props"
-import {useHandler} from "./handler"
+import useHandler from "./handler"
 import styles from "./styles.module.sass"
 
 export const CreateRecipientDetails = ({onClickCreate, recipient}: RecipientDetailsProp) => {
-  const {formElements, onChangeValue, onSubmit, isDesktop, toggleSlider} = useHandler()
+  const {formElements, onChangeValue, onSubmit, isDesktop, toggleSlider} = useHandler(styles)
 
   useEffect(() => {
     onChangeValue({...recipient})

@@ -216,7 +216,7 @@ const useHandler = (styles: IStyle) => {
         payloadData = {
           ...payloadData,
           account_no,
-          account_type: data.account_type.map(({label, isSelected}) => ({label, isSelected: label === account_type})),
+          account_type: data.account_type.map(({label}) => ({label, isSelected: label === account_type})),
         }
       }
 
@@ -448,7 +448,7 @@ const useHandler = (styles: IStyle) => {
         id_type,
         id_issued_country_id: id_issued_country.key as number,
         id_number,
-        bank_account: {account_no, account_type: account_type?.find(({isSelected}) => isSelected).label},
+        bank_account: {account_no, account_type: account_type?.find(({isSelected}) => isSelected)?.label},
       })
     }
   }

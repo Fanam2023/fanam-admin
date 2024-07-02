@@ -6,7 +6,7 @@ import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const CreateBeneficiaryDetails = ({onClickCreate, beneficiaryDetails}: BeneficiaryDetailsProps) => {
-  const {onChangeValue, onSubmit, onRouteToOptions, formElements, isDesktop, toggleSlider} = useHandler()
+  const {onChangeValue, onSubmit, onRouteToOptions, formElements, isDesktop, toggleSlider} = useHandler(styles)
 
   useEffect(() => {
     onChangeValue({...beneficiaryDetails})

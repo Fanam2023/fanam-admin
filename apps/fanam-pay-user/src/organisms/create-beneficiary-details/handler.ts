@@ -3,11 +3,10 @@ import {JSONObject, useCookies, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useSlider} from "@custom/ui"
-import {IBeneficiary} from "@custom/utils"
+import {IBeneficiary, IStyle} from "@custom/utils"
 import {COOKIE_TRANSACTION_ID, ROUTE_PAYMENT_OPTIONS} from "utils"
-import styles from "./styles.module.sass"
 
-export const useHandler = () => {
+export const useHandler = (styles: IStyle) => {
   const {isDesktop} = useResize()
   const {push} = useRouter()
   const {toggleSlider} = useSlider()

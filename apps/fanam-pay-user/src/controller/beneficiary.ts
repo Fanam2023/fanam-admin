@@ -6,7 +6,7 @@ export const useBeneficiaryController = () => {
 
   const getAllBeneficiary = async () => {
     const {result} = await getRequest<IBeneficiary[]>(API_BENEFICIARY)
-    return result
+    return result || []
   }
 
   const createBeneficiary = async (payload: IBeneficiary) => {
