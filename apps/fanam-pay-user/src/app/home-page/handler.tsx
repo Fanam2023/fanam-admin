@@ -1,19 +1,13 @@
 import {IFormData, JSONObject, useReactQuery} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
-import {useMutation} from "@tanstack/react-query"
+import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {ICountry, ITransactionData} from "@custom/utils"
-import {usePaymentController} from "controller"
+import {useLocationController, usePaymentController} from "controller"
+import {useSingleton} from "hooks"
 import {CountryPopup} from "organisms"
-import {
-  DEFAULT_DESTINATION_COUNTRY,
-  DEFAULT_SOURCE_COUNTRY,
-  PURPOSES_BUSINESS,
-  PURPOSES_INDIVIDUAL,
-  QUERY_EXCHANGE,
-  ROUTE_ATTACHMENT,
-} from "utils"
+import {PURPOSES_BUSINESS, PURPOSES_INDIVIDUAL, QUERY_COUNTRIES, QUERY_EXCHANGE, ROUTE_ATTACHMENT} from "utils"
 
 const DEFAULT_ERR_STATE = {
   errSourceAmount: "",
@@ -27,11 +21,14 @@ const DEFAULT_ERR_STATE = {
   isValid: false,
 }
 
+let debounceTimer: null | NodeJS.Timeout = null
+
 export const useHandler = () => {
   const {push} = useRouter()
   const {getFxRate} = usePaymentController()
+  const {getAllCountries} = useLocationController()
   const {refreshQuery} = useReactQuery()
-  const [destinationAmount, setDestinationAmount] = useState("")
+  const {user} = useSingleton()
   const [data, setData] = useState<ITransactionData>({
     source_amount: "",
     destination_amount: "",
@@ -39,8 +36,8 @@ export const useHandler = () => {
       {label: "Individual", isSelected: false},
       {label: "Business", isSelected: false},
     ],
-    source_country: DEFAULT_SOURCE_COUNTRY,
-    destination_country: DEFAULT_DESTINATION_COUNTRY,
+    source_country: user?.country || null,
+    destination_country: null,
     purpose: "",
     reason: "",
   })
@@ -50,11 +47,25 @@ export const useHandler = () => {
 
   const {source_country, source_amount, destination_country, destination_amount, recipient_type, purpose, reason} = data
 
+  console.log("scda", recipient_type)
   const isIndividual = recipient_type.find(({label, isSelected}) => isSelected && label === "Individual")
 
   const PURPOSES = isIndividual ? PURPOSES_INDIVIDUAL : PURPOSES_BUSINESS
 
   const {isClicked} = errState
+
+  const {data: allCountries = []} = useQuery({queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries})
+
+  useEffect(() => {
+    if (allCountries.length) {
+      setData({
+        ...data,
+        destination_country: allCountries.find(({iso2}) =>
+          source_country?.iso2 === "IN" ? iso2 === "US" : iso2 === "IN"
+        ),
+      })
+    }
+  }, [allCountries])
 
   useEffect(() => {
     if (isClicked) setErrState(prev => ({...prev, ...onValidate()}))
@@ -108,19 +119,23 @@ export const useHandler = () => {
       refreshQuery(QUERY_EXCHANGE)
       if (result) {
         const {destination_amount} = result
-        setDestinationAmount(`${destination_amount || 0}`)
+        onChangeValue({destination_amount})
       }
     },
   })
 
   useEffect(() => {
     const {isValid} = onValidateFxRate()
-    if (isValid)
-      checkFxRate({
-        source_country_code: source_country.iso2,
-        destination_country_code: destination_country.iso2,
-        source_amount: source_amount,
-      })
+    if (isValid) {
+      if (debounceTimer) clearTimeout(debounceTimer)
+      debounceTimer = setTimeout(() => {
+        checkFxRate({
+          source_country_code: source_country.iso2,
+          destination_country_code: destination_country.iso2,
+          source_amount: source_amount,
+        })
+      }, 500)
+    }
   }, [source_amount, checkFxRate, destination_country])
 
   const onChangeValue = (value: JSONObject) => setData({...data, ...value})
@@ -128,14 +143,15 @@ export const useHandler = () => {
   const onSelectCountry = (destination_country: ICountry) => setData({...data, destination_country})
 
   const showCountries = () =>
-    toggleSlider({children: <CountryPopup onSelect={onSelectCountry} selCountry={destination_country} />})
+    toggleSlider({
+      children: <CountryPopup countries={allCountries} onSelect={onSelectCountry} selCountry={destination_country} />,
+    })
 
-  const onSelectType = (recipient_type: IFormData[]) => setData({...data, recipient_type, purpose: ""})
+  const onSelectType = (value: Record<string, IFormData[]>) => onChangeValue({...value, purpose: ""})
 
   return {
     onAdd,
     data,
-    destinationAmount,
     PURPOSES,
     showCountries,
     onChangeValue,

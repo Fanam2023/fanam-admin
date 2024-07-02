@@ -70,8 +70,8 @@ export interface IPayloadTransaction {
 export interface ITransactionData {
   source_amount: string
   destination_amount: string
-  source_country: ICountry
-  destination_country: ICountry
+  source_country: ICountry | null
+  destination_country: ICountry | null
   recipient_type: IFormData[]
   purpose: string
   reason: string

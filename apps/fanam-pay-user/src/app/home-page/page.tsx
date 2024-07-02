@@ -7,7 +7,7 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const HomePage = () => {
-  const {onAdd, data, showCountries, PURPOSES, onChangeValue, onSelectType, destinationAmount} = useHandler()
+  const {onAdd, data, showCountries, PURPOSES, onChangeValue, onSelectType} = useHandler()
 
   const {source_amount, destination_amount, recipient_type, source_country, destination_country, purpose, reason} = data
 
@@ -26,7 +26,7 @@ const HomePage = () => {
             items={recipient_type}
             onSelectItems={onSelectType}
             wrapperClass={styles.radio_button}
-            name="recipientTypeGroup"
+            name="recipient_type"
           />
         </section>
         <h4 className="semi-bold">Purpose of sending money</h4>
@@ -45,7 +45,7 @@ const HomePage = () => {
           <section className={`flex ${styles.input_container}`}>
             <section className={`flex ${styles.flag_wrapper} ${styles.sender_wrapper}`}>
               <ImageView src={assets.ic_india_flag} alt="country_flag" imgSize={40} />
-              <h3 className={styles.currency_text}>{source_country.iso2}</h3>
+              <h3 className={styles.currency_text}>{source_country?.iso2}</h3>
               <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
             </section>
             <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
@@ -59,13 +59,13 @@ const HomePage = () => {
           <h5 className={`bold ${styles.recipient_text}`}>Recipient receives</h5>
           <section className={`flex ${styles.input_container}`}>
             <section className={`flex ${styles.flag_wrapper} `}>
-              <ImageView src={assets.ic_us_flag} alt="country_flag" imgSize={40} />
-              <h3 className={styles.currency_text}>{destination_country.iso2}</h3>
+              <label style={{width: "40px", height: "40px"}}>{destination_country?.emoji}</label>
+              <h3 className={styles.currency_text}>{destination_country?.iso2}</h3>
             </section>
             <ImageView src={assets.ic_grey_arrow} alt="down-arrow" onClick={showCountries} imgSize={15} />
             <TextField
               wrapperClass={styles.text_field_wrapper}
-              value={destinationAmount}
+              value={destination_amount}
               name="destination_amount"
               onChangeData={onChangeValue}
             />
