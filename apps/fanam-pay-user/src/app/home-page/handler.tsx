@@ -175,7 +175,6 @@ export const useHandler = () => {
 
   const onSubmit = () => {
     const {isValid} = onValidate()
-    console.log(">>>>>>>>>>>>>>>>>>>>>: ", isValid)
 
     if (isValid) {
       onCreate({
