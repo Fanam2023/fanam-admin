@@ -1,15 +1,10 @@
-import {IPayloadSyncRecipient} from "@custom/utils"
-
 export interface RecipientPreviewProps {
   label: string
   value: string
 }
 
 export interface RecipientDetailsProp {
-  wrapperClass?: string
-  onClickCreate?: (payload: IPayloadSyncRecipient) => void
-  recipient?: IPayloadSyncRecipient
-  onBack?: () => void
+  recipient_id?: string
 }
 
 export interface RecipientCardProps {

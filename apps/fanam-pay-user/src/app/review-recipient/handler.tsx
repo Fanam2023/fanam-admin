@@ -10,13 +10,13 @@ export const useHandler = () => {
   const {isDesktop} = useResize()
   const onPayment = () => push(ROUTE_BENEFICIARIES)
 
-  const onToggle = (id: string) => {
+  const onToggle = (recipient_id: string) => {
     if (isDesktop) {
       toggleSlider({
-        children: <CreateRecipientDetails />,
+        children: <CreateRecipientDetails recipient_id={recipient_id} />,
         title: "Edit Recipient Details",
       })
-    } else push(routeToRecipientDetails(id))
+    } else push(routeToRecipientDetails(recipient_id))
   }
 
   return {

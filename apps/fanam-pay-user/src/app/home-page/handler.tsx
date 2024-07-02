@@ -47,7 +47,7 @@ export const useHandler = () => {
       {label: "Business", isSelected: false},
     ],
     destination_country: null,
-    purpose: "",
+    purpose: null,
     reason: "",
   })
   const [errState, setErrState] = useState(DEFAULT_ERR_STATE)
@@ -185,7 +185,7 @@ export const useHandler = () => {
         source_country_id: sourceCountry?.country_id,
         sender_account_type: user_accounts?.[0]?.account_type,
         reason,
-        purpose,
+        purpose: purpose.key as string,
       })
     }
   }

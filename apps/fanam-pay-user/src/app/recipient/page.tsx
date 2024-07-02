@@ -10,8 +10,12 @@ import styles from "./page.module.sass"
 const Recipient = () => {
   const {recipients, onChangeSearch, routeToDetails, onAdd, isDesktop} = useHandler()
 
-  const renderRecipients = ({recipient_name, email, recipient_id}: IRecipient) => (
-    <ManageMembers description={email} title={recipient_name} onEdit={routeToDetails.bind(null, recipient_id)} />
+  const renderRecipients = ({first_name, last_name, email, recipient_id}: IRecipient) => (
+    <ManageMembers
+      description={email}
+      title={`${first_name} ${last_name}`}
+      onEdit={routeToDetails.bind(null, recipient_id)}
+    />
   )
 
   return (

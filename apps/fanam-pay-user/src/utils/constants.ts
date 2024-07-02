@@ -1,3 +1,4 @@
+import {IFormData} from "@fanam-pkg/core-utils"
 import assets from "assets"
 import {IStepper} from "model"
 import {BankCartProps, BankListProps, RecipientPreviewProps} from "props"
@@ -92,17 +93,22 @@ export const LIST_OF_CART: BankCartProps[] = [
   },
 ]
 
-export const PURPOSES_INDIVIDUAL = [
-  "Education",
-  "Travel",
-  "Hospital",
-  "Family Expense",
-  "Rental",
-  "Insurance",
-  "Others",
+export const PURPOSES_INDIVIDUAL: IFormData[] = [
+  {label: "Education", key: "Education"},
+  {label: "Travel", key: "Travel"},
+  {label: "Hospital", key: "Hospital"},
+  {label: "Family Expense", key: "Family_expense"},
+  {label: "Rental", key: "Rental"},
+  {label: "Insurance", key: "Insurance"},
+  {label: "Others", key: "Others"},
 ]
 
-export const PURPOSES_BUSINESS = ["Working Capital", "Rent", "Salary", "Others"]
+export const PURPOSES_BUSINESS: IFormData[] = [
+  {label: "Working Capital", key: "Working_capital"},
+  {label: "Rental", key: "Rental"},
+  {label: "Salary", key: "Salary"},
+  {label: "Others", key: "Others"},
+]
 
 export const ID_PROOFS = ["Passport", "Driving License", "Aadhaar"]
 export const RELATION_SHIP = [

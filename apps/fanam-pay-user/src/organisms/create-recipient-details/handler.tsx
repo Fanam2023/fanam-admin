@@ -1,33 +1,35 @@
-import {FormSectionProps, ImageView} from "@fanam-pkg/core-ui-sass"
-import {IFormData, JSONObject, REG_EMAIL, useCommon, useCookies, useResize} from "@fanam-pkg/core-utils"
+import {FormSectionProps, ImageView, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
+import {IFormData, JSONObject, REG_EMAIL, useCommon, useReactQuery, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
-import {useQueries} from "@tanstack/react-query"
+import {useMutation, useQueries} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
-import {IPayloadSyncRecipient, IStyle, ISycRecipient} from "@custom/utils"
+import {IRecipientData, IStyle} from "@custom/utils"
 import assets from "assets"
-import {useLocationController} from "controller"
-import {COOKIE_TRANSACTION_ID, ID_PROOFS, QUERY_COUNTRIES, ROUTE_REVIEW} from "utils"
+import {useLocationController, useRecipientController} from "controller"
+import {useSingleton} from "hooks"
+import {ID_PROOFS, QUERY_CITIES, QUERY_COUNTRIES, QUERY_RECIPIENT, QUERY_STATES, ROUTE_REVIEW} from "utils"
 
-const useHandler = (styles: IStyle) => {
+const useHandler = (styles: IStyle, recipientId?: string) => {
   const {push} = useRouter()
   const {isDesktop} = useResize()
   const {toggleSlider} = useSlider()
-  const {getCookie} = useCookies()
   const {isValidInputByRegex} = useCommon()
-  const onAdd = () => push(ROUTE_REVIEW)
-  const transId = getCookie(COOKIE_TRANSACTION_ID)
+  const {refreshQuery} = useReactQuery()
   const {getAllCountries, getCities, getStates} = useLocationController()
+  const {createRecipient, updateRecipient, getByRecipientId} = useRecipientController()
+  const {transData, transId: transaction_id} = useSingleton()
+  const {purpose} = transData || {}
+  const {toggleNotify} = useNotifyPopup()
 
-  const [data, setData] = useState<ISycRecipient>({
+  const [data, setData] = useState<IRecipientData>({
     first_name: "",
     last_name: "",
     account_no: "",
     bank_name: "",
-    bank_code: "",
-    bank_code_type: "",
-    branch: "",
-    bic: "",
+    branch_address: "",
+    branch_code: "",
+    swift_code: "",
     address_line1: "",
     address_line2: "",
     email: "",
@@ -51,10 +53,6 @@ const useHandler = (styles: IStyle) => {
     account_no,
     account_type,
     bank_name,
-    bank_code,
-    bank_code_type,
-    branch,
-    bic,
     address_line1,
     address_line2,
     email,
@@ -65,137 +63,145 @@ const useHandler = (styles: IStyle) => {
     zip_code,
     id_issued_country,
     id_type,
+    routing_code,
+    iban_no,
+    swift_code,
+    branch_address,
+    id_number,
+    branch_code,
   } = data
 
-  const [errState, setErrState] = useState({
-    isClicked: false,
-    isValid: false,
-    errFirstName: "",
-    errLastName: "",
-    errAccountNo: "",
-    errAccountType: "",
-    errBankName: "",
-    errBankCode: "",
-    errBankCodeType: "",
-    errBranch: "",
-    errBic: "",
-    errAddressLine1: "",
-    errAddressLine2: "",
-    errPhone: "",
-    errCountry: "",
-    errEmail: "",
-    errStateName: "",
-    errCity: "",
-    errZipCode: "",
-    errIdIssuedCountry: "",
-    errIdType: "",
-  })
+  const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
 
-  const {isClicked} = errState
+  const {isClicked} = errData
 
   const onValidate = () => {
-    let errState = {
-      errFirstName: "",
-      errLastName: "",
-      errAccountNo: "",
-      errAccountType: "",
-      errBankName: "",
-      errBankCode: "",
-      errBankCodeType: "",
-      errBranch: "",
-      errBic: "",
-      errAddressLine1: "",
-      errAddressLine2: "",
-      errPhone: "",
-      errCountry: "",
-      errEmail: "",
-      errStateName: "",
-      errCity: "",
-      errZipCode: "",
-      errIdIssuedCountry: "",
-      errIdType: "",
-      isValid: true,
-    }
+    let errState = {...DEFAULT_ERR_STATE, isValid: true, isClicked: true}
 
     if (!first_name) errState = {...errState, errFirstName: "Please enter FirstName", isValid: false}
 
     if (!last_name) errState = {...errState, errLastName: "Please enter LastName", isValid: false}
 
-    if (!account_no) errState = {...errState, errAccountNo: "Please enter your AccountNumber", isValid: false}
+    if (!account_no) errState = {...errState, errAccountNo: "Please enter AccountNumber", isValid: false}
 
-    if (!account_type) errState = {...errState, errAccountType: "Please enter your AccountType", isValid: false}
+    if (!account_type) errState = {...errState, errAccountType: "Please enter AccountType", isValid: false}
 
-    if (!bank_name) errState = {...errState, errBankName: "Please enter your BankName", isValid: false}
+    if (!bank_name) errState = {...errState, errBankName: "Please enter BankName", isValid: false}
 
-    if (!bank_code) errState = {...errState, errBankCode: "Please enter your BankCode", isValid: false}
+    if (!branch_code) errState = {...errState, errBranchCode: "Please enter Branch code", isValid: false}
 
-    if (!bank_code_type) errState = {...errState, errBankCodeType: "Please enter your BankCodeType", isValid: false}
+    if (!branch_address) errState = {...errState, errBranchAddress: "Please enter Branch address", isValid: false}
 
-    if (!branch) errState = {...errState, errBranch: "Please enter your Branch", isValid: false}
+    if (!swift_code) errState = {...errState, errSwiftCode: "Please enter Swift code", isValid: false}
 
-    if (!bic) errState = {...errState, errBic: "Please enter your Bic", isValid: false}
+    if (!address_line1) errState = {...errState, errAddressLine1: "Please enter Address", isValid: false}
 
-    if (!address_line1) errState = {...errState, errAddressLine1: "Please enter Your Address", isValid: false}
+    if (!address_line2) errState = {...errState, errAddressLine2: "Please enter Address", isValid: false}
 
-    if (!address_line2) errState = {...errState, errAddressLine2: "Please enter Your Address", isValid: false}
+    if (!country) errState = {...errState, errCountry: "Please select Country", isValid: false}
 
-    if (!country) errState = {...errState, errCountry: "Please enter Country Name", isValid: false}
-
-    if (!phone_no) errState = {...errState, errPhone: "Please enter PhoneNumber", isValid: false}
+    if (!phone_no) errState = {...errState, errPhoneNo: "Please enter PhoneNumber", isValid: false}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
 
-    if (!state) errState = {...errState, errStateName: "Please enter State Name", isValid: false}
+    if (!state) errState = {...errState, errState: "Please select State", isValid: false}
 
-    if (!city) errState = {...errState, errCity: "Please enter Your City/District", isValid: false}
+    if (!city) errState = {...errState, errCity: "Please select City", isValid: false}
 
-    if (!zip_code) errState = {...errState, errZipCode: "Please enter Your PinCode", isValid: false}
+    if (!zip_code) errState = {...errState, errZipCode: "Please enter PinCode", isValid: false}
 
     if (!id_issued_country)
       errState = {...errState, errIdIssuedCountry: "Please Select ID issued Country", isValid: false}
 
     if (!id_type) errState = {...errState, errIdType: "Please Select ID type", isValid: false}
 
+    if (!id_number) errState = {...errState, errIdNumber: "Please enter ID number", isValid: false}
+
+    setErrData(errState)
     return errState
   }
+
+  const onAdd = () => push(ROUTE_REVIEW)
 
   const {
     errFirstName,
     errLastName,
     errAccountNo,
-    errAccountType,
     errBankName,
-    errBankCode,
-    errBankCodeType,
-    errBranch,
-    errBic,
+    errBranchAddress,
+    errBranchCode,
+    errSwiftCode,
     errAddressLine1,
     errAddressLine2,
-    errPhone,
-    errCountry,
     errEmail,
-    errStateName,
+    errPhoneNo,
+    errCountry,
+    errState,
     errCity,
     errZipCode,
-    errIdType,
     errIdIssuedCountry,
-  } = errState
+    errIdType,
+    errIdNumber,
+    errAccountType,
+  } = errData
 
-  const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}] = useQueries({
-    queries: [
-      {queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries},
-      {
-        queryKey: [`QUERY_STATES-${country?.key}`, country],
-        queryFn: () => getStates(country?.key as string),
-        enabled: !!country,
-      },
-      {
-        queryKey: [`QUERY_CITIES-${state?.key}`, state],
-        queryFn: () => getCities(state?.key as string),
-        enabled: !!state,
-      },
-    ],
+  const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}, {data: recipientData}] = useQueries(
+    {
+      queries: [
+        {queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries},
+        {
+          queryKey: [`${QUERY_STATES}-${country?.key}`, country],
+          queryFn: () => getStates(country?.key as string),
+          enabled: !!country,
+        },
+        {
+          queryKey: [`${QUERY_CITIES}-${state?.key}`, state],
+          queryFn: () => getCities(state?.key as string),
+          enabled: !!state,
+        },
+        {
+          queryKey: [`${QUERY_RECIPIENT}-${recipientId}`, state],
+          queryFn: () => getByRecipientId(recipientId),
+          enabled: !!recipientId,
+        },
+      ],
+    }
+  )
+
+  function onSuccess(message: string) {
+    toggleNotify({
+      type: "success",
+      title: message,
+      description: "Beneficiary added Successfully.",
+    })
+  }
+
+  function onFailure(message: string) {
+    toggleNotify({
+      type: "error",
+      title: message,
+    })
+  }
+
+  const {mutate: onUpdate} = useMutation({
+    mutationKey: [QUERY_RECIPIENT],
+    mutationFn: updateRecipient,
+    onSuccess: ({result, errorData}) => {
+      refreshQuery(QUERY_RECIPIENT)
+      if (result) onSuccess("Recipient Successfully Created")
+      else onFailure(errorData.message)
+    },
+  })
+
+  const {mutate: addRecipient} = useMutation({
+    mutationKey: [QUERY_RECIPIENT],
+    mutationFn: createRecipient,
+    onSuccess: ({result, errorData}) => {
+      refreshQuery(QUERY_RECIPIENT)
+      if (result) onSuccess("Recipient Successfully updated")
+      else onFailure(errorData.message)
+    },
   })
 
   const countries: IFormData[] = useMemo(
@@ -214,7 +220,59 @@ const useHandler = (styles: IStyle) => {
   )
 
   useEffect(() => {
-    if (isClicked) setErrState(prev => ({...prev, ...onValidate()}))
+    if (recipientData) {
+      const {
+        first_name,
+        last_name,
+        email,
+        country,
+        phone_no,
+        address_line1,
+        address_line2,
+        state,
+        city,
+        zip_code,
+        id_issued_country,
+        id_type,
+        id_number,
+        bank_account,
+      } = recipientData
+
+      const {account_no, account_type, bank_name, branch_address, branch_code, swift_code, routing_code} = bank_account
+      const {country_id, country_name} = country || {}
+      const {country_id: idCountryId, country_name: idCountryName} = id_issued_country || {}
+      const {state_id, state_name} = state || {}
+      const {city_id, city_name} = city || {}
+
+      setData({
+        first_name,
+        last_name,
+        email,
+        country: {label: country_name, key: country_id},
+        phone_no,
+        address_line1,
+        address_line2,
+        state: {label: state_name, key: state_id},
+        city: {label: city_name, key: city_id},
+        zip_code,
+        id_issued_country: {label: idCountryName, key: idCountryId},
+        account_no,
+        account_type: data.account_type.map(({label}) =>
+          label === account_type ? {label, isSelected: true} : {label, isSelected: false}
+        ),
+        bank_name,
+        branch_address,
+        branch_code,
+        swift_code,
+        routing_code,
+        id_type,
+        id_number,
+      })
+    }
+  }, [recipientData])
+
+  useEffect(() => {
+    if (isClicked) setErrData(prev => ({...prev, ...onValidate()}))
   }, [data, isClicked])
 
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
@@ -253,15 +311,32 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Enter your AccountType",
+          label: "Enter PhoneNumber",
+          name: "phone_no",
+          error: errPhoneNo,
+          value: phone_no,
+          onChangeValue,
+          maxLength: 10,
+        },
+        {
+          elementType: "input",
+          label: "Enter Email",
+          name: "email",
+          error: errEmail,
+          value: email,
+          onChangeValue,
+        },
+        {
+          elementType: "radio-button",
+          label: "Enter AccountType",
           name: "account_type",
+          options: account_type,
           error: errAccountType,
-          value: account_type,
           onChangeValue,
         },
         {
           elementType: "input",
-          label: "Enter your BankName",
+          label: "Enter BankName",
           name: "bank_name",
           error: errBankName,
           value: bank_name,
@@ -269,39 +344,45 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Enter BankCode",
-          name: "bank_code",
-          error: errBankCode,
-          value: bank_code,
+          label: "Enter Branch code",
+          name: "branch_code",
+          error: errBranchCode,
+          value: branch_code,
           onChangeValue,
         },
         {
           elementType: "input",
-          label: "Enter BankCodeType ",
-          name: "bank_code_type",
-          error: errBankCodeType,
-          value: bank_code_type,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Enter Branch ",
-          name: "branch",
-          error: errBranch,
-          value: branch,
+          label: "Enter Branch Address ",
+          name: "branch_address",
+          error: errBranchAddress,
+          value: branch_address,
           onChangeValue,
         },
         {
           elementType: "input",
           label: "Enter bic",
-          name: "bic",
-          error: errBic,
-          value: bic,
+          name: "swift_code",
+          error: errSwiftCode,
+          value: swift_code,
           onChangeValue,
         },
         {
           elementType: "input",
-          label: "Enter your AddressLine1",
+          label: "Enter Routing code (optional)",
+          name: "routing_code",
+          value: routing_code,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter iban no (optional)",
+          name: "iban_no",
+          value: iban_no,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter AddressLine1",
           name: "address_line1",
           error: errAddressLine1,
           value: address_line1,
@@ -309,24 +390,15 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Enter your AddressLine2",
+          label: "Enter AddressLine2",
           name: "address_line2",
           error: errAddressLine2,
           value: address_line2,
           onChangeValue,
         },
         {
-          elementType: "input",
-          label: "Enter your PhoneNumber",
-          name: "phone_no",
-          error: errPhone,
-          value: phone_no,
-          onChangeValue,
-          maxLength: 10,
-        },
-        {
           elementType: "drop-down",
-          label: "Enter your country",
+          label: "Enter country",
           name: "country",
           options: countries,
           error: errCountry,
@@ -334,26 +406,18 @@ const useHandler = (styles: IStyle) => {
           onChangeValue: onChangeCountry,
         },
         {
-          elementType: "input",
-          label: "Enter your Email",
-          name: "email",
-          error: errEmail,
-          value: email,
-          onChangeValue,
-        },
-        {
           elementType: "drop-down",
-          label: "Enter your State",
+          label: "Enter State",
           name: "state",
           disabled: !country,
           options: states,
-          error: errStateName,
+          error: errState,
           value: state,
           onChangeValue: onChangeState,
         },
         {
           elementType: "drop-down",
-          label: "Enter your City",
+          label: "Enter City",
           name: "city",
           disabled: !state,
           options: cities,
@@ -363,7 +427,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Enter your ZipCode",
+          label: "Enter ZipCode",
           name: "zip_code",
           error: errZipCode,
           value: zip_code,
@@ -387,6 +451,14 @@ const useHandler = (styles: IStyle) => {
           value: id_type,
           onChangeValue,
         },
+        {
+          elementType: "input",
+          label: "Enter ID number",
+          name: "id_number",
+          error: errIdNumber,
+          value: id_number,
+          onChangeValue,
+        },
         // {
         //   elementType: "file-picker",
         //   fileType: "image/*",
@@ -408,36 +480,36 @@ const useHandler = (styles: IStyle) => {
   ]
 
   const onSubmit = () => {
-    console.log(">>>>>>")
-    const errState = {...onValidate(), isClicked: true}
-    const {isValid} = errState
-    setErrState(errState)
-    const payload: IPayloadSyncRecipient = {
-      first_name,
-      last_name,
-      address_line1,
-      address_line2,
-      email,
-      phone_no,
-      country_id: country.key as number,
-      state_id: state.key as number,
-      city_id: city.key as number,
-      zip_code,
-      id_issued_country_id: id_issued_country.key as number,
-      id_number: id_type,
-      transaction_id: transId,
-      bank_account: {
-        branch_address: branch,
-        account_no: account_no,
-        swift_code: bic,
-        bank_name: bank_name,
-        bank_code: bank_code,
-        branch: branch,
-        account_type: account_type.find(({isSelected}) => isSelected)?.label,
-      },
-    }
+    const {isValid} = onValidate()
 
-    return isValid ? payload : null
+    if (isValid) {
+      addRecipient({
+        first_name,
+        last_name,
+        address_line1,
+        address_line2,
+        email,
+        phone_no,
+        country_id: country.key as number,
+        state_id: state.key as number,
+        city_id: city.key as number,
+        zip_code,
+        id_issued_country_id: id_issued_country.key as number,
+        id_number,
+        id_type,
+        transaction_id,
+        bank_account: {
+          branch_address,
+          account_no,
+          swift_code,
+          iban_no,
+          routing_code,
+          bank_name,
+          branch_code,
+          account_type: account_type.find(({isSelected}) => isSelected)?.label,
+        },
+      })
+    }
   }
 
   return {
@@ -447,7 +519,6 @@ const useHandler = (styles: IStyle) => {
     formElements,
     isDesktop,
     toggleSlider,
-    transId,
   }
 }
 
@@ -459,3 +530,28 @@ export const CustomUpload = (styles: IStyle) => (
     <h5 className={styles.text_wrapper}>Upload Front Side of the Document</h5>
   </section>
 )
+
+const DEFAULT_ERR_STATE = {
+  isClicked: false,
+  isValid: false,
+  errFirstName: "",
+  errLastName: "",
+  errAccountNo: "",
+  errBankName: "",
+  errBranchAddress: "",
+  errBranchCode: "",
+  errSwiftCode: "",
+  errAddressLine1: "",
+  errAddressLine2: "",
+  errEmail: "",
+  errPhoneNo: "",
+  errCountry: "",
+  errState: "",
+  errCity: "",
+  errZipCode: "",
+  errIdIssuedCountry: "",
+  errIdType: "",
+  errIdNumber: "",
+  errAccountPurpose: "",
+  errAccountType: "",
+}

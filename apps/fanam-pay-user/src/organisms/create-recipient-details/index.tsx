@@ -1,23 +1,11 @@
 import {Button, GroupForm} from "@fanam-pkg/core-ui-sass"
-import {useEffect} from "react"
 import {BaseContainer} from "organisms"
 import {RecipientDetailsProp} from "props"
 import useHandler from "./handler"
 import styles from "./styles.module.sass"
 
-export const CreateRecipientDetails = ({onClickCreate, recipient}: RecipientDetailsProp) => {
-  const {formElements, onChangeValue, onSubmit, isDesktop, toggleSlider} = useHandler(styles)
-
-  useEffect(() => {
-    onChangeValue({...recipient})
-  }, [recipient])
-
-  const onClickSubmit = () => {
-    const payload = onSubmit()
-    if (payload) {
-      onClickCreate(payload)
-    }
-  }
+export const CreateRecipientDetails = ({recipient_id}: RecipientDetailsProp) => {
+  const {formElements, onSubmit, isDesktop, toggleSlider} = useHandler(styles, recipient_id)
 
   return isDesktop ? (
     <section>
@@ -26,7 +14,7 @@ export const CreateRecipientDetails = ({onClickCreate, recipient}: RecipientDeta
         <Button buttonType="primary-outlined" wrapperClass={styles.btn_wrapper} onClick={() => toggleSlider()}>
           Back
         </Button>
-        <Button wrapperClass={styles.btn_wrapper} onClick={onClickSubmit}>
+        <Button wrapperClass={styles.btn_wrapper} onClick={onSubmit}>
           Continue
         </Button>
       </footer>
@@ -38,7 +26,7 @@ export const CreateRecipientDetails = ({onClickCreate, recipient}: RecipientDeta
       backIcon
       addButton="Add"
       childWrapper={styles.child_wrapper}
-      onSubmit={onClickSubmit}>
+      onSubmit={onSubmit}>
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
     </BaseContainer>
   )

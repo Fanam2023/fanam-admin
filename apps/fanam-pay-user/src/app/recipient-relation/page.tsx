@@ -17,11 +17,7 @@ const RecipientRelation = () => {
       buttonText="Continue">
       <section>
         <h3>Sender’s Relationship with the Recipient</h3>
-        <DropDown
-          options={RELATION_SHIP}
-          onChangeData={selectedItem => console.log(selectedItem)}
-          wrapperClass={styles.drop_down}
-        />
+        <DropDown options={RELATION_SHIP} onChangeData={() => {}} wrapperClass={styles.drop_down} />
         <h6 className={styles.content}>
           Beneficiary is a person on whose behalf the sender is making payment to the Recipient
         </h6>

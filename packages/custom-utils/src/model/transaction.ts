@@ -34,7 +34,6 @@ export interface IBankAccount {
   branch_address: string
   currency: string
   account_type: TypeAccount
-  account_purpose: TypePurpose
   sender: IUser
   recipient: IRecipient
   sender_transactions: ITransaction[]
@@ -60,7 +59,6 @@ export interface IResponseFxRate {
 export interface IBaseTransactionData {
   source_amount: string
   destination_amount: string
-  purpose: string
   reason: string
 }
 
@@ -69,9 +67,11 @@ export interface IPayloadTransaction extends IBaseTransactionData {
   destination_country_id: number
   sender_account_type: string
   recipient_account_type: string
+  purpose: string
 }
 
 export interface ITransactionData extends IBaseTransactionData {
   destination_country: ICountry | null
+  purpose: IFormData | null
   recipient_account_type: IFormData[]
 }

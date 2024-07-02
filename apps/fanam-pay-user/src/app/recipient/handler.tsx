@@ -2,7 +2,7 @@ import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {useReactQuery, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
-import {useMutation, useQuery} from "@tanstack/react-query"
+import {useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {useRecipientController} from "controller"
 import {CreateRecipientDetails} from "organisms"
@@ -15,8 +15,7 @@ export const useHandler = () => {
   const {toggleNotify} = useNotifyPopup()
   const {toggleSlider} = useSlider()
   const [searchQuery, setSearchQuery] = useState("")
-  const [recipientId, setRecipientId] = useState<string | null>(null)
-  const {getAllRecipient, createRecipient, updateRecipient, getByRecipientId} = useRecipientController()
+  const {getAllRecipient} = useRecipientController()
 
   function onSuccess(message: string) {
     toggleNotify({
@@ -38,56 +37,23 @@ export const useHandler = () => {
     queryFn: getAllRecipient,
   })
 
-  const {mutate: addRecipient} = useMutation({
-    mutationKey: [QUERY_RECIPIENT],
-    mutationFn: createRecipient,
-    onSuccess: ({result, errorData}) => {
-      refreshQuery(QUERY_RECIPIENT)
-      if (result) onSuccess("Recipients Successfully created")
-      else onFailure(errorData.message)
-    },
-  })
-
-  const {mutate: onUpdate} = useMutation({
-    mutationKey: [QUERY_RECIPIENT],
-    mutationFn: updateRecipient,
-    onSuccess: ({result, errorData}) => {
-      refreshQuery(QUERY_RECIPIENT)
-      if (result) onSuccess("Recipient Successfully updated")
-      else onFailure(errorData.message)
-    },
-  })
-
-  const {data: recipient} = useQuery({
-    queryKey: [QUERY_RECIPIENT],
-    queryFn: () => getByRecipientId(recipientId),
-  })
-
   const onChangeSearch = (value: string) => setSearchQuery(value)
 
   const filteredRecipients = recipients?.filter(
-    recipients =>
-      recipients.recipient_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      recipients.email?.toLowerCase().includes(searchQuery.toLowerCase())
+    ({first_name, last_name, email}) =>
+      first_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      last_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      email?.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  console.log(recipientId, "recipientId")
-
-  const routeToDetails = (id: string) => {
-    console.log("id", id)
-    setRecipientId(id)
+  const routeToDetails = (recipient_id: string) => {
     if (isDesktop) {
       toggleSlider({
-        children: (
-          <CreateRecipientDetails
-            onClickCreate={payload => payload && onUpdate({...payload, recipient_id: recipientId})}
-            recipient={recipient}
-          />
-        ),
+        children: <CreateRecipientDetails recipient_id={recipient_id} />,
         title: "Edit Recipient Details",
       })
     } else {
-      push(routeToRecipientDetails(recipientId))
+      push(routeToRecipientDetails(recipient_id))
     }
   }
 
@@ -96,7 +62,7 @@ export const useHandler = () => {
   const onAdd = () => {
     if (isDesktop) {
       toggleSlider({
-        children: <CreateRecipientDetails onClickCreate={addRecipient} />,
+        children: <CreateRecipientDetails />,
         title: "Add Recipient Details",
       })
     } else push(ROUTE_RECIPIENTS)
@@ -107,7 +73,6 @@ export const useHandler = () => {
     recipients: filteredRecipients,
     onRouteToReview,
     onChangeSearch,
-    addRecipient,
     routeToDetails,
     onAdd,
   }
