@@ -1,4 +1,4 @@
-import {IRecipient} from "@custom/utils"
+import {IPayloadSyncRecipient} from "@custom/utils"
 
 export interface RecipientPreviewProps {
   label: string
@@ -7,8 +7,8 @@ export interface RecipientPreviewProps {
 
 export interface RecipientDetailsProp {
   wrapperClass?: string
-  onClickCreate?: (payload: IRecipient) => void
-  recipient?: IRecipient
+  onClickCreate?: (payload: IPayloadSyncRecipient) => void
+  recipient?: IPayloadSyncRecipient
   onBack?: () => void
 }
 
