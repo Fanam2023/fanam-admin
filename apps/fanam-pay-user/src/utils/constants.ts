@@ -1,4 +1,3 @@
-import {ICountry} from "@custom/utils"
 import assets from "assets"
 import {IStepper} from "model"
 import {BankCartProps, BankListProps, RecipientPreviewProps} from "props"
@@ -93,31 +92,15 @@ export const LIST_OF_CART: BankCartProps[] = [
   },
 ]
 
-export const DEFAULT_SOURCE_COUNTRY: ICountry = {
-  country_id: 101,
-  country_name: "India",
-  iso3: "IND",
-  iso2: "IN",
-  emoji: "🇮🇳",
-  emojiU: "U+1F1EE U+1F1F3",
-  phone_code: "91",
-  currency: "INR",
-  currency_symbol: "₹",
-}
-
-export const DEFAULT_DESTINATION_COUNTRY: ICountry = {
-  country_id: 233,
-  country_name: "United States",
-  iso3: "USA",
-  iso2: "US",
-  emoji: "🇺🇸",
-  emojiU: "U+1F1FA U+1F1F8",
-  phone_code: "1",
-  currency: "USD",
-  currency_symbol: "$",
-}
-
-export const PURPOSES_INDIVIDUAL = ["Tuition Fee", "Rent", "Family Expense", "Medical", "Travel", "Insurance", "Others"]
+export const PURPOSES_INDIVIDUAL = [
+  "Education",
+  "Travel",
+  "Hospital",
+  "Family Expense",
+  "Rental",
+  "Insurance",
+  "Others",
+]
 
 export const PURPOSES_BUSINESS = ["Working Capital", "Rent", "Salary", "Others"]
 

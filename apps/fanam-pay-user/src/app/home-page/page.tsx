@@ -7,15 +7,15 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const HomePage = () => {
-  const {onAdd, data, showCountries, PURPOSES, onChangeValue, onSelectType} = useHandler()
+  const {data, showCountries, PURPOSES, onChangeValue, onSelectType, onSubmit, sourceCountry} = useHandler()
 
-  const {source_amount, destination_amount, recipient_type, source_country, destination_country, purpose, reason} = data
+  const {source_amount, destination_amount, recipient_account_type, destination_country, purpose, reason} = data
 
   return (
     <BaseContainer
       header="Cross Border Remittance"
       buttonText="Confirm"
-      onClick={onAdd}
+      onSubmit={onSubmit}
       childWrapper={styles.page_container}
       backIcon={false}
       stepIndex={0}>
@@ -23,10 +23,10 @@ const HomePage = () => {
         <section className={`flex-col ${styles.button_container}`}>
           <h4 className="semi-bold">Recipient type</h4>
           <RadioButton
-            items={recipient_type}
+            items={recipient_account_type}
             onSelectItems={onSelectType}
             wrapperClass={styles.radio_button}
-            name="recipient_type"
+            name="recipient_account_type"
           />
         </section>
         <h4 className="semi-bold">Purpose of sending money</h4>
@@ -45,7 +45,7 @@ const HomePage = () => {
           <section className={`flex ${styles.input_container}`}>
             <section className={`flex ${styles.flag_wrapper} ${styles.sender_wrapper}`}>
               <ImageView src={assets.ic_india_flag} alt="country_flag" imgSize={40} />
-              <h3 className={styles.currency_text}>{source_country?.iso2}</h3>
+              <h3 className={styles.currency_text}>{sourceCountry?.iso2}</h3>
               <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
             </section>
             <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
