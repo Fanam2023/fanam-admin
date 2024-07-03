@@ -1,4 +1,4 @@
-import {IFormData, JSONValues} from "@fanam-pkg/core-utils"
+import {IFile, IFormData, JSONValues} from "@fanam-pkg/core-utils"
 import {ICity, ICountry, IState} from "./location"
 
 interface IBankAccount {
@@ -56,15 +56,20 @@ export interface IRecipientData extends IBaseRecipientData {
   swift_code: string
   iban_no?: string
   routing_code?: string
+  doc_data: IFile | null
 }
 
-export interface IPayloadSyncRecipient extends IBaseRecipientData {
+export interface IPayloadRecipient extends IBaseRecipientData {
   country_id: number
   id_issued_country_id: number
   state_id: number
   city_id: number
   bank_account: IPayloadRecipientBankAccount
   transaction_id: string
+}
+
+export interface IPayloadUpdateRecipient extends IPayloadRecipient {
+  recipient_id?: string
 }
 
 export interface IPayloadRecipientBankAccount {

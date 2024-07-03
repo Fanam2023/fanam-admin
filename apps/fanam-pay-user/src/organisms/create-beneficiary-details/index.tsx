@@ -1,25 +1,11 @@
 import {Button, GroupForm} from "@fanam-pkg/core-ui-sass"
-import {useEffect} from "react"
 import {BaseContainer} from "organisms"
 import {BeneficiaryDetailsProps} from "props/beneficiary"
 import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
-export const CreateBeneficiaryDetails = ({onClickCreate, beneficiaryDetails}: BeneficiaryDetailsProps) => {
-  const {onChangeValue, onSubmit, onRouteToOptions, formElements, isDesktop, toggleSlider} = useHandler(styles)
-
-  useEffect(() => {
-    onChangeValue({...beneficiaryDetails})
-  }, [beneficiaryDetails])
-
-  const onClickSubmit = () => {
-    const payload = onSubmit()
-    if (payload) {
-      onClickCreate(payload)
-      onRouteToOptions()
-      toggleSlider()
-    }
-  }
+export const CreateBeneficiaryDetails = ({beneficiary_id}: BeneficiaryDetailsProps) => {
+  const {onSubmit, formElements, isDesktop, toggleSlider} = useHandler(styles, beneficiary_id)
 
   return isDesktop ? (
     <section>
@@ -28,7 +14,7 @@ export const CreateBeneficiaryDetails = ({onClickCreate, beneficiaryDetails}: Be
         <Button buttonType="primary-outlined" wrapperClass={styles.btn_wrapper} onClick={() => toggleSlider()}>
           Back
         </Button>
-        <Button wrapperClass={styles.btn_wrapper} onClick={onClickSubmit}>
+        <Button wrapperClass={styles.btn_wrapper} onClick={onSubmit}>
           Continue
         </Button>
       </footer>
@@ -39,7 +25,7 @@ export const CreateBeneficiaryDetails = ({onClickCreate, beneficiaryDetails}: Be
       header="Beneficiary Details"
       backIcon
       childWrapper={styles.child_wrapper}
-      onSubmit={onClickSubmit}>
+      onSubmit={onSubmit}>
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
     </BaseContainer>
   )

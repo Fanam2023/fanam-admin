@@ -1,36 +1,18 @@
-import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {useReactQuery, useResize} from "@fanam-pkg/core-utils"
+import {useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
 import {useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {useRecipientController} from "controller"
 import {CreateRecipientDetails} from "organisms"
-import {QUERY_RECIPIENT, ROUTE_RECIPIENTS, ROUTE_REVIEW, routeToRecipientDetails} from "utils"
+import {QUERY_RECIPIENT, ROUTE_ADD_RECIPIENT, routeToRecipientDetails} from "utils"
 
 export const useHandler = () => {
   const {isDesktop} = useResize()
   const {push} = useRouter()
-  const {refreshQuery} = useReactQuery()
-  const {toggleNotify} = useNotifyPopup()
   const {toggleSlider} = useSlider()
   const [searchQuery, setSearchQuery] = useState("")
   const {getAllRecipient} = useRecipientController()
-
-  function onSuccess(message: string) {
-    toggleNotify({
-      type: "success",
-      title: message,
-      description: "Recipient added successfully",
-    })
-  }
-
-  function onFailure(message: string) {
-    toggleNotify({
-      type: "error",
-      title: message,
-    })
-  }
 
   const {data: recipients} = useQuery({
     queryKey: [QUERY_RECIPIENT],
@@ -46,6 +28,15 @@ export const useHandler = () => {
       email?.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
+  const onAdd = () => {
+    if (isDesktop) {
+      toggleSlider({
+        children: <CreateRecipientDetails />,
+        title: "Add Recipient Details",
+      })
+    } else push(ROUTE_ADD_RECIPIENT)
+  }
+
   const routeToDetails = (recipient_id: string) => {
     if (isDesktop) {
       toggleSlider({
@@ -57,21 +48,9 @@ export const useHandler = () => {
     }
   }
 
-  const onRouteToReview = () => push(ROUTE_REVIEW)
-
-  const onAdd = () => {
-    if (isDesktop) {
-      toggleSlider({
-        children: <CreateRecipientDetails />,
-        title: "Add Recipient Details",
-      })
-    } else push(ROUTE_RECIPIENTS)
-  }
-
   return {
     isDesktop,
     recipients: filteredRecipients,
-    onRouteToReview,
     onChangeSearch,
     routeToDetails,
     onAdd,

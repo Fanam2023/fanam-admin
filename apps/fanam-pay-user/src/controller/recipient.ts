@@ -1,4 +1,4 @@
-import {API_RECIPIENT, IPayloadSyncRecipient, IRecipient, apiRecipient} from "@custom/utils"
+import {API_RECIPIENT, IPayloadRecipient, IPayloadUpdateRecipient, IRecipient, apiRecipient} from "@custom/utils"
 import {useApi} from "./api"
 
 export const useRecipientController = () => {
@@ -6,17 +6,18 @@ export const useRecipientController = () => {
 
   const getAllRecipient = async () => {
     const {result} = await getRequest<IRecipient[]>(API_RECIPIENT)
-    return result
+    return result || []
   }
 
-  const createRecipient = async (payload: IPayloadSyncRecipient) => {
+  const createRecipient = async (payload: IPayloadRecipient) => {
     const {result, errorData} = await postRequest<IRecipient>(API_RECIPIENT, payload)
     return {result, errorData}
   }
 
-  const updateRecipient = async (payload: IRecipient) => {
-    const recipientId = payload.recipient_id
-    const {result, errorData} = await putRequest(apiRecipient(recipientId), payload)
+  const updateRecipient = async (payload: IPayloadUpdateRecipient) => {
+    const {recipient_id} = payload
+    delete payload.recipient_id
+    const {result, errorData} = await putRequest<IRecipient>(apiRecipient(recipient_id), payload)
     return {result, errorData}
   }
 

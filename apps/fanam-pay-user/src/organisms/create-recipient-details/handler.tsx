@@ -4,7 +4,7 @@ import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
-import {IRecipientData, IStyle} from "@custom/utils"
+import {IPayloadRecipient, IRecipientData, IStyle} from "@custom/utils"
 import assets from "assets"
 import {useLocationController, useRecipientController} from "controller"
 import {useSingleton} from "hooks"
@@ -45,6 +45,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       {label: "Individual", isSelected: true},
       {label: "Business", isSelected: false},
     ],
+    doc_data: null,
   })
 
   const {
@@ -69,6 +70,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     branch_address,
     id_number,
     branch_code,
+    doc_data,
   } = data
 
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
@@ -122,7 +124,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     return errState
   }
 
-  const onAdd = () => push(ROUTE_REVIEW)
+  const onReviewRecipient = () => push(ROUTE_REVIEW)
 
   const {
     errFirstName,
@@ -173,7 +175,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     toggleNotify({
       type: "success",
       title: message,
-      description: "Beneficiary added Successfully.",
+      description: "Recipient added Successfully.",
     })
   }
 
@@ -184,22 +186,22 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     })
   }
 
-  const {mutate: onUpdate} = useMutation({
-    mutationKey: [QUERY_RECIPIENT],
-    mutationFn: updateRecipient,
-    onSuccess: ({result, errorData}) => {
-      refreshQuery(QUERY_RECIPIENT)
-      if (result) onSuccess("Recipient Successfully Created")
-      else onFailure(errorData.message)
-    },
-  })
-
-  const {mutate: addRecipient} = useMutation({
+  const {mutate: addRecipient, data: addedRes} = useMutation({
     mutationKey: [QUERY_RECIPIENT],
     mutationFn: createRecipient,
     onSuccess: ({result, errorData}) => {
       refreshQuery(QUERY_RECIPIENT)
       if (result) onSuccess("Recipient Successfully updated")
+      else onFailure(errorData.message)
+    },
+  })
+
+  const {mutate: onUpdate, data: updatedRes} = useMutation({
+    mutationKey: [QUERY_RECIPIENT],
+    mutationFn: updateRecipient,
+    onSuccess: ({result, errorData}) => {
+      refreshQuery(QUERY_RECIPIENT)
+      if (result) onSuccess("Recipient Successfully Created")
       else onFailure(errorData.message)
     },
   })
@@ -267,6 +269,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         routing_code,
         id_type,
         id_number,
+        doc_data,
       })
     }
   }, [recipientData])
@@ -459,31 +462,42 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           value: id_number,
           onChangeValue,
         },
-        // {
-        //   elementType: "file-picker",
-        //   fileType: "image/*",
-        //   name: "id_back",
-        //   isMultiple: false,
-        //   children: <CustomUpload />,
-        //   onChangeValue,
-        // },
-        // {
-        //   elementType: "file-picker",
-        //   fileType: "image/*",
-        //   name: "id_back",
-        //   isMultiple: false,
-        //   children: <CustomUpload />,
-        //   onChangeValue,
-        // },
+        {
+          elementType: "file-picker",
+          fileType: "image/*",
+          name: "id_back",
+          isMultiple: false,
+          children: <CustomUpload />,
+          value: doc_data,
+          onChangeValue,
+        },
+        {
+          elementType: "file-picker",
+          fileType: "image/*",
+          name: "id_back",
+          isMultiple: false,
+          children: <CustomUpload />,
+          value: doc_data,
+          onChangeValue,
+        },
       ],
     },
   ]
+
+  useEffect(() => {
+    if (addedRes) {
+      toggleSlider()
+      onReviewRecipient()
+    } else if (updatedRes) {
+      toggleSlider()
+    }
+  }, [addedRes, updatedRes])
 
   const onSubmit = () => {
     const {isValid} = onValidate()
 
     if (isValid) {
-      addRecipient({
+      const payLoad: IPayloadRecipient = {
         first_name,
         last_name,
         address_line1,
@@ -508,14 +522,16 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           branch_code,
           account_type: account_type.find(({isSelected}) => isSelected)?.label,
         },
-      })
+      }
+
+      if (recipientId) onUpdate({...payLoad, recipient_id: recipientId})
+      else addRecipient(payLoad)
     }
   }
 
   return {
     onChangeValue,
     onSubmit,
-    onAdd,
     formElements,
     isDesktop,
     toggleSlider,
