@@ -5,7 +5,7 @@ import {useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {useRecipientController} from "controller"
 import {CreateRecipientDetails} from "organisms"
-import {QUERY_RECIPIENT, ROUTE_ADD_RECIPIENT, routeToRecipientDetails} from "utils"
+import {QUERY_RECIPIENT, ROUTE_ADD_RECIPIENT, ROUTE_INVOICE, routeToRecipientDetails} from "utils"
 
 export const useHandler = () => {
   const {isDesktop} = useResize()
@@ -48,11 +48,14 @@ export const useHandler = () => {
     }
   }
 
+  const onBack = () => push(ROUTE_INVOICE)
+
   return {
     isDesktop,
     recipients: filteredRecipients,
     onChangeSearch,
     routeToDetails,
     onAdd,
+    onBack,
   }
 }
