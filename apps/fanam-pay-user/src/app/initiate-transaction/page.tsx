@@ -6,7 +6,7 @@ import {BaseContainer} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
-const HomePage = () => {
+const InitiateTransactionPage = () => {
   const {data, showCountries, PURPOSES, onChangeValue, onSelectType, onSubmit, sourceCountry} = useHandler()
 
   const {source_amount, destination_amount, recipient_account_type, destination_country, purpose, reason} = data
@@ -76,4 +76,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default InitiateTransactionPage

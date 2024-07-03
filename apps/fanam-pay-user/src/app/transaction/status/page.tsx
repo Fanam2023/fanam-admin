@@ -5,6 +5,7 @@ import {useSearchParams} from "next/navigation"
 import assets from "assets"
 import {BaseContainer} from "organisms"
 import {PaymentDetailsProps, StatusType} from "props"
+import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const getStatusData = (status: StatusType) => {
@@ -41,8 +42,9 @@ const getStatusData = (status: StatusType) => {
   }
 }
 
-const PaymentStatus = () => {
+const TransactionStatusPage = () => {
   const searchParams = useSearchParams()
+  const {onBack} = useHandler()
 
   const status = searchParams.get("status") as StatusType
 
@@ -83,7 +85,8 @@ const PaymentStatus = () => {
       footerChild={DownloadReceipt()}
       childWrapper={styles.page_container}
       skipBtn="Download Receipt"
-      stepIndex="pending">
+      stepIndex="pending"
+      onBack={onBack}>
       <section className={`flex-col-center ${styles.page_wrapper}`}>
         <section className={`flex-col-center ${styles.payment_status_wrapper}`}>
           <ImageView src={bigIcon} alt={"status-icon"} imgSize={56} />
@@ -112,4 +115,4 @@ const PaymentStatus = () => {
   )
 }
 
-export default PaymentStatus
+export default TransactionStatusPage

@@ -1,13 +1,12 @@
 export const ROUTE_HOME = "/home-page"
 export const ROUTE_SENDER = "/sender-form"
 export const ROUTE_INVOICE = "/invoice"
-export const ROUTE_RECEPIENTS = "/manage-recipient"
-export const ROUTE_BENEFICIARIES = "/beneficiary"
 export const ROUTE_RECIPIENTS = "/recipient"
-export const ROUTE_ADD_RECIPIENT = `${ROUTE_RECIPIENTS}/create-recipient`
-export const ROUTE_ADD_BENEFICIARY = `${ROUTE_BENEFICIARIES}/create-beneficiary`
-export const routeToBeneficiaryDetails = (beneficiaryId: string) => `${ROUTE_BENEFICIARIES}/${beneficiaryId}`
+export const ROUTE_ADD_RECIPIENT = `${ROUTE_RECIPIENTS}/form`
 export const routeToRecipientDetails = (recipientId: string) => `${ROUTE_RECIPIENTS}/${recipientId}`
-export const ROUTE_REVIEW = "/review-recipient"
-export const ROUTE_PAYMENT_OPTIONS = "/payment-options"
-export const ROUTE_PAYMENT_STATUS = "/payment-status"
+export const ROUTE_RECIPIENT_PREVIEW = `${ROUTE_RECIPIENTS}/preview`
+export const ROUTE_BENEFICIARIES = "/beneficiary"
+export const ROUTE_ADD_BENEFICIARY = `${ROUTE_BENEFICIARIES}/form`
+export const routeToBeneficiaryDetails = (beneficiaryId: string) => `${ROUTE_BENEFICIARIES}/${beneficiaryId}`
+export const ROUTE_TRANSACTION = "/transaction"
+export const ROUTE_TRANSACTION_STATUS = `${ROUTE_TRANSACTION}/status`

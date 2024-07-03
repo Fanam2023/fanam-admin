@@ -29,7 +29,7 @@ const renderCart = ({icon, bankName, cartType}: BankCartProps, index: number) =>
   </section>
 )
 
-const PaymentOptions = () => {
+const TransactionPage = () => {
   const {onSuccess, onBack} = useHandler()
 
   return (
@@ -66,4 +66,4 @@ const PaymentOptions = () => {
   )
 }
 
-export default PaymentOptions
+export default TransactionPage

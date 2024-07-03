@@ -7,8 +7,8 @@ import {BaseContainer, ManageMembers} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
-const Beneficiary = () => {
-  const {onNav, beneficiaries, onChangeSearch, routeToDetails, isDesktop} = useHandler()
+const BeneficiaryPage = () => {
+  const {onNav, beneficiaries, onChangeSearch, routeToDetails, isDesktop, onBack} = useHandler()
 
   const renderBeneficiary = ({beneficiary_name, email, beneficiary_id}: IBeneficiary) => (
     <ManageMembers description={email} title={beneficiary_name} onEdit={routeToDetails.bind(null, beneficiary_id)} />
@@ -19,9 +19,10 @@ const Beneficiary = () => {
       header="Manage Beneficiary"
       addButton="Add"
       childWrapper={styles.page_container}
-      onAdd={onNav}
       backIcon
-      stepIndex={4}>
+      stepIndex={4}
+      onAdd={onNav}
+      onBack={onBack}>
       <section className={`flex ${styles.search_container}`}>
         <TextField
           type="text"
@@ -41,4 +42,4 @@ const Beneficiary = () => {
   )
 }
 
-export default Beneficiary
+export default BeneficiaryPage

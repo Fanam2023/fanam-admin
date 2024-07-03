@@ -7,8 +7,8 @@ import {BaseContainer, ManageMembers} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
-const Recipient = () => {
-  const {recipients, onChangeSearch, routeToDetails, onAdd, isDesktop} = useHandler()
+const RecipientPage = () => {
+  const {recipients, onChangeSearch, routeToDetails, onAdd, isDesktop, onBack} = useHandler()
 
   const renderRecipients = ({first_name, last_name, email, recipient_id}: IRecipient) => (
     <ManageMembers
@@ -22,10 +22,11 @@ const Recipient = () => {
     <BaseContainer
       header={"Manage Recipients"}
       addButton="Add"
-      onAdd={onAdd}
       childWrapper={styles.page_container}
       backIcon
-      stepIndex={2}>
+      stepIndex={2}
+      onAdd={onAdd}
+      onBack={onBack}>
       <section className={`flex ${styles.search_container}`}>
         <TextField
           type="text"
@@ -45,4 +46,4 @@ const Recipient = () => {
   )
 }
 
-export default Recipient
+export default RecipientPage

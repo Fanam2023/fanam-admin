@@ -2,8 +2,8 @@
 
 import {CreateBeneficiaryDetails} from "organisms"
 
-const CreateBeneficiary = () => {
+const BeneficiaryForm = () => {
   return <CreateBeneficiaryDetails />
 }
 
-export default CreateBeneficiary
+export default BeneficiaryForm
