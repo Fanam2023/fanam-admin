@@ -7,7 +7,7 @@ import {IStyle, ISyncUserData} from "@custom/utils"
 import assets from "assets"
 import {useAuthController, useLocationController} from "controller"
 import {useSingleton} from "hooks"
-import {ID_PROOFS, QUERY_COUNTRIES, QUERY_USER, ROUTE_HOME} from "utils"
+import {ID_PROOFS, QUERY_CITIES, QUERY_COUNTRIES, QUERY_STATES, QUERY_USER, ROUTE_HOME} from "utils"
 
 const DEFAULT_ERR_STATE = {
   isClicked: false,
@@ -97,12 +97,12 @@ const useHandler = (styles: IStyle) => {
     queries: [
       {queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries},
       {
-        queryKey: [`QUERY_STATES-${country?.key}`, country],
+        queryKey: [`${QUERY_STATES}-${country?.key}`, country],
         queryFn: () => getStates(country?.key as string),
         enabled: !!country,
       },
       {
-        queryKey: [`QUERY_CITIES-${state?.key}`, state],
+        queryKey: [`${QUERY_CITIES}-${state?.key}`, state],
         queryFn: () => getCities(state?.key as string),
         enabled: !!state,
       },

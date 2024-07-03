@@ -58,13 +58,17 @@ export interface IRecipientData extends IBaseRecipientData {
   routing_code?: string
 }
 
-export interface IPayloadSyncRecipient extends IBaseRecipientData {
+export interface IPayloadRecipient extends IBaseRecipientData {
   country_id: number
   id_issued_country_id: number
   state_id: number
   city_id: number
   bank_account: IPayloadRecipientBankAccount
   transaction_id: string
+}
+
+export interface IPayloadUpdateRecipient extends IPayloadRecipient {
+  recipient_id?: string
 }
 
 export interface IPayloadRecipientBankAccount {
