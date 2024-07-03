@@ -146,7 +146,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     })
   }
 
-  const {mutate: addBeneficiary} = useMutation({
+  const {mutate: addBeneficiary, data: addedRes} = useMutation({
     mutationKey: [QUERY_BENEFICIARY],
     mutationFn: createBeneficiary,
     onSuccess: ({result, errorData}) => {
@@ -156,7 +156,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     },
   })
 
-  const {mutate: onUpdate} = useMutation({
+  const {mutate: onUpdate, data: updatedRes} = useMutation({
     mutationKey: [QUERY_BENEFICIARY],
     mutationFn: updateBeneficiary,
     onSuccess: ({result, errorData}) => {
@@ -319,6 +319,15 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     },
   ]
 
+  useEffect(() => {
+    if (addedRes) {
+      toggleSlider()
+      onRouteToOptions()
+    } else if (updatedRes) {
+      toggleSlider()
+    }
+  }, [])
+
   const onSubmit = () => {
     const {isValid} = onValidate()
     if (isValid) {
@@ -335,14 +344,8 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         relationship,
         transaction_id,
       }
-      if (beneficiaryId) {
-        onUpdate(payload)
-        toggleSlider()
-      } else {
-        addBeneficiary(payload)
-        toggleSlider()
-        onRouteToOptions()
-      }
+      if (beneficiaryId) onUpdate({...payload, beneficiary_id: beneficiaryId})
+      else addBeneficiary(payload)
     }
   }
 

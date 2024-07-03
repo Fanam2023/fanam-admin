@@ -45,6 +45,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       {label: "Individual", isSelected: true},
       {label: "Business", isSelected: false},
     ],
+    doc_data: null,
   })
 
   const {
@@ -69,6 +70,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     branch_address,
     id_number,
     branch_code,
+    doc_data,
   } = data
 
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
@@ -184,22 +186,22 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     })
   }
 
-  const {mutate: onUpdate} = useMutation({
-    mutationKey: [QUERY_RECIPIENT],
-    mutationFn: updateRecipient,
-    onSuccess: ({result, errorData}) => {
-      refreshQuery(QUERY_RECIPIENT)
-      if (result) onSuccess("Recipient Successfully Created")
-      else onFailure(errorData.message)
-    },
-  })
-
-  const {mutate: addRecipient} = useMutation({
+  const {mutate: addRecipient, data: addedRes} = useMutation({
     mutationKey: [QUERY_RECIPIENT],
     mutationFn: createRecipient,
     onSuccess: ({result, errorData}) => {
       refreshQuery(QUERY_RECIPIENT)
       if (result) onSuccess("Recipient Successfully updated")
+      else onFailure(errorData.message)
+    },
+  })
+
+  const {mutate: onUpdate, data: updatedRes} = useMutation({
+    mutationKey: [QUERY_RECIPIENT],
+    mutationFn: updateRecipient,
+    onSuccess: ({result, errorData}) => {
+      refreshQuery(QUERY_RECIPIENT)
+      if (result) onSuccess("Recipient Successfully Created")
       else onFailure(errorData.message)
     },
   })
@@ -267,6 +269,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         routing_code,
         id_type,
         id_number,
+        doc_data,
       })
     }
   }, [recipientData])
@@ -465,6 +468,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           name: "id_back",
           isMultiple: false,
           children: <CustomUpload />,
+          value: doc_data,
           onChangeValue,
         },
         {
@@ -473,11 +477,21 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           name: "id_back",
           isMultiple: false,
           children: <CustomUpload />,
+          value: doc_data,
           onChangeValue,
         },
       ],
     },
   ]
+
+  useEffect(() => {
+    if (addedRes) {
+      toggleSlider()
+      onReviewRecipient()
+    } else if (updatedRes) {
+      toggleSlider()
+    }
+  }, [addedRes, updatedRes])
 
   const onSubmit = () => {
     const {isValid} = onValidate()
@@ -510,14 +524,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
       }
 
-      if (recipientId) {
-        onUpdate(payLoad)
-        toggleSlider()
-      } else {
-        addRecipient(payLoad)
-        toggleSlider()
-        onReviewRecipient()
-      }
+      if (recipientId) onUpdate({...payLoad, recipient_id: recipientId})
+      else addRecipient(payLoad)
     }
   }
 
