@@ -7,7 +7,7 @@ import {BaseContainer, ManageMembers} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
-const Recipient = () => {
+const RecipientPage = () => {
   const {recipients, onChangeSearch, routeToDetails, onAdd, isDesktop} = useHandler()
 
   const renderRecipients = ({first_name, last_name, email, recipient_id}: IRecipient) => (
@@ -45,4 +45,4 @@ const Recipient = () => {
   )
 }
 
-export default Recipient
+export default RecipientPage

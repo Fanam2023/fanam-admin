@@ -4,14 +4,14 @@ import {BaseContainer, RecipientCard} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
-const ReviewDetails = () => {
+const RecipientPreview = () => {
   const {onPayment, onToggle} = useHandler()
 
   return (
     <BaseContainer
       header="Review Recipient Details"
       buttonText="Confirm"
-      onClick={onPayment}
+      onSubmit={onPayment}
       childWrapper={styles.page_wrapper}
       stepIndex={3}>
       <RecipientCard onEdit={onToggle} />
@@ -19,4 +19,4 @@ const ReviewDetails = () => {
   )
 }
 
-export default ReviewDetails
+export default RecipientPreview

@@ -8,7 +8,7 @@ import {IPayloadRecipient, IRecipientData, IStyle} from "@custom/utils"
 import assets from "assets"
 import {useLocationController, useRecipientController} from "controller"
 import {useSingleton} from "hooks"
-import {ID_PROOFS, QUERY_CITIES, QUERY_COUNTRIES, QUERY_RECIPIENT, QUERY_STATES, ROUTE_REVIEW} from "utils"
+import {ID_PROOFS, QUERY_CITIES, QUERY_COUNTRIES, QUERY_RECIPIENT, QUERY_STATES, ROUTE_RECIPIENT_PREVIEW} from "utils"
 
 const useHandler = (styles: IStyle, recipientId?: string) => {
   const {push} = useRouter()
@@ -124,7 +124,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     return errState
   }
 
-  const onReviewRecipient = () => push(ROUTE_REVIEW)
+  const onRecipientPreview = () => push(ROUTE_RECIPIENT_PREVIEW)
 
   const {
     errFirstName,
@@ -487,7 +487,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   useEffect(() => {
     if (addedRes) {
       toggleSlider()
-      onReviewRecipient()
+      onRecipientPreview()
     } else if (updatedRes) {
       toggleSlider()
     }

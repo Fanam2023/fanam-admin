@@ -7,7 +7,7 @@ import {BaseContainer, ManageMembers} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
-const Beneficiary = () => {
+const BeneficiaryPage = () => {
   const {onNav, beneficiaries, onChangeSearch, routeToDetails, isDesktop} = useHandler()
 
   const renderBeneficiary = ({beneficiary_name, email, beneficiary_id}: IBeneficiary) => (
@@ -41,4 +41,4 @@ const Beneficiary = () => {
   )
 }
 
-export default Beneficiary
+export default BeneficiaryPage

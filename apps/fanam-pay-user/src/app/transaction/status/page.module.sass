@@ -1,0 +1,87 @@
+@use "../../../styles/index" as *
+
+@mixin desktop_width
+  width: 40%
+
+@mixin mobile_width
+  width: 100%
+
+@mixin common-styles
+  padding: $size-20px $size-18px
+  border: $size-1px solid $black
+  border-radius: $size-24px
+
+@mixin common-margin
+  margin-top: $size-8px
+
+.page_container
+  width: 80%
+  overflow-y: scroll
+
+.page_wrapper
+  margin:
+    top: 9%
+    bottom: 9%
+  gap: $size-16px
+
+.payment_status_wrapper
+  @include desktop_width
+  @include common-styles
+
+.payment_details_wrapper
+  @include desktop_width
+  @include common-styles
+
+.content
+  margin-top: $size-20px
+
+.separator
+  border: 0
+  border-top: $size-2px dotted $light-grey
+  margin: $size-20px 0
+
+.payment_helper_wrapper
+  @include desktop_width
+  @include common-styles
+
+.helper_wrapper
+  gap: $size-10px
+
+.img_section
+  gap: $size-6px
+
+.payment_text
+  @include common-margin
+
+.currency_text
+  @include common-margin
+
+.receipt_text
+  display: none
+
+@include mixin-responsive
+  .page_container
+    @include mobile_width
+
+  .page_wrapper
+    padding: 0 $size-48px $size-48px $size-48px
+    gap: $size-20px
+    margin-top: 22%
+
+  .payment_status_wrapper
+    @include mobile_width
+
+  .payment_details_wrapper
+    @include mobile_width
+
+  .payment_helper_wrapper
+    @include mobile_width
+
+  .receipt_text
+    display: block
+    text-decoration: underline
+    color: $primary
+    cursor: pointer
+    margin:
+      left: 34%
+      top: $size-10px
