@@ -5,13 +5,13 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const RecipientPreview = () => {
-  const {onPayment, onToggle} = useHandler()
+  const {onRouteToBeneficiary, onToggle} = useHandler()
 
   return (
     <BaseContainer
       header="Review Recipient Details"
       buttonText="Confirm"
-      onSubmit={onPayment}
+      onSubmit={onRouteToBeneficiary}
       childWrapper={styles.page_wrapper}
       stepIndex={3}>
       <RecipientCard onEdit={onToggle} />

@@ -8,7 +8,7 @@ export const useHandler = () => {
   const {push} = useRouter()
   const {toggleSlider} = useSlider()
   const {isDesktop} = useResize()
-  const onPayment = () => push(ROUTE_BENEFICIARIES)
+  const onRouteToBeneficiary = () => push(ROUTE_BENEFICIARIES)
 
   const onToggle = (recipient_id: string) => {
     if (isDesktop) {
@@ -20,7 +20,7 @@ export const useHandler = () => {
   }
 
   return {
-    onPayment,
+    onRouteToBeneficiary,
     toggleSlider,
     isDesktop,
     onToggle,
