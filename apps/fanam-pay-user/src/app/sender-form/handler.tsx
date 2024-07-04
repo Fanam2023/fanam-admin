@@ -7,7 +7,7 @@ import {IStyle, ISyncUserData} from "@custom/utils"
 import assets from "assets"
 import {useAuthController, useLocationController} from "controller"
 import {useSingleton} from "hooks"
-import {ID_PROOFS, QUERY_CITIES, QUERY_COUNTRIES, QUERY_STATES, QUERY_USER, ROUTE_HOME} from "utils"
+import {ID_PROOFS, QUERY_CITIES, QUERY_COUNTRIES, QUERY_STATES, QUERY_USER, ROUTE_INITIATE_TRANSACTION} from "utils"
 
 const DEFAULT_ERR_STATE = {
   isClicked: false,
@@ -26,6 +26,7 @@ const DEFAULT_ERR_STATE = {
   errZipCode: "",
   errIdIssuedCountry: "",
   errIdType: "",
+  errKyc: "",
 }
 
 const useHandler = (styles: IStyle) => {
@@ -54,6 +55,7 @@ const useHandler = (styles: IStyle) => {
       {label: "Individual", isSelected: true},
       {label: "Business", isSelected: false},
     ],
+    kyc: [],
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
 
@@ -73,6 +75,7 @@ const useHandler = (styles: IStyle) => {
     id_type,
     id_issued_country,
     id_number,
+    kyc,
   } = data
 
   const {
@@ -91,6 +94,7 @@ const useHandler = (styles: IStyle) => {
     errAddressLine2,
     errCity,
     errZipCode,
+    errKyc,
   } = errData
 
   const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}] = useQueries({
@@ -131,7 +135,7 @@ const useHandler = (styles: IStyle) => {
       const {result, errorData} = userRes
 
       if (result) {
-        push(ROUTE_HOME)
+        push(ROUTE_INITIATE_TRANSACTION)
         updateUserData(result)
       } else
         toggleNotify({
@@ -159,6 +163,7 @@ const useHandler = (styles: IStyle) => {
         id_issued_country,
         id_number,
         id_type,
+        kyc_attachments,
       } = user
 
       let payloadData: ISyncUserData = {
@@ -220,6 +225,14 @@ const useHandler = (styles: IStyle) => {
         }
       }
 
+      if (kyc_attachments?.length) {
+        payloadData = {
+          ...payloadData,
+          account_no,
+          kyc: kyc_attachments.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
+        }
+      }
+
       setData(payloadData)
     }
   }, [user])
@@ -261,6 +274,8 @@ const useHandler = (styles: IStyle) => {
 
     if (account_type.every(({isSelected}) => !isSelected))
       errState = {...errState, errAccountType: "Please enter Zip Code", isValid: false}
+
+    if (!kyc.length) errState = {...errState, errKyc: "Please choose valid KYC documents", isValid: false}
 
     setErrData(errState)
 
@@ -305,7 +320,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "input",
           label: "Enter Account Number",
           name: "account_no",
-          disabled: !!user,
+          disabled: !!user?.user_accounts?.length,
           error: errAccountNo,
           value: account_no,
           onChangeValue,
@@ -316,7 +331,7 @@ const useHandler = (styles: IStyle) => {
           name: "email",
           value: email,
           error: errEmail,
-          disabled: !!user,
+          disabled: !!user?.email,
           onChangeValue,
         },
         {
@@ -408,17 +423,11 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "file-picker",
-          fileType: "image/*",
-          name: "id_front",
-          isMultiple: false,
-          children: <CustomUpload />,
-          onChangeValue,
-        },
-        {
-          elementType: "file-picker",
-          fileType: "image/*",
-          name: "id_back",
-          isMultiple: false,
+          fileType: ["image/*", "application/pdf"],
+          name: "kyc",
+          isMultiple: true,
+          value: kyc,
+          error: errKyc,
           children: <CustomUpload />,
           onChangeValue,
         },
@@ -449,6 +458,7 @@ const useHandler = (styles: IStyle) => {
         id_issued_country_id: id_issued_country.key as number,
         id_number,
         bank_account: {account_no, account_type: account_type?.find(({isSelected}) => isSelected)?.label},
+        kyc: kyc.filter(({file}) => !!file),
       })
     }
   }

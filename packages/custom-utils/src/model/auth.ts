@@ -1,6 +1,5 @@
-import {IFormData} from "@fanam-pkg/core-utils"
-import {TypeUserRole} from "./enum"
-import {ICity, ICountry, IState} from "./location"
+import {IFile, IFormData} from "@fanam-pkg/core-utils"
+import {IAttachment, ICity, ICountry, IState, TypeUserRole} from "../model"
 
 export interface IResponseLogin {
   access_token: string
@@ -41,6 +40,7 @@ export interface IUser {
   id_number: string
   id_type: string
   user_accounts: IResponseBankAccount[]
+  kyc_attachments: IAttachment[]
 }
 
 export interface IBaseSyncUser {
@@ -53,6 +53,7 @@ export interface IBaseSyncUser {
   zip_code: string
   id_number: string
   id_type: string
+  kyc?: IFile[]
 }
 
 export interface ISyncUserData extends IBaseSyncUser {

@@ -1,5 +1,5 @@
-import {IFormData} from "@fanam-pkg/core-utils"
-import {IBeneficiary, ICountry, IRecipient, IUser, TypeAccount, TypePurpose, TypeTransactionStatus} from "../model"
+import {IFile, IFormData} from "@fanam-pkg/core-utils"
+import {IAttachment, IBeneficiary, ICountry, IRecipient, IUser, TypeAccount, TypePurpose} from "../model"
 
 export interface ITransaction {
   transaction_id: string
@@ -12,11 +12,10 @@ export interface ITransaction {
   markup_fee: number
   purpose: TypePurpose
   reason: string
-  status: TypeTransactionStatus
-  sender_bank_account: IBankAccount
-  recipient_bank_account: IBankAccount
+  invoice: IAttachment[]
+  recipient: IRecipient
+  recipient_relationship: string
   beneficiary: IBeneficiary
-  created_by: IUser
 }
 
 export interface IBankAccount {
@@ -74,4 +73,8 @@ export interface ITransactionData extends IBaseTransactionData {
   destination_country: ICountry | null
   purpose: IFormData | null
   recipient_account_type: IFormData[]
+}
+
+export interface IInvoiceData {
+  invoice: IFile[]
 }
