@@ -18,7 +18,7 @@ const InitiateTransactionPage = () => {
       onSubmit={onSubmit}
       childWrapper={styles.page_container}
       backIcon={false}
-      stepIndex={0}>
+      stepIndex={1}>
       <section className={styles.container_wrapper}>
         <section className={`flex-col ${styles.button_container}`}>
           <h4 className="semi-bold">Recipient type</h4>
@@ -38,7 +38,9 @@ const InitiateTransactionPage = () => {
           name="purpose"
           onChangeData={onChangeValue}
         />
-        <TextArea wrapperClass={styles.text_field_wrapper} value={reason} name="reason" onChangeData={onChangeValue} />
+        <section className={styles.text_area_wrapper}>
+          <TextArea wrapperClass={styles.text_area_wrapper} value={reason} name="reason" onChangeData={onChangeValue} />
+        </section>
         <h4 className={`semi-bold ${styles.conversion_text}`}>Conversion Estimate</h4>
         <section className={styles.conversion_container}>
           <h5 className={`bold ${styles.send_text}`}>You Send</h5>

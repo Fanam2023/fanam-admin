@@ -14,7 +14,8 @@ const SenderForm = () => {
       childWrapper={styles.page_container}
       backIcon={false}
       buttonText="continue"
-      onSubmit={onSubmit}>
+      onSubmit={onSubmit}
+      stepIndex={0}>
       <section className={styles.container_wrapper}>
         <h2>Add Sender Details</h2>
         <GroupForm formSections={formElements} />
