@@ -1,8 +1,11 @@
-import {API_TRANSACTION, apiTransaction, IPayloadTransaction, ITransaction} from "@custom/utils"
+import {IFile} from "@fanam-pkg/core-utils"
+import {API_INVOICE, API_TRANSACTION, apiTransaction, IPayloadTransaction, ITransaction} from "@custom/utils"
+import {useSingleton} from "hooks"
 import {useApi} from "./api"
 
 export const useTransactionController = () => {
   const {getRequest, postRequest, putRequest} = useApi()
+  const {transId} = useSingleton()
 
   const getTransaction = async () => {
     const {result} = await getRequest(API_TRANSACTION)
@@ -25,10 +28,23 @@ export const useTransactionController = () => {
     return result
   }
 
+  const uploadInvoice = async (invoices: IFile[]) => {
+    const formData = new FormData()
+
+    invoices.forEach(({file}) => formData.append("invoice", file))
+
+    formData.append("transaction_id", transId)
+
+    const {result, errorData} = await putRequest(API_INVOICE, formData)
+
+    return {result, errorData}
+  }
+
   return {
     getTransaction,
     createTransaction,
     updateTransaction,
     getByIdTransaction,
+    uploadInvoice,
   }
 }

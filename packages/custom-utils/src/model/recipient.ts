@@ -1,4 +1,5 @@
-import {IFile, IFormData, JSONValues} from "@fanam-pkg/core-utils"
+import {IFile, IFormData} from "@fanam-pkg/core-utils"
+import {IAttachment} from "./common"
 import {ICity, ICountry, IState} from "./location"
 
 interface IBankAccount {
@@ -9,7 +10,6 @@ interface IBankAccount {
   branch_code: string
   branch_address: string
   account_type: string
-  [key: string]: JSONValues
 }
 
 export interface IRecipient {
@@ -29,6 +29,7 @@ export interface IRecipient {
   id_issued_country: ICountry
   recipient_id?: string
   bank_account: IBankAccount
+  kyc_attachments: IAttachment[]
 }
 
 export interface IBaseRecipientData {
@@ -41,6 +42,7 @@ export interface IBaseRecipientData {
   zip_code: string
   id_number: string
   id_type: string
+  kyc?: IFile[]
 }
 
 export interface IRecipientData extends IBaseRecipientData {
@@ -56,7 +58,6 @@ export interface IRecipientData extends IBaseRecipientData {
   swift_code: string
   iban_no?: string
   routing_code?: string
-  doc_data: IFile | null
 }
 
 export interface IPayloadRecipient extends IBaseRecipientData {

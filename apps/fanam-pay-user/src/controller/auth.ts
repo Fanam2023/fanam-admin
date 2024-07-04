@@ -1,6 +1,7 @@
 import {
   API_LOGIN,
   API_LOGOUT,
+  API_SENDER_KYC,
   API_SYNC_USER,
   API_USER,
   ILogOutPayload,
@@ -34,7 +35,22 @@ export const useAuthController = () => {
   }
 
   const syncUser = async (payload: IPayloadSyncUser) => {
-    const {result, errorData} = await putRequest<IUser>(API_SYNC_USER, payload)
+    const {kyc} = payload
+    delete payload.kyc
+
+    let {result, errorData} = await putRequest<IUser>(API_SYNC_USER, payload)
+
+    if (kyc.length) {
+      const formData = new FormData()
+      kyc.forEach(({file}) => {
+        formData.append("kyc", file)
+      })
+
+      const response = await putRequest<IUser>(API_SENDER_KYC, formData)
+      result = response.result
+      errorData = response.errorData
+    }
+
     return {result, errorData}
   }
 

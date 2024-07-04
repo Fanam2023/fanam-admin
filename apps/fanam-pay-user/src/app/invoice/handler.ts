@@ -1,46 +1,73 @@
+import {JSONObject} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
-import {useRef, useState} from "react"
-import {AddAttachmentProps} from "props"
-import {ROUTE_RECIPIENTS} from "utils"
+import {useEffect, useState} from "react"
+import {useMutation} from "@tanstack/react-query"
+import {IInvoiceData} from "@custom/utils"
+import {useTransactionController} from "controller"
+import {QUERY_TRANSACTION, ROUTE_RECIPIENTS} from "utils"
 
 export const useHandler = () => {
-  const [selFiles, setSelFiles] = useState<AddAttachmentProps[]>([])
-  const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const [data, setData] = useState<IInvoiceData>({invoice: []})
+  const [errData, setErrData] = useState(DEFAULT_ERR_DATA)
+  const {uploadInvoice} = useTransactionController()
+
+  const {invoice} = data
+  const {isClicked} = errData
 
   const {push} = useRouter()
-  const onUpload = () => push(ROUTE_RECIPIENTS)
 
-  const onBrowse = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click()
+  const onChangeValue = (value: JSONObject) => {
+    setData(prev => ({...prev, ...value}))
+  }
+
+  const {data: invoiceRes, mutate: updateInvoice} = useMutation({
+    mutationKey: [QUERY_TRANSACTION],
+    mutationFn: uploadInvoice,
+  })
+
+  useEffect(() => {
+    if (isClicked) setErrData(prev => ({...prev, ...onValidate()}))
+  }, [data, isClicked])
+
+  useEffect(() => {
+    if (invoiceRes?.result) push(ROUTE_RECIPIENTS)
+  }, [invoiceRes])
+
+  const onValidate = () => {
+    let errState = {
+      ...DEFAULT_ERR_DATA,
+      isValid: true,
+      isClicked: true,
+    }
+
+    if (!invoice?.length) errState = {...errState, errInvoice: "Please choose valid Invoice documents", isValid: false}
+
+    setErrData(errState)
+
+    return errState
+  }
+
+  const onUpload = () => {
+    const {isValid} = onValidate()
+    console.log(">>>>>>>>>>>>>>>>>>>>>>: ", isValid)
+
+    if (isValid) {
+      updateInvoice(invoice)
     }
   }
 
-  const onAttachment = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files
-    if (files?.length) {
-      const fileDetails = Array.from(files).map(file => ({
-        name: file.name,
-        size: `${(file.size / 1024).toFixed(2)} KB`,
-      }))
-      setSelFiles(prevFiles => [...prevFiles, ...fileDetails])
-    }
-  }
-
-  const onRemove = (index: number) => {
-    setSelFiles(prevFiles => {
-      const newFiles = [...prevFiles]
-      newFiles.splice(index, 1)
-      return newFiles
-    })
-  }
+  console.log(">>>>>>>>>>>>>>>>>>>: ", data)
 
   return {
-    selFiles,
-    fileInputRef,
-    onBrowse,
     onUpload,
-    onRemove,
-    onAttachment,
+    data,
+    errData,
+    onChangeValue,
   }
+}
+
+const DEFAULT_ERR_DATA = {
+  isClicked: false,
+  isValid: false,
+  errInvoice: "",
 }

@@ -1,4 +1,4 @@
-export const ROUTE_HOME = "/home-page"
+export const ROUTE_INITIATE_TRANSACTION = "/initiate-transaction"
 export const ROUTE_SENDER = "/sender-form"
 export const ROUTE_INVOICE = "/invoice"
 export const ROUTE_RECIPIENTS = "/recipient"

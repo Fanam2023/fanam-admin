@@ -18,8 +18,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {refreshQuery} = useReactQuery()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {createRecipient, updateRecipient, getByRecipientId} = useRecipientController()
-  const {transData, transId: transaction_id} = useSingleton()
-  const {purpose} = transData || {}
+  const {transId: transaction_id} = useSingleton()
   const {toggleNotify} = useNotifyPopup()
 
   const [data, setData] = useState<IRecipientData>({
@@ -45,7 +44,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       {label: "Individual", isSelected: true},
       {label: "Business", isSelected: false},
     ],
-    doc_data: null,
+    kyc: [],
   })
 
   const {
@@ -70,7 +69,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     branch_address,
     id_number,
     branch_code,
-    doc_data,
+    kyc,
   } = data
 
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
@@ -146,6 +145,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     errIdType,
     errIdNumber,
     errAccountType,
+    errKyc,
   } = errData
 
   const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}, {data: recipientData}] = useQueries(
@@ -238,6 +238,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         id_type,
         id_number,
         bank_account,
+        kyc_attachments,
       } = recipientData
 
       const {account_no, account_type, bank_name, branch_address, branch_code, swift_code, routing_code} = bank_account
@@ -269,7 +270,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         routing_code,
         id_type,
         id_number,
-        doc_data,
+        kyc: kyc_attachments.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
       })
     }
   }, [recipientData])
@@ -464,20 +465,12 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "file-picker",
-          fileType: "image/*",
-          name: "id_back",
-          isMultiple: false,
+          fileType: ["image/*", "application/pdf"],
+          name: "kyc",
+          isMultiple: true,
           children: <CustomUpload />,
-          value: doc_data,
-          onChangeValue,
-        },
-        {
-          elementType: "file-picker",
-          fileType: "image/*",
-          name: "id_back",
-          isMultiple: false,
-          children: <CustomUpload />,
-          value: doc_data,
+          value: kyc,
+          error: errKyc,
           onChangeValue,
         },
       ],
@@ -512,6 +505,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         id_number,
         id_type,
         transaction_id,
+        kyc: kyc.filter(({file}) => !!file),
         bank_account: {
           branch_address,
           account_no,
@@ -570,4 +564,5 @@ const DEFAULT_ERR_STATE = {
   errIdNumber: "",
   errAccountPurpose: "",
   errAccountType: "",
+  errKyc: "",
 }

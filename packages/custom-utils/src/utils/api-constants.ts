@@ -17,3 +17,6 @@ export const API_BENEFICIARY = "/beneficiary"
 export const apiBeneficiary = (beneficiary_id: string) => `${API_BENEFICIARY}/${beneficiary_id}`
 export const API_TRANSACTION = "/transaction"
 export const apiTransaction = (transaction_id: string) => `${API_TRANSACTION}/${transaction_id}`
+export const API_SENDER_KYC = "/file-upload/sender-kyc"
+export const API_RECIPIENT_KYC = "/file-upload/recipient-kyc"
+export const API_INVOICE = "/file-upload/invoice"
