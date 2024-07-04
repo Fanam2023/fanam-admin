@@ -24,7 +24,7 @@ const RecipientPage = () => {
       addButton="Add"
       childWrapper={styles.page_container}
       backIcon
-      stepIndex={2}
+      stepIndex={3}
       onAdd={onAdd}
       onBack={onBack}>
       <section className={`flex ${styles.search_container}`}>

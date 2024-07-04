@@ -12,7 +12,7 @@ const RecipientRelation = () => {
   return (
     <BaseContainer
       header="Sender’s Relationship with the Recipient"
-      stepIndex={3}
+      stepIndex={4}
       childWrapper={styles.page_container}
       buttonText="Continue">
       <section>

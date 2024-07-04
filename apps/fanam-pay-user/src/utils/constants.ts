@@ -27,6 +27,10 @@ export const RECIPIENT_ACCOUNT_DETAILS: RecipientPreviewProps[] = [
 
 export const SIDE_BAR: IStepper[] = [
   {
+    title: "Add Sender Details",
+    description: "Enter Sender Details",
+  },
+  {
     title: "Cross Border Remittance",
     description:
       "Get your conversion estimate. Provide sender and recipient type along with the purpose of sending money.",

@@ -20,7 +20,7 @@ const BeneficiaryPage = () => {
       addButton="Add"
       childWrapper={styles.page_container}
       backIcon
-      stepIndex={4}
+      stepIndex={5}
       onAdd={onNav}
       onBack={onBack}>
       <section className={`flex ${styles.search_container}`}>

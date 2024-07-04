@@ -1,14 +1,14 @@
 import {useRouter} from "next/navigation"
 import {useRef, useState} from "react"
 import {AddAttachmentProps} from "props"
-import {ROUTE_RECEPIENTS} from "utils"
+import {ROUTE_RECIPIENTS} from "utils"
 
 export const useHandler = () => {
   const [selFiles, setSelFiles] = useState<AddAttachmentProps[]>([])
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
   const {push} = useRouter()
-  const onUpload = () => push(ROUTE_RECEPIENTS)
+  const onUpload = () => push(ROUTE_RECIPIENTS)
 
   const onBrowse = () => {
     if (fileInputRef.current) {

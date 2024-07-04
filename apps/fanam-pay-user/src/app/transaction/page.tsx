@@ -41,7 +41,7 @@ const TransactionPage = () => {
         <FooterPayment senderAmount="Rs. 5388.00" reciverName="Varshini receives" recivableAmt="$707.00" button="Pay" />
       }
       onSubmit={onSuccess}
-      stepIndex={5}>
+      stepIndex={6}>
       <section className={styles.page_wrapper}>
         <section className={styles.card}>
           <Accordian

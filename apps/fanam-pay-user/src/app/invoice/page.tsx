@@ -29,7 +29,7 @@ const AddAttachment = () => {
       buttonText="Continue"
       onClick={onUpload}
       childWrapper={styles.page_container}
-      stepIndex={1}>
+      stepIndex={2}>
       <section className={styles.title_wrapper}>
         <h4>Upload Supporting Documents(optional)</h4>
         <h5 className={styles.type_wrapper}>JPG, PNG and PDF Files Up to 1MB</h5>
