@@ -21,7 +21,7 @@ const InitiateTransactionPage = () => {
       stepIndex={1}>
       <section className={styles.container_wrapper}>
         <section className={`flex-col ${styles.button_container}`}>
-          <h4 className="semi-bold">Recipient type</h4>
+          <h4 className="semi-bold">Account type</h4>
           <RadioButton
             items={recipient_account_type}
             onSelectItems={onSelectType}
