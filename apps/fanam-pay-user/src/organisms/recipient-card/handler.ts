@@ -1,32 +1,39 @@
+import {IFormData} from "@fanam-pkg/core-utils"
+import {useMemo} from "react"
 import {useSingleton} from "hooks"
 
 export const useHandler = () => {
   const {transData} = useSingleton()
-  const recipient = transData?.recipient
-  console.log(recipient)
+  const {recipientDetails, recipientAccountDetails} = useMemo(() => {
+    const {first_name, last_name, address_line1, email, phone_no, bank_account, country, state, city, zip_code} =
+      transData?.recipient || {}
 
-  const recipientDetail = [
-    {label: "First Name", value: recipient?.first_name},
-    {label: "Last Name", value: recipient?.last_name},
-    {label: "Address", value: recipient?.address_line1},
-    {label: "Email", value: recipient?.email},
-    {label: "Phone Number", value: recipient?.phone_no},
-    {label: "Country", value: recipient?.country?.country_name},
-    {label: "State", value: recipient?.state?.state_name},
-    {label: "City", value: recipient?.city?.city_name},
-    {label: "ZIP Code", value: recipient?.zip_code},
-  ]
+    const {country_name} = country || {}
+    const {state_name} = state || {}
+    const {city_name} = city || {}
+    const {account_no, account_type, bank_name, branch_code, swift_code} = bank_account || {}
 
-  const recipientAccountDetails = [
-    {label: "Account Number", value: recipient?.bank_account?.account_no},
-    {label: "Account Type", value: recipient?.bank_account?.account_type},
-    {label: "Bank Name", value: recipient?.bank_account?.bank_name},
-    {label: "Branch", value: recipient?.bank_account?.branch_code},
-    {label: "BIC", value: recipient?.bank_account?.swift_code},
-  ]
+    const recipientDetails: IFormData[] = [
+      {key: "First Name", label: first_name},
+      {key: "Last Name", label: last_name},
+      {key: "Address", label: address_line1},
+      {key: "Email", label: email},
+      {key: "Phone Number", label: phone_no},
+      {key: "Country", label: country_name},
+      {key: "State", label: state_name},
+      {key: "City", label: city_name},
+      {key: "ZIP Code", label: zip_code},
+    ]
 
-  return {
-    recipientDetail,
-    recipientAccountDetails,
-  }
+    const recipientAccountDetails: IFormData[] = [
+      {key: "Account Number", label: account_no},
+      {key: "Account Type", label: account_type},
+      {key: "Bank Name", label: bank_name},
+      {key: "Branch", label: branch_code},
+      {key: "BIC", label: swift_code},
+    ]
+
+    return {recipientDetails, recipientAccountDetails}
+  }, [transData])
+  return {recipientAccountDetails, recipientDetails}
 }

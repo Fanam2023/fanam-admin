@@ -18,7 +18,7 @@ const SenderForm = () => {
       stepIndex={0}>
       <section className={styles.container_wrapper}>
         <h2>Add Sender Details</h2>
-        <h4 className={`Semi bold ${styles.type_wrapper}`}>Account Type</h4>
+        <h4 className={`semi bold ${styles.type_wrapper}`}>Account Type</h4>
         <GroupForm formSections={formElements} />
       </section>
     </BaseContainer>

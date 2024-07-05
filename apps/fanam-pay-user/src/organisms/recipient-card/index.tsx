@@ -1,16 +1,16 @@
 import {ImageView} from "@fanam-pkg/core-ui-sass"
+import {IFormData} from "@fanam-pkg/core-utils"
 import assets from "assets"
 import {RecipientCardProps} from "props"
 import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const RecipientCard = ({onEdit}: RecipientCardProps) => {
-  const {recipientDetail, recipientAccountDetails} = useHandler()
-
-  const renderRecipientDetails = (detail: {label: string; value: string}, index: number) => (
+  const {recipientDetails, recipientAccountDetails} = useHandler()
+  const renderRecipientDetails = ({key, label}: IFormData, index: number) => (
     <li className={`flex-sb-center ${styles.data_wrapper}`} key={index}>
-      <h5 className={styles.field_wrapper}>{detail.label}</h5>
-      <h5>{detail.value}</h5>
+      <h5 className={styles.field_wrapper}>{key}</h5>
+      <h5>{label}</h5>
     </li>
   )
 
@@ -27,7 +27,7 @@ export const RecipientCard = ({onEdit}: RecipientCardProps) => {
             onClick={onEdit.bind(null, null)}
           />
         </section>
-        <ul>{recipientDetail.map(renderRecipientDetails)}</ul>
+        <ul>{recipientDetails.map(renderRecipientDetails)}</ul>
       </section>
       <section className={`flex-col ${styles.account_wrapper}`}>
         <section className={`flex-sb-center ${styles.card_wrapper}`}>
