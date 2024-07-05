@@ -10,6 +10,7 @@ interface IBankAccount {
   branch_code: string
   branch_address: string
   account_type: string
+  iban_no: string
 }
 
 export interface IRecipient {

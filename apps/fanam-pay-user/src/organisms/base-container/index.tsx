@@ -58,7 +58,7 @@ export const BaseContainer = ({
           )}
           <h3>{header}</h3>
         </section>
-        {!isDesktop && !!addButton && (
+        {!!addButton && (
           <h3 onClick={onAdd} className={styles.add_text}>
             {addButton}
           </h3>

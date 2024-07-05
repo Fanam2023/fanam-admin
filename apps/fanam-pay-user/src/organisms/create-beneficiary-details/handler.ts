@@ -326,7 +326,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     } else if (updatedRes) {
       toggleSlider()
     }
-  }, [])
+  }, [addedRes, updatedRes])
 
   const onSubmit = () => {
     const {isValid} = onValidate()

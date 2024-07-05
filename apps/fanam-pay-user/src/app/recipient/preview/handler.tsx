@@ -1,5 +1,6 @@
 import {useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
+import {useState} from "react"
 import {useSlider} from "@custom/ui"
 import {CreateRecipientDetails} from "organisms"
 import {ROUTE_BENEFICIARIES, ROUTE_RECIPIENTS, routeToRecipientDetails} from "utils"
@@ -8,6 +9,7 @@ export const useHandler = () => {
   const {push} = useRouter()
   const {toggleSlider} = useSlider()
   const {isDesktop} = useResize()
+  const [isSelected, setIsSelected] = useState<boolean>(false)
   const onRouteToBeneficiary = () => push(ROUTE_BENEFICIARIES)
 
   const onBack = () => push(ROUTE_RECIPIENTS)
@@ -27,5 +29,7 @@ export const useHandler = () => {
     isDesktop,
     onToggle,
     onBack,
+    isSelected,
+    setIsSelected,
   }
 }
