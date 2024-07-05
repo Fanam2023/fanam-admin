@@ -228,7 +228,6 @@ const useHandler = (styles: IStyle) => {
       if (kyc_attachments?.length) {
         payloadData = {
           ...payloadData,
-          account_no,
           kyc: kyc_attachments.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
         }
       }

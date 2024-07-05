@@ -24,7 +24,7 @@ export const useTransactionController = () => {
   }
 
   const getByIdTransaction = async (transaction_id: string) => {
-    const {result} = await getRequest(apiTransaction(transaction_id))
+    const {result} = await getRequest<ITransaction>(apiTransaction(transaction_id))
     return result
   }
 

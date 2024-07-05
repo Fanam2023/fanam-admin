@@ -49,14 +49,11 @@ export const useHandler = () => {
 
   const onUpload = () => {
     const {isValid} = onValidate()
-    console.log(">>>>>>>>>>>>>>>>>>>>>>: ", isValid)
 
     if (isValid) {
       updateInvoice(invoice)
     }
   }
-
-  console.log(">>>>>>>>>>>>>>>>>>>: ", data)
 
   return {
     onUpload,
