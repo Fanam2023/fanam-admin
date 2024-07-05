@@ -234,7 +234,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         kyc_attachments,
       } = recipientData
 
-      const {account_no, account_type, bank_name, branch_address, branch_code, swift_code, routing_code} = bank_account
+      const {account_no, account_type, bank_name, branch_address, branch_code, swift_code, routing_code, iban_no} =
+        bank_account
       const {country_id, country_name} = country || {}
       const {country_id: idCountryId, country_name: idCountryName} = id_issued_country || {}
       const {state_id, state_name} = state || {}
@@ -260,7 +261,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         routing_code,
         id_type,
         id_number,
-        kyc: kyc_attachments.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
+        iban_no,
+        kyc: kyc_attachments?.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
       })
     }
   }, [recipientData])
