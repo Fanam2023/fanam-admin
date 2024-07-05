@@ -8,10 +8,16 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const BeneficiaryPage = () => {
-  const {onNav, beneficiaries, onChangeSearch, routeToDetails, isDesktop, onBack} = useHandler()
+  const {onNav, beneficiaries, onChangeSearch, routeToDetails, isDesktop, onBack, linkBeneficiary} = useHandler()
 
   const renderBeneficiary = ({beneficiary_name, email, beneficiary_id}: IBeneficiary) => (
-    <ManageMembers description={email} title={beneficiary_name} onEdit={routeToDetails.bind(null, beneficiary_id)} />
+    <ManageMembers
+      key={beneficiary_id}
+      description={email}
+      title={beneficiary_name}
+      onEdit={routeToDetails.bind(null, beneficiary_id)}
+      onSelect={linkBeneficiary.bind(null, beneficiary_id)}
+    />
   )
 
   return (
