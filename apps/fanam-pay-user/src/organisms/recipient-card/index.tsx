@@ -1,14 +1,16 @@
 import {ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
-import {RecipientCardProps, RecipientPreviewProps} from "props"
-import {RECIPIENT_ACCOUNT_DETAILS, RECIPIENT_DETAILS} from "utils"
+import {RecipientCardProps} from "props"
+import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const RecipientCard = ({onEdit}: RecipientCardProps) => {
-  const renderRecipientDetails = ({label, value}: RecipientPreviewProps, index: number) => (
+  const {recipientDetail, recipientAccountDetails} = useHandler()
+
+  const renderRecipientDetails = (detail: {label: string; value: string}, index: number) => (
     <li className={`flex-sb-center ${styles.data_wrapper}`} key={index}>
-      <h5 className={styles.field_wrapper}>{label}</h5>
-      <h5>{value}</h5>
+      <h5 className={styles.field_wrapper}>{detail.label}</h5>
+      <h5>{detail.value}</h5>
     </li>
   )
 
@@ -25,7 +27,7 @@ export const RecipientCard = ({onEdit}: RecipientCardProps) => {
             onClick={onEdit.bind(null, null)}
           />
         </section>
-        <ul>{RECIPIENT_DETAILS.map(renderRecipientDetails)}</ul>
+        <ul>{recipientDetail.map(renderRecipientDetails)}</ul>
       </section>
       <section className={`flex-col ${styles.account_wrapper}`}>
         <section className={`flex-sb-center ${styles.card_wrapper}`}>
@@ -38,7 +40,7 @@ export const RecipientCard = ({onEdit}: RecipientCardProps) => {
             onClick={onEdit.bind(null, null)}
           />
         </section>
-        <ul>{RECIPIENT_ACCOUNT_DETAILS.map(renderRecipientDetails)}</ul>
+        <ul>{recipientAccountDetails.map(renderRecipientDetails)}</ul>
       </section>
     </>
   )
