@@ -5,7 +5,7 @@ import {useApi} from "./api"
 
 export const useTransactionController = () => {
   const {getRequest, postRequest, putRequest} = useApi()
-  const {transId} = useSingleton()
+  const {transId, updateTransData} = useSingleton()
 
   const getTransaction = async () => {
     const {result} = await getRequest(API_TRANSACTION)
@@ -14,17 +14,18 @@ export const useTransactionController = () => {
 
   const createTransaction = async (payload: IPayloadTransaction) => {
     const {result, errorData} = await postRequest<ITransaction>(API_TRANSACTION, payload)
+    if (result) updateTransData(result)
     return {result, errorData}
   }
 
-  const updateTransaction = async (payload: any) => {
-    const transactionId = payload.transaction_id
-    const {result, errorData} = await putRequest(API_TRANSACTION, transactionId)
+  const updateTransaction = async (payload: IPayloadTransaction) => {
+    const {result, errorData} = await putRequest<ITransaction>(apiTransaction(transId), payload)
+    if (result) updateTransData(result)
     return {result, errorData}
   }
 
   const getByIdTransaction = async (transaction_id: string) => {
-    const {result} = await getRequest(apiTransaction(transaction_id))
+    const {result} = await getRequest<ITransaction>(apiTransaction(transaction_id))
     return result
   }
 
@@ -40,11 +41,32 @@ export const useTransactionController = () => {
     return {result, errorData}
   }
 
+  const syncBeneficiary = async (beneficiaryId: string) => {
+    const {result, errorData} = await putRequest<ITransaction>(apiTransaction(transId), {beneficiary_id: beneficiaryId})
+    if (result) updateTransData(result)
+    return {result, errorData}
+  }
+
+  const syncRecipient = async (recipientId: string) => {
+    const {result, errorData} = await putRequest<ITransaction>(apiTransaction(transId), {recipient_id: recipientId})
+    if (result) updateTransData(result)
+    return {result, errorData}
+  }
+
+  const syncRecipientAsBeneficiary = async (isSamePerson: boolean) => {
+    const {result, errorData} = await putRequest<ITransaction>(apiTransaction(transId), {is_same_person: isSamePerson})
+    if (result) updateTransData(result)
+    return {result, errorData}
+  }
+
   return {
     getTransaction,
     createTransaction,
     updateTransaction,
     getByIdTransaction,
     uploadInvoice,
+    syncBeneficiary,
+    syncRecipient,
+    syncRecipientAsBeneficiary,
   }
 }

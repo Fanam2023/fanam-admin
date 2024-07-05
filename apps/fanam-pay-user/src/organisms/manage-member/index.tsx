@@ -1,13 +1,24 @@
 "use client"
 
 import {ImageView} from "@fanam-pkg/core-ui-sass"
+import {MouseEvent} from "react"
 import assets from "assets"
 import {ManageMembersProps} from "props"
 import styles from "./style.module.sass"
 
-export const ManageMembers = ({title, onEdit, description}: ManageMembersProps) => {
+export const ManageMembers = ({title, onEdit, onSelect, description}: ManageMembersProps) => {
+  const onClick = (e: MouseEvent<HTMLElement>) => {
+    e.stopPropagation()
+    onSelect()
+  }
+
+  const onClickEdit = (e: MouseEvent<HTMLDivElement | HTMLImageElement>) => {
+    e.stopPropagation()
+    onEdit()
+  }
+
   return (
-    <section className={`flex-col-center ${styles.container}`}>
+    <section className={`flex-col-center ${styles.container}`} onClick={onClick}>
       <section className={`flex-col ${styles.beneficiary_container}`}>
         <section className={`flex ${styles.beneficiary_wrapper}`}>
           <ImageView src={assets.ic_user} alt={"user-profile"} imgSize={46} />
@@ -21,7 +32,7 @@ export const ManageMembers = ({title, onEdit, description}: ManageMembersProps) 
               alt={"edit-icon"}
               imgSize={24}
               wrapperClass={styles.edit_icon}
-              onClick={onEdit}
+              onClick={onClickEdit}
             />
           </section>
         </section>

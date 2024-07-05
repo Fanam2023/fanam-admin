@@ -18,7 +18,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {refreshQuery} = useReactQuery()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {createRecipient, updateRecipient, getByRecipientId} = useRecipientController()
-  const {transId: transaction_id} = useSingleton()
+  const {transId: transaction_id, transData} = useSingleton()
   const {toggleNotify} = useNotifyPopup()
 
   const [data, setData] = useState<IRecipientData>({
@@ -40,10 +40,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     id_issued_country: null,
     id_type: "",
     id_number: "",
-    account_type: [
-      {label: "Individual", isSelected: true},
-      {label: "Business", isSelected: false},
-    ],
     kyc: [],
   })
 
@@ -51,7 +47,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     first_name,
     last_name,
     account_no,
-    account_type,
     bank_name,
     address_line1,
     address_line2,
@@ -84,8 +79,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     if (!last_name) errState = {...errState, errLastName: "Please enter LastName", isValid: false}
 
     if (!account_no) errState = {...errState, errAccountNo: "Please enter AccountNumber", isValid: false}
-
-    if (!account_type) errState = {...errState, errAccountType: "Please enter AccountType", isValid: false}
 
     if (!bank_name) errState = {...errState, errBankName: "Please enter BankName", isValid: false}
 
@@ -261,9 +254,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         zip_code,
         id_issued_country: {label: idCountryName, key: idCountryId},
         account_no,
-        account_type: data.account_type.map(({label}) =>
-          label === account_type ? {label, isSelected: true} : {label, isSelected: false}
-        ),
         bank_name,
         branch_address,
         branch_code,
@@ -330,14 +320,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           name: "email",
           error: errEmail,
           value: email,
-          onChangeValue,
-        },
-        {
-          elementType: "radio-button",
-          label: "Enter AccountType",
-          name: "account_type",
-          options: account_type,
-          error: errAccountType,
           onChangeValue,
         },
         {
@@ -516,7 +498,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           routing_code,
           bank_name,
           branch_code,
-          account_type: account_type.find(({isSelected}) => isSelected)?.label,
+          account_type: transData.recipient_account_type,
         },
       }
 

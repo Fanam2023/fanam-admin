@@ -1,11 +1,18 @@
 import {useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
-import {useQuery} from "@tanstack/react-query"
+import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
-import {useRecipientController} from "controller"
+import {useRecipientController, useTransactionController} from "controller"
 import {CreateRecipientDetails} from "organisms"
-import {QUERY_RECIPIENT, ROUTE_ADD_RECIPIENT, ROUTE_INVOICE, routeToRecipientDetails} from "utils"
+import {
+  QUERY_RECIPIENT,
+  QUERY_TRANSACTION,
+  ROUTE_ADD_RECIPIENT,
+  ROUTE_INVOICE,
+  ROUTE_RECIPIENT_PREVIEW,
+  routeToRecipientDetails,
+} from "utils"
 
 export const useHandler = () => {
   const {isDesktop} = useResize()
@@ -13,10 +20,19 @@ export const useHandler = () => {
   const {toggleSlider} = useSlider()
   const [searchQuery, setSearchQuery] = useState("")
   const {getAllRecipient} = useRecipientController()
+  const {syncRecipient} = useTransactionController()
 
   const {data: recipients} = useQuery({
     queryKey: [QUERY_RECIPIENT],
     queryFn: getAllRecipient,
+  })
+
+  const {mutate: linkRecipient} = useMutation({
+    mutationKey: [QUERY_TRANSACTION],
+    mutationFn: syncRecipient,
+    onSuccess: ({result}) => {
+      if (result) push(ROUTE_RECIPIENT_PREVIEW)
+    },
   })
 
   const onChangeSearch = (value: string) => setSearchQuery(value)
@@ -57,5 +73,6 @@ export const useHandler = () => {
     routeToDetails,
     onAdd,
     onBack,
+    linkRecipient,
   }
 }

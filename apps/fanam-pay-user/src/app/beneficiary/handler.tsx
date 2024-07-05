@@ -1,11 +1,18 @@
 import {useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useMemo, useState} from "react"
-import {useQuery} from "@tanstack/react-query"
+import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
-import {useBeneficiaryController} from "controller"
+import {useBeneficiaryController, useTransactionController} from "controller"
 import {CreateBeneficiaryDetails} from "organisms"
-import {QUERY_BENEFICIARY, ROUTE_ADD_BENEFICIARY, ROUTE_RECIPIENT_PREVIEW, routeToBeneficiaryDetails} from "utils"
+import {
+  QUERY_BENEFICIARY,
+  QUERY_TRANSACTION,
+  ROUTE_ADD_BENEFICIARY,
+  ROUTE_RECIPIENT_PREVIEW,
+  ROUTE_TRANSACTION,
+  routeToBeneficiaryDetails,
+} from "utils"
 
 export const useHandler = () => {
   const {isDesktop} = useResize()
@@ -13,6 +20,15 @@ export const useHandler = () => {
   const {toggleSlider} = useSlider()
   const [searchQuery, setSearchQuery] = useState("")
   const {getAllBeneficiary} = useBeneficiaryController()
+  const {syncBeneficiary} = useTransactionController()
+
+  const {mutate: linkBeneficiary} = useMutation({
+    mutationKey: [QUERY_TRANSACTION],
+    mutationFn: syncBeneficiary,
+    onSuccess: ({result}) => {
+      if (result) push(ROUTE_TRANSACTION)
+    },
+  })
 
   const onBack = () => push(ROUTE_RECIPIENT_PREVIEW)
 
@@ -58,5 +74,6 @@ export const useHandler = () => {
     onChangeSearch,
     routeToDetails,
     onBack,
+    linkBeneficiary,
   }
 }

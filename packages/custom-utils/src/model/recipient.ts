@@ -51,7 +51,6 @@ export interface IRecipientData extends IBaseRecipientData {
   id_issued_country: IFormData | null
   state: IFormData | null
   city: IFormData | null
-  account_type: IFormData[]
   account_no: string
   branch_code: string
   bank_name: string

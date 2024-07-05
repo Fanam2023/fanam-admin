@@ -5,6 +5,7 @@ import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import {IPayloadLogin} from "@custom/utils"
 import {useAuthController} from "controller"
+import {useSingleton} from "hooks"
 import {ROUTE_SENDER} from "utils"
 
 const DEFAULT_ERR_STATE = {
@@ -20,6 +21,7 @@ export const useHandler = () => {
   const {replace} = useRouter()
   const {toggleNotify} = useNotifyPopup()
   const {isValidInputByRegex} = useCommon()
+  const {singOutUser} = useSingleton()
 
   const {isClicked} = errState
   const {email} = data
@@ -35,6 +37,10 @@ export const useHandler = () => {
         toggleNotify({title: "Login Error", description: errorData?.message || "Something went wrong", type: "error"})
     }
   }, [signInRes])
+
+  useEffect(() => {
+    singOutUser()
+  }, [])
 
   useEffect(() => {
     if (isClicked) setErrState(prev => ({...prev, ...onValidate()}))
