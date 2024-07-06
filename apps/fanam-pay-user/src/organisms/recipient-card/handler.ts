@@ -4,15 +4,26 @@ import {useSingleton} from "hooks"
 
 export const useHandler = () => {
   const {transData} = useSingleton()
+  const {
+    first_name,
+    last_name,
+    address_line1,
+    email,
+    phone_no,
+    bank_account,
+    country,
+    state,
+    city,
+    zip_code,
+    recipient_id,
+  } = transData?.recipient || {}
+
+  const {country_name} = country || {}
+  const {state_name} = state || {}
+  const {city_name} = city || {}
+  const {account_no, account_type, bank_name, branch_code, swift_code} = bank_account || {}
+
   const {recipientDetails, recipientAccountDetails} = useMemo(() => {
-    const {first_name, last_name, address_line1, email, phone_no, bank_account, country, state, city, zip_code} =
-      transData?.recipient || {}
-
-    const {country_name} = country || {}
-    const {state_name} = state || {}
-    const {city_name} = city || {}
-    const {account_no, account_type, bank_name, branch_code, swift_code} = bank_account || {}
-
     const recipientDetails: IFormData[] = [
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
@@ -35,5 +46,6 @@ export const useHandler = () => {
 
     return {recipientDetails, recipientAccountDetails}
   }, [transData])
-  return {recipientAccountDetails, recipientDetails}
+
+  return {recipientAccountDetails, recipientDetails, recipient_id}
 }
