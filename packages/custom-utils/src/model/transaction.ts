@@ -78,3 +78,13 @@ export interface ITransactionData extends IBaseTransactionData {
 export interface IInvoiceData {
   invoice: IFile[]
 }
+
+export interface IMergeRecipientData {
+  is_same_person: IFormData | null
+  recipient_relationship: string
+}
+
+export interface IPayloadMergeRecipient {
+  is_same_person: boolean
+  recipient_relationship: string
+}

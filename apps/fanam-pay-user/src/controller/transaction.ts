@@ -1,5 +1,12 @@
 import {IFile} from "@fanam-pkg/core-utils"
-import {API_INVOICE, API_TRANSACTION, apiTransaction, IPayloadTransaction, ITransaction} from "@custom/utils"
+import {
+  API_INVOICE,
+  API_TRANSACTION,
+  apiTransaction,
+  IPayloadMergeRecipient,
+  IPayloadTransaction,
+  ITransaction,
+} from "@custom/utils"
 import {useSingleton} from "hooks"
 import {useApi} from "./api"
 
@@ -53,8 +60,8 @@ export const useTransactionController = () => {
     return {result, errorData}
   }
 
-  const syncRecipientAsBeneficiary = async (isSamePerson: boolean) => {
-    const {result, errorData} = await putRequest<ITransaction>(apiTransaction(transId), {is_same_person: isSamePerson})
+  const syncRecipientAsBeneficiary = async (payload: IPayloadMergeRecipient) => {
+    const {result, errorData} = await putRequest<ITransaction>(apiTransaction(transId), payload)
     if (result) updateTransData(result)
     return {result, errorData}
   }

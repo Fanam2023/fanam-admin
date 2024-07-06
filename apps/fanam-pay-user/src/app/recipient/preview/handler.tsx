@@ -1,8 +1,9 @@
-import {useResize} from "@fanam-pkg/core-utils"
+import {JSONObject, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
+import {IMergeRecipientData} from "@custom/utils"
 import {useTransactionController} from "controller"
 import {CreateRecipientDetails} from "organisms"
 import {
@@ -18,7 +19,15 @@ export const useHandler = () => {
   const {toggleSlider} = useSlider()
   const {isDesktop} = useResize()
   const {syncRecipientAsBeneficiary} = useTransactionController()
-  const [isSelected, setIsSelected] = useState(false)
+  const [data, setData] = useState<IMergeRecipientData>({
+    is_same_person: {isSelected: false},
+    recipient_relationship: "",
+  })
+  const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
+  const {is_same_person, recipient_relationship} = data
+  const {isClicked} = errData
+
+  const isSamePerson = is_same_person.isSelected
 
   const onRouteToBeneficiary = () => push(ROUTE_BENEFICIARIES)
 
@@ -30,10 +39,10 @@ export const useHandler = () => {
 
   useEffect(() => {
     if (response) {
-      if (isSelected) push(ROUTE_TRANSACTION)
+      if (isSamePerson) push(ROUTE_TRANSACTION)
       else push(ROUTE_BENEFICIARIES)
     }
-  }, [response, isSelected])
+  }, [response, is_same_person])
 
   const onToggle = (recipient_id: string) => {
     if (isDesktop) {
@@ -44,13 +53,44 @@ export const useHandler = () => {
     } else push(routeToRecipientDetails(recipient_id))
   }
 
+  useEffect(() => {
+    if (isClicked) setErrData(prev => ({...prev, ...onValidate()}))
+  }, [isClicked, data])
+
+  const onValidate = () => {
+    let errState = {...DEFAULT_ERR_STATE, isValid: true, isClicked: true}
+
+    if (isSamePerson && !recipient_relationship)
+      errState = {...errState, errRelationShip: "Please select a relationship with recipient", isValid: false}
+
+    setErrData(errState)
+    return errState
+  }
+
+  const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
+
+  const onSubmit = () => {
+    const {isValid} = onValidate()
+
+    if (isValid) linkRecipientAsBeneficiary({is_same_person: isSamePerson, recipient_relationship})
+  }
+
   return {
     onRouteToBeneficiary,
     toggleSlider,
     isDesktop,
     onToggle,
     onBack,
-    isSelected,
-    setIsSelected,
+    data,
+    isSamePerson,
+    errData,
+    onSubmit,
+    onChangeValue,
   }
+}
+
+const DEFAULT_ERR_STATE = {
+  isValid: false,
+  isClicked: false,
+  errRelationShip: "",
 }

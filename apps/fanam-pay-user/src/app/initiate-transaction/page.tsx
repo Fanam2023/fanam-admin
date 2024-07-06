@@ -39,7 +39,13 @@ const InitiateTransactionPage = () => {
           onChangeData={onChangeValue}
         />
         <section className={styles.text_area_wrapper}>
-          <TextArea wrapperClass={styles.text_area_wrapper} value={reason} name="reason" onChangeData={onChangeValue} />
+          <TextArea
+            wrapperClass={styles.text_area_wrapper}
+            label="Brief purpose of payment"
+            value={reason}
+            name="reason"
+            onChangeData={onChangeValue}
+          />
         </section>
         <h4 className={`semi-bold ${styles.conversion_text}`}>Conversion Estimate</h4>
         <section className={styles.conversion_container}>
