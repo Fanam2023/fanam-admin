@@ -32,6 +32,7 @@ export const useHandler = () => {
   const onRouteToBeneficiary = () => push(ROUTE_BENEFICIARIES)
 
   const onBack = () => push(ROUTE_RECIPIENTS)
+
   const {mutate: linkRecipientAsBeneficiary, data: response} = useMutation({
     mutationKey: [QUERY_TRANSACTION],
     mutationFn: syncRecipientAsBeneficiary,

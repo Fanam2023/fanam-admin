@@ -21,7 +21,7 @@ export const ManageMembers = ({title, onEdit, onSelect, description}: ManageMemb
     <section className={`flex-col-center ${styles.container}`} onClick={onClick}>
       <section className={`flex-col ${styles.beneficiary_container}`}>
         <section className={`flex ${styles.beneficiary_wrapper}`}>
-          <ImageView src={assets.ic_user} alt={"user-profile"} imgSize={46} />
+          <ImageView src={assets.ic_user} alt={"user-profile"} imgSize={46} wrapperClass={styles.user_img} />
           <section className={`flex-sb-center ${styles.user_wrapper}`}>
             <section className={`flex-col ${styles.user_details}`}>
               <h3>{title}</h3>

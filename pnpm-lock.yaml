@@ -27,8 +27,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/custom-utils
       '@fanam-pkg/core-ui-sass':
-        specifier: ^1.0.3
-        version: 1.0.3(@babel/core@7.24.5)(sass@1.77.1)
+        specifier: ^1.0.4
+        version: 1.0.4(@babel/core@7.24.5)(sass@1.77.1)
       '@fanam-pkg/core-utils':
         specifier: ^1.0.2
         version: 1.0.2(react@18.3.1)
@@ -109,8 +109,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/custom-utils
       '@fanam-pkg/core-ui-sass':
-        specifier: ^1.0.3
-        version: 1.0.3(@babel/core@7.24.7)(sass@1.77.1)
+        specifier: ^1.0.4
+        version: 1.0.4(@babel/core@7.24.5)(sass@1.77.1)
       '@fanam-pkg/core-utils':
         specifier: ^1.0.2
         version: 1.0.2(react@18.3.1)
@@ -122,10 +122,10 @@ importers:
         version: 10.1.0
       next:
         specifier: ^14.2.0
-        version: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1)
+        version: 14.2.3(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1)
       next-pwa:
         specifier: ^5.6.0
-        version: 5.6.0(@babel/core@7.24.7)(next@14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1))(webpack@5.92.0)
+        version: 5.6.0(@babel/core@7.24.5)(next@14.2.3(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1))(webpack@5.92.0)
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -138,7 +138,7 @@ importers:
     devDependencies:
       '@fanam-pkg/eslint':
         specifier: ^1.0.0
-        version: 1.0.0(@babel/core@7.24.7)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.4.5)
+        version: 1.0.0(@babel/core@7.24.5)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.4.5)
       '@fanam-pkg/prettier':
         specifier: ^1.1.1
         version: 1.1.1(@types/eslint@8.56.10)(eslint@8.57.0)
@@ -194,8 +194,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/custom-utils
       '@fanam-pkg/core-ui-sass':
-        specifier: ^1.0.3
-        version: 1.0.3(@babel/core@7.24.7)(sass@1.77.1)
+        specifier: ^1.0.4
+        version: 1.0.4(@babel/core@7.24.5)(sass@1.77.1)
       '@fanam-pkg/core-utils':
         specifier: ^1.0.2
         version: 1.0.2(react@18.3.1)
@@ -210,10 +210,10 @@ importers:
         version: 10.1.0
       next:
         specifier: ^14.2.0
-        version: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1)
+        version: 14.2.3(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1)
       next-pwa:
         specifier: ^5.6.0
-        version: 5.6.0(@babel/core@7.24.7)(next@14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1))(webpack@5.92.0)
+        version: 5.6.0(@babel/core@7.24.5)(next@14.2.3(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1))(webpack@5.92.0)
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -226,7 +226,7 @@ importers:
     devDependencies:
       '@fanam-pkg/eslint':
         specifier: ^1.0.0
-        version: 1.0.0(@babel/core@7.24.7)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.4.5)
+        version: 1.0.0(@babel/core@7.24.5)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.4.5)
       '@fanam-pkg/prettier':
         specifier: ^1.1.1
         version: 1.1.1(@types/eslint@8.56.10)(eslint@8.57.0)
@@ -1136,6 +1136,9 @@ packages:
 
   '@fanam-pkg/core-ui-sass@1.0.3':
     resolution: {integrity: sha512-B5996k/8cnYXCURxwA6mClbctPP96HdQzlo+Neydu7ZrI52qxmRK9kUyB+G5v3hJd48vEjqPSOBdPUVbeahcMA==}
+
+  '@fanam-pkg/core-ui-sass@1.0.4':
+    resolution: {integrity: sha512-80Un0PJXJN5tli0her8uC32mhIFn+4gcON3eJyNE9X3NS0eykSpwcB+paFE8iBqsveyo1D+/+h502Kt8FCt+8w==}
 
   '@fanam-pkg/core-utils@1.0.2':
     resolution: {integrity: sha512-+9Ff5fpfPZ7JIM/qxVKEuwF5eAc3tB4Q70mnPTiLVWT/o1nsWOc4DS+dNgxAQQ4QYVmojpoHZNEPj5PYA9SFTA==}
@@ -5704,42 +5707,26 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
-  '@fanam-pkg/core-ui-sass@1.0.3(@babel/core@7.24.5)(sass@1.77.1)':
-    dependencies:
-      '@fanam-pkg/core-utils': 1.0.2(react@18.3.1)
-      next: 14.2.3(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-multi-carousel: 2.8.5
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@opentelemetry/api'
-      - '@playwright/test'
-      - '@react-native-async-storage/async-storage'
-      - babel-plugin-macros
-      - debug
-      - sass
-
-  '@fanam-pkg/core-ui-sass@1.0.3(@babel/core@7.24.7)(sass@1.77.1)':
-    dependencies:
-      '@fanam-pkg/core-utils': 1.0.2(react@18.3.1)
-      next: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-multi-carousel: 2.8.5
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@opentelemetry/api'
-      - '@playwright/test'
-      - '@react-native-async-storage/async-storage'
-      - babel-plugin-macros
-      - debug
-      - sass
-
   '@fanam-pkg/core-ui-sass@1.0.3(@babel/core@7.24.7)(sass@1.77.6)':
     dependencies:
       '@fanam-pkg/core-utils': 1.0.2(react@18.3.1)
       next: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-multi-carousel: 2.8.5
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@opentelemetry/api'
+      - '@playwright/test'
+      - '@react-native-async-storage/async-storage'
+      - babel-plugin-macros
+      - debug
+      - sass
+
+  '@fanam-pkg/core-ui-sass@1.0.4(@babel/core@7.24.5)(sass@1.77.1)':
+    dependencies:
+      '@fanam-pkg/core-utils': 1.0.2(react@18.3.1)
+      next: 14.2.3(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-multi-carousel: 2.8.5
@@ -6913,15 +6900,6 @@ snapshots:
   babel-loader@8.3.0(@babel/core@7.24.5)(webpack@5.92.0):
     dependencies:
       '@babel/core': 7.24.5
-      find-cache-dir: 3.3.2
-      loader-utils: 2.0.4
-      make-dir: 3.1.0
-      schema-utils: 2.7.1
-      webpack: 5.92.0
-
-  babel-loader@8.3.0(@babel/core@7.24.7)(webpack@5.92.0):
-    dependencies:
-      '@babel/core': 7.24.7
       find-cache-dir: 3.3.2
       loader-utils: 2.0.4
       make-dir: 3.1.0
@@ -8644,24 +8622,6 @@ snapshots:
       - uglify-js
       - webpack
 
-  next-pwa@5.6.0(@babel/core@7.24.7)(next@14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1))(webpack@5.92.0):
-    dependencies:
-      babel-loader: 8.3.0(@babel/core@7.24.7)(webpack@5.92.0)
-      clean-webpack-plugin: 4.0.0(webpack@5.92.0)
-      globby: 11.1.0
-      next: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1)
-      terser-webpack-plugin: 5.3.10(webpack@5.92.0)
-      workbox-webpack-plugin: 6.6.0(webpack@5.92.0)
-      workbox-window: 6.6.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@swc/core'
-      - '@types/babel__core'
-      - esbuild
-      - supports-color
-      - uglify-js
-      - webpack
-
   next@14.2.3(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1):
     dependencies:
       '@next/env': 14.2.3
@@ -8673,32 +8633,6 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       styled-jsx: 5.1.1(@babel/core@7.24.5)(react@18.3.1)
-    optionalDependencies:
-      '@next/swc-darwin-arm64': 14.2.3
-      '@next/swc-darwin-x64': 14.2.3
-      '@next/swc-linux-arm64-gnu': 14.2.3
-      '@next/swc-linux-arm64-musl': 14.2.3
-      '@next/swc-linux-x64-gnu': 14.2.3
-      '@next/swc-linux-x64-musl': 14.2.3
-      '@next/swc-win32-arm64-msvc': 14.2.3
-      '@next/swc-win32-ia32-msvc': 14.2.3
-      '@next/swc-win32-x64-msvc': 14.2.3
-      sass: 1.77.1
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-
-  next@14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1):
-    dependencies:
-      '@next/env': 14.2.3
-      '@swc/helpers': 0.5.5
-      busboy: 1.6.0
-      caniuse-lite: 1.0.30001618
-      graceful-fs: 4.2.11
-      postcss: 8.4.31
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      styled-jsx: 5.1.1(@babel/core@7.24.7)(react@18.3.1)
     optionalDependencies:
       '@next/swc-darwin-arm64': 14.2.3
       '@next/swc-darwin-x64': 14.2.3
