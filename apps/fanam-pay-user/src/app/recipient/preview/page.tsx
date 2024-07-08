@@ -31,7 +31,7 @@ const RecipientPreview = () => {
             options={RELATION_SHIP}
             onChangeData={onChangeValue}
             name="recipient_relationship"
-            value={recipient_relationship}
+            selected={recipient_relationship}
             wrapperClass={styles.drop_down}
             error={errRelationShip}
           />

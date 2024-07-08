@@ -28,6 +28,7 @@ const AddAttachment = () => {
         error={errInvoice}
         value={invoice}
         onChangeData={onChangeValue}
+        wrapperClass={styles.attachment_wrapper}
       />
     </BaseContainer>
   )
