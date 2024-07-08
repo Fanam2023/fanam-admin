@@ -113,5 +113,5 @@ export const RELATION_SHIP = [
   "Brother_in_law",
   "Nephew",
   "Niece",
-  "Not_Applicable",
+  "Not_applicable",
 ]
