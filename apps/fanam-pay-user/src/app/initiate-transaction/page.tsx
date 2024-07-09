@@ -54,7 +54,6 @@ const InitiateTransactionPage = () => {
             <section className={`flex ${styles.flag_wrapper} ${styles.sender_wrapper}`}>
               <ImageView src={assets.ic_india_flag} alt="country_flag" imgSize={40} />
               <h3 className={styles.currency_text}>{sourceCountry?.iso2}</h3>
-              <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
             </section>
             <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
             <TextField

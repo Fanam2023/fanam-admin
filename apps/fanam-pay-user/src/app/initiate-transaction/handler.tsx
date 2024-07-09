@@ -164,7 +164,10 @@ export const useHandler = () => {
 
   const onChangeValue = (value: JSONObject) => setData({...data, ...value})
 
-  const onSelectCountry = (destination_country: ICountry) => setData({...data, destination_country})
+  const onSelectCountry = (destination_country: ICountry) => {
+    setData({...data, destination_country})
+    toggleSlider()
+  }
 
   const showCountries = () =>
     toggleSlider({
