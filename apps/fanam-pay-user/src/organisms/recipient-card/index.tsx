@@ -37,7 +37,7 @@ export const RecipientCard = ({onEdit}: RecipientCardProps) => {
             src={assets.ic_edit}
             alt="edit-icon"
             imgSize={24}
-            onClick={onEdit.bind(null, null)}
+            onClick={onEdit.bind(null, recipient_id)}
           />
         </section>
         <ul>{recipientAccountDetails.map(renderRecipientDetails)}</ul>
