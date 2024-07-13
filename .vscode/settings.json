@@ -154,9 +154,9 @@
     "model": "typescript",
     "custom-ui": "lib",
     "custom-utils": "lib",
-    "fanam-pay-admin": "next",
+    "fanam-assist": "next",
     "fanam-pay-user": "next",
-    "fanam-pay-crm": "next"
+    "fanam-care": "next"
   },
   "material-icon-theme.files.associations": {},
   "material-icon-theme.activeIconPack": "react",

@@ -5,6 +5,8 @@ export const SingletonContext = createContext<ISingleton>({
   user: null,
   token: null,
   refreshToken: null,
+  refetchTransaction: () => {},
+  refetchUser: () => {},
   transData: null,
   transId: null,
   updateTransId: () => {},

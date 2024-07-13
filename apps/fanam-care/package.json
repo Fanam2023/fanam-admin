@@ -1,5 +1,5 @@
 {
-  "name": "fanam-pay-crm",
+  "name": "fanam-care",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
@@ -16,7 +16,7 @@
   },
   "private": true,
   "dependencies": {
-    "@fanam-pkg/core-ui-sass": "^1.0.4",
+    "@fanam-pkg/core-ui-sass": "^1.0.5",
     "@fanam-pkg/core-utils": "^1.0.2",
     "@custom/utils": "workspace:*",
     "@tanstack/react-query": "^5.29.2",
