@@ -155,7 +155,7 @@
     "custom-ui": "lib",
     "custom-utils": "lib",
     "fanam-assist": "next",
-    "fanam-pay-user": "next",
+    "fanam-pay": "next",
     "fanam-care": "next"
   },
   "material-icon-theme.files.associations": {},
