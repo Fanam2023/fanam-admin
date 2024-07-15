@@ -1,10 +1,9 @@
 "use client"
 
-import { DropDown, ImageView, RadioButton, TextArea, TextField } from "@fanam-pkg/core-ui-sass"
+import {DropDown, ImageView, RadioButton, TextArea, TextField} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
-import { BaseContainer } from "organisms"
-import { CountryFlag } from "organisms/country-flag"
-import { useHandler } from "./handler"
+import {BaseContainer, CountryFlag} from "organisms"
+import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const InitiateTransactionPage = () => {
@@ -52,7 +51,7 @@ const InitiateTransactionPage = () => {
         <section className={styles.conversion_container}>
           <h5 className={`bold ${styles.send_text}`}>You Send</h5>
           <section className={`flex ${styles.input_container}`}>
-          <CountryFlag sourceCountry={sourceCountry}/>
+            <CountryFlag {...sourceCountry} />
             <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
             <TextField
               wrapperClass={styles.text_field_wrapper}
@@ -63,7 +62,7 @@ const InitiateTransactionPage = () => {
           </section>
           <h5 className={`bold ${styles.recipient_text}`}>Recipient receives</h5>
           <section className={`flex ${styles.input_container}`}>
-            <CountryFlag destinationCountry={destination_country}/>
+            <CountryFlag {...destination_country} />
             <ImageView src={assets.ic_grey_arrow} alt="down-arrow" onClick={showCountries} imgSize={15} />
             <TextField
               wrapperClass={styles.text_field_wrapper}

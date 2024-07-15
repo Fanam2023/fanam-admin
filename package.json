@@ -11,6 +11,7 @@
     "eslint": "turbo run eslint --parallel --no-daemon --concurrency=15",
     "styles": "turbo run styles --parallel --no-daemon --concurrency=15",
     "rimraf": "turbo run rimraf --parallel --no-daemon --concurrency=15",
+    "pay": "cd apps/fanam-pay && pnpm dev",
     "care": "cd apps/fanam-care && pnpm dev",
     "assist": "cd apps/fanam-assist && pnpm dev",
     "build:pay": "cd apps/fanam-pay && pnpm build",
@@ -31,7 +32,7 @@
     "rimraf": "^5.0.7",
     "turbo": "^2.0.4"
   },
-  "packageManager": "pnpm@9.1.1",
+  "packageManager": "pnpm@9.0.5",
   "engines": {
     "node": ">=20.12.0",
     "pnpm": ">=9.0.5"
