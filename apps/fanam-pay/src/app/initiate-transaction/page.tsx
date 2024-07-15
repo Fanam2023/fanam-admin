@@ -2,7 +2,7 @@
 
 import {DropDown, ImageView, RadioButton, TextArea, TextField} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
-import {BaseContainer} from "organisms"
+import {BaseContainer, CountryFlag} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
@@ -51,10 +51,7 @@ const InitiateTransactionPage = () => {
         <section className={styles.conversion_container}>
           <h5 className={`bold ${styles.send_text}`}>You Send</h5>
           <section className={`flex ${styles.input_container}`}>
-            <section className={`flex ${styles.flag_wrapper} ${styles.sender_wrapper}`}>
-              <ImageView src={assets.ic_india_flag} alt="country_flag" imgSize={40} />
-              <h3 className={styles.currency_text}>{sourceCountry?.iso2}</h3>
-            </section>
+            <CountryFlag {...sourceCountry} />
             <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
             <TextField
               wrapperClass={styles.text_field_wrapper}
@@ -65,10 +62,7 @@ const InitiateTransactionPage = () => {
           </section>
           <h5 className={`bold ${styles.recipient_text}`}>Recipient receives</h5>
           <section className={`flex ${styles.input_container}`}>
-            <section className={`flex ${styles.flag_wrapper} `}>
-              <label style={{width: "40px", height: "40px"}}>{destination_country?.emoji}</label>
-              <h3 className={styles.currency_text}>{destination_country?.iso2}</h3>
-            </section>
+            <CountryFlag {...destination_country} />
             <ImageView src={assets.ic_grey_arrow} alt="down-arrow" onClick={showCountries} imgSize={15} />
             <TextField
               wrapperClass={styles.text_field_wrapper}

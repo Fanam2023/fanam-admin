@@ -10,8 +10,8 @@ import {
   IResponseLogin,
   IUser,
 } from "@custom/utils"
-import {useSingleton} from "hooks"
-import {useApi} from "./api"
+import { useSingleton } from "hooks"
+import { useApi } from "./api"
 
 export const useAuthController = () => {
   const {postRequest, getRequest, putRequest} = useApi()
@@ -40,7 +40,7 @@ export const useAuthController = () => {
 
     let {result, errorData} = await putRequest<IUser>(API_SYNC_USER, payload)
 
-    if (kyc.length) {
+    if (kyc.length && result) {
       const formData = new FormData()
       kyc.forEach(({file}) => {
         formData.append("kyc", file)

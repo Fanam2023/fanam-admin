@@ -1,5 +1,6 @@
 export * from "./accordian"
 export * from "./base-container"
+export * from "./country-flag"
 export * from "./country-popup"
 export * from "./create-beneficiary-details"
 export * from "./create-recipient-details"
