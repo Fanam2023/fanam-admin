@@ -42,17 +42,18 @@ export interface IBankAccount {
 }
 
 export interface IPayloadFxRate {
-  source_amount: string
+  source_amount?: string
+  destination_amount?: string
   source_country_code: string
   destination_country_code: string
 }
 
 export interface IResponseFxRate {
-  source_country: ICountry
-  destination_country: ICountry
-  conversion_rate: number | null
-  source_amount: number | null
-  destination_amount: number | null
+  conversion_rate: number
+  source_amount: string
+  destination_amount: string
+  markup_fee: number
+  quote_id: number
 }
 
 export interface IBaseTransactionData {

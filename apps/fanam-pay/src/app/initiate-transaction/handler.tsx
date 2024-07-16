@@ -1,10 +1,10 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {IFormData, JSONObject, useReactQuery} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
-import {useEffect, useState} from "react"
+import {useEffect, useRef, useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
-import {ICountry, ITransactionData} from "@custom/utils"
+import {ICountry, IPayloadFxRate, ITransactionData} from "@custom/utils"
 import {useLocationController, usePaymentController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
 import {CountryPopup} from "organisms"
@@ -39,6 +39,7 @@ export const useHandler = () => {
   const {refreshQuery} = useReactQuery()
   const {toggleNotify} = useNotifyPopup()
   const {user, updateTransData, updateTransId} = useSingleton()
+  const isFetched = useRef(false)
   const [data, setData] = useState<ITransactionData>({
     source_amount: "",
     destination_amount: "",
@@ -72,8 +73,13 @@ export const useHandler = () => {
     onSuccess: ({result}) => {
       refreshQuery(QUERY_EXCHANGE)
       if (result) {
-        const {destination_amount} = result
-        onChangeValue({destination_amount})
+        const {source_amount, destination_amount} = result
+        setData(prev => ({
+          ...prev,
+          source_amount: source_amount.toString(),
+          destination_amount: destination_amount.toString(),
+        }))
+        isFetched.current = true
       }
     },
   })
@@ -117,8 +123,11 @@ export const useHandler = () => {
       isValid: true,
     }
 
-    if (isNaN(parseFloat(source_amount)))
+    if (!destination_amount && isNaN(parseFloat(source_amount)))
       errState = {...errState, errSourceAmount: "Please enter valid source amount", isValid: false}
+
+    if (!source_amount && isNaN(parseFloat(destination_amount)))
+      errState = {...errState, errDestinationAmount: "Please enter valid destination amount", isValid: false}
 
     if (!destination_country?.iso2)
       errState = {...errState, errDestinationCountry: "Choose valid destination country", isValid: false}
@@ -135,6 +144,9 @@ export const useHandler = () => {
 
     errState = {...errState, ...onValidateFxRate()}
 
+    if (isNaN(parseFloat(source_amount)))
+      errState = {...errState, errSourceAmount: "Please enter valid source amount", isValid: false}
+
     if (isNaN(parseFloat(destination_amount)))
       errState = {...errState, errDestinationAmount: "Please enter valid destination amount", isValid: false}
 
@@ -150,19 +162,30 @@ export const useHandler = () => {
 
   useEffect(() => {
     const {isValid} = onValidateFxRate()
-    if (isValid) {
+    if (isValid && !isFetched.current) {
       if (debounceTimer) clearTimeout(debounceTimer)
       debounceTimer = setTimeout(() => {
-        checkFxRate({
+        let payload: IPayloadFxRate = {
           source_country_code: sourceCountry.iso2,
           destination_country_code: destination_country.iso2,
-          source_amount: source_amount,
-        })
-      }, 500)
-    }
-  }, [source_amount, checkFxRate, destination_country, user])
+        }
 
-  const onChangeValue = (value: JSONObject) => setData({...data, ...value})
+        if (source_amount) payload.source_amount = source_amount
+        else if (destination_amount) payload.destination_amount = destination_amount
+        checkFxRate(payload)
+      }, 1000)
+    }
+  }, [source_amount, destination_amount, checkFxRate, destination_country, user])
+
+  const onChangeValue = (value: JSONObject) => {
+    isFetched.current = false
+
+    const keys = Object.keys(value)
+    if (keys.includes("destination_amount")) value = {...value, source_amount: ""}
+    else if (keys.includes("source_amount")) value = {...value, destination_amount: ""}
+
+    setData({...data, ...value})
+  }
 
   const onSelectCountry = (destination_country: ICountry) => {
     setData({...data, destination_country})
