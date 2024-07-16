@@ -10,8 +10,8 @@ import {
   IResponseLogin,
   IUser,
 } from "@custom/utils"
-import { useSingleton } from "hooks"
-import { useApi } from "./api"
+import {useSingleton} from "hooks"
+import {useApi} from "./api"
 
 export const useAuthController = () => {
   const {postRequest, getRequest, putRequest} = useApi()
