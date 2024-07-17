@@ -9,17 +9,15 @@ export const CountryPopup = ({onSelect, selCountry, countries}: CountryPopupProp
     return (
       <li
         key={country_id}
-        className={`${styles.country_wrapper} ${iso2 === selCountry.iso2 ? styles.selected : ""}`}
+        className={`flex ${styles.country_wrapper} ${iso2 === selCountry.iso2 ? styles.selected : ""}`}
         onClick={onSelect.bind(null, country)}>
-        <section className={`flex ${styles.icon_wrapper}`}>
-          <ImageView
-            src={`https://flagcdn.com/w40/${iso2?.toLowerCase()}.png`}
-            alt={country_name}
-            imgSize={40}
-            wrapperClass={styles.flag_wrapper}
-          />
-          {country_name}
-        </section>
+        <ImageView
+          src={`https://flagcdn.com/w40/${iso2?.toLowerCase()}.png`}
+          alt={country_name}
+          imgSize={40}
+          wrapperClass={styles.flag_wrapper}
+        />
+        {country_name}
       </li>
     )
   }
