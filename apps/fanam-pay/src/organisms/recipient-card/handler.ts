@@ -3,7 +3,7 @@ import {useMemo} from "react"
 import {useSingleton} from "hooks"
 
 export const useHandler = () => {
-  const {transData} = useSingleton()
+  const {transData, refetchTransaction} = useSingleton()
   const {
     first_name,
     last_name,
@@ -45,7 +45,7 @@ export const useHandler = () => {
     ]
 
     return {recipientDetails, recipientAccountDetails}
-  }, [transData])
+  }, [transData, refetchTransaction()])
 
   return {recipientAccountDetails, recipientDetails, recipient_id}
 }
