@@ -6,7 +6,7 @@ import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
 const AddAttachment = () => {
-  const {data, onChangeValue, errData, onUpload} = useHandler()
+  const {data, onChangeValue, errData, onUpload, onBack} = useHandler()
 
   const {invoice} = data
   const {errInvoice} = errData
@@ -17,6 +17,7 @@ const AddAttachment = () => {
       buttonText="Continue"
       onSubmit={onUpload}
       childWrapper={styles.page_container}
+      onBack={onBack}
       stepIndex={2}>
       <section className={styles.title_wrapper}>
         <h4>Upload Supporting Documents(optional)</h4>

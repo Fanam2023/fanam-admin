@@ -1,3 +1,4 @@
+import {ImageView} from "@fanam-pkg/core-ui-sass"
 import {ICountry} from "@custom/utils"
 import {CountryPopupProps} from "props"
 import styles from "./country.module.sass"
@@ -10,7 +11,15 @@ export const CountryPopup = ({onSelect, selCountry, countries}: CountryPopupProp
         key={country_id}
         className={`${styles.country_wrapper} ${iso2 === selCountry.iso2 ? styles.selected : ""}`}
         onClick={onSelect.bind(null, country)}>
-        {country_name}
+        <section className={`flex ${styles.icon_wrapper}`}>
+          <ImageView
+            src={`https://flagcdn.com/w40/${iso2?.toLowerCase()}.png`}
+            alt={country_name}
+            imgSize={40}
+            wrapperClass={styles.flag_wrapper}
+          />
+          {country_name}
+        </section>
       </li>
     )
   }

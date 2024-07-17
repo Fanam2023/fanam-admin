@@ -4,7 +4,7 @@ import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import {IInvoiceData} from "@custom/utils"
 import {useTransactionController} from "controller"
-import {QUERY_TRANSACTION, ROUTE_RECIPIENTS} from "utils"
+import {QUERY_TRANSACTION, ROUTE_INITIATE_TRANSACTION, ROUTE_RECIPIENTS} from "utils"
 
 export const useHandler = () => {
   const [data, setData] = useState<IInvoiceData>({invoice: []})
@@ -55,11 +55,14 @@ export const useHandler = () => {
     }
   }
 
+  const onBack = () => push(ROUTE_INITIATE_TRANSACTION)
+
   return {
     onUpload,
     data,
     errData,
     onChangeValue,
+    onBack,
   }
 }
 
