@@ -1,9 +1,9 @@
 import {IFormData} from "@fanam-pkg/core-utils"
-import {useMemo} from "react"
+import {useEffect, useMemo} from "react"
 import {useSingleton} from "hooks"
 
 export const useHandler = () => {
-  const {transData, refetchTransaction} = useSingleton()
+  const {transData, refetchTransaction, transId} = useSingleton()
   const {
     first_name,
     last_name,
@@ -22,6 +22,10 @@ export const useHandler = () => {
   const {state_name} = state || {}
   const {city_name} = city || {}
   const {account_no, account_type, bank_name, branch_code, swift_code} = bank_account || {}
+
+  useEffect(() => {
+    if (transId) refetchTransaction()
+  }, [])
 
   const {recipientDetails, recipientAccountDetails} = useMemo(() => {
     const recipientDetails: IFormData[] = [
@@ -45,7 +49,7 @@ export const useHandler = () => {
     ]
 
     return {recipientDetails, recipientAccountDetails}
-  }, [transData, refetchTransaction()])
+  }, [transData])
 
   return {recipientAccountDetails, recipientDetails, recipient_id}
 }
