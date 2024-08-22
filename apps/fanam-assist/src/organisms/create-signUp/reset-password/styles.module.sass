@@ -1,0 +1,15 @@
+@use "../../../styles" as *
+.page_wrapper
+  margin-left: $size-56px
+  width: 30%
+
+@mixin grid-3
+  display: grid
+.field_wrapper
+  @include grid-3
+  margin: $size-18px 0
+
+.button_wrapper
+  background-color: var(--promary_blue, #1B2559)
+  width: 100%
+  margin: $size-12px 0

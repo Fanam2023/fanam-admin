@@ -1,0 +1,21 @@
+@use "../../styles" as *
+
+.page_wrapper
+  margin-left: $size-56px
+  width: 30%
+
+@mixin grid-3
+  display: grid
+.account_wrapper
+  @include grid-3
+  gap: $size-16px
+  margin: $size-18px 0
+
+.container_wrapper
+  height: 800px
+  overflow-y: scroll
+
+.button_wrapper
+  background-color: var(--promary_blue, #1B2559)
+  margin-top: $size-12px
+  width: 100%
