@@ -13,9 +13,11 @@ import ic_file from "./icons/ic_file.svg"
 import ic_help from "./icons/ic_help.svg"
 import ic_india_flag from "./icons/ic_india_flag.svg"
 import ic_lend_money from "./icons/ic_lend_money.svg"
+import ic_money from "./icons/ic_money.svg"
 import ic_pending from "./icons/ic_pending.svg"
 import ic_pending_small from "./icons/ic_pending_small.svg"
 import ic_remove from "./icons/ic_remove.svg"
+import ic_right from "./icons/ic_right.svg"
 import ic_search from "./icons/ic_search.svg"
 import ic_star from "./icons/ic_star.svg"
 import ic_success from "./icons/ic_success.svg"
@@ -33,6 +35,7 @@ const assets = {
   ic_up_arrow,
   ic_back,
   ic_debit_card,
+  ic_right,
   img_bank,
   ic_lend_money,
   ic_pending,
@@ -43,6 +46,7 @@ const assets = {
   ic_failure_small,
   ic_help,
   ic_arrow_theme,
+  ic_money,
   ic_upload,
   ic_file,
   ic_remove,

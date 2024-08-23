@@ -23,3 +23,18 @@ export interface ISingleton extends ISingletonData {
   refetchUser: () => void
   refetchTransaction: () => void
 }
+
+export interface IExchange {
+  destination_country: string
+  source_country: string
+  rate: string
+}
+
+export interface IDetail {
+  month: string
+  date: string
+  name: string
+  status: string
+  source_amount: string
+  destination_amount: string
+}
