@@ -8,7 +8,8 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const BeneficiaryPage = () => {
-  const {onNav, beneficiaries, onChangeSearch, routeToDetails, isDesktop, onBack, linkBeneficiary} = useHandler()
+  const {onNav, beneficiaries, onChangeSearch, routeToDetails, isDesktop, onBack, linkBeneficiary, searchQuery} =
+    useHandler()
 
   const renderBeneficiary = ({beneficiary_name, email, beneficiary_id}: IBeneficiary) => (
     <ManageMembers
@@ -27,14 +28,20 @@ const BeneficiaryPage = () => {
       childWrapper={styles.page_container}
       backIcon
       stepIndex={5}
+      buttonText="Next"
+      skipBtn="Back"
       onAdd={onNav}
       onBack={onBack}>
+      <section className={`flex-col ${styles.beneficiary_wrapper}`}>
+        <h3 className="bold">Add Beneficiary</h3>
+        <h5>If your recipient and beneficiary are different, enter the beneficiary details..</h5>
+      </section>
       <section className={`flex ${styles.search_container}`}>
         <TextField
           type="text"
-          placeholder="Search beneficiary.."
+          label="Search beneficiary.."
           wrapperClass={styles.search_wrapper}
-          leadingIcon={assets.ic_search}
+          leadingIcon={searchQuery.length ? null : assets.ic_search}
           onChangeData={onChangeSearch}></TextField>
         {isDesktop && (
           <h4 className={styles.add_text} onClick={onNav}>
@@ -42,7 +49,7 @@ const BeneficiaryPage = () => {
           </h4>
         )}
       </section>
-      <h3 className={styles.save_text}>Saved Beneficiary</h3>
+      <h5 className={`bold ${styles.save_text}`}>Saved Beneficiary</h5>
       {beneficiaries?.map(renderBeneficiary)}
     </BaseContainer>
   )

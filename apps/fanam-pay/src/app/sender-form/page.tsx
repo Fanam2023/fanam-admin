@@ -13,12 +13,16 @@ const SenderForm = () => {
       header="Cross Border Remittance"
       childWrapper={styles.page_container}
       backIcon={false}
-      buttonText="continue"
+      buttonText="Next"
       onSubmit={onSubmit}
+      skipBtn="Back"
       stepIndex={0}>
       <section className={styles.container_wrapper}>
-        <h2>Add Sender Details</h2>
-        <h4 className={`semi-bold ${styles.type_wrapper}`}>Account Type</h4>
+        <h2>Sender Details</h2>
+        <h6>Essential for verification and processing your transactions securely and efficiently.</h6>
+      </section>
+      <section className={styles.sender_form_wrapper}>
+        <h4 className={`semi-bold ${styles.type_wrapper}`}>Sender type</h4>
         <GroupForm formSections={formElements} />
       </section>
     </BaseContainer>

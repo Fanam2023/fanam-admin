@@ -1,11 +1,10 @@
 @use "../../styles/index" as *
 
 .page_container
+  width: 100%
   overflow-y: scroll
-  padding: 0 $size-24px
   margin:
     top: $size-28px
-    left: 20%
 
 .button_container
   gap: $size-20px
@@ -21,8 +20,19 @@
 .container_wrapper
   overflow-y: scroll
   margin:
-    top: 10%
-    bottom: 20%
+    top: 9%
+    left: 5%
+
+.sender_form_wrapper
+  height: 65%
+  overflow-y: scroll
+  padding: $size-24px $size-24px
+  background: $primary-fill
+  width: 70%
+  margin:
+    left: 5%
+    top: $size-24px
+  border-radius: $size-10px
 
 .radio_button
   display: flex
