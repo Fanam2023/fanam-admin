@@ -23,13 +23,8 @@ export const Currency_rate = () => {
     <section className={styles.conatiner_wrapper}>
       <h4 className={`bold ${styles.txt_wrapper}`}>Current exchange rate for popular corridors</h4>
       <section className={`flex ${styles.detail_wrapper}`}>
-        {defaultData.map((data, index) => (
-          <Card
-            key={index}
-            destination_country={data.destination_country}
-            source_country={data.source_country}
-            rate={data.rate}
-          />
+        {defaultData.map(({destination_country, source_country, rate}, index) => (
+          <Card key={index} destination_country={destination_country} source_country={source_country} rate={rate} />
         ))}
       </section>
     </section>

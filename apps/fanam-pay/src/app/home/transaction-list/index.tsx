@@ -40,15 +40,15 @@ export const History = () => {
       <section className={`flex ${styles.head_wrapper}`}>
         <h4 className={`bold ${styles.txt_wrapper}`}>Recent Transaction Activity</h4>
       </section>
-      {defaultData.map((data, index) => (
+      {defaultData.map(({month, date, name, status, source_amount, destination_amount}, index) => (
         <Card
           key={index}
-          month={data.month}
-          date={data.date}
-          name={data.name}
-          status={data.status}
-          source_amount={data.source_amount}
-          destination_amount={data.destination_amount}
+          month={month}
+          date={date}
+          name={name}
+          status={status}
+          source_amount={source_amount}
+          destination_amount={destination_amount}
         />
       ))}
       <Button wrapperClass={styles.button_wrapper}>See More Activity</Button>
