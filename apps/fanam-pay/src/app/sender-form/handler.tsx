@@ -299,6 +299,12 @@ const useHandler = (styles: IStyle) => {
           error: errAccountType,
           onChangeValue,
         },
+      ],
+    },
+    {
+      title: "Personal Information",
+      wrapperClassGrid: styles.personal_details,
+      childElements: [
         {
           elementType: "input",
           label: "Enter First Name",
@@ -313,15 +319,6 @@ const useHandler = (styles: IStyle) => {
           name: "last_name",
           error: errLastName,
           value: last_name,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Enter Account Number",
-          name: "account_no",
-          disabled: !!user?.user_accounts?.length,
-          error: errAccountNo,
-          value: account_no,
           onChangeValue,
         },
         {
@@ -341,6 +338,21 @@ const useHandler = (styles: IStyle) => {
           value: phone_no,
           onChangeValue,
         },
+        {
+          elementType: "input",
+          label: "Enter Account Number",
+          name: "account_no",
+          disabled: !!user?.user_accounts?.length,
+          error: errAccountNo,
+          value: account_no,
+          onChangeValue,
+        },
+      ],
+    },
+    {
+      title: "Address",
+      wrapperClassGrid: styles.address_details,
+      childElements: [
         {
           elementType: "input",
           label: "Enter Address Line1",
@@ -394,6 +406,12 @@ const useHandler = (styles: IStyle) => {
           error: errZipCode,
           onChangeValue,
         },
+      ],
+    },
+    {
+      title: "Identification",
+      wrapperClassGrid: `flex-col ${styles.id_types}`,
+      childElements: [
         {
           elementType: "drop-down",
           label: "Select ID issued country",

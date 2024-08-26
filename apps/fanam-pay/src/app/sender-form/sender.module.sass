@@ -1,16 +1,32 @@
 @use "../../styles/index" as *
 
+@mixin grid-3
+  display: grid
+
+@mixin common-styles
+  @include grid-3
+  grid-template-columns: 0.5fr 0.5fr
+  gap: $size-16px
+  margin:
+    top: $size-10px
+    bottom: $size-20px
+
 .page_container
-  width: 100%
-  overflow-y: scroll
   margin:
     top: $size-28px
 
-.button_container
+.personal_details
+  @include common-styles
+
+.address_details
+  @include common-styles
+
+.id_types
+  margin-top: $size-20px
   gap: $size-20px
 
-@mixin grid-3
-  display: grid
+.button_container
+  gap: $size-20px
 
 .sender_input_wrapper
   @include grid-3
@@ -28,7 +44,7 @@
   overflow-y: scroll
   padding: $size-24px $size-24px
   background: $primary-fill
-  width: 70%
+  width: 100%
   margin:
     left: 5%
     top: $size-24px

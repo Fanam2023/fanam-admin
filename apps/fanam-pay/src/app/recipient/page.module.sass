@@ -1,7 +1,4 @@
 @use "../../styles/index" as *
-.page_container
-  width: 100%
-
 .search_container
   width: 70%
   margin:
@@ -11,14 +8,14 @@
 
 .recipient_wrapper
   margin:
-    top: 11%
+    top: 12%
     left: 4%
   gap: $size-8px
 
 .recipient_text
 
 .add_text
-  color: $primary
+  color: $theme
   font-weight: $semi-bold
   cursor: pointer
 
@@ -26,6 +23,17 @@
   margin:
     left: 4%
     top: $size-24px
+
+.members
+  display: grid
+  grid-template-columns: repeat(6,0.5fr)
+  grid-column-gap: $size-18px
+  grid-row-gap: $size-28px
+  margin:
+    left: 4%
+    top: $size-10px
+  height: 50%
+  overflow-y: scroll
 
 @include mixin-responsive
   .page_container

@@ -228,6 +228,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   const formElements: FormSectionProps[] = [
     {
       wrapperClassGrid: styles.beneficiary_address_wrapper,
+      title: "Personal Information",
       childElements: [
         {
           elementType: "input",
@@ -262,6 +263,65 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           value: relationship,
           onChangeValue,
         },
+        // {
+        //   elementType: "input",
+        //   label: "Enter Address line1",
+        //   name: "address_line1",
+        //   error: errAddressLine1,
+        //   value: address_line1,
+        //   onChangeValue,
+        // },
+        // {
+        //   elementType: "input",
+        //   label: "Enter Address Line2",
+        //   name: "address_line2",
+        //   error: errAddressLine2,
+        //   value: address_line2,
+        //   onChangeValue,
+        // },
+        // {
+        //   elementType: "drop-down",
+        //   label: "Enter Country",
+        //   name: "country",
+        //   options: countries,
+        //   error: errCountry,
+        //   value: country,
+        //   onChangeValue: onChangeCountry,
+        // },
+        // {
+        //   elementType: "drop-down",
+        //   label: "Enter State",
+        //   name: "state",
+        //   disabled: !country,
+        //   options: states,
+        //   error: errStateName,
+        //   value: state,
+        //   onChangeValue: onChangeState,
+        // },
+        // {
+        //   elementType: "drop-down",
+        //   label: "Enter City/District",
+        //   name: "city",
+        //   disabled: !state,
+        //   options: cities,
+        //   error: errCity,
+        //   value: city,
+        //   onChangeValue,
+        // },
+        // {
+        //   elementType: "input",
+        //   label: "Enter Zip Code",
+        //   name: "zip_code",
+        //   value: zip_code,
+        //   error: errZipCode,
+        //   onChangeValue,
+        // },
+      ],
+    },
+    {
+      title: "Address",
+      wrapperClassGrid: styles.address_wrapper,
+      childElements: [
         {
           elementType: "input",
           label: "Enter Address line1",

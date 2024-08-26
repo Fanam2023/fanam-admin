@@ -50,7 +50,7 @@ const BeneficiaryPage = () => {
         )}
       </section>
       <h5 className={`bold ${styles.save_text}`}>Saved Beneficiary</h5>
-      {beneficiaries?.map(renderBeneficiary)}
+      <section className={styles.members}>{beneficiaries?.map(renderBeneficiary)}</section>
     </BaseContainer>
   )
 }

@@ -27,7 +27,7 @@ export const useHandler = () => {
     if (transId) refetchTransaction()
   }, [])
 
-  const {recipientDetails, recipientAccountDetails} = useMemo(() => {
+  const {recipientDetails} = useMemo(() => {
     const recipientDetails: IFormData[] = [
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
@@ -38,9 +38,6 @@ export const useHandler = () => {
       {key: "State", label: state_name},
       {key: "City", label: city_name},
       {key: "ZIP Code", label: zip_code},
-    ]
-
-    const recipientAccountDetails: IFormData[] = [
       {key: "Account Number", label: account_no},
       {key: "Account Type", label: account_type},
       {key: "Bank Name", label: bank_name},
@@ -48,8 +45,8 @@ export const useHandler = () => {
       {key: "BIC", label: swift_code},
     ]
 
-    return {recipientDetails, recipientAccountDetails}
+    return {recipientDetails}
   }, [transData])
 
-  return {recipientAccountDetails, recipientDetails, recipient_id}
+  return {recipientDetails, recipient_id}
 }

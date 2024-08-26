@@ -3,6 +3,7 @@
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import assets from "assets"
+import {useSingleton} from "hooks"
 import {IStepper} from "model"
 import {BaseContainerProps} from "props"
 import {SIDE_BAR} from "utils"
@@ -21,7 +22,16 @@ export const BaseContainer = ({
   onSubmit,
   onAdd,
 }: BaseContainerProps) => {
+  const {user} = useSingleton()
+  const {first_name, last_name} = user || {}
   const {isDesktop} = useResize()
+  const name = `${first_name} ${last_name}`
+
+  const getFirstLetter = (title: string) => {
+    const names = title.split(" ")
+    const initials = names.map(name => name.charAt(0).toUpperCase())
+    return initials
+  }
 
   const renderSideBar = ({title, description}: IStepper, index: number) => {
     const isLastStep = index < SIDE_BAR.length - 1
@@ -61,9 +71,7 @@ export const BaseContainer = ({
             <h5 className={`medium ${styles.language_text}`}>Help</h5>
           </section>
           <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />
-          <section className={`${styles.profile_wrapper}`}>
-            <ImageView src={assets.img_bank} alt="help-icon" imgSize={40} />
-          </section>
+          <section className={styles.profile_wrapper}>{getFirstLetter(name)}</section>
         </section>
         {!!addButton && (
           <h3 onClick={onAdd} className={styles.add_text}>

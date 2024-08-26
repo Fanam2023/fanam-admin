@@ -280,7 +280,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
   const formElements: FormSectionProps[] = [
     {
-      wrapperClassGrid: styles.recipient_address_wrapper,
+      title: "Personal Information",
+      wrapperClassGrid: styles.personal_details,
       childElements: [
         {
           elementType: "input",
@@ -300,10 +301,10 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "Enter Account Number",
-          name: "account_no",
-          error: errAccountNo,
-          value: account_no,
+          label: "Enter Email",
+          name: "email",
+          error: errEmail,
+          value: email,
           onChangeValue,
         },
         {
@@ -315,60 +316,13 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           onChangeValue,
           maxLength: 10,
         },
-        {
-          elementType: "input",
-          label: "Enter Email",
-          name: "email",
-          error: errEmail,
-          value: email,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Enter BankName",
-          name: "bank_name",
-          error: errBankName,
-          value: bank_name,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Enter Branch code",
-          name: "branch_code",
-          error: errBranchCode,
-          value: branch_code,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Enter Branch Address ",
-          name: "branch_address",
-          error: errBranchAddress,
-          value: branch_address,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Enter bic",
-          name: "swift_code",
-          error: errSwiftCode,
-          value: swift_code,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Enter Routing code (optional)",
-          name: "routing_code",
-          value: routing_code,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Enter iban no (optional)",
-          name: "iban_no",
-          value: iban_no,
-          onChangeValue,
-        },
+      ],
+    },
+
+    {
+      title: "Address",
+      wrapperClassGrid: styles.address_details,
+      childElements: [
         {
           elementType: "input",
           label: "Enter AddressLine1",
@@ -422,6 +376,72 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           value: zip_code,
           onChangeValue,
         },
+      ],
+    },
+    {
+      title: "Bank Details",
+      wrapperClassGrid: styles.bank_details,
+      childElements: [
+        {
+          elementType: "input",
+          label: "Enter Account Number",
+          name: "account_no",
+          error: errAccountNo,
+          value: account_no,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter BankName",
+          name: "bank_name",
+          error: errBankName,
+          value: bank_name,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Branch code",
+          name: "branch_code",
+          error: errBranchCode,
+          value: branch_code,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Branch Address ",
+          name: "branch_address",
+          error: errBranchAddress,
+          value: branch_address,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter bic",
+          name: "swift_code",
+          error: errSwiftCode,
+          value: swift_code,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Routing code (optional)",
+          name: "routing_code",
+          value: routing_code,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter iban no (optional)",
+          name: "iban_no",
+          value: iban_no,
+          onChangeValue,
+        },
+      ],
+    },
+    {
+      title: "Identification",
+      wrapperClassGrid: styles.id_types,
+      childElements: [
         {
           elementType: "drop-down",
           label: "Select ID issued country",
@@ -448,6 +468,11 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           value: id_number,
           onChangeValue,
         },
+      ],
+    },
+    {
+      wrapperClassGrid: styles.img_picker,
+      childElements: [
         {
           elementType: "file-picker",
           fileType: ["image/*", "application/pdf"],

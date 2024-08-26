@@ -17,25 +17,24 @@ export const ManageMembers = ({title, onEdit, onSelect, description}: ManageMemb
     onEdit()
   }
 
+  const getFirstLetter = (title: string) => {
+    const names = title.split(" ")
+    const initials = names.map(name => name.charAt(0).toUpperCase())
+    return initials
+  }
+
   return (
-    <section className={`flex-col-center ${styles.container}`} onClick={onClick}>
-      <section className={`flex-col ${styles.beneficiary_container}`}>
-        <section className={`flex ${styles.beneficiary_wrapper}`}>
-          <ImageView src={assets.ic_user} alt={"user-profile"} imgSize={46} wrapperClass={styles.user_img} />
-          <section className={`flex-sb-center ${styles.user_wrapper}`}>
-            <section className={`flex-col ${styles.user_details}`}>
-              <h3>{title}</h3>
-              <h5>{description}</h5>
-            </section>
-            <ImageView
-              src={assets.ic_edit_theme}
-              alt={"edit-icon"}
-              imgSize={24}
-              wrapperClass={styles.edit_icon}
-              onClick={onClickEdit}
-            />
-          </section>
+    <section className={`${styles.card_wrapper}`} onClick={onClick}>
+      <section className={styles.edit} onClick={onClickEdit}>
+        <ImageView src={assets.ic_edit} alt="profile-image" imgSize={15} />
+      </section>
+      <section className="flex-col-center">
+        <section className={styles.profile_wrapper}>
+          <h4 className="bold">{getFirstLetter(title)}</h4>
         </section>
+      </section>
+      <section className={`${styles.user_details}`}>
+        <h6 className={`ellipsis ${styles.user_name}`}>{title}</h6>
       </section>
     </section>
   )
