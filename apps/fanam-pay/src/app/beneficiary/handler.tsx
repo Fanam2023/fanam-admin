@@ -70,6 +70,7 @@ export const useHandler = () => {
   return {
     beneficiaries: filteredBeneficiaries,
     isDesktop,
+    searchQuery,
     onNav,
     onChangeSearch,
     routeToDetails,

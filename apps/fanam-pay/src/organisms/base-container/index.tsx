@@ -6,26 +6,21 @@ import assets from "assets"
 import {IStepper} from "model"
 import {BaseContainerProps} from "props"
 import {SIDE_BAR} from "utils"
-import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({
   children,
   footerChild,
-  addButton,
-  header,
   buttonText,
+  addButton,
   onClick,
   onBack,
   childWrapper = "",
-  backIcon = true,
   skipBtn,
   stepIndex,
-  containerClass = "",
   onSubmit,
   onAdd,
 }: BaseContainerProps) => {
-  const {goBack} = useHandler()
   const {isDesktop} = useResize()
 
   const renderSideBar = ({title, description}: IStepper, index: number) => {
@@ -50,13 +45,25 @@ export const BaseContainer = ({
   }
 
   return (
-    <section className={containerClass}>
+    <>
       <header className={`flex-sb-center ${styles.header_wrapper}`}>
-        <section className={`flex ${styles.label_wrapper}`}>
-          {backIcon && (
-            <ImageView src={assets.ic_back} alt="back_icon" imgSize={24} onClick={onBack ? onBack : goBack} />
-          )}
-          <h3>{header}</h3>
+        <section className={`flex ${styles.logo_wrapper}`}>
+          <ImageView src={assets.img_logo} alt={"logo"} imgHeight={29} />
+        </section>
+        <section className={`flex ${styles.language_section}`}>
+          <section className={`flex ${styles.language_wrapper}`}>
+            <ImageView src={assets.ic_world} alt="world-icon" imgSize={24} />
+            <h5 className={`medium ${styles.language_text}`}>Language</h5>
+            <ImageView src={assets.ic_down_arrow} alt="down-arrow" imgSize={20} />
+          </section>
+          <section className={`flex ${styles.help_wrapper}`}>
+            <ImageView src={assets.ic_help} alt="help-icon" imgSize={24} />
+            <h5 className={`medium ${styles.language_text}`}>Help</h5>
+          </section>
+          <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />
+          <section className={`${styles.profile_wrapper}`}>
+            <ImageView src={assets.img_bank} alt="help-icon" imgSize={40} />
+          </section>
         </section>
         {!!addButton && (
           <h3 onClick={onAdd} className={styles.add_text}>
@@ -79,12 +86,18 @@ export const BaseContainer = ({
           <section className={`flex ${styles.footer_content}`}>
             {!!buttonText && (
               <>
-                {skipBtn && (
-                  <Button onClick={onClick} wrapperClass={styles.skip_btn} buttonType="primary-outlined">
-                    {skipBtn}
-                  </Button>
-                )}
-                <Button onClick={onSubmit} wrapperClass={styles.button_wrapper}>
+                <Button
+                  onClick={onBack}
+                  wrapperClass={styles.skip_btn}
+                  buttonType="primary-outlined"
+                  leadingIcon={assets.ic_left_arrow_fill}>
+                  {skipBtn}
+                </Button>
+                <Button
+                  onClick={onSubmit}
+                  wrapperClass={styles.button_wrapper}
+                  trailingIcon={assets.ic_right_arrow_fill}
+                  trailingClass={styles.tail_class}>
                   {buttonText}
                 </Button>
               </>
@@ -93,6 +106,6 @@ export const BaseContainer = ({
           {footerChild}
         </footer>
       )}
-    </section>
+    </>
   )
 }
