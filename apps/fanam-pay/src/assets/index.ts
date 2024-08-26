@@ -6,6 +6,7 @@ import ic_back from "./icons/ic_back.svg"
 import ic_checkbox from "./icons/ic_checkbox.svg"
 import ic_cloudUpload from "./icons/ic_cloudUpload.svg"
 import ic_debit_card from "./icons/ic_debit_card.svg"
+import ic_dot from "./icons/ic_dot.svg"
 import ic_down_arrow from "./icons/ic_down_arrow.svg"
 import ic_edit from "./icons/ic_edit.svg"
 import ic_edit_theme from "./icons/ic_edit_theme.svg"
@@ -40,6 +41,7 @@ const assets = {
   ic_star,
   ic_up_arrow,
   ic_back,
+  ic_dot,
   ic_debit_card,
   ic_right,
   img_bank,

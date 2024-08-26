@@ -34,6 +34,9 @@ export interface IDetail {
   month: string
   date: string
   name: string
+  paymentId: string
+  paymentMode: string
+  paymentDuration: string
   status: string
   source_amount: string
   destination_amount: string
