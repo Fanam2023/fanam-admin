@@ -6,11 +6,24 @@
 .input_wrapper
   margin-top: $size-10px
 
+.details_wrapper
+  @include grid-3
+  grid-template-columns: 0.5fr 0.5fr
+  gap: $size-24px
+  margin:
+    top: $size-20px
+
+.address
+  gap: $size-24px
+  margin:
+    top: $size-20px
+    bottom: $size-20px
+
 .beneficiary_address_wrapper
   @include grid-3
   gap: $size-24px
   margin:
-    top: $size-10px
+    top: $size-20px
     bottom: $size-24px
 
 .footer_wrapper

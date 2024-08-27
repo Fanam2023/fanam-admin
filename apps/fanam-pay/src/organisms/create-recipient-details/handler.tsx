@@ -29,8 +29,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     branch_address: "",
     branch_code: "",
     swift_code: "",
-    address_line1: "",
-    address_line2: "",
+    address: "",
     email: "",
     phone_no: "",
     country: null,
@@ -48,8 +47,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     last_name,
     account_no,
     bank_name,
-    address_line1,
-    address_line2,
+    address,
     email,
     phone_no,
     country,
@@ -89,9 +87,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!swift_code) errState = {...errState, errSwiftCode: "Please enter Swift code", isValid: false}
 
-    if (!address_line1) errState = {...errState, errAddressLine1: "Please enter Address", isValid: false}
-
-    if (!address_line2) errState = {...errState, errAddressLine2: "Please enter Address", isValid: false}
+    if (!address) errState = {...errState, errAddress: "Please enter Address", isValid: false}
 
     if (!country) errState = {...errState, errCountry: "Please select Country", isValid: false}
 
@@ -127,8 +123,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     errBranchAddress,
     errBranchCode,
     errSwiftCode,
-    errAddressLine1,
-    errAddressLine2,
+    errAddress,
     errEmail,
     errPhoneNo,
     errCountry,
@@ -223,8 +218,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         email,
         country,
         phone_no,
-        address_line1,
-        address_line2,
+        address,
         state,
         city,
         zip_code,
@@ -248,8 +242,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         email,
         country: {label: country_name, key: country_id},
         phone_no,
-        address_line1,
-        address_line2,
+        address,
         state: {label: state_name, key: state_id},
         city: {label: city_name, key: city_id},
         zip_code,
@@ -299,14 +292,11 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           value: last_name,
           onChangeValue,
         },
-        {
-          elementType: "input",
-          label: "Enter Email",
-          name: "email",
-          error: errEmail,
-          value: email,
-          onChangeValue,
-        },
+      ],
+    },
+    {
+      wrapperClassGrid: styles.personal,
+      childElements: [
         {
           elementType: "input",
           label: "Enter PhoneNumber",
@@ -316,29 +306,33 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           onChangeValue,
           maxLength: 10,
         },
+        {
+          elementType: "input",
+          label: "Enter Email",
+          name: "email",
+          error: errEmail,
+          value: email,
+          onChangeValue,
+        },
       ],
     },
-
     {
       title: "Address",
-      wrapperClassGrid: styles.address_details,
+      wrapperClassGrid: styles.address,
       childElements: [
         {
           elementType: "input",
-          label: "Enter AddressLine1",
-          name: "address_line1",
-          error: errAddressLine1,
-          value: address_line1,
+          label: "Home address",
+          name: "address",
+          error: errAddress,
+          value: address,
           onChangeValue,
         },
-        {
-          elementType: "input",
-          label: "Enter AddressLine2",
-          name: "address_line2",
-          error: errAddressLine2,
-          value: address_line2,
-          onChangeValue,
-        },
+      ],
+    },
+    {
+      wrapperClassGrid: styles.address_details,
+      childElements: [
         {
           elementType: "drop-down",
           label: "Enter country",
@@ -503,8 +497,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       const payLoad: IPayloadRecipient = {
         first_name,
         last_name,
-        address_line1,
-        address_line2,
+        address,
         email,
         phone_no,
         country_id: country.key as number,
@@ -561,8 +554,7 @@ const DEFAULT_ERR_STATE = {
   errBranchAddress: "",
   errBranchCode: "",
   errSwiftCode: "",
-  errAddressLine1: "",
-  errAddressLine2: "",
+  errAddress: "",
   errEmail: "",
   errPhoneNo: "",
   errCountry: "",

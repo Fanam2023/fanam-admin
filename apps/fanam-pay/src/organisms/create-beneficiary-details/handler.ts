@@ -12,16 +12,17 @@ import {QUERY_BENEFICIARY, QUERY_CITIES, QUERY_COUNTRIES, QUERY_STATES, ROUTE_TR
 const DEFAULT_ERROR_STATE = {
   isClicked: false,
   isValid: false,
-  errName: "",
+  errFirstName: "",
+  errLastName: "",
   errEmail: "",
   errRelation: "",
   errNumber: "",
-  errAddressLine1: "",
-  errAddressLine2: "",
+  errAddress: "",
   errCountry: "",
   errStateName: "",
   errCity: "",
   errZipCode: "",
+  errAccountNo: "",
 }
 
 export const useHandler = (styles: IStyle, beneficiaryId: string) => {
@@ -38,30 +39,21 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   const onRouteToTransaction = () => push(ROUTE_TRANSACTION)
 
   const [data, setData] = useState<IBeneficiaryData>({
-    beneficiary_name: "",
+    first_name: "",
+    last_name: "",
     phone_no: "",
     email: "",
     relationship: "",
-    address_line1: "",
-    address_line2: "",
+    address: "",
     country: null,
     state: null,
     city: null,
     zip_code: "",
+    account_no: "",
   })
 
-  const {
-    beneficiary_name,
-    phone_no,
-    email,
-    relationship,
-    address_line1,
-    address_line2,
-    country,
-    state,
-    city,
-    zip_code,
-  } = data
+  const {first_name, last_name, phone_no, email, relationship, address, country, state, city, zip_code, account_no} =
+    data
 
   const [errState, setErrState] = useState(DEFAULT_ERROR_STATE)
 
@@ -70,7 +62,9 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   const onValidate = () => {
     let errState = {...DEFAULT_ERROR_STATE, isValid: true, isClicked: true}
 
-    if (!beneficiary_name) errState = {...errState, errName: "Please enter Beneficiary Name", isValid: false}
+    if (!first_name) errState = {...errState, errFirstName: "Please enter first Name", isValid: false}
+
+    if (!last_name) errState = {...errState, errLastName: "Please enter last Name", isValid: false}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
@@ -80,9 +74,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     if (!relationship)
       errState = {...errState, errRelation: "Please enter Your Relationship with sender", isValid: false}
 
-    if (!address_line1) errState = {...errState, errAddressLine1: "Please enter Beneficiary Address", isValid: false}
-
-    if (!address_line2) errState = {...errState, errAddressLine2: "Please enter Beneficiary Address", isValid: false}
+    if (!address) errState = {...errState, errAddress: "Please enter Beneficiary Address", isValid: false}
 
     if (!country) errState = {...errState, errCountry: "Please enter Country Name", isValid: false}
 
@@ -92,21 +84,24 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
 
     if (!zip_code) errState = {...errState, errZipCode: "Please enter Your ZipCode", isValid: false}
 
+    if (!account_no) errState = {...errState, errAccountNo: "Please enter Your ZipCode", isValid: false}
+
     setErrState(errState)
     return errState
   }
 
   const {
-    errName,
+    errFirstName,
+    errLastName,
     errEmail,
     errNumber,
     errRelation,
-    errAddressLine1,
-    errAddressLine2,
+    errAddress,
     errCountry,
     errStateName,
     errCity,
     errZipCode,
+    errAccountNo,
   } = errState
 
   const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}, {data: beneficiaryData}] =
@@ -184,7 +179,8 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   useEffect(() => {
     if (beneficiaryData) {
       const {
-        beneficiary_name,
+        first_name,
+        last_name,
         country,
         state,
         city,
@@ -192,8 +188,8 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         email,
         phone_no,
         zip_code,
-        address_line1,
-        address_line2,
+        address,
+        account_no,
       } = beneficiaryData
 
       const {country_id, country_name} = country || {}
@@ -201,16 +197,17 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
       const {city_id, city_name} = city || {}
 
       setData({
-        beneficiary_name,
+        first_name,
+        last_name,
         country: {label: country_name, key: country_id},
         state: {label: state_name, key: state_id},
         city: {label: city_name, key: city_id},
-        address_line1,
-        address_line2,
+        address,
         relationship,
         email,
         phone_no,
         zip_code,
+        account_no,
       })
     }
   }, [beneficiaryData])
@@ -227,20 +224,33 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
 
   const formElements: FormSectionProps[] = [
     {
-      wrapperClassGrid: styles.beneficiary_address_wrapper,
       title: "Personal Information",
+      wrapperClassGrid: styles.details_wrapper,
       childElements: [
         {
           elementType: "input",
-          label: "Enter Beneficiary Name",
-          name: "beneficiary_name",
-          error: errName,
-          value: beneficiary_name,
+          label: "first Name",
+          name: "first_name",
+          error: errFirstName,
+          value: first_name,
           onChangeValue,
         },
         {
           elementType: "input",
-          label: "Enter E-Mail ID",
+          label: "last Name",
+          name: "last_name",
+          error: errLastName,
+          value: last_name,
+          onChangeValue,
+        },
+      ],
+    },
+    {
+      wrapperClassGrid: styles.beneficiary_address_wrapper,
+      childElements: [
+        {
+          elementType: "input",
+          label: "Email-ID",
           name: "email",
           error: errEmail,
           value: email,
@@ -248,7 +258,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "input",
-          label: "Enter Phone Number",
+          label: "Phone Number",
           name: "phone_no",
           error: errNumber,
           value: phone_no,
@@ -257,37 +267,42 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "input",
-          label: "Enter Relationship with Sender",
+          label: "Relationship with the Sender",
           name: "relationship",
           error: errRelation,
           value: relationship,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Account Number (Optional)",
+          name: "account_no",
+          error: errAccountNo,
+          value: account_no,
           onChangeValue,
         },
       ],
     },
     {
       title: "Address",
-      wrapperClassGrid: styles.address_wrapper,
+      wrapperClassGrid: styles.address,
       childElements: [
         {
           elementType: "input",
-          label: "Enter Address line1",
-          name: "address_line1",
-          error: errAddressLine1,
-          value: address_line1,
+          label: "Home Address",
+          name: "address",
+          error: errAddress,
+          value: address,
           onChangeValue,
         },
-        {
-          elementType: "input",
-          label: "Enter Address Line2",
-          name: "address_line2",
-          error: errAddressLine2,
-          value: address_line2,
-          onChangeValue,
-        },
+      ],
+    },
+    {
+      wrapperClassGrid: styles.address_wrapper,
+      childElements: [
         {
           elementType: "drop-down",
-          label: "Enter Country",
+          label: "Country",
           name: "country",
           options: countries,
           error: errCountry,
@@ -296,7 +311,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "drop-down",
-          label: "Enter State",
+          label: "State",
           name: "state",
           disabled: !country,
           options: states,
@@ -306,7 +321,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "drop-down",
-          label: "Enter City/District",
+          label: "City/District",
           name: "city",
           disabled: !state,
           options: cities,
@@ -316,7 +331,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "input",
-          label: "Enter Zip Code",
+          label: "Zip Code",
           name: "zip_code",
           value: zip_code,
           error: errZipCode,
@@ -339,17 +354,18 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     const {isValid} = onValidate()
     if (isValid) {
       const payload: IPayloadBeneficiary = {
-        beneficiary_name,
+        first_name,
+        last_name,
         email,
         phone_no,
-        address_line1,
-        address_line2,
+        address,
         country_id: country.key as number,
         state_id: state.key as number,
         city_id: city.key as number,
         zip_code,
         relationship,
         transaction_id,
+        account_no,
       }
       if (beneficiaryId) onUpdate({...payload, beneficiary_id: beneficiaryId})
       else addBeneficiary(payload)

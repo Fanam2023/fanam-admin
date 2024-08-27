@@ -1,0 +1,51 @@
+@use "../../../styles/index" as *
+
+.page_wrapper
+  max-height: 100vh
+  margin:
+    top: $size-24px
+    left: 5%
+  width: 55vw
+  padding-bottom: 8%
+
+.input_wrapper
+  margin: $size-40px
+
+.check_icon
+  margin-left: $size-20px
+
+.detail_wrapper
+  margin-left: $size-8px
+
+.check_box_wrapper
+  margin:
+    left: $size-1px
+    top: $size-20px
+
+.drop_down
+  width: 67%
+  margin:
+    top: 4%
+
+.check_box_wrapper
+  gap: $size-12px
+  margin-top: $size-32px
+
+.content
+  margin-top: $size-32px
+
+@include mixin-responsive
+  .page_wrapper
+    width: 100vw
+    overflow-y: scroll
+    margin-left: 7%
+    padding-bottom: 25%
+
+  .text
+    font-size: $size-12px
+
+  .drop_down
+    width: 92%
+
+  .content
+    margin-top: $size-12px

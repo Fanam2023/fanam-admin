@@ -2,29 +2,31 @@ import {IFormData} from "@fanam-pkg/core-utils"
 import {ICity, ICountry, IState} from "./location"
 
 export type IBeneficiary = {
-  beneficiary_name: string
+  first_name: string
+  last_name: string
   email: string
   // country_code?: string
   phone_no: string
   country: ICountry
-  address_line1: string
-  address_line2: string
+  address: string
   state: IState
   city: ICity
   zip_code: string
   relationship: string
   transaction_id: string
   beneficiary_id?: string
+  account_no?: string
 }
 
 export interface IBaseBeneficiary {
-  beneficiary_name: string
+  first_name: string
+  last_name: string
   email: string
   phone_no: string
-  address_line1: string
-  address_line2: string
+  address: string
   zip_code: string
   relationship: string
+  account_no?: string
 }
 
 export interface IBeneficiaryData extends IBaseBeneficiary {
