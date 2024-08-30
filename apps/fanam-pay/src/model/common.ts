@@ -23,30 +23,3 @@ export interface ISingleton extends ISingletonData {
   refetchUser: () => void
   refetchTransaction: () => void
 }
-
-export interface ITransfer {
-  image: string
-  time: string
-  charge: string
-}
-
-export interface RazorpayOptions {
-  key: string
-  amount: string
-  currency: string
-  name: string
-  description: string
-  image: string
-  handler: (response: any) => void
-  prefill: {
-    name: string
-    email: string
-    contact: string
-  }
-  notes: {
-    address: string
-  }
-  theme: {
-    color: string
-  }
-}

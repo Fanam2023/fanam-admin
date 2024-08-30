@@ -1,5 +1,5 @@
 import {ImageView} from "@fanam-pkg/core-ui-sass"
-import {ITransfer} from "model"
+import {ITransfer} from "props"
 import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 

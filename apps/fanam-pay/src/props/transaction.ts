@@ -5,3 +5,9 @@ export interface CountryPopupProps {
   selCountry: ICountry
   countries: ICountry[]
 }
+
+export interface ITransfer {
+  image: string
+  time: string
+  charge: string
+}

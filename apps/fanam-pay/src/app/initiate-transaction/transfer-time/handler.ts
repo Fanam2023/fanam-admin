@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react"
 import assets from "assets"
-import {ITransfer} from "model"
+import {ITransfer} from "props"
 
 export const useHandler = (onSelectChargeAndTime: (charge: string, time: string) => void) => {
   const [selectedCard, setSelectedCard] = useState<number | null>(0)
