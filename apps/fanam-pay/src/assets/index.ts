@@ -20,6 +20,7 @@ import ic_pending from "./icons/ic_pending.svg"
 import ic_pending_small from "./icons/ic_pending_small.svg"
 import ic_remove from "./icons/ic_remove.svg"
 import ic_right_arrow_fill from "./icons/ic_right_arrow_fill.svg"
+import ic_rocket from "./icons/ic_rocket.svg"
 import ic_search from "./icons/ic_search.svg"
 import ic_star from "./icons/ic_star.svg"
 import ic_success from "./icons/ic_success.svg"
@@ -35,6 +36,7 @@ import img_logo from "./images/img_logo.webp"
 const assets = {
   ...projectAssets,
   ic_account,
+  ic_rocket,
   ic_star,
   ic_up_arrow,
   ic_back,

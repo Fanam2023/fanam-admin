@@ -1,15 +1,20 @@
 "use client"
 
-import {DropDown, ImageView, RadioButton, TextArea, TextField} from "@fanam-pkg/core-ui-sass"
-import assets from "assets"
 import {BaseContainer, CountryFlag} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
+import {Transfer} from "./transfer-time"
 
 const InitiateTransactionPage = () => {
-  const {data, showCountries, PURPOSES, onChangeValue, onSelectType, onSubmit, sourceCountry} = useHandler()
-
-  const {source_amount, destination_amount, recipient_account_type, destination_country, purpose, reason} = data
+  const {
+    data: {source_amount, destination_amount, destination_country},
+    onChangeValue,
+    onSelectType,
+    onSubmit,
+    sourceCountry,
+    handleSelect,
+    selectedTime,
+  } = useHandler()
 
   return (
     <BaseContainer
@@ -18,58 +23,55 @@ const InitiateTransactionPage = () => {
       onSubmit={onSubmit}
       childWrapper={styles.page_container}
       backIcon={false}
-      stepIndex={1}>
+      stepIndex={3}>
       <section className={styles.container_wrapper}>
-        <section className={`flex-col ${styles.button_container}`}>
-          <h4 className="semi-bold">Account type</h4>
-          <RadioButton
-            items={recipient_account_type}
-            onSelectItems={onSelectType}
-            wrapperClass={styles.radio_button}
-            name="recipient_account_type"
-          />
-        </section>
-        <h4 className="semi-bold">Purpose of sending money</h4>
-        <DropDown
-          options={PURPOSES}
-          wrapperClass={styles.drop_down_wrapper}
-          label="Purpose of Sending Money"
-          selected={purpose}
-          name="purpose"
-          onChangeData={onChangeValue}
-        />
-        <section className={styles.text_area_wrapper}>
-          <TextArea
-            wrapperClass={styles.text_area_wrapper}
-            label="Brief purpose of payment"
-            value={reason}
-            name="reason"
-            onChangeData={onChangeValue}
-          />
-        </section>
-        <h4 className={`semi-bold ${styles.conversion_text}`}>Conversion Estimate</h4>
+        <h2 className="bold">Payment Estimate</h2>
+        <h5>
+          Estimated value for converting your money from one currency to another based on the current exchange rates.
+        </h5>
         <section className={styles.conversion_container}>
-          <h5 className={`bold ${styles.send_text}`}>You Send</h5>
-          <section className={`flex ${styles.input_container}`}>
-            <CountryFlag {...sourceCountry} />
-            <ImageView src={assets.ic_grey_arrow} alt="down-arrow" imgSize={15} />
-            <TextField
-              wrapperClass={styles.text_field_wrapper}
-              value={source_amount}
-              name="source_amount"
-              onChangeData={onChangeValue}
-            />
+          <section className={`flex-sb-center ${styles.currency_wrapper}`}>
+            <section>
+              <h5 className={`bold ${styles.txt_wrapper}`}>You send</h5>
+              <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
+                <section className={styles.amount}>
+                  <input type="text" value={source_amount} className={styles.input} onChange={e => onChangeValue} />
+                </section>
+                <section className={`flex ${styles.currency}`}>
+                  <CountryFlag {...sourceCountry} />
+                  <h5 className="bold">INR</h5>
+                </section>
+              </section>
+            </section>
+            <section>
+              <h5 className={`bold ${styles.txt_wrapper}`}>Recipient recieves</h5>
+              <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
+                <section className={styles.amount}>
+                  <input type="text" value={destination_amount} className={styles.input} />
+                </section>
+                <section className={`flex ${styles.currency}`}>
+                  <CountryFlag {...destination_country} />
+                  <h5 className="bold">USD</h5>
+                </section>
+              </section>
+            </section>
           </section>
-          <h5 className={`bold ${styles.recipient_text}`}>Recipient receives</h5>
-          <section className={`flex ${styles.input_container}`}>
-            <CountryFlag {...destination_country} />
-            <ImageView src={assets.ic_grey_arrow} alt="down-arrow" onClick={showCountries} imgSize={15} />
-            <TextField
-              wrapperClass={styles.text_field_wrapper}
-              value={destination_amount}
-              name="destination_amount"
-              onChangeData={onChangeValue}
-            />
+          <Transfer onSelectChargeAndTime={handleSelect} />
+          <section className={`flex-sb-center ${styles.exchange_wrapper}`}>
+            <h5>Exchange rate</h5>
+            <h5>250.00 INR</h5>
+          </section>
+          <section className={`flex-sb-center ${styles.exchange_wrapper}`}>
+            <h5>Total fees</h5>
+            <h5>351.00 INR</h5>
+          </section>
+          <section className={styles.line_wrapper} />
+          <section className={`flex-sb-center`}>
+            <section className={styles.receiver_wrapper}>
+              <h4>Receiver will get exactly</h4>
+              <h5 className={styles.hour_wrapper}>Transfer in {selectedTime}</h5>
+            </section>
+            <h4 className={`bold ${styles.total_wrapper}`}>98.28 USD</h4>
           </section>
         </section>
       </section>

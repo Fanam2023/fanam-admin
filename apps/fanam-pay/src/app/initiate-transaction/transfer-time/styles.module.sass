@@ -1,0 +1,33 @@
+@use "../../../Styles/index" as *
+
+.container_wrapper
+  margin-top: $size-24px
+  background-color: $light-grey
+  padding: $size-16px
+  border-radius: $size-8px
+
+.txt_wrapper
+  color: #293685
+  padding:
+    top: $size-16px
+    bottom: $size-8px
+
+.card_wrapper
+  display: flex
+  flex-wrap: wrap
+  gap: $size-16px
+  margin-top: $size-16px
+
+.card
+  border: $size-1px solid $dark-grey
+  padding: $size-16px
+  border-radius: $size-16px
+  cursor: pointer
+  transition: background-color 0.3s ease, border-color 0.3s ease
+
+.selected
+  background-color: #E7EAFE
+  border: solid $size-1px #293685
+
+.transfer_wrapper
+  margin-top: $size-24px

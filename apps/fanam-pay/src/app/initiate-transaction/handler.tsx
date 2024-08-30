@@ -52,6 +52,8 @@ export const useHandler = () => {
     reason: "",
   })
   const [errState, setErrState] = useState(DEFAULT_ERR_STATE)
+  const [selectedCharge, setSelectedCharge] = useState<string>()
+  const [selectedTime, setSelectedTime] = useState<string>()
 
   const {toggleSlider} = useSlider()
 
@@ -101,6 +103,11 @@ export const useHandler = () => {
         })
     },
   })
+
+  const handleSelect = (charge: string, time: string) => {
+    setSelectedCharge(charge)
+    setSelectedTime(time)
+  }
 
   useEffect(() => {
     if (allCountries.length) {
@@ -224,5 +231,7 @@ export const useHandler = () => {
     onSelectType,
     onSubmit,
     sourceCountry,
+    handleSelect,
+    selectedTime,
   }
 }
