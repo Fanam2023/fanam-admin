@@ -1,0 +1,175 @@
+import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
+import {REG_VALID_NUMBER, useCommon, useFirebase, useStorage} from "@fanam-pkg/core-utils"
+import {useRouter} from "next/navigation"
+import {ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState} from "react"
+import {useMutation} from "@tanstack/react-query"
+import {ISignUp, IUserBase, SESSION_SIGNUP} from "@custom/utils"
+import {useAuthController} from "controller"
+import {useSingleton} from "hooks"
+import {ROUTE_HOME, ROUTE_SIGN_UP} from "utils"
+
+const useHandler = () => {
+  const {getStorage} = useStorage()
+  const {isValidInputByRegex} = useCommon()
+  const {updateToken, updateUserData} = useSingleton()
+  const {signUp} = useAuthController()
+  const {toggleNotify} = useNotifyPopup()
+  const {push} = useRouter()
+  const [otpValues, setOtpValues] = useState(Array(6).fill(""))
+  const [timer, setTimer] = useState(60)
+  const [loading, setLoading] = useState(false)
+  const inputRefs = useRef<(HTMLInputElement | null)[]>(Array(6).fill(null))
+  const [errState, setErrState] = useState({errOtp: "", isClicked: false, isValid: false})
+  const [signUpData, setSignUpData] = useState<ISignUp | null>(null)
+  const country_code = "+91"
+  const {isClicked, errOtp} = errState
+  const {phone_no} = signUpData || {}
+
+  const {mutate: createUser} = useMutation({
+    mutationFn: signUp,
+    onSuccess: ({result}) => {
+      if (result) {
+        const {access_token, user} = result
+        updateToken(access_token)
+        updateUserData(user)
+
+        toggleNotify({
+          type: "success",
+          title: "Successfully signed up",
+        })
+        push(ROUTE_HOME)
+      }
+    },
+  })
+
+  const {sendOtp, verifyOTP} = useFirebase(
+    (_, authToken: string) => createUser(signUpData),
+    data => setErrState({...errState, errOtp: data || ""})
+  )
+
+  useEffect(() => {
+    inputRefs.current[0]?.focus()
+
+    const onComplete = () => {
+      setLoading(false)
+      inputRefs.current[0]?.focus()
+    }
+
+    if (phone_no?.length === 10) {
+      setLoading(true)
+      sendOtp(country_code, phone_no, onComplete, onComplete)
+    }
+  }, [phone_no])
+
+  useEffect(() => {
+    const storedData = getStorage<ISignUp>(SESSION_SIGNUP)
+    if (storedData) setSignUpData(storedData)
+  }, [])
+
+  useEffect(() => {
+    if (isClicked) setErrState(prev => ({...prev, ...onValidate()}))
+  }, [otpValues, isClicked])
+
+  useEffect(() => {
+    if (timer) {
+      const interval = setInterval(() => setTimer(timer - 1), 1000)
+      return () => {
+        clearInterval(interval)
+      }
+    }
+  }, [timer])
+
+  const onValidate = useCallback(() => {
+    const otpText = otpValues.join("")
+    let errText = ""
+    if (otpText.length !== 6) errText = "Please enter valid 6 digit OTP"
+    return {errOtp: errText, isValid: !errText}
+  }, [otpValues])
+
+  const onInputChange = useCallback(
+    (index: number, event: ChangeEvent<HTMLInputElement>) => {
+      const inputElement = event.target as HTMLInputElement
+      const {value} = inputElement
+
+      if ((isValidInputByRegex(value, REG_VALID_NUMBER) && value.length === 1) || value === "") {
+        const newOtpValues = [...otpValues]
+        newOtpValues[index] = value
+        setOtpValues(newOtpValues)
+
+        if (index < otpValues.length - 1 && value !== "") {
+          inputRefs.current[index + 1]?.focus()
+        }
+      }
+    },
+    [otpValues]
+  )
+
+  const onKeyDown = (index: number, event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Backspace" && index > 0 && otpValues[index] === "") {
+      const prevInput = inputRefs.current[index - 1]
+      if (prevInput) {
+        prevInput.focus()
+      }
+    }
+  }
+
+  const onVerify = () => {
+    setErrState({...errState, isClicked: true})
+    const otpText = otpValues.join("")
+    if (otpText.length === 6) {
+      verifyOTP(otpValues.join(""))
+    }
+  }
+
+  const onResendOTP = () => {
+    if (!timer) {
+      setTimer(60)
+    }
+  }
+
+  const resetOTP = () => setOtpValues(Array(6).fill(""))
+
+  const onResend = () => {
+    onResendOTP()
+    resetOTP()
+    sendOtp(country_code, phone_no, () => {
+      console.log("SENT FIREBASE OTP Again Successfully >>>>>>>>>>")
+    })
+  }
+
+  const onPaste = (value: string) => {
+    if (isValidInputByRegex(value, REG_VALID_NUMBER) && value.length === 6) {
+      setOtpValues(value.split(""))
+    }
+  }
+
+  function onSuccess(user: IUserBase) {
+    const {first_name} = user
+    if (first_name) {
+      push("route to home")
+      toggleNotify({
+        type: "success",
+        title: "Login Success",
+        description: "Login successfully",
+      })
+    } else {
+      push(ROUTE_SIGN_UP)
+    }
+  }
+
+  return {
+    errOtp,
+    timer,
+    otpValues,
+    inputRefs,
+    phone_no,
+    country_code,
+    onKeyDown,
+    onInputChange,
+    onResend,
+    onPaste,
+    onVerify,
+  }
+}
+
+export default useHandler

@@ -6,6 +6,10 @@ export interface IResponseLogin {
   refresh_token: string
 }
 
+export interface IResponseUpdateUser extends IResponseLogin {
+  user: IUser
+}
+
 export interface IJwtUser {
   user_id: string
   iat: number
@@ -21,7 +25,21 @@ export interface ILogOutPayload {
 }
 
 export interface IPayloadLogin {
-  email: string
+  countryCode?: string
+  phone_no?: string
+  email?: string
+  pin?: string
+}
+
+export interface IUserBase {
+  country_code?: ICountry | string
+  phone_no?: string
+  email?: string
+  first_name?: string
+  last_name?: string
+  account_type?: string
+  newPin?: string
+  confirmPin?: string
 }
 
 export interface IUser {
@@ -80,4 +98,20 @@ export interface IPayloadUserBankAccount {
 
 export interface IResponseBankAccount extends IPayloadUserBankAccount {
   account_id: string
+}
+
+export interface ISignUp {
+  first_name: string
+  last_name: string
+  email: string
+  phone_no: string
+  account_type: string
+  newPin: string
+  confirmPin: string
+  country_code?: ICountry | string
+}
+
+export interface ILogin {
+  phone_no: string
+  pin: string
 }

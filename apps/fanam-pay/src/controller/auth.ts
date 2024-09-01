@@ -2,13 +2,16 @@ import {
   API_LOGIN,
   API_LOGOUT,
   API_SENDER_KYC,
+  API_SIGNUP,
   API_SYNC_USER,
   API_USER,
   ILogOutPayload,
   IPayloadLogin,
   IPayloadSyncUser,
   IResponseLogin,
+  IResponseUpdateUser,
   IUser,
+  IUserBase,
 } from "@custom/utils"
 import {useSingleton} from "hooks"
 import {useApi} from "./api"
@@ -59,10 +62,16 @@ export const useAuthController = () => {
     return {result, errorData}
   }
 
+  const signUp = async (payload: IUserBase) => {
+    const {result, errorData} = await postRequest<IResponseUpdateUser>(API_SIGNUP, payload)
+    return {result, errorData}
+  }
+
   return {
     login,
     getUser,
     logout,
     syncUser,
+    signUp,
   }
 }

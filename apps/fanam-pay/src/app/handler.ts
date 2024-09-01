@@ -15,7 +15,7 @@ const DEFAULT_ERR_STATE = {
 }
 
 export const useHandler = () => {
-  const [data, setData] = useState<IPayloadLogin>({email: ""})
+  const [data, setData] = useState<IPayloadLogin>({email: "", phone_no: ""})
   const [errState, setErrState] = useState(DEFAULT_ERR_STATE)
   const {login} = useAuthController()
   const {replace} = useRouter()
