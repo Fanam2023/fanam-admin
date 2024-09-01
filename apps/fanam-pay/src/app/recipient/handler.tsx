@@ -69,6 +69,7 @@ export const useHandler = () => {
   return {
     isDesktop,
     recipients: filteredRecipients,
+    searchQuery,
     onChangeSearch,
     routeToDetails,
     onAdd,

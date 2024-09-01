@@ -3,7 +3,7 @@ import {IFormData, JSONObject, REG_EMAIL, useCommon} from "@fanam-pkg/core-utils
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
-import {IStyle, ISyncUserData} from "@custom/utils"
+import {IPayloadSyncUser, IStyle, ISyncUserData} from "@custom/utils"
 import assets from "assets"
 import {useAuthController, useLocationController} from "controller"
 import {useSingleton} from "hooks"
@@ -114,6 +114,8 @@ const useHandler = (styles: IStyle) => {
   })
 
   const {mutate: updateUser, data: userRes} = useMutation({mutationKey: [QUERY_USER], mutationFn: syncUser})
+
+  const hasRegistered = !!user?.user_accounts?.length
 
   const countries: IFormData[] = useMemo(
     () => allCountries.map(({country_id, country_name}) => ({label: country_name, key: country_id})),
@@ -297,6 +299,7 @@ const useHandler = (styles: IStyle) => {
           label: "Select Account type",
           options: account_type,
           error: errAccountType,
+          disabled: hasRegistered,
           onChangeValue,
         },
         {
@@ -305,6 +308,7 @@ const useHandler = (styles: IStyle) => {
           name: "first_name",
           error: errFirstName,
           value: first_name,
+          disabled: hasRegistered,
           onChangeValue,
         },
         {
@@ -313,13 +317,14 @@ const useHandler = (styles: IStyle) => {
           name: "last_name",
           error: errLastName,
           value: last_name,
+          disabled: hasRegistered,
           onChangeValue,
         },
         {
           elementType: "input",
           label: "Enter Account Number",
           name: "account_no",
-          disabled: !!user?.user_accounts?.length,
+          disabled: hasRegistered,
           error: errAccountNo,
           value: account_no,
           onChangeValue,
@@ -339,6 +344,7 @@ const useHandler = (styles: IStyle) => {
           name: "phone_no",
           error: errPhoneNo,
           value: phone_no,
+          disabled: hasRegistered,
           onChangeValue,
         },
         {
@@ -347,6 +353,7 @@ const useHandler = (styles: IStyle) => {
           name: "address_line1",
           error: errAddressLine1,
           value: address_line1,
+          disabled: hasRegistered,
           onChangeValue,
         },
         {
@@ -355,6 +362,7 @@ const useHandler = (styles: IStyle) => {
           name: "address_line2",
           error: errAddressLine2,
           value: address_line2,
+          disabled: hasRegistered,
           onChangeValue,
         },
         {
@@ -364,6 +372,7 @@ const useHandler = (styles: IStyle) => {
           options: countries,
           error: errCountry,
           value: country,
+          disabled: hasRegistered,
           onChangeValue: onChangeCountry,
         },
         {
@@ -372,7 +381,7 @@ const useHandler = (styles: IStyle) => {
           name: "state",
           options: states,
           error: errState,
-          disabled: !country,
+          disabled: !country || hasRegistered,
           value: state,
           onChangeValue: onChangeState,
         },
@@ -382,7 +391,7 @@ const useHandler = (styles: IStyle) => {
           name: "city",
           options: cities,
           error: errCity,
-          disabled: !state,
+          disabled: !state || hasRegistered,
           value: city,
           onChangeValue,
         },
@@ -392,6 +401,7 @@ const useHandler = (styles: IStyle) => {
           name: "zip_code",
           value: zip_code,
           error: errZipCode,
+          disabled: hasRegistered,
           onChangeValue,
         },
         {
@@ -401,6 +411,7 @@ const useHandler = (styles: IStyle) => {
           options: countries,
           error: errIdIssuedCountry,
           value: id_issued_country,
+          disabled: hasRegistered,
           onChangeValue,
         },
         {
@@ -410,6 +421,7 @@ const useHandler = (styles: IStyle) => {
           options: ID_PROOFS,
           error: errIdType,
           value: id_type,
+          disabled: hasRegistered,
           onChangeValue,
         },
         {
@@ -418,6 +430,7 @@ const useHandler = (styles: IStyle) => {
           name: "id_number",
           error: errIdType,
           value: id_number,
+          disabled: hasRegistered,
           onChangeValue,
         },
         {
@@ -428,6 +441,7 @@ const useHandler = (styles: IStyle) => {
           value: kyc,
           error: errKyc,
           children: <CustomUpload />,
+          disabled: hasRegistered,
           onChangeValue,
         },
       ],
@@ -442,7 +456,7 @@ const useHandler = (styles: IStyle) => {
     const {isValid} = onValidate()
 
     if (isValid) {
-      updateUser({
+      const payload: IPayloadSyncUser = {
         first_name,
         last_name,
         email,
@@ -456,9 +470,19 @@ const useHandler = (styles: IStyle) => {
         id_type,
         id_issued_country_id: id_issued_country.key as number,
         id_number,
-        bank_account: {account_no, account_type: account_type?.find(({isSelected}) => isSelected)?.label},
+        bank_account: {
+          account_no,
+          account_type: account_type?.find(({isSelected}) => isSelected)?.label,
+        },
         kyc: kyc.filter(({file}) => !!file),
-      })
+      }
+
+      // if (user.email) delete payload.email
+
+      // if (hasRegistered) delete payload.bank_account.account_no
+
+      if (!hasRegistered) updateUser(payload)
+      else push(ROUTE_INITIATE_TRANSACTION)
     }
   }
 

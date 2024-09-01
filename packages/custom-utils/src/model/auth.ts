@@ -64,7 +64,7 @@ export interface IUser {
 export interface IBaseSyncUser {
   first_name: string
   last_name: string
-  email: string
+  email?: string
   phone_no: string
   address_line1: string
   address_line2: string
@@ -92,7 +92,7 @@ export interface IPayloadSyncUser extends IBaseSyncUser {
 }
 
 export interface IPayloadUserBankAccount {
-  account_no: string
+  account_no?: string
   account_type: string
 }
 

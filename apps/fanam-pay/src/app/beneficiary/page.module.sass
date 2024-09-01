@@ -1,15 +1,21 @@
 @use "../../styles/index" as *
 .page_container
-  padding: $size-12px $size-24px
-  width: 80%
-  overflow-y: scroll
+  width: 100%
 
 .search_container
-  width: 40%
+  width: 80%
   margin:
-    top: 9%
-    left: 30%
+    top: 1%
+    left: 4%
   gap: $size-20px
+
+.beneficiary_wrapper
+  margin:
+    top: 11%
+    left: 4%
+  gap: $size-8px
+
+.recipient_text
 
 .add_text
   color: $primary
@@ -18,7 +24,7 @@
 
 .save_text
   margin:
-    left: 30%
+    left: 4%
     top: $size-24px
 
 @include mixin-responsive
