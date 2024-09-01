@@ -9,7 +9,7 @@ export const CountryPopup = ({onSelect, selCountry, countries}: CountryPopupProp
     return (
       <li
         key={country_id}
-        className={`flex ${styles.country_wrapper} ${iso2 === selCountry.iso2 ? styles.selected : ""}`}
+        className={`flex ${styles.country_wrapper} ${iso2 === selCountry?.iso2 ? styles.selected : ""}`}
         onClick={onSelect.bind(null, country)}>
         <ImageView
           src={`https://flagcdn.com/w40/${iso2?.toLowerCase()}.png`}
