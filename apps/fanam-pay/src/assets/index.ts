@@ -3,6 +3,7 @@ import ic_account from "./icons/ic_account.svg"
 import ic_alert from "./icons/ic_alert.svg"
 import ic_arrow_theme from "./icons/ic_arrow_theme.svg"
 import ic_back from "./icons/ic_back.svg"
+import ic_back_arrow_black from "./icons/ic_back_arrow_black.svg"
 import ic_checkbox from "./icons/ic_checkbox.svg"
 import ic_cloudUpload from "./icons/ic_cloudUpload.svg"
 import ic_debit_card from "./icons/ic_debit_card.svg"
@@ -31,6 +32,7 @@ import ic_us_flag from "./icons/ic_us_flag.svg"
 import ic_user from "./icons/ic_user.svg"
 import ic_world from "./icons/ic_world.svg"
 import img_bank from "./images/img_bank.webp"
+import img_logo_in from "./images/img_log_in.webp"
 import img_logo from "./images/img_logo.webp"
 
 const assets = {
@@ -61,6 +63,8 @@ const assets = {
   ic_india_flag,
   ic_us_flag,
   ic_cloudUpload,
+  img_logo_in,
+  ic_back_arrow_black,
   img_logo,
   ic_world,
   ic_down_arrow,

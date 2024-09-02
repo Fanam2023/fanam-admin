@@ -1,0 +1,52 @@
+@use "../../styles/index" as *
+
+.page_wrapper
+  margin-top: 6%
+
+.heading
+  gap: $size-8px
+
+.otp
+  color: $theme
+
+.otp_field
+  gap: $size-8px
+  margin-top: $size-24px
+
+.otp_box
+  width: $size-24px
+  height: $size-24px
+  border: $size-1px solid $black
+  color: rgb(var(--black))
+  border-radius: $size-8px
+  text-align: center
+
+  :focus
+    outline: none
+
+  &[type="number"]::-webkit-inner-spin-button,
+  &[type="number"]::-webkit-outer-spin-button
+    -webkit-appearance: none
+    appearance: none
+    margin: 0
+
+  &[type="number"]
+    -moz-appearance: textfield
+
+.otp_wrapper
+  margin-top: $size-20px
+  gap: $size-4px
+  cursor: pointer
+
+.button_wrapper
+  margin-top: $size-24px
+  width: 100%
+  background-color: $theme
+
+.terms_wrapper
+  margin-top: $size-20px
+
+.condition_text
+  color: $theme
+  border-bottom: $size-1px solid $theme
+  cursor: pointer
