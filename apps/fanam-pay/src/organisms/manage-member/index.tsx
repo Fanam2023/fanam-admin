@@ -17,25 +17,21 @@ export const ManageMembers = ({title, onEdit, onSelect, description}: ManageMemb
     onEdit()
   }
 
-  const getFirstLetter = (title: string) => {
-    const names = title.split(" ")
-    const initials = names.map(name => name.charAt(0).toUpperCase())
-    return initials
-  }
-
   return (
     <section className={`${styles.card_wrapper}`} onClick={onClick}>
-      <section className={styles.edit} onClick={onClickEdit}>
-        <ImageView src={assets.ic_edit} alt="profile-image" imgSize={15} />
-      </section>
+      <ImageView
+        src={assets.ic_edit}
+        alt="profile-image"
+        imgSize={15}
+        wrapperClass={styles.edit}
+        onClick={onClickEdit}
+      />
       <section className="flex-col-center">
-        <section className={styles.profile_wrapper}>
-          <h4 className="bold">{getFirstLetter(title)}</h4>
+        <section className={`flex-center ${styles.profile_wrapper}`}>
+          <h4 className={`bold ${styles.title}`}>{title}</h4>
         </section>
       </section>
-      <section className={`${styles.user_details}`}>
-        <h6 className={`ellipsis ${styles.user_name}`}>{title}</h6>
-      </section>
+      <h6 className={`ellipsis ${styles.user_details}`}>{title}</h6>
     </section>
   )
 }

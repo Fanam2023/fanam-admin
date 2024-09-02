@@ -1,23 +1,32 @@
 import {IFormData} from "@fanam-pkg/core-utils"
 import {useMemo} from "react"
+import {useSingleton} from "hooks"
 
 export const useHandler = () => {
-  const {recipientDetails} = useMemo(() => {
-    const recipientDetails: IFormData[] = [
-      {key: "First Name", label: "ram"},
-      {key: "Last Name", label: "kumar"},
-      {key: "Address", label: "45"},
-      {key: "Email", label: "ram@gmail.com"},
-      {key: "Phone Number", label: "458888545"},
-      {key: "Country", label: "india"},
-      {key: "State", label: "tamilnadu"},
-      {key: "City", label: "tuticorin"},
-      {key: "ZIP Code", label: "626367"},
-      {key: "Account Number", label: "76376687899"},
+  const {transData} = useSingleton()
+  const {first_name, last_name, address, email, country, zip_code, state, city, account_no, phone_no} =
+    transData?.beneficiary || {}
+
+  const {country_name} = country || {}
+  const {state_name} = state || {}
+  const {city_name} = city || {}
+
+  const {beneficiaryDetails} = useMemo(() => {
+    const beneficiaryDetails: IFormData[] = [
+      {key: "First Name", label: first_name},
+      {key: "Last Name", label: last_name},
+      {key: "Address", label: address},
+      {key: "Email", label: email},
+      {key: "Phone Number", label: phone_no},
+      {key: "Country", label: country_name},
+      {key: "State", label: state_name},
+      {key: "City", label: city_name},
+      {key: "ZIP Code", label: zip_code},
+      {key: "Account Number", label: account_no},
     ]
 
-    return {recipientDetails}
-  }, [])
+    return {beneficiaryDetails}
+  }, [transData])
 
-  return {recipientDetails}
+  return {beneficiaryDetails}
 }

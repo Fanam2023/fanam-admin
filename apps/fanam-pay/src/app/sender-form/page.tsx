@@ -16,9 +16,10 @@ const SenderForm = () => {
       buttonText="Next"
       onSubmit={onSubmit}
       skipBtn="Back"
+      isStepper
       stepIndex={0}>
       <section className={styles.container_wrapper}>
-        <h2>Sender Details</h2>
+        <h4 className="bold">Complete Your Profile</h4>
         <h6>Essential for verification and processing your transactions securely and efficiently.</h6>
       </section>
       <section className={styles.sender_form_wrapper}>

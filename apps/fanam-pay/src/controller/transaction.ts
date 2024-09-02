@@ -1,10 +1,12 @@
 import {IFile} from "@fanam-pkg/core-utils"
 import {
   API_INVOICE,
+  API_SENDING_PURPOSE,
   API_TRANSACTION,
   apiTransaction,
   IPayloadMergeRecipient,
   IPayloadTransaction,
+  IPayloadTransactionPurpose,
   ITransaction,
 } from "@custom/utils"
 import {useSingleton} from "hooks"
@@ -66,6 +68,11 @@ export const useTransactionController = () => {
     return {result, errorData}
   }
 
+  const sendingPurpose = async (payload: IPayloadTransactionPurpose) => {
+    const {result, errorData} = await postRequest(API_SENDING_PURPOSE, payload)
+    return {result, errorData}
+  }
+
   return {
     getTransaction,
     createTransaction,
@@ -75,5 +82,6 @@ export const useTransactionController = () => {
     syncBeneficiary,
     syncRecipient,
     syncRecipientAsBeneficiary,
+    sendingPurpose,
   }
 }

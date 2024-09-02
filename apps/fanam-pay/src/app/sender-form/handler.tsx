@@ -1,4 +1,4 @@
-import {assets, FormSectionProps, ImageView, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
+import {FormSectionProps, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {IFormData, JSONObject, REG_EMAIL, useCommon} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
@@ -19,8 +19,7 @@ const DEFAULT_ERR_STATE = {
   errAccountType: "",
   errCountry: "",
   errState: "",
-  errAddressLine1: "",
-  errAddressLine2: "",
+  errAddress: "",
   errCity: "",
   errZipCode: "",
   errIdIssuedCountry: "",
@@ -40,8 +39,7 @@ const useHandler = (styles: IStyle) => {
     last_name: "",
     email: "",
     phone_no: "",
-    address_line1: "",
-    address_line2: "",
+    address: "",
     country: null,
     state: null,
     zip_code: "",
@@ -51,7 +49,7 @@ const useHandler = (styles: IStyle) => {
     id_issued_country: null,
     id_number: "",
     account_type: [
-      {label: "Individual", isSelected: true},
+      {label: "Personal", isSelected: true},
       {label: "Business", isSelected: false},
     ],
     kyc: [],
@@ -66,8 +64,7 @@ const useHandler = (styles: IStyle) => {
     phone_no,
     country,
     state,
-    address_line1,
-    address_line2,
+    address,
     city,
     account_type,
     zip_code,
@@ -89,8 +86,7 @@ const useHandler = (styles: IStyle) => {
     errIdIssuedCountry,
     errCountry,
     errState,
-    errAddressLine1,
-    errAddressLine2,
+    errAddress,
     errCity,
     errZipCode,
     errKyc,
@@ -148,8 +144,7 @@ const useHandler = (styles: IStyle) => {
   useEffect(() => {
     if (user) {
       const {
-        address_line1,
-        address_line2,
+        address,
         city,
         country,
         first_name,
@@ -167,8 +162,7 @@ const useHandler = (styles: IStyle) => {
 
       let payloadData: ISyncUserData = {
         ...data,
-        address_line1,
-        address_line2,
+        address,
         first_name,
         last_name,
         email,
@@ -251,9 +245,7 @@ const useHandler = (styles: IStyle) => {
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please Confirm Your E-mail", isValid: false}
 
-    if (!address_line1) errState = {...errState, errAddressLine1: "Please enter Sender Address", isValid: false}
-
-    if (!address_line2) errState = {...errState, errAddressLine2: "Please enter Sender Address", isValid: false}
+    if (!address) errState = {...errState, errAddress: "Please enter Sender Address", isValid: false}
 
     if (!phone_no) errState = {...errState, errPhoneNo: "Please enter Phone Number", isValid: false}
 
@@ -306,7 +298,7 @@ const useHandler = (styles: IStyle) => {
       childElements: [
         {
           elementType: "input",
-          label: "Enter First Name",
+          label: "First Name",
           name: "first_name",
           error: errFirstName,
           value: first_name,
@@ -314,7 +306,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Enter Last Name",
+          label: "Last Name",
           name: "last_name",
           error: errLastName,
           value: last_name,
@@ -322,7 +314,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Enter E-mail",
+          label: "E-mail",
           name: "email",
           value: email,
           error: errEmail,
@@ -331,7 +323,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Enter Phone Number",
+          label: "Phone Number",
           name: "phone_no",
           error: errPhoneNo,
           value: phone_no,
@@ -339,7 +331,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Enter Account Number",
+          label: "Account Number",
           name: "account_no",
           disabled: !!user?.user_accounts?.length,
           error: errAccountNo,
@@ -354,23 +346,15 @@ const useHandler = (styles: IStyle) => {
       childElements: [
         {
           elementType: "input",
-          label: "Enter Address Line1",
-          name: "address_line1",
-          error: errAddressLine1,
-          value: address_line1,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Enter Address Line2",
-          name: "address_line2",
-          error: errAddressLine2,
-          value: address_line2,
+          label: "Home Address",
+          name: "address",
+          error: errAddress,
+          value: address,
           onChangeValue,
         },
         {
           elementType: "drop-down",
-          label: "Select Country",
+          label: "Country",
           name: "country",
           options: countries,
           error: errCountry,
@@ -379,7 +363,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "drop-down",
-          label: "Select State",
+          label: "State",
           name: "state",
           options: states,
           error: errState,
@@ -389,7 +373,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "drop-down",
-          label: "Select City/District",
+          label: "City/District",
           name: "city",
           options: cities,
           error: errCity,
@@ -399,7 +383,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Enter Zip Code",
+          label: "PinCode",
           name: "zip_code",
           value: zip_code,
           error: errZipCode,
@@ -466,8 +450,7 @@ const useHandler = (styles: IStyle) => {
         phone_no,
         country_id: country.key as number,
         state_id: state.key as number,
-        address_line1,
-        address_line2,
+        address,
         city_id: city.key as number,
         zip_code,
         id_type,
@@ -489,7 +472,7 @@ export default useHandler
 
 export const CustomUpload = (styles: IStyle) => (
   <section className={`flex ${styles.upload_container}`}>
-    <ImageView src={assets.ic_cloudUpload} alt={"upload"} imgSize={24} />
+    {/* <ImageView src={assets.ic_cloudUpload} alt={"upload"} imgSize={24} /> */}
     <h5 className={styles.text_wrapper}>Upload Front Side of the Document</h5>
   </section>
 )
