@@ -18,25 +18,20 @@ export const ManageMembers = ({title, onEdit, onSelect, description}: ManageMemb
   }
 
   return (
-    <section className={`flex-col-center ${styles.container}`} onClick={onClick}>
-      <section className={`flex-col ${styles.beneficiary_container}`}>
-        <section className={`flex ${styles.beneficiary_wrapper}`}>
-          <ImageView src={assets.ic_user} alt={"user-profile"} imgSize={46} wrapperClass={styles.user_img} />
-          <section className={`flex-sb-center ${styles.user_wrapper}`}>
-            <section className={`flex-col ${styles.user_details}`}>
-              <h3>{title}</h3>
-              <h5>{description}</h5>
-            </section>
-            <ImageView
-              src={assets.ic_edit_theme}
-              alt={"edit-icon"}
-              imgSize={24}
-              wrapperClass={styles.edit_icon}
-              onClick={onClickEdit}
-            />
-          </section>
+    <section className={`${styles.card_wrapper}`} onClick={onClick}>
+      <ImageView
+        src={assets.ic_edit}
+        alt="profile-image"
+        imgSize={15}
+        wrapperClass={styles.edit}
+        onClick={onClickEdit}
+      />
+      <section className="flex-col-center">
+        <section className={`flex-center ${styles.profile_wrapper}`}>
+          <h4 className={`bold ${styles.title}`}>{title}</h4>
         </section>
       </section>
+      <h6 className={`ellipsis ${styles.user_details}`}>{title}</h6>
     </section>
   )
 }

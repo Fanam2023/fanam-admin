@@ -1,12 +1,51 @@
 @use "../../styles/index" as *
 
-@mixin grid-3
+@mixin common-styles
   display: grid
+  grid-template-columns: 0.5fr 0.5fr
+  gap: $size-16px
+  margin:
+    top: $size-12px
+    bottom: $size-20px
 
-.recipient_address_wrapper
-  @include grid-3
-  gap: $size-24px
-  margin: $size-24px 0
+.personal
+  display: grid
+  gap: $size-16px
+  margin:
+    bottom: $size-20px
+
+.address
+  display: grid
+  gap: $size-16px
+  margin:
+    top: $size-12px
+    bottom: $size-20px
+
+.input_wrapper
+  margin-top: $size-24px
+
+.personal_details
+  @include common-styles
+
+.bank_details
+  display: grid
+  gap: $size-16px
+  margin:
+    top: $size-12px
+    bottom: $size-20px
+
+.address_details
+  @include common-styles
+
+.id_types
+  display: grid
+  gap: $size-16px
+  margin:
+    top: $size-12px
+    bottom: $size-20px
+
+.img_picker
+  margin-top: $size-16px
 
 .footer_wrapper
   position: absolute
@@ -19,8 +58,12 @@
   background: $white
 
 .btn_wrapper
+  width: 100%
   height: $size-40px
-  margin-top: $size-10px
+  margin:
+    top: $size-10px
+    right: $size-12px
+  background-color: $theme
 
 @include mixin-responsive
   .input_wrapper

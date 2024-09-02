@@ -1,6 +1,6 @@
 export type TypeUserRole = "user" | "crm" | "admin"
 
-export type TypeAccount = "Individual" | "Business"
+export type TypeAccount = "Personal" | "Business"
 
 export type TypePurpose = "Education" | "Travel" | "Hospital" | "Insurance" | "Family_expense" | "Rental" | "Others"
 

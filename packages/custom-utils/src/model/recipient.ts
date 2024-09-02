@@ -14,13 +14,13 @@ interface IBankAccount {
 }
 
 export interface IRecipient {
+  account_type?: any
   first_name: string
   last_name: string
   email: string
   country: ICountry
   phone_no: string
-  address_line1: string
-  address_line2: string
+  address: string
   state: IState
   city: ICity
   zip_code: string
@@ -38,8 +38,7 @@ export interface IBaseRecipientData {
   last_name: string
   email: string
   phone_no: string
-  address_line1: string
-  address_line2: string
+  address: string
   zip_code: string
   id_number: string
   id_type: string

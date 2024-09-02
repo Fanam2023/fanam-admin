@@ -3,6 +3,29 @@
 @mixin common-styles
   width: 100%
 
+.card_wrapper
+  background-color: $primary-fill
+  border-radius: $size-10px
+  padding: $size-10px
+
+.profile_wrapper
+  height: $size-56px
+  width: $size-56px
+  background: $theme
+  border-radius: 50%
+  color: white
+
+.profile_img
+  border-radius: $size-24px
+
+.edit
+  margin:
+    left: 85%
+  cursor: pointer
+
+.title
+  text-transform: capitalize
+
 .beneficiary_container
   margin-top: $size-28px
   gap: $size-20px
@@ -17,9 +40,6 @@
 .user_wrapper
   @include common-styles
 
-.edit_icon
-  cursor: pointer
-
 .add_text
   color: $primary
   font-weight: $semi-bold
@@ -27,6 +47,8 @@
 
 .user_details
   cursor: pointer
+  margin-top: $size-8px
+  width: 100%
 
 .user_img
   cursor: pointer

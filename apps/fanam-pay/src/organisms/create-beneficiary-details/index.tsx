@@ -11,11 +11,8 @@ export const CreateBeneficiaryDetails = ({beneficiary_id}: BeneficiaryDetailsPro
     <section>
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
       <footer className={`flex ${styles.footer_wrapper}`}>
-        <Button buttonType="primary-outlined" wrapperClass={styles.btn_wrapper} onClick={() => toggleSlider()}>
-          Back
-        </Button>
         <Button wrapperClass={styles.btn_wrapper} onClick={onSubmit}>
-          Continue
+          Add Beneficiary
         </Button>
       </footer>
     </section>

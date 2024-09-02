@@ -1,10 +1,9 @@
-import {FormSectionProps, ImageView, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
+import {FormSectionProps, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {IFormData, JSONObject, REG_EMAIL, useCommon} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
-import {IPayloadSyncUser, IStyle, ISyncUserData} from "@custom/utils"
-import assets from "assets"
+import {IStyle, ISyncUserData} from "@custom/utils"
 import {useAuthController, useLocationController} from "controller"
 import {useSingleton} from "hooks"
 import {ID_PROOFS, QUERY_CITIES, QUERY_COUNTRIES, QUERY_STATES, QUERY_USER, ROUTE_INITIATE_TRANSACTION} from "utils"
@@ -20,8 +19,7 @@ const DEFAULT_ERR_STATE = {
   errAccountType: "",
   errCountry: "",
   errState: "",
-  errAddressLine1: "",
-  errAddressLine2: "",
+  errAddress: "",
   errCity: "",
   errZipCode: "",
   errIdIssuedCountry: "",
@@ -41,8 +39,7 @@ const useHandler = (styles: IStyle) => {
     last_name: "",
     email: "",
     phone_no: "",
-    address_line1: "",
-    address_line2: "",
+    address: "",
     country: null,
     state: null,
     zip_code: "",
@@ -52,7 +49,7 @@ const useHandler = (styles: IStyle) => {
     id_issued_country: null,
     id_number: "",
     account_type: [
-      {label: "Individual", isSelected: true},
+      {label: "Personal", isSelected: true},
       {label: "Business", isSelected: false},
     ],
     kyc: [],
@@ -67,8 +64,7 @@ const useHandler = (styles: IStyle) => {
     phone_no,
     country,
     state,
-    address_line1,
-    address_line2,
+    address,
     city,
     account_type,
     zip_code,
@@ -90,8 +86,7 @@ const useHandler = (styles: IStyle) => {
     errIdIssuedCountry,
     errCountry,
     errState,
-    errAddressLine1,
-    errAddressLine2,
+    errAddress,
     errCity,
     errZipCode,
     errKyc,
@@ -114,8 +109,6 @@ const useHandler = (styles: IStyle) => {
   })
 
   const {mutate: updateUser, data: userRes} = useMutation({mutationKey: [QUERY_USER], mutationFn: syncUser})
-
-  const hasRegistered = !!user?.user_accounts?.length
 
   const countries: IFormData[] = useMemo(
     () => allCountries.map(({country_id, country_name}) => ({label: country_name, key: country_id})),
@@ -151,8 +144,7 @@ const useHandler = (styles: IStyle) => {
   useEffect(() => {
     if (user) {
       const {
-        address_line1,
-        address_line2,
+        address,
         city,
         country,
         first_name,
@@ -170,8 +162,7 @@ const useHandler = (styles: IStyle) => {
 
       let payloadData: ISyncUserData = {
         ...data,
-        address_line1,
-        address_line2,
+        address,
         first_name,
         last_name,
         email,
@@ -254,9 +245,7 @@ const useHandler = (styles: IStyle) => {
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please Confirm Your E-mail", isValid: false}
 
-    if (!address_line1) errState = {...errState, errAddressLine1: "Please enter Sender Address", isValid: false}
-
-    if (!address_line2) errState = {...errState, errAddressLine2: "Please enter Sender Address", isValid: false}
+    if (!address) errState = {...errState, errAddress: "Please enter Sender Address", isValid: false}
 
     if (!phone_no) errState = {...errState, errPhoneNo: "Please enter Phone Number", isValid: false}
 
@@ -299,39 +288,33 @@ const useHandler = (styles: IStyle) => {
           label: "Select Account type",
           options: account_type,
           error: errAccountType,
-          disabled: hasRegistered,
           onChangeValue,
         },
+      ],
+    },
+    {
+      title: "Personal Information",
+      wrapperClassGrid: styles.personal_details,
+      childElements: [
         {
           elementType: "input",
-          label: "Enter First Name",
+          label: "First Name",
           name: "first_name",
           error: errFirstName,
           value: first_name,
-          disabled: hasRegistered,
           onChangeValue,
         },
         {
           elementType: "input",
-          label: "Enter Last Name",
+          label: "Last Name",
           name: "last_name",
           error: errLastName,
           value: last_name,
-          disabled: hasRegistered,
           onChangeValue,
         },
         {
           elementType: "input",
-          label: "Enter Account Number",
-          name: "account_no",
-          disabled: hasRegistered,
-          error: errAccountNo,
-          value: account_no,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Enter E-mail",
+          label: "E-mail",
           name: "email",
           value: email,
           error: errEmail,
@@ -340,70 +323,78 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Enter Phone Number",
+          label: "Phone Number",
           name: "phone_no",
           error: errPhoneNo,
           value: phone_no,
-          disabled: hasRegistered,
           onChangeValue,
         },
         {
           elementType: "input",
-          label: "Enter Address Line1",
-          name: "address_line1",
-          error: errAddressLine1,
-          value: address_line1,
-          disabled: hasRegistered,
+          label: "Account Number",
+          name: "account_no",
+          disabled: !!user?.user_accounts?.length,
+          error: errAccountNo,
+          value: account_no,
           onChangeValue,
         },
+      ],
+    },
+    {
+      title: "Address",
+      wrapperClassGrid: styles.address_details,
+      childElements: [
         {
           elementType: "input",
-          label: "Enter Address Line2",
-          name: "address_line2",
-          error: errAddressLine2,
-          value: address_line2,
-          disabled: hasRegistered,
+          label: "Home Address",
+          name: "address",
+          error: errAddress,
+          value: address,
           onChangeValue,
         },
         {
           elementType: "drop-down",
-          label: "Select Country",
+          label: "Country",
           name: "country",
           options: countries,
           error: errCountry,
           value: country,
-          disabled: hasRegistered,
           onChangeValue: onChangeCountry,
         },
         {
           elementType: "drop-down",
-          label: "Select State",
+          label: "State",
           name: "state",
           options: states,
           error: errState,
-          disabled: !country || hasRegistered,
+          disabled: !country,
           value: state,
           onChangeValue: onChangeState,
         },
         {
           elementType: "drop-down",
-          label: "Select City/District",
+          label: "City/District",
           name: "city",
           options: cities,
           error: errCity,
-          disabled: !state || hasRegistered,
+          disabled: !state,
           value: city,
           onChangeValue,
         },
         {
           elementType: "input",
-          label: "Enter Zip Code",
+          label: "PinCode",
           name: "zip_code",
           value: zip_code,
           error: errZipCode,
-          disabled: hasRegistered,
           onChangeValue,
         },
+      ],
+    },
+    {
+      title: "Identification",
+      wrapperClassGrid: `flex-col ${styles.id_types}`,
+      childElements: [
         {
           elementType: "drop-down",
           label: "Select ID issued country",
@@ -411,7 +402,6 @@ const useHandler = (styles: IStyle) => {
           options: countries,
           error: errIdIssuedCountry,
           value: id_issued_country,
-          disabled: hasRegistered,
           onChangeValue,
         },
         {
@@ -421,7 +411,6 @@ const useHandler = (styles: IStyle) => {
           options: ID_PROOFS,
           error: errIdType,
           value: id_type,
-          disabled: hasRegistered,
           onChangeValue,
         },
         {
@@ -430,7 +419,6 @@ const useHandler = (styles: IStyle) => {
           name: "id_number",
           error: errIdType,
           value: id_number,
-          disabled: hasRegistered,
           onChangeValue,
         },
         {
@@ -441,7 +429,6 @@ const useHandler = (styles: IStyle) => {
           value: kyc,
           error: errKyc,
           children: <CustomUpload />,
-          disabled: hasRegistered,
           onChangeValue,
         },
       ],
@@ -456,33 +443,22 @@ const useHandler = (styles: IStyle) => {
     const {isValid} = onValidate()
 
     if (isValid) {
-      const payload: IPayloadSyncUser = {
+      updateUser({
         first_name,
         last_name,
         email,
         phone_no,
         country_id: country.key as number,
         state_id: state.key as number,
-        address_line1,
-        address_line2,
+        address,
         city_id: city.key as number,
         zip_code,
         id_type,
         id_issued_country_id: id_issued_country.key as number,
         id_number,
-        bank_account: {
-          account_no,
-          account_type: account_type?.find(({isSelected}) => isSelected)?.label,
-        },
+        bank_account: {account_no, account_type: account_type?.find(({isSelected}) => isSelected)?.label},
         kyc: kyc.filter(({file}) => !!file),
-      }
-
-      // if (user.email) delete payload.email
-
-      // if (hasRegistered) delete payload.bank_account.account_no
-
-      if (!hasRegistered) updateUser(payload)
-      else push(ROUTE_INITIATE_TRANSACTION)
+      })
     }
   }
 
@@ -496,7 +472,7 @@ export default useHandler
 
 export const CustomUpload = (styles: IStyle) => (
   <section className={`flex ${styles.upload_container}`}>
-    <ImageView src={assets.ic_cloudUpload} alt={"upload"} imgSize={24} />
+    {/* <ImageView src={assets.ic_cloudUpload} alt={"upload"} imgSize={24} /> */}
     <h5 className={styles.text_wrapper}>Upload Front Side of the Document</h5>
   </section>
 )

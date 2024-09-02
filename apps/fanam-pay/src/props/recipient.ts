@@ -1,3 +1,5 @@
+import {IFormData, JSONObject} from "@fanam-pkg/core-utils"
+
 export interface RecipientPreviewProps {
   label: string
   value: string
@@ -9,4 +11,9 @@ export interface RecipientDetailsProp {
 
 export interface RecipientCardProps {
   onEdit?: (id?: string) => void
+  onChangeData?: (value: JSONObject) => void
+  isSame?: boolean
+  isPerson?: IFormData
+  relation?: string
+  error?: string
 }

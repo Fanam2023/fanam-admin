@@ -3,24 +3,53 @@
 @mixin grid-3
   display: grid
 
+.input_wrapper
+  margin-top: $size-10px
+
+.details_wrapper
+  @include grid-3
+  grid-template-columns: 0.5fr 0.5fr
+  gap: $size-24px
+  margin:
+    top: $size-20px
+
+.address
+  gap: $size-24px
+  margin:
+    top: $size-20px
+    bottom: $size-20px
+
 .beneficiary_address_wrapper
   @include grid-3
   gap: $size-24px
-  margin: $size-24px 0
+  margin:
+    top: $size-20px
+    bottom: $size-24px
 
 .footer_wrapper
   position: absolute
   bottom: 0
   justify-content: flex-end
   gap: $size-20px
-  box-shadow: 0 -5px 5px -5px $dark-border-grey
   padding: $size-8px
   width: 95%
   background: $white
 
+.address_wrapper
+  @include grid-3
+  margin:
+    top: $size-10px
+    bottom: $size-10px
+  gap: $size-24px
+  grid-template-columns: 0.5fr 0.5fr
+
 .btn_wrapper
+  width: 100%
   height: $size-40px
-  margin-top: $size-10px
+  margin:
+    top: $size-10px
+    right: $size-12px
+  background-color: $theme
 
 @include mixin-responsive
   .input_wrapper

@@ -21,6 +21,7 @@ export const apiTransaction = (transaction_id: string) => `${API_TRANSACTION}/${
 export const API_SENDER_KYC = "/file-upload/sender-kyc"
 export const API_RECIPIENT_KYC = "/file-upload/recipient-kyc"
 export const API_INVOICE = "/file-upload/invoice"
+export const API_SENDING_PURPOSE = "/sending-purpose"
 export const API_REGISTER_START = "/auth/register-start"
 export const API_REGISTER_FINISH = "/auth/register-finish"
 export const API_AUTHENTICATION_START = "/auth/login-start"

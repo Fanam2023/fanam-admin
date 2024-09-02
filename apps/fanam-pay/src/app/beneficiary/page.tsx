@@ -11,11 +11,11 @@ const BeneficiaryPage = () => {
   const {onNav, beneficiaries, onChangeSearch, routeToDetails, isDesktop, onBack, linkBeneficiary, searchQuery} =
     useHandler()
 
-  const renderBeneficiary = ({beneficiary_name, email, beneficiary_id}: IBeneficiary) => (
+  const renderBeneficiary = ({first_name, last_name, email, beneficiary_id}: IBeneficiary) => (
     <ManageMembers
       key={beneficiary_id}
       description={email}
-      title={beneficiary_name}
+      title={`${first_name}${last_name}`}
       onEdit={routeToDetails.bind(null, beneficiary_id)}
       onSelect={linkBeneficiary.bind(null, beneficiary_id)}
     />
@@ -50,7 +50,7 @@ const BeneficiaryPage = () => {
         )}
       </section>
       <h5 className={`bold ${styles.save_text}`}>Saved Beneficiary</h5>
-      {beneficiaries?.map(renderBeneficiary)}
+      <ul className={styles.members}>{beneficiaries?.map(renderBeneficiary)}</ul>
     </BaseContainer>
   )
 }

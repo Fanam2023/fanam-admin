@@ -58,7 +58,6 @@ const TransactionStatusPage = () => {
     {
       label: "Payment Status",
       value: statusText,
-      icon: smallIcon,
     },
     {
       label: "Payment Time",
@@ -66,11 +65,10 @@ const TransactionStatusPage = () => {
     },
   ]
 
-  const renderPaymentDetails = ({label, icon, value}: PaymentDetailsProps, index: number) => (
+  const renderPaymentDetails = ({label, value}: PaymentDetailsProps, index: number) => (
     <section className={`flex-sb-center ${styles.content}`} key={index}>
       <h5>{label}</h5>
       <section className={`flex ${styles.img_section}`}>
-        {!!icon && <ImageView src={icon} alt="status-icon" imgSize={20}></ImageView>}
         <h5>{value}</h5>
       </section>
     </section>
@@ -87,29 +85,41 @@ const TransactionStatusPage = () => {
       skipBtn="Download Receipt"
       stepIndex="pending"
       onBack={onBack}>
-      <section className={`flex-col-center ${styles.page_wrapper}`}>
-        <section className={`flex-col-center ${styles.payment_status_wrapper}`}>
-          <ImageView src={bigIcon} alt={"status-icon"} imgSize={56} />
-          <h4 className={styles.payment_text}>{title}</h4>
-          <h2 className={styles.currency_text}>{"$ 707"}</h2>
+      <section className={`flex-col ${styles.heading_wrapper}`}>
+        <h4 className="bold">Payment Status</h4>
+        <h5>Get the payment status after sending the money.</h5>
+      </section>
+      <section className={`flex-col-center ${styles.payment_status_wrapper}`}>
+        <ImageView src={bigIcon} alt={"status-icon"} imgSize={56} />
+        <h4 className={`bold ${styles.payment_text}`}>{title}</h4>
+        <h4 className={`bold  ${styles.currency_text}`}>{"$ 707"}</h4>
+      </section>
+      <section className={styles.source_payment_wrapper}>
+        <h4 className={styles.source_payment}>Source of Payment</h4>
+        <section className={`flex ${styles.account_wrapper}`}>
+          <ImageView src={assets.ic_account} alt="bank-image" imgSize={20} />
+          <h5>Bank Account</h5>
         </section>
-        <section className={`flex-col ${styles.payment_details_wrapper}`}>
-          <h4>Payment Details</h4>
+        <hr className={styles.separator} />
+        <section>
+          <h4 className={styles.source_payment}>Payment Details</h4>
           <ul>{PAYMENT_DETAILS.map(renderPaymentDetails)}</ul>
           <hr className={styles.separator} />
           <section className={`flex-sb-center ${styles.total}`}>
             <h5>Total Payment</h5>
-            <h5>{"$ 707"}</h5>
+            <h5 className={styles.source_payment}>{"$ 707"}</h5>
           </section>
         </section>
-        <section className={`flex-sb-center ${styles.payment_helper_wrapper}`}>
-          <ImageView src={assets.ic_help} alt={"help-icon"} imgSize={48} />
+      </section>
+      <section className={`flex-sb-center ${styles.payment_helper_wrapper}`}>
+        <section className={`flex ${styles.payment_helper_container}`}>
+          <ImageView src={assets.ic_help_theme} alt={"help-icon"} imgSize={32} />
           <section className={`flex-col ${styles.helper_wrapper}`}>
-            <h4>Trouble With Your Payment?</h4>
-            <h5>Let us know on help center now!</h5>
+            <h5 className="bold">Trouble With Your Payment?</h5>
+            <h6>Let us know on help center now!</h6>
           </section>
-          <ImageView src={assets.ic_arrow_theme} alt={"right-arrow"} imgSize={20} />
         </section>
+        <ImageView src={assets.ic_arrow_theme} alt={"right-arrow"} imgSize={20} />
       </section>
     </BaseContainer>
   )

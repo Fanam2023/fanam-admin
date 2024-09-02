@@ -1,0 +1,58 @@
+"use client"
+
+import {DropDown, FileUpload, TextArea} from "@fanam-pkg/core-ui-sass"
+import {BaseContainer} from "organisms"
+import useHandler from "./handler"
+import styles from "./page.module.sass"
+
+const PurposeOfSending = () => {
+  const {onChangeValue, PURPOSES, onSubmit, data, errState} = useHandler()
+  const {purpose, reason} = data
+  const {errDoc, errPurpose, errReason} = errState
+
+  return (
+    <BaseContainer
+      stepIndex={3}
+      buttonText="Next"
+      skipBtn="Back"
+      childWrapper={styles.page_wrapper}
+      onSubmit={onSubmit}>
+      <section className={`flex-col ${styles.heading_wrapper}`}>
+        <h4 className="bold">Purpose of Sending Money</h4>
+        <h5>
+          Estimated value for converting your money from one currency to another based on the current exchange rates.
+        </h5>
+      </section>
+      <section className={styles.card_wrapper}>
+        <h5 className="bold">Purpose of Sending Money</h5>
+        <DropDown
+          options={PURPOSES}
+          wrapperClass={styles.drop_down_wrapper}
+          label="Purpose of Sending Money"
+          selected={purpose}
+          name="purpose"
+          onChangeData={onChangeValue}
+          error={errPurpose}
+        />
+        <section className={styles.text_area_wrapper}>
+          <TextArea
+            maxLength={50}
+            wrapperClass={styles.text_area_wrapper}
+            label="Brief purpose of sending Money"
+            name="reason"
+            value={reason}
+            onChangeData={onChangeValue}
+            error={errReason}
+          />
+        </section>
+        <section className={styles.upload_wrapper}>
+          <h5 className="bold">Upload Document </h5>
+          <p className={styles.child_text}>Upload the supporting document related to the purpose of sending money</p>
+          <FileUpload wrapperClass={styles.file_upload} name="doc" onChangeData={onChangeValue} error={errDoc} />
+        </section>
+      </section>
+    </BaseContainer>
+  )
+}
+
+export default PurposeOfSending

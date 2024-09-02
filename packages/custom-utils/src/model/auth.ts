@@ -47,8 +47,7 @@ export interface IUser {
   last_name: string
   email: string
   phone_no: string
-  address_line1: string
-  address_line2: string
+  address: string
   zip_code: string
   role?: TypeUserRole
   country: ICountry
@@ -66,8 +65,8 @@ export interface IBaseSyncUser {
   last_name: string
   email?: string
   phone_no: string
-  address_line1: string
-  address_line2: string
+  address: string
+  // address_line2: string
   zip_code: string
   id_number: string
   id_type: string
