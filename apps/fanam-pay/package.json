@@ -16,8 +16,8 @@
   },
   "private": true,
   "dependencies": {
-    "@fanam-pkg/core-ui-sass": "^1.0.5",
-    "@fanam-pkg/core-utils": "^1.0.2",
+    "@fanam-pkg/core-ui-sass": "^1.0.6",
+    "@fanam-pkg/core-utils": "^1.0.3",
     "@custom/ui": "workspace:*",
     "@custom/utils": "workspace:*",
     "@tanstack/react-query": "^5.29.2",
