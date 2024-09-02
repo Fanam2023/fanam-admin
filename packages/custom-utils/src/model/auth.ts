@@ -1,4 +1,5 @@
 import {IFile, IFormData} from "@fanam-pkg/core-utils"
+import type {AuthenticationResponseJSON, RegistrationResponseJSON} from "@simplewebauthn/types"
 import {IAttachment, ICity, ICountry, IState, TypeUserRole} from "../model"
 
 export interface IResponseLogin {
@@ -8,6 +9,14 @@ export interface IResponseLogin {
 
 export interface IResponseUpdateUser extends IResponseLogin {
   user: IUser
+}
+
+export interface IResponseWebAuthRegistration extends RegistrationResponseJSON {
+  challenge: string
+}
+
+export interface IResponseWebAuthLogin extends AuthenticationResponseJSON {
+  challenge: string
 }
 
 export interface IJwtUser {

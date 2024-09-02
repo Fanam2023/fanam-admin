@@ -23,6 +23,7 @@
     "@fanam-pkg/prettier": "^1.1.1",
     "@fanam-pkg/style-lint": "^1.0.0",
     "@fanam-pkg/ts-config": "^1.0.0",
+    "@simplewebauthn/types": "^10.0.0",
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.77",
     "eslint": "^8.56.0",
