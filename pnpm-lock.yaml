@@ -194,11 +194,14 @@ importers:
         specifier: workspace:*
         version: link:../../packages/custom-utils
       '@fanam-pkg/core-ui-sass':
-        specifier: ^1.0.6
-        version: 1.0.6(@babel/core@7.24.7)(sass@1.77.1)
+        specifier: ^1.0.8
+        version: 1.0.8(@babel/core@7.24.7)(sass@1.77.1)
       '@fanam-pkg/core-utils':
         specifier: ^1.0.3
         version: 1.0.3(react@18.3.1)
+      '@simplewebauthn/browser':
+        specifier: ^10.0.0
+        version: 10.0.0
       '@tanstack/react-query':
         specifier: ^5.29.2
         version: 5.36.0(react@18.3.1)
@@ -236,6 +239,9 @@ importers:
       '@fanam-pkg/ts-config':
         specifier: ^1.0.0
         version: 1.0.0
+      '@simplewebauthn/types':
+        specifier: ^10.0.0
+        version: 10.0.0
       '@types/google.maps':
         specifier: ^3.55.7
         version: 3.55.8
@@ -1137,8 +1143,8 @@ packages:
   '@fanam-pkg/core-ui-sass@1.0.5':
     resolution: {integrity: sha512-KT7WddKmIY2uLTbFEyV4xEUjvVbssAwgK0NjLI7gK1Sau1Kw+wC3wRojPL8+e1zpyaF3E4rSeojtokhdyihFwA==}
 
-  '@fanam-pkg/core-ui-sass@1.0.6':
-    resolution: {integrity: sha512-uqKuSPGZCkPXHLV080q6lDyqy9qUSruj5EM4nWNUAFFsYAOXviXaS1lT5q0jTnsOJlt0ugscA10F+URWCs4/tw==}
+  '@fanam-pkg/core-ui-sass@1.0.8':
+    resolution: {integrity: sha512-RcAT2aerCfIQv0XcV940Y4yPuAFPj63T8ahQfLbvMrrP/Hs4KsJaXan9yT4Of/z1M+Cue8DpUviohNt9CtPaAg==}
 
   '@fanam-pkg/core-utils@1.0.2':
     resolution: {integrity: sha512-+9Ff5fpfPZ7JIM/qxVKEuwF5eAc3tB4Q70mnPTiLVWT/o1nsWOc4DS+dNgxAQQ4QYVmojpoHZNEPj5PYA9SFTA==}
@@ -1366,6 +1372,7 @@ packages:
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
     engines: {node: '>=10.10.0'}
+    deprecated: Use @eslint/config-array instead
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -1373,6 +1380,7 @@ packages:
 
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
+    deprecated: Use @eslint/object-schema instead
 
   '@img/sharp-darwin-arm64@0.33.3':
     resolution: {integrity: sha512-FaNiGX1MrOuJ3hxuNzWgsT/mg5OHG/Izh59WW2mk1UwYHUwtfbhk5QNKYZgxf0pLOhx9ctGiGa2OykD71vOnSw==}
@@ -1655,6 +1663,12 @@ packages:
 
   '@rushstack/eslint-patch@1.10.2':
     resolution: {integrity: sha512-hw437iINopmQuxWPSUEvqE56NCPsiU8N4AYtfHmJFckclktzK9YQJieD3XkDCDH4OjL+C7zgPUh73R/nrcHrqw==}
+
+  '@simplewebauthn/browser@10.0.0':
+    resolution: {integrity: sha512-hG0JMZD+LiLUbpQcAjS4d+t4gbprE/dLYop/CkE01ugU/9sKXflxV5s0DRjdz3uNMFecatRfb4ZLG3XvF8m5zg==}
+
+  '@simplewebauthn/types@10.0.0':
+    resolution: {integrity: sha512-SFXke7xkgPRowY2E+8djKbdEznTVnD5R6GO7GPTthpHrokLvNKw8C3lFZypTxLI7KkCfGPfhtqB3d7OVGGa9jQ==}
 
   '@surma/rollup-plugin-off-main-thread@2.2.3':
     resolution: {integrity: sha512-lR8q/9W7hZpMWweNiAKU7NQerBnzQQLvi8qnTDU/fxItPhtZVMbPV3lbCwjhIlNBe9Bbr5V+KHshvWmVSG9cxQ==}
@@ -3055,6 +3069,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -3970,10 +3985,12 @@ packages:
 
   rimraf@2.7.1:
     resolution: {integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==}
+    deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
   rimraf@3.0.2:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
+    deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
   rimraf@5.0.7:
@@ -5758,7 +5775,7 @@ snapshots:
       - debug
       - sass
 
-  '@fanam-pkg/core-ui-sass@1.0.6(@babel/core@7.24.7)(sass@1.77.1)':
+  '@fanam-pkg/core-ui-sass@1.0.8(@babel/core@7.24.7)(sass@1.77.1)':
     dependencies:
       '@fanam-pkg/core-utils': 1.0.3(react@18.3.1)
       next: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1)
@@ -6429,6 +6446,12 @@ snapshots:
       rollup: 2.79.1
 
   '@rushstack/eslint-patch@1.10.2': {}
+
+  '@simplewebauthn/browser@10.0.0':
+    dependencies:
+      '@simplewebauthn/types': 10.0.0
+
+  '@simplewebauthn/types@10.0.0': {}
 
   '@surma/rollup-plugin-off-main-thread@2.2.3':
     dependencies:
