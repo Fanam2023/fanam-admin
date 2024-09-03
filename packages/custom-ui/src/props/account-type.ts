@@ -1,4 +1,4 @@
-import {IFormData} from "@fanam-pkg/core-ui-sass"
+import {IFormData} from "@fanam-pkg/core-utils"
 import {StaticImageData} from "next/image"
 
 export interface PropsButtonAccountType {

@@ -25,6 +25,7 @@ const useHandler = () => {
       if (result) push(ROUTE_HOME)
     },
   })
+  const stringToBase64 = (inputString: string) => Buffer.from(inputString).toString("base64")
 
   const {mutate: createUser, data: logInRes} = useMutation({mutationFn: login})
 

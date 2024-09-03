@@ -26,7 +26,7 @@ const useHandler = (styles: IStyle) => {
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
 
-  const {first_name, last_name, email, phone_no, account_type, newPin, confirmPin, country_code} = data
+  const {first_name, last_name, email, phone_no, account_type, country_code} = data
 
   const {isClicked} = errData
 
@@ -95,12 +95,8 @@ const useHandler = (styles: IStyle) => {
   useEffect(() => {
     const storedData = getStorage<IBaseSignUp>(SESSION_SIGNUP)
     if (storedData) setData(storedData)
-    const {newPin, confirmPin} = storedData || {}
 
-    const encryptedPin = base64ToString(newPin)
-    const encryptedConfirmPin = base64ToString(confirmPin)
-
-    if (storedData) setData({...storedData, newPin: encryptedPin, confirmPin: encryptedConfirmPin})
+    if (storedData) setData({...storedData})
   }, [])
 
   useEffect(() => {
@@ -188,8 +184,6 @@ const useHandler = (styles: IStyle) => {
 
   const onSubmit = () => {
     const {isValid} = onValidate()
-    const newPinBase64 = stringToBase64(newPin)
-    const confirmPinPinBase64 = stringToBase64(confirmPin)
 
     if (isValid) {
       const payload: IBaseSignUp = {
@@ -199,8 +193,6 @@ const useHandler = (styles: IStyle) => {
         phone_no,
         country_code: country_code ? `+${(country_code as ICountry).phone_code}` : "+91",
         account_type,
-        newPin: newPinBase64,
-        confirmPin: confirmPinPinBase64,
       }
       setStorage(SESSION_SIGNUP, payload)
       push(ROUTE_OTP)
