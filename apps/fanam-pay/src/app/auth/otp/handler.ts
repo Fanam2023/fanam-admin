@@ -1,7 +1,7 @@
 import {REG_VALID_NUMBER, useCommon, useFirebase, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState} from "react"
-import {IUserBase, SESSION_SIGNUP} from "@custom/utils"
+import {IBaseSignUp, SESSION_SIGNUP} from "@custom/utils"
 import {ROUTE_PIN} from "utils"
 
 const useHandler = () => {
@@ -12,10 +12,10 @@ const useHandler = () => {
   const [timer, setTimer] = useState(60)
   const inputRefs = useRef<(HTMLInputElement | null)[]>(Array(6).fill(null))
   const [errState, setErrState] = useState({errOtp: "", isClicked: false, isValid: false})
-  const [signUpData, setSignUpData] = useState<IUserBase | null>(null)
-  const country_code = "+91"
+  const [signUpData, setSignUpData] = useState<IBaseSignUp | null>(null)
+  const [loading, setLoading] = useState(false)
   const {isClicked, errOtp} = errState
-  const {phone_no} = signUpData || {}
+  const {phone_no, country_code} = signUpData || {}
 
   const {sendOtp, verifyOTP} = useFirebase(
     () => push(ROUTE_PIN),
@@ -27,11 +27,14 @@ const useHandler = () => {
 
     const onComplete = () => inputRefs.current[0]?.focus()
 
-    if (phone_no?.length === 10) sendOtp(country_code, phone_no, onComplete, onComplete)
+    if (phone_no?.length === 10) {
+      setLoading(true)
+      sendOtp(country_code as string, phone_no, onComplete, onComplete)
+    }
   }, [phone_no])
 
   useEffect(() => {
-    const storedData = getStorage<IUserBase>(SESSION_SIGNUP)
+    const storedData = getStorage<IBaseSignUp>(SESSION_SIGNUP)
     if (storedData) setSignUpData(storedData)
   }, [])
 
@@ -101,7 +104,7 @@ const useHandler = () => {
   const onResend = () => {
     onResendOTP()
     resetOTP()
-    sendOtp(country_code, phone_no, () => {
+    sendOtp(country_code as string, phone_no, () => {
       console.log("SENT FIREBASE OTP Again Successfully >>>>>>>>>>")
     })
   }

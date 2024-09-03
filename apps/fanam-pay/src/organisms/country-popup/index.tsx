@@ -1,9 +1,16 @@
-import {ImageView} from "@fanam-pkg/core-ui-sass"
+import {ImageView, TextField} from "@fanam-pkg/core-ui-sass"
+import {useState} from "react"
 import {ICountry} from "@custom/utils"
 import {CountryPopupProps} from "props"
 import styles from "./country.module.sass"
 
 export const CountryPopup = ({onSelect, selCountry, countries}: CountryPopupProps) => {
+  const [searchTerm, setSearchTerm] = useState<string>("")
+
+  const filteredCountry = countries?.filter(({country_name}) =>
+    country_name?.toLowerCase()?.includes(searchTerm?.toLowerCase())
+  )
+
   const renderCountries = (country: ICountry) => {
     const {country_id, country_name, iso2} = country
     return (
@@ -22,10 +29,26 @@ export const CountryPopup = ({onSelect, selCountry, countries}: CountryPopupProp
     )
   }
 
+  const onSearchChange = (value: string) => {
+    setSearchTerm(value)
+  }
+
   return (
     <section>
-      <h3>Select a country</h3>
-      <ul className={styles.layout_wrapper}>{countries?.map(renderCountries)}</ul>
+      <TextField
+        label="Enter country name"
+        value={searchTerm}
+        onChangeData={onSearchChange}
+        wrapperClass={styles.search_wrapper}
+      />
+      <h3 className={styles.select_country_text}>Select a country</h3>
+      {filteredCountry && filteredCountry.length > 0 ? (
+        <ul className={styles.layout_wrapper}>{filteredCountry?.map(renderCountries)}</ul>
+      ) : (
+        <section className={`flex-col-center ${styles.no_data_wrapper}`}>
+          <h4 className={`bold ${styles.found_text}`}>No countries found</h4>
+        </section>
+      )}
     </section>
   )
 }

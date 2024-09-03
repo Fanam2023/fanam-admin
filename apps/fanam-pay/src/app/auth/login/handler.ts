@@ -32,7 +32,7 @@ const useHandler = () => {
     if (logInRes) {
       const {result, errorData} = logInRes
 
-      if (result) replace(`route to home screen`)
+      if (result) replace(ROUTE_HOME)
       else
         toggleNotify({title: "Login Error", description: errorData?.message || "Something went wrong", type: "error"})
     }
@@ -68,11 +68,12 @@ const useHandler = () => {
   const onSubmit = () => {
     const {isValid} = onValidate()
     const {phone_no, pin} = data
+    const pinBase64 = stringToBase64(pin)
 
     if (isValid) {
       const payload: IPayloadLogin = {
         phone_no,
-        pin,
+        pin: pinBase64,
       }
       createUser(payload)
     }

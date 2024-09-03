@@ -5,33 +5,25 @@ import {BankCartProps, BankListProps} from "props"
 
 export const SIDE_BAR: IStepper[] = [
   {
-    title: "Add Sender Details",
-    description: "Enter Sender Details",
+    title: "Sender Details",
+    description: "Essential for verification and processing your transactions securely and efficiently.",
   },
   {
-    title: "Cross Border Remittance",
-    description:
-      "Get your conversion estimate. Provide sender and recipient type along with the purpose of sending money.",
-  },
-  {
-    title: "Upload Document",
-    description: "Upload the supporting document related to the purpose of sending money.",
-  },
-  {
-    title: "Recipient Details",
+    title: "Add Recipient",
     description: "Enter the Recipient details and their account details.",
   },
   {
-    title: "Recipient Review Details",
-    description: "Review the details of the recipient details and their account details.",
-  },
-  {
-    title: "Beneficiary Details",
+    title: "Add Beneficiary",
     description: "If your recipient and beneficiary are different, enter the beneficiary details.",
   },
   {
-    title: "Mode of Payment",
-    description: "Choose the payment option from the list.",
+    title: "Payout Estimate",
+    description:
+      "Estimated value for converting your money from one currency to another based on the current exchange rates.",
+  },
+  {
+    title: "Review and Send",
+    description: "Review the details of the recipient details and their account details.",
   },
   {
     title: "Payment Status",

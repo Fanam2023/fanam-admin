@@ -1,18 +1,14 @@
 "use client"
 
 import {ImageView} from "@fanam-pkg/core-ui-sass"
-import {ReactNode} from "react"
 import assets from "assets"
+import {AuthProps} from "props"
 import useHandler from "./handler"
 import styles from "./styles.module.sass"
 
-export interface authProps {
-  children: ReactNode
-  isBack?: boolean
-}
-
-export const Auth = ({children, isBack}: authProps) => {
+export const Auth = ({children, isBack}: AuthProps) => {
   const {back} = useHandler()
+
   return (
     <section className={`${styles.main_container}`}>
       <section className={styles.img_container}>
