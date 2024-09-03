@@ -110,12 +110,12 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         {queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries},
         {
           queryKey: [`${QUERY_STATES}-${country?.key}`, country],
-          queryFn: () => getStates(country?.key as string),
+          queryFn: () => getStates(country?.key),
           enabled: !!country,
         },
         {
-          queryKey: [`${QUERY_CITIES}-${country?.key}`, state],
-          queryFn: () => getCities(state?.key as string),
+          queryKey: [`${QUERY_CITIES}-${state?.key}`, state],
+          queryFn: () => getCities(state?.key),
           enabled: !!state,
         },
         {
@@ -161,17 +161,17 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     },
   })
 
-  const countries: IFormData[] = useMemo(
+  const countries: IFormData<number>[] = useMemo(
     () => allCountries.map(({country_id, country_name}) => ({key: country_id, label: country_name})),
     [allCountries]
   )
 
-  const states: IFormData[] = useMemo(
+  const states: IFormData<number>[] = useMemo(
     () => allStates.map(({state_id, state_name}) => ({key: state_id, label: state_name})),
     [allStates]
   )
 
-  const cities: IFormData[] = useMemo(
+  const cities: IFormData<number>[] = useMemo(
     () => allCities.map(({city_id, city_name}) => ({key: city_id, label: city_name})),
     [allCities]
   )
@@ -359,9 +359,9 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         email,
         phone_no,
         address,
-        country_id: country.key as number,
-        state_id: state.key as number,
-        city_id: city.key as number,
+        country_id: country.key,
+        state_id: state.key,
+        city_id: city.key,
         zip_code,
         relationship,
         transaction_id,

@@ -30,9 +30,9 @@ export interface IBaseBeneficiary {
 }
 
 export interface IBeneficiaryData extends IBaseBeneficiary {
-  country: IFormData | null
-  state: IFormData | null
-  city: IFormData | null
+  country: IFormData<number> | null
+  state: IFormData<number> | null
+  city: IFormData<number> | null
 }
 
 export interface IPayloadBeneficiary extends IBaseBeneficiary {

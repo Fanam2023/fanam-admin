@@ -27,11 +27,11 @@ importers:
         specifier: workspace:*
         version: link:../../packages/custom-utils
       '@fanam-pkg/core-ui-sass':
-        specifier: ^1.0.5
-        version: 1.0.5(@babel/core@7.24.5)(sass@1.77.1)
+        specifier: ^1.0.10
+        version: 1.0.10(@babel/core@7.24.5)(sass@1.77.1)
       '@fanam-pkg/core-utils':
-        specifier: ^1.0.2
-        version: 1.0.2(react@18.3.1)
+        specifier: ^1.0.3
+        version: 1.0.3(react@18.3.1)
       '@tanstack/react-query':
         specifier: ^5.29.2
         version: 5.36.0(react@18.3.1)
@@ -109,11 +109,11 @@ importers:
         specifier: workspace:*
         version: link:../../packages/custom-utils
       '@fanam-pkg/core-ui-sass':
-        specifier: ^1.0.5
-        version: 1.0.5(@babel/core@7.24.7)(sass@1.77.1)
+        specifier: ^1.0.10
+        version: 1.0.10(@babel/core@7.24.7)(sass@1.77.1)
       '@fanam-pkg/core-utils':
-        specifier: ^1.0.2
-        version: 1.0.2(react@18.3.1)
+        specifier: ^1.0.3
+        version: 1.0.3(react@18.3.1)
       '@tanstack/react-query':
         specifier: ^5.29.2
         version: 5.36.0(react@18.3.1)
@@ -194,8 +194,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/custom-utils
       '@fanam-pkg/core-ui-sass':
-        specifier: ^1.0.8
-        version: 1.0.8(@babel/core@7.24.7)(sass@1.77.1)
+        specifier: ^1.0.10
+        version: 1.0.10(@babel/core@7.24.7)(sass@1.77.1)
       '@fanam-pkg/core-utils':
         specifier: ^1.0.3
         version: 1.0.3(react@18.3.1)
@@ -285,11 +285,11 @@ importers:
         specifier: workspace:*
         version: link:../custom-utils
       '@fanam-pkg/core-ui-sass':
-        specifier: ^1.0.5
-        version: 1.0.5(@babel/core@7.24.7)(sass@1.77.6)
+        specifier: ^1.0.10
+        version: 1.0.10(@babel/core@7.24.7)(sass@1.77.6)
       '@fanam-pkg/core-utils':
-        specifier: ^1.0.2
-        version: 1.0.2(react@18.3.1)
+        specifier: ^1.0.3
+        version: 1.0.3(react@18.3.1)
       next:
         specifier: ^14.2.0
         version: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6)
@@ -340,8 +340,8 @@ importers:
   packages/custom-utils:
     dependencies:
       '@fanam-pkg/core-utils':
-        specifier: ^1.0.2
-        version: 1.0.2(react@18.3.1)
+        specifier: ^1.0.3
+        version: 1.0.3(react@18.3.1)
       axios:
         specifier: ^1.7.2
         version: 1.7.2
@@ -1143,14 +1143,8 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@fanam-pkg/core-ui-sass@1.0.5':
-    resolution: {integrity: sha512-KT7WddKmIY2uLTbFEyV4xEUjvVbssAwgK0NjLI7gK1Sau1Kw+wC3wRojPL8+e1zpyaF3E4rSeojtokhdyihFwA==}
-
-  '@fanam-pkg/core-ui-sass@1.0.8':
-    resolution: {integrity: sha512-RcAT2aerCfIQv0XcV940Y4yPuAFPj63T8ahQfLbvMrrP/Hs4KsJaXan9yT4Of/z1M+Cue8DpUviohNt9CtPaAg==}
-
-  '@fanam-pkg/core-utils@1.0.2':
-    resolution: {integrity: sha512-+9Ff5fpfPZ7JIM/qxVKEuwF5eAc3tB4Q70mnPTiLVWT/o1nsWOc4DS+dNgxAQQ4QYVmojpoHZNEPj5PYA9SFTA==}
+  '@fanam-pkg/core-ui-sass@1.0.10':
+    resolution: {integrity: sha512-89AdMj09/B6ubDqsWv0nhsdt8Blt6Mx1y2Z4zLOGoqstI2KQOH0OQZHihTr9LoQi1F1N5aePfevoMibmLjOemQ==}
 
   '@fanam-pkg/core-utils@1.0.3':
     resolution: {integrity: sha512-d9cAKZUxzArqK+cn96u8iY60yMgWTr1/+9Jz7xh4uCb7jMdoSJWpM9p7Y1WNGGtt23y64naLkCcrUAmcfQgrCQ==}
@@ -5730,9 +5724,9 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
-  '@fanam-pkg/core-ui-sass@1.0.5(@babel/core@7.24.5)(sass@1.77.1)':
+  '@fanam-pkg/core-ui-sass@1.0.10(@babel/core@7.24.5)(sass@1.77.1)':
     dependencies:
-      '@fanam-pkg/core-utils': 1.0.2(react@18.3.1)
+      '@fanam-pkg/core-utils': 1.0.3(react@18.3.1)
       next: 14.2.3(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -5746,39 +5740,7 @@ snapshots:
       - debug
       - sass
 
-  '@fanam-pkg/core-ui-sass@1.0.5(@babel/core@7.24.7)(sass@1.77.1)':
-    dependencies:
-      '@fanam-pkg/core-utils': 1.0.2(react@18.3.1)
-      next: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-multi-carousel: 2.8.5
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@opentelemetry/api'
-      - '@playwright/test'
-      - '@react-native-async-storage/async-storage'
-      - babel-plugin-macros
-      - debug
-      - sass
-
-  '@fanam-pkg/core-ui-sass@1.0.5(@babel/core@7.24.7)(sass@1.77.6)':
-    dependencies:
-      '@fanam-pkg/core-utils': 1.0.2(react@18.3.1)
-      next: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      react-multi-carousel: 2.8.5
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@opentelemetry/api'
-      - '@playwright/test'
-      - '@react-native-async-storage/async-storage'
-      - babel-plugin-macros
-      - debug
-      - sass
-
-  '@fanam-pkg/core-ui-sass@1.0.8(@babel/core@7.24.7)(sass@1.77.1)':
+  '@fanam-pkg/core-ui-sass@1.0.10(@babel/core@7.24.7)(sass@1.77.1)':
     dependencies:
       '@fanam-pkg/core-utils': 1.0.3(react@18.3.1)
       next: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.1)
@@ -5794,19 +5756,21 @@ snapshots:
       - debug
       - sass
 
-  '@fanam-pkg/core-utils@1.0.2(react@18.3.1)':
+  '@fanam-pkg/core-ui-sass@1.0.10(@babel/core@7.24.7)(sass@1.77.6)':
     dependencies:
-      '@googlemaps/js-api-loader': 1.16.6
-      '@tanstack/react-query': 5.36.0(react@18.3.1)
-      axios: 1.7.2
-      dayjs: 1.11.11
-      firebase: 10.12.0
-      js-cookie: 3.0.5
-      jsonwebtoken: 8.5.1
+      '@fanam-pkg/core-utils': 1.0.3(react@18.3.1)
+      next: 14.2.3(@babel/core@7.24.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.6)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-multi-carousel: 2.8.5
     transitivePeerDependencies:
+      - '@babel/core'
+      - '@opentelemetry/api'
+      - '@playwright/test'
       - '@react-native-async-storage/async-storage'
+      - babel-plugin-macros
       - debug
-      - react
+      - sass
 
   '@fanam-pkg/core-utils@1.0.3(react@18.3.1)':
     dependencies:

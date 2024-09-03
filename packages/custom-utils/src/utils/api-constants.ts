@@ -8,8 +8,8 @@ export const API_USER = `user/me`
 export const API_SYNC_USER = `user/sync`
 export const API_LOCATION = "/location"
 export const API_COUNTRIES = `${API_LOCATION}/all-countries`
-export const apiStates = (countryId: string) => `${API_LOCATION}/countries/${countryId}`
-export const apiCities = (stateId: string) => `${API_LOCATION}/states/${stateId}`
+export const apiStates = (countryId: number) => `${API_LOCATION}/countries/${countryId}`
+export const apiCities = (stateId: number) => `${API_LOCATION}/states/${stateId}`
 export const API_PAYMENT = "/payment"
 export const API_FXRATE = `${API_PAYMENT}/fx-rate`
 export const API_RECIPIENT = "/recipient"
