@@ -20,14 +20,16 @@ export const ExchangeRate = () => {
     </section>
   )
 
+  const renderCards = (data: IExchange[]) => {
+    return data.map(({destination_country, source_country, rate}, index) => (
+      <Card key={index} destination_country={destination_country} source_country={source_country} rate={rate} />
+    ))
+  }
+
   return (
-    <section className={styles.conatiner_wrapper}>
+    <section className={styles.container_wrapper}>
       <h4 className={`bold ${styles.txt_wrapper}`}>Current exchange rate for popular corridors</h4>
-      <section className={`flex ${styles.detail_wrapper}`}>
-        {defaultData.map(({destination_country, source_country, rate}, index) => (
-          <Card key={index} destination_country={destination_country} source_country={source_country} rate={rate} />
-        ))}
-      </section>
+      <section className={`flex ${styles.detail_wrapper}`}>{renderCards(defaultData)}</section>
     </section>
   )
 }

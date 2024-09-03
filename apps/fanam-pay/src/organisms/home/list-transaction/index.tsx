@@ -20,7 +20,7 @@ export const ListTransaction = () => {
     paymentMode,
     paymentDuration,
   }: IDetail) => (
-    <section>
+    <section className={styles.page_wrapper}>
       <section className={`flex ${styles.content_wrapper}`}>
         <section className={`flex ${styles.detail_wrapper}`}>
           <section className={styles.date_wrapper}>
@@ -47,9 +47,30 @@ export const ListTransaction = () => {
           </section>
         </section>
       </section>
-      <section className={styles.line_wrapper} />
     </section>
   )
+
+  const renderCards = (data: IDetail[]) => {
+    return data.map(
+      (
+        {month, date, name, status, source_amount, destination_amount, paymentId, paymentMode, paymentDuration},
+        index
+      ) => (
+        <Card
+          key={index}
+          month={month}
+          date={date}
+          name={name}
+          paymentId={paymentId}
+          paymentMode={paymentMode}
+          paymentDuration={paymentDuration}
+          status={status}
+          source_amount={source_amount}
+          destination_amount={destination_amount}
+        />
+      )
+    )
+  }
 
   return (
     <section className={styles.conatiner_wrapper}>
@@ -57,25 +78,7 @@ export const ListTransaction = () => {
         <h4 className={`bold ${styles.txt_wrapper}`}>Recent Transaction Activity</h4>
         <GroupForm formSections={formElements} wrapperClass={styles.dropDown_wrappper} />
       </section>
-      {defaultData.map(
-        (
-          {month, date, name, status, source_amount, destination_amount, paymentId, paymentMode, paymentDuration},
-          index
-        ) => (
-          <Card
-            key={index}
-            month={month}
-            date={date}
-            name={name}
-            paymentId={paymentId}
-            status={status}
-            source_amount={source_amount}
-            destination_amount={destination_amount}
-            paymentMode={paymentMode}
-            paymentDuration={paymentDuration}
-          />
-        )
-      )}
+      {renderCards(defaultData)}
       <Button wrapperClass={styles.button_wrapper}>See More Activity</Button>
     </section>
   )
