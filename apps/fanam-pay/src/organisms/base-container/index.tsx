@@ -3,6 +3,7 @@
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import assets from "assets"
+import {useSingleton} from "hooks"
 import {IStepper} from "model"
 import {BaseContainerProps} from "props"
 import {SIDE_BAR} from "utils"
@@ -20,7 +21,10 @@ export const BaseContainer = ({
   stepIndex,
   onSubmit,
   onAdd,
+  isStepper,
 }: BaseContainerProps) => {
+  const {user} = useSingleton()
+  const {first_name} = user || {}
   const {isDesktop} = useResize()
 
   const renderSideBar = ({title, description}: IStepper, index: number) => {
@@ -61,9 +65,7 @@ export const BaseContainer = ({
             <h5 className={`medium ${styles.language_text}`}>Help</h5>
           </section>
           <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />
-          <section className={`${styles.profile_wrapper}`}>
-            <ImageView src={assets.img_bank} alt="help-icon" imgSize={40} />
-          </section>
+          <section className={styles.profile_wrapper}>{first_name}</section>
         </section>
         {!!addButton && (
           <h3 onClick={onAdd} className={styles.add_text}>
@@ -74,7 +76,7 @@ export const BaseContainer = ({
       <section className={styles.main_wrapper}>
         {isDesktop ? (
           <>
-            <nav className={`flex-col ${styles.nav_container}`}>{SIDE_BAR.map(renderSideBar)}</nav>
+            {!isStepper && <nav className={`flex-col ${styles.nav_container}`}>{SIDE_BAR.map(renderSideBar)}</nav>}
             <section className={childWrapper}>{children}</section>
           </>
         ) : (

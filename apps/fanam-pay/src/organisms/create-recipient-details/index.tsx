@@ -11,11 +11,8 @@ export const CreateRecipientDetails = ({recipient_id}: RecipientDetailsProp) => 
     <section>
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
       <footer className={`flex ${styles.footer_wrapper}`}>
-        <Button buttonType="primary-outlined" wrapperClass={styles.btn_wrapper} onClick={() => toggleSlider()}>
-          Back
-        </Button>
         <Button wrapperClass={styles.btn_wrapper} onClick={onSubmit}>
-          Continue
+          Add Recipient
         </Button>
       </footer>
     </section>

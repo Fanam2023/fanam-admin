@@ -1,9 +1,22 @@
 import {IFile, IFormData} from "@fanam-pkg/core-utils"
+import type {AuthenticationResponseJSON, RegistrationResponseJSON} from "@simplewebauthn/types"
 import {IAttachment, ICity, ICountry, IState, TypeUserRole} from "../model"
 
 export interface IResponseLogin {
   access_token: string
   refresh_token: string
+}
+
+export interface IResponseUpdateUser extends IResponseLogin {
+  user: IUser
+}
+
+export interface IResponseWebAuthRegistration extends RegistrationResponseJSON {
+  challenge: string
+}
+
+export interface IResponseWebAuthLogin extends AuthenticationResponseJSON {
+  challenge: string
 }
 
 export interface IJwtUser {
@@ -21,7 +34,21 @@ export interface ILogOutPayload {
 }
 
 export interface IPayloadLogin {
-  email: string
+  countryCode?: string
+  phone_no?: string
+  email?: string
+  pin?: string
+}
+
+export interface IUserBase {
+  country_code?: ICountry | string
+  phone_no?: string
+  email?: string
+  first_name?: string
+  last_name?: string
+  account_type?: string
+  newPin?: string
+  confirmPin?: string
 }
 
 export interface IUser {
@@ -29,8 +56,7 @@ export interface IUser {
   last_name: string
   email: string
   phone_no: string
-  address_line1: string
-  address_line2: string
+  address: string
   zip_code: string
   role?: TypeUserRole
   country: ICountry
@@ -48,8 +74,8 @@ export interface IBaseSyncUser {
   last_name: string
   email?: string
   phone_no: string
-  address_line1: string
-  address_line2: string
+  address: string
+  // address_line2: string
   zip_code: string
   id_number: string
   id_type: string
@@ -80,4 +106,20 @@ export interface IPayloadUserBankAccount {
 
 export interface IResponseBankAccount extends IPayloadUserBankAccount {
   account_id: string
+}
+
+export interface ISignUp {
+  first_name: string
+  last_name: string
+  email: string
+  phone_no: string
+  account_type: string
+  newPin: string
+  confirmPin: string
+  country_code?: ICountry | string
+}
+
+export interface ILogin {
+  phone_no: string
+  pin: string
 }

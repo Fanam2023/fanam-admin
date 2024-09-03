@@ -48,8 +48,8 @@ export const useHandler = () => {
 
   const filteredBeneficiaries = useMemo(() => {
     return beneficiaries?.filter(
-      ({beneficiary_name, email}) =>
-        beneficiary_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      ({first_name, email}) =>
+        first_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         email?.toLowerCase().includes(searchQuery.toLowerCase())
     )
   }, [beneficiaries, searchQuery])

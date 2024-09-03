@@ -1,31 +1,36 @@
 @use "../../styles/index" as *
-.page_container
-  width: 100%
-
 .search_container
-  width: 70%
   margin:
     top: 1%
-    left: 4%
+    left: 7%
   gap: $size-20px
 
 .recipient_wrapper
   margin:
-    top: 11%
-    left: 4%
+    top: 21%
+    left: 7%
   gap: $size-8px
 
-.recipient_text
-
 .add_text
-  color: $primary
+  color: $theme
   font-weight: $semi-bold
   cursor: pointer
 
 .save_text
   margin:
-    left: 4%
+    left: 7%
     top: $size-24px
+
+.members
+  display: grid
+  grid-template-columns: repeat(6,0.5fr)
+  grid-column-gap: $size-18px
+  grid-row-gap: $size-28px
+  margin:
+    left: 7%
+    top: $size-10px
+  height: 50%
+  overflow-y: scroll
 
 @include mixin-responsive
   .page_container

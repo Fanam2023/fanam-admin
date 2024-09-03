@@ -44,7 +44,7 @@ export const useHandler = () => {
     source_amount: "",
     destination_amount: "",
     recipient_account_type: [
-      {label: "Individual", isSelected: false},
+      {label: "Personal", isSelected: false},
       {label: "Business", isSelected: false},
     ],
     destination_country: null,
@@ -59,7 +59,7 @@ export const useHandler = () => {
 
   const {source_amount, destination_country, destination_amount, recipient_account_type, purpose, reason} = data
 
-  const isIndividual = recipient_account_type.find(({label, isSelected}) => isSelected && label === "Individual")
+  const isIndividual = recipient_account_type.find(({label, isSelected}) => isSelected && label === "Personal")
 
   const PURPOSES = isIndividual ? PURPOSES_INDIVIDUAL : PURPOSES_BUSINESS
 

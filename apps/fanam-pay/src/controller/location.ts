@@ -9,12 +9,12 @@ export const useLocationController = () => {
     return result || []
   }
 
-  const getStates = async (countryId: string) => {
+  const getStates = async (countryId: number) => {
     const {result} = await getRequest<IState[]>(apiStates(countryId))
     return result || []
   }
 
-  const getCities = async (stateId: string) => {
+  const getCities = async (stateId: number) => {
     const {result} = await getRequest<ICity[]>(apiCities(stateId))
     return result || []
   }

@@ -89,3 +89,15 @@ export interface IPayloadMergeRecipient {
   is_same_person: boolean
   recipient_relationship: string
 }
+
+export interface ITransactionPurpose {
+  purpose: IFormData | null
+  reason: string
+  doc: IFile
+}
+
+export interface IPayloadTransactionPurpose {
+  purpose: string
+  reason: string
+  doc: IFile
+}

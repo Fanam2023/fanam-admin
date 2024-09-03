@@ -1,12 +1,19 @@
 @use "../../styles/index" as *
 
+.recipient
+  margin-top: 12%
+
+.check_box_wrapper
+  gap: $size-12px
+  margin-top: $size-32px
+
 .details_wrapper
-  width: 60%
+  width: 70%
   padding: $size-20px $size-24px
   border: $size-1px solid $medium-grey
   border-radius: $size-10px
   overflow-y: scroll
-  margin-top: 10%
+  margin-top: $size-16px
 
 .account_wrapper
   width: 60%
@@ -17,9 +24,9 @@
   margin-top: 5%
 
 .card_wrapper
-  border-radius: $size-12px
-  padding: $size-18px
-  background-color: var(--primary)
+  border-radius: $size-10px
+  padding: $size-8px $size-16px
+  background-color: $theme
 
 .title_wrapper
   color: $white
@@ -34,6 +41,10 @@
 
 .field_wrapper
   opacity: $alpha-five
+
+.drop_down
+  margin:
+    top: 4%
 
 @include mixin-responsive
   .border_wrapper

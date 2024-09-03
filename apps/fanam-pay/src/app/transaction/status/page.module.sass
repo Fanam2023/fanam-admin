@@ -6,17 +6,11 @@
 @mixin mobile_width
   width: 100%
 
-@mixin common-styles
-  padding: $size-20px $size-18px
-  border: $size-1px solid $black
-  border-radius: $size-24px
-
 @mixin common-margin
   margin-top: $size-8px
 
 .page_container
-  width: 80%
-  overflow-y: scroll
+  width: 40%
 
 .page_wrapper
   margin:
@@ -24,13 +18,38 @@
     bottom: 9%
   gap: $size-16px
 
-.payment_status_wrapper
-  @include desktop_width
-  @include common-styles
+.heading_wrapper
+  margin:
+    top: 21%
+    left: 14%
+  gap: $size-8px
 
-.payment_details_wrapper
-  @include desktop_width
-  @include common-styles
+.payment_status_wrapper
+  padding: $size-24px $size-24px
+  box-shadow: 0 $size-1px $size-20px 0 rgba($black, $alpha-two)
+  margin:
+    left: 14%
+    top: $size-16px
+  width: 100%
+  border-radius: $size-6px
+  gap: $size-8px
+
+.source_payment_wrapper
+  padding: $size-24px $size-24px
+  box-shadow: 0 $size-1px $size-20px 0 rgba($black, $alpha-two)
+  margin:
+    left: 14%
+    top: $size-16px
+  width: 100%
+  border-radius: $size-6px
+  margin-top: $size-16px
+
+.source_payment
+  color: $theme
+
+.account_wrapper
+  gap: $size-12px
+  margin-top: $size-16px
 
 .content
   margin-top: $size-20px
@@ -41,11 +60,20 @@
   margin: $size-20px 0
 
 .payment_helper_wrapper
-  @include desktop_width
-  @include common-styles
+  padding: $size-20px $size-24px
+  box-shadow: 0 $size-1px $size-20px 0 rgba($black, $alpha-two)
+  margin:
+    left: 14%
+    top: $size-16px
+  width: 100%
+  border-radius: $size-6px
+  margin-top: $size-16px
 
 .helper_wrapper
-  gap: $size-10px
+  gap: $size-4px
+
+.payment_helper_container
+  gap: $size-16px
 
 .img_section
   gap: $size-6px
@@ -54,7 +82,7 @@
   @include common-margin
 
 .currency_text
-  @include common-margin
+  color: $theme
 
 .receipt_text
   display: none

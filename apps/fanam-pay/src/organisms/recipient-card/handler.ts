@@ -4,19 +4,8 @@ import {useSingleton} from "hooks"
 
 export const useHandler = () => {
   const {transData, refetchTransaction, transId} = useSingleton()
-  const {
-    first_name,
-    last_name,
-    address_line1,
-    email,
-    phone_no,
-    bank_account,
-    country,
-    state,
-    city,
-    zip_code,
-    recipient_id,
-  } = transData?.recipient || {}
+  const {first_name, last_name, address, email, phone_no, bank_account, country, state, city, zip_code, recipient_id} =
+    transData?.recipient || {}
 
   const {country_name} = country || {}
   const {state_name} = state || {}
@@ -27,20 +16,17 @@ export const useHandler = () => {
     if (transId) refetchTransaction()
   }, [])
 
-  const {recipientDetails, recipientAccountDetails} = useMemo(() => {
+  const {recipientDetails} = useMemo(() => {
     const recipientDetails: IFormData[] = [
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
-      {key: "Address", label: address_line1},
+      {key: "Address", label: address},
       {key: "Email", label: email},
       {key: "Phone Number", label: phone_no},
       {key: "Country", label: country_name},
       {key: "State", label: state_name},
       {key: "City", label: city_name},
       {key: "ZIP Code", label: zip_code},
-    ]
-
-    const recipientAccountDetails: IFormData[] = [
       {key: "Account Number", label: account_no},
       {key: "Account Type", label: account_type},
       {key: "Bank Name", label: bank_name},
@@ -48,8 +34,8 @@ export const useHandler = () => {
       {key: "BIC", label: swift_code},
     ]
 
-    return {recipientDetails, recipientAccountDetails}
+    return {recipientDetails}
   }, [transData])
 
-  return {recipientAccountDetails, recipientDetails, recipient_id}
+  return {recipientDetails, recipient_id}
 }

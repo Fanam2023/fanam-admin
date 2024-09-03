@@ -1,4 +1,5 @@
 export const API_AUTH = "/auth"
+export const API_SIGNUP = `${API_AUTH}/signup`
 export const API_LOGIN = `${API_AUTH}/login`
 export const API_REFRESH_TOKEN = "/refresh-token"
 export const API_LOGOUT = `${API_AUTH}/logOut`
@@ -7,8 +8,8 @@ export const API_USER = `user/me`
 export const API_SYNC_USER = `user/sync`
 export const API_LOCATION = "/location"
 export const API_COUNTRIES = `${API_LOCATION}/all-countries`
-export const apiStates = (countryId: string) => `${API_LOCATION}/countries/${countryId}`
-export const apiCities = (stateId: string) => `${API_LOCATION}/states/${stateId}`
+export const apiStates = (countryId: number) => `${API_LOCATION}/countries/${countryId}`
+export const apiCities = (stateId: number) => `${API_LOCATION}/states/${stateId}`
 export const API_PAYMENT = "/payment"
 export const API_FXRATE = `${API_PAYMENT}/fx-rate`
 export const API_RECIPIENT = "/recipient"
@@ -20,3 +21,8 @@ export const apiTransaction = (transaction_id: string) => `${API_TRANSACTION}/${
 export const API_SENDER_KYC = "/file-upload/sender-kyc"
 export const API_RECIPIENT_KYC = "/file-upload/recipient-kyc"
 export const API_INVOICE = "/file-upload/invoice"
+export const API_SENDING_PURPOSE = "/sending-purpose"
+export const API_REGISTER_START = "/auth/register-start"
+export const API_REGISTER_FINISH = "/auth/register-finish"
+export const API_LOGIN_START = "/auth/login-start"
+export const API_LOGIN_FINISH = "/auth/login-finish"

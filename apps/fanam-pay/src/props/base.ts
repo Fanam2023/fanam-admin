@@ -22,6 +22,7 @@ export interface BaseContainerProps {
   containerClass?: string
   onSubmit?: () => void
   onAdd?: () => void
+  isStepper?: boolean
 }
 
 export interface FooterPaymentProps {
