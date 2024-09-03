@@ -11,7 +11,7 @@ export const useHandler = (onSelectChargeAndTime: (charge: string, time: string)
     {image: assets.ic_rocket, time: "2-3 days", charge: "300.00 INR"},
   ]
 
-  const handleSelect = (charge: string, time: string, index: number) => {
+  const onSelect = (charge: string, time: string, index: number) => {
     setSelectedCard(index)
     onSelectChargeAndTime(charge, time)
   }
@@ -25,5 +25,5 @@ export const useHandler = (onSelectChargeAndTime: (charge: string, time: string)
     }
   }, [selectedCard, onSelectChargeAndTime])
 
-  return {defaultData, selectedCard, handleSelect, selectedCharge, selectedTime}
+  return {defaultData, selectedCard, onSelect, selectedCharge, selectedTime}
 }
