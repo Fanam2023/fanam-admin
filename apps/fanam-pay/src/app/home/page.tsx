@@ -1,8 +1,9 @@
+"use client"
+
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
+import {ExchangeRate, ListTransaction} from "organisms"
 import styles from "./Page.module.sass"
-import {Currency_rate} from "./exchange-rate"
-import {History} from "./transaction-list"
 
 const HomeScreen = () => {
   return (
@@ -14,8 +15,8 @@ const HomeScreen = () => {
         <h3>Send your money instantly and effortlessly</h3>
         <Button wrapperClass={styles.button_wrapper}>Send Money</Button>
       </section>
-      <Currency_rate />
-      <History />
+      <ExchangeRate />
+      <ListTransaction />
     </section>
   )
 }
