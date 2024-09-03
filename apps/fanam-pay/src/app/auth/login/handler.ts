@@ -19,28 +19,25 @@ const useHandler = () => {
 
   const {phone_no, pin} = data
 
-  const {mutate: authWebAuth} = useMutation({
-    mutationFn: loginWebAuth,
-    onSuccess: ({result}) => {
-      if (result) push(ROUTE_HOME)
-    },
-  })
   const stringToBase64 = (inputString: string) => Buffer.from(inputString).toString("base64")
-
-  const {mutate: createUser, data: logInRes} = useMutation({mutationFn: login})
-
-  useEffect(() => {
-    if (logInRes) {
-      const {result, errorData} = logInRes
-
+  const {mutate: loginWithCredential} = useMutation({
+    mutationFn: login,
+    onSuccess: ({result, errorData}) => {
       if (result) replace(ROUTE_HOME)
       else
         toggleNotify({title: "Login Error", description: errorData?.message || "Something went wrong", type: "error"})
+    },
+  })
+
+  const executeWebAuthn = async () => {
+    if (browserSupportsWebAuthn) {
+      const {result} = await loginWebAuth()
+      if (result) replace(ROUTE_HOME)
     }
-  }, [logInRes])
+  }
 
   useEffect(() => {
-    if (browserSupportsWebAuthn) authWebAuth()
+    executeWebAuthn()
   }, [])
 
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
@@ -76,7 +73,7 @@ const useHandler = () => {
         phone_no,
         pin: pinBase64,
       }
-      createUser(payload)
+      loginWithCredential(payload)
     }
   }
 

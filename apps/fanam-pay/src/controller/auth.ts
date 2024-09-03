@@ -1,4 +1,4 @@
-import {browserSupportsWebAuthn, startAuthentication, startRegistration} from "@simplewebauthn/browser"
+import {platformAuthenticatorIsAvailable, startAuthentication, startRegistration} from "@simplewebauthn/browser"
 import type {PublicKeyCredentialCreationOptionsJSON} from "@simplewebauthn/types"
 import {
   API_LOGIN,
@@ -48,12 +48,13 @@ export const useAuthController = () => {
     }
 
     try {
+      const isAuthenticatorAvailable = await platformAuthenticatorIsAvailable()
       /* Fetch @simple-web's authentication options from server */
       const {result: loginStart, errorData} = await getRequest<IResponseWebAuthLogin, IFanamApiError<IResponseLogin>>(
         API_LOGIN_START
       )
       console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_LOGIN_START, loginStart)
-      if (loginStart) {
+      if (isAuthenticatorAvailable && loginStart) {
         /* Fetch @simple-web's authentication assessment */
         const assessment = await startAuthentication(loginStart)
 
@@ -77,7 +78,7 @@ export const useAuthController = () => {
         } else response.errorData = errorData
       } else response.errorData = errorData
     } catch (error) {
-      console.error(">>>>>>>>>>>>> Failed in LoginWebAuthentication error: ", error)
+      // ERROR_CEREMONY_ABORTED - AbortError
       response.errorData.message = error?.message || "Something went wrong"
     }
 
@@ -124,7 +125,7 @@ export const useAuthController = () => {
     return {result, errorData}
   }
 
-  const signUpWebAuth = async (payload: IUserBase) => {
+  const registerWebAuth = async () => {
     let response: {result: IResponseUpdateUser | null; errorData: IFanamApiError<IResponseUpdateUser> | null} = {
       result: null,
       errorData: null,
@@ -132,45 +133,42 @@ export const useAuthController = () => {
 
     try {
       /* Create User */
-      const {result: signUpResult, errorData} = await postRequest<IResponseUpdateUser>(API_SIGNUP, payload)
+      const isAuthenticatorAvailable = await platformAuthenticatorIsAvailable()
 
-      if (signUpResult) {
-        const {access_token, refresh_token, user} = signUpResult
-        updateToken(access_token)
-        updateRefreshToken(refresh_token)
-        updateUserData(user)
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_SIGNUP, signUpResult)
+      if (isAuthenticatorAvailable) {
+        /* Fetch @simple-web Start Registration options from Server */
+        const {result: regStart, errorData} = await getRequest<
+          PublicKeyCredentialCreationOptionsJSON,
+          IFanamApiError<IResponseUpdateUser>
+        >(API_REGISTER_START)
+        if (regStart) {
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_REGISTER_START, regStart)
 
-        if (browserSupportsWebAuthn) {
-          /* Fetch @simple-web Start Registration options from Server */
-          const {result: regStart, errorData} = await getRequest<
-            PublicKeyCredentialCreationOptionsJSON,
+          /* Fetch @simple-web's registration attestation */
+          const attestation = await startRegistration(regStart)
+
+          const {challenge} = regStart
+
+          /* Complete @simple-web's registration and get User details and access-token */
+          const {errorData, result: finishResult} = await postRequest<
+            IResponseUpdateUser,
+            IResponseWebAuthRegistration,
             IFanamApiError<IResponseUpdateUser>
-          >(API_REGISTER_START)
-          if (regStart) {
-            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_REGISTER_START, regStart)
+          >(API_REGISTER_FINISH, {...attestation, challenge})
 
-            /* Fetch @simple-web's registration attestation */
-            const attestation = await startRegistration(regStart)
+          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_REGISTER_FINISH, finishResult)
 
-            const {challenge} = regStart
-
-            /* Complete @simple-web's registration and get User details and access-token */
-            const {errorData, result: finishResult} = await postRequest<
-              IResponseUpdateUser,
-              IResponseWebAuthRegistration,
-              IFanamApiError<IResponseUpdateUser>
-            >(API_REGISTER_FINISH, {...attestation, challenge})
-
-            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_REGISTER_FINISH, finishResult)
-
-            if (finishResult) response.result = signUpResult
-            else response.errorData = errorData
+          if (finishResult) {
           } else response.errorData = errorData
-        } else response.result = signUpResult /* Set User data if Browser not supports Passkey authentication */
-      } else response.errorData = errorData
+        } else response.errorData = errorData
+      }
     } catch (error) {
-      console.error(">>>>>>>>>>>>> Failed in SignupWebAuthentication error: ", error)
+      // ERROR_PASSTHROUGH_SEE_CAUSE_PROPERTY - NotAllowedError
+      // ERROR_AUTHENTICATOR_PREVIOUSLY_REGISTERED - InvalidStateError
+      if (error.code === "ERROR_AUTHENTICATOR_PREVIOUSLY_REGISTERED") {
+        loginWebAuth()
+      }
+
       response.errorData.message = error?.message || "Something went wrong"
     }
 
@@ -184,6 +182,6 @@ export const useAuthController = () => {
     logout,
     syncUser,
     signUp,
-    signUpWebAuth,
+    registerWebAuth,
   }
 }

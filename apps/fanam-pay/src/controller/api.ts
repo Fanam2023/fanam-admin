@@ -20,7 +20,7 @@ export const useApi = () => {
       try {
         let accessToken = getCookie(COOKIE_ACCESS_TOKEN)
         if (!config.headers.has("Authorization")) {
-          if (!accessToken) accessToken = getJwtToken({})
+          if (!accessToken) accessToken = getJwtToken({user_id: "GUEST-ID"})
 
           config.headers.set("Authorization", `Bearer ${accessToken}`)
         }

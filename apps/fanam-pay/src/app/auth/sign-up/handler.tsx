@@ -95,8 +95,6 @@ const useHandler = (styles: IStyle) => {
   useEffect(() => {
     const storedData = getStorage<IBaseSignUp>(SESSION_SIGNUP)
     if (storedData) setData(storedData)
-
-    if (storedData) setData({...storedData})
   }, [])
 
   useEffect(() => {
