@@ -1,3 +1,4 @@
+import "@custom/utils"
 import {API_POPULAR_CORRIDORS} from "@custom/utils"
 import {useApi} from "./api"
 

@@ -1,58 +1,31 @@
-import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {REG_VALID_NUMBER, useCommon, useFirebase, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState} from "react"
-import {useMutation} from "@tanstack/react-query"
-import {ISignUp, SESSION_SIGNUP} from "@custom/utils"
-import {useAuthController} from "controller"
-import {useSingleton} from "hooks"
-import {ROUTE_HOME} from "utils"
+import {IBaseSignUp, SESSION_SIGNUP} from "@custom/utils"
+import {ROUTE_PIN} from "utils"
 
 const useHandler = () => {
   const {getStorage} = useStorage()
   const {isValidInputByRegex} = useCommon()
-  const {updateToken, updateUserData} = useSingleton()
-  const {signUp} = useAuthController()
-  const {toggleNotify} = useNotifyPopup()
   const {push} = useRouter()
   const [otpValues, setOtpValues] = useState(Array(6).fill(""))
   const [timer, setTimer] = useState(60)
-  const [loading, setLoading] = useState(false)
   const inputRefs = useRef<(HTMLInputElement | null)[]>(Array(6).fill(null))
   const [errState, setErrState] = useState({errOtp: "", isClicked: false, isValid: false})
-  const [signUpData, setSignUpData] = useState<ISignUp | null>(null)
+  const [signUpData, setSignUpData] = useState<IBaseSignUp | null>(null)
+  const [loading, setLoading] = useState(false)
   const {isClicked, errOtp} = errState
   const {phone_no, country_code} = signUpData || {}
 
-  const {mutate: createUser} = useMutation({
-    mutationFn: signUp,
-    onSuccess: ({result}) => {
-      if (result) {
-        const {access_token, user} = result
-        updateToken(access_token)
-        updateUserData(user)
-
-        toggleNotify({
-          type: "success",
-          title: "Successfully signed up",
-        })
-        push(ROUTE_HOME)
-      }
-    },
-  })
-
   const {sendOtp, verifyOTP} = useFirebase(
-    (_, authToken: string) => createUser(signUpData),
+    () => push(ROUTE_PIN),
     data => setErrState({...errState, errOtp: data || ""})
   )
 
   useEffect(() => {
     inputRefs.current[0]?.focus()
 
-    const onComplete = () => {
-      setLoading(false)
-      inputRefs.current[0]?.focus()
-    }
+    const onComplete = () => inputRefs.current[0]?.focus()
 
     if (phone_no?.length === 10) {
       setLoading(true)
@@ -61,7 +34,7 @@ const useHandler = () => {
   }, [phone_no])
 
   useEffect(() => {
-    const storedData = getStorage<ISignUp>(SESSION_SIGNUP)
+    const storedData = getStorage<IBaseSignUp>(SESSION_SIGNUP)
     if (storedData) setSignUpData(storedData)
   }, [])
 

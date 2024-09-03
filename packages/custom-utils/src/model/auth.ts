@@ -108,15 +108,18 @@ export interface IResponseBankAccount extends IPayloadUserBankAccount {
   account_id: string
 }
 
-export interface ISignUp {
+export interface IBaseSignUp {
   first_name: string
   last_name: string
   email: string
   phone_no: string
   account_type: string
+  country_code?: ICountry | string
+}
+
+export interface ISignUpPin {
   newPin: string
   confirmPin: string
-  country_code?: ICountry | string
 }
 
 export interface ILogin {

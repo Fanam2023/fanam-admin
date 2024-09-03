@@ -1,5 +1,6 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {JSONObject} from "@fanam-pkg/core-utils"
+import {browserSupportsWebAuthn} from "@simplewebauthn/browser"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
@@ -10,7 +11,7 @@ import {ROUTE_HOME, ROUTE_SIGN_UP} from "utils"
 const useHandler = () => {
   const {push, replace} = useRouter()
   const {toggleNotify} = useNotifyPopup()
-  const {login} = useAuthController()
+  const {login, loginWebAuth} = useAuthController()
   const [data, setData] = useState<ILogin>({
     phone_no: "",
     pin: "",
@@ -18,6 +19,12 @@ const useHandler = () => {
 
   const {phone_no, pin} = data
 
+  const {mutate: authWebAuth} = useMutation({
+    mutationFn: loginWebAuth,
+    onSuccess: ({result}) => {
+      if (result) push(ROUTE_HOME)
+    },
+  })
   const stringToBase64 = (inputString: string) => Buffer.from(inputString).toString("base64")
 
   const {mutate: createUser, data: logInRes} = useMutation({mutationFn: login})
@@ -31,6 +38,10 @@ const useHandler = () => {
         toggleNotify({title: "Login Error", description: errorData?.message || "Something went wrong", type: "error"})
     }
   }, [logInRes])
+
+  useEffect(() => {
+    if (browserSupportsWebAuthn) authWebAuth()
+  }, [])
 
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
   const {isClicked} = errData

@@ -1,4 +1,4 @@
-import {startAuthentication, startRegistration} from "@simplewebauthn/browser"
+import {browserSupportsWebAuthn, startAuthentication, startRegistration} from "@simplewebauthn/browser"
 import type {PublicKeyCredentialCreationOptionsJSON} from "@simplewebauthn/types"
 import {
   API_LOGIN,
@@ -27,7 +27,7 @@ import {useApi} from "./api"
 
 export const useAuthController = () => {
   const {postRequest, getRequest, putRequest} = useApi()
-  const {updateToken, updateRefreshToken} = useSingleton()
+  const {updateToken, updateRefreshToken, updateUserData} = useSingleton()
 
   const login = async (payload: IPayloadLogin) => {
     const {result, errorData} = await postRequest<IResponseLogin>(API_LOGIN, payload)
@@ -52,10 +52,12 @@ export const useAuthController = () => {
       const {result: loginStart, errorData} = await getRequest<IResponseWebAuthLogin, IFanamApiError<IResponseLogin>>(
         API_LOGIN_START
       )
+      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_LOGIN_START, loginStart)
       if (loginStart) {
         /* Fetch @simple-web's authentication assessment */
         const assessment = await startAuthentication(loginStart)
 
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: assessment", assessment)
         const {challenge} = loginStart
 
         /* Complete @simple-web's login and get access-token */
@@ -64,6 +66,7 @@ export const useAuthController = () => {
           IResponseWebAuthLogin,
           IFanamApiError<IResponseLogin>
         >(API_LOGIN_FINISH, {...assessment, challenge})
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_LOGIN_FINISH, finishReg)
 
         if (finishReg) {
           const {access_token, refresh_token} = finishReg
@@ -74,8 +77,8 @@ export const useAuthController = () => {
         } else response.errorData = errorData
       } else response.errorData = errorData
     } catch (error) {
-      response.errorData.message = error?.message || "Something went wrong"
       console.error(">>>>>>>>>>>>> Failed in LoginWebAuthentication error: ", error)
+      response.errorData.message = error?.message || "Something went wrong"
     }
 
     return response
@@ -108,7 +111,18 @@ export const useAuthController = () => {
 
   const logout = async (payload: ILogOutPayload) => await postRequest<IResponseLogin>(API_LOGOUT, payload)
 
-  const signUp = async (payload: IUserBase) => await postRequest<IResponseUpdateUser>(API_SIGNUP, payload)
+  const signUp = async (payload: IUserBase) => {
+    const {result, errorData} = await postRequest<IResponseUpdateUser>(API_SIGNUP, payload)
+
+    if (result) {
+      const {access_token, refresh_token, user} = result
+      updateToken(access_token)
+      updateRefreshToken(refresh_token)
+      updateUserData(user)
+    }
+
+    return {result, errorData}
+  }
 
   const signUpWebAuth = async (payload: IUserBase) => {
     let response: {result: IResponseUpdateUser | null; errorData: IFanamApiError<IResponseUpdateUser> | null} = {
@@ -118,34 +132,46 @@ export const useAuthController = () => {
 
     try {
       /* Create User */
-      const {result, errorData} = await postRequest<IResponseUpdateUser>(API_SIGNUP, payload)
+      const {result: signUpResult, errorData} = await postRequest<IResponseUpdateUser>(API_SIGNUP, payload)
 
-      if (result) {
-        /* Fetch @simple-web Start Registration options from Server */
-        const {result: regStart, errorData} = await getRequest<
-          PublicKeyCredentialCreationOptionsJSON,
-          IFanamApiError<IResponseUpdateUser>
-        >(API_REGISTER_START)
-        if (regStart) {
-          /* Fetch @simple-web's registration attestation */
-          const attestation = await startRegistration(regStart)
+      if (signUpResult) {
+        const {access_token, refresh_token, user} = signUpResult
+        updateToken(access_token)
+        updateRefreshToken(refresh_token)
+        updateUserData(user)
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_SIGNUP, signUpResult)
 
-          const {challenge} = regStart
-
-          /* Complete @simple-web's registration and get User details and access-token */
-          const {result: finishReg, errorData} = await postRequest<
-            IResponseUpdateUser,
-            IResponseWebAuthRegistration,
+        if (browserSupportsWebAuthn) {
+          /* Fetch @simple-web Start Registration options from Server */
+          const {result: regStart, errorData} = await getRequest<
+            PublicKeyCredentialCreationOptionsJSON,
             IFanamApiError<IResponseUpdateUser>
-          >(API_REGISTER_FINISH, {...attestation, challenge})
+          >(API_REGISTER_START)
+          if (regStart) {
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_REGISTER_START, regStart)
 
-          if (finishReg) response.result = finishReg
-          else response.errorData = errorData
-        } else response.errorData = errorData
+            /* Fetch @simple-web's registration attestation */
+            const attestation = await startRegistration(regStart)
+
+            const {challenge} = regStart
+
+            /* Complete @simple-web's registration and get User details and access-token */
+            const {errorData, result: finishResult} = await postRequest<
+              IResponseUpdateUser,
+              IResponseWebAuthRegistration,
+              IFanamApiError<IResponseUpdateUser>
+            >(API_REGISTER_FINISH, {...attestation, challenge})
+
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_REGISTER_FINISH, finishResult)
+
+            if (finishResult) response.result = signUpResult
+            else response.errorData = errorData
+          } else response.errorData = errorData
+        } else response.result = signUpResult /* Set User data if Browser not supports Passkey authentication */
       } else response.errorData = errorData
     } catch (error) {
-      response.errorData.message = error?.message || "Something went wrong"
       console.error(">>>>>>>>>>>>> Failed in SignupWebAuthentication error: ", error)
+      response.errorData.message = error?.message || "Something went wrong"
     }
 
     return response

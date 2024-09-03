@@ -4,7 +4,7 @@ import {useRouter} from "next/navigation"
 import {useCallback, useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
-import {ICountry, ISignUp, IStyle, IUserBase, SESSION_SIGNUP} from "@custom/utils"
+import {IBaseSignUp, ICountry, IStyle, SESSION_SIGNUP} from "@custom/utils"
 import assets from "assets"
 import {useLocationController} from "controller"
 import {CountryPopup} from "organisms"
@@ -16,19 +16,17 @@ const useHandler = (styles: IStyle) => {
   const {toggleSlider} = useSlider()
   const {getAllCountries} = useLocationController()
   const {push} = useRouter()
-  const [data, setData] = useState<ISignUp>({
+  const [data, setData] = useState<IBaseSignUp>({
     first_name: "",
     last_name: "",
     email: "",
     phone_no: "",
     account_type: "",
-    newPin: "",
-    confirmPin: "",
     country_code: null,
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
 
-  const {first_name, last_name, email, phone_no, account_type, newPin, confirmPin, country_code} = data
+  const {first_name, last_name, email, phone_no, account_type, country_code} = data
 
   const {isClicked} = errData
 
@@ -84,12 +82,6 @@ const useHandler = (styles: IStyle) => {
 
     if (!account_type) errState = {...errState, errAccountType: "Please enter AccountType", isValid: false}
 
-    if (!newPin) errState = {...errState, errPin: "Please enter valid pin", isValid: false}
-
-    if (!confirmPin) errState = {...errState, errConfirmPin: "Please enter valid pin", isValid: false}
-    else if (confirmPin !== newPin)
-      errState = {...errState, errConfirmPin: "Not Match confirm pin and pin", isValid: false}
-
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
 
@@ -101,13 +93,10 @@ const useHandler = (styles: IStyle) => {
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
 
   useEffect(() => {
-    const storedData = getStorage<ISignUp>(SESSION_SIGNUP)
-    const {newPin, confirmPin} = storedData || {}
+    const storedData = getStorage<IBaseSignUp>(SESSION_SIGNUP)
+    if (storedData) setData(storedData)
 
-    const encryptedPin = base64ToString(newPin)
-    const encryptedConfirmPin = base64ToString(confirmPin)
-
-    if (storedData) setData({...storedData, newPin: encryptedPin, confirmPin: encryptedConfirmPin})
+    if (storedData) setData({...storedData})
   }, [])
 
   useEffect(() => {
@@ -181,22 +170,6 @@ const useHandler = (styles: IStyle) => {
           onChangeValue,
         },
         {
-          elementType: "input",
-          label: "Pin",
-          name: "newPin",
-          error: errPin,
-          value: newPin,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Confirm Pin",
-          name: "confirmPin",
-          error: errConfirmPin,
-          value: confirmPin,
-          onChangeValue,
-        },
-        {
           elementType: "drop-down",
           label: "Sender type",
           name: "account_type",
@@ -211,19 +184,15 @@ const useHandler = (styles: IStyle) => {
 
   const onSubmit = () => {
     const {isValid} = onValidate()
-    const newPinBase64 = stringToBase64(newPin)
-    const confirmPinPinBase64 = stringToBase64(confirmPin)
 
     if (isValid) {
-      const payload: IUserBase = {
+      const payload: IBaseSignUp = {
         first_name,
         last_name,
         email,
         phone_no,
         country_code: country_code ? `+${(country_code as ICountry).phone_code}` : "+91",
         account_type,
-        newPin: newPinBase64,
-        confirmPin: confirmPinPinBase64,
       }
       setStorage(SESSION_SIGNUP, payload)
       push(ROUTE_OTP)
