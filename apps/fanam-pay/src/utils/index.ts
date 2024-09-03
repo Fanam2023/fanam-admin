@@ -1,3 +1,3 @@
 export * from "./constants"
-export * from "./route"
+export * from "./routes"
 export * from "./storage-constants"

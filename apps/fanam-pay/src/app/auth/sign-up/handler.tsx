@@ -2,26 +2,24 @@ import {FormSectionProps} from "@fanam-pkg/core-ui-sass"
 import {JSONObject, REG_EMAIL, REG_INDIAN_MOBILE, useCommon, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useCallback, useEffect, useState} from "react"
-import {ISignUp, IStyle, IUserBase, SESSION_SIGNUP} from "@custom/utils"
+import {IBaseSignUp, IStyle, SESSION_SIGNUP} from "@custom/utils"
 import {ROUTE_LOGIN, ROUTE_OTP} from "utils"
 
 const useHandler = (styles: IStyle) => {
   const {isValidInputByRegex} = useCommon()
   const {getStorage, setStorage} = useStorage()
   const {push} = useRouter()
-  const [data, setData] = useState<ISignUp>({
+  const [data, setData] = useState<IBaseSignUp>({
     first_name: "",
     last_name: "",
     email: "",
     phone_no: "",
     account_type: "",
-    newPin: "",
-    confirmPin: "",
     country_code: null,
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
 
-  const {first_name, last_name, email, phone_no, account_type, newPin, confirmPin} = data
+  const {first_name, last_name, email, phone_no, account_type} = data
 
   const {isClicked} = errData
 
@@ -55,12 +53,6 @@ const useHandler = (styles: IStyle) => {
 
     if (!account_type) errState = {...errState, errAccountType: "Please enter AccountType", isValid: false}
 
-    if (!newPin) errState = {...errState, errPin: "Please enter valid pin", isValid: false}
-
-    if (!confirmPin) errState = {...errState, errConfirmPin: "Please enter valid pin", isValid: false}
-    else if (confirmPin !== newPin)
-      errState = {...errState, errConfirmPin: "Not Match confirm pin and pin", isValid: false}
-
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
 
@@ -72,7 +64,7 @@ const useHandler = (styles: IStyle) => {
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
 
   useEffect(() => {
-    const storedData = getStorage<ISignUp>(SESSION_SIGNUP)
+    const storedData = getStorage<IBaseSignUp>(SESSION_SIGNUP)
     if (storedData) setData(storedData)
   }, [])
 
@@ -125,22 +117,6 @@ const useHandler = (styles: IStyle) => {
           onChangeValue,
         },
         {
-          elementType: "input",
-          label: "Pin",
-          name: "newPin",
-          error: errPin,
-          value: newPin,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Confirm Pin",
-          name: "confirmPin",
-          error: errConfirmPin,
-          value: confirmPin,
-          onChangeValue,
-        },
-        {
           elementType: "drop-down",
           label: "Sender type",
           name: "account_type",
@@ -157,15 +133,13 @@ const useHandler = (styles: IStyle) => {
     const {isValid} = onValidate()
 
     if (isValid) {
-      const payload: IUserBase = {
+      const payload: IBaseSignUp = {
         first_name,
         last_name,
         email,
         phone_no,
         country_code: "+91",
         account_type,
-        newPin,
-        confirmPin,
       }
       setStorage(SESSION_SIGNUP, payload)
       push(ROUTE_OTP)

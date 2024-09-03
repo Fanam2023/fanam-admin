@@ -1,68 +1,37 @@
-import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {REG_VALID_NUMBER, useCommon, useFirebase, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState} from "react"
-import {useMutation} from "@tanstack/react-query"
-import {ISignUp, IUserBase, SESSION_SIGNUP} from "@custom/utils"
-import {useAuthController} from "controller"
-import {useSingleton} from "hooks"
-import {ROUTE_HOME, ROUTE_SIGN_UP} from "utils"
+import {IUserBase, SESSION_SIGNUP} from "@custom/utils"
+import {ROUTE_PIN} from "utils"
 
 const useHandler = () => {
   const {getStorage} = useStorage()
   const {isValidInputByRegex} = useCommon()
-  const {updateToken, updateUserData} = useSingleton()
-  const {signUp} = useAuthController()
-  const {toggleNotify} = useNotifyPopup()
   const {push} = useRouter()
   const [otpValues, setOtpValues] = useState(Array(6).fill(""))
   const [timer, setTimer] = useState(60)
-  const [loading, setLoading] = useState(false)
   const inputRefs = useRef<(HTMLInputElement | null)[]>(Array(6).fill(null))
   const [errState, setErrState] = useState({errOtp: "", isClicked: false, isValid: false})
-  const [signUpData, setSignUpData] = useState<ISignUp | null>(null)
+  const [signUpData, setSignUpData] = useState<IUserBase | null>(null)
   const country_code = "+91"
   const {isClicked, errOtp} = errState
   const {phone_no} = signUpData || {}
 
-  const {mutate: createUser} = useMutation({
-    mutationFn: signUp,
-    onSuccess: ({result}) => {
-      if (result) {
-        const {access_token, user} = result
-        updateToken(access_token)
-        updateUserData(user)
-
-        toggleNotify({
-          type: "success",
-          title: "Successfully signed up",
-        })
-        push(ROUTE_HOME)
-      }
-    },
-  })
-
   const {sendOtp, verifyOTP} = useFirebase(
-    (_, authToken: string) => createUser(signUpData),
+    () => push(ROUTE_PIN),
     data => setErrState({...errState, errOtp: data || ""})
   )
 
   useEffect(() => {
     inputRefs.current[0]?.focus()
 
-    const onComplete = () => {
-      setLoading(false)
-      inputRefs.current[0]?.focus()
-    }
+    const onComplete = () => inputRefs.current[0]?.focus()
 
-    if (phone_no?.length === 10) {
-      setLoading(true)
-      sendOtp(country_code, phone_no, onComplete, onComplete)
-    }
+    if (phone_no?.length === 10) sendOtp(country_code, phone_no, onComplete, onComplete)
   }, [phone_no])
 
   useEffect(() => {
-    const storedData = getStorage<ISignUp>(SESSION_SIGNUP)
+    const storedData = getStorage<IUserBase>(SESSION_SIGNUP)
     if (storedData) setSignUpData(storedData)
   }, [])
 
@@ -140,20 +109,6 @@ const useHandler = () => {
   const onPaste = (value: string) => {
     if (isValidInputByRegex(value, REG_VALID_NUMBER) && value.length === 6) {
       setOtpValues(value.split(""))
-    }
-  }
-
-  function onSuccess(user: IUserBase) {
-    const {first_name} = user
-    if (first_name) {
-      push("route to home")
-      toggleNotify({
-        type: "success",
-        title: "Login Success",
-        description: "Login successfully",
-      })
-    } else {
-      push(ROUTE_SIGN_UP)
     }
   }
 
