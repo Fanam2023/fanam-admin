@@ -3,8 +3,8 @@ import {IFormData, JSONObject, REG_EMAIL, useCommon, useReactQuery, useResize} f
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
-import {useSlider} from "@custom/ui"
-import {IPayloadRecipient, IRecipientData, IStyle} from "@custom/utils"
+import {ButtonAccountType, useSlider} from "@custom/ui"
+import {IPayloadRecipient, IRecipientData, IStyle, TypeAccount} from "@custom/utils"
 import assets from "assets"
 import {useLocationController, useRecipientController} from "controller"
 import {useSingleton} from "hooks"
@@ -21,7 +21,13 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {transId: transaction_id, transData} = useSingleton()
   const {toggleNotify} = useNotifyPopup()
 
+  const RECIPIENT_TYPE: IFormData<TypeAccount>[] = [
+    {label: "Personal", key: "Personal"},
+    {label: "Business", key: "Business"},
+  ]
+
   const [data, setData] = useState<IRecipientData>({
+    recipient_account_type: "Personal",
     first_name: "",
     last_name: "",
     account_no: "",
@@ -63,6 +69,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     id_number,
     branch_code,
     kyc,
+    recipient_account_type,
   } = data
 
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
@@ -195,17 +202,17 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     },
   })
 
-  const countries: IFormData[] = useMemo(
+  const countries: IFormData<number>[] = useMemo(
     () => allCountries.map(({country_id, country_name}) => ({label: country_name, key: country_id})),
     [allCountries]
   )
 
-  const states: IFormData[] = useMemo(
+  const states: IFormData<number>[] = useMemo(
     () => allStates.map(({state_id, state_name}) => ({label: state_name, key: state_id})),
     [allStates]
   )
 
-  const cities: IFormData[] = useMemo(
+  const cities: IFormData<number>[] = useMemo(
     () => allCities.map(({city_id, city_name}) => ({label: city_name, key: city_id})),
     [allCities]
   )
@@ -227,6 +234,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         id_number,
         bank_account,
         kyc_attachments,
+        recipient_account_type,
       } = recipientData
 
       const {account_no, account_type, bank_name, branch_address, branch_code, swift_code, routing_code, iban_no} =
@@ -257,6 +265,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         id_number,
         iban_no,
         kyc: kyc_attachments?.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
+        recipient_account_type,
       })
     }
   }, [recipientData])
@@ -271,10 +280,29 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
   const onChangeState = (value: JSONObject) => onChangeValue({...value, city: null})
 
+  const onSelectAccType = (accountType: TypeAccount) => onChangeValue({recipient_account_type: accountType})
+
+  const renderAccType = (item: IFormData<TypeAccount>, index: number) => (
+    <ButtonAccountType
+      key={index}
+      content={item}
+      onSelect={onSelectAccType}
+      isSelected={item.key === recipient_account_type}
+      selIcon={assets.ic_india_flag}
+      icon={assets.ic_us_flag}
+    />
+  )
+
   const formElements: FormSectionProps[] = [
     {
+      title: "Recipient type",
+      wrapperClassGrid: styles.recipient_type_wrapper,
+      children: <ul className={`${styles.btn_container}`}>{RECIPIENT_TYPE?.map(renderAccType)}</ul>,
+    },
+    {
       title: "Personal Information",
-      wrapperClassGrid: styles.personal_details,
+      wrapperClass: styles.recipient_address,
+      wrapperClassGrid: styles.recipient_address_wrapper,
       childElements: [
         {
           elementType: "input",
@@ -295,7 +323,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       ],
     },
     {
-      wrapperClassGrid: styles.personal,
+      wrapperClass: styles.personal,
       childElements: [
         {
           elementType: "input",
@@ -508,6 +536,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         id_number,
         id_type,
         transaction_id,
+        recipient_account_type,
         kyc: kyc.filter(({file}) => !!file),
         bank_account: {
           branch_address,

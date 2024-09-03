@@ -8,6 +8,18 @@
     top: $size-12px
     bottom: $size-20px
 
+.recipient_address_wrapper
+  display: grid
+  grid-template-columns: repeat(2, 0.5fr)
+  gap: $size-16px
+  margin:
+    top: $size-20px
+    bottom: $size-20px
+
+.recipient_address
+  margin:
+    top: $size-20px
+
 .personal
   display: grid
   gap: $size-16px
@@ -64,6 +76,18 @@
     top: $size-10px
     right: $size-12px
   background-color: $theme
+
+.btn_container
+  gap: $size-12px
+  margin-top: $size-20px
+  display: grid
+  grid-template-columns: repeat(2, 0.5fr)
+
+.recipient_type_wrapper
+  width: 100%
+
+.input_wrapper
+  margin-top: $size-20px
 
 @include mixin-responsive
   .input_wrapper

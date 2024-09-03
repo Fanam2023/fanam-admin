@@ -41,9 +41,7 @@ const Otp = () => {
 
   useEffect(() => {
     const handleKeyPress = (event: {key: string}) => {
-      if (event.key === "Enter") {
-        onVerify()
-      }
+      if (event.key === "Enter") onVerify()
     }
     document.addEventListener("keydown", handleKeyPress)
     return () => {
@@ -71,9 +69,9 @@ const Otp = () => {
         <section className={`flex-col ${styles.heading}`}>
           <h4 className={`bold ${styles.otp}`}>OTP Verification </h4>
           <h5>
-            We have sent an OTP on given number {country_code} {phone_no}
+            We have sent an OTP on given number {country_code as string} {phone_no}
           </h5>
-          <section className={`flex ${styles.otp_field}`}>{otpValues?.map(renderInputNumber)}</section>
+          <ul className={`flex ${styles.otp_field}`}>{otpValues?.map(renderInputNumber)}</ul>
         </section>
         <section className={`flex ${styles.otp_wrapper}`}>
           <h5>Didn’t receive the otp?</h5>

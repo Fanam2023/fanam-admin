@@ -18,6 +18,8 @@ const useHandler = () => {
 
   const {phone_no, pin} = data
 
+  const stringToBase64 = (inputString: string) => Buffer.from(inputString).toString("base64")
+
   const {mutate: createUser, data: logInRes} = useMutation({mutationFn: login})
 
   useEffect(() => {
@@ -56,11 +58,12 @@ const useHandler = () => {
   const onSubmit = () => {
     const {isValid} = onValidate()
     const {phone_no, pin} = data
+    const pinBase64 = stringToBase64(pin)
 
     if (isValid) {
       const payload: IPayloadLogin = {
         phone_no,
-        pin,
+        pin: pinBase64,
       }
       createUser(payload)
     }
