@@ -7,6 +7,7 @@ import ic_back_arrow_black from "./icons/ic_back_arrow_black.svg"
 import ic_checkbox from "./icons/ic_checkbox.svg"
 import ic_cloudUpload from "./icons/ic_cloudUpload.svg"
 import ic_debit_card from "./icons/ic_debit_card.svg"
+import ic_dot from "./icons/ic_dot.svg"
 import ic_down_arrow from "./icons/ic_down_arrow.svg"
 import ic_edit from "./icons/ic_edit.svg"
 import ic_edit_theme from "./icons/ic_edit_theme.svg"
@@ -19,9 +20,11 @@ import ic_help_theme from "./icons/ic_help_theme.svg"
 import ic_india_flag from "./icons/ic_india_flag.svg"
 import ic_left_arrow_fill from "./icons/ic_left_arrow_fill.svg"
 import ic_lend_money from "./icons/ic_lend_money.svg"
+import ic_money from "./icons/ic_money.svg"
 import ic_pending from "./icons/ic_pending.svg"
 import ic_pending_small from "./icons/ic_pending_small.svg"
 import ic_remove from "./icons/ic_remove.svg"
+import ic_right from "./icons/ic_right.svg"
 import ic_right_arrow_fill from "./icons/ic_right_arrow_fill.svg"
 import ic_search from "./icons/ic_search.svg"
 import ic_star from "./icons/ic_star.svg"
@@ -42,7 +45,9 @@ const assets = {
   ic_star,
   ic_up_arrow,
   ic_back,
+  ic_dot,
   ic_debit_card,
+  ic_right,
   img_bank,
   ic_lend_money,
   ic_pending,
@@ -53,6 +58,7 @@ const assets = {
   ic_failure_small,
   ic_help,
   ic_arrow_theme,
+  ic_money,
   ic_upload,
   ic_file,
   ic_remove,
