@@ -5,7 +5,7 @@ import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import {ILogin, IPayloadLogin} from "@custom/utils"
 import {useAuthController} from "controller"
-import {ROUTE_SIGN_UP} from "utils"
+import {ROUTE_HOME, ROUTE_SIGN_UP} from "utils"
 
 const useHandler = () => {
   const {push, replace} = useRouter()
@@ -18,13 +18,15 @@ const useHandler = () => {
 
   const {phone_no, pin} = data
 
+  const stringToBase64 = (inputString: string) => Buffer.from(inputString).toString("base64")
+
   const {mutate: createUser, data: logInRes} = useMutation({mutationFn: login})
 
   useEffect(() => {
     if (logInRes) {
       const {result, errorData} = logInRes
 
-      if (result) replace(`route to home screen`)
+      if (result) replace(ROUTE_HOME)
       else
         toggleNotify({title: "Login Error", description: errorData?.message || "Something went wrong", type: "error"})
     }
@@ -56,11 +58,12 @@ const useHandler = () => {
   const onSubmit = () => {
     const {isValid} = onValidate()
     const {phone_no, pin} = data
+    const pinBase64 = stringToBase64(pin)
 
     if (isValid) {
       const payload: IPayloadLogin = {
         phone_no,
-        pin,
+        pin: pinBase64,
       }
       createUser(payload)
     }

@@ -3,10 +3,10 @@ import {REG_VALID_NUMBER, useCommon, useFirebase, useStorage} from "@fanam-pkg/c
 import {useRouter} from "next/navigation"
 import {ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
-import {ISignUp, IUserBase, SESSION_SIGNUP} from "@custom/utils"
+import {ISignUp, SESSION_SIGNUP} from "@custom/utils"
 import {useAuthController} from "controller"
 import {useSingleton} from "hooks"
-import {ROUTE_HOME, ROUTE_SIGN_UP} from "utils"
+import {ROUTE_HOME} from "utils"
 
 const useHandler = () => {
   const {getStorage} = useStorage()
@@ -21,9 +21,8 @@ const useHandler = () => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>(Array(6).fill(null))
   const [errState, setErrState] = useState({errOtp: "", isClicked: false, isValid: false})
   const [signUpData, setSignUpData] = useState<ISignUp | null>(null)
-  const country_code = "+91"
   const {isClicked, errOtp} = errState
-  const {phone_no} = signUpData || {}
+  const {phone_no, country_code} = signUpData || {}
 
   const {mutate: createUser} = useMutation({
     mutationFn: signUp,
@@ -57,7 +56,7 @@ const useHandler = () => {
 
     if (phone_no?.length === 10) {
       setLoading(true)
-      sendOtp(country_code, phone_no, onComplete, onComplete)
+      sendOtp(country_code as string, phone_no, onComplete, onComplete)
     }
   }, [phone_no])
 
@@ -132,7 +131,7 @@ const useHandler = () => {
   const onResend = () => {
     onResendOTP()
     resetOTP()
-    sendOtp(country_code, phone_no, () => {
+    sendOtp(country_code as string, phone_no, () => {
       console.log("SENT FIREBASE OTP Again Successfully >>>>>>>>>>")
     })
   }
@@ -140,20 +139,6 @@ const useHandler = () => {
   const onPaste = (value: string) => {
     if (isValidInputByRegex(value, REG_VALID_NUMBER) && value.length === 6) {
       setOtpValues(value.split(""))
-    }
-  }
-
-  function onSuccess(user: IUserBase) {
-    const {first_name} = user
-    if (first_name) {
-      push("route to home")
-      toggleNotify({
-        type: "success",
-        title: "Login Success",
-        description: "Login successfully",
-      })
-    } else {
-      push(ROUTE_SIGN_UP)
     }
   }
 
