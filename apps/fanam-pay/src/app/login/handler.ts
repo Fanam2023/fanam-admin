@@ -5,7 +5,7 @@ import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import {ILogin, IPayloadLogin} from "@custom/utils"
 import {useAuthController} from "controller"
-import {ROUTE_SIGN_UP} from "utils"
+import {ROUTE_HOME, ROUTE_SIGN_UP} from "utils"
 
 const useHandler = () => {
   const {push, replace} = useRouter()
@@ -26,7 +26,7 @@ const useHandler = () => {
     if (logInRes) {
       const {result, errorData} = logInRes
 
-      if (result) replace(`route to home screen`)
+      if (result) replace(ROUTE_HOME)
       else
         toggleNotify({title: "Login Error", description: errorData?.message || "Something went wrong", type: "error"})
     }
