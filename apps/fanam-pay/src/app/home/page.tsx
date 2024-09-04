@@ -8,16 +8,20 @@ import styles from "./Page.module.sass"
 import useHandler from "./handler"
 
 const HomeScreen = () => {
-  const {address, push} = useHandler()
+  const {status, first_name, push} = useHandler()
+
   return (
     <BaseContainer childWrapper={styles.page_container} isStepper buttonText="Next" skipBtn="Back">
       <section className={styles.page_wrapper}>
-        <h2>Good Afternoon, Jhon</h2>
+        <section className={`flex ${styles.name_wrapper}`}>
+          <h2>Good Afternoon,</h2>
+          <h2 className={styles.first_name}>{first_name}</h2>
+        </section>
         <h5>Discover how your currency has been tracking with our exchange rate charts.</h5>
         <section className={`flex ${styles.nav_wrapper}`}>
           <ImageView src={assets.ic_money} alt="money-icon" imgSize={32} />
           <h3>Send your money instantly and effortlessly</h3>
-          {address ? (
+          {status === "In_active" ? (
             <Button wrapperClass={styles.button_wrapper} onClick={() => push(ROUTE_RECIPIENTS)}>
               Send Money
             </Button>

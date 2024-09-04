@@ -5,7 +5,11 @@ import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const ExchangeRate = () => {
-  const {getPopularCorridors} = useHandler()
+  const {getPopularCorridors, isLoading, getFlagUrl} = useHandler()
+
+  const Spinner = () => {
+    return <div className={styles.spinner}></div>
+  }
 
   const Card = ({destination_country, source_country, rate}: any) => {
     const {iso3} = destination_country || {}
@@ -14,12 +18,7 @@ export const ExchangeRate = () => {
     return (
       <section className={styles.card_wrapper}>
         <section className={`flex ${styles.country_wrapper}`}>
-          <ImageView
-            src={`https://flagcdn.com/w40/${iso2?.toLowerCase()}.png`}
-            alt="country-image"
-            imgSize={24}
-            wrapperClass={styles.img_wrapper}
-          />
+          <ImageView src={getFlagUrl(iso2)} alt="country-image" imgSize={24} wrapperClass={styles.img_wrapper} />
           <h5 className="bold">
             {sourceCountryName} / {iso3}
           </h5>
@@ -43,7 +42,9 @@ export const ExchangeRate = () => {
   return (
     <section className={styles.container_wrapper}>
       <h4 className={`bold ${styles.txt_wrapper}`}>Current exchange rate for popular corridors</h4>
-      <section className={`flex ${styles.detail_wrapper}`}>{renderCards(getPopularCorridors)}</section>
+      <section className={`flex ${isLoading ? styles.details_wrapper : styles.detail_wrapper}`}>
+        {isLoading ? <Spinner /> : renderCards(getPopularCorridors)}
+      </section>
     </section>
   )
 }
