@@ -7,6 +7,11 @@ export interface IResponseLogin {
   refresh_token: string
 }
 
+export interface IResponseWebAuthRegistrationFinish {
+  verified: boolean
+  cred_id: string
+}
+
 export interface IResponseUpdateUser extends IResponseLogin {
   user: IUser
 }

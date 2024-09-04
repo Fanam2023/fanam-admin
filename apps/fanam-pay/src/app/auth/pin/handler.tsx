@@ -15,13 +15,14 @@ const useHandler = (styles: IStyle) => {
     confirmPin: "",
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
-  const {signUpWebAuth} = useAuthController()
+  const {signUp, registerWebAuth} = useAuthController()
   const {toggleNotify} = useNotifyPopup()
 
   const {mutate: createUser} = useMutation({
-    mutationFn: signUpWebAuth,
-    onSuccess: ({result}) => {
+    mutationFn: signUp,
+    onSuccess: async ({result}) => {
       if (result) {
+        await registerWebAuth()
         toggleNotify({
           type: "success",
           title: "Successfully signed up",

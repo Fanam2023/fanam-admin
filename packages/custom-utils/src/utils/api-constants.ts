@@ -24,6 +24,6 @@ export const API_INVOICE = "/file-upload/invoice"
 export const API_SENDING_PURPOSE = "/sending-purpose"
 export const API_REGISTER_START = "/passkey/register-start"
 export const API_REGISTER_FINISH = "/passkey/register-finish"
-export const API_LOGIN_START = "/passkey/login-start"
+export const apiLoginStart = (credentialId: string) => `/passkey/login-start?credentialId=${credentialId}`
 export const API_LOGIN_FINISH = "/passkey/login-finish"
 export const API_POPULAR_CORRIDORS = "/payment/popularCorridors-visa"
