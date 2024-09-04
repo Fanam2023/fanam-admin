@@ -2,20 +2,13 @@ import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {IFormData, JSONObject, useReactQuery} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useRef, useState} from "react"
-import {useMutation, useQuery} from "@tanstack/react-query"
+import {useMutation} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {ICountry, IPayloadFxRate, ITransactionData} from "@custom/utils"
-import {useLocationController, usePaymentController, useTransactionController} from "controller"
+import {usePaymentController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
 import {CountryPopup} from "organisms"
-import {
-  PURPOSES_BUSINESS,
-  PURPOSES_INDIVIDUAL,
-  QUERY_COUNTRIES,
-  QUERY_EXCHANGE,
-  QUERY_TRANSACTION,
-  ROUTE_INVOICE,
-} from "utils"
+import {PURPOSES_BUSINESS, PURPOSES_INDIVIDUAL, QUERY_EXCHANGE, QUERY_TRANSACTION, ROUTE_INVOICE} from "utils"
 
 const DEFAULT_ERR_STATE = {
   errSourceAmount: "",
@@ -34,7 +27,6 @@ let debounceTimer: null | NodeJS.Timeout = null
 export const useHandler = () => {
   const {push} = useRouter()
   const {getFxRate} = usePaymentController()
-  const {getAllCountries} = useLocationController()
   const {createTransaction} = useTransactionController()
   const {refreshQuery} = useReactQuery()
   const {toggleNotify} = useNotifyPopup()
@@ -66,8 +58,6 @@ export const useHandler = () => {
   const PURPOSES = isIndividual ? PURPOSES_INDIVIDUAL : PURPOSES_BUSINESS
 
   const {isClicked} = errState
-
-  const {data: allCountries = []} = useQuery({queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries})
 
   const {mutate: checkFxRate} = useMutation({
     mutationKey: [QUERY_EXCHANGE],
@@ -108,17 +98,6 @@ export const useHandler = () => {
     setSelectedCharge(charge)
     setSelectedTime(time)
   }
-
-  useEffect(() => {
-    if (allCountries.length) {
-      setData({
-        ...data,
-        destination_country: allCountries.find(({iso2}) =>
-          sourceCountry?.iso2 === "IN" ? iso2 === "US" : iso2 === "IN"
-        ),
-      })
-    }
-  }, [allCountries])
 
   useEffect(() => {
     if (isClicked) setErrState(prev => ({...prev, ...onValidate()}))
@@ -201,7 +180,7 @@ export const useHandler = () => {
 
   const showCountries = () =>
     toggleSlider({
-      children: <CountryPopup countries={allCountries} onSelect={onSelectCountry} selCountry={destination_country} />,
+      children: <CountryPopup onSelect={onSelectCountry} selCountry={destination_country} />,
     })
 
   const onSelectType = (value: Record<string, IFormData[]>) => onChangeValue({...value, purpose: ""})

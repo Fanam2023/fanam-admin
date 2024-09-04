@@ -7,6 +7,7 @@ import {
 } from "@simplewebauthn/browser"
 import type {PublicKeyCredentialCreationOptionsJSON} from "@simplewebauthn/types"
 import {
+  API_FORGOTPIN,
   API_LOGIN,
   API_LOGIN_FINISH,
   API_LOGOUT,
@@ -19,6 +20,7 @@ import {
   apiLoginStart,
   IFanamApiError,
   ILogOutPayload,
+  IPayloadForgotPin,
   IPayloadLogin,
   IPayloadSyncUser,
   IResponseLogin,
@@ -50,6 +52,21 @@ export const useAuthController = () => {
       /* If user enters Username and pin and trying to login */
       await registerWebAuth()
     }
+    return {result, errorData}
+  }
+
+  const forgotPin = async (payload: IPayloadForgotPin) => {
+    const {result, errorData} = await putRequest<IResponseLogin>(API_FORGOTPIN, payload)
+    if (result) {
+      const {access_token, refresh_token} = result
+
+      updateToken(access_token)
+      updateRefreshToken(refresh_token)
+
+      /* If user enters Username and pin and trying to login */
+      await registerWebAuth()
+    }
+
     return {result, errorData}
   }
 
@@ -133,6 +150,9 @@ export const useAuthController = () => {
       updateToken(access_token)
       updateRefreshToken(refresh_token)
       updateUserData(user)
+
+      /* If user enters Username and pin and trying to login */
+      await registerWebAuth()
     }
 
     return {result, errorData}
@@ -188,6 +208,7 @@ export const useAuthController = () => {
   return {
     login,
     loginWebAuth,
+    forgotPin,
     getUser,
     logout,
     syncUser,

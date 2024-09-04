@@ -13,3 +13,5 @@ export type TypeTransactionStatus =
   | "Payment_pending"
   | "Payment_successful"
   | "Payment_failed"
+
+export type TypeScope = "reset" | "singup"

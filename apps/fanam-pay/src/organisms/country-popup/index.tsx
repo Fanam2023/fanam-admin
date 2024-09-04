@@ -1,14 +1,16 @@
 import {ImageView, TextField} from "@fanam-pkg/core-ui-sass"
-import {useState} from "react"
+import {useMemo} from "react"
 import {ICountry} from "@custom/utils"
 import {CountryPopupProps} from "props"
 import styles from "./country.module.sass"
+import {useHandler} from "./handler"
 
-export const CountryPopup = ({onSelect, selCountry, countries}: CountryPopupProps) => {
-  const [searchTerm, setSearchTerm] = useState<string>("")
+export const CountryPopup = ({onSelect, selCountry}: CountryPopupProps) => {
+  const {allCountries, searchTerm, setSearchTerm} = useHandler()
 
-  const filteredCountry = countries?.filter(({country_name}) =>
-    country_name?.toLowerCase()?.includes(searchTerm?.toLowerCase())
+  const filteredCountry = useMemo(
+    () => allCountries?.filter(({country_name}) => country_name?.toLowerCase()?.includes(searchTerm?.toLowerCase())),
+    [searchTerm, allCountries]
   )
 
   const renderCountries = (country: ICountry) => {

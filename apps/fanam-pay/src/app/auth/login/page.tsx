@@ -6,7 +6,7 @@ import useHandler from "./handler"
 import styles from "./page.module.sass"
 
 const Login = () => {
-  const {data, errData, onChangeValue, onSubmit, routeToSignUp} = useHandler()
+  const {data, errData, onChangeValue, onSubmit, routeToSignUp, routeTOForgotPin} = useHandler()
   const {phone_no, pin} = data
   const {errPhoneNo, errPin} = errData
 
@@ -33,10 +33,15 @@ const Login = () => {
           wrapperClass={styles.text_field_wrapper}
           error={errPin}
         />
-        <section className={`flex ${styles.login_wrapper}`}>
-          <h6>No Account ?</h6>
-          <h6 className={`bold ${styles.login}`} onClick={routeToSignUp}>
-            Sign in
+        <section className={`flex-sb-center`}>
+          <section className={`flex ${styles.login_wrapper}`}>
+            <h6>No Account ?</h6>
+            <h6 className={`bold ${styles.login}`} onClick={routeToSignUp}>
+              Sign in
+            </h6>
+          </section>
+          <h6 className={`bold ${styles.login}`} onClick={routeTOForgotPin}>
+            Forget PIN?
           </h6>
         </section>
         <Button wrapperClass={styles.button_wrapper} onClick={onSubmit}>
