@@ -1,9 +1,14 @@
-import {platformAuthenticatorIsAvailable, startAuthentication, startRegistration} from "@simplewebauthn/browser"
+import {useStorage} from "@fanam-pkg/core-utils"
+import {
+  browserSupportsWebAuthn,
+  platformAuthenticatorIsAvailable,
+  startAuthentication,
+  startRegistration,
+} from "@simplewebauthn/browser"
 import type {PublicKeyCredentialCreationOptionsJSON} from "@simplewebauthn/types"
 import {
   API_LOGIN,
   API_LOGIN_FINISH,
-  API_LOGIN_START,
   API_LOGOUT,
   API_REGISTER_FINISH,
   API_REGISTER_START,
@@ -11,6 +16,7 @@ import {
   API_SIGNUP,
   API_SYNC_USER,
   API_USER,
+  apiLoginStart,
   IFanamApiError,
   ILogOutPayload,
   IPayloadLogin,
@@ -19,15 +25,18 @@ import {
   IResponseUpdateUser,
   IResponseWebAuthLogin,
   IResponseWebAuthRegistration,
+  IResponseWebAuthRegistrationFinish,
   IUser,
   IUserBase,
 } from "@custom/utils"
 import {useSingleton} from "hooks"
+import {LS_WEBAUTHN_CRED_ID} from "utils"
 import {useApi} from "./api"
 
 export const useAuthController = () => {
   const {postRequest, getRequest, putRequest} = useApi()
   const {updateToken, updateRefreshToken, updateUserData} = useSingleton()
+  const {getStorage, setStorage} = useStorage()
 
   const login = async (payload: IPayloadLogin) => {
     const {result, errorData} = await postRequest<IResponseLogin>(API_LOGIN, payload)
@@ -37,6 +46,9 @@ export const useAuthController = () => {
 
       updateToken(access_token)
       updateRefreshToken(refresh_token)
+
+      /* If user enters Username and pin and trying to login */
+      await registerWebAuth()
     }
     return {result, errorData}
   }
@@ -48,35 +60,36 @@ export const useAuthController = () => {
     }
 
     try {
-      const isAuthenticatorAvailable = await platformAuthenticatorIsAvailable()
+      const credentialId = getStorage(LS_WEBAUTHN_CRED_ID, true)
+      const isAuthenticatorAvailable =
+        (await platformAuthenticatorIsAvailable()) && browserSupportsWebAuthn && !!credentialId
       /* Fetch @simple-web's authentication options from server */
-      const {result: loginStart, errorData} = await getRequest<IResponseWebAuthLogin, IFanamApiError<IResponseLogin>>(
-        API_LOGIN_START
-      )
-      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_LOGIN_START, loginStart)
-      if (isAuthenticatorAvailable && loginStart) {
-        /* Fetch @simple-web's authentication assessment */
-        const assessment = await startAuthentication(loginStart)
+      if (isAuthenticatorAvailable) {
+        const {result: loginStart, errorData} = await getRequest<IResponseWebAuthLogin, IFanamApiError<IResponseLogin>>(
+          apiLoginStart(credentialId)
+        )
 
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: assessment", assessment)
-        const {challenge} = loginStart
+        if (loginStart) {
+          /* Fetch @simple-web's authentication assessment */
+          const assessment = await startAuthentication(loginStart)
+          const {challenge} = loginStart
 
-        /* Complete @simple-web's login and get access-token */
-        const {result: finishReg, errorData} = await postRequest<
-          IResponseLogin,
-          IResponseWebAuthLogin,
-          IFanamApiError<IResponseLogin>
-        >(API_LOGIN_FINISH, {...assessment, challenge})
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_LOGIN_FINISH, finishReg)
+          /* Complete @simple-web's login and get access-token */
+          const {result: finishReg, errorData} = await postRequest<
+            IResponseLogin,
+            IResponseWebAuthLogin,
+            IFanamApiError<IResponseLogin>
+          >(API_LOGIN_FINISH, {...assessment, challenge})
 
-        if (finishReg) {
-          const {access_token, refresh_token} = finishReg
+          if (finishReg) {
+            const {access_token, refresh_token} = finishReg
 
-          updateToken(access_token)
-          updateRefreshToken(refresh_token)
-          response.result = finishReg
+            updateToken(access_token)
+            updateRefreshToken(refresh_token)
+            response.result = finishReg
+          } else response.errorData = errorData
         } else response.errorData = errorData
-      } else response.errorData = errorData
+      }
     } catch (error) {
       // ERROR_CEREMONY_ABORTED - AbortError
       response.errorData.message = error?.message || "Something went wrong"
@@ -133,7 +146,7 @@ export const useAuthController = () => {
 
     try {
       /* Create User */
-      const isAuthenticatorAvailable = await platformAuthenticatorIsAvailable()
+      const isAuthenticatorAvailable = (await platformAuthenticatorIsAvailable()) && browserSupportsWebAuthn
 
       if (isAuthenticatorAvailable) {
         /* Fetch @simple-web Start Registration options from Server */
@@ -142,8 +155,6 @@ export const useAuthController = () => {
           IFanamApiError<IResponseUpdateUser>
         >(API_REGISTER_START)
         if (regStart) {
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_REGISTER_START, regStart)
-
           /* Fetch @simple-web's registration attestation */
           const attestation = await startRegistration(regStart)
 
@@ -151,14 +162,13 @@ export const useAuthController = () => {
 
           /* Complete @simple-web's registration and get User details and access-token */
           const {errorData, result: finishResult} = await postRequest<
-            IResponseUpdateUser,
+            IResponseWebAuthRegistrationFinish,
             IResponseWebAuthRegistration,
             IFanamApiError<IResponseUpdateUser>
           >(API_REGISTER_FINISH, {...attestation, challenge})
 
-          console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>: ", API_REGISTER_FINISH, finishResult)
-
-          if (finishResult) {
+          if (finishResult.verified) {
+            setStorage(LS_WEBAUTHN_CRED_ID, finishResult.cred_id, true)
           } else response.errorData = errorData
         } else response.errorData = errorData
       }

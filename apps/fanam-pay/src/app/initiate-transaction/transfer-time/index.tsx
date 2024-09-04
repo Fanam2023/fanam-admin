@@ -1,6 +1,6 @@
-import { ImageView } from "@fanam-pkg/core-ui-sass"
-import { ITransfer } from "props"
-import { useHandler } from "./handler"
+import {ImageView} from "@fanam-pkg/core-ui-sass"
+import {ITransfer} from "props"
+import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const Transfer = ({onSelectChargeAndTime}: {onSelectChargeAndTime: (charge: string, time: string) => void}) => {

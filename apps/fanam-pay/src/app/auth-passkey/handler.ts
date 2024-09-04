@@ -1,7 +1,8 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {startAuthentication, startRegistration} from "@simplewebauthn/browser"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import axios from "axios"
+import {useAuthController} from "controller"
 
 export const API_REGISTER_START = "http://192.168.208.48:3000/auth/register-start"
 export const API_REGISTER_FINISH = "http://192.168.208.48:3000/auth/register-finish"
@@ -10,9 +11,14 @@ export const API_AUTHENTICATION_FINISH = "http://192.168.208.48:3000/auth/login-
 
 export const useHandler = () => {
   const {toggleNotify} = useNotifyPopup()
+  const {registerWebAuth} = useAuthController()
 
   /* This is not required Backend team will store it while implementing */
   const [registrationInfo, setRegistrationInfo] = useState()
+
+  useEffect(() => {
+    registerWebAuth()
+  }, [])
 
   const onRegister = async () => {
     try {

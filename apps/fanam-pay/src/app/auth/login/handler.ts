@@ -1,6 +1,5 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {JSONObject} from "@fanam-pkg/core-utils"
-import {browserSupportsWebAuthn} from "@simplewebauthn/browser"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
@@ -30,10 +29,8 @@ const useHandler = () => {
   })
 
   const executeWebAuthn = async () => {
-    if (browserSupportsWebAuthn) {
-      const {result} = await loginWebAuth()
-      if (result) replace(ROUTE_HOME)
-    }
+    const {result} = await loginWebAuth()
+    if (result) replace(ROUTE_HOME)
   }
 
   useEffect(() => {
