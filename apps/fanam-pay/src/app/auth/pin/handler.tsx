@@ -1,35 +1,58 @@
 import {FormSectionProps, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {JSONObject, useStorage} from "@fanam-pkg/core-utils"
-import {useRouter} from "next/navigation"
+import {useRouter, useSearchParams} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
-import {ISignUpPin, IStyle, IUserBase, SESSION_SIGNUP} from "@custom/utils"
+import {ISignUpPin, IStyle, IUserBase, SESSION_SIGNUP, TypeScope} from "@custom/utils"
 import {useAuthController} from "controller"
 import {ROUTE_HOME, ROUTE_LOGIN} from "utils"
 
 const useHandler = (styles: IStyle) => {
   const {getStorage, setStorage, removeStorage} = useStorage()
   const {push} = useRouter()
+  const searchParams = useSearchParams()
+  const scope = searchParams.get("scope") as TypeScope
   const [data, setData] = useState<ISignUpPin>({
     newPin: "",
     confirmPin: "",
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
-  const {signUp, registerWebAuth} = useAuthController()
+  const {signUp, registerWebAuth, forgotPin} = useAuthController()
   const {toggleNotify} = useNotifyPopup()
 
   const {mutate: createUser} = useMutation({
     mutationFn: signUp,
-    onSuccess: async ({result}) => {
+    onSuccess: async ({result, errorData}) => {
       if (result) {
-        await registerWebAuth()
         toggleNotify({
           type: "success",
           title: "Successfully signed up",
         })
         removeStorage(SESSION_SIGNUP)
         push(ROUTE_HOME)
-      }
+      } else if (errorData?.message)
+        toggleNotify({
+          type: "error",
+          title: errorData?.message || "Something went wrong",
+        })
+    },
+  })
+
+  const {mutate: resetPin} = useMutation({
+    mutationFn: forgotPin,
+    onSuccess: async ({result, errorData}) => {
+      if (result) {
+        toggleNotify({
+          type: "success",
+          title: "PIN resetted Successfully",
+        })
+        removeStorage(SESSION_SIGNUP)
+        push(ROUTE_HOME)
+      } else if (errorData?.message)
+        toggleNotify({
+          type: "error",
+          title: errorData?.message || "Something went wrong",
+        })
     },
   })
 
@@ -91,13 +114,20 @@ const useHandler = (styles: IStyle) => {
     if (isValid) {
       const storedData = getStorage<IUserBase>(SESSION_SIGNUP)
       if (storedData) {
-        const payload: IUserBase = {
-          ...storedData,
-          newPin,
-          confirmPin,
-        }
-        setStorage(SESSION_SIGNUP, payload)
-        createUser({...payload, newPin: stringToBase64(newPin), confirmPin: stringToBase64(confirmPin)})
+        if (scope === "singup") {
+          const payload: IUserBase = {
+            ...storedData,
+            newPin,
+            confirmPin,
+          }
+
+          createUser({...payload, newPin: stringToBase64(newPin), confirmPin: stringToBase64(confirmPin)})
+        } else if (scope === "reset")
+          resetPin({
+            phone_no: storedData.phone_no,
+            newPin: stringToBase64(newPin),
+            confirmPin: stringToBase64(confirmPin),
+          })
       } else push(ROUTE_LOGIN)
     }
   }

@@ -45,6 +45,13 @@ export interface IPayloadLogin {
   pin?: string
 }
 
+export interface IPayloadForgotPin {
+  country_code?: string | ICountry
+  newPin?: string
+  confirmPin?: string
+  phone_no?: string
+}
+
 export interface IUserBase {
   country_code?: ICountry | string
   phone_no?: string
@@ -130,4 +137,9 @@ export interface ISignUpPin {
 export interface ILogin {
   phone_no: string
   pin: string
+}
+export interface IForgotPin {
+  newPin?: string
+  confirmPin?: string
+  phone_no?: string
 }

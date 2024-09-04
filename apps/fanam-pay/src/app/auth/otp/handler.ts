@@ -1,24 +1,25 @@
 import {REG_VALID_NUMBER, useCommon, useFirebase, useStorage} from "@fanam-pkg/core-utils"
-import {useRouter} from "next/navigation"
+import {useRouter, useSearchParams} from "next/navigation"
 import {ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState} from "react"
-import {IBaseSignUp, SESSION_SIGNUP} from "@custom/utils"
-import {ROUTE_PIN} from "utils"
+import {IBaseSignUp, SESSION_SIGNUP, TypeScope} from "@custom/utils"
+import {routeToPin} from "utils"
 
 const useHandler = () => {
-  const {getStorage} = useStorage()
   const {isValidInputByRegex} = useCommon()
   const {push} = useRouter()
+  const searchParams = useSearchParams()
+  const {getStorage} = useStorage()
   const [otpValues, setOtpValues] = useState(Array(6).fill(""))
   const [timer, setTimer] = useState(60)
   const inputRefs = useRef<(HTMLInputElement | null)[]>(Array(6).fill(null))
   const [errState, setErrState] = useState({errOtp: "", isClicked: false, isValid: false})
-  const [signUpData, setSignUpData] = useState<IBaseSignUp | null>(null)
-  const [loading, setLoading] = useState(false)
   const {isClicked, errOtp} = errState
-  const {phone_no, country_code} = signUpData || {}
+  const [storedData, setStoredData] = useState<IBaseSignUp | null>(null)
+  const {phone_no, country_code} = storedData || {}
+  const scope = searchParams.get("scope")
 
   const {sendOtp, verifyOTP} = useFirebase(
-    () => push(ROUTE_PIN),
+    () => push(routeToPin(scope as TypeScope)),
     data => setErrState({...errState, errOtp: data || ""})
   )
 
@@ -27,15 +28,12 @@ const useHandler = () => {
 
     const onComplete = () => inputRefs.current[0]?.focus()
 
-    if (phone_no?.length === 10) {
-      setLoading(true)
-      sendOtp(country_code as string, phone_no, onComplete, onComplete)
-    }
+    if (phone_no?.length === 10) sendOtp(country_code as string, phone_no, onComplete, onComplete)
   }, [phone_no])
 
   useEffect(() => {
     const storedData = getStorage<IBaseSignUp>(SESSION_SIGNUP)
-    if (storedData) setSignUpData(storedData)
+    if (storedData) setStoredData(storedData)
   }, [])
 
   useEffect(() => {

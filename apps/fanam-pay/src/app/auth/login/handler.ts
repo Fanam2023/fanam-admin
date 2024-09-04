@@ -5,7 +5,7 @@ import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import {ILogin, IPayloadLogin} from "@custom/utils"
 import {useAuthController} from "controller"
-import {ROUTE_HOME, ROUTE_SIGN_UP} from "utils"
+import {ROUTE_FORGOT_PIN, ROUTE_HOME, ROUTE_SIGN_UP} from "utils"
 
 const useHandler = () => {
   const {push, replace} = useRouter()
@@ -75,12 +75,14 @@ const useHandler = () => {
   }
 
   const routeToSignUp = () => push(ROUTE_SIGN_UP)
+  const routeTOForgotPin = () => push(ROUTE_FORGOT_PIN)
   return {
     data,
     errData,
     onChangeValue,
     onSubmit,
     routeToSignUp,
+    routeTOForgotPin,
   }
 }
 

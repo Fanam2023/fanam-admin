@@ -1,3 +1,5 @@
+import {TypeScope} from "@custom/utils"
+
 export const ROUTE_INITIATE_TRANSACTION = "/initiate-transaction"
 export const ROUTE_SENDER = "/sender-form"
 export const ROUTE_INVOICE = "/invoice"
@@ -13,6 +15,7 @@ export const ROUTE_TRANSACTION = "/transaction"
 export const ROUTE_TRANSACTION_STATUS = `${ROUTE_TRANSACTION}/status`
 export const ROUTE_SIGN_UP = "/auth/sign-up"
 export const ROUTE_LOGIN = "/auth/login"
-export const ROUTE_OTP = "/auth/otp"
+export const ROUTE_FORGOT_PIN = "/auth/forgot-password"
+export const routeToOTP = (scope: TypeScope) => `/auth/otp?scope=${scope}`
 export const ROUTE_HOME = "/home"
-export const ROUTE_PIN = "/auth/pin"
+export const routeToPin = (scope: TypeScope) => `/auth/pin?scope=${scope}`

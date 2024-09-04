@@ -1,6 +1,7 @@
 export const API_AUTH = "/auth"
 export const API_SIGNUP = `${API_AUTH}/signup`
 export const API_LOGIN = `${API_AUTH}/login`
+export const API_FORGOTPIN = `${API_AUTH}/forgot-pin`
 export const API_REFRESH_TOKEN = "/refresh-token"
 export const API_LOGOUT = `${API_AUTH}/logOut`
 export const API_USER_FCM = `${API_AUTH}/fcm`

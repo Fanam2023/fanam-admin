@@ -2,19 +2,16 @@ import {FormSectionProps, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
 import {JSONObject, REG_EMAIL, REG_INDIAN_MOBILE, useCommon, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useCallback, useEffect, useState} from "react"
-import {useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {IBaseSignUp, ICountry, IStyle, SESSION_SIGNUP} from "@custom/utils"
 import assets from "assets"
-import {useLocationController} from "controller"
 import {CountryPopup} from "organisms"
-import {QUERY_COUNTRIES, ROUTE_LOGIN, ROUTE_OTP} from "utils"
+import {ROUTE_LOGIN, routeToOTP} from "utils"
 
 const useHandler = (styles: IStyle) => {
   const {isValidInputByRegex} = useCommon()
   const {getStorage, setStorage} = useStorage()
   const {toggleSlider} = useSlider()
-  const {getAllCountries} = useLocationController()
   const {push} = useRouter()
   const [data, setData] = useState<IBaseSignUp>({
     first_name: "",
@@ -30,27 +27,20 @@ const useHandler = (styles: IStyle) => {
 
   const {isClicked} = errData
 
-  const stringToBase64 = (inputString: string) => Buffer.from(inputString).toString("base64")
-
-  const base64ToString = (base64String: string = ""): string => {
-    return Buffer.from(base64String, "base64").toString("utf-8")
+  const onSelectCountry = (country: ICountry) => {
+    setData(prev => ({
+      ...prev,
+      country_code: country, // Store the entire country object
+    }))
+    toggleSlider()
   }
-
-  const {data: allCountries = []} = useQuery({queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries})
 
   const goToCountrySlider = () =>
     toggleSlider({
       children: (
         <CountryPopup
-          onSelect={country => {
-            setData(prev => ({
-              ...prev,
-              country_code: country, // Store the entire country object
-            }))
-            toggleSlider()
-          }}
-          selCountry={allCountries.find(c => c.iso2 === (country_code as ICountry)?.iso2)} // Find selected country by ISO code
-          countries={allCountries}
+          onSelect={onSelectCountry}
+          selCountry={typeof country_code === "object" ? (country_code as ICountry) : null}
         />
       ),
     })
@@ -193,7 +183,7 @@ const useHandler = (styles: IStyle) => {
         account_type,
       }
       setStorage(SESSION_SIGNUP, payload)
-      push(ROUTE_OTP)
+      push(routeToOTP("singup"))
     }
   }
 
