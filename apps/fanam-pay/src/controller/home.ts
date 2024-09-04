@@ -6,7 +6,7 @@ export const useHomeController = () => {
   const {getRequest} = useApi()
 
   const popularCorridors = async () => {
-    const {result} = await getRequest<ICorridors[]>(API_POPULAR_CORRIDORS)
+    const {result = []} = await getRequest<ICorridors[]>(API_POPULAR_CORRIDORS)
     return result
   }
 
