@@ -1,17 +1,16 @@
 "use client"
 
 import {ImageView} from "@fanam-pkg/core-ui-sass"
+import {ICorridors} from "@custom/utils"
 import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const ExchangeRate = () => {
   const {getPopularCorridors, isLoading, getFlagUrl} = useHandler()
 
-  const Spinner = () => {
-    return <div className={styles.spinner}></div>
-  }
+  const Spinner = () => <div className={styles.spinner}></div>
 
-  const Card = ({destination_country, source_country, rate}: any) => {
+  const Card = ({destination_country, source_country, conversion_rate}: ICorridors) => {
     const {iso3} = destination_country || {}
     const {iso3: sourceCountryName, iso2} = source_country || {}
 
@@ -23,18 +22,18 @@ export const ExchangeRate = () => {
             {sourceCountryName} / {iso3}
           </h5>
         </section>
-        <h5 className={`bold ${styles.text_wrapper}`}>{rate}</h5>
+        <h5 className={`bold ${styles.text_wrapper}`}>{conversion_rate}</h5>
       </section>
     )
   }
 
-  const renderCards = (data: any) => {
+  const renderCards = (data: ICorridors[]) => {
     return data?.map(({destination_country, source_country, conversion_rate}, index: number) => (
       <Card
         key={index}
         destination_country={destination_country}
         source_country={source_country}
-        rate={conversion_rate}
+        conversion_rate={conversion_rate}
       />
     ))
   }
