@@ -12,6 +12,23 @@ export interface ICountry {
   iso3: string
 }
 
+export interface ICorridors {
+  source_country: ISourceCountry
+  destination_country: ISourceCountry
+  conversion_rate: number
+}
+
+export interface ISourceCountry extends ICountry {
+  numeric_code: string
+  currency_symbol: string
+  tld: string
+  native: string
+  nationality: string
+  latitude: string
+  longitude: string
+  subregion_id: number
+}
+
 export interface IState {
   state_id: number
   state_name: string

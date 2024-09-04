@@ -302,6 +302,7 @@ const useHandler = (styles: IStyle) => {
           name: "first_name",
           error: errFirstName,
           value: first_name,
+          disabled: !!user?.first_name,
           onChangeValue,
         },
         {
@@ -310,6 +311,7 @@ const useHandler = (styles: IStyle) => {
           name: "last_name",
           error: errLastName,
           value: last_name,
+          disabled: !!user?.last_name,
           onChangeValue,
         },
         {
@@ -327,6 +329,7 @@ const useHandler = (styles: IStyle) => {
           name: "phone_no",
           error: errPhoneNo,
           value: phone_no,
+          disabled: !!user?.phone_no,
           onChangeValue,
         },
         {
