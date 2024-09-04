@@ -1,6 +1,7 @@
 export * from "./api"
 export * from "./auth"
 export * from "./beneficiary"
+export * from "./home"
 export * from "./location"
 export * from "./payment"
 export * from "./recipient"
