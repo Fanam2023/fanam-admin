@@ -259,7 +259,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!zip_code) errState = {...errState, errZipCode: "Please enter Zip Code", isValid: false}
 
-    if (!account_type) errState = {...errState, errAccountType: "Please enter Zip Code", isValid: false}
+    if (!account_type) errState = {...errState, errAccountType: "Please enter account type", isValid: false}
 
     if (!kyc.length) errState = {...errState, errKyc: "Please choose valid KYC documents", isValid: false}
 

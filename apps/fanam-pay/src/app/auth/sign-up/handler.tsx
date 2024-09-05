@@ -5,7 +5,7 @@ import {useCallback, useEffect, useState} from "react"
 import {useSlider} from "@custom/ui"
 import {IBaseSignUp, ICountry, IStyle, SESSION_SIGNUP} from "@custom/utils"
 import assets from "assets"
-import {useCommon} from "hooks/common"
+import {useCommon} from "hooks"
 import {CountryPopup} from "organisms"
 import {ROUTE_LOGIN, routeToOTP} from "utils"
 
