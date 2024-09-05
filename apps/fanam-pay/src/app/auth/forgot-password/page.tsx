@@ -3,7 +3,7 @@
 import {assets, Button, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
 import {useSlider} from "@custom/ui"
 import {ICountry} from "@custom/utils"
-import {Auth, CountryPopup} from "organisms"
+import {Auth, BaseContainer, CountryPopup} from "organisms"
 import useHandler from "./handler"
 import styles from "./page.module.sass"
 
@@ -32,13 +32,13 @@ const Forgot_Password = () => {
     })
 
   return (
-    <section className={`flex-col-center ${styles.page_wrapper}`}>
+    <BaseContainer childWrapper={`flex-col-center ${styles.page_wrapper}`} isStepper profile bellIcon>
       <Auth>
         <section className={`flex-col ${styles.heading}`}>
           <h3 className={`bold ${styles.Forgot}`}>Forgot PIN?</h3>
           <h5>Enter your registered mobile number to receive a 6-digit code.</h5>
         </section>
-        <section className="flex">
+        <section className={`flex ${styles.country_container}`}>
           <>
             <section className={`flex ${styles.country_wrapper}`} onClick={goToCountrySlider}>
               <ImageView
@@ -59,6 +59,7 @@ const Forgot_Password = () => {
               value={phone_no}
               onChangeData={onChangeValue}
               error={errPhoneNo}
+              className={styles.text_field_wrapper}
             />
           </>
         </section>
@@ -67,7 +68,7 @@ const Forgot_Password = () => {
           Next
         </Button>
       </Auth>
-    </section>
+    </BaseContainer>
   )
 }
 export default Forgot_Password

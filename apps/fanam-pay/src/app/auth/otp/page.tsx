@@ -2,6 +2,7 @@
 
 import {Button} from "@fanam-pkg/core-ui-sass"
 import {useEffect} from "react"
+import {BaseContainer} from "organisms"
 import {Auth} from "organisms/auth"
 import useHandler from "./handler"
 import styles from "./page.module.sass"
@@ -64,7 +65,7 @@ const Otp = () => {
   }, [])
 
   return (
-    <section className={`flex-col-center ${styles.page_wrapper}`}>
+    <BaseContainer childWrapper={`flex-col-center ${styles.page_wrapper}`} isStepper bellIcon profile>
       <Auth isBack>
         <section className={`flex-col ${styles.heading}`}>
           <h4 className={`bold ${styles.otp}`}>OTP Verification </h4>
@@ -90,7 +91,7 @@ const Otp = () => {
         </h6>
         <section id="auth-proceed-button"></section>
       </Auth>
-    </section>
+    </BaseContainer>
   )
 }
 

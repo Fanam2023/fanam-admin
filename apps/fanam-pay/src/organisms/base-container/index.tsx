@@ -20,6 +20,8 @@ export const BaseContainer = ({
   childWrapper = "",
   skipBtn,
   stepIndex,
+  profile,
+  bellIcon,
   onSubmit,
   onAdd,
   isStepper,
@@ -76,8 +78,8 @@ export const BaseContainer = ({
             <ImageView src={assets.ic_help} alt="help-icon" imgSize={24} />
             <h5 className={`medium ${styles.language_text}`}>Help</h5>
           </section>
-          <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />
-          <section className={styles.profile_wrapper}>{first_name}</section>
+          {!bellIcon && <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />}
+          {!profile && <section className={styles.profile_wrapper}>{first_name}</section>}
         </section>
         {!!addButton && (
           <h3 onClick={onAdd} className={styles.add_text}>
