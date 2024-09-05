@@ -8,6 +8,7 @@ export const QUERY_TRANSACTION = "__FANAM_VGYBHU__"
 export const QUERY_RECIPIENT = "__FANAM_ACTRYG__"
 export const QUERY_BENEFICIARY = "__FANAM_BCFGGQ__"
 export const QUERY_POPULAR_CORRIDORS = "__FANAM_FEFCRG__"
+export const QUERY_PAN_CARD = "__FANAM_PNHDER__"
 
 /* Cookie Storage Constant Keys here */
 export const COOKIE_ACCESS_TOKEN = "__FANAM_YTGUYG__"
