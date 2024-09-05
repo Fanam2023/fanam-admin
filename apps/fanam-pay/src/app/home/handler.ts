@@ -4,10 +4,11 @@ import {useSingleton} from "hooks"
 const useHandler = () => {
   const {push} = useRouter()
   const {user} = useSingleton()
-  const {address} = user || {}
+  const {status, first_name} = user || {}
 
   return {
-    address,
+    status,
+    first_name,
     push,
   }
 }
