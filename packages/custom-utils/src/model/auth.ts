@@ -2,6 +2,8 @@ import {IFile, IFormData} from "@fanam-pkg/core-utils"
 import type {AuthenticationResponseJSON, RegistrationResponseJSON} from "@simplewebauthn/types"
 import {IAttachment, ICity, ICountry, IState, TypeUserRole} from "../model"
 
+export type StatusType = "Active" | "Blocked" | "locked" | "In_active"
+
 export interface IResponseLogin {
   access_token: string
   refresh_token: string
@@ -79,6 +81,7 @@ export interface IUser {
   id_type: string
   user_accounts: IResponseBankAccount[]
   kyc_attachments: IAttachment[]
+  status: StatusType
 }
 
 export interface IBaseSyncUser {
