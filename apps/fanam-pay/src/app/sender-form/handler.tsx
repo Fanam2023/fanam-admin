@@ -48,10 +48,7 @@ const useHandler = (styles: IStyle) => {
     id_type: "",
     id_issued_country: null,
     id_number: "",
-    account_type: [
-      {label: "Personal", isSelected: true},
-      {label: "Business", isSelected: false},
-    ],
+    account_type: "",
     kyc: [],
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
@@ -214,7 +211,7 @@ const useHandler = (styles: IStyle) => {
         payloadData = {
           ...payloadData,
           account_no,
-          account_type: data.account_type.map(({label}) => ({label, isSelected: label === account_type})),
+          account_type,
         }
       }
 
@@ -262,8 +259,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!zip_code) errState = {...errState, errZipCode: "Please enter Zip Code", isValid: false}
 
-    if (account_type.every(({isSelected}) => !isSelected))
-      errState = {...errState, errAccountType: "Please enter Zip Code", isValid: false}
+    if (!account_type) errState = {...errState, errAccountType: "Please enter Zip Code", isValid: false}
 
     if (!kyc.length) errState = {...errState, errKyc: "Please choose valid KYC documents", isValid: false}
 
@@ -283,11 +279,13 @@ const useHandler = (styles: IStyle) => {
       wrapperClassGrid: styles.sender_input_wrapper,
       childElements: [
         {
-          elementType: "radio-button",
+          elementType: "drop-down",
           name: "account_type",
           label: "Select Account type",
-          options: account_type,
+          options: ["Personal", "Business"],
+          value: account_type,
           error: errAccountType,
+          disabled: !!user?.user_accounts[0]?.account_type,
           onChangeValue,
         },
       ],
@@ -459,7 +457,7 @@ const useHandler = (styles: IStyle) => {
         id_type,
         id_issued_country_id: id_issued_country.key as number,
         id_number,
-        bank_account: {account_no, account_type: account_type?.find(({isSelected}) => isSelected)?.label},
+        bank_account: {account_no, account_type: account_type},
         kyc: kyc.filter(({file}) => !!file),
       })
     }
