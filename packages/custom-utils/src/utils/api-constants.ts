@@ -28,3 +28,4 @@ export const API_REGISTER_FINISH = "/passkey/register-finish"
 export const apiLoginStart = (credentialId: string) => `/passkey/login-start?credentialId=${credentialId}`
 export const API_LOGIN_FINISH = "/passkey/login-finish"
 export const API_POPULAR_CORRIDORS = "/payment/popularCorridors-visa"
+export const API_CREATE_ORDER = "/order"

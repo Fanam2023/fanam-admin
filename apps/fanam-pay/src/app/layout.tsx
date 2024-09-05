@@ -26,7 +26,13 @@ const secondaryFont = Nunito({
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
-      <body className={`${secondaryFont.variable}  ${primaryFont.variable}`}>
+      <body
+        className={`${secondaryFont.variable}  ${primaryFont.variable}`}
+        style={{
+          background: "linear-gradient(to top right, #a6e1e6, #c2a189, #d3e6d3, #f5d6b1)",
+          minHeight: "100vh",
+          margin: 0,
+        }}>
         <LibProvider>
           <CustomProvider>
             <UIProvider>{children}</UIProvider>
