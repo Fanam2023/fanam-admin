@@ -32,6 +32,7 @@ import ic_search from "./icons/ic_search.svg"
 import ic_star from "./icons/ic_star.svg"
 import ic_success from "./icons/ic_success.svg"
 import ic_success_small from "./icons/ic_success_small.svg"
+import ic_tick from "./icons/ic_tick.svg"
 import ic_up_arrow from "./icons/ic_up_arrow.svg"
 import ic_upload from "./icons/ic_upload.svg"
 import ic_us_flag from "./icons/ic_us_flag.svg"
@@ -84,6 +85,7 @@ const assets = {
   ic_help_theme,
   ic_edit_white,
   ic_profile,
+  ic_tick,
 }
 
 export default assets
