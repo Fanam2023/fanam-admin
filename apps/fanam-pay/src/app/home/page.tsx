@@ -4,7 +4,7 @@ import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
 import {BaseContainer, ExchangeRate, ListTransaction} from "organisms"
 import {ROUTE_RECIPIENTS, ROUTE_SENDER} from "utils"
-import styles from "./Page.module.sass"
+import styles from "./page.module.sass"
 import useHandler from "./handler"
 
 const HomeScreen = () => {

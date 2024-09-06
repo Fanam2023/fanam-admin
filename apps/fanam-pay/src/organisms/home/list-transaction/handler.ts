@@ -1,10 +1,20 @@
 "use client"
 
 import {FormSectionProps} from "@fanam-pkg/core-ui-sass"
-import {IDetail} from "model"
+import { useQuery } from "@tanstack/react-query"
+import { useTransactionController } from "controller"
+import {ITransactionDetails} from "model"
+import { QUERY_TRANSACTION } from "utils/storage-constants"
 
 export const useHandler = () => {
-  const defaultData: IDetail[] = [
+  const {getTransaction} = useTransactionController()
+
+  const {data: transaction} = useQuery({
+    queryKey: [QUERY_TRANSACTION],
+    queryFn: getTransaction,
+  })
+
+  const defaultData: ITransactionDetails[] = [
     {
       month: "JUN",
       date: "19",
@@ -34,6 +44,7 @@ export const useHandler = () => {
   ]
 
   return {
+    transaction,
     defaultData,
     formElements,
   }

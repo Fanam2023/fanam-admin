@@ -11,14 +11,15 @@ import {
 } from "@custom/utils"
 import {useSingleton} from "hooks"
 import {useApi} from "./api"
+import { ITransactionDetails } from "model"
 
 export const useTransactionController = () => {
   const {getRequest, postRequest, putRequest} = useApi()
   const {transId, updateTransData} = useSingleton()
 
   const getTransaction = async () => {
-    const {result} = await getRequest(API_TRANSACTION)
-    return result
+    const {result} = await getRequest<ITransactionDetails[]>(API_TRANSACTION)
+    return result || []
   }
 
   const createTransaction = async (payload: IPayloadTransaction) => {
