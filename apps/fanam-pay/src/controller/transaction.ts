@@ -10,8 +10,8 @@ import {
   ITransaction,
 } from "@custom/utils"
 import {useSingleton} from "hooks"
+import {ITransactionDetails} from "model"
 import {useApi} from "./api"
-import { ITransactionDetails } from "model"
 
 export const useTransactionController = () => {
   const {getRequest, postRequest, putRequest} = useApi()

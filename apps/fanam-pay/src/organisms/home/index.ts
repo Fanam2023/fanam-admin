@@ -1,3 +1,5 @@
 export * from "./list-transaction"
 export * from "./exchange-rate"
 export * from "./transaction-details"
+export * from "./recipient-details"
+export * from "./content-transaction"

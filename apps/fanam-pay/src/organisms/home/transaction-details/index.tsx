@@ -1,10 +1,11 @@
 import {ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
-import {RecipientDetails} from "./recipient-details"
+import {ContentTransaction} from "../content-transaction"
+import {RecipientDetails} from "../recipient-details"
 import styles from "./styles.module.sass"
 
 export const TransactionDetails = () => (
-  <section className={"card"}>
+  <section className="card">
     <h3 className={styles.txt_wrapper}>Transaction Details</h3>
     <section className={`flex ${styles.payment_wrapper}`}>
       <ImageView src={assets.ic_profile} alt="profile" imgSize={42} />
@@ -32,29 +33,7 @@ export const TransactionDetails = () => (
       </section>
     </section>
     <section className={styles.transaction_container}>
-      <section className={`flex-col ${styles.payment_container}`}>
-        <h4 className={`bold ${styles.txt_wrapper}`}>Details</h4>
-        <section className={"flex"}>
-          <h5 className={styles.transaction_details}>You were going to send</h5>
-          <h5 className={`semi-bold ${styles.payment_amount}`}>1,000 USD</h5>
-        </section>
-        <section className={"flex"}>
-          <h5 className={styles.transaction_details}>Transfer Fee</h5>
-          <h5 className={`semi-bold ${styles.payment_amount}`}>200.00 USD</h5>
-        </section>
-        <section className={"flex"}>
-          <h5 className={styles.transaction_details}>Exchange Rate</h5>
-          <h5 className={`semi-bold ${styles.payment_amount}`}>1,000 USD</h5>
-        </section>
-        <section className={`flex ${styles.total_wrapper}`}>
-          <h5 className={styles.transaction_txt}>Receiver will get Exactly</h5>
-          <h5 className={`semi-bold ${styles.total_usd}`}>92,962.05 USD</h5>
-        </section>
-        <section className={"flex"}>
-          <h5 className={styles.transaction_txt}>Transaction Number</h5>
-          <h5 className={`semi-bold ${styles.transaction_number}`}>#1190538268</h5>
-        </section>
-      </section>
+      <ContentTransaction />
       <RecipientDetails />
     </section>
   </section>

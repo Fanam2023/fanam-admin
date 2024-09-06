@@ -1,10 +1,10 @@
 "use client"
 
 import {FormSectionProps} from "@fanam-pkg/core-ui-sass"
-import { useQuery } from "@tanstack/react-query"
-import { useTransactionController } from "controller"
+import {useQuery} from "@tanstack/react-query"
+import {useTransactionController} from "controller"
 import {ITransactionDetails} from "model"
-import { QUERY_TRANSACTION } from "utils/storage-constants"
+import {QUERY_TRANSACTION} from "utils/storage-constants"
 
 export const useHandler = () => {
   const {getTransaction} = useTransactionController()

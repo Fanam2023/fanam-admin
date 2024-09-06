@@ -3,18 +3,18 @@
 import {Button, GroupForm, ImageView, usePopup} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
 import {ITransactionDetails} from "model"
+import {TransactionDetails} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./style.module.sass"
-import { TransactionDetails } from "organisms"
 
 export const ListTransaction = () => {
-  const {transaction, formElements, defaultData} = useHandler()
+  const {transaction, formElements} = useHandler()
   const {togglePopup} = usePopup()
   const onAddPayment = () =>
     togglePopup({
       children: <TransactionDetails />,
     })
-    
+
   const Card = ({
     month,
     date,
@@ -27,7 +27,7 @@ export const ListTransaction = () => {
     paymentDuration,
   }: ITransactionDetails) => (
     <section className={styles.page_wrapper}>
-      <section className={`flex ${styles.content_wrapper}`} onClick={onAddPayment} >
+      <section className={`flex ${styles.content_wrapper}`} onClick={onAddPayment}>
         <section className={`flex ${styles.detail_wrapper}`}>
           <section className={styles.date_wrapper}>
             <h4 className="bold">{month}</h4>
@@ -79,12 +79,12 @@ export const ListTransaction = () => {
   }
 
   return (
-    <section className={styles.conatiner_wrapper}>
+    <section className={styles.container_wrapper}>
       <section className={`flex ${styles.head_wrapper}`}>
         <h4 className={`bold ${styles.txt_wrapper}`}>Recent Transaction Activity</h4>
-        <GroupForm formSections={formElements} wrapperClass={styles.dropDown_wrappper} />
+        <GroupForm formSections={formElements} wrapperClass={styles.dropDown_wrapper} />
       </section>
-      {renderCards(defaultData)}
+      {transaction && renderCards(transaction)}
       <Button wrapperClass={styles.button_wrapper}>See More Activity</Button>
     </section>
   )
