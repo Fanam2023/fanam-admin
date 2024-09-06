@@ -4,6 +4,8 @@ export type TypeAccount = "Personal" | "Business"
 
 export type TypePurpose = "Education" | "Travel" | "Hospital" | "Insurance" | "Family_expense" | "Rental" | "Others"
 
+export type TypeStatus = "Active" | "Blocked" | "locked" | "In_active"
+
 export type TypeTransactionStatus =
   | "Transaction_initiated"
   | "Invoice_upload"

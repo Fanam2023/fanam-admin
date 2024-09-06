@@ -1,12 +1,22 @@
-import {FormSectionProps, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
+import {Button, FormSectionProps, ImageView, TextField, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
 import {IFormData, JSONObject, REG_EMAIL, useCommon} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
-import {IStyle, ISyncUserData} from "@custom/utils"
-import {useAuthController, useLocationController} from "controller"
+import {IPayLoadPan, IStyle, ISyncUserData, IVerifyData} from "@custom/utils"
+import assets from "assets"
+import {useAuthController, useLocationController, useVerificationController} from "controller"
 import {useSingleton} from "hooks"
-import {ID_PROOFS, QUERY_CITIES, QUERY_COUNTRIES, QUERY_STATES, QUERY_USER, ROUTE_INITIATE_TRANSACTION} from "utils"
+import {OtpPopUp} from "organisms"
+import {
+  ID_PROOFS,
+  QUERY_CITIES,
+  QUERY_COUNTRIES,
+  QUERY_PAN_CARD,
+  QUERY_STATES,
+  QUERY_USER,
+  ROUTE_INITIATE_TRANSACTION,
+} from "utils"
 
 const DEFAULT_ERR_STATE = {
   isClicked: false,
@@ -25,6 +35,8 @@ const DEFAULT_ERR_STATE = {
   errIdIssuedCountry: "",
   errIdType: "",
   errKyc: "",
+  errPan: "",
+  errAadhaarNumber: "",
 }
 
 const useHandler = (styles: IStyle) => {
@@ -32,8 +44,14 @@ const useHandler = (styles: IStyle) => {
   const {isValidInputByRegex} = useCommon()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {syncUser} = useAuthController()
+  const {verifyPanCard} = useVerificationController()
   const {toggleNotify} = useNotifyPopup()
+  const {togglePopup} = usePopup()
   const {updateUserData, user} = useSingleton()
+  const [verify, setVerify] = useState<IVerifyData>({
+    pan: "",
+    aadhaarNumber: "",
+  })
   const [data, setData] = useState<ISyncUserData>({
     first_name: "",
     last_name: "",
@@ -48,10 +66,7 @@ const useHandler = (styles: IStyle) => {
     id_type: "",
     id_issued_country: null,
     id_number: "",
-    account_type: [
-      {label: "Personal", isSelected: true},
-      {label: "Business", isSelected: false},
-    ],
+    account_type: "",
     kyc: [],
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
@@ -74,6 +89,8 @@ const useHandler = (styles: IStyle) => {
     kyc,
   } = data
 
+  const {pan, aadhaarNumber} = verify
+
   const {
     isClicked,
     errFirstName,
@@ -92,6 +109,14 @@ const useHandler = (styles: IStyle) => {
     errKyc,
   } = errData
 
+  const toggle = () => {
+    togglePopup({
+      title: "Verify Aadhaar",
+      children: <OtpPopUp></OtpPopUp>,
+      // isClosable: false,
+    })
+  }
+
   const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}] = useQueries({
     queries: [
       {queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries},
@@ -109,6 +134,30 @@ const useHandler = (styles: IStyle) => {
   })
 
   const {mutate: updateUser, data: userRes} = useMutation({mutationKey: [QUERY_USER], mutationFn: syncUser})
+
+  const {mutate: verifyPan, data: panRes} = useMutation({
+    mutationKey: [QUERY_PAN_CARD],
+    mutationFn: verifyPanCard,
+    onSuccess: ({result, errorData}) => {
+      const {message} = errorData || {}
+      if (result) {
+        toggleNotify({
+          title: "Success",
+          description: "PAN card verified successfully!",
+          type: "success",
+        })
+      } else {
+        toggleNotify({
+          title: "Error - PAN Verification",
+          description: message || "PAN verification failed. Please try again.",
+          type: "error",
+        })
+      }
+    },
+  })
+
+  const {result} = panRes || {}
+  const {verification, message} = result?.result || {}
 
   const countries: IFormData[] = useMemo(
     () => allCountries.map(({country_id, country_name}) => ({label: country_name, key: country_id})),
@@ -214,7 +263,7 @@ const useHandler = (styles: IStyle) => {
         payloadData = {
           ...payloadData,
           account_no,
-          account_type: data.account_type.map(({label}) => ({label, isSelected: label === account_type})),
+          account_type,
         }
       }
 
@@ -262,8 +311,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!zip_code) errState = {...errState, errZipCode: "Please enter Zip Code", isValid: false}
 
-    if (account_type.every(({isSelected}) => !isSelected))
-      errState = {...errState, errAccountType: "Please enter Zip Code", isValid: false}
+    if (!account_type) errState = {...errState, errAccountType: "Please enter account type", isValid: false}
 
     if (!kyc.length) errState = {...errState, errKyc: "Please choose valid KYC documents", isValid: false}
 
@@ -278,16 +326,20 @@ const useHandler = (styles: IStyle) => {
 
   const onChangeState = (value: JSONObject) => onChangeValue({...value, city: null})
 
+  const onChangeData = (value: JSONObject) => setVerify(prev => ({...prev, ...value}))
+
   const formElements: FormSectionProps[] = [
     {
       wrapperClassGrid: styles.sender_input_wrapper,
       childElements: [
         {
-          elementType: "radio-button",
+          elementType: "drop-down",
           name: "account_type",
           label: "Select Account type",
-          options: account_type,
+          options: ["Personal", "Business"],
+          value: account_type,
           error: errAccountType,
+          disabled: !!user?.user_accounts[0]?.account_type,
           onChangeValue,
         },
       ],
@@ -442,6 +494,54 @@ const useHandler = (styles: IStyle) => {
     if (isClicked) setErrData(prev => ({...prev, ...onValidate()}))
   }, [data, isClicked])
 
+  const formElement: FormSectionProps[] = [
+    {
+      title: "Verification",
+      wrapperClassGrid: styles.verify_wrapper,
+      childElements: [
+        {
+          childElement: (
+            <section className={`flex ${styles.pan_wrapper}`}>
+              <TextField label="Enter Pan Number" name="pan" value={pan} onChangeData={onChangeData} />
+              <Button onClick={onVerify}>Verify</Button>
+              {!!verification && (
+                <>
+                  <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
+                  <h5 className={styles.verified_text}>{message}</h5>
+                </>
+              )}
+            </section>
+          ),
+        },
+      ],
+    },
+    {
+      childElements: [
+        {
+          childElement: (
+            <section className={`flex ${styles.pan_wrapper}`}>
+              <TextField
+                label="Enter Aaadhar Number"
+                name="aadhaarNumber"
+                value={aadhaarNumber}
+                onChangeData={onChangeData}
+              />
+              <Button onClick={toggle}>Verify</Button>
+            </section>
+          ),
+        },
+      ],
+    },
+  ]
+
+  function onVerify() {
+    const {pan} = verify
+    let payload: IPayLoadPan = {
+      pan,
+    }
+    verifyPan(payload)
+  }
+
   const onSubmit = () => {
     const {isValid} = onValidate()
 
@@ -459,15 +559,16 @@ const useHandler = (styles: IStyle) => {
         id_type,
         id_issued_country_id: id_issued_country.key as number,
         id_number,
-        bank_account: {account_no, account_type: account_type?.find(({isSelected}) => isSelected)?.label},
+        bank_account: {account_no, account_type: account_type},
         kyc: kyc.filter(({file}) => !!file),
       })
     }
   }
 
   return {
-    onSubmit,
     formElements,
+    formElement,
+    onSubmit,
   }
 }
 

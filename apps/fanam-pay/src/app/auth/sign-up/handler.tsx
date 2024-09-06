@@ -1,15 +1,16 @@
 import {FormSectionProps, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
-import {JSONObject, REG_EMAIL, REG_INDIAN_MOBILE, useCommon, useStorage} from "@fanam-pkg/core-utils"
+import {JSONObject, REG_EMAIL, REG_INDIAN_MOBILE, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useCallback, useEffect, useState} from "react"
 import {useSlider} from "@custom/ui"
 import {IBaseSignUp, ICountry, IStyle, SESSION_SIGNUP} from "@custom/utils"
 import assets from "assets"
+import {useCommon} from "hooks"
 import {CountryPopup} from "organisms"
 import {ROUTE_LOGIN, routeToOTP} from "utils"
 
 const useHandler = (styles: IStyle) => {
-  const {isValidInputByRegex} = useCommon()
+  const {isValidInputByRegex, getFlagUrl} = useCommon()
   const {getStorage, setStorage} = useStorage()
   const {toggleSlider} = useSlider()
   const {push} = useRouter()
@@ -123,11 +124,7 @@ const useHandler = (styles: IStyle) => {
             <>
               <section className={`flex ${styles.country_wrapper}`} onClick={goToCountrySlider}>
                 <ImageView
-                  src={
-                    country_code
-                      ? `https://flagcdn.com/w40/${(country_code as ICountry)?.iso2?.toLowerCase()}.png`
-                      : assets.ic_india_flag
-                  }
+                  src={country_code ? getFlagUrl(country_code) : assets.ic_india_flag}
                   alt="country-img"
                   imgSize={24}
                   wrapperClass={styles.flag}

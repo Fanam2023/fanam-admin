@@ -3,10 +3,12 @@
 import {ImageView} from "@fanam-pkg/core-ui-sass"
 import {MouseEvent} from "react"
 import assets from "assets"
+import {useCommon} from "hooks"
 import {ManageMembersProps} from "props"
 import styles from "./style.module.sass"
 
 export const ManageMembers = ({title, onEdit, onSelect, description}: ManageMembersProps) => {
+  const {getFirstLetter} = useCommon()
   const onClick = (e: MouseEvent<HTMLElement>) => {
     e.stopPropagation()
     onSelect()
@@ -28,7 +30,7 @@ export const ManageMembers = ({title, onEdit, onSelect, description}: ManageMemb
       />
       <section className="flex-col-center">
         <section className={`flex-center ${styles.profile_wrapper}`}>
-          <h4 className={`bold ${styles.title}`}>{title}</h4>
+          <h4 className={`bold ${styles.title}`}>{getFirstLetter(title)}</h4>
         </section>
       </section>
       <h6 className={`ellipsis ${styles.user_details}`}>{title}</h6>
