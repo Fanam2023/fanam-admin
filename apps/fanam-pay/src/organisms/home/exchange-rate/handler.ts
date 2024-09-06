@@ -12,8 +12,16 @@ export const useHandler = () => {
     queryFn: popularCorridors,
   })
 
+  const loopCard = () => {
+    if (getPopularCorridors) {
+      return [...getPopularCorridors, ...getPopularCorridors]
+    }
+    return []
+  }
+
   return {
     getPopularCorridors,
     isLoading,
+    loopCard,
   }
 }

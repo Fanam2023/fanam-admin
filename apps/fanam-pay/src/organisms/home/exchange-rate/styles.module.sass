@@ -4,21 +4,28 @@
   margin:
     top: $size-24px
   padding: $size-24px
+  width: 80vw
   border-radius: $size-12px
   gap: $size-16px
   background-color: $white
   box-shadow: 0 $size-1px $size-20px 0 rgba($black, $alpha-two)
+  overflow: hidden
 
 .txt_wrapper
   color: $theme
 
+.text_wrapper
+  margin-top: $size-16px
+  gap: $size-6px
+
 .detail_wrapper
+  display: flex
+  flex-direction: row
   gap: $size-20px
-  overflow-x: scroll
+  white-space: nowrap
+  animation: scrollHorizontal 20s linear infinite
 
 .details_wrapper
-  gap: $size-20px
-  overflow-x: scroll
   align-items: center
   justify-content: center
   margin-top: $size-10px
@@ -36,3 +43,9 @@
     transform: rotate(0deg)
   100%
     transform: rotate(360deg)
+
+@keyframes scrollHorizontal
+  0%
+    transform: translateX(0)
+  100%
+    transform: translateX(-50%)

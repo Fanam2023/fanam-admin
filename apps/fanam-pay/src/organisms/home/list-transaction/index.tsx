@@ -74,7 +74,7 @@ export const ListTransaction = () => {
 
   return (
     <section className={styles.conatiner_wrapper}>
-      <section className={`flex ${styles.head_wrapper}`}>
+      <section className={`flex-sb-center ${styles.head_wrapper}`}>
         <h4 className={`bold ${styles.txt_wrapper}`}>Recent Transaction Activity</h4>
         <GroupForm formSections={formElements} wrapperClass={styles.dropDown_wrappper} />
       </section>

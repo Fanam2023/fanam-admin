@@ -12,6 +12,7 @@ const useHandler = (styles: IStyle) => {
   const {push} = useRouter()
   const searchParams = useSearchParams()
   const scope = searchParams.get("scope") as TypeScope
+  const [showPin, setShowPin] = useState(false)
   const [data, setData] = useState<ISignUpPin>({
     newPin: "",
     confirmPin: "",
@@ -41,18 +42,19 @@ const useHandler = (styles: IStyle) => {
   const {mutate: resetPin} = useMutation({
     mutationFn: forgotPin,
     onSuccess: async ({result, errorData}) => {
+      const message = result
+        ? "PIN resetted Successfully"
+        : errorData?.message?.includes("last 10 passwords")
+          ? "Current PIN should not be the same as the last 10 PINs"
+          : errorData?.message || "Something went wrong"
+      toggleNotify({
+        type: result ? "success" : "error",
+        title: message,
+      })
       if (result) {
-        toggleNotify({
-          type: "success",
-          title: "PIN resetted Successfully",
-        })
         removeStorage(SESSION_SIGNUP)
         push(ROUTE_HOME)
-      } else if (errorData?.message)
-        toggleNotify({
-          type: "error",
-          title: errorData?.message || "Something went wrong",
-        })
+      }
     },
   })
 
@@ -74,7 +76,12 @@ const useHandler = (styles: IStyle) => {
     return errState
   }
 
-  const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
+  const onChangeValue = (value: JSONObject) => {
+    const pinValue = Object.values(value)[0] as string
+    ;/^[0-9]*$/.test(pinValue)
+      ? setData(prev => ({...prev, ...value}))
+      : toggleNotify({type: "error", title: "Only numbers are allowed for the PIN"})
+  }
 
   useEffect(() => {
     if (isClicked) setErrData(prev => ({...prev, ...onValidate()}))
@@ -92,6 +99,7 @@ const useHandler = (styles: IStyle) => {
           name: "newPin",
           error: errPin,
           value: newPin,
+          type: showPin ? "text" : "password",
           onChangeValue,
         },
         {
@@ -99,6 +107,7 @@ const useHandler = (styles: IStyle) => {
           label: "Confirm Pin",
           name: "confirmPin",
           error: errConfirmPin,
+          type: showPin ? "text" : "password",
           value: confirmPin,
           onChangeValue,
         },
@@ -129,15 +138,20 @@ const useHandler = (styles: IStyle) => {
             confirmPin: stringToBase64(confirmPin),
           })
       } else push(ROUTE_LOGIN)
+      setShowPin(false)
     }
   }
 
   const routeToLogin = () => push(ROUTE_LOGIN)
 
+  const togglePinVisibility = () => setShowPin(prev => !prev)
+
   return {
     formElements,
     onSubmit,
     routeToLogin,
+    togglePinVisibility,
+    showPin,
   }
 }
 

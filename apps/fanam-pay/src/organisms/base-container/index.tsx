@@ -1,13 +1,13 @@
 "use client"
 
 import {Button, ImageView, usePopup} from "@fanam-pkg/core-ui-sass"
+import {useResize} from "@fanam-pkg/core-utils"
 import assets from "assets"
 import {useSingleton} from "hooks"
 import {IStepper} from "model"
 import {OtpPopUp} from "organisms/otp"
 import {BaseContainerProps} from "props"
 import {SIDE_BAR} from "utils"
-import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({
@@ -27,9 +27,8 @@ export const BaseContainer = ({
   isStepper,
 }: BaseContainerProps) => {
   const {user} = useSingleton()
-  const {isDesktop, getFirstLetter} = useHandler()
-  const {first_name} = user || {}
-
+  const {first_name, last_name} = user || {}
+  const {isDesktop} = useResize()
   const {togglePopup} = usePopup()
 
   const toggle = () => {
@@ -80,7 +79,12 @@ export const BaseContainer = ({
             <h5 className={`medium ${styles.language_text}`}>Help</h5>
           </section>
           {!bellIcon && <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />}
-          {!profile && <section className={styles.profile_wrapper}>{first_name}</section>}
+          {!profile && (
+            <section className={styles.profile_wrapper}>
+              {first_name?.charAt(0).toUpperCase()}
+              {last_name?.charAt(0).toUpperCase()}
+            </section>
+          )}
         </section>
         {!!addButton && (
           <h3 onClick={onAdd} className={styles.add_text}>

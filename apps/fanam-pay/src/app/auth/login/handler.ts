@@ -11,6 +11,7 @@ const useHandler = () => {
   const {push, replace} = useRouter()
   const {toggleNotify} = useNotifyPopup()
   const {login, loginWebAuth} = useAuthController()
+  const [showPin, setShowPin] = useState(false)
   const [data, setData] = useState<ILogin>({
     phone_no: "",
     pin: "",
@@ -54,7 +55,12 @@ const useHandler = () => {
     return errState
   }
 
-  const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
+  const onChangeValue = (value: JSONObject) => {
+    const pinValue = Object.values(value)[0] as string
+    ;/^[0-9]*$/.test(pinValue)
+      ? setData(prev => ({...prev, ...value}))
+      : toggleNotify({type: "error", title: "Only numbers are allowed for the PIN"})
+  }
 
   useEffect(() => {
     if (isClicked) setErrData(prev => ({...prev, ...onValidate()}))
@@ -71,9 +77,11 @@ const useHandler = () => {
         pin: pinBase64,
       }
       loginWithCredential(payload)
+      setShowPin(false)
     }
   }
 
+  const togglePinVisibility = () => setShowPin(prev => !prev)
   const routeToSignUp = () => push(ROUTE_SIGN_UP)
   const routeTOForgotPin = () => push(ROUTE_FORGOT_PIN)
   return {
@@ -82,6 +90,8 @@ const useHandler = () => {
     onChangeValue,
     onSubmit,
     routeToSignUp,
+    togglePinVisibility,
+    showPin,
     routeTOForgotPin,
   }
 }

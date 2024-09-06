@@ -7,7 +7,8 @@ import useHandler from "./handler"
 import styles from "./page.module.sass"
 
 const Login = () => {
-  const {data, errData, onChangeValue, onSubmit, routeToSignUp, routeTOForgotPin} = useHandler()
+  const {data, errData, onChangeValue, onSubmit, routeToSignUp, routeTOForgotPin, togglePinVisibility, showPin} =
+    useHandler()
   const {phone_no, pin} = data
   const {errPhoneNo, errPin} = errData
 
@@ -30,12 +31,13 @@ const Login = () => {
           <TextField
             label="Enter PIN"
             name="pin"
+            type={showPin ? "text" : "password"}
             value={pin}
             onChangeData={onChangeValue}
             wrapperClass={styles.text_field_wrapper}
             error={errPin}
           />
-          <section className={`flex-sb-center`}>
+          <section className={`flex-sb-center ${styles.forgot_wrpapper}`}>
             <section className={`flex ${styles.login_wrapper}`}>
               <h6>No Account ?</h6>
               <h6 className={`bold ${styles.login}`} onClick={routeToSignUp}>
