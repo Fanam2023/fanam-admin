@@ -22,12 +22,12 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {toggleNotify} = useNotifyPopup()
 
   const RECIPIENT_TYPE: IFormData<TypeAccount>[] = [
-    {label: "Personal", key: "Personal"},
+    {label: "Individual", key: "Individual"},
     {label: "Business", key: "Business"},
   ]
 
   const [data, setData] = useState<IRecipientData>({
-    recipient_account_type: "Personal",
+    recipient_account_type: "Individual",
     first_name: "",
     last_name: "",
     account_no: "",
@@ -35,7 +35,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     branch_address: "",
     branch_code: "",
     swift_code: "",
-    address: "",
+    address_line_1: "",
+    address_line_2: "",
     email: "",
     phone_no: "",
     country: null,
@@ -53,7 +54,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     last_name,
     account_no,
     bank_name,
-    address,
+    address_line_1,
+    address_line_2,
     email,
     phone_no,
     country,
@@ -94,7 +96,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!swift_code) errState = {...errState, errSwiftCode: "Please enter Swift code", isValid: false}
 
-    if (!address) errState = {...errState, errAddress: "Please enter Address", isValid: false}
+    if (!address_line_1) errState = {...errState, errAddressLine1: "Please enter Address", isValid: false}
 
     if (!country) errState = {...errState, errCountry: "Please select Country", isValid: false}
 
@@ -130,7 +132,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     errBranchAddress,
     errBranchCode,
     errSwiftCode,
-    errAddress,
+    errAddressLine1,
     errEmail,
     errPhoneNo,
     errCountry,
@@ -225,7 +227,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         email,
         country,
         phone_no,
-        address,
+        address_line_1,
+        address_line_2,
         state,
         city,
         zip_code,
@@ -250,7 +253,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         email,
         country: {label: country_name, key: country_id},
         phone_no,
-        address,
+        address_line_1,
+        address_line_2,
         state: {label: state_name, key: state_id},
         city: {label: city_name, key: city_id},
         zip_code,
@@ -288,8 +292,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       content={item}
       onSelect={onSelectAccType}
       isSelected={item.key === recipient_account_type}
-      selIcon={item.key === "Personal" ? assets.ic_select_personal : assets.ic_select_business}
-      icon={item.key === "Personal" ? assets.ic_personal : assets.ic_business}
+      selIcon={item.key === "Individual" ? assets.ic_select_personal : assets.ic_select_business}
+      icon={item.key === "Individual" ? assets.ic_personal : assets.ic_business}
     />
   )
 
@@ -350,10 +354,17 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       childElements: [
         {
           elementType: "input",
-          label: "Home address",
-          name: "address",
-          error: errAddress,
-          value: address,
+          label: "Address Line 1",
+          name: "address_line_1",
+          error: errAddressLine1,
+          value: address_line_1,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Address Line 2 (optional )",
+          name: "address_line_2",
+          value: address_line_2,
           onChangeValue,
         },
       ],
@@ -525,7 +536,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       const payLoad: IPayloadRecipient = {
         first_name,
         last_name,
-        address,
+        address_line_1,
+        address_line_2,
         email,
         phone_no,
         country_id: country.key as number,
@@ -583,7 +595,7 @@ const DEFAULT_ERR_STATE = {
   errBranchAddress: "",
   errBranchCode: "",
   errSwiftCode: "",
-  errAddress: "",
+  errAddressLine1: "",
   errEmail: "",
   errPhoneNo: "",
   errCountry: "",

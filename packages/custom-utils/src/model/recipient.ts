@@ -21,7 +21,8 @@ export interface IRecipient {
   email: string
   country: ICountry
   phone_no: string
-  address: string
+  address_line_1: string
+  address_line_2?: string
   state: IState
   city: ICity
   zip_code: string
@@ -40,7 +41,8 @@ export interface IBaseRecipientData {
   last_name: string
   email: string
   phone_no: string
-  address: string
+  address_line_1: string
+  address_line_2?: string
   zip_code: string
   id_number: string
   id_type: string

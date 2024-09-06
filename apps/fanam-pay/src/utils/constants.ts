@@ -107,3 +107,7 @@ export const RELATION_SHIP = [
   "Niece",
   "Not_applicable",
 ]
+
+export const ACCOUNT_TYPE = ["Individual", "Business"]
+
+export const BUSINESS_TYPE = ["Sole_proprietor", "Partnership_firm", "Companies", "Limited_liability_partnership"]

@@ -6,7 +6,7 @@ import useHandler from "./handler"
 import styles from "./sender.module.sass"
 
 const SenderForm = () => {
-  const {formElements, formElement, onSubmit} = useHandler(styles)
+  const {individualForm, formElement, businessForm, individualType, onSubmit} = useHandler(styles)
 
   return (
     <BaseContainer
@@ -24,7 +24,7 @@ const SenderForm = () => {
       </section>
       <section className={styles.sender_form_wrapper}>
         <h4 className={`semi-bold ${styles.type_wrapper}`}>Sender type</h4>
-        <GroupForm formSections={formElements} />
+        <GroupForm formSections={individualType ? individualForm : businessForm} />
         <GroupForm formSections={formElement} />
       </section>
     </BaseContainer>
