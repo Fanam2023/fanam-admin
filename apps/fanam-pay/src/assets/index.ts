@@ -4,6 +4,7 @@ import ic_alert from "./icons/ic_alert.svg"
 import ic_arrow_theme from "./icons/ic_arrow_theme.svg"
 import ic_back from "./icons/ic_back.svg"
 import ic_back_arrow_black from "./icons/ic_back_arrow_black.svg"
+import ic_business from "./icons/ic_business.svg"
 import ic_checkbox from "./icons/ic_checkbox.svg"
 import ic_cloudUpload from "./icons/ic_cloudUpload.svg"
 import ic_debit_card from "./icons/ic_debit_card.svg"
@@ -23,15 +24,19 @@ import ic_lend_money from "./icons/ic_lend_money.svg"
 import ic_money from "./icons/ic_money.svg"
 import ic_pending from "./icons/ic_pending.svg"
 import ic_pending_small from "./icons/ic_pending_small.svg"
+import ic_personal from "./icons/ic_personal.svg"
 import ic_profile from "./icons/ic_profile.svg"
 import ic_remove from "./icons/ic_remove.svg"
 import ic_right from "./icons/ic_right.svg"
 import ic_right_arrow_fill from "./icons/ic_right_arrow_fill.svg"
 import ic_rocket from "./icons/ic_rocket.svg"
 import ic_search from "./icons/ic_search.svg"
+import ic_select_business from "./icons/ic_select_business.svg"
+import ic_select_personal from "./icons/ic_select_personal.svg"
 import ic_star from "./icons/ic_star.svg"
 import ic_success from "./icons/ic_success.svg"
 import ic_success_small from "./icons/ic_success_small.svg"
+import ic_tick from "./icons/ic_tick.svg"
 import ic_up_arrow from "./icons/ic_up_arrow.svg"
 import ic_upload from "./icons/ic_upload.svg"
 import ic_us_flag from "./icons/ic_us_flag.svg"
@@ -84,6 +89,11 @@ const assets = {
   ic_help_theme,
   ic_edit_white,
   ic_profile,
+  ic_tick,
+  ic_personal,
+  ic_select_personal,
+  ic_business,
+  ic_select_business,
 }
 
 export default assets

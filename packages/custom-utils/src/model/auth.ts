@@ -1,8 +1,6 @@
 import {IFile, IFormData} from "@fanam-pkg/core-utils"
 import type {AuthenticationResponseJSON, RegistrationResponseJSON} from "@simplewebauthn/types"
-import {IAttachment, ICity, ICountry, IState, TypeUserRole} from "../model"
-
-export type StatusType = "Active" | "Blocked" | "locked" | "In_active"
+import {IAttachment, ICity, ICountry, IState, TypeStatus, TypeUserRole} from "../model"
 
 export interface IResponseLogin {
   access_token: string
@@ -81,7 +79,7 @@ export interface IUser {
   id_type: string
   user_accounts: IResponseBankAccount[]
   kyc_attachments: IAttachment[]
-  status: StatusType
+  status: TypeStatus
 }
 
 export interface IBaseSyncUser {
@@ -102,8 +100,10 @@ export interface ISyncUserData extends IBaseSyncUser {
   id_issued_country: IFormData | null
   state: IFormData | null
   city: IFormData | null
-  account_type: IFormData[]
+  account_type: string
   account_no: string
+  pan: string
+  aadhaarNumber: string
 }
 
 export interface IPayloadSyncUser extends IBaseSyncUser {
