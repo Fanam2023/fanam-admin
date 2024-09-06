@@ -10,7 +10,7 @@ import {CreateBeneficiaryDetails, CreateRecipientDetails} from "organisms"
 import {routeToBeneficiaryDetails, routeToRecipientDetails} from "utils"
 
 const useHandler = () => {
-  const {transData, refetchTransaction, transId} = useSingleton()
+  const {transData, refetchTransaction, transId, user} = useSingleton()
   const [showDetails, setShowDetails] = useState({
     recipient: false,
     beneficiary: false,
@@ -105,6 +105,9 @@ const useHandler = () => {
     const {result, errorData} = await createOrder({transaction_id})
     if (result) {
       const {razorpay_order_id, amount, order_id} = result || {}
+      const {first_name, last_name, phone_no, email} = user || {}
+      const fullName = `${first_name} ${last_name}`
+
       const rzp1 = new Razorpay({
         order_id: razorpay_order_id,
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY!,
@@ -113,9 +116,9 @@ const useHandler = () => {
         description: "Thanks",
         amount: amount?.toString(),
         prefill: {
-          name: "",
+          name: fullName,
           email,
-          contact: "",
+          contact: phone_no,
         },
         retry: {
           enabled: false,
@@ -138,6 +141,7 @@ const useHandler = () => {
       console.error(">>>>>>>>>>>>>>>>> Error while creating error: ", errorData?.message)
     }
   }
+
   function onSuccess(order_id: string) {
     toggleNotify({
       type: "success",

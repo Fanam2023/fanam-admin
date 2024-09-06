@@ -4,10 +4,7 @@ import {useApi} from "./api"
 export const useOrderController = () => {
   const {postRequest} = useApi()
 
-  const createOrder = async (payload: IOrderPayload) => {
-    const {result, errorData} = await postRequest<IOrderResponse>(API_CREATE_ORDER, payload)
-    return {result, errorData}
-  }
+  const createOrder = async (payload: IOrderPayload) => await postRequest<IOrderResponse>(API_CREATE_ORDER, payload)
 
   return {
     createOrder,

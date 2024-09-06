@@ -6,6 +6,7 @@ import {Nunito, Poppins} from "next/font/google"
 import {CustomProvider} from "@custom/ui"
 import {LibProvider} from "provider"
 import "../../../../packages/custom-ui/src/styles/index.css"
+import styles from "./layout.module.sass"
 
 const primaryFont = Poppins({
   weight: ["400"],
@@ -26,13 +27,7 @@ const secondaryFont = Nunito({
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
-      <body
-        className={`${secondaryFont.variable}  ${primaryFont.variable}`}
-        style={{
-          background: "linear-gradient(to top right, #a6e1e6, #c2a189, #d3e6d3, #f5d6b1)",
-          minHeight: "100vh",
-          margin: 0,
-        }}>
+      <body className={`${secondaryFont.variable}  ${primaryFont.variable} ${styles.background}`}>
         <LibProvider>
           <CustomProvider>
             <UIProvider>{children}</UIProvider>
