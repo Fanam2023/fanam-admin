@@ -85,27 +85,27 @@ export const PURPOSES_BUSINESS: IFormData[] = [
 ]
 
 export const RECIPIENT_INFO: RecipientInfo[] = [
-  { label: "First Name", value: "Varshini J" },
-  { label: "Last Name", value: "Patel" },
-  { label: "Email", value: "Varshini123@gmail.com" },
-  { label: "Phone Number", value: "6785674356" },
-  { label: "Account Type", value: "Saving" },
-  { label: "Account Number", value: "27379264923864" },
-  { label: "Bank Name", value: "Swis Bank" },
-  { label: "Bank Code Type", value: "United States" },
-  { label: "Bank Code", value: "12344" },
-  { label: "Branch", value: "California" },
-  { label: "BIC", value: "United States" },
-  { label: "Country", value: "United States" },
-  { label: "State", value: "Alabama" },
-  { label: "City/District", value: "Tuscaloosa" },
-  { label: "Pin code", value: "35401" }
+  {label: "First Name", value: "Varshini J"},
+  {label: "Last Name", value: "Patel"},
+  {label: "Email", value: "Varshini123@gmail.com"},
+  {label: "Phone Number", value: "6785674356"},
+  {label: "Account Type", value: "Saving"},
+  {label: "Account Number", value: "27379264923864"},
+  {label: "Bank Name", value: "Swis Bank"},
+  {label: "Bank Code Type", value: "United States"},
+  {label: "Bank Code", value: "12344"},
+  {label: "Branch", value: "California"},
+  {label: "BIC", value: "United States"},
+  {label: "Country", value: "United States"},
+  {label: "State", value: "Alabama"},
+  {label: "City/District", value: "Tuscaloosa"},
+  {label: "Pin code", value: "35401"},
 ]
 
-export const TRANSACTION_DETAILS:RecipientInfo[] = [
-  { label: "You were going to send", value: "1,000 USD" },
-  { label: "Transfer Fee", value: "200.00 USD" },
-  { label: "Exchange Rate", value: "1,000 USD" }
+export const TRANSACTION_DETAILS: RecipientInfo[] = [
+  {label: "You were going to send", value: "1,000 USD"},
+  {label: "Transfer Fee", value: "200.00 USD"},
+  {label: "Exchange Rate", value: "1,000 USD"},
 ]
 
 export const ID_PROOFS = ["Passport", "Driving License", "Aadhaar"]

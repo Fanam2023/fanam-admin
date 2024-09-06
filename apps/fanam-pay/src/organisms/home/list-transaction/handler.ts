@@ -14,20 +14,6 @@ export const useHandler = () => {
     queryFn: getTransaction,
   })
 
-  const defaultData: ITransactionDetails[] = [
-    {
-      month: "JUN",
-      date: "19",
-      name: "Phillip Levin",
-      paymentId: "#1190538268",
-      paymentMode: "Bank account",
-      paymentDuration: "2-3 days",
-      status: "Payment Sent",
-      source_amount: " 10000 INR",
-      destination_amount: "98 USD",
-    },
-  ]
-
   const formElements: FormSectionProps[] = [
     {
       childElements: [
@@ -45,7 +31,6 @@ export const useHandler = () => {
 
   return {
     transaction,
-    defaultData,
     formElements,
   }
 }
