@@ -3,7 +3,7 @@ import {IFormData, JSONObject, REG_EMAIL, useCommon} from "@fanam-pkg/core-utils
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
-import {IPayLoadPan, IStyle, ISyncUserData, IVerifyData} from "@custom/utils"
+import {IStyle, ISyncUserData} from "@custom/utils"
 import assets from "assets"
 import {useAuthController, useLocationController, useVerificationController} from "controller"
 import {useSingleton} from "hooks"
@@ -48,10 +48,6 @@ const useHandler = (styles: IStyle) => {
   const {toggleNotify} = useNotifyPopup()
   const {togglePopup} = usePopup()
   const {updateUserData, user} = useSingleton()
-  const [verify, setVerify] = useState<IVerifyData>({
-    pan: "",
-    aadhaarNumber: "",
-  })
   const [data, setData] = useState<ISyncUserData>({
     first_name: "",
     last_name: "",
@@ -68,6 +64,8 @@ const useHandler = (styles: IStyle) => {
     id_number: "",
     account_type: "",
     kyc: [],
+    pan: "",
+    aadhaarNumber: "",
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
 
@@ -87,9 +85,9 @@ const useHandler = (styles: IStyle) => {
     id_issued_country,
     id_number,
     kyc,
+    pan,
+    aadhaarNumber,
   } = data
-
-  const {pan, aadhaarNumber} = verify
 
   const {
     isClicked,
@@ -140,19 +138,18 @@ const useHandler = (styles: IStyle) => {
     mutationFn: verifyPanCard,
     onSuccess: ({result, errorData}) => {
       const {message} = errorData || {}
-      if (result) {
+      if (result)
         toggleNotify({
           title: "Success",
           description: "PAN card verified successfully!",
           type: "success",
         })
-      } else {
+      else
         toggleNotify({
           title: "Error - PAN Verification",
           description: message || "PAN verification failed. Please try again.",
           type: "error",
         })
-      }
     },
   })
 
@@ -325,8 +322,6 @@ const useHandler = (styles: IStyle) => {
   const onChangeCountry = (value: JSONObject) => onChangeValue({...value, state: null, city: null})
 
   const onChangeState = (value: JSONObject) => onChangeValue({...value, city: null})
-
-  const onChangeData = (value: JSONObject) => setVerify(prev => ({...prev, ...value}))
 
   const formElements: FormSectionProps[] = [
     {
@@ -502,7 +497,7 @@ const useHandler = (styles: IStyle) => {
         {
           childElement: (
             <section className={`flex ${styles.pan_wrapper}`}>
-              <TextField label="Enter Pan Number" name="pan" value={pan} onChangeData={onChangeData} />
+              <TextField label="Enter Pan Number" name="pan" value={pan} onChangeData={onChangeValue} />
               <Button onClick={onVerify}>Verify</Button>
               {!!verification && (
                 <>
@@ -524,7 +519,7 @@ const useHandler = (styles: IStyle) => {
                 label="Enter Aaadhar Number"
                 name="aadhaarNumber"
                 value={aadhaarNumber}
-                onChangeData={onChangeData}
+                onChangeData={onChangeValue}
               />
               <Button onClick={toggle}>Verify</Button>
             </section>
@@ -535,11 +530,8 @@ const useHandler = (styles: IStyle) => {
   ]
 
   function onVerify() {
-    const {pan} = verify
-    let payload: IPayLoadPan = {
-      pan,
-    }
-    verifyPan(payload)
+    const {pan} = data
+    verifyPan({pan})
   }
 
   const onSubmit = () => {
@@ -559,7 +551,7 @@ const useHandler = (styles: IStyle) => {
         id_type,
         id_issued_country_id: id_issued_country.key as number,
         id_number,
-        bank_account: {account_no, account_type: account_type},
+        bank_account: {account_no, account_type},
         kyc: kyc.filter(({file}) => !!file),
       })
     }
