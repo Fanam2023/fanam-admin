@@ -102,6 +102,8 @@ export interface ISyncUserData extends IBaseSyncUser {
   city: IFormData | null
   account_type: string
   account_no: string
+  pan: string
+  aadhaarNumber: string
 }
 
 export interface IPayloadSyncUser extends IBaseSyncUser {

@@ -288,8 +288,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       content={item}
       onSelect={onSelectAccType}
       isSelected={item.key === recipient_account_type}
-      selIcon={assets.ic_india_flag}
-      icon={assets.ic_us_flag}
+      selIcon={item.key === "Personal" ? assets.ic_select_personal : assets.ic_select_business}
+      icon={item.key === "Personal" ? assets.ic_personal : assets.ic_business}
     />
   )
 
