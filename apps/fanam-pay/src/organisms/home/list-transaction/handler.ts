@@ -1,22 +1,18 @@
 "use client"
 
 import {FormSectionProps} from "@fanam-pkg/core-ui-sass"
-import {IDetail} from "model"
+import {useQuery} from "@tanstack/react-query"
+import {useTransactionController} from "controller"
+import {ITransactionDetails} from "model"
+import {QUERY_TRANSACTION} from "utils/storage-constants"
 
 export const useHandler = () => {
-  const defaultData: IDetail[] = [
-    {
-      month: "JUN",
-      date: "19",
-      name: "Phillip Levin",
-      paymentId: "#1190538268",
-      paymentMode: "Bank account",
-      paymentDuration: "2-3 days",
-      status: "Payment Sent",
-      source_amount: " 10000 INR",
-      destination_amount: "98 USD",
-    },
-  ]
+  const {getTransaction} = useTransactionController()
+
+  const {data: transaction} = useQuery({
+    queryKey: [QUERY_TRANSACTION],
+    queryFn: getTransaction,
+  })
 
   const formElements: FormSectionProps[] = [
     {
@@ -34,7 +30,7 @@ export const useHandler = () => {
   ]
 
   return {
-    defaultData,
+    transaction,
     formElements,
   }
 }

@@ -1,13 +1,19 @@
 "use client"
 
-import {Button, GroupForm, ImageView} from "@fanam-pkg/core-ui-sass"
+import {Button, GroupForm, ImageView, usePopup} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
-import {IDetail} from "model"
+import {ITransactionDetails} from "model"
+import {TransactionDetails} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
 export const ListTransaction = () => {
-  const {defaultData, formElements} = useHandler()
+  const {transaction, formElements} = useHandler()
+  const {togglePopup} = usePopup()
+  const onAddPayment = () =>
+    togglePopup({
+      children: <TransactionDetails />,
+    })
 
   const Card = ({
     month,
@@ -19,9 +25,9 @@ export const ListTransaction = () => {
     paymentId,
     paymentMode,
     paymentDuration,
-  }: IDetail) => (
+  }: ITransactionDetails) => (
     <section className={styles.page_wrapper}>
-      <section className={`flex ${styles.content_wrapper}`}>
+      <section className={`flex ${styles.content_wrapper}`} onClick={onAddPayment}>
         <section className={`flex ${styles.detail_wrapper}`}>
           <section className={styles.date_wrapper}>
             <h4 className="bold">{month}</h4>
@@ -50,7 +56,7 @@ export const ListTransaction = () => {
     </section>
   )
 
-  const renderCards = (data: IDetail[]) => {
+  const renderCards = (data: ITransactionDetails[]) => {
     return data.map(
       (
         {month, date, name, status, source_amount, destination_amount, paymentId, paymentMode, paymentDuration},
@@ -73,12 +79,12 @@ export const ListTransaction = () => {
   }
 
   return (
-    <section className={styles.conatiner_wrapper}>
+    <section className={styles.container_wrapper}>
       <section className={`flex ${styles.head_wrapper}`}>
         <h4 className={`bold ${styles.txt_wrapper}`}>Recent Transaction Activity</h4>
-        <GroupForm formSections={formElements} wrapperClass={styles.dropDown_wrappper} />
+        <GroupForm formSections={formElements} wrapperClass={styles.dropDown_wrapper} />
       </section>
-      {renderCards(defaultData)}
+      {transaction && renderCards(transaction)}
       <Button wrapperClass={styles.button_wrapper}>See More Activity</Button>
     </section>
   )
