@@ -96,6 +96,20 @@ const useHandler = (styles: IStyle) => {
 
   const formElements: FormSectionProps[] = [
     {
+      wrapperClassGrid: styles.details_wrapper,
+      childElements: [
+        {
+          elementType: "drop-down",
+          label: "Sender type",
+          name: "account_type",
+          error: errAccountType,
+          value: account_type,
+          options: ACCOUNT_TYPE,
+          onChangeValue,
+        },
+      ],
+    },
+    {
       wrapperClassGrid: styles.name_wrapper,
       childElements: [
         {
@@ -152,15 +166,6 @@ const useHandler = (styles: IStyle) => {
           name: "email",
           error: errEmail,
           value: email,
-          onChangeValue,
-        },
-        {
-          elementType: "drop-down",
-          label: "Sender type",
-          name: "account_type",
-          error: errAccountType,
-          value: account_type,
-          options: ACCOUNT_TYPE,
           onChangeValue,
         },
       ],

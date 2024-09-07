@@ -1,13 +1,16 @@
-import {IFormData, useResize} from "@fanam-pkg/core-utils"
+import {useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
+import {IFormData, JSONObject, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
+import useRazorpay from "react-razorpay"
 import {useSlider} from "@custom/ui"
+import {useOrderController} from "controller"
 import {useSingleton} from "hooks"
 import {CreateBeneficiaryDetails, CreateRecipientDetails} from "organisms"
 import {routeToBeneficiaryDetails, routeToRecipientDetails} from "utils"
 
 const useHandler = () => {
-  const {transData, refetchTransaction, transId} = useSingleton()
+  const {transData, refetchTransaction, transId, user} = useSingleton()
   const [showDetails, setShowDetails] = useState({
     recipient: false,
     beneficiary: false,
@@ -15,7 +18,10 @@ const useHandler = () => {
   const {isDesktop} = useResize()
   const {toggleSlider} = useSlider()
   const {push} = useRouter()
-
+  const {toggleNotify} = useNotifyPopup()
+  const {togglePopup} = usePopup()
+  const {createOrder} = useOrderController()
+  const [Razorpay] = useRazorpay()
   const {first_name, last_name, address, email, phone_no, bank_account, country, state, city, zip_code, recipient_id} =
     transData?.recipient || {}
 
@@ -95,6 +101,63 @@ const useHandler = () => {
     }
   }
 
+  const onProcessPayment = async (transaction_id: string) => {
+    const {result, errorData} = await createOrder({transaction_id})
+    if (result) {
+      const {razorpay_order_id, amount, order_id} = result || {}
+      const {first_name, last_name, phone_no, email} = user || {}
+      const fullName = `${first_name} ${last_name}`
+
+      const rzp1 = new Razorpay({
+        order_id: razorpay_order_id,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY!,
+        currency: "INR",
+        name: "Fanam Pay",
+        description: "Thanks",
+        amount: amount?.toString(),
+        prefill: {
+          name: fullName,
+          email,
+          contact: phone_no,
+        },
+        retry: {
+          enabled: false,
+        },
+        modal: {
+          backdropclose: false,
+          escape: false,
+          handleback: true,
+          confirm_close: true,
+          ondismiss: onFailure.bind(null, order_id),
+        },
+        handler: () => {
+          console.log(">>>>>>>>>>>>>>>> Payment is Successful")
+          onSuccess(order_id)
+        },
+      })
+      rzp1.open()
+      togglePopup()
+    } else {
+      console.error(">>>>>>>>>>>>>>>>> Error while creating error: ", errorData?.message)
+    }
+  }
+
+  function onSuccess(order_id: string) {
+    toggleNotify({
+      type: "success",
+      title: "Payment Successful !",
+      description: "Your payment has been processed.",
+    })
+  }
+
+  function onFailure(order_id: string, error: Record<string, JSONObject>) {
+    toggleNotify({
+      type: "error",
+      title: "Payment Failed !",
+      description: (error?.error?.description as string) || "Something went wrong",
+    })
+  }
+
   return {
     recipient_id,
     recipientDetails,
@@ -104,6 +167,7 @@ const useHandler = () => {
     toggleDetails,
     routeToBeneficiary,
     routeToRecipient,
+    onProcessPayment,
   }
 }
 
