@@ -3,8 +3,8 @@ import {ICountry} from "@custom/utils"
 
 export const useCommon = () => {
   const commonHook = usePkgCommon()
-  const getFlagUrl = (country_code: ICountry | string): string => {
-    const iso2 = typeof country_code === "string" ? country_code : country_code.iso2
+  const getFlagUrl = (country: ICountry | string): string => {
+    const iso2 = typeof country === "string" ? country : country?.iso2
     return `https://flagcdn.com/w40/${iso2.toLowerCase()}.png`
   }
 

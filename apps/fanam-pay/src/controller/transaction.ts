@@ -10,6 +10,7 @@ import {
   ITransaction,
 } from "@custom/utils"
 import {useSingleton} from "hooks"
+import {ITransactionDetails} from "model"
 import {useApi} from "./api"
 
 export const useTransactionController = () => {
@@ -17,8 +18,8 @@ export const useTransactionController = () => {
   const {transId, updateTransData} = useSingleton()
 
   const getTransaction = async () => {
-    const {result} = await getRequest(API_TRANSACTION)
-    return result
+    const {result} = await getRequest<ITransactionDetails[]>(API_TRANSACTION)
+    return result || []
   }
 
   const createTransaction = async (payload: IPayloadTransaction) => {

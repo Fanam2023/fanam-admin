@@ -77,7 +77,7 @@ const useHandler = () => {
     setData(prev => ({...prev, ...value}))
   }
 
-  const isIndividual = account_type?.find(({label, isSelected}) => isSelected && label === "Personal")
+  const isIndividual = account_type?.find(({label, isSelected}) => isSelected && label === "Individual")
 
   const PURPOSES = isIndividual ? PURPOSES_INDIVIDUAL : PURPOSES_BUSINESS
 
