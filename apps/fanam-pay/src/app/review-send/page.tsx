@@ -17,6 +17,7 @@ const ReviewAndSend = () => {
     toggleDetails,
     routeToBeneficiary,
     routeToRecipient,
+    onProcessPayment,
   } = useHandler()
 
   const {recipient, beneficiary} = showDetails
@@ -38,7 +39,11 @@ const ReviewAndSend = () => {
   )
 
   return (
-    <BaseContainer buttonText="Send money" skipBtn="Back" childWrapper={styles.page_wrapper}>
+    <BaseContainer
+      buttonText="Send money"
+      skipBtn="Back"
+      onSubmit={onProcessPayment.bind(null, "transaction_id")}
+      childWrapper={styles.page_wrapper}>
       <section className={`flex-col ${styles.heading_wrapper}`}>
         <h4 className="bold">Review and Send</h4>
         <p>Review the details of the recipient details and their account details.</p>

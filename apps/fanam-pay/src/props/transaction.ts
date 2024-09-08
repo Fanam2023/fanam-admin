@@ -10,3 +10,8 @@ export interface ITransfer {
   time: string
   charge: string
 }
+
+export interface RecipientInfo {
+  label: string
+  value: string
+}

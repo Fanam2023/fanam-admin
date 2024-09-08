@@ -7,7 +7,7 @@ import {IBaseSignUp, ICountry, IStyle, SESSION_SIGNUP} from "@custom/utils"
 import assets from "assets"
 import {useCommon} from "hooks"
 import {CountryPopup} from "organisms"
-import {ROUTE_LOGIN, routeToOTP} from "utils"
+import {ACCOUNT_TYPE, ROUTE_LOGIN, routeToOTP} from "utils"
 
 const useHandler = (styles: IStyle) => {
   const {isValidInputByRegex, getFlagUrl} = useCommon()
@@ -96,7 +96,7 @@ const useHandler = (styles: IStyle) => {
 
   const formElements: FormSectionProps[] = [
     {
-      wrapperClass: styles.sender_wrapper,
+      wrapperClassGrid: styles.details_wrapper,
       childElements: [
         {
           elementType: "drop-down",
@@ -104,7 +104,7 @@ const useHandler = (styles: IStyle) => {
           name: "account_type",
           error: errAccountType,
           value: account_type,
-          options: ["Personal", "Business"],
+          options: ACCOUNT_TYPE,
           onChangeValue,
         },
       ],

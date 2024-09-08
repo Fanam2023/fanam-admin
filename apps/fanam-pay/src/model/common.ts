@@ -30,7 +30,7 @@ export interface IExchange {
   rate: string
 }
 
-export interface IDetail {
+export interface ITransactionDetails {
   month: string
   date: string
   name: string
