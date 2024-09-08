@@ -100,10 +100,10 @@ export interface IBaseSyncUser {
 }
 
 export interface ISyncUserData extends IBaseSyncUser {
-  country: IFormData | null
-  id_issued_country: IFormData | null
-  state: IFormData | null
-  city: IFormData | null
+  country: IFormData<number> | null
+  id_issued_country: IFormData<number> | null
+  state: IFormData<number> | null
+  city: IFormData<number> | null
   account_type: string
   account_no: string
   business_name: string

@@ -132,12 +132,12 @@ const useHandler = (styles: IStyle) => {
       {queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries},
       {
         queryKey: [`${QUERY_STATES}-${country?.key}`, country],
-        queryFn: () => getStates(country?.key as string),
+        queryFn: () => getStates(country?.key),
         enabled: !!country,
       },
       {
         queryKey: [`${QUERY_CITIES}-${state?.key}`, state],
-        queryFn: () => getCities(state?.key as string),
+        queryFn: () => getCities(state?.key),
         enabled: !!state,
       },
     ],
@@ -168,17 +168,17 @@ const useHandler = (styles: IStyle) => {
   const {result} = panRes || {}
   const {verification, message} = result?.result || {}
 
-  const countries: IFormData[] = useMemo(
+  const countries: IFormData<number>[] = useMemo(
     () => allCountries.map(({country_id, country_name}) => ({label: country_name, key: country_id})),
     [allCountries]
   )
 
-  const states: IFormData[] = useMemo(
+  const states: IFormData<number>[] = useMemo(
     () => allStates.map(({state_id, state_name}) => ({label: state_name, key: state_id})),
     [allStates]
   )
 
-  const cities: IFormData[] = useMemo(
+  const cities: IFormData<number>[] = useMemo(
     () => allCities.map(({city_id, city_name}) => ({label: city_name, key: city_id})),
     [allCities]
   )

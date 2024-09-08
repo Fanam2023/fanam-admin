@@ -37,7 +37,7 @@ const Login = () => {
           <section className={`flex ${styles.login_wrapper}`}>
             <h6>No Account ?</h6>
             <h6 className={`bold ${styles.login}`} onClick={routeToSignUp}>
-              Sign in
+              Sign up
             </h6>
           </section>
           <h6 className={`bold ${styles.login}`} onClick={routeTOForgotPin}>
