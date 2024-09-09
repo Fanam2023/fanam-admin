@@ -5,13 +5,14 @@ import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import {ILogin, IPayloadLogin} from "@custom/utils"
 import {useAuthController} from "controller"
+import {useCommon} from "hooks"
 import {ROUTE_FORGOT_PIN, ROUTE_HOME, ROUTE_SIGN_UP} from "utils"
 
 const useHandler = () => {
   const {push, replace} = useRouter()
+  const {isValidInputByRegex} = useCommon()
   const {toggleNotify} = useNotifyPopup()
   const {login, loginWebAuth} = useAuthController()
-  const [showPin, setShowPin] = useState(false)
   const [data, setData] = useState<ILogin>({
     phone_no: "",
     pin: "",
@@ -55,11 +56,14 @@ const useHandler = () => {
     return errState
   }
 
+  const REG_VALID_NUMBER = /^[0-9]*$/
   const onChangeValue = (value: JSONObject) => {
     const pinValue = Object.values(value)[0] as string
-    ;/^[0-9]*$/.test(pinValue)
-      ? setData(prev => ({...prev, ...value}))
-      : toggleNotify({type: "error", title: "Only numbers are allowed for the PIN"})
+    if (isValidInputByRegex(pinValue, REG_VALID_NUMBER)) {
+      setData(prev => ({...prev, ...value}))
+    } else {
+      toggleNotify({type: "error", title: "Only numbers are allowed for the PIN"})
+    }
   }
 
   useEffect(() => {
@@ -77,11 +81,9 @@ const useHandler = () => {
         pin: pinBase64,
       }
       loginWithCredential(payload)
-      setShowPin(false)
     }
   }
 
-  const togglePinVisibility = () => setShowPin(prev => !prev)
   const routeToSignUp = () => push(ROUTE_SIGN_UP)
   const routeTOForgotPin = () => push(ROUTE_FORGOT_PIN)
   return {
@@ -90,8 +92,6 @@ const useHandler = () => {
     onChangeValue,
     onSubmit,
     routeToSignUp,
-    togglePinVisibility,
-    showPin,
     routeTOForgotPin,
   }
 }

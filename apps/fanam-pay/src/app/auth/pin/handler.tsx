@@ -1,5 +1,5 @@
 import {FormSectionProps, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {JSONObject, useStorage} from "@fanam-pkg/core-utils"
+import {JSONObject, useCommon, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter, useSearchParams} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
@@ -11,8 +11,8 @@ const useHandler = (styles: IStyle) => {
   const {getStorage, setStorage, removeStorage} = useStorage()
   const {push} = useRouter()
   const searchParams = useSearchParams()
+  const {isValidInputByRegex} = useCommon()
   const scope = searchParams.get("scope") as TypeScope
-  const [showPin, setShowPin] = useState(false)
   const [data, setData] = useState<ISignUpPin>({
     newPin: "",
     confirmPin: "",
@@ -76,11 +76,14 @@ const useHandler = (styles: IStyle) => {
     return errState
   }
 
+  const REG_VALID_NUMBER = /^[0-9]*$/
   const onChangeValue = (value: JSONObject) => {
     const pinValue = Object.values(value)[0] as string
-    ;/^[0-9]*$/.test(pinValue)
-      ? setData(prev => ({...prev, ...value}))
-      : toggleNotify({type: "error", title: "Only numbers are allowed for the PIN"})
+    if (isValidInputByRegex(pinValue, REG_VALID_NUMBER)) {
+      setData(prev => ({...prev, ...value}))
+    } else {
+      toggleNotify({type: "error", title: "Only numbers are allowed for the PIN"})
+    }
   }
 
   useEffect(() => {
@@ -99,7 +102,7 @@ const useHandler = (styles: IStyle) => {
           name: "newPin",
           error: errPin,
           value: newPin,
-          type: showPin ? "text" : "password",
+          type: "password",
           onChangeValue,
         },
         {
@@ -107,7 +110,7 @@ const useHandler = (styles: IStyle) => {
           label: "Confirm Pin",
           name: "confirmPin",
           error: errConfirmPin,
-          type: showPin ? "text" : "password",
+          type: "password",
           value: confirmPin,
           onChangeValue,
         },
@@ -138,20 +141,15 @@ const useHandler = (styles: IStyle) => {
             confirmPin: stringToBase64(confirmPin),
           })
       } else push(ROUTE_LOGIN)
-      setShowPin(false)
     }
   }
 
   const routeToLogin = () => push(ROUTE_LOGIN)
 
-  const togglePinVisibility = () => setShowPin(prev => !prev)
-
   return {
     formElements,
     onSubmit,
     routeToLogin,
-    togglePinVisibility,
-    showPin,
   }
 }
 
