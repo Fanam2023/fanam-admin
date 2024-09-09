@@ -12,3 +12,6 @@ export const DATE_PICKER_FORMAT = "dd-MM-yyyy"
 export const API_HEADER_FORM_DATA = {
   "Content-Type": "multipart/form-data",
 }
+
+export const REG_AADHAAR = /^\d{12}$/
+export const REG_PAN = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/

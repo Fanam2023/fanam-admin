@@ -1,5 +1,5 @@
-import {IUser} from "./auth"
-import {TypeOKycCode} from "./enum"
+import {IAttachment} from "@fanam-pkg/core-utils"
+import {ICountry, IUser, TypeKYC, TypeOKycCode} from "../model"
 
 export interface IPayloadPan {
   pan: string
@@ -15,6 +15,18 @@ export interface IPanResult {
 export interface IResponsePan {
   user: IUser
   result: IPanResult
+}
+
+export interface IResponseKYC {
+  kyc_id: string
+  type: TypeKYC
+  kyc_number: string
+  issued_country: ICountry
+  attachments: IAttachment[]
+  request_id: string
+  share_code: string
+  consent: boolean
+  is_verified: boolean
 }
 
 export interface IAadhaarCaptcha {

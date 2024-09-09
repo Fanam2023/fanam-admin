@@ -23,6 +23,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     queryKey: [QUERY_USER],
     queryFn: getUser,
   })
+
   const {data: transRes, refetch: refetchTransaction} = useQuery({
     enabled: !!transId && !transData,
     queryKey: [QUERY_TRANSACTION],

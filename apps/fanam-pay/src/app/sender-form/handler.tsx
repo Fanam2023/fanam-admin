@@ -3,7 +3,7 @@ import {IFormData, JSONObject, REG_EMAIL, useCommon} from "@fanam-pkg/core-utils
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
-import {IAadhaarCaptcha, IStyle, ISyncUserData} from "@custom/utils"
+import {IAadhaarCaptcha, IStyle, ISyncUserData, REG_AADHAAR, REG_PAN} from "@custom/utils"
 import assets from "assets"
 import {useAuthController, useKYCController, useLocationController} from "controller"
 import {useSingleton} from "hooks"
@@ -138,7 +138,7 @@ const useHandler = (styles: IStyle) => {
 
   const {mutate: updateUser, data: userRes} = useMutation({mutationKey: [QUERY_USER], mutationFn: syncUser})
 
-  const {mutate: verifyPan, data: panRes} = useMutation({
+  const {mutate: onVerifyPan} = useMutation({
     mutationKey: [QUERY_PAN_CARD],
     mutationFn: verifyPanCard,
     onSuccess: ({result, errorData}) => {
@@ -282,9 +282,6 @@ const useHandler = (styles: IStyle) => {
     },
   })
 
-  const {result} = panRes || {}
-  const {verification, message} = result?.result || {}
-
   const countries: IFormData<number>[] = useMemo(
     () => allCountries.map(({country_id, country_name}) => ({label: country_name, key: country_id})),
     [allCountries]
@@ -299,6 +296,24 @@ const useHandler = (styles: IStyle) => {
     () => allCities.map(({city_id, city_name}) => ({label: city_name, key: city_id})),
     [allCities]
   )
+
+  const {verifiedAadhaar, verifiedPAN} = useMemo(() => {
+    const {kyc_details = []} = user || {}
+
+    const verification = {verifiedAadhaar: "", verifiedPAN: ""}
+    if (kyc_details?.length) {
+      const {verifiedAadhaar, verifiedPAN} = verification
+      for (const {is_verified, type, kyc_number} of kyc_details) {
+        if (verifiedAadhaar && verifiedPAN) break
+        else if (is_verified) {
+          if (type === "Aadhaar") verification.verifiedAadhaar = kyc_number
+          else if (type === "PAN") verification.verifiedPAN = kyc_number
+        }
+      }
+    }
+
+    return verification
+  }, [user])
 
   useEffect(() => {
     if (userRes) {
@@ -335,6 +350,7 @@ const useHandler = (styles: IStyle) => {
         kyc_attachments,
         account_no,
         account_type,
+        kyc_details,
       } = user
 
       let payloadData: ISyncUserData = {
@@ -395,9 +411,23 @@ const useHandler = (styles: IStyle) => {
         }
       }
 
+      if (verifiedAadhaar) {
+        payloadData = {
+          ...payloadData,
+          aadhaarNumber: verifiedAadhaar,
+        }
+      }
+
+      if (verifiedPAN) {
+        payloadData = {
+          ...payloadData,
+          pan: verifiedPAN,
+        }
+      }
+
       setData(payloadData)
     }
-  }, [user])
+  }, [user, verifiedPAN, verifiedAadhaar])
 
   const onValidate = () => {
     let errState = {
@@ -810,13 +840,22 @@ const useHandler = (styles: IStyle) => {
         {
           childElement: (
             <section className={`flex ${styles.pan_wrapper}`}>
-              <TextField label="Enter Pan Number" name="pan" value={pan} onChangeData={onChangeValue} />
-              <Button onClick={onVerify}>Verify</Button>
-              {!!verification && (
+              <TextField
+                label="Enter Pan Number"
+                name="pan"
+                value={pan}
+                onChangeData={onChangeValue}
+                disabled={!!verifiedPAN}
+              />
+              {verifiedPAN ? (
                 <>
                   <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
-                  <h5 className={styles.verified_text}>{message}</h5>
+                  <h5 className={styles.verified_text}>PAN is Verified</h5>
                 </>
+              ) : (
+                <Button disabled={!isValidInputByRegex(pan, REG_PAN)} onClick={onVerifyPan.bind(null, {pan})}>
+                  Verify
+                </Button>
               )}
             </section>
           ),
@@ -832,19 +871,27 @@ const useHandler = (styles: IStyle) => {
                 label="Enter Aaadhar Number"
                 name="aadhaarNumber"
                 value={aadhaarNumber}
+                disabled={!!verifiedAadhaar}
                 onChangeData={onChangeValue}
               />
-              <Button onClick={generateCaptcha.bind(null, null)}>Verify</Button>
+              {verifiedAadhaar ? (
+                <>
+                  <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
+                  <h5 className={styles.verified_text}>Aadhaar is Verified</h5>
+                </>
+              ) : (
+                <Button
+                  disabled={!isValidInputByRegex(aadhaarNumber, REG_AADHAAR)}
+                  onClick={generateCaptcha.bind(null, null)}>
+                  Verify
+                </Button>
+              )}
             </section>
           ),
         },
       ],
     },
   ]
-
-  function onVerify() {
-    verifyPan({pan})
-  }
 
   const individualType = user?.account_type === "Individual"
 
