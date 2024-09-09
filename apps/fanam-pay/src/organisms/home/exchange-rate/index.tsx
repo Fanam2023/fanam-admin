@@ -6,7 +6,7 @@ import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const ExchangeRate = () => {
-  const {isLoading, loopCard} = useHandler()
+  const {isLoading, getPopularCorridors} = useHandler()
 
   const Spinner = () => <section className={styles.spinner}></section>
 
@@ -25,7 +25,7 @@ export const ExchangeRate = () => {
     <section className={styles.container_wrapper}>
       <h4 className={`bold ${styles.txt_wrapper}`}>Current exchange rate for popular corridors</h4>
       <section className={`flex ${isLoading ? styles.details_wrapper : styles.detail_wrapper}`}>
-        {isLoading ? <Spinner /> : loopCard()?.map(renderCards)}
+        {isLoading ? <Spinner /> : getPopularCorridors?.map(renderCards)}
       </section>
     </section>
   )

@@ -1,5 +1,5 @@
 import {FormSectionProps, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {JSONObject, useCommon, useStorage} from "@fanam-pkg/core-utils"
+import {JSONObject, REG_VALID_NUMBER, useCommon, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter, useSearchParams} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
@@ -42,11 +42,7 @@ const useHandler = (styles: IStyle) => {
   const {mutate: resetPin} = useMutation({
     mutationFn: forgotPin,
     onSuccess: async ({result, errorData}) => {
-      const message = result
-        ? "PIN resetted Successfully"
-        : errorData?.message?.includes("last 10 passwords")
-          ? "Current PIN should not be the same as the last 10 PINs"
-          : errorData?.message || "Something went wrong"
+      const message = result ? "PIN resetted Successfully" : errorData?.message || "Something went wrong"
       toggleNotify({
         type: result ? "success" : "error",
         title: message,
@@ -76,14 +72,10 @@ const useHandler = (styles: IStyle) => {
     return errState
   }
 
-  const REG_VALID_NUMBER = /^[0-9]*$/
   const onChangeValue = (value: JSONObject) => {
-    const pinValue = Object.values(value)[0] as string
-    if (isValidInputByRegex(pinValue, REG_VALID_NUMBER)) {
-      setData(prev => ({...prev, ...value}))
-    } else {
-      toggleNotify({type: "error", title: "Only numbers are allowed for the PIN"})
-    }
+    const pinValue = (value?.newPin as string) || (value?.confirmPin as string)
+    if (isValidInputByRegex(pinValue, REG_VALID_NUMBER)) setData(prev => ({...prev, ...value}))
+    else toggleNotify({type: "error", title: "Only numbers are allowed for the PIN"})
   }
 
   useEffect(() => {

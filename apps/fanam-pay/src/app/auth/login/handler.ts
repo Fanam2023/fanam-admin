@@ -1,5 +1,5 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {JSONObject} from "@fanam-pkg/core-utils"
+import {JSONObject, REG_VALID_NUMBER} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
@@ -56,14 +56,10 @@ const useHandler = () => {
     return errState
   }
 
-  const REG_VALID_NUMBER = /^[0-9]*$/
   const onChangeValue = (value: JSONObject) => {
-    const pinValue = Object.values(value)[0] as string
-    if (isValidInputByRegex(pinValue, REG_VALID_NUMBER)) {
-      setData(prev => ({...prev, ...value}))
-    } else {
-      toggleNotify({type: "error", title: "Only numbers are allowed for the PIN"})
-    }
+    const pinValue = (value?.phone_no as string) || (value?.pin as string)
+    if (isValidInputByRegex(pinValue, REG_VALID_NUMBER)) setData(prev => ({...prev, ...value}))
+    else toggleNotify({type: "error", title: "Only numbers are allowed for the PIN"})
   }
 
   useEffect(() => {
