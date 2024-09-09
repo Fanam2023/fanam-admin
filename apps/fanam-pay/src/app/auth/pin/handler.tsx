@@ -1,5 +1,5 @@
 import {FormSectionProps, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {JSONObject, useStorage} from "@fanam-pkg/core-utils"
+import {JSONObject, REG_VALID_NUMBER, useCommon, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter, useSearchParams} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
@@ -11,6 +11,7 @@ const useHandler = (styles: IStyle) => {
   const {getStorage, setStorage, removeStorage} = useStorage()
   const {push} = useRouter()
   const searchParams = useSearchParams()
+  const {isValidInputByRegex} = useCommon()
   const scope = searchParams.get("scope") as TypeScope
   const [data, setData] = useState<ISignUpPin>({
     newPin: "",
@@ -41,18 +42,15 @@ const useHandler = (styles: IStyle) => {
   const {mutate: resetPin} = useMutation({
     mutationFn: forgotPin,
     onSuccess: async ({result, errorData}) => {
+      const message = result ? "PIN resetted Successfully" : errorData?.message || "Something went wrong"
+      toggleNotify({
+        type: result ? "success" : "error",
+        title: message,
+      })
       if (result) {
-        toggleNotify({
-          type: "success",
-          title: "PIN resetted Successfully",
-        })
         removeStorage(SESSION_SIGNUP)
         push(ROUTE_HOME)
-      } else if (errorData?.message)
-        toggleNotify({
-          type: "error",
-          title: errorData?.message || "Something went wrong",
-        })
+      }
     },
   })
 
@@ -74,7 +72,11 @@ const useHandler = (styles: IStyle) => {
     return errState
   }
 
-  const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
+  const onChangeValue = (value: JSONObject) => {
+    const pinValue = (value?.newPin as string) || (value?.confirmPin as string)
+    if (isValidInputByRegex(pinValue, REG_VALID_NUMBER)) setData(prev => ({...prev, ...value}))
+    else toggleNotify({type: "error", title: "Only numbers are allowed for the PIN"})
+  }
 
   useEffect(() => {
     if (isClicked) setErrData(prev => ({...prev, ...onValidate()}))
@@ -92,6 +94,7 @@ const useHandler = (styles: IStyle) => {
           name: "newPin",
           error: errPin,
           value: newPin,
+          type: "password",
           onChangeValue,
         },
         {
@@ -99,6 +102,7 @@ const useHandler = (styles: IStyle) => {
           label: "Confirm Pin",
           name: "confirmPin",
           error: errConfirmPin,
+          type: "password",
           value: confirmPin,
           onChangeValue,
         },

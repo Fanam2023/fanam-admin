@@ -1,12 +1,12 @@
 "use client"
 
 import {Button, ImageView, usePopup} from "@fanam-pkg/core-ui-sass"
+import {useResize} from "@fanam-pkg/core-utils"
 import assets from "assets"
 import {useSingleton} from "hooks"
 import {IStepper} from "model"
 import {BaseContainerProps} from "props"
 import {SIDE_BAR} from "utils"
-import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({
@@ -19,14 +19,15 @@ export const BaseContainer = ({
   childWrapper = "",
   skipBtn,
   stepIndex,
+  profile,
+  bellIcon,
   onSubmit,
   onAdd,
   isStepper,
 }: BaseContainerProps) => {
   const {user} = useSingleton()
-  const {isDesktop, getFirstLetter} = useHandler()
-  const {first_name} = user || {}
-
+  const {first_name, last_name} = user || {}
+  const {isDesktop} = useResize()
   const {togglePopup} = usePopup()
 
   const toggle = () => {
@@ -76,8 +77,13 @@ export const BaseContainer = ({
             <ImageView src={assets.ic_help} alt="help-icon" imgSize={24} />
             <h5 className={`medium ${styles.language_text}`}>Help</h5>
           </section>
-          <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />
-          <section className={`flex-center ${styles.profile_wrapper}`}>{getFirstLetter(first_name)}</section>
+          {!bellIcon && <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />}
+          {!profile && (
+            <section className={styles.profile_wrapper}>
+              {first_name?.charAt(0).toUpperCase()}
+              {last_name?.charAt(0).toUpperCase()}
+            </section>
+          )}
         </section>
         {!!addButton && (
           <h3 onClick={onAdd} className={styles.add_text}>

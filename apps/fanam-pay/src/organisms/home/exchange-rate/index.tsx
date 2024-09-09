@@ -6,7 +6,7 @@ import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const ExchangeRate = () => {
-  const {getPopularCorridors, isLoading} = useHandler()
+  const {isLoading, getPopularCorridors} = useHandler()
 
   const Spinner = () => <section className={styles.spinner}></section>
 

@@ -1,14 +1,16 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {JSONObject} from "@fanam-pkg/core-utils"
+import {JSONObject, REG_VALID_NUMBER} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import {ILogin, IPayloadLogin} from "@custom/utils"
 import {useAuthController} from "controller"
+import {useCommon} from "hooks"
 import {ROUTE_FORGOT_PIN, ROUTE_HOME, ROUTE_SIGN_UP} from "utils"
 
 const useHandler = () => {
   const {push, replace} = useRouter()
+  const {isValidInputByRegex} = useCommon()
   const {toggleNotify} = useNotifyPopup()
   const {login, loginWebAuth} = useAuthController()
   const [data, setData] = useState<ILogin>({
@@ -54,7 +56,11 @@ const useHandler = () => {
     return errState
   }
 
-  const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
+  const onChangeValue = (value: JSONObject) => {
+    const pinValue = (value?.phone_no as string) || (value?.pin as string)
+    if (isValidInputByRegex(pinValue, REG_VALID_NUMBER)) setData(prev => ({...prev, ...value}))
+    else toggleNotify({type: "error", title: "Only numbers are allowed for the PIN"})
+  }
 
   useEffect(() => {
     if (isClicked) setErrData(prev => ({...prev, ...onValidate()}))

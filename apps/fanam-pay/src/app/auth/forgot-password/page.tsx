@@ -4,7 +4,7 @@ import {assets, Button, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
 import {useSlider} from "@custom/ui"
 import {ICountry} from "@custom/utils"
 import {useCommon} from "hooks"
-import {Auth, CountryPopup} from "organisms"
+import {Auth, BaseContainer, CountryPopup} from "organisms"
 import useHandler from "./handler"
 import styles from "./page.module.sass"
 
@@ -34,7 +34,7 @@ const Forgot_Password = () => {
     })
 
   return (
-    <section className={`flex-col-center ${styles.page_wrapper}`}>
+    <BaseContainer childWrapper={`flex-col-center ${styles.page_wrapper}`} isStepper profile bellIcon>
       <Auth>
         <section className={`flex-col ${styles.heading}`}>
           <h3 className={`bold ${styles.Forgot}`}>Forgot PIN?</h3>
@@ -62,7 +62,7 @@ const Forgot_Password = () => {
           Next
         </Button>
       </Auth>
-    </section>
+    </BaseContainer>
   )
 }
 export default Forgot_Password

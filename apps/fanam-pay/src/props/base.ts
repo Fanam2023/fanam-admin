@@ -12,6 +12,8 @@ export interface BaseContainerProps {
   footerChild?: ReactNode
   addButton?: string
   header?: string
+  profile?: boolean
+  bellIcon?: boolean
   buttonText?: string
   childWrapper?: string
   onClick?: () => void
