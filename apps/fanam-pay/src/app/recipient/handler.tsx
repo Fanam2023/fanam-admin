@@ -1,4 +1,4 @@
-import {useResize} from "@fanam-pkg/core-utils"
+import {IFormData, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
@@ -18,18 +18,27 @@ export const useHandler = () => {
   const {isDesktop} = useResize()
   const {push} = useRouter()
   const {toggleSlider} = useSlider()
-  const [searchQuery, setSearchQuery] = useState("")
   const {getAllRecipient} = useRecipientController()
-  const {syncRecipient} = useTransactionController()
+  const {initiateTransaction} = useTransactionController()
+  const [searchQuery, setSearchQuery] = useState("")
+  const [selectedType, setSelectedType] = useState("Individual")
+  const TYPE: IFormData[] = [
+    {label: "Individual", isSelected: selectedType === "Individual"},
+    {label: "Business", isSelected: selectedType === "Business"},
+  ]
+
+  const onChangeType = (type: string) => {
+    setSelectedType(type)
+  }
 
   const {data: recipients} = useQuery({
-    queryKey: [QUERY_RECIPIENT],
-    queryFn: getAllRecipient,
+    queryKey: [QUERY_RECIPIENT.concat(selectedType)],
+    queryFn: () => getAllRecipient(selectedType),
   })
 
   const {mutate: linkRecipient} = useMutation({
     mutationKey: [QUERY_TRANSACTION],
-    mutationFn: syncRecipient,
+    mutationFn: initiateTransaction,
     onSuccess: ({result}) => {
       if (result) push(ROUTE_RECIPIENT_PREVIEW)
     },
@@ -67,6 +76,7 @@ export const useHandler = () => {
   const onBack = () => push(ROUTE_INVOICE)
 
   return {
+    TYPE,
     isDesktop,
     recipients: filteredRecipients,
     searchQuery,
@@ -75,5 +85,6 @@ export const useHandler = () => {
     onAdd,
     onBack,
     linkRecipient,
+    onChangeType,
   }
 }
