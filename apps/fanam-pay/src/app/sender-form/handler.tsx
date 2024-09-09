@@ -3,11 +3,11 @@ import {IFormData, JSONObject, REG_EMAIL, useCommon} from "@fanam-pkg/core-utils
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
-import {IStyle, ISyncUserData} from "@custom/utils"
+import {IAadhaarCaptcha, IStyle, ISyncUserData} from "@custom/utils"
 import assets from "assets"
-import {useAuthController, useLocationController, useVerificationController} from "controller"
+import {useAuthController, useKYCController, useLocationController} from "controller"
 import {useSingleton} from "hooks"
-import {OtpPopUp} from "organisms"
+import {PopupAadhaarCaptcha, PopupAadhaarOTP} from "organisms"
 import {
   ACCOUNT_TYPE,
   BUSINESS_TYPE,
@@ -48,7 +48,8 @@ const useHandler = (styles: IStyle) => {
   const {isValidInputByRegex} = useCommon()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {syncUser} = useAuthController()
-  const {verifyPanCard} = useVerificationController()
+  const {verifyPanCard, generateAadhaarCaptcha, reGenerateAadhaarCaptcha, generateAadhaarOTP, verifyAadhaarOTP} =
+    useKYCController()
   const {toggleNotify} = useNotifyPopup()
   const {togglePopup} = usePopup()
   const {updateUserData, user} = useSingleton()
@@ -119,14 +120,6 @@ const useHandler = (styles: IStyle) => {
     errBusinessType,
   } = errData
 
-  const toggle = () => {
-    togglePopup({
-      title: "Verify Aadhaar",
-      children: <OtpPopUp></OtpPopUp>,
-      // isClosable: false,
-    })
-  }
-
   const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}] = useQueries({
     queries: [
       {queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries},
@@ -160,6 +153,130 @@ const useHandler = (styles: IStyle) => {
         toggleNotify({
           title: "Error - PAN Verification",
           description: message || "PAN verification failed. Please try again.",
+          type: "error",
+        })
+    },
+  })
+
+  const onGenerateOTP = (captchaCode: string) => generateOTP({captchaCode, aadhaarNumber})
+
+  const {mutate: generateCaptcha} = useMutation({
+    mutationFn: generateAadhaarCaptcha,
+    onSuccess: ({result, errorData}) => {
+      const {captcha} = result || {}
+      const {message} = errorData || {}
+      if (result) {
+        toggleNotify({
+          title: "Aadhaar CAPTCHA",
+          description: "Captcha generated successfully",
+          type: "success",
+        })
+        togglePopup({
+          title: "Verify Captcha",
+          children: (
+            <PopupAadhaarCaptcha
+              captchaCode={captcha.captchaImage}
+              regenerateCaptcha={regenerateCaptcha}
+              generateOTP={onGenerateOTP}
+            />
+          ),
+          isClosable: false,
+        })
+      } else
+        toggleNotify({
+          title: "Error - Captcha!",
+          description: message || "Failed to generate Captcha",
+          type: "error",
+        })
+    },
+  })
+
+  const onVerifyOTP = (otp: string) => verifyOTP({otp, aadhaarNumber})
+
+  const {mutate: generateOTP} = useMutation({
+    mutationFn: generateAadhaarOTP,
+    onSuccess: ({result, errorData}) => {
+      const {message} = errorData || {}
+      if (result) {
+        toggleNotify({
+          title: "Aadhaar OTP",
+          description: "OTP Sent successfully",
+          type: "success",
+        })
+        togglePopup({
+          title: "Verify Aadhaar",
+          children: <PopupAadhaarOTP verifyOTP={onVerifyOTP} />,
+          isClosable: false,
+        })
+      } else
+        toggleNotify({
+          title: "Error - OTP!",
+          description: message || "Failed to generate OTP to the Aadhaar linked phone number",
+          type: "error",
+        })
+    },
+  })
+
+  const {mutate: verifyOTP} = useMutation({
+    mutationFn: verifyAadhaarOTP,
+    onSuccess: ({result, errorData}) => {
+      const {message} = errorData || {}
+      if (result) {
+        toggleNotify({
+          title: "OTP Verification",
+          description: "OTP Verified successfully",
+          type: "success",
+        })
+        togglePopup()
+      } else
+        toggleNotify({
+          title: "Error - OTP Verification!",
+          description: message || "Something went wrong",
+          type: "error",
+        })
+    },
+  })
+
+  const onRegenerate = ({captchaRetriesRemaining}: IAadhaarCaptcha) => {
+    if (captchaRetriesRemaining > 1) {
+      togglePopup()
+      regenerateCaptcha()
+    } else
+      toggleNotify({
+        title: "Error - Aadhaar Captcha!",
+        description: "No of regenerating captcha is exceeded",
+        type: "error",
+      })
+  }
+
+  const {mutate: regenerateCaptcha} = useMutation({
+    mutationFn: reGenerateAadhaarCaptcha,
+    onSuccess: ({result, errorData}) => {
+      const {message} = errorData || {}
+      if (result) {
+        const {captcha} = result
+
+        toggleNotify({
+          title: "Aadhaar Captcha",
+          description: "Regenerated Aadhaar captcha successfully!",
+          type: "success",
+        })
+
+        togglePopup({
+          title: "Verify Captcha",
+          children: (
+            <PopupAadhaarCaptcha
+              captchaCode={captcha.captchaImage}
+              regenerateCaptcha={onRegenerate.bind(null, captcha)}
+              generateOTP={onGenerateOTP}
+            />
+          ),
+          isClosable: false,
+        })
+      } else
+        toggleNotify({
+          title: "Error - Aadhaar Captcha!",
+          description: message || "Something went wrong",
           type: "error",
         })
     },
@@ -717,7 +834,7 @@ const useHandler = (styles: IStyle) => {
                 value={aadhaarNumber}
                 onChangeData={onChangeValue}
               />
-              <Button onClick={toggle}>Verify</Button>
+              <Button onClick={generateCaptcha.bind(null, null)}>Verify</Button>
             </section>
           ),
         },

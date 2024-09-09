@@ -21,3 +21,14 @@ export type TypeTransactionStatus =
   | "Payment_failed"
 
 export type TypeScope = "reset" | "singup"
+
+export type TypeOKycCode =
+  | "complete"
+  | "incomplete"
+  | "invalid_redirect_url"
+  | "exceeded_captcha_requests"
+  | "otp_sent"
+  | "invalid_captcha_entered"
+  | "invalid_sequence"
+  | "request_not_found"
+  | "internal_server_error"

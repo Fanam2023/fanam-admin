@@ -7,29 +7,31 @@ import {
   API_PAN_VERIFY,
   IPayloadGenerateAadhaarOTP,
   IPayloadPan,
-  IPayloadRegenerateCaptcha,
   IPayloadVerifyAadhaarOTP,
   IPayloadVerifyGST,
+  IResponseAadhaarCaptcha,
+  IResponseAadhaarGenerateOTP,
+  IResponseAadhaarVerifyOTP,
   IResponsePan,
 } from "@custom/utils"
 import {useApi} from "./api"
 
-export const useVerificationController = () => {
+export const useKYCController = () => {
   const {postRequest} = useApi()
 
   const verifyPanCard = async (payload: IPayloadPan) => await postRequest<IResponsePan>(API_PAN_VERIFY, payload)
 
-  const generateAadhaarCaptcha = async (payload: IPayloadRegenerateCaptcha) =>
-    await postRequest<IResponsePan>(API_KYC_AADHAAR_INITIATE_CAPTCHA, payload)
+  const generateAadhaarCaptcha = async () =>
+    await postRequest<IResponseAadhaarCaptcha>(API_KYC_AADHAAR_INITIATE_CAPTCHA, {})
 
-  const reGenerateAadhaarCaptcha = async (payload: IPayloadRegenerateCaptcha) =>
-    await postRequest<IResponsePan>(API_KYC_AADHAAR_REGENERATE_CAPTCHA, payload)
+  const reGenerateAadhaarCaptcha = async () =>
+    await postRequest<IResponseAadhaarCaptcha>(API_KYC_AADHAAR_REGENERATE_CAPTCHA, {})
 
   const generateAadhaarOTP = async (payload: IPayloadGenerateAadhaarOTP) =>
-    await postRequest<IResponsePan>(API_KYC_AADHAAR_GENERATE_OTP, payload)
+    await postRequest<IResponseAadhaarGenerateOTP>(API_KYC_AADHAAR_GENERATE_OTP, payload)
 
   const verifyAadhaarOTP = async (payload: IPayloadVerifyAadhaarOTP) =>
-    await postRequest<IResponsePan>(API_KYC_AADHAAR_OTP_VERIFICATION, payload)
+    await postRequest<IResponseAadhaarVerifyOTP>(API_KYC_AADHAAR_OTP_VERIFICATION, payload)
 
   const verifyGST = async (payload: IPayloadVerifyGST) =>
     await postRequest<IResponsePan>(API_KYC_GST_VERIFICATION, payload)

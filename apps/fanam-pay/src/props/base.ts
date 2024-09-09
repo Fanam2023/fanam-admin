@@ -31,3 +31,9 @@ export interface FooterPaymentProps {
   recivableAmt: string
   button: string
 }
+
+export interface PropsOTPField {
+  error: string
+  otpValues: string[]
+  onChangeInputs: (values: string[]) => void
+}
