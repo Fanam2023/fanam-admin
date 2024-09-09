@@ -8,6 +8,7 @@ import {
 import type {PublicKeyCredentialCreationOptionsJSON} from "@simplewebauthn/types"
 import {
   API_FORGOTPIN,
+  API_GET_PROFILE,
   API_LOGIN,
   API_LOGIN_FINISH,
   API_LOGOUT,
@@ -16,7 +17,6 @@ import {
   API_SENDER_KYC,
   API_SIGNUP,
   API_SYNC_USER,
-  API_USER,
   apiLoginStart,
   IFanamApiError,
   ILogOutPayload,
@@ -116,7 +116,7 @@ export const useAuthController = () => {
   }
 
   const getUser = async () => {
-    const {result} = await getRequest<IUser>(API_USER)
+    const {result} = await getRequest<IUser>(API_GET_PROFILE)
     return result
   }
 

@@ -26,6 +26,7 @@ import ic_pending from "./icons/ic_pending.svg"
 import ic_pending_small from "./icons/ic_pending_small.svg"
 import ic_personal from "./icons/ic_personal.svg"
 import ic_profile from "./icons/ic_profile.svg"
+import ic_refresh from "./icons/ic_refresh.svg"
 import ic_remove from "./icons/ic_remove.svg"
 import ic_right from "./icons/ic_right.svg"
 import ic_right_arrow_fill from "./icons/ic_right_arrow_fill.svg"
@@ -71,6 +72,7 @@ const assets = {
   ic_file,
   ic_remove,
   ic_edit,
+  ic_refresh,
   ic_checkbox,
   ic_search,
   ic_user,

@@ -1,6 +1,7 @@
 "use client"
 
 import {Button, GroupForm} from "@fanam-pkg/core-ui-sass"
+import {BaseContainer} from "organisms"
 import {Auth} from "organisms/auth"
 import useHandler from "./handler"
 import styles from "./page.module.sass"
@@ -9,7 +10,7 @@ const SignUp = () => {
   const {formElements, onSubmit, routeToLogin} = useHandler(styles)
 
   return (
-    <section className={`flex-col-center ${styles.page_wrapper}`}>
+    <BaseContainer childWrapper={`flex-col-center ${styles.page_wrapper}`} isStepper profile bellIcon>
       <Auth>
         <section className={`flex-col ${styles.heading}`}>
           <h4 className={`bold ${styles.login}`}>Sign Up</h4>
@@ -30,7 +31,7 @@ const SignUp = () => {
           <label className={`bold ${styles.condition_text}`}>Privacy Policy</label>.
         </h6>
       </Auth>
-    </section>
+    </BaseContainer>
   )
 }
 
