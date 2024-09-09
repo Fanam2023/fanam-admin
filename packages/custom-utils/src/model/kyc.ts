@@ -1,5 +1,4 @@
-import {IAttachment} from "@fanam-pkg/core-utils"
-import {ICountry, IUser, TypeKYC, TypeOKycCode} from "../model"
+import {IAttachment, ICountry, IUser, TypeKYC, TypeOKycCode} from "../model"
 
 export interface IPayloadPan {
   pan: string
