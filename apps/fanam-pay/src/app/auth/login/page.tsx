@@ -51,7 +51,7 @@ const Login = () => {
             Next
           </Button>
           <h6 className={styles.terms_wrapper}>
-            By continuing, you agree to the <label className={`bold ${styles.condition_text}`}>Terms of use</label> and{" "}
+            By continuing, you agree to the <label className={`bold ${styles.condition_text}`}>Terms of use</label> and
             <label className={`bold ${styles.condition_text}`}>Privacy Policy</label>.
           </h6>
         </Auth>

@@ -4,7 +4,6 @@ import ic_alert from "./icons/ic_alert.svg"
 import ic_arrow_theme from "./icons/ic_arrow_theme.svg"
 import ic_back from "./icons/ic_back.svg"
 import ic_back_arrow_black from "./icons/ic_back_arrow_black.svg"
-import ic_backfround from "./icons/ic_background.svg"
 import ic_business from "./icons/ic_business.svg"
 import ic_checkbox from "./icons/ic_checkbox.svg"
 import ic_cloudUpload from "./icons/ic_cloudUpload.svg"
@@ -50,7 +49,6 @@ import img_logo from "./images/img_logo.webp"
 const assets = {
   ...projectAssets,
   ic_account,
-  ic_backfround,
   ic_rocket,
   ic_star,
   ic_up_arrow,
