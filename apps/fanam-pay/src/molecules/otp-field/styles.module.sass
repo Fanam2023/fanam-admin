@@ -1,0 +1,25 @@
+@use "../../styles/index" as *
+
+.otp_field
+  gap: $size-28px
+  margin-top: $size-24px
+
+.otp_box
+  width: $size-20px
+  height: $size-20px
+  border: $size-1px solid $black
+  color: rgb(var(--black))
+  border-radius: $size-8px
+  text-align: center
+
+  :focus
+    outline: none
+
+  &[type="number"]::-webkit-inner-spin-button,
+  &[type="number"]::-webkit-outer-spin-button
+    -webkit-appearance: none
+    appearance: none
+    margin: 0
+
+  &[type="number"]
+    -moz-appearance: textfield

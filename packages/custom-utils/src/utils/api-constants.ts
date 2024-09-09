@@ -5,8 +5,9 @@ export const API_FORGOTPIN = `${API_AUTH}/forgot-pin`
 export const API_REFRESH_TOKEN = "/refresh-token"
 export const API_LOGOUT = `${API_AUTH}/logOut`
 export const API_USER_FCM = `${API_AUTH}/fcm`
-export const API_USER = `user/me`
-export const API_SYNC_USER = `user/sync`
+export const API_USER = "/user"
+export const API_GET_PROFILE = `${API_USER}/me`
+export const API_SYNC_USER = `${API_USER}/sync`
 export const API_LOCATION = "/location"
 export const API_COUNTRIES = `${API_LOCATION}/all-countries`
 export const apiStates = (countryId: number) => `${API_LOCATION}/countries/${countryId}`
@@ -29,4 +30,11 @@ export const apiLoginStart = (credentialId: string) => `/passkey/login-start?cre
 export const API_LOGIN_FINISH = "/passkey/login-finish"
 export const API_POPULAR_CORRIDORS = "/payment/popularCorridors-visa"
 export const API_CREATE_ORDER = "/order"
-export const API_PAN_VERIFY = "/user/pan-verification"
+
+/* KYC Endpoints */
+export const API_PAN_VERIFY = `${API_USER}/pan-verification`
+export const API_KYC_AADHAAR_INITIATE_CAPTCHA = `${API_USER}/initiateCaptcha-aadhaar`
+export const API_KYC_AADHAAR_REGENERATE_CAPTCHA = `${API_USER}/reGenerateCaptcha-aadhaar`
+export const API_KYC_AADHAAR_GENERATE_OTP = `${API_USER}/generateOtp-aadhaar`
+export const API_KYC_AADHAAR_OTP_VERIFICATION = `${API_USER}/aadhaarOtp-verification`
+export const API_KYC_GST_VERIFICATION = `${API_USER}/gst-verification`

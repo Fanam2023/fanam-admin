@@ -160,7 +160,15 @@
   },
   "material-icon-theme.files.associations": {},
   "material-icon-theme.activeIconPack": "react",
-  "cSpell.words": ["fanam", "fintech", "Razorpay", "tanstack", "WEBAUTHN"],
+  "cSpell.words": [
+    "AADHAAR",
+    "fanam",
+    "fintech",
+    "gstin",
+    "Razorpay",
+    "tanstack",
+    "WEBAUTHN"
+  ],
   "[sass]": {
     "editor.defaultFormatter": "syler.sass-indented"
   }

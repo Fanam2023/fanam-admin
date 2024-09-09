@@ -5,7 +5,6 @@ import {useResize} from "@fanam-pkg/core-utils"
 import assets from "assets"
 import {useSingleton} from "hooks"
 import {IStepper} from "model"
-import {OtpPopUp} from "organisms/otp"
 import {BaseContainerProps} from "props"
 import {SIDE_BAR} from "utils"
 import styles from "./style.module.sass"
@@ -32,11 +31,11 @@ export const BaseContainer = ({
   const {togglePopup} = usePopup()
 
   const toggle = () => {
-    togglePopup({
-      title: "Verify Aadhaar",
-      children: <OtpPopUp></OtpPopUp>,
-      // isClosable: false,
-    })
+    // togglePopup({
+    //   title: "Verify Aadhaar",
+    //   children: <OtpPopUp></OtpPopUp>,
+    //   // isClosable: false,
+    // })
   }
 
   const renderSideBar = ({title, description}: IStepper, index: number) => {

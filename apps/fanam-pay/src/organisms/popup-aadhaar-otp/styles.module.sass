@@ -1,0 +1,43 @@
+@use "../../styles/index" as *
+
+.popup_wrapper
+  padding: $size-24px $size-24px
+
+.otp_field
+  gap: $size-28px
+  margin-top: $size-24px
+
+.otp_box
+  width: $size-20px
+  height: $size-20px
+  border: $size-1px solid $black
+  color: rgb(var(--black))
+  border-radius: $size-8px
+  text-align: center
+
+  :focus
+    outline: none
+
+  &[type="number"]::-webkit-inner-spin-button,
+  &[type="number"]::-webkit-outer-spin-button
+    -webkit-appearance: none
+    appearance: none
+    margin: 0
+
+  &[type="number"]
+    -moz-appearance: textfield
+
+.captcha_wrapper
+  display: grid
+  place-items: baseline
+  grid-template-columns: 1fr 0.4fr 0.4fr
+  gap: $size-12px
+  margin-top: $size-20px
+
+.otp_text
+  margin-top: $size-20px
+
+.button_wrapper
+  margin-top: $size-20px
+  background: $theme
+  width: 100%
