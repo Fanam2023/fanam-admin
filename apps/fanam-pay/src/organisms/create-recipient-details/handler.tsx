@@ -6,8 +6,7 @@ import {useMutation, useQueries} from "@tanstack/react-query"
 import {ButtonAccountType, useSlider} from "@custom/ui"
 import {IPayloadRecipient, IRecipientData, IStyle, TypeAccount, TypeBankAccount} from "@custom/utils"
 import assets from "assets"
-import {useLocationController, useRecipientController, useTransactionController} from "controller"
-import {useSingleton} from "hooks"
+import {useLocationController, useRecipientController} from "controller"
 import {
   BANK_ACCOUNT_TYPE,
   ID_PROOFS,
@@ -15,7 +14,6 @@ import {
   QUERY_COUNTRIES,
   QUERY_RECIPIENT,
   QUERY_STATES,
-  QUERY_TRANSACTION,
   ROUTE_RECIPIENT_PREVIEW,
 } from "utils"
 
@@ -27,8 +25,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {refreshQuery} = useReactQuery()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {createRecipient, updateRecipient, getByRecipientId} = useRecipientController()
-  const {initiateTransaction} = useTransactionController()
-  const {transId: transaction_id, transData, updateTransData} = useSingleton()
+
   const {toggleNotify} = useNotifyPopup()
 
   const RECIPIENT_TYPE: IFormData<TypeAccount>[] = [
@@ -136,8 +133,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     return errState
   }
 
-  const onRecipientPreview = () => push(ROUTE_RECIPIENT_PREVIEW)
-
   const {
     errFirstName,
     errLastName,
@@ -189,9 +184,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     onSuccess: ({result, errorData}) => {
       if (result) {
         toggleNotify({type: "success", title: "Recipient created Successfully"})
-        refreshQuery(QUERY_RECIPIENT)
-        updateTransData(result)
-        linkRecipient(result?.recipient?.recipient_id)
+        refreshQuery(QUERY_RECIPIENT.concat(recipient_account_type))
+        push(ROUTE_RECIPIENT_PREVIEW)
       } else toggleNotify({type: "error", title: errorData.message})
     },
   })
@@ -200,17 +194,9 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     mutationKey: [QUERY_RECIPIENT],
     mutationFn: updateRecipient,
     onSuccess: ({result, errorData}) => {
-      refreshQuery(QUERY_RECIPIENT)
+      refreshQuery(QUERY_RECIPIENT.concat(recipient_account_type))
       if (result) toggleNotify({type: "success", title: "Recipient updated Successfully"})
       else toggleNotify({type: "error", title: errorData?.message})
-    },
-  })
-
-  const {mutate: linkRecipient} = useMutation({
-    mutationKey: [QUERY_TRANSACTION],
-    mutationFn: initiateTransaction,
-    onSuccess: ({result}) => {
-      if (result) push(ROUTE_RECIPIENT_PREVIEW)
     },
   })
 

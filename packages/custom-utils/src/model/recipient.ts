@@ -5,7 +5,7 @@ import {ICity, ICountry, IState} from "./location"
 import {IBankAccount} from "./transaction"
 
 export interface IRecipient {
-  account_type?: any
+  account_type?: TypeAccount
   first_name: string
   last_name: string
   email: string

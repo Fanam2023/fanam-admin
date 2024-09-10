@@ -2,6 +2,7 @@ import {IFile} from "@fanam-pkg/core-utils"
 import {
   API_RECIPIENT,
   API_RECIPIENT_KYC,
+  IFanamApiError,
   IPayloadRecipient,
   IPayloadUpdateRecipient,
   IRecipient,
@@ -9,10 +10,14 @@ import {
   apiRecipient,
   apiRecipientType,
 } from "@custom/utils"
+import {useSingleton} from "hooks"
 import {useApi} from "./api"
+import {useTransactionController} from "./transaction"
 
 export const useRecipientController = () => {
   const {getRequest, postRequest, putRequest} = useApi()
+  const {initiateTransaction} = useTransactionController()
+  const {updateTransData, updateTransId} = useSingleton()
 
   const getAllRecipient = async (recipientType: string) => {
     const {result} = await getRequest<IRecipient[]>(apiRecipientType(recipientType))
@@ -20,14 +25,39 @@ export const useRecipientController = () => {
   }
 
   const createRecipient = async (payload: IPayloadRecipient) => {
-    const {kyc, transaction_id} = payload
+    const {kyc} = payload
     delete payload.kyc
 
-    let {result, errorData} = await postRequest<ITransaction>(API_RECIPIENT, payload)
-    if (kyc.length && result) {
-      const response = await uploadKyc(result.recipient?.recipient_id, transaction_id, kyc)
-      result = response.result
-      errorData = response.errorData
+    let {result, errorData} = await postRequest<IRecipient, IPayloadRecipient, IFanamApiError<null>>(
+      API_RECIPIENT,
+      payload
+    )
+
+    if (result) {
+      const {recipient_id} = result
+      const {result: transResult, errorData: errTrans} = await initiateTransaction(recipient_id)
+
+      if (transResult) {
+        const {transaction_id} = transResult
+        updateTransId(transaction_id)
+        updateTransData(transResult)
+
+        if (kyc.length && result) {
+          const {result: transRecipientKyc, errorData: errKyc} = await uploadKyc(recipient_id, transaction_id, kyc)
+
+          if (transRecipientKyc) updateTransData(transRecipientKyc)
+          else if (errKyc) {
+            errorData = {
+              ...errKyc,
+              result: null,
+            }
+          }
+        }
+      } else if (errTrans)
+        errorData = {
+          ...errTrans,
+          result: null,
+        }
     }
 
     return {result, errorData}
@@ -47,7 +77,7 @@ export const useRecipientController = () => {
     return {result, errorData}
   }
 
-  const uploadKyc = async <R>(recipientId: string, transactionId: string, kyc: IFile[]) => {
+  const uploadKyc = async (recipientId: string, transactionId: string, kyc: IFile[]) => {
     const formData = new FormData()
     kyc.forEach(({file}) => {
       formData.append("kyc", file)

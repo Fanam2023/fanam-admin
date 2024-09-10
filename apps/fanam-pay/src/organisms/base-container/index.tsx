@@ -14,7 +14,6 @@ export const BaseContainer = ({
   footerChild,
   buttonText,
   addButton,
-  onClick,
   onBack,
   childWrapper = "",
   skipBtn,

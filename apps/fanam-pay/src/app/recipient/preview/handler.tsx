@@ -9,8 +9,8 @@ import {CreateRecipientDetails} from "organisms"
 import {
   QUERY_TRANSACTION,
   ROUTE_BENEFICIARIES,
+  ROUTE_BENEFICIARY_PREVIEW,
   ROUTE_RECIPIENTS,
-  ROUTE_TRANSACTION,
   routeToRecipientDetails,
 } from "utils"
 
@@ -33,17 +33,13 @@ export const useHandler = () => {
 
   const onBack = () => push(ROUTE_RECIPIENTS)
 
-  const {mutate: linkRecipientAsBeneficiary, data: response} = useMutation({
+  const {mutate: linkRecipientAsBeneficiary} = useMutation({
     mutationKey: [QUERY_TRANSACTION],
     mutationFn: syncRecipientAsBeneficiary,
+    onSuccess: ({result}) => {
+      if (result) push(ROUTE_BENEFICIARY_PREVIEW)
+    },
   })
-
-  useEffect(() => {
-    if (response) {
-      if (isSamePerson) push(ROUTE_TRANSACTION)
-      else push(ROUTE_BENEFICIARIES)
-    }
-  }, [response, is_same_person])
 
   const onToggle = (recipient_id: string) => {
     if (isDesktop) {
@@ -73,7 +69,9 @@ export const useHandler = () => {
   const onSubmit = () => {
     const {isValid} = onValidate()
 
-    if (isValid) linkRecipientAsBeneficiary({is_same_person: isSamePerson, recipient_relationship})
+    if (isSamePerson) {
+      if (isValid) linkRecipientAsBeneficiary({is_same_person: isSamePerson, recipient_relationship})
+    } else onRouteToBeneficiary()
   }
 
   return {

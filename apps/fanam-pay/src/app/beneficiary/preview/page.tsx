@@ -5,7 +5,7 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const RecipientPreview = () => {
-  const {onToggle, onBack} = useHandler()
+  const {onToggle, onBack, onRouteToPurpose} = useHandler()
 
   return (
     <BaseContainer
@@ -14,6 +14,7 @@ const RecipientPreview = () => {
       childWrapper={styles.page_wrapper}
       skipBtn="Back"
       stepIndex={3}
+      onSubmit={onRouteToPurpose}
       onBack={onBack}>
       <BeneficiaryCard onEdit={onToggle} />
     </BaseContainer>

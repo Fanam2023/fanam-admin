@@ -30,7 +30,7 @@ export const useHandler = () => {
   const {createTransaction} = useTransactionController()
   const {refreshQuery} = useReactQuery()
   const {toggleNotify} = useNotifyPopup()
-  const {user, updateTransData, updateTransId} = useSingleton()
+  const {user, updateTransData} = useSingleton()
   const isFetched = useRef(false)
   const [data, setData] = useState<ITransactionData>({
     source_amount: "",
@@ -81,8 +81,6 @@ export const useHandler = () => {
     mutationFn: createTransaction,
     onSuccess: ({result, errorData}) => {
       if (result) {
-        const {transaction_id} = result
-        updateTransId(transaction_id)
         updateTransData(result)
         push(ROUTE_INVOICE)
       } else

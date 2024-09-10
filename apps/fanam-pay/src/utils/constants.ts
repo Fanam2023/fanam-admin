@@ -1,4 +1,5 @@
 import {IFormData} from "@fanam-pkg/core-utils"
+import {TypePurpose} from "@custom/utils"
 import assets from "assets"
 import {IStepper} from "model"
 import {BankCartProps, BankListProps, RecipientInfo} from "props"
@@ -67,20 +68,22 @@ export const LIST_OF_CART: BankCartProps[] = [
   },
 ]
 
-export const PURPOSES_INDIVIDUAL: IFormData[] = [
-  {label: "Education", key: "Education"},
+export const PURPOSES_INDIVIDUAL: IFormData<TypePurpose>[] = [
+  {label: "Education", key: "Tuition_fee"},
   {label: "Travel", key: "Travel"},
   {label: "Hospital", key: "Hospital"},
-  {label: "Family Expense", key: "Family_expense"},
-  {label: "Rental", key: "Rental"},
+  // {label: "Family Expense", key: "Family_expense"},
+  {label: "Rental", key: "Rent"},
   {label: "Insurance", key: "Insurance"},
   {label: "Others", key: "Others"},
 ]
 
-export const PURPOSES_BUSINESS: IFormData[] = [
-  {label: "Working Capital", key: "Working_capital"},
-  {label: "Rental", key: "Rental"},
-  {label: "Salary", key: "Salary"},
+export const PURPOSES_BUSINESS: IFormData<TypePurpose>[] = [
+  {label: "Retail Business", key: "Retail"},
+  {label: "Import and Export", key: "Import_and_export"},
+  {label: "Legal Charges", key: "Legal_fees"},
+  {label: "Rental", key: "Rent"},
+  {label: "Salary", key: "Payroll_and_pension"},
   {label: "Others", key: "Others"},
 ]
 

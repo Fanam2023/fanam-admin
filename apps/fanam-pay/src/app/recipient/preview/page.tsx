@@ -5,7 +5,7 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const RecipientPreview = () => {
-  const {onRouteToBeneficiary, onToggle, onBack, data, errData, isSamePerson, onSubmit, onChangeValue} = useHandler()
+  const {onToggle, onBack, data, errData, isSamePerson, onSubmit, onChangeValue} = useHandler()
   const {recipient_relationship, is_same_person} = data
   const {errRelationShip} = errData
 
