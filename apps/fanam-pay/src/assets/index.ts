@@ -90,7 +90,6 @@ const assets = {
   ic_right_arrow_fill,
   ic_help_theme,
   ic_edit_white,
-  ic_profile,
   ic_tick,
   ic_personal,
   ic_select_personal,

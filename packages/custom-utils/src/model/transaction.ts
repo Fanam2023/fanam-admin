@@ -16,6 +16,16 @@ export interface ITransaction {
   recipient: IRecipient
   recipient_relationship: string
   beneficiary: IBeneficiary
+  status?: string
+  created_at?: string
+}
+
+export interface ITransactionDetails extends ITransaction {
+  month: string
+  date: string
+  paymentId: string
+  paymentMode: string
+  paymentDuration: string
 }
 
 export interface IBankAccount {
