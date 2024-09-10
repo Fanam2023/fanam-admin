@@ -1,6 +1,6 @@
 import {IFile, IFormData} from "@fanam-pkg/core-utils"
 import {IAttachment} from "./common"
-import {TypeAccount} from "./enum"
+import {TypeAccount, TypeBankAccount} from "./enum"
 import {ICity, ICountry, IState} from "./location"
 
 interface IBankAccount {
@@ -62,6 +62,7 @@ export interface IRecipientData extends IBaseRecipientData {
   swift_code: string
   iban_no?: string
   routing_code?: string
+  account_type: TypeBankAccount
 }
 
 export interface IPayloadRecipient extends IBaseRecipientData {
@@ -70,7 +71,7 @@ export interface IPayloadRecipient extends IBaseRecipientData {
   state_id: number
   city_id: number
   bank_account: IPayloadRecipientBankAccount
-  transaction_id: string
+  transaction_id?: string
   recipient_account_type?: string
 }
 
@@ -87,6 +88,7 @@ export interface IPayloadRecipientBankAccount {
   swift_code: string
   iban_no?: string
   routing_code?: string
+  bank_code_type: string
 }
 
 export interface IResponseRecipientBankAccount extends IPayloadRecipientBankAccount {

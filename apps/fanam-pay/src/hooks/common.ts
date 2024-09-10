@@ -5,7 +5,7 @@ export const useCommon = () => {
   const commonHook = usePkgCommon()
   const getFlagUrl = (country: ICountry | string): string => {
     const iso2 = typeof country === "string" ? country : country?.iso2
-    return `https://flagcdn.com/w40/${iso2.toLowerCase()}.png`
+    return `https://flagcdn.com/w40/${iso2?.toLowerCase()}.png`
   }
 
   const getFirstLetter = (name: string) => {

@@ -52,13 +52,15 @@ export const useTransactionController = () => {
   }
 
   const syncBeneficiary = async (beneficiaryId: string) => {
-    const {result, errorData} = await putRequest<ITransaction>(apiTransaction(transId), {beneficiary_id: beneficiaryId})
+    const {result, errorData} = await postRequest<ITransaction>(apiTransaction(transId), {
+      beneficiary_id: beneficiaryId,
+    })
     if (result) updateTransData(result)
     return {result, errorData}
   }
 
-  const syncRecipient = async (recipientId: string) => {
-    const {result, errorData} = await putRequest<ITransaction>(apiTransaction(transId), {recipient_id: recipientId})
+  const initiateTransaction = async (recipientId: string) => {
+    const {result, errorData} = await postRequest<ITransaction>(API_TRANSACTION, {recipient_id: recipientId})
     if (result) updateTransData(result)
     return {result, errorData}
   }
@@ -81,7 +83,7 @@ export const useTransactionController = () => {
     getByIdTransaction,
     uploadInvoice,
     syncBeneficiary,
-    syncRecipient,
+    initiateTransaction,
     syncRecipientAsBeneficiary,
     sendingPurpose,
   }

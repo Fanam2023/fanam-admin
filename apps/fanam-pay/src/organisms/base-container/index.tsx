@@ -1,6 +1,6 @@
 "use client"
 
-import {Button, ImageView, usePopup} from "@fanam-pkg/core-ui-sass"
+import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import assets from "assets"
 import {useSingleton} from "hooks"
@@ -28,15 +28,6 @@ export const BaseContainer = ({
   const {user} = useSingleton()
   const {first_name, last_name} = user || {}
   const {isDesktop} = useResize()
-  const {togglePopup} = usePopup()
-
-  const toggle = () => {
-    // togglePopup({
-    //   title: "Verify Aadhaar",
-    //   children: <OtpPopUp></OtpPopUp>,
-    //   // isClosable: false,
-    // })
-  }
 
   const renderSideBar = ({title, description}: IStepper, index: number) => {
     const isLastStep = index < SIDE_BAR.length - 1
@@ -68,9 +59,7 @@ export const BaseContainer = ({
         <section className={`flex ${styles.language_section}`}>
           <section className={`flex ${styles.language_wrapper}`}>
             <ImageView src={assets.ic_world} alt="world-icon" imgSize={24} />
-            <h5 className={`medium ${styles.language_text}`} onClick={toggle}>
-              Language
-            </h5>
+            <h5 className={`medium ${styles.language_text}`}>Language</h5>
             <ImageView src={assets.ic_down_arrow} alt="down-arrow" imgSize={20} />
           </section>
           <section className={`flex ${styles.help_wrapper}`}>
