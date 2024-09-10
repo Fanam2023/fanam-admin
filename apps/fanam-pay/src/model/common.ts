@@ -29,4 +29,3 @@ export interface IExchange {
   source_country: string
   rate: string
 }
-

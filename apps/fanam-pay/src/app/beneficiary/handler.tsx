@@ -5,7 +5,7 @@ import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {useBeneficiaryController, useTransactionController} from "controller"
 import {CreateBeneficiaryDetails} from "organisms"
-import {QUERY_BENEFICIARY, QUERY_TRANSACTION, ROUTE_RECIPIENT_PREVIEW, ROUTE_TRANSACTION} from "utils"
+import {QUERY_BENEFICIARY, QUERY_TRANSACTION, ROUTE_BENEFICIARY_PREVIEW, ROUTE_RECIPIENT_PREVIEW} from "utils"
 
 export const useHandler = () => {
   const {isDesktop} = useResize()
@@ -19,7 +19,7 @@ export const useHandler = () => {
     mutationKey: [QUERY_TRANSACTION],
     mutationFn: syncBeneficiary,
     onSuccess: ({result}) => {
-      if (result) push(ROUTE_TRANSACTION)
+      if (result) push(ROUTE_BENEFICIARY_PREVIEW)
     },
   })
 

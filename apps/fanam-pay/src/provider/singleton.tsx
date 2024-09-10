@@ -10,7 +10,7 @@ import {COOKIE_ACCESS_TOKEN, COOKIE_REFRESH_TOKEN, COOKIE_TRANSACTION_ID, QUERY_
 export const SingletonProvider = ({children}: PropsWithChildren) => {
   const {setCookie, getCookie, removeCookie} = useCookies()
   const {getUser, logout} = useAuthController()
-  const {getByIdTransaction} = useTransactionController()
+  const {getTransactionDetails} = useTransactionController()
   const {clearQueryCache} = useReactQuery()
   const {clearAllStorage} = useStorage()
   const [user, setUser] = useState<IUser | null>(null)
@@ -27,7 +27,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   const {data: transRes, refetch: refetchTransaction} = useQuery({
     enabled: !!transId && !transData,
     queryKey: [QUERY_TRANSACTION],
-    queryFn: () => getByIdTransaction(transId),
+    queryFn: () => getTransactionDetails(transId),
   })
 
   const updateUserData = (user: IUser | null) => setUser(user)

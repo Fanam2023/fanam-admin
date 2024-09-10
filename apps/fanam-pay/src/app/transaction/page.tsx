@@ -30,7 +30,7 @@ const renderCart = ({icon, bankName, cartType}: BankCartProps, index: number) =>
 )
 
 const TransactionPage = () => {
-  const {onSuccess, onBack} = useHandler()
+  const {onBack} = useHandler()
 
   return (
     <BaseContainer
@@ -40,7 +40,6 @@ const TransactionPage = () => {
       footerChild={
         <FooterPayment senderAmount="Rs. 5388.00" reciverName="Varshini receives" recivableAmt="$707.00" button="Pay" />
       }
-      onSubmit={onSuccess}
       stepIndex={6}>
       <section className={styles.page_wrapper}>
         <section className={styles.card}>

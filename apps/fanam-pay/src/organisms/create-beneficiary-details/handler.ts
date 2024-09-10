@@ -7,7 +7,7 @@ import {useSlider} from "@custom/ui"
 import {IBeneficiaryData, IPayloadBeneficiary, IStyle} from "@custom/utils"
 import {useBeneficiaryController, useLocationController} from "controller"
 import {useSingleton} from "hooks"
-import {QUERY_BENEFICIARY, QUERY_CITIES, QUERY_COUNTRIES, QUERY_STATES, ROUTE_TRANSACTION} from "utils"
+import {QUERY_BENEFICIARY, QUERY_CITIES, QUERY_COUNTRIES, QUERY_STATES, ROUTE_BENEFICIARY_PREVIEW} from "utils"
 
 const DEFAULT_ERROR_STATE = {
   isClicked: false,
@@ -35,8 +35,6 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   const {isValidInputByRegex} = useCommon()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {getByBeneficiaryId, createBeneficiary, updateBeneficiary} = useBeneficiaryController()
-
-  const onRouteToTransaction = () => push(ROUTE_TRANSACTION)
 
   const [data, setData] = useState<IBeneficiaryData>({
     first_name: "",
@@ -344,7 +342,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   useEffect(() => {
     if (addedRes) {
       toggleSlider()
-      onRouteToTransaction()
+      push(ROUTE_BENEFICIARY_PREVIEW)
     } else if (updatedRes) {
       toggleSlider()
     }

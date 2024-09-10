@@ -44,7 +44,7 @@ const getStatusData = (status: StatusType) => {
 
 const TransactionStatusPage = () => {
   const searchParams = useSearchParams()
-  const {onBack} = useHandler()
+  const {transactionDetail} = useHandler()
 
   const status = searchParams.get("status") as StatusType
 
@@ -83,8 +83,7 @@ const TransactionStatusPage = () => {
       footerChild={DownloadReceipt()}
       childWrapper={styles.page_container}
       skipBtn="Download Receipt"
-      stepIndex="pending"
-      onBack={onBack}>
+      stepIndex="pending">
       <section className={`flex-col ${styles.heading_wrapper}`}>
         <h4 className="bold">Payment Status</h4>
         <h5>Get the payment status after sending the money.</h5>

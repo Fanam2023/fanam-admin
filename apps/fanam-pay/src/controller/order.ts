@@ -1,10 +1,13 @@
-import {API_CREATE_ORDER, IOrderPayload, IOrderResponse} from "@custom/utils"
+import {API_CREATE_ORDER, IFanamApiError, IPayloadOrder, IResponseOrder} from "@custom/utils"
+import {useSingleton} from "hooks"
 import {useApi} from "./api"
 
 export const useOrderController = () => {
   const {postRequest} = useApi()
+  const {transId} = useSingleton()
 
-  const createOrder = async (payload: IOrderPayload) => await postRequest<IOrderResponse>(API_CREATE_ORDER, payload)
+  const createOrder = async () =>
+    await postRequest<IResponseOrder, IPayloadOrder, IFanamApiError<null>>(API_CREATE_ORDER, {transaction_id: transId})
 
   return {
     createOrder,

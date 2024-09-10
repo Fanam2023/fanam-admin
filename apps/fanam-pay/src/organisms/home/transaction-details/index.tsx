@@ -1,14 +1,14 @@
 import {ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
-import {ListTransactionProps} from "props"
+import {PropsTransactionDetails} from "props"
 import {ContentTransaction} from "../content-transaction"
 import {RecipientDetails} from "../recipient-details"
 import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
-export const TransactionDetails = ({transactionId}: ListTransactionProps) => {
-  const {transactionDetail, recipientDetails, getFirstLetter} = useHandler(transactionId)
-  const {status, source_amount, destination_amount, recipient, transaction_id, created_at} = transactionDetail || {}
+export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
+  const {recipientDetails, getFirstLetter} = useHandler(transaction)
+  const {status, source_amount, destination_amount, recipient, transaction_id, created_at} = transaction || {}
   const {first_name, last_name} = recipient || {}
 
   return (
@@ -42,7 +42,7 @@ export const TransactionDetails = ({transactionId}: ListTransactionProps) => {
         </section>
       </section>
       <section className={styles.transaction_container}>
-        <ContentTransaction transactionDetail={transactionDetail} />
+        <ContentTransaction transactionDetail={transaction} />
         <RecipientDetails recipientData={recipientDetails} />
       </section>
     </section>

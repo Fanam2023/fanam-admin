@@ -9,14 +9,13 @@ import styles from "./page.module.sass"
 
 const ReviewAndSend = () => {
   const {
-    recipient_id,
     beneficiaryDetails,
     recipientDetails,
     paymentDetails,
     showDetails,
     toggleDetails,
-    handleBeneficiaryEditClick,
-    handleRecipientEditClick,
+    routeToBeneficiary,
+    routeToRecipient,
     onProcessPayment,
     transId,
     destination_amount,
@@ -78,7 +77,7 @@ const ReviewAndSend = () => {
                   src={assets.ic_edit_white}
                   alt="edit-icon"
                   imgSize={20}
-                  onClick={handleRecipientEditClick}
+                  onClick={routeToRecipient}
                 />
                 <h5 className={styles.edit_text}>Edit</h5>
               </>
@@ -88,7 +87,7 @@ const ReviewAndSend = () => {
                 alt="edit-icon"
                 wrapperClass={styles.edit_icon}
                 imgSize={20}
-                onClick={handleRecipientEditClick}
+                onClick={routeToRecipient}
               />
             )}
           </section>
@@ -108,7 +107,7 @@ const ReviewAndSend = () => {
                   src={assets.ic_edit_white}
                   alt="edit-icon"
                   imgSize={20}
-                  onClick={handleBeneficiaryEditClick}
+                  onClick={routeToBeneficiary}
                 />
                 <h5 className={styles.edit_text}>Edit</h5>
               </>
@@ -118,7 +117,7 @@ const ReviewAndSend = () => {
                 alt="edit-icon"
                 wrapperClass={styles.edit_icon}
                 imgSize={20}
-                onClick={handleBeneficiaryEditClick}
+                onClick={routeToBeneficiary}
               />
             )}
           </section>

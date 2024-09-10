@@ -1,33 +1,14 @@
 import {IFormData} from "@fanam-pkg/core-utils"
 import {useMemo} from "react"
-import {useQuery} from "@tanstack/react-query"
-import {useTransactionController} from "controller"
+import {ITransaction} from "@custom/utils"
 import {useCommon} from "hooks"
-import {QUERY_TRANSACTION} from "utils/storage-constants"
 
-export const useHandler = (transaction_id: string) => {
-  const {getByIdTransaction} = useTransactionController()
+export const useHandler = (transaction: ITransaction) => {
   const {getFirstLetter} = useCommon()
 
-  const {data: transactionDetail} = useQuery({
-    queryKey: [QUERY_TRANSACTION, transaction_id],
-    queryFn: () => getByIdTransaction(transaction_id),
-    enabled: !!transaction_id,
-  })
-  const {recipient} = transactionDetail || {}
-  const {
-    first_name,
-    last_name,
-    address_line_1,
-    email,
-    phone_no,
-    bank_account,
-    country,
-    state,
-    city,
-    zip_code,
-    recipient_id,
-  } = recipient || {}
+  const {recipient} = transaction || {}
+  const {first_name, last_name, address_line_1, email, phone_no, bank_account, country, state, city, zip_code} =
+    recipient || {}
 
   const {country_name} = country || {}
   const {state_name} = state || {}
@@ -52,10 +33,9 @@ export const useHandler = (transaction_id: string) => {
       {key: "BIC", label: swift_code},
     ]
     return {recipientDetails}
-  }, [transactionDetail])
+  }, [transaction])
 
   return {
-    transactionDetail,
     recipientDetails,
     getFirstLetter,
   }
