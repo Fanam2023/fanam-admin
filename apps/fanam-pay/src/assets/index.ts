@@ -26,7 +26,6 @@ import ic_more from "./icons/ic_more.svg"
 import ic_pending from "./icons/ic_pending.svg"
 import ic_pending_small from "./icons/ic_pending_small.svg"
 import ic_personal from "./icons/ic_personal.svg"
-import ic_profile from "./icons/ic_profile.svg"
 import ic_refresh from "./icons/ic_refresh.svg"
 import ic_remove from "./icons/ic_remove.svg"
 import ic_right from "./icons/ic_right.svg"
@@ -92,7 +91,6 @@ const assets = {
   ic_right_arrow_fill,
   ic_help_theme,
   ic_edit_white,
-  ic_profile,
   ic_tick,
   ic_personal,
   ic_select_personal,

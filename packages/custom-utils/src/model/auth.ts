@@ -107,6 +107,7 @@ export interface ISyncUserData extends IBaseSyncUser {
   business_name: string
   pan: string
   aadhaarNumber: string
+  date_of_birth: string
 }
 
 export interface IPayloadSyncUser extends IBaseSyncUser {
@@ -116,6 +117,7 @@ export interface IPayloadSyncUser extends IBaseSyncUser {
   bank_account?: IPayloadUserBankAccount
   account_no: string
   account_type: string
+  date_of_birth: string
 }
 
 export interface IPayloadUserBankAccount {

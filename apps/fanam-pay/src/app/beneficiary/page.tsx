@@ -8,8 +8,7 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const BeneficiaryPage = () => {
-  const {onNav, beneficiaries, onChangeSearch, routeToDetails, isDesktop, onBack, linkBeneficiary, searchQuery} =
-    useHandler()
+  const {onNav, beneficiaries, onChangeSearch, routeToDetails, onBack, linkBeneficiary, searchQuery} = useHandler()
 
   const renderBeneficiary = ({first_name, last_name, email, beneficiary_id}: IBeneficiary) => (
     <ManageMembers
@@ -27,7 +26,7 @@ const BeneficiaryPage = () => {
       addButton="Add"
       childWrapper={styles.page_container}
       backIcon
-      stepIndex={5}
+      stepIndex={1}
       buttonText="Next"
       skipBtn="Back"
       onAdd={onNav}
@@ -43,11 +42,9 @@ const BeneficiaryPage = () => {
           wrapperClass={styles.search_wrapper}
           leadingIcon={searchQuery.length ? null : assets.ic_search}
           onChangeData={onChangeSearch}></TextField>
-        {isDesktop && (
-          <h4 className={styles.add_text} onClick={onNav}>
-            Add
-          </h4>
-        )}
+        <h4 className={styles.add_text} onClick={onNav}>
+          Add
+        </h4>
       </section>
       <h5 className={`bold ${styles.save_text}`}>Saved Beneficiary</h5>
       <ul className={styles.members}>{beneficiaries?.map(renderBeneficiary)}</ul>

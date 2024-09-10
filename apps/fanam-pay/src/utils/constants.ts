@@ -2,20 +2,20 @@ import {IFormData} from "@fanam-pkg/core-utils"
 import {TypePurpose} from "@custom/utils"
 import assets from "assets"
 import {IStepper} from "model"
-import {BankCartProps, BankListProps, RecipientInfo} from "props"
+import {BankCartProps, BankListProps} from "props"
 
 export const SIDE_BAR: IStepper[] = [
   {
-    title: "Sender Details",
-    description: "Essential for verification and processing your transactions securely and efficiently.",
-  },
-  {
-    title: "Add Recipient",
+    title: "Add or Select Recipient",
     description: "Enter the Recipient details and their account details.",
   },
   {
-    title: "Add Beneficiary",
+    title: "Add or Select Beneficiary",
     description: "If your recipient and beneficiary are different, enter the beneficiary details.",
+  },
+  {
+    title: "Purpose of Sending Money",
+    description: "Briefly describe the reason for your transfer for accurate processing and compliance.",
   },
   {
     title: "Payout Estimate",
@@ -85,30 +85,6 @@ export const PURPOSES_BUSINESS: IFormData<TypePurpose>[] = [
   {label: "Rental", key: "Rent"},
   {label: "Salary", key: "Payroll_and_pension"},
   {label: "Others", key: "Others"},
-]
-
-export const RECIPIENT_INFO: RecipientInfo[] = [
-  {label: "First Name", value: "Varshini J"},
-  {label: "Last Name", value: "Patel"},
-  {label: "Email", value: "Varshini123@gmail.com"},
-  {label: "Phone Number", value: "6785674356"},
-  {label: "Account Type", value: "Saving"},
-  {label: "Account Number", value: "27379264923864"},
-  {label: "Bank Name", value: "Swis Bank"},
-  {label: "Bank Code Type", value: "United States"},
-  {label: "Bank Code", value: "12344"},
-  {label: "Branch", value: "California"},
-  {label: "BIC", value: "United States"},
-  {label: "Country", value: "United States"},
-  {label: "State", value: "Alabama"},
-  {label: "City/District", value: "Tuscaloosa"},
-  {label: "Pin code", value: "35401"},
-]
-
-export const TRANSACTION_DETAILS: RecipientInfo[] = [
-  {label: "You were going to send", value: "1,000 USD"},
-  {label: "Transfer Fee", value: "200.00 USD"},
-  {label: "Exchange Rate", value: "1,000 USD"},
 ]
 
 export const ID_PROOFS = ["Passport", "Driving License", "Aadhaar"]

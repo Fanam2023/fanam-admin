@@ -22,6 +22,17 @@
   &.hide-animate
     animation: closeAnimad 1s
 
+  @include mixin-responsive
+    right: auto
+    left: 0
+    bottom: 0
+    width: 100%
+    height: 88vh
+    border-top-left-radius: $size-10px
+    border-top-right-radius: $size-10px
+    border-bottom-right-radius: 0
+    animation: bottomSheetSlideUp 0.8s ease-in-out
+
 .header_wrapper
   padding: $size-12px $size-12px
   box-shadow: $size-1px $size-4px $size-16px $size-1px rgb($dark-border-grey, $alpha-three)
@@ -50,3 +61,10 @@
 
   100%
     right: -100vw
+
+@keyframes bottomSheetSlideUp
+  0%
+    bottom: -100vh
+
+  100%
+    bottom: 0

@@ -324,8 +324,16 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       ],
     },
     {
-      wrapperClass: styles.personal,
+      wrapperClassGrid: styles.personal,
       childElements: [
+        {
+          elementType: "input",
+          label: "Enter Email",
+          name: "email",
+          error: errEmail,
+          value: email,
+          onChangeValue,
+        },
         {
           elementType: "input",
           label: "Enter PhoneNumber",
@@ -335,19 +343,11 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           onChangeValue,
           maxLength: 10,
         },
-        {
-          elementType: "input",
-          label: "Enter Email",
-          name: "email",
-          error: errEmail,
-          value: email,
-          onChangeValue,
-        },
       ],
     },
     {
       title: "Address",
-      wrapperClassGrid: styles.address,
+      wrapperClassGrid: styles.address_details,
       childElements: [
         {
           elementType: "input",
