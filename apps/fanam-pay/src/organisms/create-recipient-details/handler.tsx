@@ -166,12 +166,12 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         {queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries},
         {
           queryKey: [`${QUERY_STATES}-${country?.key}`, country],
-          queryFn: () => getStates(country?.key as string),
+          queryFn: () => getStates(country?.key),
           enabled: !!country,
         },
         {
           queryKey: [`${QUERY_CITIES}-${state?.key}`, state],
-          queryFn: () => getCities(state?.key as string),
+          queryFn: () => getCities(state?.key),
           enabled: !!state,
         },
         {
