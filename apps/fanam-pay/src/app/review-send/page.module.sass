@@ -38,3 +38,20 @@
 .separator
   border: $size-1px solid $medium-grey
   margin: $size-20px 0 $size-20px 0
+
+@include mixin-responsive
+  .page_wrapper
+    width: 100%
+    margin:
+      top: 22%
+      left: $size-16px
+      right: $size-16px
+
+  .card_wrapper
+    box-shadow: none
+    border-radius: $size-12px
+    background: none
+    border: 1px solid $dark-border-grey
+
+  .title_text
+    color: $darker-grey
