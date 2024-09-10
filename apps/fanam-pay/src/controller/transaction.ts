@@ -7,9 +7,9 @@ import {
   IPayloadTransaction,
   IPayloadTransactionPurpose,
   ITransaction,
+  ITransactionDetails,
 } from "@custom/utils"
 import {useSingleton} from "hooks"
-import {ITransactionDetails} from "model"
 import {useApi} from "./api"
 
 export const useTransactionController = () => {

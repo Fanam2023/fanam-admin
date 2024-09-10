@@ -1,4 +1,5 @@
-import {ICountry} from "@custom/utils"
+import {IFormData} from "@fanam-pkg/core-utils"
+import {ICountry, ITransaction} from "@custom/utils"
 
 export interface CountryPopupProps {
   onSelect: (currencyCode: ICountry) => void
@@ -11,7 +12,16 @@ export interface ITransfer {
   charge: string
 }
 
-export interface RecipientInfo {
+export interface ITransactionInfo {
   label: string
-  value: string
+  value: string | number
+}
+
+export interface ListTransactionProps {
+  transactionId: string
+}
+
+export interface ITransactionProps {
+  transactionDetail?: ITransaction
+  recipientData?: IFormData[]
 }
