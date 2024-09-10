@@ -246,7 +246,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
       ],
     },
     {
-      wrapperClassGrid: styles.beneficiary_address_wrapper,
+      wrapperClassGrid: `flex ${styles.beneficiary_address_wrapper}`,
       childElements: [
         {
           elementType: "input",

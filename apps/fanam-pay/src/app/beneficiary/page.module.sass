@@ -3,13 +3,13 @@
 .search_container
   width: 80%
   margin:
-    top: 1%
+    top: $size-16px
     left: 7%
   gap: $size-20px
 
 .beneficiary_wrapper
   margin:
-    top: 14%
+    top: 21%
     left: 7%
   gap: $size-8px
 
@@ -41,10 +41,31 @@
     display: none
 
   .search_container
-    width: 100%
+    width: 90%
     margin:
-      left: 0
-      top: 22%
+      left: $size-16px
+      top: 5%
 
   .save_text
     margin-left: 0
+
+  .beneficiary_wrapper
+    margin-top: 25%
+
+  .add_text
+    border: $size-1px solid $theme
+    padding: $size-18px
+    border-radius: $size-10px
+    background: $primary-fill
+
+  .members
+    grid-template-columns: repeat(4,0.5fr)
+    width: 90%
+    padding: 0 $size-16px
+    margin-left: 0
+    grid-column-gap: $size-12px
+
+  .save_text
+    margin-left: $size-16px
+    font-size: $size-16px
+    color: $theme

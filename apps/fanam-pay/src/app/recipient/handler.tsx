@@ -1,21 +1,13 @@
-import {IFormData, useResize} from "@fanam-pkg/core-utils"
+import {IFormData} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {useRecipientController, useTransactionController} from "controller"
 import {CreateRecipientDetails} from "organisms"
-import {
-  QUERY_RECIPIENT,
-  QUERY_TRANSACTION,
-  ROUTE_ADD_RECIPIENT,
-  ROUTE_INVOICE,
-  ROUTE_RECIPIENT_PREVIEW,
-  routeToRecipientDetails,
-} from "utils"
+import {QUERY_RECIPIENT, QUERY_TRANSACTION, ROUTE_INVOICE, ROUTE_RECIPIENT_PREVIEW} from "utils"
 
 export const useHandler = () => {
-  const {isDesktop} = useResize()
   const {push} = useRouter()
   const {toggleSlider} = useSlider()
   const {getAllRecipient} = useRecipientController()
@@ -27,8 +19,9 @@ export const useHandler = () => {
     {label: "Business", isSelected: selectedType === "Business"},
   ]
 
-  const onChangeType = (type: string) => {
-    setSelectedType(type)
+  const onSelectType = (items: IFormData<string, string>[]) => {
+    const selectedItem = items.find(item => item.isSelected)
+    if (selectedItem) setSelectedType(selectedItem.label)
   }
 
   const {data: recipients} = useQuery({
@@ -54,30 +47,23 @@ export const useHandler = () => {
   )
 
   const onAdd = () => {
-    if (isDesktop) {
-      toggleSlider({
-        children: <CreateRecipientDetails />,
-        title: "Add Recipient Details",
-      })
-    } else push(ROUTE_ADD_RECIPIENT)
+    toggleSlider({
+      children: <CreateRecipientDetails />,
+      title: "Add Recipient Details",
+    })
   }
 
   const routeToDetails = (recipient_id: string) => {
-    if (isDesktop) {
-      toggleSlider({
-        children: <CreateRecipientDetails recipient_id={recipient_id} />,
-        title: "Edit Recipient Details",
-      })
-    } else {
-      push(routeToRecipientDetails(recipient_id))
-    }
+    toggleSlider({
+      children: <CreateRecipientDetails recipient_id={recipient_id} />,
+      title: "Edit Recipient Details",
+    })
   }
 
   const onBack = () => push(ROUTE_INVOICE)
 
   return {
     TYPE,
-    isDesktop,
     recipients: filteredRecipients,
     searchQuery,
     onChangeSearch,
@@ -85,6 +71,6 @@ export const useHandler = () => {
     onAdd,
     onBack,
     linkRecipient,
-    onChangeType,
+    onSelectType,
   }
 }

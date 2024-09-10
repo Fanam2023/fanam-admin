@@ -1,13 +1,13 @@
 @use "../../styles/index" as *
 .search_container
   margin:
-    top: 1%
+    top: $size-16px
     left: 7%
   gap: $size-20px
 
 .recipient_wrapper
   margin:
-    top: 21%
+    top: 26%
     left: 7%
   gap: $size-8px
 
@@ -50,11 +50,36 @@
   .slider_card
     display: none
 
+  .saved_wrapper
+    padding: 0 $size-20px
+
+  .radio_button
+    margin-top: $size-20px
+
+  .recipient_wrapper
+    margin-top: 25%
+
   .search_container
-    width: 100%
+    width: 90%
     margin:
-      left: 0
-      top: 22%
+      left: $size-16px
+      top: 5%
+
+  .members
+    grid-template-columns: repeat(4,0.5fr)
+    width: 90%
+    padding: 0 $size-16px
+    margin-left: 0
+    grid-column-gap: $size-12px
+    height: 27%
+
+  .add_text
+    border: $size-1px solid $theme
+    padding: $size-18px
+    border-radius: $size-10px
+    background: $primary-fill
 
   .save_text
     margin-left: 0
+    font-size: $size-16px
+    color: $theme
