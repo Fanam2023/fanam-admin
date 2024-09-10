@@ -22,6 +22,7 @@ import ic_india_flag from "./icons/ic_india_flag.svg"
 import ic_left_arrow_fill from "./icons/ic_left_arrow_fill.svg"
 import ic_lend_money from "./icons/ic_lend_money.svg"
 import ic_money from "./icons/ic_money.svg"
+import ic_more from "./icons/ic_more.svg"
 import ic_pending from "./icons/ic_pending.svg"
 import ic_pending_small from "./icons/ic_pending_small.svg"
 import ic_personal from "./icons/ic_personal.svg"
@@ -50,6 +51,7 @@ import img_logo from "./images/img_logo.webp"
 const assets = {
   ...projectAssets,
   ic_account,
+  ic_more,
   ic_rocket,
   ic_star,
   ic_up_arrow,

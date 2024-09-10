@@ -1,7 +1,7 @@
 "use client"
 
 import {ImageView} from "@fanam-pkg/core-ui-sass"
-import {IFormData} from "@fanam-pkg/core-utils"
+import {IFormData, useResize} from "@fanam-pkg/core-utils"
 import assets from "assets"
 import {BaseContainer} from "organisms"
 import useHandler from "./handler"
@@ -24,6 +24,7 @@ const ReviewAndSend = () => {
   } = useHandler()
 
   const {recipient, beneficiary} = showDetails
+  const {isDesktop} = useResize()
 
   const renderPaymentDetails = ({label, key}: IFormData) => {
     return (
@@ -48,8 +49,14 @@ const ReviewAndSend = () => {
         <section className={`flex-sb-center ${styles.header}`}>
           <h5 className={styles.edit_text}>Conversation Details</h5>
           <section className="flex">
-            <ImageView wrapperClass={styles.edit_icon} src={assets.ic_edit_white} alt="edit-icon" imgSize={20} />
-            <h5 className={styles.edit_text}>Edit</h5>
+            {isDesktop ? (
+              <>
+                <ImageView wrapperClass={styles.edit_icon} src={assets.ic_edit_white} alt="edit-icon" imgSize={20} />
+                <h5 className={styles.edit_text}>Edit</h5>
+              </>
+            ) : (
+              <ImageView src={assets.ic_more} alt="edit-icon" imgSize={20} />
+            )}
           </section>
         </section>
         <ul>{paymentDetails?.map(renderPaymentDetails)}</ul>
@@ -64,14 +71,26 @@ const ReviewAndSend = () => {
         <section className={`flex-sb-center ${styles.header}`}>
           <h5 className={styles.edit_text}>Recipient Details</h5>
           <section className="flex">
-            <ImageView
-              wrapperClass={styles.edit_icon}
-              src={assets.ic_edit_white}
-              alt="edit-icon"
-              imgSize={20}
-              onClick={() => routeToRecipient(recipient_id)}
-            />
-            <h5 className={styles.edit_text}>Edit</h5>
+            {isDesktop ? (
+              <>
+                <ImageView
+                  wrapperClass={styles.edit_icon}
+                  src={assets.ic_edit_white}
+                  alt="edit-icon"
+                  imgSize={20}
+                  onClick={() => routeToRecipient(recipient_id)}
+                />
+                <h5 className={styles.edit_text}>Edit</h5>
+              </>
+            ) : (
+              <ImageView
+                src={assets.ic_more}
+                alt="edit-icon"
+                wrapperClass={styles.edit_icon}
+                imgSize={20}
+                onClick={() => routeToRecipient(recipient_id)}
+              />
+            )}
           </section>
         </section>
         <ul>{(recipient ? recipientDetails : recipientDetails?.slice(0, 4))?.map(renderPaymentDetails)}</ul>
@@ -82,14 +101,26 @@ const ReviewAndSend = () => {
         <section className={`flex-sb-center ${styles.header}`}>
           <h5 className={styles.edit_text}>Beneficiary Details</h5>
           <section className="flex">
-            <ImageView
-              wrapperClass={styles.edit_icon}
-              src={assets.ic_edit_white}
-              alt="edit-icon"
-              imgSize={20}
-              onClick={() => routeToBeneficiary("beneficiary_id")}
-            />
-            <h5 className={styles.edit_text}>Edit</h5>
+            {isDesktop ? (
+              <>
+                <ImageView
+                  wrapperClass={styles.edit_icon}
+                  src={assets.ic_edit_white}
+                  alt="edit-icon"
+                  imgSize={20}
+                  onClick={() => routeToBeneficiary("beneficiary_id")}
+                />
+                <h5 className={styles.edit_text}>Edit</h5>
+              </>
+            ) : (
+              <ImageView
+                src={assets.ic_more}
+                alt="edit-icon"
+                wrapperClass={styles.edit_icon}
+                imgSize={20}
+                onClick={() => routeToBeneficiary("beneficiary_id")}
+              />
+            )}
           </section>
         </section>
         <ul>{(beneficiary ? beneficiaryDetails : beneficiaryDetails?.slice(0, 4))?.map(renderPaymentDetails)}</ul>
