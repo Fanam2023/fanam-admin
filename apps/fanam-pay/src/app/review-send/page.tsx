@@ -15,8 +15,8 @@ const ReviewAndSend = () => {
     paymentDetails,
     showDetails,
     toggleDetails,
-    routeToBeneficiary,
-    routeToRecipient,
+    handleBeneficiaryEditClick,
+    handleRecipientEditClick,
     onProcessPayment,
     transId,
     destination_amount,
@@ -78,7 +78,7 @@ const ReviewAndSend = () => {
                   src={assets.ic_edit_white}
                   alt="edit-icon"
                   imgSize={20}
-                  onClick={() => routeToRecipient(recipient_id)}
+                  onClick={handleRecipientEditClick}
                 />
                 <h5 className={styles.edit_text}>Edit</h5>
               </>
@@ -88,7 +88,7 @@ const ReviewAndSend = () => {
                 alt="edit-icon"
                 wrapperClass={styles.edit_icon}
                 imgSize={20}
-                onClick={() => routeToRecipient(recipient_id)}
+                onClick={handleRecipientEditClick}
               />
             )}
           </section>
@@ -108,7 +108,7 @@ const ReviewAndSend = () => {
                   src={assets.ic_edit_white}
                   alt="edit-icon"
                   imgSize={20}
-                  onClick={() => routeToBeneficiary("beneficiary_id")}
+                  onClick={handleBeneficiaryEditClick}
                 />
                 <h5 className={styles.edit_text}>Edit</h5>
               </>
@@ -118,7 +118,7 @@ const ReviewAndSend = () => {
                 alt="edit-icon"
                 wrapperClass={styles.edit_icon}
                 imgSize={20}
-                onClick={() => routeToBeneficiary("beneficiary_id")}
+                onClick={handleBeneficiaryEditClick}
               />
             )}
           </section>
