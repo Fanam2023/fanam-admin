@@ -6,16 +6,16 @@ import {BankCartProps, BankListProps, RecipientInfo} from "props"
 
 export const SIDE_BAR: IStepper[] = [
   {
-    title: "Sender Details",
-    description: "Essential for verification and processing your transactions securely and efficiently.",
-  },
-  {
-    title: "Add Recipient",
+    title: "Add or Select Recipient",
     description: "Enter the Recipient details and their account details.",
   },
   {
-    title: "Add Beneficiary",
+    title: "Add or Select Beneficiary",
     description: "If your recipient and beneficiary are different, enter the beneficiary details.",
+  },
+  {
+    title: "Purpose of Sending Money",
+    description: "Briefly describe the reason for your transfer for accurate processing and compliance.",
   },
   {
     title: "Payout Estimate",

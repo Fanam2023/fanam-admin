@@ -33,8 +33,7 @@ const DEFAULT_ERR_STATE = {
   errAddress: "",
   errCity: "",
   errZipCode: "",
-  errIdIssuedCountry: "",
-  errIdType: "",
+  errDateOfBirth: "",
   errKycAadhaar: "",
   errKycPAN: "",
   errBusinessName: "",
@@ -70,6 +69,7 @@ const useHandler = (styles: IStyle) => {
     aadhaarNumber: "",
     business_name: "",
     business_type: "Sole_proprietor",
+    date_of_birth: "",
     kyc_aadhaar: [],
     kyc_pan: [],
   })
@@ -94,6 +94,7 @@ const useHandler = (styles: IStyle) => {
     aadhaarNumber,
     business_name,
     business_type,
+    date_of_birth,
   } = data
 
   const {
@@ -104,8 +105,6 @@ const useHandler = (styles: IStyle) => {
     errPhoneNo,
     errAccountNo,
     errAccountType,
-    errIdType,
-    errIdIssuedCountry,
     errCountry,
     errState,
     errAddress,
@@ -115,6 +114,7 @@ const useHandler = (styles: IStyle) => {
     errKycPAN,
     errBusinessName,
     errBusinessType,
+    errDateOfBirth,
   } = errData
 
   const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}] = useQueries({
@@ -526,6 +526,14 @@ const useHandler = (styles: IStyle) => {
           value: account_no,
           onChangeValue,
         },
+        {
+          elementType: "date-picker",
+          label: "Date of Birth",
+          name: "date_of_birth",
+          error: errDateOfBirth,
+          value: date_of_birth,
+          onChangeValue,
+        },
       ],
     },
     {
@@ -742,7 +750,7 @@ const useHandler = (styles: IStyle) => {
           disabled: !verifyPanCard,
           onChangeValue,
           childTop: (
-            <section className={`flex ${styles.pan_wrapper}`}>
+            <section className={styles.pan_wrapper}>
               <TextField
                 label="Enter Pan Number"
                 name="pan"
@@ -751,10 +759,10 @@ const useHandler = (styles: IStyle) => {
                 disabled={!!verifiedPAN}
               />
               {verifiedPAN ? (
-                <>
+                <section className={`flex ${styles.pan_verify}`}>
                   <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
                   <h5 className={styles.verified_text}>PAN is Verified</h5>
-                </>
+                </section>
               ) : (
                 <Button disabled={!isValidInputByRegex(pan, REG_PAN)} onClick={onVerifyPan.bind(null, {pan})}>
                   Verify
@@ -778,7 +786,7 @@ const useHandler = (styles: IStyle) => {
           disabled: !verifiedAadhaar,
           onChangeValue,
           childTop: (
-            <section className={`flex ${styles.pan_wrapper}`}>
+            <section className={styles.pan_wrapper}>
               <TextField
                 label="Enter Aaadhar Number"
                 name="aadhaarNumber"
@@ -787,11 +795,9 @@ const useHandler = (styles: IStyle) => {
                 onChangeData={onChangeValue}
               />
               {verifiedAadhaar ? (
-                <section>
-                  <>
-                    <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
-                    <h5 className={styles.verified_text}>Aadhaar is Verified</h5>
-                  </>
+                <section className={`flex ${styles.pan_verify}`}>
+                  <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
+                  <h5 className={styles.verified_text}>Aadhaar is Verified</h5>
                 </section>
               ) : (
                 <Button
@@ -828,6 +834,7 @@ const useHandler = (styles: IStyle) => {
         account_no,
         kyc_aadhaar: kyc_aadhaar.filter(({file}) => !!file),
         kyc_pan: kyc_pan.filter(({file}) => !!file),
+        date_of_birth,
       })
     }
   }

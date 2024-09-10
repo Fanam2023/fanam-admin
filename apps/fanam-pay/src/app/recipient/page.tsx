@@ -40,7 +40,7 @@ const RecipientPage = () => {
       backIcon
       buttonText="Next"
       skipBtn="Back"
-      stepIndex={3}
+      stepIndex={0}
       onAdd={onAdd}
       onBack={onBack}>
       <section className={`flex-col ${styles.recipient_wrapper}`}>
@@ -54,11 +54,9 @@ const RecipientPage = () => {
           wrapperClass={styles.search_wrapper}
           leadingIcon={searchQuery.length ? null : assets.ic_search}
           onChangeData={onChangeSearch}></TextField>
-        {isDesktop && (
-          <h4 className={styles.add_text} onClick={onAdd}>
-            Add
-          </h4>
-        )}
+        <h4 className={styles.add_text} onClick={onAdd}>
+          Add
+        </h4>
       </section>
       <section className={`flex ${styles.saved_wrapper}`}>
         <h5 className={`bold ${styles.save_text}`}>Saved Recipients</h5>
