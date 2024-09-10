@@ -51,6 +51,9 @@
   gap: $size-24px
   margin-top: $size-20px
 
+.txt_wrapper
+  margin-top: $size-12px
+
 .country_wrapper
   border: $size-1px solid $medium-grey
   width: 100%
@@ -60,3 +63,9 @@
 
 .flag
   border-radius: $size-12px
+
+@include mixin-responsive
+  .page_wrapper
+    width: 100%
+    margin-top: 20%
+    justify-content: flex-start
