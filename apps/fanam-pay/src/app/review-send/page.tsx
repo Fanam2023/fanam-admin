@@ -18,6 +18,9 @@ const ReviewAndSend = () => {
     routeToBeneficiary,
     routeToRecipient,
     onProcessPayment,
+    transId,
+    destination_amount,
+    destinationCountryValue,
   } = useHandler()
 
   const {recipient, beneficiary} = showDetails
@@ -31,18 +34,11 @@ const ReviewAndSend = () => {
     )
   }
 
-  const renderDetails = ({label, key}: IFormData) => (
-    <section className={`flex-sb-center ${styles.payment_wrapper}`}>
-      <h6 className={styles.title_text}>{key}</h6>
-      <h6>{label}</h6>
-    </section>
-  )
-
   return (
     <BaseContainer
       buttonText="Send money"
       skipBtn="Back"
-      onSubmit={onProcessPayment.bind(null, "transaction_id")}
+      onSubmit={onProcessPayment.bind(null, transId)}
       childWrapper={styles.page_wrapper}>
       <section className={`flex-col ${styles.heading_wrapper}`}>
         <h4 className="bold">Review and Send</h4>
@@ -59,7 +55,10 @@ const ReviewAndSend = () => {
         <ul>{paymentDetails?.map(renderPaymentDetails)}</ul>
         <section className={`flex-sb-center`}>
           <h5 className={styles.amount_title}>Receiver will get exactly</h5>
-          <h5 className={`bold ${styles.amount}`}>{`98.82 USD`}</h5>
+          <h5 className={`bold ${styles.amount}`}>
+            {destination_amount}
+            {destinationCountryValue}
+          </h5>
         </section>
         <section className={styles.separator}></section>
         <section className={`flex-sb-center ${styles.header}`}>
@@ -75,7 +74,7 @@ const ReviewAndSend = () => {
             <h5 className={styles.edit_text}>Edit</h5>
           </section>
         </section>
-        <ul>{(recipient ? recipientDetails : recipientDetails?.slice(0, 4))?.map(renderDetails)}</ul>
+        <ul>{(recipient ? recipientDetails : recipientDetails?.slice(0, 4))?.map(renderPaymentDetails)}</ul>
         <h6 className={`bold ${styles.amount}`} onClick={() => toggleDetails("recipient")}>
           {recipient ? "See less" : "See more"}
         </h6>
@@ -93,7 +92,7 @@ const ReviewAndSend = () => {
             <h5 className={styles.edit_text}>Edit</h5>
           </section>
         </section>
-        <ul>{(beneficiary ? beneficiaryDetails : beneficiaryDetails?.slice(0, 4))?.map(renderDetails)}</ul>
+        <ul>{(beneficiary ? beneficiaryDetails : beneficiaryDetails?.slice(0, 4))?.map(renderPaymentDetails)}</ul>
         <h6 className={`bold ${styles.amount}`} onClick={() => toggleDetails("beneficiary")}>
           {beneficiary ? "See less" : "See more"}
         </h6>

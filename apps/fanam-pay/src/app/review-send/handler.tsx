@@ -22,13 +22,51 @@ const useHandler = () => {
   const {togglePopup} = usePopup()
   const {createOrder} = useOrderController()
   const [Razorpay] = useRazorpay()
-  const {first_name, last_name, address, email, phone_no, bank_account, country, state, city, zip_code, recipient_id} =
-    transData?.recipient || {}
 
+  const {
+    recipient,
+    beneficiary,
+    recipient_relationship,
+    source_amount,
+    source_country,
+    destination_country,
+    destination_amount,
+    markup_fee,
+  } = transData || {}
+  const {
+    first_name,
+    last_name,
+    address_line_1,
+    address_line_2,
+    email,
+    phone_no,
+    bank_account,
+    country,
+    state,
+    city,
+    zip_code,
+    recipient_id,
+  } = recipient || {}
+  const {currency} = source_country || {}
+  const {currency: destinationCountryValue} = destination_country || {}
   const {country_name} = country || {}
   const {state_name} = state || {}
   const {city_name} = city || {}
-  const {account_no, account_type, bank_name, branch_code, swift_code} = bank_account || {}
+  const {account_no, account_type, account_holder, branch_address, bank_name, branch_code, swift_code} =
+    bank_account || {}
+
+  const {
+    first_name: beneficiaryFirstName,
+    last_name: beneficiarylastName,
+    address: beneficiaryAddress,
+    email: beneficiaryEmail,
+    phone_no: beneficiaryPhoneNo,
+    zip_code: beneficiaryZipCode,
+    country_id: beneficiaryCountryId,
+    city_id: beneficiaryCityId,
+    state_id: beneficiaryStateId,
+    relationship: beneficiaryRelationShip,
+  } = beneficiary || {}
 
   useEffect(() => {
     if (transId) refetchTransaction()
@@ -38,38 +76,43 @@ const useHandler = () => {
     const recipientDetails: IFormData[] = [
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
-      {key: "Address", label: address},
+      {key: "Address 1", label: address_line_1},
+      {key: "Address 2", label: address_line_2},
       {key: "Email", label: email},
       {key: "Phone Number", label: phone_no},
+      {key: "RelationShip", label: recipient_relationship},
       {key: "Country", label: country_name},
       {key: "State", label: state_name},
       {key: "City", label: city_name},
       {key: "ZIP Code", label: zip_code},
       {key: "Account Number", label: account_no},
+      {key: "Account Holder", label: account_holder},
       {key: "Account Type", label: account_type},
       {key: "Bank Name", label: bank_name},
       {key: "Branch", label: branch_code},
+      {key: "Branch Address", label: branch_address},
       {key: "BIC", label: swift_code},
     ]
 
     const beneficiaryDetails: IFormData[] = [
-      {key: "First Name", label: "ram"},
-      {key: "Last Name", label: "kumar"},
-      {key: "Address", label: "45"},
-      {key: "Email", label: "ram@gmail.com"},
-      {key: "Phone Number", label: "458888545"},
-      {key: "Country", label: "india"},
-      {key: "State", label: "tamilnadu"},
-      {key: "City", label: "tuticorin"},
-      {key: "ZIP Code", label: "626367"},
+      {key: "First Name", label: beneficiaryFirstName},
+      {key: "Last Name", label: beneficiarylastName},
+      {key: "Address", label: beneficiaryAddress},
+      {key: "Email", label: beneficiaryEmail},
+      {key: "Phone Number", label: beneficiaryPhoneNo},
+      {key: "Country", label: beneficiaryCountryId},
+      {key: "State", label: beneficiaryStateId},
+      {key: "City", label: beneficiaryCityId},
+      {key: "ZIP Code", label: beneficiaryZipCode},
       {key: "Account Number", label: "76376687899"},
+      {key: "RelationShip", label: beneficiaryRelationShip},
     ]
 
     const paymentDetails: IFormData[] = [
-      {key: "You Send ", label: "5000.00 INR"},
-      {key: "Transfer Fee", label: "150.50 INR"},
-      {key: "Exchange rate", label: "200.50 INR"},
-      {key: "Total Fees", label: "351.00 INR"},
+      {key: "You Send", label: `${String(source_amount)} ${currency}`},
+      {key: "Transfer Fee", label: String(markup_fee)},
+      // {key: "Exchange rate", label: "200.50 INR"},
+      // {key: "Total Fees", label: "351.00 INR"},
     ]
 
     return {recipientDetails, beneficiaryDetails, paymentDetails}
@@ -168,6 +211,9 @@ const useHandler = () => {
     routeToBeneficiary,
     routeToRecipient,
     onProcessPayment,
+    transId,
+    destination_amount,
+    destinationCountryValue,
   }
 }
 

@@ -2,17 +2,7 @@ import {IFile, IFormData} from "@fanam-pkg/core-utils"
 import {IAttachment} from "./common"
 import {TypeAccount, TypeBankAccount} from "./enum"
 import {ICity, ICountry, IState} from "./location"
-
-interface IBankAccount {
-  account_no: string
-  swift_code: string
-  routing_code?: string
-  bank_name: string
-  branch_code: string
-  branch_address: string
-  account_type: string
-  iban_no: string
-}
+import {IBankAccount} from "./transaction"
 
 export interface IRecipient {
   account_type?: any
