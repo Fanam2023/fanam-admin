@@ -11,7 +11,6 @@ import {PopupAadhaarCaptcha, PopupAadhaarOTP} from "organisms"
 import {
   ACCOUNT_TYPE,
   BUSINESS_TYPE,
-  ID_PROOFS,
   QUERY_CITIES,
   QUERY_COUNTRIES,
   QUERY_PAN_CARD,
@@ -66,9 +65,6 @@ const useHandler = (styles: IStyle) => {
     zip_code: "",
     city: null,
     account_no: "",
-    id_type: "",
-    id_issued_country: null,
-    id_number: "",
     account_type: "",
     pan: "",
     aadhaarNumber: "",
@@ -92,9 +88,6 @@ const useHandler = (styles: IStyle) => {
     city,
     account_type,
     zip_code,
-    id_type,
-    id_issued_country,
-    id_number,
     kyc_pan,
     kyc_aadhaar,
     pan,
@@ -350,9 +343,6 @@ const useHandler = (styles: IStyle) => {
         phone_no,
         state,
         zip_code,
-        id_issued_country,
-        id_number,
-        id_type,
         account_no,
         account_type,
       } = user
@@ -366,8 +356,6 @@ const useHandler = (styles: IStyle) => {
         email,
         phone_no,
         zip_code,
-        id_number,
-        id_type,
         account_no,
         account_type,
       }
@@ -396,15 +384,6 @@ const useHandler = (styles: IStyle) => {
         payloadData = {
           ...payloadData,
           city: {label: city_name, key: city_id, isSelected: true},
-        }
-      }
-
-      if (id_issued_country) {
-        const {country_id, country_name} = id_issued_country
-
-        payloadData = {
-          ...payloadData,
-          id_issued_country: {label: country_name, key: country_id, isSelected: true},
         }
       }
 
@@ -451,11 +430,6 @@ const useHandler = (styles: IStyle) => {
     if (!phone_no) errState = {...errState, errPhoneNo: "Please enter Phone Number", isValid: false}
 
     if (!country) errState = {...errState, errCountry: "Please select Country", isValid: false}
-
-    if (!id_issued_country)
-      errState = {...errState, errIdIssuedCountry: "Please Select ID issued Country", isValid: false}
-
-    if (!id_type) errState = {...errState, errIdType: "Please Select ID type", isValid: false}
 
     if (!state) errState = {...errState, errState: "Please enter State", isValid: false}
 
@@ -612,38 +586,6 @@ const useHandler = (styles: IStyle) => {
         },
       ],
     },
-    {
-      title: "Identification",
-      wrapperClassGrid: `flex-col ${styles.id_types}`,
-      childElements: [
-        {
-          elementType: "drop-down",
-          label: "Select ID issued country",
-          name: "id_issued_country",
-          options: countries,
-          error: errIdIssuedCountry,
-          value: id_issued_country,
-          onChangeValue,
-        },
-        {
-          elementType: "drop-down",
-          label: "Select ID type",
-          name: "id_type",
-          options: ID_PROOFS,
-          error: errIdType,
-          value: id_type,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Enter ID number",
-          name: "id_number",
-          error: errIdType,
-          value: id_number,
-          onChangeValue,
-        },
-      ],
-    },
   ]
 
   const businessForm: FormSectionProps[] = [
@@ -778,38 +720,6 @@ const useHandler = (styles: IStyle) => {
         },
       ],
     },
-    {
-      title: "Identification",
-      wrapperClassGrid: `flex-col ${styles.id_types}`,
-      childElements: [
-        {
-          elementType: "drop-down",
-          label: "Select ID issued country",
-          name: "id_issued_country",
-          options: countries,
-          error: errIdIssuedCountry,
-          value: id_issued_country,
-          onChangeValue,
-        },
-        {
-          elementType: "drop-down",
-          label: "Select ID type",
-          name: "id_type",
-          options: ID_PROOFS,
-          error: errIdType,
-          value: id_type,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Enter ID number",
-          name: "id_number",
-          error: errIdType,
-          value: id_number,
-          onChangeValue,
-        },
-      ],
-    },
   ]
 
   useEffect(() => {
@@ -915,9 +825,6 @@ const useHandler = (styles: IStyle) => {
         address_line_2,
         city_id: city.key as number,
         zip_code,
-        id_type,
-        id_issued_country_id: id_issued_country.key as number,
-        id_number,
         account_no,
         kyc_aadhaar: kyc_aadhaar.filter(({file}) => !!file),
         kyc_pan: kyc_pan.filter(({file}) => !!file),
