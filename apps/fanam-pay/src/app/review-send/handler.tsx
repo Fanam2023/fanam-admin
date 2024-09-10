@@ -144,6 +144,14 @@ const useHandler = () => {
     }
   }
 
+  const handleRecipientEditClick = () => {
+    routeToRecipient(recipient_id)
+  }
+
+  const handleBeneficiaryEditClick = () => {
+    routeToBeneficiary("beneficiary_id")
+  }
+
   const onProcessPayment = async (transaction_id: string) => {
     const {result, errorData} = await createOrder({transaction_id})
     if (result) {
@@ -208,8 +216,8 @@ const useHandler = () => {
     paymentDetails,
     showDetails,
     toggleDetails,
-    routeToBeneficiary,
-    routeToRecipient,
+    handleBeneficiaryEditClick,
+    handleRecipientEditClick,
     onProcessPayment,
     transId,
     destination_amount,
