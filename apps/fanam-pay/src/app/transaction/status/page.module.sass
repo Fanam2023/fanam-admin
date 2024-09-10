@@ -4,13 +4,13 @@
   width: 40%
 
 @mixin mobile_width
-  width: 100%
 
 @mixin common-margin
   margin-top: $size-8px
 
 .page_container
-  width: 40%
+  margin: $size-24px
+  width: 100%
 
 .page_wrapper
   margin:
@@ -19,28 +19,20 @@
   gap: $size-16px
 
 .heading_wrapper
-  margin:
-    top: 21%
-    left: 14%
+  margin-top: 21%
   gap: $size-8px
 
 .payment_status_wrapper
   padding: $size-24px $size-24px
   box-shadow: 0 $size-1px $size-20px 0 rgba($black, $alpha-two)
-  margin:
-    left: 14%
-    top: $size-16px
-  width: 100%
+  margin-top: $size-16px
   border-radius: $size-6px
   gap: $size-8px
 
 .source_payment_wrapper
   padding: $size-24px $size-24px
   box-shadow: 0 $size-1px $size-20px 0 rgba($black, $alpha-two)
-  margin:
-    left: 14%
-    top: $size-16px
-  width: 100%
+  margin-top: $size-16px
   border-radius: $size-6px
   margin-top: $size-16px
 
@@ -62,10 +54,7 @@
 .payment_helper_wrapper
   padding: $size-20px $size-24px
   box-shadow: 0 $size-1px $size-20px 0 rgba($black, $alpha-two)
-  margin:
-    left: 14%
-    top: $size-16px
-  width: 100%
+  margin-top: $size-16px
   border-radius: $size-6px
   margin-top: $size-16px
 
@@ -97,13 +86,24 @@
     margin-top: 22%
 
   .payment_status_wrapper
+    border: 1px solid $dark-border-grey
+    box-shadow: none
+    border-radius: $size-6px
     @include mobile_width
+
+  .source_payment_wrapper
+    border: 1px solid $dark-border-grey
+    box-shadow: none
+    border-radius: $size-6px
 
   .payment_details_wrapper
     @include mobile_width
 
   .payment_helper_wrapper
     @include mobile_width
+    border: 1px solid $dark-border-grey
+    box-shadow: none
+    border-radius: $size-6px
 
   .receipt_text
     display: block
