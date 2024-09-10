@@ -10,18 +10,14 @@ const SenderForm = () => {
 
   return (
     <BaseContainer
-      header="Cross Border Remittance"
       childWrapper={styles.page_container}
       backIcon={false}
       buttonText="Next"
       onSubmit={onSubmit}
       skipBtn="Back"
-      isStepper
       stepIndex={0}>
-      <section className={styles.container_wrapper}>
-        <h4 className="bold">Complete Your Profile</h4>
-        <h6>Essential for verification and processing your transactions securely and efficiently.</h6>
-      </section>
+      <h4 className="bold">Complete Your Profile</h4>
+      <h6>Essential for verification and processing your transactions securely and efficiently.</h6>
       <section className={styles.sender_form_wrapper}>
         <h4 className={`semi-bold ${styles.type_wrapper}`}>Sender type</h4>
         <GroupForm formSections={individualType ? individualForm : businessForm} />

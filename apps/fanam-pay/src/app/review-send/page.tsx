@@ -38,6 +38,7 @@ const ReviewAndSend = () => {
     <BaseContainer
       buttonText="Send money"
       skipBtn="Back"
+      isStepper
       onSubmit={onProcessPayment.bind(null, transId)}
       childWrapper={styles.page_wrapper}>
       <section className={`flex-col ${styles.heading_wrapper}`}>

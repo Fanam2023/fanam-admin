@@ -10,7 +10,7 @@ const SignUp = () => {
   const {formElements, onSubmit, routeToLogin} = useHandler(styles)
 
   return (
-    <BaseContainer childWrapper={`flex-col-center ${styles.page_wrapper}`} isStepper profile bellIcon>
+    <BaseContainer profile bellIcon>
       <Auth>
         <section className={`flex-col ${styles.heading}`}>
           <h4 className={`bold ${styles.login}`}>Sign Up</h4>

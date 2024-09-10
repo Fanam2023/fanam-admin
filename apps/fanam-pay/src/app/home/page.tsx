@@ -12,7 +12,7 @@ const HomeScreen = () => {
   const {status, first_name, push} = useHandler()
 
   return (
-    <BaseContainer childWrapper={styles.page_container} isStepper buttonText="Next" skipBtn="Back">
+    <BaseContainer childWrapper={styles.page_container} buttonText="Next" skipBtn="Back">
       <section className={styles.page_wrapper}>
         <section className={`flex ${styles.name_wrapper}`}>
           <h2>Good Afternoon,</h2>

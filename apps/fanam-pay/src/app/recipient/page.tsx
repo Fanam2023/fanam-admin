@@ -40,6 +40,7 @@ const RecipientPage = () => {
       backIcon
       buttonText="Next"
       skipBtn="Back"
+      isStepper
       stepIndex={3}
       onAdd={onAdd}
       onBack={onBack}>

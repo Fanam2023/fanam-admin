@@ -22,6 +22,7 @@ const InitiateTransactionPage = () => {
       buttonText="Confirm"
       onSubmit={onSubmit}
       childWrapper={styles.page_container}
+      isStepper
       backIcon={false}
       stepIndex={3}>
       <section className={styles.container_wrapper}>

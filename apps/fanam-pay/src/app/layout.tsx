@@ -2,6 +2,7 @@
 
 import {UIProvider} from "@fanam-pkg/core-ui-sass"
 import "@fanam-pkg/core-ui-sass/src/styles/style.sass"
+import {useResize} from "@fanam-pkg/core-utils"
 import {Nunito, Poppins} from "next/font/google"
 import {CustomProvider} from "@custom/ui"
 import {LibProvider} from "provider"
@@ -25,9 +26,11 @@ const secondaryFont = Nunito({
 // }
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
+  const {isDesktop} = useResize()
+
   return (
     <html lang="en">
-      <body className={`${secondaryFont.variable}  ${primaryFont.variable} ${styles.background}`}>
+      <body className={`${secondaryFont.variable}  ${primaryFont.variable} ${isDesktop ? styles.background : ""}`}>
         <LibProvider>
           <CustomProvider>
             <UIProvider>{children}</UIProvider>
