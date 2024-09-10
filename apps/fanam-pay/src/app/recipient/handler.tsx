@@ -1,4 +1,4 @@
-import {IFormData, useResize} from "@fanam-pkg/core-utils"
+import {IFormData} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
@@ -8,7 +8,6 @@ import {CreateRecipientDetails} from "organisms"
 import {QUERY_RECIPIENT, QUERY_TRANSACTION, ROUTE_INVOICE, ROUTE_RECIPIENT_PREVIEW} from "utils"
 
 export const useHandler = () => {
-  const {isDesktop} = useResize()
   const {push} = useRouter()
   const {toggleSlider} = useSlider()
   const {getAllRecipient} = useRecipientController()
@@ -20,8 +19,9 @@ export const useHandler = () => {
     {label: "Business", isSelected: selectedType === "Business"},
   ]
 
-  const onChangeType = (type: string) => {
-    setSelectedType(type)
+  const onSelectType = (items: IFormData<string, string>[]) => {
+    const selectedItem = items.find(item => item.isSelected)
+    if (selectedItem) setSelectedType(selectedItem.label)
   }
 
   const {data: recipients} = useQuery({
@@ -64,7 +64,6 @@ export const useHandler = () => {
 
   return {
     TYPE,
-    isDesktop,
     recipients: filteredRecipients,
     searchQuery,
     onChangeSearch,
@@ -72,6 +71,6 @@ export const useHandler = () => {
     onAdd,
     onBack,
     linkRecipient,
-    onChangeType,
+    onSelectType,
   }
 }

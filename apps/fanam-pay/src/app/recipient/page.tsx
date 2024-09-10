@@ -1,7 +1,6 @@
 "use client"
 
 import {RadioButton, TextField} from "@fanam-pkg/core-ui-sass"
-import {IFormData} from "@fanam-pkg/core-utils"
 import {IRecipient} from "@custom/utils"
 import assets from "assets"
 import {BaseContainer, ManageMembers} from "organisms"
@@ -9,18 +8,8 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const RecipientPage = () => {
-  const {
-    recipients,
-    onChangeSearch,
-    routeToDetails,
-    onAdd,
-    isDesktop,
-    onBack,
-    linkRecipient,
-    searchQuery,
-    TYPE,
-    onChangeType,
-  } = useHandler()
+  const {recipients, onChangeSearch, routeToDetails, onAdd, onBack, linkRecipient, searchQuery, TYPE, onSelectType} =
+    useHandler()
 
   const renderRecipients = ({first_name, last_name, email, recipient_id}: IRecipient) => (
     <ManageMembers
@@ -60,12 +49,7 @@ const RecipientPage = () => {
       </section>
       <section className={`flex ${styles.saved_wrapper}`}>
         <h5 className={`bold ${styles.save_text}`}>Saved Recipients</h5>
-        <RadioButton
-          items={TYPE}
-          wrapperClass={styles.radio_button}
-          onSelectItems={(items: IFormData<string, string>[]) =>
-            onChangeType(items.find(item => item.isSelected)?.label)
-          }></RadioButton>
+        <RadioButton items={TYPE} wrapperClass={styles.radio_button} onSelectItems={onSelectType}></RadioButton>
       </section>
       <ul className={styles.members}>{recipients?.map(renderRecipients)}</ul>
     </BaseContainer>
