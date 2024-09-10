@@ -14,10 +14,10 @@ import {
   API_LOGOUT,
   API_REGISTER_FINISH,
   API_REGISTER_START,
-  API_SENDER_KYC,
   API_SIGNUP,
   API_SYNC_USER,
   apiLoginStart,
+  apiSenderKYC,
   IFanamApiError,
   ILogOutPayload,
   IPayloadForgotPin,
@@ -121,20 +121,38 @@ export const useAuthController = () => {
   }
 
   const syncUser = async (payload: IPayloadSyncUser) => {
-    const {kyc} = payload
-    delete payload.kyc
+    const {kyc_aadhaar, kyc_pan} = payload
+    delete payload.kyc_aadhaar
+    delete payload.kyc_pan
 
     let {result, errorData} = await putRequest<IUser>(API_SYNC_USER, payload)
 
-    if (kyc.length && result) {
-      const formData = new FormData()
-      kyc.forEach(({file}) => {
-        formData.append("kyc", file)
-      })
+    if (result) {
+      const {kyc_details} = result
+      const aadhaarKycId = kyc_details?.find(({type}) => type === "Aadhaar")?.kyc_id
+      const panKycId = kyc_details?.find(({type}) => type === "PAN")?.kyc_id
 
-      const response = await putRequest<IUser>(API_SENDER_KYC, formData)
-      result = response.result
-      errorData = response.errorData
+      if (kyc_aadhaar.length && aadhaarKycId) {
+        const formData = new FormData()
+        kyc_aadhaar.forEach(({file}) => {
+          formData.append("kyc", file)
+        })
+
+        const response = await putRequest<IUser>(apiSenderKYC(aadhaarKycId), formData)
+        result = response.result
+        errorData = response.errorData
+      }
+
+      if (kyc_pan.length && panKycId) {
+        const formData = new FormData()
+        kyc_pan.forEach(({file}) => {
+          formData.append("kyc", file)
+        })
+
+        const response = await putRequest<IUser>(apiSenderKYC(panKycId), formData)
+        result = response.result
+        errorData = response.errorData
+      }
     }
 
     return {result, errorData}

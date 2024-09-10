@@ -3,7 +3,7 @@ import {IFormData, JSONObject, REG_EMAIL, useCommon} from "@fanam-pkg/core-utils
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
-import {IAadhaarCaptcha, IStyle, ISyncUserData} from "@custom/utils"
+import {IAadhaarCaptcha, IResponseKYC, IStyle, ISyncUserData, REG_AADHAAR, REG_PAN} from "@custom/utils"
 import assets from "assets"
 import {useAuthController, useKYCController, useLocationController} from "controller"
 import {useSingleton} from "hooks"
@@ -17,7 +17,7 @@ import {
   QUERY_PAN_CARD,
   QUERY_STATES,
   QUERY_USER,
-  ROUTE_INITIATE_TRANSACTION,
+  ROUTE_RECIPIENTS,
 } from "utils"
 
 const DEFAULT_ERR_STATE = {
@@ -36,7 +36,8 @@ const DEFAULT_ERR_STATE = {
   errZipCode: "",
   errIdIssuedCountry: "",
   errIdType: "",
-  errKyc: "",
+  errKycAadhaar: "",
+  errKycPAN: "",
   errBusinessName: "",
   errPan: "",
   errAadhaarNumber: "",
@@ -73,7 +74,8 @@ const useHandler = (styles: IStyle) => {
     aadhaarNumber: "",
     business_name: "",
     business_type: "Sole_proprietor",
-    kyc: [],
+    kyc_aadhaar: [],
+    kyc_pan: [],
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
 
@@ -93,7 +95,8 @@ const useHandler = (styles: IStyle) => {
     id_type,
     id_issued_country,
     id_number,
-    kyc,
+    kyc_pan,
+    kyc_aadhaar,
     pan,
     aadhaarNumber,
     business_name,
@@ -115,7 +118,8 @@ const useHandler = (styles: IStyle) => {
     errAddress,
     errCity,
     errZipCode,
-    errKyc,
+    errKycAadhaar,
+    errKycPAN,
     errBusinessName,
     errBusinessType,
   } = errData
@@ -136,9 +140,23 @@ const useHandler = (styles: IStyle) => {
     ],
   })
 
-  const {mutate: updateUser, data: userRes} = useMutation({mutationKey: [QUERY_USER], mutationFn: syncUser})
+  const {mutate: updateUser} = useMutation({
+    mutationKey: [QUERY_USER],
+    mutationFn: syncUser,
+    onSuccess: ({result, errorData}) => {
+      if (result) {
+        updateUserData(result)
+        push(ROUTE_RECIPIENTS)
+      } else
+        toggleNotify({
+          title: "Error - Update User",
+          description: errorData?.message || "Something went wrong",
+          type: "error",
+        })
+    },
+  })
 
-  const {mutate: verifyPan, data: panRes} = useMutation({
+  const {mutate: onVerifyPan} = useMutation({
     mutationKey: [QUERY_PAN_CARD],
     mutationFn: verifyPanCard,
     onSuccess: ({result, errorData}) => {
@@ -282,9 +300,6 @@ const useHandler = (styles: IStyle) => {
     },
   })
 
-  const {result} = panRes || {}
-  const {verification, message} = result?.result || {}
-
   const countries: IFormData<number>[] = useMemo(
     () => allCountries.map(({country_id, country_name}) => ({label: country_name, key: country_id})),
     [allCountries]
@@ -300,21 +315,27 @@ const useHandler = (styles: IStyle) => {
     [allCities]
   )
 
-  useEffect(() => {
-    if (userRes) {
-      const {result, errorData} = userRes
+  const {verifiedAadhaar, verifiedPAN} = useMemo(() => {
+    const {kyc_details = []} = user || {}
 
-      if (result) {
-        push(ROUTE_INITIATE_TRANSACTION)
-        updateUserData(result)
-      } else
-        toggleNotify({
-          title: "Error - Update User",
-          description: errorData?.message || "Something went wrong",
-          type: "error",
-        })
+    const verification: {verifiedAadhaar: IResponseKYC | null; verifiedPAN: IResponseKYC | null} = {
+      verifiedAadhaar: null,
+      verifiedPAN: null,
     }
-  }, [userRes])
+    if (kyc_details?.length) {
+      const {verifiedAadhaar, verifiedPAN} = verification
+      for (const kyc of kyc_details) {
+        const {is_verified, type, kyc_number} = kyc
+        if (verifiedAadhaar && verifiedPAN) break
+        else if (is_verified) {
+          if (type === "Aadhaar") verification.verifiedAadhaar = kyc
+          else if (type === "PAN") verification.verifiedPAN = kyc
+        }
+      }
+    }
+
+    return verification
+  }, [user])
 
   useEffect(() => {
     if (user) {
@@ -332,7 +353,6 @@ const useHandler = (styles: IStyle) => {
         id_issued_country,
         id_number,
         id_type,
-        kyc_attachments,
         account_no,
         account_type,
       } = user
@@ -388,16 +408,27 @@ const useHandler = (styles: IStyle) => {
         }
       }
 
-      if (kyc_attachments?.length) {
+      if (verifiedAadhaar) {
+        const {kyc_number, attachments} = verifiedAadhaar
         payloadData = {
           ...payloadData,
-          kyc: kyc_attachments.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
+          aadhaarNumber: kyc_number,
+          kyc_aadhaar: attachments.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
+        }
+      }
+
+      if (verifiedPAN) {
+        const {kyc_number, attachments} = verifiedPAN
+        payloadData = {
+          ...payloadData,
+          pan: kyc_number,
+          kyc_pan: attachments.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
         }
       }
 
       setData(payloadData)
     }
-  }, [user])
+  }, [user, verifiedPAN, verifiedAadhaar])
 
   const onValidate = () => {
     let errState = {
@@ -434,7 +465,10 @@ const useHandler = (styles: IStyle) => {
 
     if (!account_type) errState = {...errState, errAccountType: "Please enter account type", isValid: false}
 
-    if (!kyc.length) errState = {...errState, errKyc: "Please choose valid KYC documents", isValid: false}
+    if (!kyc_aadhaar.length)
+      errState = {...errState, errKycAadhaar: "Please choose valid Aadhaar KYC documents", isValid: false}
+
+    if (!kyc_pan.length) errState = {...errState, errKycPAN: "Please choose valid PAN KYC documents", isValid: false}
 
     if (user?.account_type === "Business") {
       if (!business_name) errState = {...errState, errBusinessName: "Please enter the company name", isValid: false}
@@ -608,16 +642,6 @@ const useHandler = (styles: IStyle) => {
           value: id_number,
           onChangeValue,
         },
-        {
-          elementType: "file-picker",
-          fileType: ["image/*", "application/pdf"],
-          name: "kyc",
-          isMultiple: true,
-          value: kyc,
-          error: errKyc,
-          children: <CustomUpload />,
-          onChangeValue,
-        },
       ],
     },
   ]
@@ -784,16 +808,6 @@ const useHandler = (styles: IStyle) => {
           value: id_number,
           onChangeValue,
         },
-        {
-          elementType: "file-picker",
-          fileType: ["image/*", "application/pdf"],
-          name: "kyc",
-          isMultiple: true,
-          value: kyc,
-          error: errKyc,
-          children: <CustomUpload />,
-          onChangeValue,
-        },
       ],
     },
   ]
@@ -808,15 +822,33 @@ const useHandler = (styles: IStyle) => {
       wrapperClassGrid: styles.verify_wrapper,
       childElements: [
         {
-          childElement: (
+          elementType: "file-picker",
+          fileType: ["image/*", "application/pdf"],
+          name: "kyc_pan",
+          isMultiple: true,
+          value: kyc_pan,
+          error: errKycPAN,
+          children: <CustomUpload />,
+          disabled: !verifyPanCard,
+          onChangeValue,
+          childTop: (
             <section className={`flex ${styles.pan_wrapper}`}>
-              <TextField label="Enter Pan Number" name="pan" value={pan} onChangeData={onChangeValue} />
-              <Button onClick={onVerify}>Verify</Button>
-              {!!verification && (
+              <TextField
+                label="Enter Pan Number"
+                name="pan"
+                value={pan}
+                onChangeData={onChangeValue}
+                disabled={!!verifiedPAN}
+              />
+              {verifiedPAN ? (
                 <>
                   <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
-                  <h5 className={styles.verified_text}>{message}</h5>
+                  <h5 className={styles.verified_text}>PAN is Verified</h5>
                 </>
+              ) : (
+                <Button disabled={!isValidInputByRegex(pan, REG_PAN)} onClick={onVerifyPan.bind(null, {pan})}>
+                  Verify
+                </Button>
               )}
             </section>
           ),
@@ -826,25 +858,44 @@ const useHandler = (styles: IStyle) => {
     {
       childElements: [
         {
-          childElement: (
+          elementType: "file-picker",
+          fileType: ["image/*", "application/pdf"],
+          name: "kyc_aadhaar",
+          isMultiple: true,
+          value: kyc_aadhaar,
+          error: errKycAadhaar,
+          children: <CustomUpload />,
+          disabled: !verifiedAadhaar,
+          onChangeValue,
+          childTop: (
             <section className={`flex ${styles.pan_wrapper}`}>
               <TextField
                 label="Enter Aaadhar Number"
                 name="aadhaarNumber"
                 value={aadhaarNumber}
+                disabled={!!verifiedAadhaar}
                 onChangeData={onChangeValue}
               />
-              <Button onClick={generateCaptcha.bind(null, null)}>Verify</Button>
+              {verifiedAadhaar ? (
+                <section>
+                  <>
+                    <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
+                    <h5 className={styles.verified_text}>Aadhaar is Verified</h5>
+                  </>
+                </section>
+              ) : (
+                <Button
+                  disabled={!isValidInputByRegex(aadhaarNumber, REG_AADHAAR)}
+                  onClick={generateCaptcha.bind(null, null)}>
+                  Verify
+                </Button>
+              )}
             </section>
           ),
         },
       ],
     },
   ]
-
-  function onVerify() {
-    verifyPan({pan})
-  }
 
   const individualType = user?.account_type === "Individual"
 
@@ -868,7 +919,8 @@ const useHandler = (styles: IStyle) => {
         id_issued_country_id: id_issued_country.key as number,
         id_number,
         account_no,
-        kyc: kyc.filter(({file}) => !!file),
+        kyc_aadhaar: kyc_aadhaar.filter(({file}) => !!file),
+        kyc_pan: kyc_pan.filter(({file}) => !!file),
       })
     }
   }
