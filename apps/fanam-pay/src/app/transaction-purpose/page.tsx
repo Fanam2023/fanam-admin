@@ -1,11 +1,11 @@
 "use client"
 
-import {DropDown, FileUpload, TextArea} from "@fanam-pkg/core-ui-sass"
+import {DropDown, GroupAttachment, TextArea} from "@fanam-pkg/core-ui-sass"
 import {BaseContainer} from "organisms"
 import useHandler from "./handler"
 import styles from "./page.module.sass"
 
-const PurposeOfSending = () => {
+const TransactionPurpose = () => {
   const {onChangeValue, PURPOSES, onSubmit, data, errState} = useHandler()
   const {purpose, reason} = data
   const {errDoc, errPurpose, errReason} = errState
@@ -48,11 +48,17 @@ const PurposeOfSending = () => {
         <section className={styles.upload_wrapper}>
           <h5 className="bold">Upload Document </h5>
           <p className={styles.child_text}>Upload the supporting document related to the purpose of sending money</p>
-          <FileUpload wrapperClass={styles.file_upload} name="doc" onChangeData={onChangeValue} error={errDoc} />
+          <GroupAttachment
+            wrapperClass={styles.file_upload}
+            name="doc"
+            onChangeData={onChangeValue}
+            error={errDoc}
+            isMultiple={true}
+          />
         </section>
       </section>
     </BaseContainer>
   )
 }
 
-export default PurposeOfSending
+export default TransactionPurpose

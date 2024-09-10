@@ -9,6 +9,7 @@ export const routeToRecipientDetails = (recipientId: string) => `${ROUTE_ADD_REC
 export const ROUTE_RECIPIENT_PREVIEW = `${ROUTE_RECIPIENTS}/preview`
 export const ROUTE_BENEFICIARIES = "/beneficiary"
 export const ROUTE_ADD_BENEFICIARY = `${ROUTE_BENEFICIARIES}/form`
+export const ROUTE_BENEFICIARY_PREVIEW = `${ROUTE_BENEFICIARIES}/preview`
 export const routeToBeneficiaryDetails = (beneficiaryId: string) =>
   `${ROUTE_ADD_BENEFICIARY}?beneficiaryId=${beneficiaryId}`
 export const ROUTE_TRANSACTION = "/transaction"
@@ -19,3 +20,4 @@ export const ROUTE_FORGOT_PIN = "/auth/forgot-password"
 export const routeToOTP = (scope: TypeScope) => `/auth/otp?scope=${scope}`
 export const ROUTE_HOME = "/home"
 export const routeToPin = (scope: TypeScope) => `/auth/pin?scope=${scope}`
+export const ROUTE_TRANSACTION_PURPOSE = "/transaction-purpose"

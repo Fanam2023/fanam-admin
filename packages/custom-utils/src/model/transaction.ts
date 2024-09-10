@@ -93,11 +93,11 @@ export interface IPayloadMergeRecipient {
 export interface ITransactionPurpose {
   purpose: IFormData | null
   reason: string
-  doc: IFile
+  doc: IFile[]
 }
 
 export interface IPayloadTransactionPurpose {
   purpose: string
   reason: string
-  doc: IFile
+  doc?: IFile[]
 }

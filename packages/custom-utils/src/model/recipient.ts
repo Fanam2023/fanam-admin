@@ -15,7 +15,7 @@ interface IBankAccount {
 }
 
 export interface IRecipient {
-  account_type?: any
+  account_type?: TypeAccount
   first_name: string
   last_name: string
   email: string

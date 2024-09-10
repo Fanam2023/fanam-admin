@@ -1,7 +1,6 @@
 import {IFile} from "@fanam-pkg/core-utils"
 import {
   API_INVOICE,
-  API_SENDING_PURPOSE,
   API_TRANSACTION,
   apiTransaction,
   IPayloadMergeRecipient,
@@ -46,7 +45,8 @@ export const useTransactionController = () => {
 
     formData.append("transaction_id", transId)
 
-    const {result, errorData} = await putRequest(API_INVOICE, formData)
+    const {result, errorData} = await putRequest<ITransaction>(API_INVOICE, formData)
+    if (result) updateTransData(result)
 
     return {result, errorData}
   }
@@ -72,7 +72,24 @@ export const useTransactionController = () => {
   }
 
   const sendingPurpose = async (payload: IPayloadTransactionPurpose) => {
-    const {result, errorData} = await postRequest(API_SENDING_PURPOSE, payload)
+    const {doc} = payload
+
+    if (doc) delete payload.doc
+
+    let {result, errorData} = await putRequest<ITransaction>(apiTransaction(transId), payload)
+    if (result) {
+      updateTransData(result)
+
+      if (doc?.length) {
+        const {result: uploadResult, errorData: uploadErr} = await uploadInvoice(doc)
+
+        if (uploadResult) updateTransData(uploadResult)
+
+        result = uploadResult
+        errorData = uploadErr
+      }
+    }
+
     return {result, errorData}
   }
 

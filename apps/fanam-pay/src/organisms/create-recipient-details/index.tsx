@@ -5,7 +5,7 @@ import useHandler from "./handler"
 import styles from "./styles.module.sass"
 
 export const CreateRecipientDetails = ({recipient_id}: RecipientDetailsProp) => {
-  const {formElements, onSubmit, isDesktop, toggleSlider} = useHandler(styles, recipient_id)
+  const {formElements, onSubmit, isDesktop} = useHandler(styles, recipient_id)
 
   return isDesktop ? (
     <section>

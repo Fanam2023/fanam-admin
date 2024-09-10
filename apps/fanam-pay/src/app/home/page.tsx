@@ -1,6 +1,7 @@
 "use client"
 
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
+import Link from "next/link"
 import assets from "assets"
 import {BaseContainer, ExchangeRate, ListTransaction} from "organisms"
 import {ROUTE_RECIPIENTS, ROUTE_SENDER} from "utils"
@@ -21,10 +22,10 @@ const HomeScreen = () => {
         <section className={`flex ${styles.nav_wrapper}`}>
           <ImageView src={assets.ic_money} alt="money-icon" imgSize={32} />
           <h3>Send your money instantly and effortlessly</h3>
-          {status === "In_active" ? (
-            <Button wrapperClass={styles.button_wrapper} onClick={() => push(ROUTE_RECIPIENTS)}>
-              Send Money
-            </Button>
+          {status === "Active" ? (
+            <Link href={ROUTE_RECIPIENTS}>
+              <Button wrapperClass={styles.button_wrapper}>Send Money</Button>
+            </Link>
           ) : (
             <Button
               wrapperClass={styles.danger_button}

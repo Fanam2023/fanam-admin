@@ -6,7 +6,18 @@ export type TypeBankAccount = "Current" | "Savings" | "Overdraft"
 
 export type TypeBusiness = "Sole_proprietor" | "Partnership_firm" | "Companies" | "Limited_liability_partnership"
 
-export type TypePurpose = "Education" | "Travel" | "Hospital" | "Insurance" | "Family_expense" | "Rental" | "Others"
+export type TypePurpose =
+  | "Tuition_fee"
+  | "Travel"
+  | "Hospital"
+  | "Insurance"
+  | "Living_expense"
+  | "Rent"
+  | "Retail"
+  | "Payroll_and_pension"
+  | "Import_and_export"
+  | "Legal_fees"
+  | "Others"
 
 export type TypeStatus = "Active" | "Blocked" | "locked" | "In_active"
 
