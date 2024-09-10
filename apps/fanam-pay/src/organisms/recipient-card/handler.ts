@@ -4,8 +4,19 @@ import {useSingleton} from "hooks"
 
 export const useHandler = () => {
   const {transData, refetchTransaction, transId} = useSingleton()
-  const {first_name, last_name, address, email, phone_no, bank_account, country, state, city, zip_code, recipient_id} =
-    transData?.recipient || {}
+  const {
+    first_name,
+    last_name,
+    address_line_1,
+    email,
+    phone_no,
+    bank_account,
+    country,
+    state,
+    city,
+    zip_code,
+    recipient_id,
+  } = transData?.recipient || {}
 
   const {country_name} = country || {}
   const {state_name} = state || {}
@@ -20,7 +31,7 @@ export const useHandler = () => {
     const recipientDetails: IFormData[] = [
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
-      {key: "Address", label: address},
+      {key: "Address", label: address_line_1},
       {key: "Email", label: email},
       {key: "Phone Number", label: phone_no},
       {key: "Country", label: country_name},

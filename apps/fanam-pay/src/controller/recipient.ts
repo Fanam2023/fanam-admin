@@ -7,14 +7,15 @@ import {
   IRecipient,
   ITransaction,
   apiRecipient,
+  apiRecipientType,
 } from "@custom/utils"
 import {useApi} from "./api"
 
 export const useRecipientController = () => {
   const {getRequest, postRequest, putRequest} = useApi()
 
-  const getAllRecipient = async () => {
-    const {result} = await getRequest<IRecipient[]>(API_RECIPIENT)
+  const getAllRecipient = async (recipientType: string) => {
+    const {result} = await getRequest<IRecipient[]>(apiRecipientType(recipientType))
     return result || []
   }
 

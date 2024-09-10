@@ -2,7 +2,7 @@ export type TypeUserRole = "user" | "crm" | "admin"
 
 export type TypeAccount = "Individual" | "Business"
 
-export type TypeBankAccount = "Current" | "Savings"
+export type TypeBankAccount = "Current" | "Savings" | "Overdraft"
 
 export type TypeBusiness = "Sole_proprietor" | "Partnership_firm" | "Companies" | "Limited_liability_partnership"
 
@@ -32,3 +32,5 @@ export type TypeOKycCode =
   | "invalid_sequence"
   | "request_not_found"
   | "internal_server_error"
+
+export type TypeKYC = "Aadhaar" | "PAN" | "GST" | "Passport" | "Driving_License"

@@ -135,3 +135,5 @@ export const RELATION_SHIP = [
 export const ACCOUNT_TYPE = ["Individual", "Business"]
 
 export const BUSINESS_TYPE = ["Sole_proprietor", "Partnership_firm", "Companies", "Limited_liability_partnership"]
+
+export const BANK_ACCOUNT_TYPE = ["Current", "Savings", "Overdraft"]

@@ -4,11 +4,20 @@ import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
 import {ButtonAccountType, useSlider} from "@custom/ui"
-import {IPayloadRecipient, IRecipientData, IStyle, TypeAccount} from "@custom/utils"
+import {IPayloadRecipient, IRecipientData, IStyle, TypeAccount, TypeBankAccount} from "@custom/utils"
 import assets from "assets"
-import {useLocationController, useRecipientController} from "controller"
+import {useLocationController, useRecipientController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
-import {ID_PROOFS, QUERY_CITIES, QUERY_COUNTRIES, QUERY_RECIPIENT, QUERY_STATES, ROUTE_RECIPIENT_PREVIEW} from "utils"
+import {
+  BANK_ACCOUNT_TYPE,
+  ID_PROOFS,
+  QUERY_CITIES,
+  QUERY_COUNTRIES,
+  QUERY_RECIPIENT,
+  QUERY_STATES,
+  QUERY_TRANSACTION,
+  ROUTE_RECIPIENT_PREVIEW,
+} from "utils"
 
 const useHandler = (styles: IStyle, recipientId?: string) => {
   const {push} = useRouter()
@@ -18,7 +27,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {refreshQuery} = useReactQuery()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {createRecipient, updateRecipient, getByRecipientId} = useRecipientController()
-  const {transId: transaction_id, transData} = useSingleton()
+  const {initiateTransaction} = useTransactionController()
+  const {transId: transaction_id, transData, updateTransData} = useSingleton()
   const {toggleNotify} = useNotifyPopup()
 
   const RECIPIENT_TYPE: IFormData<TypeAccount>[] = [
@@ -47,6 +57,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     id_type: "",
     id_number: "",
     kyc: [],
+    account_type: "Current",
   })
 
   const {
@@ -72,6 +83,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     branch_code,
     kyc,
     recipient_account_type,
+    account_type,
   } = data
 
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
@@ -118,6 +130,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!id_number) errState = {...errState, errIdNumber: "Please enter ID number", isValid: false}
 
+    if (!account_type) errState = {...errState, errAccountType: "Please choose recipient account type", isValid: false}
+
     setErrData(errState)
     return errState
   }
@@ -152,12 +166,12 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         {queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries},
         {
           queryKey: [`${QUERY_STATES}-${country?.key}`, country],
-          queryFn: () => getStates(country?.key as string),
+          queryFn: () => getStates(country?.key),
           enabled: !!country,
         },
         {
           queryKey: [`${QUERY_CITIES}-${state?.key}`, state],
-          queryFn: () => getCities(state?.key as string),
+          queryFn: () => getCities(state?.key),
           enabled: !!state,
         },
         {
@@ -169,28 +183,16 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     }
   )
 
-  function onSuccess(message: string) {
-    toggleNotify({
-      type: "success",
-      title: message,
-      description: "Recipient added Successfully.",
-    })
-  }
-
-  function onFailure(message: string) {
-    toggleNotify({
-      type: "error",
-      title: message,
-    })
-  }
-
   const {mutate: addRecipient, data: addedRes} = useMutation({
     mutationKey: [QUERY_RECIPIENT],
     mutationFn: createRecipient,
     onSuccess: ({result, errorData}) => {
-      refreshQuery(QUERY_RECIPIENT)
-      if (result) onSuccess("Recipient Successfully updated")
-      else onFailure(errorData.message)
+      if (result) {
+        toggleNotify({type: "success", title: "Recipient created Successfully"})
+        refreshQuery(QUERY_RECIPIENT)
+        updateTransData(result)
+        linkRecipient(result?.recipient?.recipient_id)
+      } else toggleNotify({type: "error", title: errorData.message})
     },
   })
 
@@ -199,8 +201,16 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     mutationFn: updateRecipient,
     onSuccess: ({result, errorData}) => {
       refreshQuery(QUERY_RECIPIENT)
-      if (result) onSuccess("Recipient Successfully Created")
-      else onFailure(errorData.message)
+      if (result) toggleNotify({type: "success", title: "Recipient updated Successfully"})
+      else toggleNotify({type: "error", title: errorData?.message})
+    },
+  })
+
+  const {mutate: linkRecipient} = useMutation({
+    mutationKey: [QUERY_TRANSACTION],
+    mutationFn: initiateTransaction,
+    onSuccess: ({result}) => {
+      if (result) push(ROUTE_RECIPIENT_PREVIEW)
     },
   })
 
@@ -268,6 +278,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         id_type,
         id_number,
         iban_no,
+        account_type: account_type as TypeBankAccount,
         kyc: kyc_attachments?.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
         recipient_account_type,
       })
@@ -416,6 +427,15 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       wrapperClassGrid: styles.bank_details,
       childElements: [
         {
+          elementType: "drop-down",
+          label: "Account Type",
+          name: "account_type",
+          error: errAccountType,
+          value: account_type,
+          options: BANK_ACCOUNT_TYPE,
+          onChangeValue,
+        },
+        {
           elementType: "input",
           label: "Enter Account Number",
           name: "account_no",
@@ -523,7 +543,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   useEffect(() => {
     if (addedRes) {
       toggleSlider()
-      onRecipientPreview()
     } else if (updatedRes) {
       toggleSlider()
     }
@@ -547,7 +566,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         id_issued_country_id: id_issued_country.key as number,
         id_number,
         id_type,
-        transaction_id,
         recipient_account_type,
         kyc: kyc.filter(({file}) => !!file),
         bank_account: {
@@ -558,7 +576,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           routing_code,
           bank_name,
           branch_code,
-          account_type: transData.recipient_account_type,
+          account_type,
+          bank_code_type: "IBAN",
         },
       }
 

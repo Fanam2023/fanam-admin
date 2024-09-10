@@ -1,6 +1,6 @@
 import {IFile, IFormData} from "@fanam-pkg/core-utils"
 import type {AuthenticationResponseJSON, RegistrationResponseJSON} from "@simplewebauthn/types"
-import {IAttachment, ICity, ICountry, IState, TypeAccount, TypeBusiness, TypeStatus, TypeUserRole} from "../model"
+import {ICity, ICountry, IResponseKYC, IState, TypeAccount, TypeBusiness, TypeStatus, TypeUserRole} from "../model"
 
 export interface IResponseLogin {
   access_token: string
@@ -79,7 +79,7 @@ export interface IUser {
   id_number: string
   id_type: string
   user_accounts: IResponseBankAccount[]
-  kyc_attachments: IAttachment[]
+  kyc_details: IResponseKYC[]
   status: TypeStatus
   account_type: TypeAccount
   account_no: string
@@ -93,15 +93,13 @@ export interface IBaseSyncUser {
   address_line_1: string
   address_line_2?: string
   zip_code: string
-  id_number: string
-  id_type: string
   business_type?: TypeBusiness
-  kyc?: IFile[]
+  kyc_aadhaar?: IFile[]
+  kyc_pan?: IFile[]
 }
 
 export interface ISyncUserData extends IBaseSyncUser {
   country: IFormData<number> | null
-  id_issued_country: IFormData<number> | null
   state: IFormData<number> | null
   city: IFormData<number> | null
   account_type: string
@@ -113,7 +111,6 @@ export interface ISyncUserData extends IBaseSyncUser {
 
 export interface IPayloadSyncUser extends IBaseSyncUser {
   country_id: number
-  id_issued_country_id: number
   state_id: number
   city_id: number
   bank_account?: IPayloadUserBankAccount

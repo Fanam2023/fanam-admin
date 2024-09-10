@@ -15,12 +15,13 @@ export const apiCities = (stateId: number) => `${API_LOCATION}/states/${stateId}
 export const API_PAYMENT = "/payment"
 export const API_FXRATE = `${API_PAYMENT}/fx-rate`
 export const API_RECIPIENT = "/recipient"
+export const apiRecipientType = (recipientType: string) => `${API_RECIPIENT}?recipient_type=${recipientType}`
 export const apiRecipient = (recipient_id: string) => `${API_RECIPIENT}/${recipient_id}`
 export const API_BENEFICIARY = "/beneficiary"
 export const apiBeneficiary = (beneficiary_id: string) => `${API_BENEFICIARY}/${beneficiary_id}`
 export const API_TRANSACTION = "/transaction"
 export const apiTransaction = (transaction_id: string) => `${API_TRANSACTION}/${transaction_id}`
-export const API_SENDER_KYC = "/file-upload/sender-kyc"
+export const apiSenderKYC = (kycId: string) => `/file-upload/sender-kyc/${kycId}`
 export const API_RECIPIENT_KYC = "/file-upload/recipient-kyc"
 export const API_INVOICE = "/file-upload/invoice"
 export const API_SENDING_PURPOSE = "/sending-purpose"
