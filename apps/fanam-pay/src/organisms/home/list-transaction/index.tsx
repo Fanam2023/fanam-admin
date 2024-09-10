@@ -1,19 +1,13 @@
 "use client"
 
-import {Button, GroupForm, ImageView, usePopup} from "@fanam-pkg/core-ui-sass"
+import {Button, GroupForm, ImageView} from "@fanam-pkg/core-ui-sass"
 import {ITransactionDetails} from "@custom/utils"
 import assets from "assets"
-import {TransactionDetails} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
 export const ListTransaction = () => {
-  const {transaction, formElements} = useHandler()
-  const {togglePopup} = usePopup()
-  const onAddPayment = (transaction_id: string) =>
-    togglePopup({
-      children: <TransactionDetails transactionId={transaction_id} />
-    })
+  const {transactions, formElements, fetchTransaction} = useHandler()
 
   const renderTransactionDetails = (
     {
@@ -34,7 +28,7 @@ export const ListTransaction = () => {
     const {first_name, last_name} = recipient || {}
 
     return (
-      <li key={index} className={styles.page_wrapper} onClick={onAddPayment.bind(null, transaction_id)}>
+      <li key={index} className={styles.page_wrapper} onClick={fetchTransaction.bind(null, transaction_id)}>
         <section className={`flex ${styles.content_wrapper}`}>
           <section className={`flex ${styles.detail_wrapper}`}>
             <section className={styles.date_section_wrapper}>
@@ -73,7 +67,7 @@ export const ListTransaction = () => {
         <h4 className={`bold ${styles.txt_wrapper}`}>Recent Transaction Activity</h4>
         <GroupForm formSections={formElements} wrapperClass={styles.dropDown_wrapper} />
       </section>
-      <ul>{transaction?.map(renderTransactionDetails)}</ul>
+      <ul>{transactions?.map(renderTransactionDetails)}</ul>
       <Button wrapperClass={styles.button_wrapper}>See More Activity</Button>
     </section>
   )

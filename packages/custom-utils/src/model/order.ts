@@ -1,8 +1,8 @@
-export interface IOrderPayload {
+export interface IPayloadOrder {
   transaction_id: string
 }
 
-export interface IOrderResponse {
+export interface IResponseOrder {
   order_id: string
   order_no: string
   amount: number

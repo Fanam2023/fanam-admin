@@ -17,8 +17,8 @@ export interface ITransactionInfo {
   value: string | number
 }
 
-export interface ListTransactionProps {
-  transactionId: string
+export interface PropsTransactionDetails {
+  transaction: ITransaction
 }
 
 export interface ITransactionProps {

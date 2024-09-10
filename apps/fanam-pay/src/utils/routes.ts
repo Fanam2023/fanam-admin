@@ -12,8 +12,7 @@ export const ROUTE_ADD_BENEFICIARY = `${ROUTE_BENEFICIARIES}/form`
 export const ROUTE_BENEFICIARY_PREVIEW = `${ROUTE_BENEFICIARIES}/preview`
 export const routeToBeneficiaryDetails = (beneficiaryId: string) =>
   `${ROUTE_ADD_BENEFICIARY}?beneficiaryId=${beneficiaryId}`
-export const ROUTE_TRANSACTION = "/transaction"
-export const ROUTE_TRANSACTION_STATUS = `${ROUTE_TRANSACTION}/status`
+export const routeToTransactionDetail = (transactionId: string) => `/transaction/${transactionId}`
 export const ROUTE_SIGN_UP = "/auth/sign-up"
 export const ROUTE_LOGIN = "/auth/login"
 export const ROUTE_FORGOT_PIN = "/auth/forgot-password"

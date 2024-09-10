@@ -2,6 +2,7 @@
 
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
+import {useRouter} from "next/navigation"
 import assets from "assets"
 import {useSingleton} from "hooks"
 import {IStepper} from "model"
@@ -27,6 +28,12 @@ export const BaseContainer = ({
   const {user} = useSingleton()
   const {first_name, last_name} = user || {}
   const {isDesktop} = useResize()
+  const {back} = useRouter()
+
+  const onClickBack = () => {
+    if (onBack) onBack()
+    else back()
+  }
 
   const renderSideBar = ({title, description}: IStepper, index: number) => {
     const isLastStep = index < SIDE_BAR.length - 1
@@ -95,7 +102,7 @@ export const BaseContainer = ({
             {!!buttonText && (
               <>
                 <Button
-                  onClick={onBack}
+                  onClick={onClickBack}
                   wrapperClass={styles.skip_btn}
                   buttonType="primary-outlined"
                   leadingIcon={assets.ic_left_arrow_fill}>
