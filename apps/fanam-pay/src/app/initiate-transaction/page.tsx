@@ -25,13 +25,15 @@ const InitiateTransactionPage = () => {
       backIcon={false}
       stepIndex={3}>
       <section className={styles.container_wrapper}>
-        <h2 className="bold">Payment Estimate</h2>
-        <h5>
-          Estimated value for converting your money from one currency to another based on the current exchange rates.
-        </h5>
+        <section className={styles.header_wrapper}>
+          <h2 className="bold">Payment Estimate</h2>
+          <h5>
+            Estimated value for converting your money from one currency to another based on the current exchange rates.
+          </h5>
+        </section>
         <section className={styles.conversion_container}>
           <section className={`flex-sb-center ${styles.currency_wrapper}`}>
-            <section>
+            <section className={styles.sender_wrapper}>
               <h5 className={`bold ${styles.txt_wrapper}`}>You send</h5>
               <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
                 <section className={styles.amount}>
