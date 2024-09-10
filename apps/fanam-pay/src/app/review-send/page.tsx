@@ -107,7 +107,7 @@ const ReviewAndSend = () => {
                   src={assets.ic_edit_white}
                   alt="edit-icon"
                   imgSize={20}
-                  onClick={() => routeToBeneficiary("beneficiary_id")}
+                  onClick={routeToBeneficiary}
                 />
                 <h5 className={styles.edit_text}>Edit</h5>
               </>
@@ -117,7 +117,7 @@ const ReviewAndSend = () => {
                 alt="edit-icon"
                 wrapperClass={styles.edit_icon}
                 imgSize={20}
-                onClick={() => routeToBeneficiary("beneficiary_id")}
+                onClick={routeToBeneficiary}
               />
             )}
           </section>

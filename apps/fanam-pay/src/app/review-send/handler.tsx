@@ -4,7 +4,7 @@ import {useEffect, useMemo, useState} from "react"
 import {useSlider} from "@custom/ui"
 import {useSingleton} from "hooks"
 import {CreateBeneficiaryDetails, CreateRecipientDetails} from "organisms"
-import {routeToBeneficiaryDetails, routeToTransactionDetail} from "utils"
+import {routeToTransactionDetail} from "utils"
 
 const useHandler = () => {
   const {transData, refetchTransaction, transId, user} = useSingleton()
@@ -27,6 +27,7 @@ const useHandler = () => {
     markup_fee,
   } = transData || {}
   const {recipient_id} = recipient || {}
+  const {beneficiary_id} = beneficiary || {}
 
   const {currency} = source_country || {}
   const {currency: destinationCountryValue} = destination_country || {}
@@ -115,15 +116,11 @@ const useHandler = () => {
 
   const toggleDetails = (type: string) => setShowDetails(prev => ({...prev, [type]: !prev[type]}))
 
-  const routeToBeneficiary = (beneficiaryId: string) => {
-    if (isDesktop) {
-      toggleSlider({
-        children: <CreateBeneficiaryDetails beneficiary_id={beneficiaryId} />,
-        title: "Edit Beneficiary",
-      })
-    } else {
-      push(routeToBeneficiaryDetails(beneficiaryId))
-    }
+  const routeToBeneficiary = () => {
+    toggleSlider({
+      children: <CreateBeneficiaryDetails beneficiary_id={beneficiary_id} />,
+      title: "Edit Beneficiary",
+    })
   }
 
   const routeToRecipient = () =>
@@ -143,10 +140,10 @@ const useHandler = () => {
     paymentDetails,
     showDetails,
     toggleDetails,
-    routeToBeneficiary,
-    routeToRecipient,
     onProcessPayment,
     transId,
+    routeToRecipient,
+    routeToBeneficiary,
     destination_amount,
     destinationCountryValue,
   }
