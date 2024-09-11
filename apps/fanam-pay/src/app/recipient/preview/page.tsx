@@ -15,7 +15,8 @@ const RecipientPreview = () => {
       buttonText="Next"
       childWrapper={styles.page_wrapper}
       skipBtn="Back"
-      stepIndex={3}
+      stepIndex={0}
+      isStepper
       onSubmit={onSubmit}
       onBack={onBack}>
       <RecipientCard

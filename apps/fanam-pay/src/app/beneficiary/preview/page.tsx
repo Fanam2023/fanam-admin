@@ -13,7 +13,8 @@ const RecipientPreview = () => {
       buttonText="Next"
       childWrapper={styles.page_wrapper}
       skipBtn="Back"
-      stepIndex={3}
+      stepIndex={1}
+      isStepper
       onSubmit={onRouteToPurpose}
       onBack={onBack}>
       <BeneficiaryCard onEdit={onToggle} />
