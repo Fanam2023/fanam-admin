@@ -90,3 +90,48 @@
 
 .price_wrapper
   justify-content: flex-end
+
+.list_wrapper
+  margin-top: $size-32px
+
+.empty_transaction
+  justify-content: center
+  margin: 8%
+
+.head_wrapper
+  justify-content: space-between
+
+.source_amount,.view_more,.activity_wrapper
+  display: none
+
+@include mixin-responsive
+  .id_wrapper,.source_wrapper,.duration_wrapper,.destination_amount,.button_wrapper
+    display: none
+
+  .detail_wrapper
+    gap: 0
+
+  .status_wrapper
+    padding: 0
+
+  .source_amount
+    display: flex
+    color: $alert-green
+    margin-top: $size-8px
+
+  .view_more
+    display: flex
+    color: $primary
+    gap: $size-8px
+    margin-left: auto
+
+  .activity_wrapper
+    display: flex
+    gap: $size-8px
+    margin-top: 5%
+    color: $primary
+
+  .container_wrapper
+    box-shadow: none
+    padding: $size-6px
+
