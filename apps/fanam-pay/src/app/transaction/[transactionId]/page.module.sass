@@ -9,7 +9,7 @@
   margin-top: $size-8px
 
 .page_container
-  width: 45%
+  width: 100%
   margin:
     top: 7%
     left: $size-64px
@@ -78,6 +78,13 @@
 @include mixin-responsive
   .page_container
     @include mobile_width
+    width: 100%
+
+  .mobile_wrapper
+    margin:
+      top: 16%
+      left: $size-16px
+      right: $size-16px
 
   .payment_status_wrapper
     border: 1px solid $dark-border-grey

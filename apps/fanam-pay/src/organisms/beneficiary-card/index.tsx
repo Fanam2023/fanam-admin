@@ -16,8 +16,8 @@ export const BeneficiaryCard = ({onEdit}: BeneficiaryCardProps) => {
   )
 
   return (
-    <>
-      <h5 className={`bold ${styles.beneficiary}`}>Beneficiary</h5>
+    <section className={styles.page_wrapper}>
+      <h5 className="bold">Beneficiary</h5>
       <section className={`flex-col ${styles.details_wrapper}`}>
         <section className={`flex-sb-center ${styles.card_wrapper}`}>
           <h5 className={styles.title_wrapper}>Beneficiary Details</h5>
@@ -31,6 +31,6 @@ export const BeneficiaryCard = ({onEdit}: BeneficiaryCardProps) => {
         </section>
         <ul>{beneficiaryDetails?.map(renderRecipientDetails)}</ul>
       </section>
-    </>
+    </section>
   )
 }
