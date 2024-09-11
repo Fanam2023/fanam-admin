@@ -41,15 +41,24 @@
   background: $white
   color: $primary
 
-.footer_wrapper
-  position: relative
-  margin-top: auto
-  box-shadow: 0 -4px $size-4px 0 rgba($black, $alpha-one)
-  background: $white
-  padding: $size-16px $size-16px
+.children_wrapper
+  padding:
+    top: 3%
+    bottom: 8%
 
-.footer_content
+.footer_wrapper
+  box-shadow: 0 -4px $size-4px 0 rgba($black, $alpha-one)
+  position: fixed
+  gap: $size-16px
   justify-content: flex-end
+  bottom: 0
+  right: 0
+  width: 100%
+  border-top: $size-1px solid $light-grey
+  padding: $size-12px $size-16px $size-16px 0
+  margin-top: $size-24px
+  background-color: $white
+  z-index: 1
 
 .button_wrapper
   box-shadow: $size-6px $size-6px $size-10px $medium-grey
@@ -57,15 +66,15 @@
   height: $size-40px
   background-color: $theme
 
+.disable_btn
+  background-color: $dark-border-grey
+  cursor: not-allowed
+  &:hover
+    background-color: $dark-border-grey
+
 .skip_btn
   box-shadow: $size-6px $size-6px $size-10px $medium-grey
-  margin-right: $size-32px
   height: $size-40px
-
-.main_wrapper
-  display: flex
-  min-height: 100vh
-  margin-bottom: 2%
 
 .wrapper
   display: flex
@@ -146,8 +155,6 @@
     left: 0
     box-shadow: 0 -4px $size-4px 0 rgba($black,$alpha-one)
     background: $white
-
-  .footer_content
     justify-content: center
     align-items: center
 
@@ -155,11 +162,19 @@
     display: none
 
   .button_wrapper
-    height: 10%
-    display: block
-    width: 75%
+    padding: $size-24px $size-24px
+    width: 100%
     box-shadow: $size-6px $size-6px $size-10px $medium-grey
+    margin-right: 0
+    margin: 16px
 
   .add_text
     display: block
     margin-right: $size-20px
+
+  .header_wrapper
+    padding: $size-16px
+    background: $white
+
+  .language_text
+    color: $black

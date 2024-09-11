@@ -15,6 +15,7 @@ const SenderForm = () => {
       buttonText="Next"
       onSubmit={onSubmit}
       skipBtn="Back"
+      disabled
       stepIndex={0}>
       <h4 className="bold">Complete Your Profile</h4>
       <h6>Essential for verification and processing your transactions securely and efficiently.</h6>

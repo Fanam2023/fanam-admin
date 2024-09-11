@@ -15,7 +15,7 @@ const Login = () => {
     <BaseContainer profile bellIcon>
       <Auth>
         <section className={`flex-col ${styles.heading}`}>
-          <h3 className={`bold ${styles.login}`}>Log in</h3>
+          <h3 className={`bold ${styles.login} ${styles.sub_heading}`}>Log in</h3>
           <h5>Login in once and seamlessly access your account across all your devices.</h5>
         </section>
         <TextField

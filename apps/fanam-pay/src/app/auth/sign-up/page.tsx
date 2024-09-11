@@ -13,7 +13,7 @@ const SignUp = () => {
     <BaseContainer profile bellIcon>
       <Auth>
         <section className={`flex-col ${styles.heading}`}>
-          <h4 className={`bold ${styles.login}`}>Sign Up</h4>
+          <h4 className={`bold ${styles.login} ${styles.sub_heading}`}>Sign Up</h4>
           <h5>Create Account once and seamlessly access your account across all your devices.</h5>
         </section>
         <GroupForm formSections={formElements} wrapperClass={styles.form_wrapper} />
