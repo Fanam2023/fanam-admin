@@ -1,7 +1,7 @@
 @use "../../styles/index" as *
 
 .page_wrapper
-  margin: $size-28px
+  margin: 5% 8%
 
 .nav_wrapper
   margin:
@@ -10,6 +10,7 @@
   border-radius: $size-12px
   background-color: $white
   box-shadow: 0 $size-1px $size-20px 0 rgba($black, $alpha-two)
+  justify-content: space-between
 
 .heading
   padding-left: $size-20px
@@ -31,3 +32,25 @@
 
 .first_name
   text-transform: capitalize
+
+.amount_txt
+  gap: $size-16px
+
+@include mixin-responsive
+  .name_wrapper
+    margin-top: 25%
+
+  .nav_wrapper
+    flex-direction: column
+
+  .page_wrapper
+    margin: 0
+    padding: 0 6%
+
+  .button_wrapper
+    width: 38vh
+    margin-top: 8%
+
+  .main_container
+    padding: 5%
+    margin-bottom: 25%

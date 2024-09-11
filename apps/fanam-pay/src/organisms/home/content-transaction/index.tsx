@@ -20,7 +20,7 @@ export const ContentTransaction = ({transactionDetail}: ITransactionProps) => {
         <h5 className={styles.transaction_txt}>Receiver will get Exactly</h5>
         <h5 className={`semi-bold ${styles.total_usd}`}>{destination_amount}</h5>
       </section>
-      <section className="flex">
+      <section className={`flex ${styles.id_wrapper}`}>
         <h5 className={styles.transaction_txt}>Transaction Number</h5>
         <h5 className={`semi-bold ${styles.transaction_number}`}>{transaction_id}</h5>
       </section>

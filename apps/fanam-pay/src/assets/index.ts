@@ -1,6 +1,7 @@
 import {assets as projectAssets} from "@fanam-pkg/core-ui-sass"
 import ic_account from "./icons/ic_account.svg"
 import ic_alert from "./icons/ic_alert.svg"
+import ic_arrow_right from "./icons/ic_arrow_right.svg"
 import ic_arrow_theme from "./icons/ic_arrow_theme.svg"
 import ic_back from "./icons/ic_back.svg"
 import ic_back_arrow_black from "./icons/ic_back_arrow_black.svg"
@@ -14,6 +15,7 @@ import ic_down_arrow from "./icons/ic_down_arrow.svg"
 import ic_edit from "./icons/ic_edit.svg"
 import ic_edit_theme from "./icons/ic_edit_theme.svg"
 import ic_edit_white from "./icons/ic_edit_white.svg"
+import ic_empty_transaction from "./icons/ic_empty_transaction.svg"
 import ic_failure from "./icons/ic_failure.svg"
 import ic_failure_small from "./icons/ic_failure_small.svg"
 import ic_file from "./icons/ic_file.svg"
@@ -100,6 +102,8 @@ const assets = {
   ic_select_business,
   ic_country,
   ic_menu,
+  ic_empty_transaction,
+  ic_arrow_right,
 }
 
 export default assets
