@@ -29,15 +29,3 @@ export interface IExchange {
   source_country: string
   rate: string
 }
-
-export interface ITransactionDetails {
-  month: string
-  date: string
-  name: string
-  paymentId: string
-  paymentMode: string
-  paymentDuration: string
-  status: string
-  source_amount: string
-  destination_amount: string
-}

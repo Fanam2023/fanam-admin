@@ -24,10 +24,10 @@ import ic_left_arrow_fill from "./icons/ic_left_arrow_fill.svg"
 import ic_lend_money from "./icons/ic_lend_money.svg"
 import ic_menu from "./icons/ic_menu.svg"
 import ic_money from "./icons/ic_money.svg"
+import ic_more from "./icons/ic_more.svg"
 import ic_pending from "./icons/ic_pending.svg"
 import ic_pending_small from "./icons/ic_pending_small.svg"
 import ic_personal from "./icons/ic_personal.svg"
-import ic_profile from "./icons/ic_profile.svg"
 import ic_refresh from "./icons/ic_refresh.svg"
 import ic_remove from "./icons/ic_remove.svg"
 import ic_right from "./icons/ic_right.svg"
@@ -52,6 +52,7 @@ import img_logo from "./images/img_logo.webp"
 const assets = {
   ...projectAssets,
   ic_account,
+  ic_more,
   ic_rocket,
   ic_star,
   ic_up_arrow,
@@ -92,7 +93,6 @@ const assets = {
   ic_right_arrow_fill,
   ic_help_theme,
   ic_edit_white,
-  ic_profile,
   ic_tick,
   ic_personal,
   ic_select_personal,

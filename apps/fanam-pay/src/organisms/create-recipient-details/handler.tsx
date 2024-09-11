@@ -92,7 +92,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!first_name) errState = {...errState, errFirstName: "Please enter FirstName", isValid: false}
 
-    if (!last_name || last_name.length < 2)
+    if (!last_name) errState = {...errState, errLastName: "Please enter the last name", isValid: false}
+    else if (last_name.length < 2)
       errState = {...errState, errLastName: "LastName must be longer than 2 characters", isValid: false}
 
     if (!account_no) errState = {...errState, errAccountNo: "Please enter AccountNumber", isValid: false}
@@ -324,8 +325,16 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       ],
     },
     {
-      wrapperClass: styles.personal,
+      wrapperClassGrid: styles.personal,
       childElements: [
+        {
+          elementType: "input",
+          label: "Enter Email",
+          name: "email",
+          error: errEmail,
+          value: email,
+          onChangeValue,
+        },
         {
           elementType: "input",
           label: "Enter PhoneNumber",
@@ -335,19 +344,11 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           onChangeValue,
           maxLength: 10,
         },
-        {
-          elementType: "input",
-          label: "Enter Email",
-          name: "email",
-          error: errEmail,
-          value: email,
-          onChangeValue,
-        },
       ],
     },
     {
       title: "Address",
-      wrapperClassGrid: styles.address,
+      wrapperClassGrid: styles.address_details,
       childElements: [
         {
           elementType: "input",

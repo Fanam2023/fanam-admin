@@ -4,14 +4,19 @@
 
 .page_container
   overflow-y: scroll
-  padding: 0 $size-24px
+  margin: 0 $size-24px
   margin:
     top: $size-28px
+
+.header_wrapper
+  margin: $size-24px
 
 .container_wrapper
   margin:
     top: 10%
     bottom: 20%
+    right: 2%
+  overflow-y: scroll
 
 .button_container
   gap: $size-20px
@@ -58,12 +63,11 @@
   gap: $size-10px
 
 .sender_wrapper
-  opacity: $alpha-five
+  margin-bottom: $size-16px
 
 .receiver_text
   color: $primary
 
-.currency_text
   @include common-color
 
 .radio_button
@@ -82,7 +86,7 @@
   margin-top: $size-14px
 
 .receiver_wrapper
-  padding: $size-16px
+  margin-top: $size-16px
 
 .hour_wrapper
   margin-top: $size-4px
@@ -99,12 +103,23 @@
 
 .input
   border: none
+  background: none
   outline: none
   padding: $size-8px $size-12px
 
 @include mixin-responsive
   .page_container
-    padding: 0 $size-24px
     margin:
-      top: $size-28px
-      left: 0
+      top: 8%
+      right: $size-12px
+      left: $size-12px
+
+  .conversion_container
+    background: none
+    border-radius: none
+    box-shadow: none
+    margin-top: $size-16px
+    padding: $size-16px $size-32px
+
+  .currency_wrapper
+    display: block

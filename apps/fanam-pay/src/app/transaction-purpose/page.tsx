@@ -15,7 +15,7 @@ const TransactionPurpose = () => {
       stepIndex={3}
       buttonText="Next"
       skipBtn="Back"
-      childWrapper={styles.page_wrapper}
+      childWrapper={`flex-col-center ${styles.page_wrapper}`}
       onSubmit={onSubmit}>
       <section className={`flex-col ${styles.heading_wrapper}`}>
         <h4 className="bold">Purpose of Sending Money</h4>

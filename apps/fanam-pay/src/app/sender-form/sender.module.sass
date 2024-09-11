@@ -5,7 +5,7 @@
 
 @mixin common-styles
   @include grid-3
-  grid-template-columns: 2fr 2fr
+  grid-template-columns: 1fr 1fr
   gap: $size-16px
   margin:
     top: $size-10px
@@ -81,6 +81,10 @@
 .verified_text
   color: $alert-green
 
+.pan_verify
+  gap: $size-4px
+  margin-top: $size-12px
+
 @include mixin-responsive
   .page_container
     width: 100%
@@ -88,3 +92,16 @@
     margin:
       top: $size-28px
       left: 0
+
+  .container_wrapper
+    margin-top: 20%
+
+  .sender_input_wrapper, .personal_details,.address_details,.verify_wrapper
+    display: flex
+
+  .sender_form_wrapper
+    height: 65%
+    width: 90%
+    padding: $size-24px $size-24px
+    margin:
+      top: $size-24px

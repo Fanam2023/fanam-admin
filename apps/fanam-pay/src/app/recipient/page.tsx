@@ -1,7 +1,6 @@
 "use client"
 
 import {RadioButton, TextField} from "@fanam-pkg/core-ui-sass"
-import {IFormData} from "@fanam-pkg/core-utils"
 import {IRecipient} from "@custom/utils"
 import assets from "assets"
 import {BaseContainer, ManageMembers} from "organisms"
@@ -9,18 +8,8 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const RecipientPage = () => {
-  const {
-    recipients,
-    onChangeSearch,
-    routeToDetails,
-    onAdd,
-    isDesktop,
-    onBack,
-    linkRecipient,
-    searchQuery,
-    TYPE,
-    onChangeType,
-  } = useHandler()
+  const {recipients, onChangeSearch, routeToDetails, onAdd, onBack, linkRecipient, searchQuery, TYPE, onSelectType} =
+    useHandler()
 
   const renderRecipients = ({first_name, last_name, email, recipient_id}: IRecipient) => (
     <ManageMembers
@@ -35,14 +24,12 @@ const RecipientPage = () => {
   return (
     <BaseContainer
       header={"Manage Recipients"}
-      addButton="Add"
       childWrapper={styles.page_container}
       backIcon
       buttonText="Next"
       skipBtn="Back"
       isStepper
-      stepIndex={3}
-      onAdd={onAdd}
+      stepIndex={0}
       onBack={onBack}>
       <section className={`flex-col ${styles.recipient_wrapper}`}>
         <h3 className="bold">Add Recipient</h3>
@@ -55,20 +42,13 @@ const RecipientPage = () => {
           wrapperClass={styles.search_wrapper}
           leadingIcon={searchQuery.length ? null : assets.ic_search}
           onChangeData={onChangeSearch}></TextField>
-        {isDesktop && (
-          <h4 className={styles.add_text} onClick={onAdd}>
-            Add
-          </h4>
-        )}
+        <h4 className={styles.add_text} onClick={onAdd}>
+          Add
+        </h4>
       </section>
       <section className={`flex ${styles.saved_wrapper}`}>
         <h5 className={`bold ${styles.save_text}`}>Saved Recipients</h5>
-        <RadioButton
-          items={TYPE}
-          wrapperClass={styles.radio_button}
-          onSelectItems={(items: IFormData<string, string>[]) =>
-            onChangeType(items.find(item => item.isSelected)?.label)
-          }></RadioButton>
+        <RadioButton items={TYPE} wrapperClass={styles.radio_button} onSelectItems={onSelectType}></RadioButton>
       </section>
       <ul className={styles.members}>{recipients?.map(renderRecipients)}</ul>
     </BaseContainer>

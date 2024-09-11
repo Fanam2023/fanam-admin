@@ -16,7 +16,7 @@ import {
   QUERY_PAN_CARD,
   QUERY_STATES,
   QUERY_USER,
-  ROUTE_RECIPIENTS,
+  ROUTE_HOME,
 } from "utils"
 
 const DEFAULT_ERR_STATE = {
@@ -33,8 +33,7 @@ const DEFAULT_ERR_STATE = {
   errAddress: "",
   errCity: "",
   errZipCode: "",
-  errIdIssuedCountry: "",
-  errIdType: "",
+  errDateOfBirth: "",
   errKycAadhaar: "",
   errKycPAN: "",
   errBusinessName: "",
@@ -44,7 +43,7 @@ const DEFAULT_ERR_STATE = {
 }
 
 const useHandler = (styles: IStyle) => {
-  const {push} = useRouter()
+  const {replace} = useRouter()
   const {isValidInputByRegex} = useCommon()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {syncUser} = useAuthController()
@@ -70,6 +69,7 @@ const useHandler = (styles: IStyle) => {
     aadhaarNumber: "",
     business_name: "",
     business_type: "Sole_proprietor",
+    date_of_birth: "",
     kyc_aadhaar: [],
     kyc_pan: [],
   })
@@ -94,6 +94,7 @@ const useHandler = (styles: IStyle) => {
     aadhaarNumber,
     business_name,
     business_type,
+    date_of_birth,
   } = data
 
   const {
@@ -104,8 +105,6 @@ const useHandler = (styles: IStyle) => {
     errPhoneNo,
     errAccountNo,
     errAccountType,
-    errIdType,
-    errIdIssuedCountry,
     errCountry,
     errState,
     errAddress,
@@ -115,6 +114,7 @@ const useHandler = (styles: IStyle) => {
     errKycPAN,
     errBusinessName,
     errBusinessType,
+    errDateOfBirth,
   } = errData
 
   const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}] = useQueries({
@@ -139,7 +139,7 @@ const useHandler = (styles: IStyle) => {
     onSuccess: ({result, errorData}) => {
       if (result) {
         updateUserData(result)
-        push(ROUTE_RECIPIENTS)
+        replace(ROUTE_HOME)
       } else
         toggleNotify({
           title: "Error - Update User",
@@ -526,6 +526,14 @@ const useHandler = (styles: IStyle) => {
           value: account_no,
           onChangeValue,
         },
+        {
+          elementType: "date-picker",
+          label: "Date of Birth",
+          name: "date_of_birth",
+          error: errDateOfBirth,
+          value: date_of_birth,
+          onChangeValue,
+        },
       ],
     },
     {
@@ -726,59 +734,14 @@ const useHandler = (styles: IStyle) => {
     if (isClicked) setErrData(prev => ({...prev, ...onValidate()}))
   }, [data, isClicked])
 
-  const formElement: FormSectionProps[] = [
-    {
+  const individualKYCElements: FormSectionProps = useMemo(() => {
+    const elements: FormSectionProps = {
       title: "Verification",
       wrapperClassGrid: styles.verify_wrapper,
       childElements: [
         {
-          elementType: "file-picker",
-          fileType: ["image/*", "application/pdf"],
-          name: "kyc_pan",
-          isMultiple: true,
-          value: kyc_pan,
-          error: errKycPAN,
-          children: <CustomUpload />,
-          disabled: !verifyPanCard,
-          onChangeValue,
-          childTop: (
-            <section className={`flex ${styles.pan_wrapper}`}>
-              <TextField
-                label="Enter Pan Number"
-                name="pan"
-                value={pan}
-                onChangeData={onChangeValue}
-                disabled={!!verifiedPAN}
-              />
-              {verifiedPAN ? (
-                <>
-                  <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
-                  <h5 className={styles.verified_text}>PAN is Verified</h5>
-                </>
-              ) : (
-                <Button disabled={!isValidInputByRegex(pan, REG_PAN)} onClick={onVerifyPan.bind(null, {pan})}>
-                  Verify
-                </Button>
-              )}
-            </section>
-          ),
-        },
-      ],
-    },
-    {
-      childElements: [
-        {
-          elementType: "file-picker",
-          fileType: ["image/*", "application/pdf"],
-          name: "kyc_aadhaar",
-          isMultiple: true,
-          value: kyc_aadhaar,
-          error: errKycAadhaar,
-          children: <CustomUpload />,
-          disabled: !verifiedAadhaar,
-          onChangeValue,
-          childTop: (
-            <section className={`flex ${styles.pan_wrapper}`}>
+          childElement: (
+            <section className={styles.pan_wrapper}>
               <TextField
                 label="Enter Aaadhar Number"
                 name="aadhaarNumber"
@@ -787,11 +750,9 @@ const useHandler = (styles: IStyle) => {
                 onChangeData={onChangeValue}
               />
               {verifiedAadhaar ? (
-                <section>
-                  <>
-                    <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
-                    <h5 className={styles.verified_text}>Aadhaar is Verified</h5>
-                  </>
+                <section className={`flex ${styles.pan_verify}`}>
+                  <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
+                  <h5 className={styles.verified_text}>Aadhaar is Verified</h5>
                 </section>
               ) : (
                 <Button
@@ -804,8 +765,64 @@ const useHandler = (styles: IStyle) => {
           ),
         },
       ],
-    },
-  ]
+    }
+
+    if (verifiedAadhaar) {
+      elements.childElements.push({
+        elementType: "file-picker",
+        fileType: ["image/*", "application/pdf"],
+        name: "kyc_aadhaar",
+        isMultiple: true,
+        value: kyc_aadhaar,
+        error: errKycAadhaar,
+        children: <CustomUpload />,
+        disabled: !verifiedAadhaar,
+        onChangeValue,
+      })
+    }
+
+    if (verifiedAadhaar && kyc_aadhaar) {
+      elements.childElements.push({
+        childElement: (
+          <section className={styles.pan_wrapper}>
+            <TextField
+              label="Enter Pan Number"
+              name="pan"
+              value={pan}
+              onChangeData={onChangeValue}
+              disabled={!!verifiedPAN}
+            />
+            {verifiedPAN ? (
+              <section className={`flex ${styles.pan_verify}`}>
+                <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
+                <h5 className={styles.verified_text}>PAN is Verified</h5>
+              </section>
+            ) : (
+              <Button disabled={!isValidInputByRegex(pan, REG_PAN)} onClick={onVerifyPan.bind(null, {pan})}>
+                Verify
+              </Button>
+            )}
+          </section>
+        ),
+      })
+    }
+
+    if (verifiedPAN) {
+      elements.childElements.push({
+        elementType: "file-picker",
+        fileType: ["image/*", "application/pdf"],
+        name: "kyc_pan",
+        isMultiple: true,
+        value: kyc_pan,
+        error: errKycPAN,
+        children: <CustomUpload />,
+        disabled: !verifyPanCard,
+        onChangeValue,
+      })
+    }
+
+    return elements
+  }, [user, data])
 
   const individualType = user?.account_type === "Individual"
 
@@ -828,12 +845,13 @@ const useHandler = (styles: IStyle) => {
         account_no,
         kyc_aadhaar: kyc_aadhaar.filter(({file}) => !!file),
         kyc_pan: kyc_pan.filter(({file}) => !!file),
+        date_of_birth,
       })
     }
   }
 
   return {
-    formElement,
+    individualKYCElements,
     individualForm,
     businessForm,
     individualType,

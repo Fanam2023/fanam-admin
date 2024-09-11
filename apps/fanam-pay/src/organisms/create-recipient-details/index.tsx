@@ -1,30 +1,17 @@
 import {Button, GroupForm} from "@fanam-pkg/core-ui-sass"
-import {BaseContainer} from "organisms"
 import {RecipientDetailsProp} from "props"
 import useHandler from "./handler"
 import styles from "./styles.module.sass"
 
 export const CreateRecipientDetails = ({recipient_id}: RecipientDetailsProp) => {
-  const {formElements, onSubmit, isDesktop} = useHandler(styles, recipient_id)
+  const {formElements, onSubmit} = useHandler(styles, recipient_id)
 
-  return isDesktop ? (
+  return (
     <section>
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-      <footer className={`flex ${styles.footer_wrapper}`}>
-        <Button wrapperClass={styles.btn_wrapper} onClick={onSubmit}>
-          Add Recipient
-        </Button>
-      </footer>
+      <Button wrapperClass={styles.btn_wrapper} onClick={onSubmit}>
+        Add Recipient
+      </Button>
     </section>
-  ) : (
-    <BaseContainer
-      buttonText="Submit"
-      header="Recipient Details"
-      backIcon
-      addButton="Add"
-      childWrapper={styles.child_wrapper}
-      onSubmit={onSubmit}>
-      <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-    </BaseContainer>
   )
 }

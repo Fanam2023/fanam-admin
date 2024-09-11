@@ -3,18 +3,22 @@ import {
   API_INVOICE,
   API_TRANSACTION,
   apiTransaction,
+  IFanamApiError,
   IPayloadMergeRecipient,
   IPayloadTransaction,
   IPayloadTransactionPurpose,
+  IResponseOrder,
   ITransaction,
+  ITransactionDetails,
 } from "@custom/utils"
 import {useSingleton} from "hooks"
-import {ITransactionDetails} from "model"
 import {useApi} from "./api"
+import {useOrderController} from "./order"
 
 export const useTransactionController = () => {
   const {getRequest, postRequest, putRequest} = useApi()
   const {transId, updateTransData} = useSingleton()
+  const {createOrder} = useOrderController()
 
   const getTransaction = async () => {
     const {result} = await getRequest<ITransactionDetails[]>(API_TRANSACTION)
@@ -28,12 +32,26 @@ export const useTransactionController = () => {
   }
 
   const updateTransaction = async (payload: IPayloadTransaction) => {
-    const {result, errorData} = await putRequest<ITransaction>(apiTransaction(transId), payload)
-    if (result) updateTransData(result)
-    return {result, errorData}
+    let response: {order: IResponseOrder | null; errorData: IFanamApiError<null> | null} = {
+      order: null,
+      errorData: null,
+    }
+
+    const {result, errorData} = await putRequest<ITransaction, IPayloadTransaction, IFanamApiError<null>>(
+      apiTransaction(transId),
+      payload
+    )
+    if (result) {
+      updateTransData(result)
+      const {result: orderResult, errorData} = await createOrder()
+      response.order = orderResult
+      response.errorData = errorData
+    } else response.errorData = errorData
+
+    return response
   }
 
-  const getByIdTransaction = async (transaction_id: string) => {
+  const getTransactionDetails = async (transaction_id: string) => {
     const {result} = await getRequest<ITransaction>(apiTransaction(transaction_id))
     return result
   }
@@ -52,7 +70,7 @@ export const useTransactionController = () => {
   }
 
   const syncBeneficiary = async (beneficiaryId: string) => {
-    const {result, errorData} = await postRequest<ITransaction>(apiTransaction(transId), {
+    const {result, errorData} = await putRequest<ITransaction>(apiTransaction(transId), {
       beneficiary_id: beneficiaryId,
     })
     if (result) updateTransData(result)
@@ -97,7 +115,7 @@ export const useTransactionController = () => {
     getTransaction,
     createTransaction,
     updateTransaction,
-    getByIdTransaction,
+    getTransactionDetails,
     uploadInvoice,
     syncBeneficiary,
     initiateTransaction,

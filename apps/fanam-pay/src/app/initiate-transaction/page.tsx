@@ -7,11 +7,9 @@ import {Transfer} from "./transfer-time"
 
 const InitiateTransactionPage = () => {
   const {
-    data: {source_amount, destination_amount, destination_country},
+    data: {source_amount, destination_amount, destination_country, source_country},
     onChangeValue,
-    onSelectType,
     onSubmit,
-    sourceCountry,
     handleSelect,
     selectedTime,
   } = useHandler()
@@ -20,27 +18,35 @@ const InitiateTransactionPage = () => {
     <BaseContainer
       header="Cross Border Remittance"
       buttonText="Confirm"
+      skipBtn="Back"
       onSubmit={onSubmit}
       childWrapper={styles.page_container}
       isStepper
       backIcon={false}
       stepIndex={3}>
       <section className={styles.container_wrapper}>
-        <h2 className="bold">Payment Estimate</h2>
-        <h5>
-          Estimated value for converting your money from one currency to another based on the current exchange rates.
-        </h5>
+        <section className={styles.header_wrapper}>
+          <h2 className="bold">Payment Estimate</h2>
+          <h5>
+            Estimated value for converting your money from one currency to another based on the current exchange rates.
+          </h5>
+        </section>
         <section className={styles.conversion_container}>
           <section className={`flex-sb-center ${styles.currency_wrapper}`}>
-            <section>
+            <section className={styles.sender_wrapper}>
               <h5 className={`bold ${styles.txt_wrapper}`}>You send</h5>
               <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
                 <section className={styles.amount}>
-                  <input type="text" value={source_amount} className={styles.input} onChange={e => onChangeValue} />
+                  <input
+                    type="text"
+                    value={source_amount}
+                    className={styles.input}
+                    name="source_amount"
+                    onChange={onChangeValue}
+                  />
                 </section>
                 <section className={`flex ${styles.currency}`}>
-                  <CountryFlag {...sourceCountry} />
-                  <h5 className="bold">INR</h5>
+                  <CountryFlag {...source_country} />
                 </section>
               </section>
             </section>
@@ -48,11 +54,16 @@ const InitiateTransactionPage = () => {
               <h5 className={`bold ${styles.txt_wrapper}`}>Recipient recieves</h5>
               <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
                 <section className={styles.amount}>
-                  <input type="text" value={destination_amount} className={styles.input} />
+                  <input
+                    type="text"
+                    value={destination_amount}
+                    name="destination_amount"
+                    className={styles.input}
+                    onChange={onChangeValue}
+                  />
                 </section>
                 <section className={`flex ${styles.currency}`}>
                   <CountryFlag {...destination_country} />
-                  <h5 className="bold">USD</h5>
                 </section>
               </section>
             </section>

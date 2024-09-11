@@ -5,6 +5,7 @@
   background-color: $light-grey
   padding: $size-16px
   border-radius: $size-8px
+  overflow: hidden
 
 .txt_wrapper
   color: $theme
@@ -14,8 +15,9 @@
 
 .card_wrapper
   display: flex
-  flex-wrap: wrap
+  width: 100vw
   gap: $size-16px
+  overflow-x: scroll
   margin-top: $size-16px
 
 .card
@@ -31,3 +33,10 @@
 
 .transfer_wrapper
   margin-top: $size-24px
+
+  @include mixin-responsive
+  .container_wrapper
+
+  .card_wrapper
+    border: $size-1px solid $dark-grey
+    cursor: pointer

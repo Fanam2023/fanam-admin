@@ -16,6 +16,16 @@ export interface ITransaction {
   recipient: IRecipient
   recipient_relationship: string
   beneficiary: IBeneficiary
+  status?: string
+  created_at?: string
+}
+
+export interface ITransactionDetails extends ITransaction {
+  month: string
+  date: string
+  paymentId: string
+  paymentMode: string
+  paymentDuration: string
 }
 
 export interface IBankAccount {
@@ -59,21 +69,16 @@ export interface IResponseFxRate {
 export interface IBaseTransactionData {
   source_amount: string
   destination_amount: string
-  reason: string
 }
 
 export interface IPayloadTransaction extends IBaseTransactionData {
   source_country_id: number
   destination_country_id: number
-  sender_account_type: string
-  recipient_account_type: string
-  purpose: string
 }
 
 export interface ITransactionData extends IBaseTransactionData {
+  source_country: ICountry | null
   destination_country: ICountry | null
-  purpose: IFormData | null
-  recipient_account_type: IFormData[]
 }
 
 export interface IInvoiceData {

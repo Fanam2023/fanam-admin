@@ -1,80 +1,63 @@
 "use client"
 
-import {Button, GroupForm, ImageView, usePopup} from "@fanam-pkg/core-ui-sass"
+import {Button, GroupForm, ImageView} from "@fanam-pkg/core-ui-sass"
+import {ITransactionDetails} from "@custom/utils"
 import assets from "assets"
-import {ITransactionDetails} from "model"
-import {TransactionDetails} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
 export const ListTransaction = () => {
-  const {transaction, formElements} = useHandler()
-  const {togglePopup} = usePopup()
-  const onAddPayment = () =>
-    togglePopup({
-      children: <TransactionDetails />,
-    })
+  const {transactions, formElements, fetchTransaction} = useHandler()
 
-  const Card = ({
-    month,
-    date,
-    name,
-    status,
-    source_amount,
-    destination_amount,
-    paymentId,
-    paymentMode,
-    paymentDuration,
-  }: ITransactionDetails) => (
-    <section className={styles.page_wrapper}>
-      <section className={`flex ${styles.content_wrapper}`} onClick={onAddPayment}>
-        <section className={`flex ${styles.detail_wrapper}`}>
-          <section className={styles.date_wrapper}>
-            <h4 className="bold">{month}</h4>
-            <h4 className={`bold ${styles.date_wrapper}`}>{date}</h4>
-          </section>
-          <section>
-            <section className={`flex`}>
-              <h4 className="bold">{name}</h4>
-              <h5 className={styles.id_wrapper}>{paymentId}</h5>
+  const renderTransactionDetails = (
+    {
+      month,
+      date,
+      status,
+      source_amount,
+      destination_amount,
+      paymentId,
+      paymentMode,
+      paymentDuration,
+      transaction_id,
+      recipient,
+      created_at,
+    }: ITransactionDetails,
+    index: number
+  ) => {
+    const {first_name, last_name} = recipient || {}
+
+    return (
+      <li key={index} className={styles.page_wrapper} onClick={fetchTransaction.bind(null, transaction_id)}>
+        <section className={`flex ${styles.content_wrapper}`}>
+          <section className={`flex ${styles.detail_wrapper}`}>
+            <section className={styles.date_section_wrapper}>
+              <h4 className="bold">{month}</h4>
+              <h4 className={`bold ${styles.date_wrapper}`}>{date}</h4>
             </section>
-            <section className={`flex ${styles.duration_wrapper}`}>
-              <h5>Mode: {paymentMode}</h5>
-              <ImageView src={assets.ic_dot} alt={""} imgSize={6} className={styles.dot_wrapper} />
-              <h5>Transfer Time:{paymentDuration}</h5>
+            <section>
+              <section className="flex">
+                <h4 className="bold">
+                  {first_name} {last_name}
+                </h4>
+                <h5 className={styles.id_wrapper}>{transaction_id}</h5>
+              </section>
+              <section className={`flex ${styles.duration_wrapper}`}>
+                <h5>Mode: {paymentMode}</h5>
+                <ImageView src={assets.ic_dot} alt="dot" imgSize={6} className={styles.dot_wrapper} />
+                <h5>Transfer Time: {paymentDuration}</h5>
+              </section>
+            </section>
+          </section>
+          <section className={styles.price_wrapper}>
+            <h5 className={styles.status_wrapper}>{status}</h5>
+            <section className={`flex ${styles.price_wrapper}`}>
+              <h5 className={`bold ${styles.source_wrapper}`}>{source_amount}</h5>
+              <h5 className="bold">{destination_amount}</h5>
             </section>
           </section>
         </section>
-        <section className={styles.price_wrapper}>
-          <h5 className={styles.status_wrapper}>{status}</h5>
-          <section className={`flex ${styles.price_wrapper}`}>
-            <h5 className={`bold ${styles.source_wrapper}`}>{source_amount}</h5>
-            <h5 className="bold">{destination_amount}</h5>
-          </section>
-        </section>
-      </section>
-    </section>
-  )
-
-  const renderCards = (data: ITransactionDetails[]) => {
-    return data.map(
-      (
-        {month, date, name, status, source_amount, destination_amount, paymentId, paymentMode, paymentDuration},
-        index
-      ) => (
-        <Card
-          key={index}
-          month={month}
-          date={date}
-          name={name}
-          paymentId={paymentId}
-          paymentMode={paymentMode}
-          paymentDuration={paymentDuration}
-          status={status}
-          source_amount={source_amount}
-          destination_amount={destination_amount}
-        />
-      )
+      </li>
     )
   }
 
@@ -84,7 +67,7 @@ export const ListTransaction = () => {
         <h4 className={`bold ${styles.txt_wrapper}`}>Recent Transaction Activity</h4>
         <GroupForm formSections={formElements} wrapperClass={styles.dropDown_wrapper} />
       </section>
-      {transaction && renderCards(transaction)}
+      <ul>{transactions?.map(renderTransactionDetails)}</ul>
       <Button wrapperClass={styles.button_wrapper}>See More Activity</Button>
     </section>
   )

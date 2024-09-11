@@ -18,7 +18,7 @@ export const Transfer = ({onSelectChargeAndTime}: {onSelectChargeAndTime: (charg
     <section>
       <ul className={styles.container_wrapper}>
         <h4 className="bold">Transfer Time</h4>
-        <section className={`flex ${styles.card_wrapper}`}>
+        <section className={` ${styles.card_wrapper}`}>
           {defaultData.map((data, index) => (
             <Card
               key={index}

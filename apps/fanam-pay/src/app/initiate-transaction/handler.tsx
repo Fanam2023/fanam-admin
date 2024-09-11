@@ -1,14 +1,15 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {IFormData, JSONObject, useReactQuery} from "@fanam-pkg/core-utils"
+import {JSONObject, useReactQuery} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
-import {useEffect, useRef, useState} from "react"
+import {ChangeEvent, useEffect, useRef, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
+import useRazorpay from "react-razorpay"
 import {useSlider} from "@custom/ui"
-import {ICountry, IPayloadFxRate, ITransactionData} from "@custom/utils"
+import {ICountry, IPayloadFxRate, IResponseOrder, ITransactionData} from "@custom/utils"
 import {usePaymentController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
 import {CountryPopup} from "organisms"
-import {PURPOSES_BUSINESS, PURPOSES_INDIVIDUAL, QUERY_EXCHANGE, QUERY_TRANSACTION, ROUTE_INVOICE} from "utils"
+import {PURPOSES_BUSINESS, PURPOSES_INDIVIDUAL, QUERY_EXCHANGE, QUERY_TRANSACTION} from "utils"
 
 const DEFAULT_ERR_STATE = {
   errSourceAmount: "",
@@ -27,33 +28,30 @@ let debounceTimer: null | NodeJS.Timeout = null
 export const useHandler = () => {
   const {push} = useRouter()
   const {getFxRate} = usePaymentController()
-  const {createTransaction} = useTransactionController()
+  const {updateTransaction} = useTransactionController()
   const {refreshQuery} = useReactQuery()
   const {toggleNotify} = useNotifyPopup()
-  const {user, updateTransData} = useSingleton()
+  const [Razorpay] = useRazorpay()
+  const {user, updateTransData, transData} = useSingleton()
   const isFetched = useRef(false)
   const [data, setData] = useState<ITransactionData>({
     source_amount: "",
     destination_amount: "",
-    recipient_account_type: [
-      {label: "Individual", isSelected: false},
-      {label: "Business", isSelected: false},
-    ],
     destination_country: null,
-    purpose: null,
-    reason: "",
+    source_country: null,
   })
   const [errState, setErrState] = useState(DEFAULT_ERR_STATE)
   const [selectedCharge, setSelectedCharge] = useState<string>()
   const [selectedTime, setSelectedTime] = useState<string>()
+  const {recipient_account_type, recipient} = transData || {}
 
   const {toggleSlider} = useSlider()
 
-  const {country: sourceCountry, user_accounts = []} = user || {}
+  const {country: sourceCountry, first_name, last_name, phone_no, email} = user || {}
 
-  const {source_amount, destination_country, destination_amount, recipient_account_type, purpose, reason} = data
+  const {source_amount, destination_country, destination_amount} = data
 
-  const isIndividual = recipient_account_type.find(({label, isSelected}) => isSelected && label === "Individual")
+  const isIndividual = recipient_account_type === "Individual"
 
   const PURPOSES = isIndividual ? PURPOSES_INDIVIDUAL : PURPOSES_BUSINESS
 
@@ -76,13 +74,12 @@ export const useHandler = () => {
     },
   })
 
-  const {mutate: onCreate} = useMutation({
+  const {mutate: onUpdateTransaction} = useMutation({
     mutationKey: [QUERY_TRANSACTION],
-    mutationFn: createTransaction,
-    onSuccess: ({result, errorData}) => {
-      if (result) {
-        updateTransData(result)
-        push(ROUTE_INVOICE)
+    mutationFn: updateTransaction,
+    onSuccess: ({order, errorData}) => {
+      if (order) {
+        showPaymentPopup(order)
       } else
         toggleNotify({
           title: "Error - Initiate transaction",
@@ -92,7 +89,56 @@ export const useHandler = () => {
     },
   })
 
-  const handleSelect = (charge: string, time: string) => {
+  function onSuccess() {
+    toggleNotify({
+      type: "success",
+      title: "Payment Successful !",
+      description: "Your payment has been processed.",
+    })
+  }
+
+  function onFailure(error: Record<string, JSONObject>) {
+    toggleNotify({
+      type: "error",
+      title: "Payment Failed !",
+      description: (error?.error?.description as string) || "Something went wrong",
+    })
+  }
+
+  function showPaymentPopup({razorpay_order_id, amount}: IResponseOrder) {
+    const fullName = `${first_name} ${last_name}`
+
+    const rzp1 = new Razorpay({
+      order_id: razorpay_order_id,
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY!,
+      currency: "INR",
+      name: "Fanam Pay",
+      description: "Thanks",
+      amount: amount?.toString(),
+      prefill: {
+        name: fullName,
+        email,
+        contact: phone_no,
+      },
+      retry: {
+        enabled: false,
+      },
+      modal: {
+        backdropclose: false,
+        escape: false,
+        handleback: true,
+        confirm_close: true,
+        ondismiss: onFailure.bind(null),
+      },
+      handler: () => {
+        console.log(">>>>>>>>>>>>>>>> Payment is Successful")
+        onSuccess()
+      },
+    })
+    rzp1.open()
+  }
+
+  const onSelect = (charge: string, time: string) => {
     setSelectedCharge(charge)
     setSelectedTime(time)
   }
@@ -134,15 +180,17 @@ export const useHandler = () => {
     if (isNaN(parseFloat(destination_amount)))
       errState = {...errState, errDestinationAmount: "Please enter valid destination amount", isValid: false}
 
-    if (!recipient_account_type?.some(({isSelected}) => isSelected))
-      errState = {...errState, errRecipientType: "Choose valid recipient type", isValid: false}
-
-    if (!purpose) errState = {...errState, errPurpose: "Please choose valid purpose", isValid: false}
-
-    if (!reason) errState = {...errState, errReason: "Please choose valid reason", isValid: false}
-
     return errState
   }
+
+  useEffect(() => {
+    const payloadData = {...data}
+    if (transData) payloadData.destination_country = recipient.country
+
+    if (user) payloadData.source_country = sourceCountry
+
+    setData(payloadData)
+  }, [transData, user])
 
   useEffect(() => {
     const {isValid} = onValidateFxRate()
@@ -161,14 +209,17 @@ export const useHandler = () => {
     }
   }, [source_amount, destination_amount, checkFxRate, destination_country, user])
 
-  const onChangeValue = (value: JSONObject) => {
+  const onChangeValue = ({target}: ChangeEvent<HTMLInputElement>) => {
     isFetched.current = false
+    const {name, value} = target
+    const payloadData = {...data}
 
-    const keys = Object.keys(value)
-    if (keys.includes("destination_amount")) value = {...value, source_amount: ""}
-    else if (keys.includes("source_amount")) value = {...value, destination_amount: ""}
+    if (name === "destination_amount") payloadData.source_amount = ""
+    else if (name === "source_amount") payloadData.destination_amount = ""
 
-    setData({...data, ...value})
+    payloadData[name] = value
+
+    setData({...data, ...payloadData})
   }
 
   const onSelectCountry = (destination_country: ICountry) => {
@@ -181,21 +232,15 @@ export const useHandler = () => {
       children: <CountryPopup onSelect={onSelectCountry} selCountry={destination_country} />,
     })
 
-  const onSelectType = (value: Record<string, IFormData[]>) => onChangeValue({...value, purpose: ""})
-
   const onSubmit = () => {
     const {isValid} = onValidate()
 
     if (isValid) {
-      onCreate({
+      onUpdateTransaction({
         destination_amount,
         source_amount,
-        recipient_account_type: recipient_account_type.find(({isSelected}) => isSelected)?.label,
         destination_country_id: destination_country?.country_id,
         source_country_id: sourceCountry?.country_id,
-        sender_account_type: user_accounts?.[0]?.account_type,
-        reason,
-        purpose: purpose.key as string,
       })
     }
   }
@@ -205,10 +250,8 @@ export const useHandler = () => {
     PURPOSES,
     showCountries,
     onChangeValue,
-    onSelectType,
     onSubmit,
-    sourceCountry,
-    handleSelect,
+    handleSelect: onSelect,
     selectedTime,
   }
 }

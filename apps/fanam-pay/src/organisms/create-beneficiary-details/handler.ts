@@ -5,9 +5,9 @@ import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {IBeneficiaryData, IPayloadBeneficiary, IStyle} from "@custom/utils"
-import {useBeneficiaryController, useLocationController} from "controller"
+import {useBeneficiaryController, useLocationController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
-import {QUERY_BENEFICIARY, QUERY_CITIES, QUERY_COUNTRIES, QUERY_STATES, ROUTE_TRANSACTION} from "utils"
+import {QUERY_BENEFICIARY, QUERY_CITIES, QUERY_COUNTRIES, QUERY_STATES, ROUTE_BENEFICIARY_PREVIEW} from "utils"
 
 const DEFAULT_ERROR_STATE = {
   isClicked: false,
@@ -35,8 +35,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   const {isValidInputByRegex} = useCommon()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {getByBeneficiaryId, createBeneficiary, updateBeneficiary} = useBeneficiaryController()
-
-  const onRouteToTransaction = () => push(ROUTE_TRANSACTION)
+  const {syncBeneficiary} = useTransactionController()
 
   const [data, setData] = useState<IBeneficiaryData>({
     first_name: "",
@@ -65,6 +64,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     if (!first_name) errState = {...errState, errFirstName: "Please enter first Name", isValid: false}
 
     if (!last_name) errState = {...errState, errLastName: "Please enter last Name", isValid: false}
+    else if (last_name.length < 2) errState = {...errState, errLastName: "LastName must be longer than 2 characters"}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
@@ -145,9 +145,12 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     mutationKey: [QUERY_BENEFICIARY],
     mutationFn: createBeneficiary,
     onSuccess: ({result, errorData}) => {
-      refreshQuery(QUERY_BENEFICIARY)
-      if (result) onSuccess("Beneficiary added Successfully")
-      else onFailure(errorData.message)
+      if (result) {
+        const beneficiary_id = result?.beneficiary_id
+        refreshQuery(QUERY_BENEFICIARY)
+        syncBeneficiary(beneficiary_id)
+        onSuccess("Beneficiary added Successfully")
+      } else onFailure(errorData.message)
     },
   })
 
@@ -246,7 +249,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
       ],
     },
     {
-      wrapperClassGrid: styles.beneficiary_address_wrapper,
+      wrapperClassGrid: `flex ${styles.beneficiary_address_wrapper}`,
       childElements: [
         {
           elementType: "input",
@@ -344,7 +347,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   useEffect(() => {
     if (addedRes) {
       toggleSlider()
-      onRouteToTransaction()
+      push(ROUTE_BENEFICIARY_PREVIEW)
     } else if (updatedRes) {
       toggleSlider()
     }
