@@ -6,7 +6,7 @@ import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const BeneficiaryCard = ({onEdit}: BeneficiaryCardProps) => {
-  const {beneficiaryDetails} = useHandler()
+  const {beneficiaryDetails, beneficiary_id} = useHandler()
 
   const renderRecipientDetails = ({key, label}: IFormData, index: number) => (
     <li className={`flex-sb-center ${styles.data_wrapper}`} key={index}>
@@ -26,7 +26,7 @@ export const BeneficiaryCard = ({onEdit}: BeneficiaryCardProps) => {
             src={assets.ic_edit}
             alt="edit-icon"
             imgSize={24}
-            onClick={onEdit.bind(null, "beneficiary_id")}
+            onClick={onEdit.bind(null, beneficiary_id)}
           />
         </section>
         <ul>{beneficiaryDetails?.map(renderRecipientDetails)}</ul>
