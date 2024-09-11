@@ -40,7 +40,8 @@ const ReviewAndSend = () => {
       skipBtn="Back"
       isStepper
       onSubmit={onProcessPayment.bind(null, transId)}
-      childWrapper={styles.page_wrapper}>
+      childWrapper={styles.page_wrapper}
+      stepIndex={4}>
       <section className={`flex-col ${styles.heading_wrapper}`}>
         <h4 className="bold">Review and Send</h4>
         <p>Review the details of the recipient details and their account details.</p>

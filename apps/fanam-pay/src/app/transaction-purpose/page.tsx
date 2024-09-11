@@ -12,9 +12,10 @@ const TransactionPurpose = () => {
 
   return (
     <BaseContainer
-      stepIndex={3}
+      stepIndex={2}
       buttonText="Next"
       skipBtn="Back"
+      isStepper
       childWrapper={`flex-col-center ${styles.page_wrapper}`}
       onSubmit={onSubmit}>
       <section className={`flex-col ${styles.heading_wrapper}`}>

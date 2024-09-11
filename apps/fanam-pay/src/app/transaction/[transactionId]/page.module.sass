@@ -9,17 +9,13 @@
   margin-top: $size-8px
 
 .page_container
-  margin: $size-24px
-  width: 100%
-
-.page_wrapper
+  width: 45%
   margin:
-    top: 9%
-    bottom: 9%
-  gap: $size-16px
+    top: 7%
+    left: $size-64px
+    right: $size-64px
 
 .heading_wrapper
-  margin-top: 21%
   gap: $size-8px
 
 .payment_status_wrapper
@@ -28,6 +24,7 @@
   margin-top: $size-16px
   border-radius: $size-6px
   gap: $size-8px
+  background: $white
 
 .source_payment_wrapper
   padding: $size-24px $size-24px
@@ -35,6 +32,7 @@
   margin-top: $size-16px
   border-radius: $size-6px
   margin-top: $size-16px
+  background: $white
 
 .source_payment
   color: $theme
@@ -57,6 +55,7 @@
   margin-top: $size-16px
   border-radius: $size-6px
   margin-top: $size-16px
+  background: $white
 
 .helper_wrapper
   gap: $size-4px
@@ -80,14 +79,10 @@
   .page_container
     @include mobile_width
 
-  .page_wrapper
-    padding: 0 $size-48px $size-48px $size-48px
-    gap: $size-20px
-    margin-top: 22%
-
   .payment_status_wrapper
     border: 1px solid $dark-border-grey
     box-shadow: none
+    background: none
     border-radius: $size-6px
     @include mobile_width
 
@@ -95,6 +90,7 @@
     border: 1px solid $dark-border-grey
     box-shadow: none
     border-radius: $size-6px
+    background: none
 
   .payment_details_wrapper
     @include mobile_width
@@ -104,6 +100,7 @@
     border: 1px solid $dark-border-grey
     box-shadow: none
     border-radius: $size-6px
+    background: none
 
   .receipt_text
     display: block
