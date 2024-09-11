@@ -17,16 +17,16 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
   )
 
   return (
-    <>
-      <h5 className={`bold ${styles.recipient}`}>Recipient</h5>
+    <section className={styles.page_wrapper}>
+      <h5 className="bold">Recipient</h5>
       <section className={`flex-col ${styles.details_wrapper}`}>
         <section className={`flex-sb-center ${styles.card_wrapper}`}>
           <h5 className={styles.title_wrapper}>Recipient Details</h5>
           <ImageView
             wrapperClass={styles.edit_icon}
-            src={assets.ic_edit}
+            src={assets.ic_more}
             alt="edit-icon"
-            imgSize={24}
+            imgSize={18}
             onClick={onEdit.bind(null, recipient_id)}
           />
         </section>
@@ -49,6 +49,6 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
           )}
         </section>
       </section>
-    </>
+    </section>
   )
 }

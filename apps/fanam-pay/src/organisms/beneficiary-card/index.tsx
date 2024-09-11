@@ -16,21 +16,21 @@ export const BeneficiaryCard = ({onEdit}: BeneficiaryCardProps) => {
   )
 
   return (
-    <>
-      <h5 className={`bold ${styles.beneficiary}`}>Beneficiary</h5>
+    <section className={styles.page_wrapper}>
+      <h5 className="bold">Beneficiary</h5>
       <section className={`flex-col ${styles.details_wrapper}`}>
         <section className={`flex-sb-center ${styles.card_wrapper}`}>
           <h5 className={styles.title_wrapper}>Beneficiary Details</h5>
           <ImageView
             wrapperClass={styles.edit_icon}
-            src={assets.ic_edit}
+            src={assets.ic_more}
             alt="edit-icon"
-            imgSize={24}
+            imgSize={18}
             onClick={onEdit.bind(null, beneficiary_id)}
           />
         </section>
         <ul>{beneficiaryDetails?.map(renderRecipientDetails)}</ul>
       </section>
-    </>
+    </section>
   )
 }
