@@ -70,7 +70,7 @@ export const useTransactionController = () => {
   }
 
   const syncBeneficiary = async (beneficiaryId: string) => {
-    const {result, errorData} = await postRequest<ITransaction>(apiTransaction(transId), {
+    const {result, errorData} = await putRequest<ITransaction>(apiTransaction(transId), {
       beneficiary_id: beneficiaryId,
     })
     if (result) updateTransData(result)
