@@ -6,7 +6,7 @@ import assets from "assets"
 import {BaseContainer, ExchangeRate, ListTransaction} from "organisms"
 import {ROUTE_RECIPIENTS, ROUTE_SENDER} from "utils"
 import useHandler from "./handler"
-import styles from "./pages.module.sass"
+import styles from "./page.module.sass"
 
 const HomeScreen = () => {
   const {first_name, push, isKYCVerified} = useHandler()
