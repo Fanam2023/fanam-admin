@@ -70,7 +70,7 @@ export const ListTransaction = () => {
         <h4 className={`bold ${styles.txt_wrapper}`}>Recent Transaction Activity</h4>
         {/* <GroupForm formSections={formElements} wrapperClass={styles.dropDown_wrapper} /> */}
       </section>
-      {!!transactions?.length ? (
+      {transactions?.length ? (
         <ul className={styles.list_wrapper}>{transactions.map(renderTransactionDetails)}</ul>
       ) : (
         <ImageView
@@ -80,14 +80,14 @@ export const ListTransaction = () => {
           wrapperClass={styles.empty_transaction}
         />
       )}
-      {!!transactions?.length && (
-       <>
-        <Button wrapperClass={styles.button_wrapper}>See More Activity</Button>
-        <section className={`flex ${styles.activity_wrapper}`}>
-          <h4 className={`bold ${styles.button_txt}`}>See More Activity</h4>
-          <ImageView src={assets.ic_arrow_right} alt="arrow" imgSize={20} wrapperClass={styles.arrow} />
-        </section>
-       </>
+      {transactions?.length && (
+        <>
+          <Button wrapperClass={styles.button_wrapper}>See More Activity</Button>
+          <section className={`flex ${styles.activity_wrapper}`}>
+            <h4 className={`bold ${styles.button_txt}`}>See More Activity</h4>
+            <ImageView src={assets.ic_arrow_right} alt="arrow" imgSize={20} wrapperClass={styles.arrow} />
+          </section>
+        </>
       )}
     </section>
   )
