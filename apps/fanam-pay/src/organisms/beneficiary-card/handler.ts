@@ -4,7 +4,7 @@ import {useSingleton} from "hooks"
 
 export const useHandler = () => {
   const {transData} = useSingleton()
-  const {first_name, last_name, address, email, country, zip_code, state, city, account_no, phone_no} =
+  const {first_name, last_name, address, email, country, zip_code, state, city, account_no, phone_no, beneficiary_id} =
     transData?.beneficiary || {}
 
   const {country_name} = country || {}
@@ -28,5 +28,5 @@ export const useHandler = () => {
     return {beneficiaryDetails}
   }, [transData])
 
-  return {beneficiaryDetails}
+  return {beneficiaryDetails, beneficiary_id}
 }
