@@ -56,9 +56,10 @@ export interface IUserBase {
   country_code?: ICountry | string
   phone_no?: string
   email?: string
+  business_name?: string
   first_name?: string
   last_name?: string
-  account_type?: string
+  account_type?: TypeAccount
   newPin?: string
   confirmPin?: string
 }
@@ -102,7 +103,7 @@ export interface ISyncUserData extends IBaseSyncUser {
   country: IFormData<number> | null
   state: IFormData<number> | null
   city: IFormData<number> | null
-  account_type: string
+  account_type: IFormData<TypeAccount>
   account_no: string
   business_name: string
   pan: string
@@ -132,9 +133,10 @@ export interface IResponseBankAccount extends IPayloadUserBankAccount {
 export interface IBaseSignUp {
   first_name: string
   last_name: string
+  business_name?: string
   email: string
   phone_no: string
-  account_type: string
+  account_type: IFormData<TypeAccount>
   country_code?: ICountry | string
 }
 

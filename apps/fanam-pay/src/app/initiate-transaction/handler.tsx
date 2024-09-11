@@ -98,6 +98,8 @@ export const useHandler = () => {
   }
 
   function onFailure(error: Record<string, JSONObject>) {
+    console.error(">>>>>>>>>>>>>>>>>>>>: error", error)
+
     toggleNotify({
       type: "error",
       title: "Payment Failed !",

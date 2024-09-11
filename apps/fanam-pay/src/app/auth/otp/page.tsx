@@ -12,7 +12,7 @@ const Otp = () => {
     otpValues,
     inputRefs,
     phone_no,
-    country_code,
+    countryCode,
     timer,
     errOtp,
     onKeyDown,
@@ -70,7 +70,7 @@ const Otp = () => {
         <section className={`flex-col ${styles.heading}`}>
           <h4 className={`bold ${styles.otp}`}>OTP Verification </h4>
           <h5>
-            We have sent an OTP on given number {country_code as string} {phone_no}
+            We have sent an OTP on given number {countryCode} {phone_no}
           </h5>
           <ul className={`flex ${styles.otp_field}`}>{otpValues?.map(renderInputNumber)}</ul>
         </section>

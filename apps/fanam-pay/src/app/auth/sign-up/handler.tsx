@@ -15,16 +15,19 @@ const useHandler = (styles: IStyle) => {
   const {toggleSlider} = useSlider()
   const {push} = useRouter()
   const [data, setData] = useState<IBaseSignUp>({
+    business_name: "",
     first_name: "",
     last_name: "",
     email: "",
     phone_no: "",
-    account_type: "",
+    account_type: ACCOUNT_TYPE[0],
     country_code: null,
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
 
-  const {first_name, last_name, email, phone_no, account_type, country_code} = data
+  const {first_name, last_name, email, phone_no, account_type, country_code, business_name} = data
+
+  const isIndividual = account_type.key === "Individual"
 
   const {isClicked} = errData
 
@@ -63,6 +66,9 @@ const useHandler = (styles: IStyle) => {
   const onValidate = () => {
     let errState = {...DEFAULT_ERR_STATE, isValid: true, isClicked: true}
 
+    if (!isIndividual && !business_name)
+      errState = {...errState, errBusinessName: "Please enter Business name", isValid: false}
+
     if (!first_name) errState = {...errState, errFirstName: "Please enter FirstName", isValid: false}
 
     if (!last_name || last_name.length < 2)
@@ -77,6 +83,7 @@ const useHandler = (styles: IStyle) => {
       errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
 
     setErrData(errState)
+    console.log(">>>>>>>>>>>>>>>>>> IS_VALID: ", errState)
 
     return errState
   }
@@ -92,7 +99,7 @@ const useHandler = (styles: IStyle) => {
     if (isClicked) setErrData(prev => ({...prev, ...onValidate()}))
   }, [data, isClicked])
 
-  const {errFirstName, errLastName, errEmail, errPhoneNo, errAccountType, errConfirmPin, errPin} = errData
+  const {errFirstName, errLastName, errEmail, errPhoneNo, errAccountType, errBusinessName, errCountryCode} = errData
 
   const formElements: FormSectionProps[] = [
     {
@@ -136,14 +143,16 @@ const useHandler = (styles: IStyle) => {
         {
           childElement: (
             <>
-              <section className={`flex ${styles.country_wrapper}`} onClick={goToCountrySlider}>
+              <section
+                className={`flex ${styles.country_wrapper} ${errCountryCode ? styles.error_border : ""}`}
+                onClick={goToCountrySlider}>
                 <ImageView
-                  src={country_code ? getFlagUrl(country_code) : assets.ic_india_flag}
+                  src={country_code ? getFlagUrl(country_code) : assets.ic_world}
                   alt="country-img"
                   imgSize={24}
                   wrapperClass={styles.flag}
                 />
-                {country_code ? `+${(country_code as ICountry).phone_code}` : "+91"}
+                {country_code ? `+${(country_code as ICountry).phone_code}` : "-"}
               </section>
               <TextField
                 label="Phone Number"
@@ -172,6 +181,22 @@ const useHandler = (styles: IStyle) => {
     },
   ]
 
+  if (!isIndividual) {
+    formElements.splice(1, 0, {
+      wrapperClassGrid: styles.details_wrapper,
+      childElements: [
+        {
+          elementType: "input",
+          label: "Business Name",
+          name: "business_name",
+          error: errBusinessName,
+          value: business_name,
+          onChangeValue,
+        },
+      ],
+    })
+  }
+
   const onSubmit = () => {
     const {isValid} = onValidate()
 
@@ -181,8 +206,9 @@ const useHandler = (styles: IStyle) => {
         last_name,
         email,
         phone_no,
-        country_code: country_code ? `+${(country_code as ICountry).phone_code}` : "+91",
+        country_code,
         account_type,
+        business_name,
       }
       setStorage(SESSION_SIGNUP, payload)
       push(routeToOTP("singup"))
@@ -201,13 +227,12 @@ const useHandler = (styles: IStyle) => {
 const DEFAULT_ERR_STATE = {
   isClicked: false,
   isValid: false,
+  errBusinessName: "",
   errFirstName: "",
   errLastName: "",
   errAccountType: "",
   errEmail: "",
   errPhoneNo: "",
-  errPin: "",
-  errConfirmPin: "",
   errCountryCode: "",
 }
 

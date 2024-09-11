@@ -1,5 +1,5 @@
 import {Button, FormSectionProps, ImageView, TextField, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
-import {IFormData, JSONObject, REG_EMAIL, useCommon} from "@fanam-pkg/core-utils"
+import {IFormData, JSONObject, REG_EMAIL, useCommon, useDateTime} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
@@ -49,6 +49,7 @@ const useHandler = (styles: IStyle) => {
   const {syncUser} = useAuthController()
   const {verifyPanCard, generateAadhaarCaptcha, reGenerateAadhaarCaptcha, generateAadhaarOTP, verifyAadhaarOTP} =
     useKYCController()
+  const {formatDateUTC} = useDateTime()
   const {toggleNotify} = useNotifyPopup()
   const {togglePopup} = usePopup()
   const {updateUserData, user} = useSingleton()
@@ -64,7 +65,7 @@ const useHandler = (styles: IStyle) => {
     zip_code: "",
     city: null,
     account_no: "",
-    account_type: "",
+    account_type: ACCOUNT_TYPE[0],
     pan: "",
     aadhaarNumber: "",
     business_name: "",
@@ -99,6 +100,7 @@ const useHandler = (styles: IStyle) => {
 
   const {
     isClicked,
+    isValid,
     errFirstName,
     errLastName,
     errEmail,
@@ -209,6 +211,8 @@ const useHandler = (styles: IStyle) => {
     onSuccess: ({result, errorData}) => {
       const {message} = errorData || {}
       if (result) {
+        const {user} = result
+        updateUserData(user)
         toggleNotify({
           title: "Aadhaar OTP",
           description: "OTP Sent successfully",
@@ -228,11 +232,15 @@ const useHandler = (styles: IStyle) => {
     },
   })
 
+  console.log(">>>>>>>>>>>>>>>>>>>>: errState", errData)
+
   const {mutate: verifyOTP} = useMutation({
     mutationFn: verifyAadhaarOTP,
     onSuccess: ({result, errorData}) => {
       const {message} = errorData || {}
       if (result) {
+        const {user} = result
+        updateUserData(user)
         toggleNotify({
           title: "OTP Verification",
           description: "OTP Verified successfully",
@@ -357,7 +365,7 @@ const useHandler = (styles: IStyle) => {
         phone_no,
         zip_code,
         account_no,
-        account_type,
+        account_type: ACCOUNT_TYPE.find(({key}) => key === account_type),
       }
 
       if (country) {
@@ -388,7 +396,7 @@ const useHandler = (styles: IStyle) => {
       }
 
       if (verifiedAadhaar) {
-        const {kyc_number, attachments} = verifiedAadhaar
+        const {kyc_number, attachments = []} = verifiedAadhaar
         payloadData = {
           ...payloadData,
           aadhaarNumber: kyc_number,
@@ -397,7 +405,7 @@ const useHandler = (styles: IStyle) => {
       }
 
       if (verifiedPAN) {
-        const {kyc_number, attachments} = verifiedPAN
+        const {kyc_number, attachments = []} = verifiedPAN
         payloadData = {
           ...payloadData,
           pan: kyc_number,
@@ -460,6 +468,65 @@ const useHandler = (styles: IStyle) => {
   const onChangeCountry = (value: JSONObject) => onChangeValue({...value, state: null, city: null})
 
   const onChangeState = (value: JSONObject) => onChangeValue({...value, city: null})
+
+  const addressForm: FormSectionProps = {
+    title: "Address",
+    wrapperClassGrid: styles.address_details,
+    childElements: [
+      {
+        elementType: "input",
+        label: "Address Line 1",
+        name: "address_line_1",
+        error: errAddress,
+        value: address_line_1,
+        onChangeValue,
+      },
+      {
+        elementType: "input",
+        label: "Address Line 2 (Optional)",
+        name: "address_line_2",
+        value: address_line_2,
+        onChangeValue,
+      },
+      {
+        elementType: "drop-down",
+        label: "Country",
+        name: "country",
+        options: countries,
+        error: errCountry,
+        value: country,
+        onChangeValue: onChangeCountry,
+      },
+      {
+        elementType: "drop-down",
+        label: "State",
+        name: "state",
+        options: states,
+        error: errState,
+        disabled: !country,
+        value: state,
+        onChangeValue: onChangeState,
+      },
+      {
+        elementType: "drop-down",
+        label: "City/District",
+        name: "city",
+        options: cities,
+        error: errCity,
+        disabled: !state,
+        value: city,
+        onChangeValue,
+      },
+      {
+        elementType: "input",
+        label: "PinCode",
+        name: "zip_code",
+        value: zip_code,
+        error: errZipCode,
+        onChangeValue,
+      },
+    ],
+  }
 
   const individualForm: FormSectionProps[] = [
     {
@@ -527,7 +594,8 @@ const useHandler = (styles: IStyle) => {
           onChangeValue,
         },
         {
-          elementType: "date-picker",
+          elementType: "input",
+          type: "date",
           label: "Date of Birth",
           name: "date_of_birth",
           error: errDateOfBirth,
@@ -536,64 +604,7 @@ const useHandler = (styles: IStyle) => {
         },
       ],
     },
-    {
-      title: "Address",
-      wrapperClassGrid: styles.address_details,
-      childElements: [
-        {
-          elementType: "input",
-          label: "Address Line 1",
-          name: "address_line_1",
-          error: errAddress,
-          value: address_line_1,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Address Line 2 (Optional)",
-          name: "address_line_2",
-          value: address_line_2,
-          onChangeValue,
-        },
-        {
-          elementType: "drop-down",
-          label: "Country",
-          name: "country",
-          options: countries,
-          error: errCountry,
-          value: country,
-          onChangeValue: onChangeCountry,
-        },
-        {
-          elementType: "drop-down",
-          label: "State",
-          name: "state",
-          options: states,
-          error: errState,
-          disabled: !country,
-          value: state,
-          onChangeValue: onChangeState,
-        },
-        {
-          elementType: "drop-down",
-          label: "City/District",
-          name: "city",
-          options: cities,
-          error: errCity,
-          disabled: !state,
-          value: city,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "PinCode",
-          name: "zip_code",
-          value: zip_code,
-          error: errZipCode,
-          onChangeValue,
-        },
-      ],
-    },
+    addressForm,
   ]
 
   const businessForm: FormSectionProps[] = [
@@ -670,64 +681,7 @@ const useHandler = (styles: IStyle) => {
         },
       ],
     },
-    {
-      title: "Address",
-      wrapperClassGrid: styles.address_details,
-      childElements: [
-        {
-          elementType: "input",
-          label: "Address Line 1",
-          name: "address_line_1",
-          error: errAddress,
-          value: address_line_1,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "Address Line 2 (Optional)",
-          name: "address_line_2",
-          value: address_line_2,
-          onChangeValue,
-        },
-        {
-          elementType: "drop-down",
-          label: "Country",
-          name: "country",
-          options: countries,
-          error: errCountry,
-          value: country,
-          onChangeValue: onChangeCountry,
-        },
-        {
-          elementType: "drop-down",
-          label: "State",
-          name: "state",
-          options: states,
-          error: errState,
-          disabled: !country,
-          value: state,
-          onChangeValue: onChangeState,
-        },
-        {
-          elementType: "drop-down",
-          label: "City/District",
-          name: "city",
-          options: cities,
-          error: errCity,
-          disabled: !state,
-          value: city,
-          onChangeValue,
-        },
-        {
-          elementType: "input",
-          label: "PinCode",
-          name: "zip_code",
-          value: zip_code,
-          error: errZipCode,
-          onChangeValue,
-        },
-      ],
-    },
+    addressForm,
   ]
 
   useEffect(() => {
@@ -831,7 +785,7 @@ const useHandler = (styles: IStyle) => {
 
     if (isValid) {
       updateUser({
-        account_type,
+        account_type: account_type.key,
         first_name,
         last_name,
         email,
@@ -845,7 +799,7 @@ const useHandler = (styles: IStyle) => {
         account_no,
         kyc_aadhaar: kyc_aadhaar.filter(({file}) => !!file),
         kyc_pan: kyc_pan.filter(({file}) => !!file),
-        date_of_birth,
+        date_of_birth: formatDateUTC(date_of_birth),
       })
     }
   }
@@ -856,6 +810,7 @@ const useHandler = (styles: IStyle) => {
     businessForm,
     individualType,
     onSubmit,
+    isValid,
   }
 }
 

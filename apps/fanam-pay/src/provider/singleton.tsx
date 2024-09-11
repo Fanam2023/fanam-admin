@@ -1,17 +1,26 @@
 import {useCookies, useReactQuery, useStorage} from "@fanam-pkg/core-utils"
+import {useRouter} from "next/navigation"
 import {PropsWithChildren, useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
 import {ITransaction, IUser} from "@custom/utils"
 import {SingletonContext} from "contexts"
 import {useAuthController, useTransactionController} from "controller"
 import {ISingleton} from "model"
-import {COOKIE_ACCESS_TOKEN, COOKIE_REFRESH_TOKEN, COOKIE_TRANSACTION_ID, QUERY_TRANSACTION, QUERY_USER} from "utils"
+import {
+  COOKIE_ACCESS_TOKEN,
+  COOKIE_REFRESH_TOKEN,
+  COOKIE_TRANSACTION_ID,
+  QUERY_TRANSACTION,
+  QUERY_USER,
+  ROUTE_LOGIN,
+} from "utils"
 
 export const SingletonProvider = ({children}: PropsWithChildren) => {
   const {setCookie, getCookie, removeCookie} = useCookies()
   const {getUser, logout} = useAuthController()
   const {getTransactionDetails} = useTransactionController()
   const {clearQueryCache} = useReactQuery()
+  const {replace} = useRouter()
   const {clearAllStorage} = useStorage()
   const [user, setUser] = useState<IUser | null>(null)
   const [transData, setTransData] = useState<ITransaction | null>(null)
@@ -68,6 +77,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     updateTransId(null)
     clearQueryCache()
     clearAllStorage()
+    replace(ROUTE_LOGIN)
   }
 
   const value: ISingleton = {

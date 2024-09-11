@@ -21,7 +21,6 @@ import ic_failure_small from "./icons/ic_failure_small.svg"
 import ic_file from "./icons/ic_file.svg"
 import ic_help from "./icons/ic_help.svg"
 import ic_help_theme from "./icons/ic_help_theme.svg"
-import ic_india_flag from "./icons/ic_india_flag.svg"
 import ic_left_arrow_fill from "./icons/ic_left_arrow_fill.svg"
 import ic_lend_money from "./icons/ic_lend_money.svg"
 import ic_menu from "./icons/ic_menu.svg"
@@ -82,7 +81,6 @@ const assets = {
   ic_search,
   ic_user,
   ic_edit_theme,
-  ic_india_flag,
   ic_us_flag,
   ic_cloudUpload,
   img_logo_in,

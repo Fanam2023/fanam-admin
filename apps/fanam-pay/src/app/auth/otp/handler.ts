@@ -18,6 +18,8 @@ const useHandler = () => {
   const {phone_no, country_code} = storedData || {}
   const scope = searchParams.get("scope")
 
+  const countryCode = typeof country_code === "string" ? country_code : `+${country_code?.phone_code}`
+
   const {sendOtp, verifyOTP} = useFirebase(
     () => push(routeToPin(scope as TypeScope)),
     data => setErrState({...errState, errOtp: data || ""})
@@ -28,7 +30,7 @@ const useHandler = () => {
 
     const onComplete = () => inputRefs.current[0]?.focus()
 
-    if (phone_no?.length === 10) sendOtp(country_code as string, phone_no, onComplete, onComplete)
+    if (phone_no?.length === 10) sendOtp(countryCode, phone_no, onComplete, onComplete)
   }, [phone_no])
 
   useEffect(() => {
@@ -102,7 +104,7 @@ const useHandler = () => {
   const onResend = () => {
     onResendOTP()
     resetOTP()
-    sendOtp(country_code as string, phone_no, () => {
+    sendOtp(countryCode, phone_no, () => {
       console.log("SENT FIREBASE OTP Again Successfully >>>>>>>>>>")
     })
   }
@@ -119,7 +121,7 @@ const useHandler = () => {
     otpValues,
     inputRefs,
     phone_no,
-    country_code,
+    countryCode,
     onKeyDown,
     onInputChange,
     onResend,

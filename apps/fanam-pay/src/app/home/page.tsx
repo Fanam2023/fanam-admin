@@ -9,7 +9,7 @@ import useHandler from "./handler"
 import styles from "./page.module.sass"
 
 const HomeScreen = () => {
-  const {status, first_name, push} = useHandler()
+  const {first_name, push, isKYCVerified} = useHandler()
 
   return (
     <BaseContainer childWrapper={styles.page_container} buttonText="Next" skipBtn="Back">
@@ -24,7 +24,7 @@ const HomeScreen = () => {
             <ImageView src={assets.ic_money} alt="money-icon" imgSize={32} />
             <h3 className={styles.heading}>Send your money instantly and effortlessly</h3>
           </section>
-          {status === "Active" ? (
+          {isKYCVerified ? (
             <Link href={ROUTE_RECIPIENTS}>
               <Button wrapperClass={styles.button_wrapper}>Send Money</Button>
             </Link>

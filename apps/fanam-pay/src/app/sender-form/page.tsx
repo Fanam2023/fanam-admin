@@ -6,7 +6,7 @@ import useHandler from "./handler"
 import styles from "./sender.module.sass"
 
 const SenderForm = () => {
-  const {individualForm, individualKYCElements, businessForm, individualType, onSubmit} = useHandler(styles)
+  const {individualForm, individualKYCElements, businessForm, individualType, onSubmit, isValid} = useHandler(styles)
 
   return (
     <BaseContainer
@@ -15,7 +15,7 @@ const SenderForm = () => {
       buttonText="Next"
       onSubmit={onSubmit}
       skipBtn="Back"
-      disabled
+      // disabled={!isValid}
       stepIndex={0}>
       <h4 className="bold">Complete Your Profile</h4>
       <h6>Essential for verification and processing your transactions securely and efficiently.</h6>

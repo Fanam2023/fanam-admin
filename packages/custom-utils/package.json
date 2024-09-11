@@ -15,8 +15,8 @@
   "private": true,
   "dependencies": {
     "@fanam-pkg/core-utils": "^1.0.3",
-    "axios": "^1.7.2",
-    "react": "^18.2.0"
+    "axios": "^1.7.7",
+    "react": "^18.3.1"
   },
   "devDependencies": {
     "@fanam-pkg/eslint": "^1.0.0",
@@ -24,12 +24,12 @@
     "@fanam-pkg/style-lint": "^1.0.0",
     "@fanam-pkg/ts-config": "^1.0.0",
     "@simplewebauthn/types": "^10.0.0",
-    "@types/node": "^20.12.7",
-    "@types/react": "^18.2.77",
-    "eslint": "^8.56.0",
-    "prettier": "^3.2.5",
-    "sass": "^1.75.0",
-    "stylelint": "^16.3.1",
-    "typescript": "^5.4.5"
+    "@types/node": "^20.16.5",
+    "@types/react": "^18.3.5",
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.3",
+    "sass": "^1.78.0",
+    "stylelint": "^16.9.0",
+    "typescript": "^5.6.2"
   }
 }

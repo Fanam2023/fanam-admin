@@ -1,5 +1,5 @@
 import {IFormData} from "@fanam-pkg/core-utils"
-import {TypePurpose} from "@custom/utils"
+import {TypeAccount, TypePurpose} from "@custom/utils"
 import assets from "assets"
 import {IStepper} from "model"
 import {BankCartProps, BankListProps} from "props"
@@ -111,7 +111,10 @@ export const RELATION_SHIP = [
   "Not_applicable",
 ]
 
-export const ACCOUNT_TYPE = ["Individual", "Business"]
+export const ACCOUNT_TYPE: IFormData<TypeAccount>[] = [
+  {label: "Individual", key: "Individual"},
+  {label: "Business", key: "Business"},
+]
 
 export const BUSINESS_TYPE = ["Sole_proprietor", "Partnership_firm", "Companies", "Limited_liability_partnership"]
 
