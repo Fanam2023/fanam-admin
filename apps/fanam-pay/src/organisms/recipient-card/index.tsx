@@ -24,9 +24,9 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
           <h5 className={styles.title_wrapper}>Recipient Details</h5>
           <ImageView
             wrapperClass={styles.edit_icon}
-            src={assets.ic_edit}
+            src={assets.ic_more}
             alt="edit-icon"
-            imgSize={24}
+            imgSize={18}
             onClick={onEdit.bind(null, recipient_id)}
           />
         </section>
