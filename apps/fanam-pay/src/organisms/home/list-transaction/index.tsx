@@ -80,7 +80,7 @@ export const ListTransaction = () => {
           wrapperClass={styles.empty_transaction}
         />
       )}
-      {transactions?.length && (
+      {transactions?.length > 0 && (
         <>
           <Button wrapperClass={styles.button_wrapper}>See More Activity</Button>
           <section className={`flex ${styles.activity_wrapper}`}>
