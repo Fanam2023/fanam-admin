@@ -24,13 +24,12 @@ const RecipientPage = () => {
   return (
     <BaseContainer
       header={"Manage Recipients"}
-      addButton="Add"
       childWrapper={styles.page_container}
       backIcon
       buttonText="Next"
       skipBtn="Back"
+      isStepper
       stepIndex={0}
-      onAdd={onAdd}
       onBack={onBack}>
       <section className={`flex-col ${styles.recipient_wrapper}`}>
         <h3 className="bold">Add Recipient</h3>

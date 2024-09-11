@@ -1,6 +1,6 @@
 "use client"
 
-import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
+import {Button, ImageView, assets as projectAssets} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import assets from "assets"
@@ -14,16 +14,15 @@ export const BaseContainer = ({
   children,
   footerChild,
   buttonText,
-  addButton,
   onBack,
-  childWrapper = "",
+  childWrapper,
   skipBtn,
   stepIndex,
   profile,
   bellIcon,
   onSubmit,
-  onAdd,
-  isStepper,
+  isStepper = false,
+  disabled = false,
 }: BaseContainerProps) => {
   const {user} = useSingleton()
   const {first_name, last_name} = user || {}
@@ -60,64 +59,72 @@ export const BaseContainer = ({
     <>
       <header className={`flex-sb-center ${styles.header_wrapper}`}>
         <section className={`flex ${styles.logo_wrapper}`}>
-          <ImageView src={assets.img_logo} alt={"logo"} imgHeight={29} />
+          <ImageView src={assets.img_logo} alt={"logo"} imgHeight={isDesktop ? 29 : 20} />
         </section>
         <section className={`flex ${styles.language_section}`}>
           <section className={`flex ${styles.language_wrapper}`}>
-            <ImageView src={assets.ic_world} alt="world-icon" imgSize={24} />
+            <ImageView src={isDesktop ? assets.ic_world : assets.ic_country} alt="world-icon" imgSize={24} />
             <h5 className={`medium ${styles.language_text}`}>Language</h5>
-            <ImageView src={assets.ic_down_arrow} alt="down-arrow" imgSize={20} />
+            <ImageView
+              src={isDesktop ? assets.ic_down_arrow : projectAssets.ic_black_arrow}
+              alt="down-arrow"
+              imgSize={20}
+            />
           </section>
-          <section className={`flex ${styles.help_wrapper}`}>
-            <ImageView src={assets.ic_help} alt="help-icon" imgSize={24} />
-            <h5 className={`medium ${styles.language_text}`}>Help</h5>
-          </section>
-          {!bellIcon && <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />}
-          {!profile && (
-            <section className={styles.profile_wrapper}>
-              {first_name?.charAt(0).toUpperCase()}
-              {last_name?.charAt(0).toUpperCase()}
-            </section>
+          {isDesktop ? (
+            <>
+              <section className={`flex ${styles.help_wrapper}`}>
+                <ImageView src={assets.ic_help} alt="help-icon" imgSize={24} />
+                <h5 className={`medium ${styles.language_text}`}>Help</h5>
+              </section>
+              {!bellIcon && <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />}
+
+              {!profile && (
+                <section className={styles.profile_wrapper}>
+                  {first_name?.charAt(0).toUpperCase()}
+                  {last_name?.charAt(0).toUpperCase()}
+                </section>
+              )}
+            </>
+          ) : (
+            <ImageView src={assets.ic_menu} alt="menu-icon" imgSize={24} />
           )}
         </section>
-        {!!addButton && (
-          <h3 onClick={onAdd} className={styles.add_text}>
-            {addButton}
-          </h3>
-        )}
       </header>
-      <section className={styles.main_wrapper}>
-        {isDesktop ? (
-          <>
-            {!isStepper && <nav className={`flex-col ${styles.nav_container}`}>{SIDE_BAR.map(renderSideBar)}</nav>}
+      {isDesktop ? (
+        isStepper ? (
+          <section className={`flex-start ${styles.children_wrapper}`}>
+            <nav className={`flex-col ${styles.nav_container}`}>{SIDE_BAR.map(renderSideBar)}</nav>
             <section className={childWrapper}>{children}</section>
-          </>
-        ) : (
-          <section className={childWrapper}>{children}</section>
-        )}
-      </section>
-      {(buttonText || footerChild) && (
-        <footer className={styles.footer_wrapper}>
-          <section className={`flex ${styles.footer_content}`}>
-            {!!buttonText && (
-              <>
-                <Button
-                  onClick={onClickBack}
-                  wrapperClass={styles.skip_btn}
-                  buttonType="primary-outlined"
-                  leadingIcon={assets.ic_left_arrow_fill}>
-                  {skipBtn}
-                </Button>
-                <Button
-                  onClick={onSubmit}
-                  wrapperClass={styles.button_wrapper}
-                  trailingIcon={assets.ic_right_arrow_fill}
-                  trailingClass={styles.tail_class}>
-                  {buttonText}
-                </Button>
-              </>
-            )}
           </section>
+        ) : (
+          <section className={`${childWrapper} ${styles.children_wrapper}`}>{children}</section>
+        )
+      ) : (
+        <section>{children}</section>
+      )}
+
+      {(buttonText || footerChild) && (
+        <footer className={`flex ${styles.footer_wrapper}`}>
+          {!!buttonText && (
+            <>
+              <Button
+                onClick={onClickBack}
+                wrapperClass={styles.skip_btn}
+                buttonType="primary-outlined"
+                leadingIcon={assets.ic_left_arrow_fill}>
+                {skipBtn}
+              </Button>
+              <Button
+                onClick={onSubmit}
+                wrapperClass={`${styles.button_wrapper} ${disabled ? styles.disable_btn : ""}`}
+                trailingIcon={assets.ic_right_arrow_fill}
+                trailingClass={styles.tail_class}
+                disabled={disabled}>
+                {buttonText}
+              </Button>
+            </>
+          )}
           {footerChild}
         </footer>
       )}

@@ -30,6 +30,7 @@ const BeneficiaryPage = () => {
       buttonText="Next"
       skipBtn="Back"
       onAdd={onNav}
+      isStepper
       onBack={onBack}>
       <section className={`flex-col ${styles.beneficiary_wrapper}`}>
         <h3 className="bold">Add Beneficiary</h3>

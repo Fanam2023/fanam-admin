@@ -34,7 +34,7 @@ const Forgot_Password = () => {
     })
 
   return (
-    <BaseContainer childWrapper={`flex-col-center ${styles.page_wrapper}`} isStepper profile bellIcon>
+    <BaseContainer profile bellIcon>
       <Auth>
         <section className={`flex-col ${styles.heading}`}>
           <h3 className={`bold ${styles.Forgot}`}>Forgot PIN?</h3>

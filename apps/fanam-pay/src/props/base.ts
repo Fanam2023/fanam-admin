@@ -10,12 +10,10 @@ export interface BottomNavbarProps {
 export interface BaseContainerProps {
   children?: ReactNode
   footerChild?: ReactNode
-  addButton?: string
   header?: string
   profile?: boolean
   bellIcon?: boolean
   buttonText?: string
-  childWrapper?: string
   onClick?: () => void
   backIcon?: boolean
   onBack?: () => void
@@ -23,8 +21,9 @@ export interface BaseContainerProps {
   stepIndex?: number | "success" | "pending" | "failed"
   containerClass?: string
   onSubmit?: () => void
-  onAdd?: () => void
   isStepper?: boolean
+  disabled?: boolean
+  childWrapper?: string
 }
 
 export interface FooterPaymentProps {

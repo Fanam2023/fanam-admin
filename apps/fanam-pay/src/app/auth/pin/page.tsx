@@ -9,7 +9,7 @@ const AuthPin = () => {
   const {formElements, onSubmit} = useHandler(styles)
 
   return (
-    <BaseContainer childWrapper={`flex-col-center ${styles.page_wrapper}`} isStepper profile bellIcon>
+    <BaseContainer profile bellIcon>
       <Auth>
         <section className={`flex-col ${styles.heading}`}>
           <h4 className={`bold ${styles.login}`}>Create a PIN</h4>

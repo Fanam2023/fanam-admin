@@ -83,7 +83,8 @@ const TransactionStatusPage = () => {
       footerChild={DownloadReceipt()}
       childWrapper={styles.page_container}
       skipBtn="Download Receipt"
-      stepIndex="pending">
+      stepIndex="pending"
+      isStepper>
       <section className={`flex-col ${styles.heading_wrapper}`}>
         <h4 className="bold">Payment Status</h4>
         <h5>Get the payment status after sending the money.</h5>

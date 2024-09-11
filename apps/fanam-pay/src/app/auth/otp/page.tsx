@@ -65,7 +65,7 @@ const Otp = () => {
   }, [])
 
   return (
-    <BaseContainer childWrapper={`flex-col-center ${styles.page_wrapper}`} isStepper bellIcon profile>
+    <BaseContainer bellIcon profile>
       <Auth isBack>
         <section className={`flex-col ${styles.heading}`}>
           <h4 className={`bold ${styles.otp}`}>OTP Verification </h4>

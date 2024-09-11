@@ -7,6 +7,7 @@ import ic_back_arrow_black from "./icons/ic_back_arrow_black.svg"
 import ic_business from "./icons/ic_business.svg"
 import ic_checkbox from "./icons/ic_checkbox.svg"
 import ic_cloudUpload from "./icons/ic_cloudUpload.svg"
+import ic_country from "./icons/ic_country.svg"
 import ic_debit_card from "./icons/ic_debit_card.svg"
 import ic_dot from "./icons/ic_dot.svg"
 import ic_down_arrow from "./icons/ic_down_arrow.svg"
@@ -21,6 +22,7 @@ import ic_help_theme from "./icons/ic_help_theme.svg"
 import ic_india_flag from "./icons/ic_india_flag.svg"
 import ic_left_arrow_fill from "./icons/ic_left_arrow_fill.svg"
 import ic_lend_money from "./icons/ic_lend_money.svg"
+import ic_menu from "./icons/ic_menu.svg"
 import ic_money from "./icons/ic_money.svg"
 import ic_more from "./icons/ic_more.svg"
 import ic_pending from "./icons/ic_pending.svg"
@@ -96,6 +98,8 @@ const assets = {
   ic_select_personal,
   ic_business,
   ic_select_business,
+  ic_country,
+  ic_menu,
 }
 
 export default assets
