@@ -4,10 +4,17 @@ import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
-import {IBeneficiaryData, IPayloadBeneficiary, IStyle} from "@custom/utils"
+import {IBeneficiaryData, IPayloadBeneficiary, IStyle, TypeRelation} from "@custom/utils"
 import {useBeneficiaryController, useLocationController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
-import {QUERY_BENEFICIARY, QUERY_CITIES, QUERY_COUNTRIES, QUERY_STATES, ROUTE_BENEFICIARY_PREVIEW} from "utils"
+import {
+  QUERY_BENEFICIARY,
+  QUERY_CITIES,
+  QUERY_COUNTRIES,
+  QUERY_STATES,
+  RELATION_SHIP,
+  ROUTE_BENEFICIARY_PREVIEW,
+} from "utils"
 
 const DEFAULT_ERROR_STATE = {
   isClicked: false,
@@ -42,7 +49,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     last_name: "",
     phone_no: "",
     email: "",
-    relationship: "",
+    relationship: "Friend",
     address: "",
     country: null,
     state: null,
@@ -206,7 +213,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         state: {label: state_name, key: state_id},
         city: {label: city_name, key: city_id},
         address,
-        relationship,
+        relationship: relationship as TypeRelation,
         email,
         phone_no,
         zip_code,
@@ -269,11 +276,12 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           maxLength: 10,
         },
         {
-          elementType: "input",
+          elementType: "drop-down",
           label: "Relationship with the Sender",
           name: "relationship",
           error: errRelation,
           value: relationship,
+          options: RELATION_SHIP,
           onChangeValue,
         },
         {

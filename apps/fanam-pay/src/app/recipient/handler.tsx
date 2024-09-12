@@ -1,11 +1,10 @@
-import {IFormData} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {useRecipientController, useTransactionController} from "controller"
 import {CreateRecipientDetails} from "organisms"
-import {QUERY_RECIPIENT, QUERY_TRANSACTION, ROUTE_INVOICE, ROUTE_RECIPIENT_PREVIEW} from "utils"
+import {ACCOUNT_TYPE, QUERY_RECIPIENT, QUERY_TRANSACTION, ROUTE_INVOICE, ROUTE_RECIPIENT_PREVIEW} from "utils"
 
 export const useHandler = () => {
   const {push} = useRouter()
@@ -13,20 +12,13 @@ export const useHandler = () => {
   const {getAllRecipient} = useRecipientController()
   const {initiateTransaction} = useTransactionController()
   const [searchQuery, setSearchQuery] = useState("")
-  const [selectedType, setSelectedType] = useState("Individual")
-  const TYPE: IFormData[] = [
-    {label: "Individual", isSelected: selectedType === "Individual"},
-    {label: "Business", isSelected: selectedType === "Business"},
-  ]
+  const [selIndex, setSelIndex] = useState(0)
 
-  const onSelectType = (items: IFormData<string, string>[]) => {
-    const selectedItem = items.find(item => item.isSelected)
-    if (selectedItem) setSelectedType(selectedItem.label)
-  }
+  const selectType = ACCOUNT_TYPE[selIndex].key
 
   const {data: recipients} = useQuery({
-    queryKey: [QUERY_RECIPIENT.concat(selectedType)],
-    queryFn: () => getAllRecipient(selectedType),
+    queryKey: [QUERY_RECIPIENT.concat(selectType)],
+    queryFn: () => getAllRecipient(selectType),
   })
 
   const {mutate: linkRecipient} = useMutation({
@@ -63,14 +55,14 @@ export const useHandler = () => {
   const onBack = () => push(ROUTE_INVOICE)
 
   return {
-    TYPE,
     recipients: filteredRecipients,
     searchQuery,
+    selIndex,
     onChangeSearch,
     routeToDetails,
     onAdd,
     onBack,
     linkRecipient,
-    onSelectType,
+    setSelIndex,
   }
 }
