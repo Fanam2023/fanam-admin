@@ -8,7 +8,7 @@ import assets from "assets"
 import {useSingleton} from "hooks"
 import {IStepper} from "model"
 import {BaseContainerProps} from "props"
-import {ROUTE_HOME, ROUTE_LOGIN, SIDE_BAR} from "utils"
+import {ROUTE_HOME, ROUTE_LOGIN, ROUTE_SENDER, SIDE_BAR} from "utils"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({
@@ -28,7 +28,7 @@ export const BaseContainer = ({
   const {user, token, transId} = useSingleton()
   const {first_name, last_name} = user || {}
   const {isDesktop} = useResize()
-  const {back, replace} = useRouter()
+  const {back, replace, push} = useRouter()
   const pathname = usePathname()
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export const BaseContainer = ({
               {!bellIcon && <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />}
 
               {!profile && (
-                <section className={styles.profile_wrapper}>
+                <section className={styles.profile_wrapper} onClick={() => push(ROUTE_SENDER)}>
                   {first_name?.charAt(0).toUpperCase()}
                   {last_name?.charAt(0).toUpperCase()}
                 </section>
