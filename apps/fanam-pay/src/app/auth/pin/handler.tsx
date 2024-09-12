@@ -73,9 +73,10 @@ const useHandler = (styles: IStyle) => {
   }
 
   const onChangeValue = (value: JSONObject) => {
-    const pinValue = (value?.newPin as string) || (value?.confirmPin as string)
-    if (isValidInputByRegex(pinValue, REG_VALID_NUMBER)) setData(prev => ({...prev, ...value}))
-    else toggleNotify({type: "error", title: "Only numbers are allowed for the PIN"})
+    const pinValue = (value?.newPin as string) || (value?.confirmPin as string) || ""
+    const isValid = pinValue === "" || isValidInputByRegex(pinValue, REG_VALID_NUMBER)
+    if (isValid) setData(prev => ({...prev, ...value}))
+    else toggleNotify({type: "error", title: "Only numbers are allowed"})
   }
 
   useEffect(() => {
@@ -94,6 +95,7 @@ const useHandler = (styles: IStyle) => {
           name: "newPin",
           error: errPin,
           value: newPin,
+          maxLength: 6,
           type: "password",
           onChangeValue,
         },
@@ -104,6 +106,7 @@ const useHandler = (styles: IStyle) => {
           error: errConfirmPin,
           type: "password",
           value: confirmPin,
+          maxLength: 6,
           onChangeValue,
         },
       ],

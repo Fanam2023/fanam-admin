@@ -57,9 +57,10 @@ const useHandler = () => {
   }
 
   const onChangeValue = (value: JSONObject) => {
-    const pinValue = (value?.phone_no as string) || (value?.pin as string)
-    if (isValidInputByRegex(pinValue, REG_VALID_NUMBER)) setData(prev => ({...prev, ...value}))
-    else toggleNotify({type: "error", title: "Only numbers are allowed for the PIN"})
+    const pinValue = (value?.phone_no as string) || (value?.pin as string) || ""
+    const isValid = pinValue === "" || isValidInputByRegex(pinValue, REG_VALID_NUMBER)
+    if (isValid) setData(prev => ({...prev, ...value}))
+    else toggleNotify({type: "error", title: "Only numbers are allowed"})
   }
 
   useEffect(() => {

@@ -31,6 +31,7 @@ const Login = () => {
           name="pin"
           type="password"
           value={pin}
+          maxLength={6}
           onChangeData={onChangeValue}
           wrapperClass={styles.text_field_wrapper}
           error={errPin}

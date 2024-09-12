@@ -1,14 +1,13 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {JSONObject, useReactQuery} from "@fanam-pkg/core-utils"
+import {JSONObject, REG_VALID_NUMBER, useReactQuery} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {ChangeEvent, useEffect, useRef, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import useRazorpay from "react-razorpay"
 import {useSlider} from "@custom/ui"
-import {ICountry, IPayloadFxRate, IResponseOrder, ITransactionData} from "@custom/utils"
+import {IPayloadFxRate, IResponseOrder, ITransactionData} from "@custom/utils"
 import {usePaymentController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
-import {CountryPopup} from "organisms"
 import {PURPOSES_BUSINESS, PURPOSES_INDIVIDUAL, QUERY_EXCHANGE, QUERY_TRANSACTION} from "utils"
 
 const DEFAULT_ERR_STATE = {
@@ -216,6 +215,15 @@ export const useHandler = () => {
     const {name, value} = target
     const payloadData = {...data}
 
+    const isNumber = value === "" || REG_VALID_NUMBER.test(value)
+    if (!isNumber) {
+      toggleNotify({
+        description: "Only nummbers allowed",
+        type: "error",
+      })
+      return
+    }
+
     if (name === "destination_amount") payloadData.source_amount = ""
     else if (name === "source_amount") payloadData.destination_amount = ""
 
@@ -223,16 +231,6 @@ export const useHandler = () => {
 
     setData({...data, ...payloadData})
   }
-
-  const onSelectCountry = (destination_country: ICountry) => {
-    setData({...data, destination_country})
-    toggleSlider()
-  }
-
-  const showCountries = () =>
-    toggleSlider({
-      children: <CountryPopup onSelect={onSelectCountry} selCountry={destination_country} />,
-    })
 
   const onSubmit = () => {
     const {isValid} = onValidate()
@@ -250,7 +248,6 @@ export const useHandler = () => {
   return {
     data,
     PURPOSES,
-    showCountries,
     onChangeValue,
     onSubmit,
     handleSelect: onSelect,
