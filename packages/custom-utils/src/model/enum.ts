@@ -50,7 +50,7 @@ export type TypeRelation =
   | "Father"
   | "Mother"
   | "Son"
-  | "Bother"
+  | "Brother"
   | "Sister"
   | "Others"
   | "Cousin"
