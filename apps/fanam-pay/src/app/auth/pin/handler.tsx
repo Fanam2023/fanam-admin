@@ -13,6 +13,7 @@ const useHandler = (styles: IStyle) => {
   const searchParams = useSearchParams()
   const {isValidInputByRegex} = useCommon()
   const scope = searchParams.get("scope") as TypeScope
+  const [isNextDisabled, setIsNextDisabled] = useState<boolean>(false)
   const [data, setData] = useState<ISignUpPin>({
     newPin: "",
     confirmPin: "",
@@ -72,11 +73,20 @@ const useHandler = (styles: IStyle) => {
     return errState
   }
 
+  const isSequential = (pin: string): boolean => {
+    const ascending = "1234567890"
+    const descending = "0987654321"
+    return ascending.includes(pin) || descending.includes(pin)
+  }
+
   const onChangeValue = (value: JSONObject) => {
     const pinValue = (value?.newPin as string) || (value?.confirmPin as string) || ""
     const isValid = pinValue === "" || isValidInputByRegex(pinValue, REG_VALID_NUMBER)
-    if (isValid) setData(prev => ({...prev, ...value}))
-    else toggleNotify({type: "error", title: "Only numbers are allowed"})
+    setData(prev => ({...prev, ...value}))
+    setIsNextDisabled(!isValid || (pinValue.length === 6 && isSequential(pinValue)))
+    if (!isValid) toggleNotify({type: "error", title: "Only numbers are allowed"})
+    else if (pinValue.length === 6 && isSequential(pinValue))
+      toggleNotify({type: "error", title: "PIN cannot be a continuous sequence"})
   }
 
   useEffect(() => {
@@ -105,6 +115,7 @@ const useHandler = (styles: IStyle) => {
           name: "confirmPin",
           error: errConfirmPin,
           type: "password",
+          disabled: isNextDisabled,
           value: confirmPin,
           maxLength: 6,
           onChangeValue,
