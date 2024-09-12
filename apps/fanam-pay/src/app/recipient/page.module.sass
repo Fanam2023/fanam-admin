@@ -1,14 +1,16 @@
 @use "../../styles/index" as *
+.page_container
+  width: 50%
+  margin:
+    left: $size-64px
+    top: 7%
+
 .search_container
   margin:
     top: $size-16px
-    left: 7%
   gap: $size-20px
 
 .recipient_wrapper
-  margin:
-    top: 26%
-    left: 7%
   gap: $size-8px
 
 .add_text
@@ -18,7 +20,6 @@
 
 .save_text
   margin:
-    left: 7%
     top: $size-24px
 
 .members
@@ -27,37 +28,43 @@
   grid-column-gap: $size-18px
   grid-row-gap: $size-28px
   margin:
-    left: 7%
     top: $size-10px
   overflow-y: scroll
   width: 100%
 
 .saved_wrapper
+  align-items: baseline
   justify-content: space-between
 
 .radio_button
   display: flex
   flex-direction: row
-  margin-top: $size-14px
 
   label
     border: none
 
+.tabs_container
+  z-index: 0
+
 @include mixin-responsive
   .page_container
     width: 100%
+    margin-bottom: 5%
 
   .slider_card
     display: none
 
   .saved_wrapper
     padding: 0 $size-20px
+    gap: $size-12px
 
   .radio_button
     margin-top: $size-20px
 
   .recipient_wrapper
-    margin-top: 25%
+    margin:
+      top: 25%
+      left: 5%
 
   .search_container
     width: 90%
@@ -71,7 +78,7 @@
     padding: 0 $size-16px
     margin-left: 0
     grid-column-gap: $size-12px
-    height: 27%
+    overflow-y: scroll
 
   .add_text
     border: $size-1px solid $theme
@@ -83,3 +90,7 @@
     margin-left: 0
     font-size: $size-16px
     color: $theme
+
+  .tabs_container
+    display: none
+    width: max-content

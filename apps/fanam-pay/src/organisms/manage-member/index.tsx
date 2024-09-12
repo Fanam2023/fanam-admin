@@ -33,7 +33,7 @@ export const ManageMembers = ({title, onEdit, onSelect, description}: ManageMemb
           <h4 className={`bold ${styles.title}`}>{getFirstLetter(title)}</h4>
         </section>
       </section>
-      <h6 className={`ellipsis ${styles.user_details}`}>{title}</h6>
+      <h6 className={`ellipsis ${styles.user_details} `}>{title}</h6>
     </section>
   )
 }

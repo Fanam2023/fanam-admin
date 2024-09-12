@@ -23,13 +23,11 @@ const BeneficiaryPage = () => {
   return (
     <BaseContainer
       header="Manage Beneficiary"
-      addButton="Add"
       childWrapper={styles.page_container}
       backIcon
       stepIndex={1}
       buttonText="Next"
       skipBtn="Back"
-      onAdd={onNav}
       isStepper
       onBack={onBack}>
       <section className={`flex-col ${styles.beneficiary_wrapper}`}>

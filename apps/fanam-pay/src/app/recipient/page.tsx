@@ -1,14 +1,15 @@
 "use client"
 
-import {RadioButton, TextField} from "@fanam-pkg/core-ui-sass"
+import {Tabs, TextField} from "@fanam-pkg/core-ui-sass"
 import {IRecipient} from "@custom/utils"
 import assets from "assets"
 import {BaseContainer, ManageMembers} from "organisms"
+import {ACCOUNT_TYPE} from "utils"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const RecipientPage = () => {
-  const {recipients, onChangeSearch, routeToDetails, onAdd, onBack, linkRecipient, searchQuery, TYPE, onSelectType} =
+  const {recipients, searchQuery, selIndex, setSelIndex, onChangeSearch, routeToDetails, onAdd, onBack, linkRecipient} =
     useHandler()
 
   const renderRecipients = ({first_name, last_name, email, recipient_id}: IRecipient) => (
@@ -48,7 +49,7 @@ const RecipientPage = () => {
       </section>
       <section className={`flex ${styles.saved_wrapper}`}>
         <h5 className={`bold ${styles.save_text}`}>Saved Recipients</h5>
-        <RadioButton items={TYPE} wrapperClass={styles.radio_button} onSelectItems={onSelectType}></RadioButton>
+        <Tabs selIndex={selIndex} tabs={ACCOUNT_TYPE} onClickTab={setSelIndex} wrapperClass={styles.tabs_container} />
       </section>
       <ul className={styles.members}>{recipients?.map(renderRecipients)}</ul>
     </BaseContainer>
