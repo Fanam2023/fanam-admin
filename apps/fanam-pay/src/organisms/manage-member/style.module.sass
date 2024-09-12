@@ -4,9 +4,9 @@
   width: 100%
 
 .card_wrapper
-  background-color: $primary-fill
+  background-color: $white
   border-radius: $size-10px
-  padding: $size-14px $size-24px
+  padding: $size-14px
 
 .profile_wrapper
   height: $size-56px
@@ -47,9 +47,12 @@
 
 .user_details
   cursor: pointer
-  margin-top: $size-8px
-  width: 90%
+  margin-top: $size-16px
+  // width: 90%
   text-align: center
+  overflow: hidden
+  white-space: nowrap
+  text-overflow: ellipsis
 
 .user_img
   cursor: pointer
@@ -75,10 +78,10 @@
 
   .user_details
     gap: $size-4px
+    font-size: $size-14px
 
   .card_wrapper
-    padding: $size-8px
+    border: $size-1px solid $dark-border-grey
 
-  .profile_wrapper
-    height: $size-36px
-    width: $size-36px
+  .title
+    font-size: $size-16px

@@ -24,7 +24,7 @@
 
 .members
   display: grid
-  grid-template-columns: repeat(6,0.5fr)
+  grid-template-columns: repeat(4, 0.5fr)
   grid-column-gap: $size-18px
   grid-row-gap: $size-28px
   margin:
@@ -45,6 +45,14 @@
 
 .tabs_container
   z-index: 0
+  background: none
+
+  &li
+    border-color: $white
+
+.content
+  height: 40%
+  overflow: scroll
 
 @include mixin-responsive
   .page_container
@@ -73,12 +81,13 @@
       top: 5%
 
   .members
-    grid-template-columns: repeat(4,0.5fr)
+    grid-template-columns: repeat(2, 0.5fr)
     width: 90%
     padding: 0 $size-16px
     margin-left: 0
     grid-column-gap: $size-12px
     overflow-y: scroll
+    margin-bottom: 33%
 
   .add_text
     border: $size-1px solid $theme

@@ -49,9 +49,17 @@ const RecipientPage = () => {
       </section>
       <section className={`flex ${styles.saved_wrapper}`}>
         <h5 className={`bold ${styles.save_text}`}>Saved Recipients</h5>
-        <Tabs selIndex={selIndex} tabs={ACCOUNT_TYPE} onClickTab={setSelIndex} wrapperClass={styles.tabs_container} />
+        <Tabs
+          selIndex={selIndex}
+          tabs={ACCOUNT_TYPE}
+          onClickTab={setSelIndex}
+          wrapperClass={styles.tabs_container}
+          isChip={true}
+        />
       </section>
-      <ul className={styles.members}>{recipients?.map(renderRecipients)}</ul>
+      <section className={styles.content}>
+        <ul className={styles.members}>{recipients?.map(renderRecipients)}</ul>
+      </section>
     </BaseContainer>
   )
 }
