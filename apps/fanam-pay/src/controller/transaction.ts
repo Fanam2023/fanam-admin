@@ -2,6 +2,7 @@ import {IFile} from "@fanam-pkg/core-utils"
 import {
   API_INVOICE,
   API_TRANSACTION,
+  apiAllTransaction,
   apiTransaction,
   IFanamApiError,
   IPayloadMergeRecipient,
@@ -20,8 +21,8 @@ export const useTransactionController = () => {
   const {transId, updateTransData, updateTransId} = useSingleton()
   const {createOrder} = useOrderController()
 
-  const getTransaction = async () => {
-    const {result} = await getRequest<ITransactionDetails[]>(API_TRANSACTION)
+  const getTransaction = async (status: string) => {
+    const {result} = await getRequest<ITransactionDetails[]>(apiAllTransaction(status))
     return result || []
   }
 

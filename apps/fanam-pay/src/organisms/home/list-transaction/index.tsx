@@ -1,13 +1,13 @@
 "use client"
 
-import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
+import {Button, GroupForm, ImageView} from "@fanam-pkg/core-ui-sass"
 import {ITransactionDetails} from "@custom/utils"
 import assets from "assets"
 import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
 export const ListTransaction = () => {
-  const {transactions, fetchTransaction} = useHandler()
+  const {transactions, formElements, fetchTransaction} = useHandler()
 
   const renderTransactionDetails = (
     {
@@ -68,7 +68,7 @@ export const ListTransaction = () => {
     <section className={styles.container_wrapper}>
       <section className={`flex ${styles.head_wrapper}`}>
         <h4 className={`bold ${styles.txt_wrapper}`}>Recent Transaction Activity</h4>
-        {/* <GroupForm formSections={formElements} wrapperClass={styles.dropDown_wrapper} /> */}
+        <GroupForm formSections={formElements} wrapperClass={styles.dropDown_wrapper} />
       </section>
       {transactions?.length ? (
         <ul className={styles.list_wrapper}>{transactions.map(renderTransactionDetails)}</ul>

@@ -4,7 +4,7 @@ import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
-import {IBeneficiaryData, IPayloadBeneficiary, IStyle, TypeRelation} from "@custom/utils"
+import {IBeneficiaryData, IPayloadBeneficiary, IStyle} from "@custom/utils"
 import {useBeneficiaryController, useLocationController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
 import {
@@ -49,7 +49,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     last_name: "",
     phone_no: "",
     email: "",
-    relationship: "Friend",
+    relationship: null,
     address: "",
     country: null,
     state: null,
@@ -90,8 +90,6 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     if (!city) errState = {...errState, errCity: "Please enter Your City/District", isValid: false}
 
     if (!zip_code) errState = {...errState, errZipCode: "Please enter Your ZipCode", isValid: false}
-
-    if (!account_no) errState = {...errState, errAccountNo: "Please enter Your ZipCode", isValid: false}
 
     setErrState(errState)
     return errState
@@ -213,7 +211,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         state: {label: state_name, key: state_id},
         city: {label: city_name, key: city_id},
         address,
-        relationship: relationship as TypeRelation,
+        relationship: RELATION_SHIP.find(({key}) => key === relationship),
         email,
         phone_no,
         zip_code,
@@ -374,7 +372,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         state_id: state.key,
         city_id: city.key,
         zip_code,
-        relationship,
+        relationship: relationship?.key,
         transaction_id,
         account_no,
       }

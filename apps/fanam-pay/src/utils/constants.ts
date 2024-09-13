@@ -1,5 +1,5 @@
 import {IFormData} from "@fanam-pkg/core-utils"
-import {TypeAccount, TypePurpose} from "@custom/utils"
+import {TypeAccount, TypePurpose, TypeRelation, TypeTransactionStatus} from "@custom/utils"
 import assets from "assets"
 import {IStepper} from "model"
 import {BankCartProps, BankListProps} from "props"
@@ -87,29 +87,18 @@ export const PURPOSES_BUSINESS: IFormData<TypePurpose>[] = [
   {label: "Others", key: "Others"},
 ]
 
-export const ID_PROOFS = ["Passport", "Driving License", "Aadhaar"]
-export const RELATION_SHIP = [
-  "Father",
-  "Mother",
-  "Son",
-  "Bother",
-  "Sister",
-  "Others",
-  "Cousin",
-  "Daughter",
-  "Friend",
-  "Uncle",
-  "Aunty",
-  "Grandmother",
-  "Grandfather",
-  "Sister_in_law",
-  "Father_in_law",
-  "Mother_in_law",
-  "Brother_in_law",
-  "Nephew",
-  "Niece",
-  "Not_applicable",
+export const TRANSACTION_STATUS: IFormData<TypeTransactionStatus>[] = [
+  {label: "Transaction Initiated", key: "Transaction_initiated"},
+  {label: "Invoice Upload", key: "Invoice_upload"},
+  {label: "Recipient Picked", key: "Recipient_picked"},
+  {label: "Beneficiary Picked", key: "Beneficiary_picked"},
+  {label: "Payment Initiated", key: "Payment_initiated"},
+  {label: "Payment Pending", key: "Payment_pending"},
+  {label: "Payment Successful", key: "Payment_successful"},
+  {label: "Payment Failed", key: "Payment_failed"},
 ]
+
+export const ID_PROOFS = ["Passport", "Driving License", "Aadhaar"]
 
 export const ACCOUNT_TYPE: IFormData<TypeAccount>[] = [
   {label: "Individual", key: "Individual"},
@@ -119,3 +108,26 @@ export const ACCOUNT_TYPE: IFormData<TypeAccount>[] = [
 export const BUSINESS_TYPE = ["Sole_proprietor", "Partnership_firm", "Companies", "Limited_liability_partnership"]
 
 export const BANK_ACCOUNT_TYPE = ["Current", "Savings", "Overdraft"]
+
+export const RELATION_SHIP: IFormData<TypeRelation>[] = [
+  {key: "Father", label: "Father"},
+  {key: "Mother", label: "Mother"},
+  {key: "Son", label: "Son"},
+  {key: "Brother", label: "Brother"},
+  {key: "Sister", label: "Sister"},
+  {key: "Others", label: "Others"},
+  {key: "Cousin", label: "Cousin"},
+  {key: "Daughter", label: "Daughter"},
+  {key: "Friend", label: "Friend"},
+  {key: "Uncle", label: "Uncle"},
+  {key: "Aunty", label: "Aunty"},
+  {key: "Grandmother", label: "GrandMother"},
+  {key: "Grandfather", label: "GrandFather"},
+  {key: "Sister_in_law", label: "SisterInLaw"},
+  {key: "Father_in_law", label: "FatherInLaw"},
+  {key: "Mother_in_law", label: "MotherInLaw"},
+  {key: "Brother_in_law", label: "BrotherInLaw"},
+  {key: "Nephew", label: "Nephew"},
+  {key: "Niece", label: "Niece"},
+  {key: "Not_applicable", label: "NotApplicable"},
+]
