@@ -17,7 +17,7 @@ import {useOrderController} from "./order"
 
 export const useTransactionController = () => {
   const {getRequest, postRequest, putRequest} = useApi()
-  const {transId, updateTransData} = useSingleton()
+  const {transId, updateTransData, updateTransId} = useSingleton()
   const {createOrder} = useOrderController()
 
   const getTransaction = async () => {
@@ -79,7 +79,11 @@ export const useTransactionController = () => {
 
   const initiateTransaction = async (recipientId: string) => {
     const {result, errorData} = await postRequest<ITransaction>(API_TRANSACTION, {recipient_id: recipientId})
-    if (result) updateTransData(result)
+    if (result) {
+      const {transaction_id} = result
+      updateTransId(transaction_id)
+      updateTransData(result)
+    }
     return {result, errorData}
   }
 

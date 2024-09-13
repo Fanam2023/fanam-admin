@@ -48,8 +48,8 @@ const ReviewAndSend = () => {
       </section>
       <section className={styles.card_wrapper}>
         <section className={`flex-sb-center ${styles.header}`}>
-          <h5 className={styles.edit_text}>Conversation Details</h5>
-          <section className="flex">
+          <h5 className={styles.edit_text}>Conversion Details</h5>
+          {/* <section className="flex">
             {isDesktop ? (
               <>
                 <ImageView wrapperClass={styles.edit_icon} src={assets.ic_edit_white} alt="edit-icon" imgSize={20} />
@@ -58,7 +58,7 @@ const ReviewAndSend = () => {
             ) : (
               <ImageView src={assets.ic_more} alt="edit-icon" imgSize={20} />
             )}
-          </section>
+          </section> */}
         </section>
         <ul>{paymentDetails?.map(renderPaymentDetails)}</ul>
         <section className={`flex-sb-center`}>

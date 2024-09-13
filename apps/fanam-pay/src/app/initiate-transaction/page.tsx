@@ -14,6 +14,8 @@ const InitiateTransactionPage = () => {
     selectedTime,
   } = useHandler()
 
+  const {currency} = destination_country || {}
+
   return (
     <BaseContainer
       header="Cross Border Remittance"
@@ -83,7 +85,9 @@ const InitiateTransactionPage = () => {
               <h4>Receiver will get exactly</h4>
               <h5 className={styles.hour_wrapper}>Transfer in {selectedTime}</h5>
             </section>
-            <h4 className={`bold ${styles.total_wrapper}`}>98.28 USD</h4>
+            <h4 className={`bold ${styles.total_wrapper}`}>
+              {destination_amount} {currency}
+            </h4>
           </section>
         </section>
       </section>

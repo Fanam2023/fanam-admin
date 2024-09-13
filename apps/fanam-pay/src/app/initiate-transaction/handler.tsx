@@ -8,7 +8,14 @@ import {useSlider} from "@custom/ui"
 import {IPayloadFxRate, IResponseOrder, ITransactionData} from "@custom/utils"
 import {usePaymentController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
-import {PURPOSES_BUSINESS, PURPOSES_INDIVIDUAL, QUERY_EXCHANGE, QUERY_TRANSACTION} from "utils"
+import {
+  PURPOSES_BUSINESS,
+  PURPOSES_INDIVIDUAL,
+  QUERY_EXCHANGE,
+  QUERY_TRANSACTION,
+  ROUTE_REVIEW_SEND,
+  routeToTransactionDetail,
+} from "utils"
 
 const DEFAULT_ERR_STATE = {
   errSourceAmount: "",
@@ -31,7 +38,7 @@ export const useHandler = () => {
   const {refreshQuery} = useReactQuery()
   const {toggleNotify} = useNotifyPopup()
   const [Razorpay] = useRazorpay()
-  const {user, updateTransData, transData} = useSingleton()
+  const {user, transId, transData} = useSingleton()
   const isFetched = useRef(false)
   const [data, setData] = useState<ITransactionData>({
     source_amount: "",
@@ -94,16 +101,16 @@ export const useHandler = () => {
       title: "Payment Successful !",
       description: "Your payment has been processed.",
     })
+    push(ROUTE_REVIEW_SEND)
   }
 
-  function onFailure(error: Record<string, JSONObject>) {
-    console.error(">>>>>>>>>>>>>>>>>>>>: error", error)
-
+  function onFailure(error?: string) {
     toggleNotify({
       type: "error",
       title: "Payment Failed !",
-      description: (error?.error?.description as string) || "Something went wrong",
+      description: error || "Something went wrong",
     })
+    push(routeToTransactionDetail(transId))
   }
 
   function showPaymentPopup({razorpay_order_id, amount}: IResponseOrder) {
@@ -129,7 +136,7 @@ export const useHandler = () => {
         escape: false,
         handleback: true,
         confirm_close: true,
-        ondismiss: onFailure.bind(null),
+        ondismiss: onFailure.bind(null, "You have cancelled the payment!"),
       },
       handler: () => {
         console.log(">>>>>>>>>>>>>>>> Payment is Successful")
@@ -137,6 +144,13 @@ export const useHandler = () => {
       },
     })
     rzp1.open()
+
+    rzp1.on("payment.failed", (response: Record<string, JSONObject>) => {
+      console.error(">>>>>>>>>>>>>>>> Payment is Failed", response, response?.error?.description)
+      const message =
+        (response?.error?.description as string) || "Sorry, We are not able to process your payment at the moment."
+      onFailure(message)
+    })
   }
 
   const onSelect = (charge: string, time: string) => {

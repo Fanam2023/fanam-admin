@@ -20,3 +20,4 @@ export const routeToOTP = (scope: TypeScope) => `/auth/otp?scope=${scope}`
 export const ROUTE_HOME = "/home"
 export const routeToPin = (scope: TypeScope) => `/auth/pin?scope=${scope}`
 export const ROUTE_TRANSACTION_PURPOSE = "/transaction-purpose"
+export const ROUTE_REVIEW_SEND = "/review-send"

@@ -12,7 +12,7 @@ const HomeScreen = () => {
   const {first_name, push, isKYCVerified} = useHandler()
 
   return (
-    <BaseContainer childWrapper={styles.page_container} buttonText="Next" skipBtn="Back">
+    <BaseContainer childWrapper={styles.page_container}>
       <section className={styles.main_container}>
         <section className={`flex ${styles.name_wrapper}`}>
           <h2>Good Afternoon,</h2>

@@ -1,4 +1,4 @@
-import {IFormData, useResize} from "@fanam-pkg/core-utils"
+import {IFormData} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useSlider} from "@custom/ui"
@@ -12,7 +12,6 @@ const useHandler = () => {
     recipient: false,
     beneficiary: false,
   })
-  const {isDesktop} = useResize()
   const {toggleSlider} = useSlider()
   const {push} = useRouter()
 
@@ -103,6 +102,7 @@ const useHandler = () => {
 
     return beneficiaryDetails
   }, [transData])
+
   const paymentDetails = useMemo(() => {
     const paymentDetails: IFormData[] = [
       {key: "You Send", label: `${String(source_amount)} ${currency}`},

@@ -38,7 +38,7 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
           </section>
           {isSame && (
             <DropDown
-              label="Select Relationship with Recipient"
+              label="Sender's relationship with the Recipient *"
               options={RELATION_SHIP}
               onChangeData={onChangeData}
               name="recipient_relationship"
