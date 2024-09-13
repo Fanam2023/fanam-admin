@@ -1,5 +1,14 @@
 import {IFile, IFormData} from "@fanam-pkg/core-utils"
-import {IAttachment, IBeneficiary, ICountry, IRecipient, IUser, TypeAccount, TypePurpose} from "../model"
+import {
+  IAttachment,
+  IBeneficiary,
+  ICountry,
+  IRecipient,
+  IUser,
+  TypeAccount,
+  TypePurpose,
+  TypeTransactionStatus,
+} from "../model"
 
 export interface ITransaction {
   transaction_id: string
@@ -26,6 +35,11 @@ export interface ITransactionDetails extends ITransaction {
   paymentId: string
   paymentMode: string
   paymentDuration: string
+}
+
+export interface StatusSelect {
+  date: string
+  status: IFormData<TypeTransactionStatus> | null
 }
 
 export interface IBankAccount {

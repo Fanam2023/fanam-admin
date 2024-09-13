@@ -20,6 +20,7 @@ export const apiRecipient = (recipient_id: string) => `${API_RECIPIENT}/${recipi
 export const API_BENEFICIARY = "/beneficiary"
 export const apiBeneficiary = (beneficiary_id: string) => `${API_BENEFICIARY}/${beneficiary_id}`
 export const API_TRANSACTION = "/transaction"
+export const apiAllTransaction = (status: string) => `${API_TRANSACTION}?status=${status}`
 export const apiTransaction = (transaction_id: string) => `${API_TRANSACTION}/${transaction_id}`
 export const apiSenderKYC = (kycId: string) => `/file-upload/sender-kyc/${kycId}`
 export const API_RECIPIENT_KYC = "/file-upload/recipient-kyc"

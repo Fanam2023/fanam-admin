@@ -1,18 +1,24 @@
 "use client"
 
 import {FormSectionProps, usePopup} from "@fanam-pkg/core-ui-sass"
+import {JSONObject} from "@fanam-pkg/core-utils"
+import {useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
+import {StatusSelect} from "@custom/utils"
 import {useTransactionController} from "controller"
-import {TransactionDetails} from "organisms"
-import {QUERY_TRANSACTION} from "utils/storage-constants"
+import {QUERY_TRANSACTION, TRANSACTION_STATUS} from "utils"
+import {TransactionDetails} from "../transaction-details"
 
 export const useHandler = () => {
   const {getTransaction, getTransactionDetails} = useTransactionController()
   const {togglePopup} = usePopup()
+  const [data, setData] = useState<StatusSelect>({date: "", status: null})
+  const {date, status} = data
+  const statusKey = status?.key || ""
 
   const {data: transactions = []} = useQuery({
-    queryKey: [QUERY_TRANSACTION],
-    queryFn: getTransaction,
+    queryKey: [QUERY_TRANSACTION.concat(statusKey)],
+    queryFn: () => getTransaction(statusKey),
   })
 
   const {mutate: fetchTransaction} = useMutation({
@@ -25,16 +31,23 @@ export const useHandler = () => {
     },
   })
 
+  const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
   const formElements: FormSectionProps[] = [
     {
       childElements: [
         {
           elementType: "drop-down",
-          label: "All",
+          options: TRANSACTION_STATUS,
+          value: status,
+          onChangeValue,
+          name: "status",
         },
         {
-          elementType: "date-picker",
-          label: "Date",
+          elementType: "input",
+          type: "date",
+          name: "date",
+          value: date,
+          onChangeValue,
         },
       ],
     },
