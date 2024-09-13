@@ -1,5 +1,4 @@
 import {IFormData} from "@fanam-pkg/core-utils"
-import {TypeRelation} from "./enum"
 import {ICity, ICountry, IState} from "./location"
 
 export type IBeneficiary = {
@@ -26,7 +25,7 @@ export interface IBaseBeneficiary {
   phone_no: string
   address: string
   zip_code: string
-  relationship: TypeRelation
+  relationship: IFormData<string> | null
   account_no?: string
 }
 
@@ -36,11 +35,12 @@ export interface IBeneficiaryData extends IBaseBeneficiary {
   city: IFormData<number> | null
 }
 
-export interface IPayloadBeneficiary extends IBaseBeneficiary {
+export interface IPayloadBeneficiary extends Omit<IBaseBeneficiary, "relationship"> {
   country_id: number
   state_id: number
   city_id: number
   transaction_id: string
+  relationship: string
 }
 
 export interface IPayloadUpdateBeneficiary extends IPayloadBeneficiary {
