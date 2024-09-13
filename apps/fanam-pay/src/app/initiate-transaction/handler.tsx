@@ -119,7 +119,7 @@ export const useHandler = () => {
     const rzp1 = new Razorpay({
       order_id: razorpay_order_id,
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY!,
-      currency: "INR",
+      currency: sourceCountry.currency,
       name: "Fanam Pay",
       description: "Thanks",
       amount: amount?.toString(),

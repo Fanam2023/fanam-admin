@@ -17,7 +17,7 @@ export const ROUTE_SIGN_UP = "/auth/sign-up"
 export const ROUTE_LOGIN = "/auth/login"
 export const ROUTE_FORGOT_PIN = "/auth/forgot-password"
 export const routeToOTP = (scope: TypeScope) => `/auth/otp?scope=${scope}`
-export const ROUTE_HOME = "/home"
+export const ROUTE_HOME = "/"
 export const routeToPin = (scope: TypeScope) => `/auth/pin?scope=${scope}`
 export const ROUTE_TRANSACTION_PURPOSE = "/transaction-purpose"
 export const ROUTE_REVIEW_SEND = "/review-send"
