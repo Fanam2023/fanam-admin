@@ -1,5 +1,7 @@
 "use client"
 
+import {ImageView} from "@fanam-pkg/core-ui-sass"
+import assets from "assets"
 import {BaseContainer, CountryFlag} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
@@ -11,6 +13,7 @@ const InitiateTransactionPage = () => {
     onChangeValue,
     onSubmit,
     handleSelect,
+    showCountries,
     selectedTime,
   } = useHandler()
 
@@ -66,6 +69,7 @@ const InitiateTransactionPage = () => {
                 </section>
                 <section className={`flex ${styles.currency}`}>
                   <CountryFlag {...destination_country} />
+                  <ImageView src={assets.ic_dropDown} alt={"Drop-Down"} imgSize={12} onClick={showCountries} />
                 </section>
               </section>
             </section>

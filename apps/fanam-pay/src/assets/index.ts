@@ -12,6 +12,7 @@ import ic_country from "./icons/ic_country.svg"
 import ic_debit_card from "./icons/ic_debit_card.svg"
 import ic_dot from "./icons/ic_dot.svg"
 import ic_down_arrow from "./icons/ic_down_arrow.svg"
+import ic_dropDown from "./icons/ic_dropDown.svg"
 import ic_edit from "./icons/ic_edit.svg"
 import ic_edit_theme from "./icons/ic_edit_theme.svg"
 import ic_edit_white from "./icons/ic_edit_white.svg"
@@ -55,6 +56,7 @@ const assets = {
   ic_account,
   ic_more,
   ic_rocket,
+  ic_dropDown,
   ic_star,
   ic_up_arrow,
   ic_back,

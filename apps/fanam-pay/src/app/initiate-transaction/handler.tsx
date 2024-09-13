@@ -5,9 +5,10 @@ import {ChangeEvent, useEffect, useRef, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import useRazorpay from "react-razorpay"
 import {useSlider} from "@custom/ui"
-import {IPayloadFxRate, IResponseOrder, ITransactionData} from "@custom/utils"
+import {ICountry, IPayloadFxRate, IResponseOrder, ITransactionData} from "@custom/utils"
 import {usePaymentController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
+import {CountryPopup} from "organisms"
 import {
   PURPOSES_BUSINESS,
   PURPOSES_INDIVIDUAL,
@@ -180,6 +181,16 @@ export const useHandler = () => {
     return errState
   }
 
+  const onSelectCountry = (destination_country: ICountry) => {
+    setData({...data, destination_country})
+    toggleSlider()
+  }
+
+  const showCountries = () =>
+    toggleSlider({
+      children: <CountryPopup onSelect={onSelectCountry} selCountry={destination_country} />,
+    })
+
   const onValidate = () => {
     let errState = {
       ...DEFAULT_ERR_STATE,
@@ -264,6 +275,7 @@ export const useHandler = () => {
     PURPOSES,
     onChangeValue,
     onSubmit,
+    showCountries,
     handleSelect: onSelect,
     selectedTime,
   }
