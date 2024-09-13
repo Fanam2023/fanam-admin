@@ -21,7 +21,7 @@ export const useTransactionController = () => {
   const {transId, updateTransData, updateTransId} = useSingleton()
   const {createOrder} = useOrderController()
 
-  const getTransaction = async (status:string) => {
+  const getTransaction = async (status: string) => {
     const {result} = await getRequest<ITransactionDetails[]>(apiAllTransaction(status))
     return result || []
   }

@@ -38,7 +38,6 @@ export interface ITransactionDetails extends ITransaction {
 }
 
 export interface StatusSelect {
-  date: string
   status: IFormData<TypeTransactionStatus> | null
 }
 

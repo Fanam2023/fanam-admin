@@ -6,14 +6,14 @@ import {useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import {StatusSelect} from "@custom/utils"
 import {useTransactionController} from "controller"
+import {TransactionDetails} from "organisms"
 import {QUERY_TRANSACTION, TRANSACTION_STATUS} from "utils"
-import {TransactionDetails} from "../transaction-details"
 
 export const useHandler = () => {
   const {getTransaction, getTransactionDetails} = useTransactionController()
   const {togglePopup} = usePopup()
-  const [data, setData] = useState<StatusSelect>({date: "", status: null})
-  const {date, status} = data
+  const [data, setData] = useState<StatusSelect>({status: null})
+  const {status} = data
   const statusKey = status?.key || ""
 
   const {data: transactions = []} = useQuery({
@@ -46,7 +46,6 @@ export const useHandler = () => {
           elementType: "input",
           type: "date",
           name: "date",
-          value: date,
           onChangeValue,
         },
       ],
