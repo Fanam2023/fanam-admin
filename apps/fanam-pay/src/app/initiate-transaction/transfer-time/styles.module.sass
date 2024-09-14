@@ -2,38 +2,50 @@
 
 .container_wrapper
   margin-top: $size-24px
-  background-color: $light-grey
-  padding: $size-16px
-  border-radius: $size-8px
-  overflow: hidden
 
 .txt_wrapper
-  color: $theme
-  padding:
-    top: $size-16px
-    bottom: $size-8px
+  color: $darker-grey
+  white-space: nowrap
 
 .card_wrapper
-  display: flex
-  width: 100vw
   gap: $size-16px
-  overflow-x: scroll
   margin-top: $size-16px
 
 .card
-  border: $size-1px solid $dark-grey
-  padding: $size-16px
+  row-gap: $size-8px
+  padding: $size-12px
   border-radius: $size-16px
+  background-color: $light-grey
   cursor: pointer
   transition: background-color 0.3s ease, border-color 0.3s ease
 
-.selected
+.transfer_time_wrapper
+  border: $size-1px solid $light-grey
+  border-radius: $size-12px
+  padding: $size-12px $size-24px $size-12px $size-12px
+  gap: $size-24px
+
+.text
+  color: $darker-grey
+
+.selected_text
+  color: $black
+
+.selected_txt
+  color: $theme
+
+.selected_image
   background-color: $light-theme
+
+.selected_card
   border: solid $size-1px $theme
+  box-shadow: 0 $size-1px $size-12px 0 rgba($black, $alpha-two)
+
+.fees_wrapper
+  row-gap: $size-8px
+  width: 100vw
 
 .transfer_wrapper
-  margin-top: $size-24px
-
   @include mixin-responsive
   .container_wrapper
 

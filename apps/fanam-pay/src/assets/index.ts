@@ -8,8 +8,10 @@ import ic_back_arrow_black from "./icons/ic_back_arrow_black.svg"
 import ic_business from "./icons/ic_business.svg"
 import ic_checkbox from "./icons/ic_checkbox.svg"
 import ic_cloudUpload from "./icons/ic_cloudUpload.svg"
+import ic_conversion from "./icons/ic_conversion.svg"
 import ic_country from "./icons/ic_country.svg"
 import ic_debit_card from "./icons/ic_debit_card.svg"
+import ic_delivery from "./icons/ic_delivery.svg"
 import ic_dot from "./icons/ic_dot.svg"
 import ic_down_arrow from "./icons/ic_down_arrow.svg"
 import ic_edit from "./icons/ic_edit.svg"
@@ -26,9 +28,11 @@ import ic_lend_money from "./icons/ic_lend_money.svg"
 import ic_menu from "./icons/ic_menu.svg"
 import ic_money from "./icons/ic_money.svg"
 import ic_more from "./icons/ic_more.svg"
+import ic_parachute from "./icons/ic_parachute.svg"
 import ic_pending from "./icons/ic_pending.svg"
 import ic_pending_small from "./icons/ic_pending_small.svg"
 import ic_personal from "./icons/ic_personal.svg"
+import ic_power from "./icons/ic_power.svg"
 import ic_refresh from "./icons/ic_refresh.svg"
 import ic_remove from "./icons/ic_remove.svg"
 import ic_right from "./icons/ic_right.svg"
@@ -55,6 +59,10 @@ const assets = {
   ic_account,
   ic_more,
   ic_rocket,
+  ic_power,
+  ic_conversion,
+  ic_parachute,
+  ic_delivery,
   ic_star,
   ic_up_arrow,
   ic_back,

@@ -1,5 +1,7 @@
 "use client"
 
+import {ImageView} from "@fanam-pkg/core-ui-sass"
+import assets from "assets"
 import {BaseContainer, CountryFlag} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
@@ -28,32 +30,31 @@ const InitiateTransactionPage = () => {
       stepIndex={3}>
       <section className={styles.container_wrapper}>
         <section className={styles.header_wrapper}>
-          <h2 className="bold">Payment Estimate</h2>
-          <h5>
+          <h2 className="bold">Payout Estimate</h2>
+          <h5 className={styles.description}>
             Estimated value for converting your money from one currency to another based on the current exchange rates.
           </h5>
         </section>
         <section className={styles.conversion_container}>
           <section className={`flex-sb-center ${styles.currency_wrapper}`}>
             <section className={styles.sender_wrapper}>
-              <h5 className={`bold ${styles.txt_wrapper}`}>You send</h5>
+              <h5 className={`bold ${styles.txt_wrapper}`}>You Send</h5>
               <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
-                <section className={styles.amount}>
-                  <input
-                    type="text"
-                    value={source_amount}
-                    className={styles.input}
-                    name="source_amount"
-                    onChange={onChangeValue}
-                  />
-                </section>
+                <input
+                  type="text"
+                  value={source_amount}
+                  className={styles.input}
+                  name="source_amount"
+                  onChange={onChangeValue}
+                />
                 <section className={`flex ${styles.currency}`}>
                   <CountryFlag {...source_country} />
                 </section>
               </section>
             </section>
+            <ImageView src={assets.ic_conversion} alt="convert" imgSize={40} wrapperClass={styles.convert_img} />
             <section>
-              <h5 className={`bold ${styles.txt_wrapper}`}>Recipient recieves</h5>
+              <h5 className={`bold ${styles.txt_wrapper}`}>Recipient receives</h5>
               <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
                 <section className={styles.amount}>
                   <input
@@ -71,19 +72,13 @@ const InitiateTransactionPage = () => {
             </section>
           </section>
           <Transfer onSelectChargeAndTime={handleSelect} />
-          <section className={`flex-sb-center ${styles.exchange_wrapper}`}>
-            <h5>Exchange rate</h5>
-            <h5>250.00 INR</h5>
-          </section>
-          <section className={`flex-sb-center ${styles.exchange_wrapper}`}>
-            <h5>Total fees</h5>
-            <h5>351.00 INR</h5>
-          </section>
-          <section className={styles.line_wrapper} />
-          <section className={`flex-sb-center`}>
+          <section className={`flex-sb-center ${styles.total_background}`}>
             <section className={styles.receiver_wrapper}>
               <h4>Receiver will get exactly</h4>
-              <h5 className={styles.hour_wrapper}>Transfer in {selectedTime}</h5>
+              <section className="flex">
+                <ImageView src={assets.ic_power} alt="" imgSize={24} />
+                <h5 className={styles.hour_wrapper}>Transfer in {selectedTime}</h5>
+              </section>
             </section>
             <h4 className={`bold ${styles.total_wrapper}`}>
               {destination_amount} {currency}
