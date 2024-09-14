@@ -6,9 +6,9 @@ export const useHandler = (onSelectChargeAndTime: (charge: string, time: string)
   const [selectedCard, setSelectedCard] = useState<number | null>(0)
 
   const defaultData: ITransfer[] = [
-    {image: assets.ic_rocket, time: "1 Hour", charge: "1000.00 INR"},
-    {image: assets.ic_rocket, time: "5 Hours", charge: "700.00 INR"},
-    {image: assets.ic_rocket, time: "2-3 days", charge: "300.00 INR"},
+    {image: assets.ic_rocket, time: "12 Hours", charge: "1000.00 INR"},
+    {image: assets.ic_parachute, time: "24 Hours", charge: "700.00 INR"},
+    {image: assets.ic_delivery, time: "36 Hours", charge: "300.00 INR"},
   ]
 
   const onSelect = (charge: string, time: string, index: number) => {

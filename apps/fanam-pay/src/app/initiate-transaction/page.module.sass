@@ -1,12 +1,15 @@
 @use "../../styles/index" as *
+
 @mixin common-color
   color: $darker-grey
 
 .page_container
   overflow-y: scroll
-  margin: 0 $size-24px
+  width: 70%
   margin:
     top: $size-28px
+    left: 5%
+    right: 5%
 
 .header_wrapper
   margin: $size-24px
@@ -20,9 +23,6 @@
 
 .button_container
   gap: $size-20px
-
-.text_wrapper
-  color: $dark-grey
 
 .txt_wrapper
   color: $dark-grey
@@ -62,12 +62,8 @@
 .flag_wrapper
   gap: $size-10px
 
-.sender_wrapper
-  margin-bottom: $size-16px
-
 .receiver_text
   color: $primary
-
   @include common-color
 
 .radio_button
@@ -85,9 +81,6 @@
   height: $size-1px
   margin-top: $size-14px
 
-.receiver_wrapper
-  margin-top: $size-16px
-
 .hour_wrapper
   margin-top: $size-4px
   color: $theme
@@ -101,6 +94,9 @@
   padding: $size-10px $size-8px
   border-radius: $size-8px
 
+.description
+  margin-top: $size-16px
+
 .input
   border: none
   background: none
@@ -109,13 +105,29 @@
 
 .currency
   gap: $size-6px
+.convert_img
+  margin-top: $size-40px
+
+.total_background
+  background: $light-theme
+  padding: $size-8px
+  border-radius: $size-8px
+  margin-top: $size-24px
 
 @include mixin-responsive
+
   .page_container
     margin:
       top: 8%
       right: $size-12px
       left: $size-12px
+
+  .container_wrapper
+    margin:
+      top: 10%
+      bottom: 0%
+      right: 0
+    overflow-y: scroll
 
   .conversion_container
     background: none
@@ -123,6 +135,18 @@
     box-shadow: none
     margin-top: $size-16px
     padding: $size-16px $size-32px
+    height: 100vh
+    overflow-y: scroll
 
   .currency_wrapper
     display: block
+
+  .convert_img
+    margin-top: $size-16px
+    transform: rotate(90deg)
+
+  .conversion_container
+    padding: $size-16px
+
+  .header_wrapper
+    margin: $size-16px

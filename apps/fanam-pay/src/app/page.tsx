@@ -1,27 +1,47 @@
 "use client"
 
-import {Button, TextField} from "@fanam-pkg/core-ui-sass"
-import {useHandler} from "./handler"
+import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
+import Link from "next/link"
+import assets from "assets"
+import {BaseContainer, ExchangeRate, ListTransaction} from "organisms"
+import {ROUTE_RECIPIENTS, ROUTE_SENDER} from "utils"
+import useHandler from "./handler"
 import styles from "./page.module.sass"
 
-export default function Dashboard() {
-  const {onLogin, data, errState, onChangeValue} = useHandler()
-  const {email} = data
-  const {errEmail} = errState
+const HomeScreen = () => {
+  const {first_name, push, isKYCVerified} = useHandler()
 
   return (
-    <section className={styles.page_container}>
-      <TextField
-        label="Email"
-        wrapperClass={styles.login_field}
-        value={email}
-        onChangeData={onChangeValue}
-        name="email"
-        error={errEmail}
-      />
-      <Button wrapperClass={styles.login_button} onClick={onLogin}>
-        Login
-      </Button>
-    </section>
+    <BaseContainer childWrapper={styles.page_container}>
+      <section className={styles.main_container}>
+        <section className={`flex ${styles.name_wrapper}`}>
+          <h2>Good Afternoon,</h2>
+          <h2 className={styles.first_name}>{first_name}</h2>
+        </section>
+        <h5>Discover how your currency has been tracking with our exchange rate charts.</h5>
+        <section className={`flex-sb-center ${styles.nav_wrapper}`}>
+          <section className="flex">
+            <ImageView src={assets.ic_money} alt="money-icon" imgSize={32} />
+            <h3 className={styles.heading}>Send your money instantly and effortlessly</h3>
+          </section>
+          {isKYCVerified ? (
+            <Link href={ROUTE_RECIPIENTS}>
+              <Button wrapperClass={styles.button_wrapper}>Send Money</Button>
+            </Link>
+          ) : (
+            <Button
+              wrapperClass={styles.danger_button}
+              buttonType="primary-outlined"
+              onClick={() => push(ROUTE_SENDER)}>
+              Complete Your Profile
+            </Button>
+          )}
+        </section>
+        <ExchangeRate />
+        <ListTransaction />
+      </section>
+    </BaseContainer>
   )
 }
+
+export default HomeScreen
