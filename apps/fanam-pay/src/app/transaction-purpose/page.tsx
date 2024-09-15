@@ -47,8 +47,10 @@ const TransactionPurpose = () => {
           />
         </section>
         <section className={styles.upload_wrapper}>
-          <h5 className="bold">Upload Document </h5>
-          <p className={styles.child_text}>Upload the supporting document related to the purpose of sending money</p>
+          <h5 className="bold">Upload Supporting Document</h5>
+          <p className={styles.child_text}>
+            Upload the supporting document related to the purpose like Invoice, Way bills etc...
+          </p>
           <GroupAttachment
             wrapperClass={styles.file_upload}
             name="doc"

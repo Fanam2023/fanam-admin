@@ -13,6 +13,7 @@ const InitiateTransactionPage = () => {
     onChangeValue,
     onSubmit,
     handleSelect,
+    showCountries,
     selectedTime,
   } = useHandler()
 
@@ -67,6 +68,7 @@ const InitiateTransactionPage = () => {
                 </section>
                 <section className={`flex ${styles.currency}`}>
                   <CountryFlag {...destination_country} />
+                  <ImageView src={assets.ic_dropDown} alt={"Drop-Down"} imgSize={12} onClick={showCountries} />
                 </section>
               </section>
             </section>
