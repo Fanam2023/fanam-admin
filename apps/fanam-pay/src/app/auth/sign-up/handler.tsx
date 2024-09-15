@@ -83,7 +83,6 @@ const useHandler = (styles: IStyle) => {
       errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
 
     setErrData(errState)
-    console.log(">>>>>>>>>>>>>>>>>> IS_VALID: ", errState)
 
     return errState
   }

@@ -24,12 +24,8 @@ export const useHandler = () => {
     try {
       const {data: startResponse} = await axios.get(API_REGISTER_START)
 
-      console.log(">>>>>>>>>>>> startResponse: ", startResponse)
-
       if (startResponse) {
         const attestation = await startRegistration(startResponse)
-
-        console.log(">>>>>>>>>>>> attestation: ", attestation)
 
         const {challenge} = startResponse
 
@@ -40,7 +36,6 @@ export const useHandler = () => {
             title: "Registration done successfully",
             type: "success",
           })
-        console.log(">>>>>>>>>>>> finishResponse: ", finishResponse)
       }
     } catch (error) {
       console.error(">>>>>>>>>>>>> onRegister error: ", error)
@@ -49,18 +44,12 @@ export const useHandler = () => {
 
   const onAuthenticate = async () => {
     try {
-      console.log(">>>>>>>>>>>> registrationInfo: ", registrationInfo)
-
       if (registrationInfo) {
         /* This request to be changed as GET while implement */
         const {data: startResponse} = await axios.post(API_AUTHENTICATION_START, [registrationInfo])
 
-        console.log(">>>>>>>>>>>> startResponse: ", startResponse)
-
         if (startResponse) {
           const assessRes = await startAuthentication(startResponse)
-
-          console.log(">>>>>>>>>>>> assessRes: ", assessRes)
 
           const {challenge} = startResponse
           const {credentialPublicKey, credentialID} = registrationInfo
@@ -77,8 +66,6 @@ export const useHandler = () => {
               title: "Logged in successfully",
               type: "success",
             })
-
-          console.log(">>>>>>>>>>>> finishResponse: ", finishResponse)
         }
       }
     } catch (error) {

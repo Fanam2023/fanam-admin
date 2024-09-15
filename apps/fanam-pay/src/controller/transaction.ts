@@ -68,14 +68,25 @@ export const useTransactionController = () => {
     return {result, errorData}
   }
 
-  const initiateTransaction = async (recipientId: string) => {
-    const {result, errorData} = await postRequest<ITransaction>(API_TRANSACTION, {recipient_id: recipientId})
-    if (result) {
-      const {transaction_id} = result
-      updateTransId(transaction_id)
-      updateTransData(result)
-    }
+  const syncRecipient = async (recipientId: string) => {
+    const {result, errorData} = await putRequest<ITransaction>(apiTransaction(transId), {
+      recipient_id: recipientId,
+    })
+    if (result) updateTransData(result)
     return {result, errorData}
+  }
+
+  const initiateTransaction = async (recipientId: string) => {
+    if (transId) return await syncRecipient(recipientId)
+    else {
+      const {result, errorData} = await postRequest<ITransaction>(API_TRANSACTION, {recipient_id: recipientId})
+      if (result) {
+        const {transaction_id} = result
+        updateTransId(transaction_id)
+        updateTransData(result)
+      }
+      return {result, errorData}
+    }
   }
 
   const syncRecipientAsBeneficiary = async (payload: IPayloadMergeRecipient) => {
