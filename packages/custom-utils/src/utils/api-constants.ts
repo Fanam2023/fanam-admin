@@ -13,7 +13,7 @@ export const API_COUNTRIES = `${API_LOCATION}/all-countries`
 export const apiStates = (countryId: number) => `${API_LOCATION}/countries/${countryId}`
 export const apiCities = (stateId: number) => `${API_LOCATION}/states/${stateId}`
 export const API_PAYMENT = "/payment"
-export const API_FXRATE = `${API_PAYMENT}/fxRate-visa`
+export const API_FXRATE = `${API_PAYMENT}/fxRate-conversion`
 export const API_RECIPIENT = "/recipient"
 export const apiRecipientType = (recipientType: string) => `${API_RECIPIENT}?recipient_type=${recipientType}`
 export const apiRecipient = (recipient_id: string) => `${API_RECIPIENT}/${recipient_id}`
@@ -31,6 +31,7 @@ export const apiLoginStart = (credentialId: string) => `/passkey/login-start?cre
 export const API_LOGIN_FINISH = "/passkey/login-finish"
 export const API_POPULAR_CORRIDORS = "/payment/popularCorridors-visa"
 export const API_CREATE_ORDER = "/order"
+export const apiPayout = (transacionId: string) => `/payment/masterCard-payout/${transacionId}`
 
 /* KYC Endpoints */
 export const API_PAN_VERIFY = `${API_USER}/pan-verification`

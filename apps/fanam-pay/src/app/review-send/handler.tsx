@@ -1,32 +1,35 @@
 import {IFormData} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
-import {useSlider} from "@custom/ui"
+import {useMutation} from "@tanstack/react-query"
+import {usePaymentController} from "controller"
 import {useSingleton} from "hooks"
-import {CreateBeneficiaryDetails, CreateRecipientDetails} from "organisms"
 import {routeToTransactionDetail} from "utils"
 
 const useHandler = () => {
   const {transData, refetchTransaction, transId, user} = useSingleton()
+  const {sendPayout} = usePaymentController()
   const [showDetails, setShowDetails] = useState({
     recipient: false,
     beneficiary: false,
   })
-  const {toggleSlider} = useSlider()
   const {push} = useRouter()
 
   const {
     recipient,
     beneficiary,
     recipient_relationship,
-    source_amount,
     source_country,
     destination_country,
     destination_amount,
     markup_fee,
+    other_fee,
+    exchange_amount,
+    final_amount,
+    order,
   } = transData || {}
-  const {recipient_id} = recipient || {}
-  const {beneficiary_id} = beneficiary || {}
+
+  const isDisabled = !order
 
   const {currency} = source_country || {}
   const {currency: destinationCountryValue} = destination_country || {}
@@ -105,10 +108,10 @@ const useHandler = () => {
 
   const paymentDetails = useMemo(() => {
     const paymentDetails: IFormData[] = [
-      {key: "You Send", label: `${String(source_amount)} ${currency}`},
-      {key: "Transfer Fee", label: String(markup_fee)},
-      // {key: "Exchange rate", label: "200.50 INR"},
-      // {key: "Total Fees", label: "351.00 INR"},
+      {key: "Exchange Amount", label: `${exchange_amount} ${currency}`},
+      {key: "Transfer Fee", label: `${other_fee} ${currency}`},
+      {key: "Exchange rate", label: `${markup_fee} ${currency}`},
+      {key: "Total Fees", label: `${final_amount} ${currency}`},
     ]
 
     return paymentDetails
@@ -116,36 +119,23 @@ const useHandler = () => {
 
   const toggleDetails = (type: string) => setShowDetails(prev => ({...prev, [type]: !prev[type]}))
 
-  const routeToBeneficiary = () => {
-    toggleSlider({
-      children: <CreateBeneficiaryDetails beneficiary_id={beneficiary_id} />,
-      title: "Edit Beneficiary",
-    })
-  }
-
-  const routeToRecipient = () =>
-    toggleSlider({
-      children: <CreateRecipientDetails recipient_id={recipient_id} />,
-      title: "Edit Recipient Details",
-    })
-
-  const onProcessPayment = async () => {
-    /* HIT Network Partner (VISA or MasterCard API to transact money to the recipient) */
-    push(routeToTransactionDetail(transId))
-  }
+  const {mutate: completeTransaction} = useMutation({
+    mutationFn: sendPayout,
+    onSuccess: ({result}) => {
+      if (result) push(routeToTransactionDetail(transId))
+    },
+  })
 
   return {
-    recipientDetails,
     beneficiaryDetails,
+    recipientDetails,
     paymentDetails,
     showDetails,
     toggleDetails,
-    onProcessPayment,
-    transId,
-    routeToRecipient,
-    routeToBeneficiary,
     destination_amount,
     destinationCountryValue,
+    isDisabled,
+    completeTransaction,
   }
 }
 

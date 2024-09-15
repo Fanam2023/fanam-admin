@@ -27,7 +27,7 @@ const useHandler = (styles: IStyle) => {
 
   const {first_name, last_name, email, phone_no, account_type, country_code, business_name} = data
 
-  const isIndividual = account_type.key === "Individual"
+  const isIndividual = account_type?.key === "Individual"
 
   const {isClicked} = errData
 

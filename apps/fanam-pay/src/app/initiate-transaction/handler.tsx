@@ -1,18 +1,19 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {JSONObject, REG_VALID_NUMBER, useReactQuery} from "@fanam-pkg/core-utils"
+import {JSONObject, REG_VALID_NUMBER} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {ChangeEvent, useEffect, useRef, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import useRazorpay from "react-razorpay"
 import {useSlider} from "@custom/ui"
-import {ICountry, IPayloadFxRate, IResponseOrder, ITransactionData} from "@custom/utils"
-import {usePaymentController, useTransactionController} from "controller"
+import {ICountry, IPayloadFxRate, IResponseOrder, ITransactionData, ITransferTime} from "@custom/utils"
+import {useOrderController, usePaymentController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
 import {CountryPopup} from "organisms"
 import {
   PURPOSES_BUSINESS,
   PURPOSES_INDIVIDUAL,
   QUERY_EXCHANGE,
+  QUERY_ORDER,
   QUERY_TRANSACTION,
   ROUTE_REVIEW_SEND,
   routeToTransactionDetail,
@@ -36,7 +37,7 @@ export const useHandler = () => {
   const {push} = useRouter()
   const {getFxRate} = usePaymentController()
   const {updateTransaction} = useTransactionController()
-  const {refreshQuery} = useReactQuery()
+  const {createOrder} = useOrderController()
   const {toggleNotify} = useNotifyPopup()
   const [Razorpay] = useRazorpay()
   const {user, transId, transData} = useSingleton()
@@ -48,13 +49,11 @@ export const useHandler = () => {
     source_country: null,
   })
   const [errState, setErrState] = useState(DEFAULT_ERR_STATE)
-  const [selectedCharge, setSelectedCharge] = useState<string>()
-  const [selectedTime, setSelectedTime] = useState<string>()
-  const {recipient_account_type, recipient} = transData || {}
+  const {recipient_account_type, recipient, transfer_time} = transData || {}
 
   const {toggleSlider} = useSlider()
 
-  const {country: sourceCountry, first_name, last_name, phone_no, email} = user || {}
+  const {country: userCountry, first_name, last_name, phone_no, email} = user || {}
 
   const {source_amount, destination_country, destination_amount} = data
 
@@ -64,29 +63,27 @@ export const useHandler = () => {
 
   const {isClicked} = errState
 
-  const {mutate: checkFxRate} = useMutation({
+  const {mutate: checkFxRate, data: fxRes} = useMutation({
     mutationKey: [QUERY_EXCHANGE],
     mutationFn: getFxRate,
-    onSuccess: ({result}) => {
-      refreshQuery(QUERY_EXCHANGE)
-      if (result) {
-        const {source_amount, destination_amount} = result
-        setData(prev => ({
-          ...prev,
-          source_amount: source_amount.toString(),
-          destination_amount: destination_amount.toString(),
-        }))
-        isFetched.current = true
-      }
-    },
   })
 
-  const {mutate: onUpdateTransaction} = useMutation({
+  const {sourceCountry, destinationCountry, transfer_times = []} = fxRes || {}
+
+  const {mutate: putTransaction} = useMutation({
     mutationKey: [QUERY_TRANSACTION],
     mutationFn: updateTransaction,
-    onSuccess: ({order, errorData}) => {
-      if (order) {
-        showPaymentPopup(order)
+    onSuccess: ({result, errorData}) => {
+      isFetched.current = true
+
+      if (result) {
+        const {final_amount, destination_amount, source_country, destination_country} = result
+        setData({
+          source_amount: `${final_amount}`,
+          destination_amount: `${destination_amount}`,
+          source_country,
+          destination_country,
+        })
       } else
         toggleNotify({
           title: "Error - Initiate transaction",
@@ -95,6 +92,41 @@ export const useHandler = () => {
         })
     },
   })
+
+  const {mutate: onCreateOrder} = useMutation({
+    mutationKey: [QUERY_ORDER],
+    mutationFn: createOrder,
+    onSuccess: ({result, errorData}) => {
+      if (result) showPaymentPopup(result)
+      else
+        toggleNotify({
+          title: "Error - Initiate transaction",
+          description: errorData?.message || "Something went wrong",
+          type: "error",
+        })
+    },
+  })
+
+  useEffect(() => {
+    if (fxRes) onUpdateTransaction(transfer_times?.find(({is_recommended}) => is_recommended))
+  }, [fxRes])
+  console.log("sss", data)
+
+  function onUpdateTransaction({exchange_rate, transfer_time_id, quote_id}: ITransferTime) {
+    if (transfer_time_id) {
+      const {country_id: source_country_id} = sourceCountry
+      const {country_id: destination_country_id} = destinationCountry
+
+      putTransaction({
+        source_country_id,
+        destination_country_id,
+        exchange_amount: exchange_rate,
+        transfer_time_id,
+        visa_quote_id: quote_id ? `${quote_id}` : "",
+        destination_amount,
+      })
+    }
+  }
 
   function onSuccess() {
     toggleNotify({
@@ -120,7 +152,7 @@ export const useHandler = () => {
     const rzp1 = new Razorpay({
       order_id: razorpay_order_id,
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY!,
-      currency: sourceCountry.currency,
+      currency: userCountry.currency,
       name: "Fanam Pay",
       description: "Thanks",
       amount: amount?.toString(),
@@ -154,11 +186,6 @@ export const useHandler = () => {
     })
   }
 
-  const onSelect = (charge: string, time: string) => {
-    setSelectedCharge(charge)
-    setSelectedTime(time)
-  }
-
   useEffect(() => {
     if (isClicked) setErrState(prev => ({...prev, ...onValidate()}))
   }, [data, isClicked])
@@ -182,6 +209,7 @@ export const useHandler = () => {
   }
 
   const onSelectCountry = (destination_country: ICountry) => {
+    isFetched.current = false
     setData({...data, destination_country})
     toggleSlider()
   }
@@ -211,9 +239,14 @@ export const useHandler = () => {
 
   useEffect(() => {
     const payloadData = {...data}
-    if (transData) payloadData.destination_country = recipient.country
+    if (transData && user) {
+      const {source_country, destination_country} = transData
+      if (destination_country) payloadData.destination_country = destination_country
+      else if (recipient?.country) payloadData.destination_country = recipient.country
 
-    if (user) payloadData.source_country = sourceCountry
+      if (source_country) payloadData.source_country = source_country
+      else if (userCountry) payloadData.source_country = userCountry
+    }
 
     setData(payloadData)
   }, [transData, user])
@@ -224,7 +257,7 @@ export const useHandler = () => {
       if (debounceTimer) clearTimeout(debounceTimer)
       debounceTimer = setTimeout(() => {
         let payload: IPayloadFxRate = {
-          source_country_code: sourceCountry.iso2,
+          source_country_code: userCountry.iso2,
           destination_country_code: destination_country.iso2,
         }
 
@@ -243,7 +276,7 @@ export const useHandler = () => {
     const isNumber = value === "" || REG_VALID_NUMBER.test(value)
     if (!isNumber) {
       toggleNotify({
-        description: "Only nummbers allowed",
+        description: "Only numbers allowed",
         type: "error",
       })
       return
@@ -260,14 +293,7 @@ export const useHandler = () => {
   const onSubmit = () => {
     const {isValid} = onValidate()
 
-    if (isValid) {
-      onUpdateTransaction({
-        destination_amount,
-        source_amount,
-        destination_country_id: destination_country?.country_id,
-        source_country_id: sourceCountry?.country_id,
-      })
-    }
+    if (isValid) onCreateOrder()
   }
 
   return {
@@ -276,7 +302,8 @@ export const useHandler = () => {
     onChangeValue,
     onSubmit,
     showCountries,
-    handleSelect: onSelect,
-    selectedTime,
+    fxRes,
+    onSelect: onUpdateTransaction,
+    transfer_time,
   }
 }
