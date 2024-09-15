@@ -13,6 +13,7 @@ const InitiateTransactionPage = () => {
     onChangeValue,
     onSubmit,
     handleSelect,
+    transferItem,
     showCountries,
     selectedTime,
   } = useHandler()
@@ -73,7 +74,7 @@ const InitiateTransactionPage = () => {
               </section>
             </section>
           </section>
-          <Transfer onSelectChargeAndTime={handleSelect} />
+          <Transfer onSelectChargeAndTime={handleSelect} transferItem={transferItem} />
           <section className={`flex-sb-center ${styles.total_background}`}>
             <section className={styles.receiver_wrapper}>
               <h4>Receiver will get exactly</h4>

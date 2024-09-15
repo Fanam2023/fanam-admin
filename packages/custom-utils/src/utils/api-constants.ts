@@ -13,7 +13,7 @@ export const API_COUNTRIES = `${API_LOCATION}/all-countries`
 export const apiStates = (countryId: number) => `${API_LOCATION}/countries/${countryId}`
 export const apiCities = (stateId: number) => `${API_LOCATION}/states/${stateId}`
 export const API_PAYMENT = "/payment"
-export const API_FXRATE = `${API_PAYMENT}/fxRate-visa`
+export const API_FXRATE = `${API_PAYMENT}/fxRate-conversion`
 export const API_RECIPIENT = "/recipient"
 export const apiRecipientType = (recipientType: string) => `${API_RECIPIENT}?recipient_type=${recipientType}`
 export const apiRecipient = (recipient_id: string) => `${API_RECIPIENT}/${recipient_id}`

@@ -12,6 +12,11 @@ export interface ITransfer {
   charge: string
 }
 
+export interface ITransferTime {
+  onSelectChargeAndTime: (charge: string, time: string) => void
+  transferItem: any
+}
+
 export interface ITransactionInfo {
   label: string
   value: string | number

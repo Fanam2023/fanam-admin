@@ -47,6 +47,9 @@ export const useHandler = () => {
     destination_country: null,
     source_country: null,
   })
+  const [transferItem, setTransferItem] = useState([])
+
+  console.log("sadfd", data)
   const [errState, setErrState] = useState(DEFAULT_ERR_STATE)
   const [selectedCharge, setSelectedCharge] = useState<string>()
   const [selectedTime, setSelectedTime] = useState<string>()
@@ -70,12 +73,18 @@ export const useHandler = () => {
     onSuccess: ({result}) => {
       refreshQuery(QUERY_EXCHANGE)
       if (result) {
-        const {source_amount, destination_amount} = result
+        console.log("ddd", result)
+
+        const {source_amount, destination_amount, transfer_times} = result
+        console.log("asas", transfer_times)
+
         setData(prev => ({
           ...prev,
-          source_amount: source_amount.toString(),
-          destination_amount: destination_amount.toString(),
+          source_amount: source_amount,
+          destination_amount: destination_amount,
         }))
+        setTransferItem(transfer_times)
+
         isFetched.current = true
       }
     },
@@ -230,7 +239,11 @@ export const useHandler = () => {
 
         if (source_amount) payload.source_amount = source_amount
         else if (destination_amount) payload.destination_amount = destination_amount
-        checkFxRate(payload)
+        checkFxRate({
+          source_country_code: "IN",
+          destination_country_code: "US",
+          source_amount: "10000",
+        })
       }, 1000)
     }
   }, [source_amount, destination_amount, checkFxRate, destination_country, user])
@@ -273,6 +286,7 @@ export const useHandler = () => {
   return {
     data,
     PURPOSES,
+    transferItem,
     onChangeValue,
     onSubmit,
     showCountries,
