@@ -1,8 +1,6 @@
 "use client"
 
-import {ImageView} from "@fanam-pkg/core-ui-sass"
-import {IFormData, useResize} from "@fanam-pkg/core-utils"
-import assets from "assets"
+import {IFormData} from "@fanam-pkg/core-utils"
 import {BaseContainer} from "organisms"
 import useHandler from "./handler"
 import styles from "./page.module.sass"
@@ -14,16 +12,13 @@ const ReviewAndSend = () => {
     paymentDetails,
     showDetails,
     toggleDetails,
-    routeToBeneficiary,
-    routeToRecipient,
-    onProcessPayment,
-    transId,
     destination_amount,
     destinationCountryValue,
+    isDisabled,
+    completeTransaction,
   } = useHandler()
 
   const {recipient, beneficiary} = showDetails
-  const {isDesktop} = useResize()
 
   const renderPaymentDetails = ({label, key}: IFormData) => {
     return (
@@ -39,7 +34,8 @@ const ReviewAndSend = () => {
       buttonText="Send money"
       skipBtn="Back"
       isStepper
-      onSubmit={onProcessPayment.bind(null, transId)}
+      disabled={isDisabled}
+      onSubmit={completeTransaction}
       childWrapper={styles.page_wrapper}
       stepIndex={4}>
       <section className={`flex-col ${styles.heading_wrapper}`}>
@@ -64,14 +60,14 @@ const ReviewAndSend = () => {
         <section className={`flex-sb-center`}>
           <h5 className={styles.amount_title}>Receiver will get exactly</h5>
           <h5 className={`bold ${styles.amount}`}>
-            {destination_amount}
-            {destinationCountryValue}
+            {`${destination_amount}  
+            ${destinationCountryValue}`}
           </h5>
         </section>
         <section className={styles.separator}></section>
         <section className={`flex-sb-center ${styles.header}`}>
           <h5 className={styles.edit_text}>Recipient Details</h5>
-          <section className="flex">
+          {/* <section className="flex">
             {isDesktop ? (
               <>
                 <ImageView
@@ -92,7 +88,7 @@ const ReviewAndSend = () => {
                 onClick={routeToRecipient}
               />
             )}
-          </section>
+          </section> */}
         </section>
         <ul>{(recipient ? recipientDetails : recipientDetails?.slice(0, 4))?.map(renderPaymentDetails)}</ul>
         <h6 className={`bold ${styles.amount}`} onClick={() => toggleDetails("recipient")}>
@@ -101,7 +97,7 @@ const ReviewAndSend = () => {
         <section className={styles.separator}></section>
         <section className={`flex-sb-center ${styles.header}`}>
           <h5 className={styles.edit_text}>Beneficiary Details</h5>
-          <section className="flex">
+          {/* <section className="flex">
             {isDesktop ? (
               <>
                 <ImageView
@@ -122,7 +118,7 @@ const ReviewAndSend = () => {
                 onClick={routeToBeneficiary}
               />
             )}
-          </section>
+          </section> */}
         </section>
         <ul>{(beneficiary ? beneficiaryDetails : beneficiaryDetails?.slice(0, 4))?.map(renderPaymentDetails)}</ul>
         <h6 className={`bold ${styles.amount}`} onClick={() => toggleDetails("beneficiary")}>

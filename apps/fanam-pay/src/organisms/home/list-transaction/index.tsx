@@ -20,10 +20,12 @@ export const ListTransaction = () => {
       paymentDuration,
       transaction_id,
       recipient,
+      order,
     }: ITransactionDetails,
     index: number
   ) => {
     const {first_name, last_name} = recipient || {}
+    const {order_no} = order || {}
 
     return (
       <li key={index} className={styles.page_wrapper} onClick={fetchTransaction.bind(null, transaction_id)}>
@@ -38,7 +40,7 @@ export const ListTransaction = () => {
                 <h4 className="bold">
                   {first_name} {last_name}
                 </h4>
-                <h5 className={styles.id_wrapper}>{transaction_id}</h5>
+                <h5 className={styles.id_wrapper}>{order_no}</h5>
               </section>
               <h5 className={`bold ${styles.source_amount}`}>{source_amount}</h5>
               <section className={`flex ${styles.duration_wrapper}`}>

@@ -8,18 +8,15 @@ import {
   IPayloadMergeRecipient,
   IPayloadTransaction,
   IPayloadTransactionPurpose,
-  IResponseOrder,
   ITransaction,
   ITransactionDetails,
 } from "@custom/utils"
 import {useSingleton} from "hooks"
 import {useApi} from "./api"
-import {useOrderController} from "./order"
 
 export const useTransactionController = () => {
   const {getRequest, postRequest, putRequest} = useApi()
   const {transId, updateTransData, updateTransId} = useSingleton()
-  const {createOrder} = useOrderController()
 
   const getTransaction = async (status: string) => {
     const {result} = await getRequest<ITransactionDetails[]>(apiAllTransaction(status))
@@ -33,21 +30,14 @@ export const useTransactionController = () => {
   }
 
   const updateTransaction = async (payload: IPayloadTransaction) => {
-    let response: {order: IResponseOrder | null; errorData: IFanamApiError<null> | null} = {
-      order: null,
-      errorData: null,
-    }
-
-    const {result, errorData} = await putRequest<ITransaction, IPayloadTransaction, IFanamApiError<null>>(
+    const response = await putRequest<ITransaction, IPayloadTransaction, IFanamApiError<null>>(
       apiTransaction(transId),
       payload
     )
-    if (result) {
-      updateTransData(result)
-      const {result: orderResult, errorData} = await createOrder()
-      response.order = orderResult
-      response.errorData = errorData
-    } else response.errorData = errorData
+
+    const {result} = response
+
+    if (result) updateTransData(result)
 
     return response
   }

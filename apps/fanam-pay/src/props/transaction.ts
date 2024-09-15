@@ -1,5 +1,5 @@
 import {IFormData} from "@fanam-pkg/core-utils"
-import {ICountry, ITransaction} from "@custom/utils"
+import {ICountry, IResponseFxRate, ITransaction, ITransferTime} from "@custom/utils"
 
 export interface CountryPopupProps {
   onSelect: (currencyCode: ICountry) => void
@@ -12,9 +12,9 @@ export interface ITransfer {
   charge: string
 }
 
-export interface ITransferTime {
-  onSelectChargeAndTime: (charge: string, time: string) => void
-  transferItem: any
+export interface PropsTransferTime {
+  onSelect: (transfer: ITransferTime) => void
+  transferTimeRes: IResponseFxRate
 }
 
 export interface ITransactionInfo {

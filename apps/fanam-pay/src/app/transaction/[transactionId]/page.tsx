@@ -1,35 +1,28 @@
 "use client"
 
 import {ImageView} from "@fanam-pkg/core-ui-sass"
-import {useSearchParams} from "next/navigation"
+import {TypeTransactionStatus} from "@custom/utils"
 import assets from "assets"
 import {BaseContainer} from "organisms"
-import {PaymentDetailsProps, StatusType} from "props"
+import {PaymentDetailsProps} from "props"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
-const getStatusData = (status: StatusType) => {
+const getStatusData = (status: TypeTransactionStatus) => {
   switch (status) {
-    case "success":
+    case "Payment_successful":
       return {
         bigIcon: assets.ic_success,
         smallIcon: assets.ic_success_small,
         title: "Payment Success!",
         statusText: "Success",
       }
-    case "failure":
+    case "Payment_failed":
       return {
         bigIcon: assets.ic_failure,
         smallIcon: assets.ic_failure_small,
         title: "Payment Unsuccessful!",
         statusText: "Unsuccessful",
-      }
-    case "pending":
-      return {
-        bigIcon: assets.ic_pending,
-        smallIcon: assets.ic_pending_small,
-        title: "Payment Processing!",
-        statusText: "Processing",
       }
 
     default:
@@ -43,17 +36,21 @@ const getStatusData = (status: StatusType) => {
 }
 
 const TransactionStatusPage = () => {
-  const searchParams = useSearchParams()
-  const {transactionDetail} = useHandler()
+  const {transactionDetail, routeHome} = useHandler()
 
-  const status = searchParams.get("status") as StatusType
+  const {status, transfer_time, final_amount, destination_amount, destination_country, source_country, order} =
+    transactionDetail || {}
 
   const {bigIcon, smallIcon, title, statusText} = getStatusData(status)
+
+  const {order_no} = order || {}
+
+  const {sla_timing_min, sla_timing_max} = transfer_time || {}
 
   const PAYMENT_DETAILS: PaymentDetailsProps[] = [
     {
       label: "Ref Number",
-      value: "756551544215",
+      value: order_no,
     },
     {
       label: "Payment Status",
@@ -61,7 +58,8 @@ const TransactionStatusPage = () => {
     },
     {
       label: "Payment Time",
-      value: "3-5 Business Days",
+      value:
+        sla_timing_min !== sla_timing_max ? `${sla_timing_min} - ${sla_timing_max} hours` : `${sla_timing_min} hours`,
     },
   ]
 
@@ -84,6 +82,7 @@ const TransactionStatusPage = () => {
       childWrapper={styles.page_container}
       skipBtn="Download Receipt"
       stepIndex="pending"
+      onSubmit={routeHome}
       isStepper>
       <section className={styles.mobile_wrapper}>
         <section className={`flex-col ${styles.heading_wrapper}`}>
@@ -93,7 +92,9 @@ const TransactionStatusPage = () => {
         <section className={`flex-col-center ${styles.payment_status_wrapper}`}>
           <ImageView src={bigIcon} alt={"status-icon"} imgSize={56} />
           <h4 className={`bold ${styles.payment_text}`}>{title}</h4>
-          <h4 className={`bold  ${styles.currency_text}`}>{"$ 707"}</h4>
+          <h4 className={`bold  ${styles.currency_text}`}>
+            {destination_country?.currency_symbol} {destination_amount}
+          </h4>
         </section>
         <section className={styles.source_payment_wrapper}>
           <h4 className={styles.source_payment}>Source of Payment</h4>
@@ -108,7 +109,10 @@ const TransactionStatusPage = () => {
             <hr className={styles.separator} />
             <section className={`flex-sb-center ${styles.total}`}>
               <h5>Total Payment</h5>
-              <h5 className={styles.source_payment}>{"$ 707"}</h5>
+              <h5 className={styles.source_payment}>
+                {source_country?.currency_symbol}
+                {final_amount}
+              </h5>
             </section>
           </section>
         </section>

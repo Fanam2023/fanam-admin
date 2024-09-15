@@ -3,20 +3,22 @@
 import {ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
 import {BaseContainer, CountryFlag} from "organisms"
+import {TransferTime} from "../../organisms/transfer-time"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
-import {Transfer} from "./transfer-time"
 
 const InitiateTransactionPage = () => {
   const {
     data: {source_amount, destination_amount, destination_country, source_country},
     onChangeValue,
     onSubmit,
-    handleSelect,
-    transferItem,
+    onSelect,
+    fxRes,
     showCountries,
-    selectedTime,
+    transfer_time,
   } = useHandler()
+
+  const {sla_timing_min, sla_timing_max} = transfer_time || {}
 
   const {currency} = destination_country || {}
 
@@ -47,7 +49,7 @@ const InitiateTransactionPage = () => {
                   value={source_amount}
                   className={styles.input}
                   name="source_amount"
-                  onChange={onChangeValue}
+                  // onChange={onChangeValue}
                 />
                 <section className={`flex ${styles.currency}`}>
                   <CountryFlag {...source_country} />
@@ -67,20 +69,25 @@ const InitiateTransactionPage = () => {
                     onChange={onChangeValue}
                   />
                 </section>
-                <section className={`flex ${styles.currency}`}>
+                <section className={`flex ${styles.currency}`} onClick={showCountries}>
                   <CountryFlag {...destination_country} />
-                  <ImageView src={assets.ic_dropDown} alt={"Drop-Down"} imgSize={12} onClick={showCountries} />
+                  <ImageView src={assets.ic_dropDown} alt={"Drop-Down"} imgSize={12} />
                 </section>
               </section>
             </section>
           </section>
-          <Transfer onSelectChargeAndTime={handleSelect} transferItem={transferItem} />
+          <TransferTime onSelect={onSelect} transferTimeRes={fxRes} />
           <section className={`flex-sb-center ${styles.total_background}`}>
             <section className={styles.receiver_wrapper}>
               <h4>Receiver will get exactly</h4>
               <section className="flex">
                 <ImageView src={assets.ic_power} alt="" imgSize={24} />
-                <h5 className={styles.hour_wrapper}>Transfer in {selectedTime}</h5>
+                <h5 className={styles.hour_wrapper}>
+                  Transfer in
+                  {sla_timing_min !== sla_timing_max
+                    ? `${sla_timing_min} - ${sla_timing_max} hours`
+                    : `${sla_timing_min} hours`}
+                </h5>
               </section>
             </section>
             <h4 className={`bold ${styles.total_wrapper}`}>
