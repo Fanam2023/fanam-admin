@@ -6,7 +6,7 @@ export const usePaymentController = () => {
 
   const getFxRate = async (payload: IPayloadFxRate) => {
     const {result, errorData} = await postRequest<IResponseFxRate>(API_FXRATE, payload)
-    return {result, errorData}
+    return result
   }
 
   return {

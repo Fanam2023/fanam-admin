@@ -4,6 +4,7 @@ import {
   IBeneficiary,
   ICountry,
   IRecipient,
+  IResponseOrder,
   IUser,
   TypeAccount,
   TypePurpose,
@@ -19,6 +20,9 @@ export interface ITransaction {
   source_amount: number
   destination_amount: number
   markup_fee: number
+  other_fee?: number
+  exchange_amount?: number
+  final_amount?: number
   purpose: TypePurpose
   reason: string
   invoice: IAttachment[]
@@ -26,6 +30,8 @@ export interface ITransaction {
   recipient_relationship: string
   beneficiary: IBeneficiary
   status?: string
+  order?: IResponseOrder
+  transfer_time?: ITransferTime
   created_at?: string
 }
 
@@ -71,12 +77,31 @@ export interface IPayloadFxRate {
   destination_country_code: string
 }
 
-export interface IResponseFxRate {
-  conversion_rate: number
-  source_amount: string
+export type TypeNetworkFX = "Visa" | "Master_card"
+
+export type TypeNetworkTransfer = "Visa" | "Master_card"
+
+export interface ITransferTime {
+  transfer_time_id: string
+  fx_rate_network: TypeNetworkFX
+  transfer_network: TypeNetworkTransfer
+  sla_timing_min: number
+  sla_timing_max: number
+  exchange_rate: string
   destination_amount: string
-  markup_fee: number
-  quote_id: number
+  conversion_rate: string
+  markup_fee: string
+  other_fees: number
+  final_rate: string
+  is_recommended: boolean
+  is_exclude_other_fees: boolean
+  quote_id?: number | string
+}
+
+export interface IResponseFxRate {
+  destinationCountry: ICountry
+  sourceCountry: ICountry
+  transfer_times: ITransferTime[]
 }
 
 export interface IBaseTransactionData {
@@ -84,9 +109,13 @@ export interface IBaseTransactionData {
   destination_amount: string
 }
 
-export interface IPayloadTransaction extends IBaseTransactionData {
+export interface IPayloadTransaction {
   source_country_id: number
   destination_country_id: number
+  transfer_time_id: string
+  visa_quote_id?: string
+  exchange_amount: string
+  destination_amount: string
 }
 
 export interface ITransactionData extends IBaseTransactionData {
