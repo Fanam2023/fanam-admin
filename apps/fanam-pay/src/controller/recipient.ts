@@ -17,7 +17,7 @@ import {useTransactionController} from "./transaction"
 export const useRecipientController = () => {
   const {getRequest, postRequest, putRequest} = useApi()
   const {initiateTransaction} = useTransactionController()
-  const {updateTransData, updateTransId} = useSingleton()
+  const {updateTransData} = useSingleton()
 
   const getAllRecipient = async (recipientType: string) => {
     const {result} = await getRequest<IRecipient[]>(apiRecipientType(recipientType))
@@ -39,8 +39,6 @@ export const useRecipientController = () => {
 
       if (transResult) {
         const {transaction_id} = transResult
-        updateTransId(transaction_id)
-        updateTransData(transResult)
 
         if (kyc.length && result) {
           const {result: transRecipientKyc, errorData: errKyc} = await uploadKyc(recipient_id, transaction_id, kyc)

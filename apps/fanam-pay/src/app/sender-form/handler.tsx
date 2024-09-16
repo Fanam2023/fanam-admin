@@ -232,8 +232,6 @@ const useHandler = (styles: IStyle) => {
     },
   })
 
-  console.log(">>>>>>>>>>>>>>>>>>>>: errState", errData)
-
   const {mutate: verifyOTP} = useMutation({
     mutationFn: verifyAadhaarOTP,
     onSuccess: ({result, errorData}) => {
