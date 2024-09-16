@@ -21,7 +21,7 @@ export const TransferTime = ({onSelect, transferTimeRes}: PropsTransferTime) => 
   )
 
   const renderTransferItem = (item: ITransferTime) => {
-    const {sla_timing_max, exchange_rate, markup_fee, other_fees = 0, final_rate, transfer_time_id} = item
+    const {sla_timing_max, exchange_rate, markup_fee, other_fees = "", final_rate, transfer_time_id} = item
     const isSelected = transfer_time_id === transfer_time?.transfer_time_id
 
     return (
@@ -41,11 +41,13 @@ export const TransferTime = ({onSelect, transferTimeRes}: PropsTransferTime) => 
             alt=""
             imgSize={30}
           />
-          <h4 className={`bold ${styles.txt_wrapper} ${isSelected ? styles.selected_txt : ""}`}>In {sla_timing_max}</h4>
+          <h4 className={`bold ${styles.txt_wrapper} ${isSelected ? styles.selected_txt : ""}`}>
+            In {sla_timing_max} Hours
+          </h4>
         </section>
         <ul className={`flex-col ${styles.fees_wrapper}`}>
           {renderItem("Exchange Amount", exchange_rate, isSelected)}
-          {renderItem("Fees", other_fees + parseFloat(markup_fee), isSelected)}
+          {renderItem("Fees", parseFloat(other_fees) + parseFloat(markup_fee), isSelected)}
           {renderItem("Total", final_rate, true)}
         </ul>
       </li>

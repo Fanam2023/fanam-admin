@@ -1,4 +1,5 @@
-import {JSONObject, useStorage} from "@fanam-pkg/core-utils"
+import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
+import {JSONObject, REG_VALID_NUMBER, useCommon, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {IPayloadForgotPin, SESSION_SIGNUP} from "@custom/utils"
@@ -7,6 +8,8 @@ import {routeToOTP} from "utils"
 const useHandler = () => {
   const {push} = useRouter()
   const {setStorage} = useStorage()
+  const {isValidInputByRegex} = useCommon()
+  const {toggleNotify} = useNotifyPopup()
   const [data, setData] = useState<IPayloadForgotPin>({
     phone_no: "",
     country_code: "",
@@ -36,7 +39,12 @@ const useHandler = () => {
     return errState
   }
 
-  const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
+  const onChangeValue = (value: JSONObject) => {
+    const phoneNO = (value?.phone_no as string) || ""
+    const isValid = phoneNO === "" || isValidInputByRegex(phoneNO, REG_VALID_NUMBER)
+    if (isValid) setData(prev => ({...prev, ...value}))
+    else toggleNotify({type: "error", title: "Only numbers are allowed"})
+  }
 
   useEffect(() => {
     if (isClicked) {
