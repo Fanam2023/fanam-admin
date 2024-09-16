@@ -128,6 +128,7 @@ export const useAuthController = () => {
     let {result, errorData} = await putRequest<IUser>(API_SYNC_USER, payload)
 
     if (result) {
+      updateUserData(result)
       const {kyc_details} = result
       const aadhaarKycId = kyc_details?.find(({type}) => type === "Aadhaar")?.kyc_id
       const panKycId = kyc_details?.find(({type}) => type === "PAN")?.kyc_id
@@ -139,8 +140,9 @@ export const useAuthController = () => {
         })
 
         const response = await putRequest<IUser>(apiSenderKYC(aadhaarKycId), formData)
-        result = response.result
+        result = {...result, ...response.result}
         errorData = response.errorData
+        updateUserData(result)
       }
 
       if (kyc_pan.length && panKycId) {
@@ -150,8 +152,9 @@ export const useAuthController = () => {
         })
 
         const response = await putRequest<IUser>(apiSenderKYC(panKycId), formData)
-        result = response.result
+        result = {...result, ...response.result}
         errorData = response.errorData
+        updateUserData(result)
       }
     }
 

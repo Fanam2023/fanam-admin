@@ -140,7 +140,6 @@ const useHandler = (styles: IStyle) => {
     mutationFn: syncUser,
     onSuccess: ({result, errorData}) => {
       if (result) {
-        updateUserData(result)
         replace(ROUTE_HOME)
       } else
         toggleNotify({
