@@ -7,7 +7,7 @@ import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
 export const ListTransaction = () => {
-  const {transactions, formElements, fetchTransaction} = useHandler()
+  const {transactions, formElements, fetchTransaction} = useHandler(styles)
 
   const renderTransactionDetails = (
     {
