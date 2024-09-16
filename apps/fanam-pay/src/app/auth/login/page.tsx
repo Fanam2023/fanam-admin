@@ -25,6 +25,7 @@ const Login = () => {
           onChangeData={onChangeValue}
           wrapperClass={styles.text_field_wrapper}
           error={errPhoneNo}
+          autoComplete="off"
         />
         <TextField
           label="Enter PIN"

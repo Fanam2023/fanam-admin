@@ -4,12 +4,12 @@ import {FormSectionProps, usePopup} from "@fanam-pkg/core-ui-sass"
 import {JSONObject} from "@fanam-pkg/core-utils"
 import {useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
-import {StatusSelect} from "@custom/utils"
+import {IStyle, StatusSelect} from "@custom/utils"
 import {useTransactionController} from "controller"
 import {TransactionDetails} from "organisms"
 import {QUERY_TRANSACTION, TRANSACTION_STATUS} from "utils"
 
-export const useHandler = () => {
+export const useHandler = (styles: IStyle) => {
   const {getTransaction, getTransactionDetails} = useTransactionController()
   const {togglePopup} = usePopup()
   const [data, setData] = useState<StatusSelect>({status: null})
@@ -34,6 +34,7 @@ export const useHandler = () => {
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
   const formElements: FormSectionProps[] = [
     {
+      wrapperClassGrid: styles.filter_wrapper,
       childElements: [
         {
           elementType: "drop-down",

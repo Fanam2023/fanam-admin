@@ -58,8 +58,19 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     account_no: "",
   })
 
-  const {first_name, last_name, phone_no, email, relationship, address, country, state, city, zip_code, account_no} =
-    data
+  const {
+    first_name,
+    last_name,
+    phone_no,
+    email,
+    relationship,
+    address,
+    country,
+    state,
+    city,
+    zip_code,
+    account_no,
+  } = data
 
   const [errState, setErrState] = useState(DEFAULT_ERROR_STATE)
 
@@ -290,6 +301,14 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           error: errAccountNo,
           value: account_no,
           onChangeValue,
+        },
+        {
+          elementType: "text-area",
+          label: "Add Notes",
+          name: "description",
+          onChangeValue,
+          maxLength: 50,
+          wrapperClass: styles.text_area_wrapper,
         },
       ],
     },
