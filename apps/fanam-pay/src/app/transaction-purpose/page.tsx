@@ -7,7 +7,7 @@ import styles from "./page.module.sass"
 
 const TransactionPurpose = () => {
   const {onChangeValue, PURPOSES, onSubmit, data, errState} = useHandler()
-  const {purpose, reason} = data
+  const {purpose, reason, doc} = data
   const {errDoc, errPurpose, errReason} = errState
 
   return (
@@ -57,6 +57,8 @@ const TransactionPurpose = () => {
             onChangeData={onChangeValue}
             error={errDoc}
             isMultiple={true}
+            fileType={["image/*", "application/pdf"]}
+            value={doc}
           />
         </section>
       </section>
