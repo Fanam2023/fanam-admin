@@ -18,7 +18,7 @@ const Forgot_Password = () => {
   const onSelectCountry = (country: ICountry) => {
     setData(prev => ({
       ...prev,
-      country_code: country, // Store the entire country object
+      country_code: country,
     }))
     toggleSlider()
   }

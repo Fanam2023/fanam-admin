@@ -1,5 +1,5 @@
-import {FormSectionProps, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
-import {JSONObject, REG_EMAIL, REG_INDIAN_MOBILE, useStorage} from "@fanam-pkg/core-utils"
+import {FormSectionProps, ImageView, TextField, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
+import {JSONObject, REG_EMAIL, REG_INDIAN_MOBILE, REG_VALID_NUMBER, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useCallback, useEffect, useState} from "react"
 import {useSlider} from "@custom/ui"
@@ -13,6 +13,7 @@ const useHandler = (styles: IStyle) => {
   const {isValidInputByRegex, getFlagUrl} = useCommon()
   const {getStorage, setStorage} = useStorage()
   const {toggleSlider} = useSlider()
+  const {toggleNotify} = useNotifyPopup()
   const {push} = useRouter()
   const [data, setData] = useState<IBaseSignUp>({
     business_name: "",
@@ -34,7 +35,7 @@ const useHandler = (styles: IStyle) => {
   const onSelectCountry = (country: ICountry) => {
     setData(prev => ({
       ...prev,
-      country_code: country, // Store the entire country object
+      country_code: country,
     }))
     toggleSlider()
   }
@@ -87,8 +88,12 @@ const useHandler = (styles: IStyle) => {
     return errState
   }
 
-  const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
-
+  const onChangeValue = (value: JSONObject) => {
+    const phoneNO = (value?.phone_no as string) || ""
+    const isValid = phoneNO === "" || isValidInputByRegex(phoneNO, REG_VALID_NUMBER)
+    if (isValid) setData(prev => ({...prev, ...value}))
+    else toggleNotify({type: "error", title: "Only numbers are allowed"})
+  }
   useEffect(() => {
     const storedData = getStorage<IBaseSignUp>(SESSION_SIGNUP)
     if (storedData) setData(storedData)

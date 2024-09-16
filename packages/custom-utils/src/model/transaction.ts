@@ -91,7 +91,7 @@ export interface ITransferTime {
   destination_amount: string
   conversion_rate: string
   markup_fee: string
-  other_fees: number
+  other_fees: string
   final_rate: string
   is_recommended: boolean
   is_exclude_other_fees: boolean
