@@ -118,7 +118,6 @@ export const useHandler = () => {
   useEffect(() => {
     if (fxRes) onUpdateTransaction(transfer_times?.find(({is_recommended}) => is_recommended))
   }, [fxRes])
-  console.log("sss", data)
 
   function onUpdateTransaction({exchange_rate, transfer_time_id, quote_id}: ITransferTime) {
     if (transfer_time_id) {
