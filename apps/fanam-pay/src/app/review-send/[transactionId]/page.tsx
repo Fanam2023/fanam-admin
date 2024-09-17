@@ -45,16 +45,6 @@ const ReviewAndSend = () => {
       <section className={styles.card_wrapper}>
         <section className={`flex-sb-center ${styles.header}`}>
           <h5 className={styles.edit_text}>Conversion Details</h5>
-          {/* <section className="flex">
-            {isDesktop ? (
-              <>
-                <ImageView wrapperClass={styles.edit_icon} src={assets.ic_edit_white} alt="edit-icon" imgSize={20} />
-                <h5 className={styles.edit_text}>Edit</h5>
-              </>
-            ) : (
-              <ImageView src={assets.ic_more} alt="edit-icon" imgSize={20} />
-            )}
-          </section> */}
         </section>
         <ul>{paymentDetails?.map(renderPaymentDetails)}</ul>
         <section className={`flex-sb-center`}>
@@ -67,28 +57,6 @@ const ReviewAndSend = () => {
         <section className={styles.separator}></section>
         <section className={`flex-sb-center ${styles.header}`}>
           <h5 className={styles.edit_text}>Recipient Details</h5>
-          {/* <section className="flex">
-            {isDesktop ? (
-              <>
-                <ImageView
-                  wrapperClass={styles.edit_icon}
-                  src={assets.ic_edit_white}
-                  alt="edit-icon"
-                  imgSize={20}
-                  onClick={routeToRecipient}
-                />
-                <h5 className={styles.edit_text}>Edit</h5>
-              </>
-            ) : (
-              <ImageView
-                src={assets.ic_more}
-                alt="edit-icon"
-                wrapperClass={styles.edit_icon}
-                imgSize={20}
-                onClick={routeToRecipient}
-              />
-            )}
-          </section> */}
         </section>
         <ul>{(recipient ? recipientDetails : recipientDetails?.slice(0, 4))?.map(renderPaymentDetails)}</ul>
         <h6 className={`bold ${styles.amount}`} onClick={() => toggleDetails("recipient")}>
@@ -97,28 +65,6 @@ const ReviewAndSend = () => {
         <section className={styles.separator}></section>
         <section className={`flex-sb-center ${styles.header}`}>
           <h5 className={styles.edit_text}>Beneficiary Details</h5>
-          {/* <section className="flex">
-            {isDesktop ? (
-              <>
-                <ImageView
-                  wrapperClass={styles.edit_icon}
-                  src={assets.ic_edit_white}
-                  alt="edit-icon"
-                  imgSize={20}
-                  onClick={routeToBeneficiary}
-                />
-                <h5 className={styles.edit_text}>Edit</h5>
-              </>
-            ) : (
-              <ImageView
-                src={assets.ic_more}
-                alt="edit-icon"
-                wrapperClass={styles.edit_icon}
-                imgSize={20}
-                onClick={routeToBeneficiary}
-              />
-            )}
-          </section> */}
         </section>
         <ul>{(beneficiary ? beneficiaryDetails : beneficiaryDetails?.slice(0, 4))?.map(renderPaymentDetails)}</ul>
         <h6 className={`bold ${styles.amount}`} onClick={() => toggleDetails("beneficiary")}>

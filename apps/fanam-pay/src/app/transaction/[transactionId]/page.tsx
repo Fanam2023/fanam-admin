@@ -1,23 +1,28 @@
 "use client"
 
 import {ImageView} from "@fanam-pkg/core-ui-sass"
-import {TypeTransactionStatus} from "@custom/utils"
+import {TypeOrderStatus} from "@custom/utils"
 import assets from "assets"
 import {BaseContainer} from "organisms"
 import {PaymentDetailsProps} from "props"
 import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
-const getStatusData = (status: TypeTransactionStatus) => {
+const getStatusData = (status: TypeOrderStatus) => {
   switch (status) {
-    case "Payment_successful":
+    case "Transaction_success":
       return {
         bigIcon: assets.ic_success,
         smallIcon: assets.ic_success_small,
         title: "Payment Success!",
         statusText: "Success",
       }
-    case "Payment_failed":
+
+    case "Payment_failure":
+    case "Transaction_rejected":
+    case "Transaction_canceled":
+    case "Transaction_returned":
+    case "Transaction_failed":
       return {
         bigIcon: assets.ic_failure,
         smallIcon: assets.ic_failure_small,
@@ -38,12 +43,12 @@ const getStatusData = (status: TypeTransactionStatus) => {
 const TransactionStatusPage = () => {
   const {transactionDetail, routeHome} = useHandler()
 
-  const {status, transfer_time, final_amount, destination_amount, destination_country, source_country, order} =
+  const {transfer_time, final_amount, destination_amount, destination_country, source_country, order} =
     transactionDetail || {}
 
-  const {bigIcon, smallIcon, title, statusText} = getStatusData(status)
+  const {order_no, order_status} = order || {}
 
-  const {order_no} = order || {}
+  const {bigIcon, smallIcon, title, statusText} = getStatusData(order_status)
 
   const {sla_timing_min, sla_timing_max} = transfer_time || {}
 

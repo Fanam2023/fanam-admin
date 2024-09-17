@@ -4,7 +4,7 @@ import {Button, GroupForm, ImageView} from "@fanam-pkg/core-ui-sass"
 import {useDateTime} from "@fanam-pkg/core-utils"
 import {ITransactionDetails} from "@custom/utils"
 import assets from "assets"
-import {TRANSACTION_STATUS} from "utils"
+import {TRANSACTION_STATUS_OBJECT} from "utils"
 import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
@@ -16,7 +16,6 @@ export const ListTransaction = () => {
     {
       month,
       date,
-      status,
       source_amount,
       destination_amount,
       paymentMode,
@@ -30,10 +29,10 @@ export const ListTransaction = () => {
     index: number
   ) => {
     const {first_name, last_name} = recipient || {}
-    const {order_no} = order || {}
+    const {order_no, order_status} = order || {}
     const {currency} = destination_country || {}
     const {sla_timing_min, sla_timing_max} = transfer_time || {}
-    const statusLabel = TRANSACTION_STATUS[status]?.key || status
+    const statusLabel = TRANSACTION_STATUS_OBJECT[order_status]?.label
 
     return (
       <li key={index} className={styles.page_wrapper} onClick={() => fetchTransaction(transaction_id)}>

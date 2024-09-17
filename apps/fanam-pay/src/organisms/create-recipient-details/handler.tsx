@@ -170,19 +170,20 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   )
 
   const {ibanInput, swiftInput, bsbInput, routingInput} = useMemo(() => {
-    const verfications: {
+    const verification: {
       ibanInput: null | IBankInput
       swiftInput: null | IBankInput
       routingInput: null | IBankInput
       bsbInput: null | IBankInput
     } = {ibanInput: null, swiftInput: null, routingInput: null, bsbInput: null}
     const {bankInputs = []} = allCountries.find(({country_id}) => country_id === country?.key) || {}
-    verfications.ibanInput = bankInputs.find(({type}) => type === "IBAN")
-    verfications.swiftInput = bankInputs.find(({type}) => type === "Swift")
-    verfications.bsbInput = bankInputs.find(({type}) => type === "BSB")
-    verfications.routingInput = bankInputs.find(({type}) => type === "Routing")
-    return verfications
-  }, [])
+
+    verification.ibanInput = bankInputs.find(({type}) => type === "IBAN")
+    verification.swiftInput = bankInputs.find(({type}) => type === "Swift")
+    verification.bsbInput = bankInputs.find(({type}) => type === "BSB")
+    verification.routingInput = bankInputs.find(({type}) => type === "Routing")
+    return verification
+  }, [country])
 
   const states: IFormData<number>[] = useMemo(
     () => allStates.map(({state_id, state_name}) => ({label: state_name, key: state_id})),

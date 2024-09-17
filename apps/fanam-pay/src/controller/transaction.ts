@@ -10,6 +10,7 @@ import {
   IPayloadTransactionPurpose,
   ITransaction,
   ITransactionDetails,
+  TypeOrderStatus,
 } from "@custom/utils"
 import {useSingleton} from "hooks"
 import {useApi} from "./api"
@@ -18,7 +19,7 @@ export const useTransactionController = () => {
   const {getRequest, postRequest, putRequest} = useApi()
   const {transId, updateTransData, updateTransId} = useSingleton()
 
-  const getTransaction = async (status: string) => {
+  const getTransaction = async (status: TypeOrderStatus | "") => {
     const {result} = await getRequest<ITransactionDetails[]>(apiAllTransaction(status))
     return result || []
   }

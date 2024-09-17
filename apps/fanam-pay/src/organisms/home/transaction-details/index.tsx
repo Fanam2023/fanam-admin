@@ -2,7 +2,7 @@ import {ImageView} from "@fanam-pkg/core-ui-sass"
 import {useDateTime} from "@fanam-pkg/core-utils"
 import assets from "assets"
 import {PropsTransactionDetails} from "props"
-import {TRANSACTION_STATUS} from "utils"
+import {TRANSACTION_STATUS_OBJECT} from "utils"
 import {ContentTransaction} from "../content-transaction"
 import {RecipientDetails} from "../recipient-details"
 import {useHandler} from "./handler"
@@ -12,7 +12,6 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
   const {formatDate} = useDateTime()
   const {recipientDetails, getFirstLetter} = useHandler(transaction)
   const {
-    status,
     source_amount,
     destination_amount,
     recipient,
@@ -23,9 +22,9 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
     destination_country,
   } = transaction || {}
   const {first_name, last_name} = recipient || {}
-  const {order_no} = order || {}
+  const {order_no, order_status} = order || {}
   const {sla_timing_min, sla_timing_max} = transfer_time || {}
-  const statusLabel = TRANSACTION_STATUS[status]?.key || status
+  const statusLabel = TRANSACTION_STATUS_OBJECT[order_status]?.label
   const {currency} = destination_country || {}
 
   return (
