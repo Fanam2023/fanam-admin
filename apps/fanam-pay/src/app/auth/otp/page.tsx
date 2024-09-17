@@ -69,7 +69,7 @@ const Otp = () => {
       <Auth isBack>
         <section className={`flex-col ${styles.heading}`}>
           <h4 className={`bold ${styles.otp}`}>OTP Verification </h4>
-          <h5>
+          <h5 className={styles.description}>
             We have sent an OTP on given number {countryCode} {phone_no}
           </h5>
           <ul className={`flex ${styles.otp_field}`}>{otpValues?.map(renderInputNumber)}</ul>

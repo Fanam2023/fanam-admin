@@ -93,8 +93,8 @@ const TransactionStatusPage = () => {
       isStepper>
       <section className={styles.mobile_wrapper}>
         <section className={`flex-col ${styles.heading_wrapper}`}>
-          <h4 className="bold">Payment Status</h4>
-          <h5>Get the payment status after sending the money.</h5>
+          <h4 className={`bold ${styles.title}`}>Payment Status</h4>
+          <h5 className={styles.description}>Get the payment status after sending the money.</h5>
         </section>
         <section className={`flex-col-center ${styles.payment_status_wrapper}`}>
           <ImageView src={bigIcon} alt={"status-icon"} imgSize={56} />

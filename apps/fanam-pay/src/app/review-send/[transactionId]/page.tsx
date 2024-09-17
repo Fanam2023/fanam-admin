@@ -24,7 +24,7 @@ const ReviewAndSend = () => {
     return (
       <section className={`flex-sb-center ${styles.payment_wrapper}`}>
         <h6 className={styles.title_text}>{key}</h6>
-        <h6>{label}</h6>
+        <h6 className={styles.detail}>{label}</h6>
       </section>
     )
   }
@@ -39,8 +39,8 @@ const ReviewAndSend = () => {
       childWrapper={styles.page_wrapper}
       stepIndex={4}>
       <section className={`flex-col ${styles.heading_wrapper}`}>
-        <h4 className="bold">Review and Send</h4>
-        <p>Review the details of the recipient details and their account details.</p>
+        <h4 className={`bold ${styles.title}`}>Review and Send</h4>
+        <p className={styles.description}>Review the details of the recipient details and their account details.</p>
       </section>
       <section className={styles.card_wrapper}>
         <section className={`flex-sb-center ${styles.header}`}>

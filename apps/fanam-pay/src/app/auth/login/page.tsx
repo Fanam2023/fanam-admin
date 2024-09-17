@@ -15,8 +15,10 @@ const Login = () => {
     <BaseContainer profile bellIcon>
       <Auth>
         <section className={`flex-col ${styles.heading}`}>
-          <h3 className={`bold ${styles.login} ${styles.sub_heading}`}>Log in</h3>
-          <h5>Login in once and seamlessly access your account across all your devices.</h5>
+          <h3 className={`bold ${styles.sub_heading}`}>Log in</h3>
+          <h5 className={styles.description}>
+            Login in once and seamlessly access your account across all your devices.
+          </h5>
         </section>
         <TextField
           label="Enter Phone Number"
@@ -39,7 +41,7 @@ const Login = () => {
         />
         <section className={`flex-sb-center ${styles.forgot_wrpapper}`}>
           <section className={`flex ${styles.login_wrapper}`}>
-            <h6>No Account ?</h6>
+            <h6 className={styles.login}>No Account ?</h6>
             <h6 className={`bold ${styles.login}`} onClick={routeToSignUp}>
               Sign up
             </h6>
