@@ -4,6 +4,8 @@ export type TypeAccount = "Individual" | "Business"
 
 export type TypeBankAccount = "Current" | "Savings" | "Overdraft"
 
+export type TypeBankCode = "Swift" | "BSB" | "Routing" | "IBAN"
+
 export type TypeBusiness = "Sole_proprietor" | "Partnership_firm" | "Companies" | "Limited_liability_partnership"
 
 export type TypePurpose =
