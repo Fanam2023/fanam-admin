@@ -16,6 +16,11 @@ export const useHandler = (styles: IStyle) => {
   const {status} = data
   const statusKey = status?.key || ""
 
+  const formattedStatusOptions = Object.keys(TRANSACTION_STATUS).map(key => ({
+    key,
+    label: TRANSACTION_STATUS[key]?.key,
+  }))
+
   const {data: transactions = []} = useQuery({
     queryKey: [QUERY_TRANSACTION.concat(statusKey)],
     queryFn: () => getTransaction(statusKey),
@@ -38,7 +43,7 @@ export const useHandler = (styles: IStyle) => {
       childElements: [
         {
           elementType: "drop-down",
-          options: TRANSACTION_STATUS,
+          options: formattedStatusOptions,
           value: status,
           onChangeValue,
           name: "status",

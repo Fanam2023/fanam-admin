@@ -33,13 +33,13 @@ export interface ITransaction {
   order?: IResponseOrder
   transfer_time?: ITransferTime
   created_at?: string
+  paymentMode?: string
 }
 
 export interface ITransactionDetails extends ITransaction {
   month: string
   date: string
   paymentId: string
-  paymentMode: string
   paymentDuration: string
 }
 

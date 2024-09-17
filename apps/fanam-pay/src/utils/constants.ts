@@ -87,16 +87,17 @@ export const PURPOSES_BUSINESS: IFormData<TypePurpose>[] = [
   {label: "Others", key: "Others"},
 ]
 
-export const TRANSACTION_STATUS: IFormData<TypeTransactionStatus>[] = [
-  {label: "Transaction Initiated", key: "Transaction_initiated"},
-  {label: "Invoice Upload", key: "Invoice_upload"},
-  {label: "Recipient Picked", key: "Recipient_picked"},
-  {label: "Beneficiary Picked", key: "Beneficiary_picked"},
-  {label: "Payment Initiated", key: "Payment_initiated"},
-  {label: "Payment Pending", key: "Payment_pending"},
-  {label: "Payment Successful", key: "Payment_successful"},
-  {label: "Payment Failed", key: "Payment_failed"},
-]
+export const TRANSACTION_STATUS: Record<string, {key: string}> = {
+  Transaction_initiated: {key: "Transaction Initiated"},
+  Invoice_upload: {key: "Invoice Upload"},
+  Recipient_picked: {key: "Recipient Picked"},
+  Beneficiary_picked: {key: "Beneficiary Picked"},
+  Payment_initiated: {key: "Payment Initiated"},
+  Payment_pending: {key: "Payment Pending"},
+  Payment_successful: {key: "Payment Successful"},
+  Payment_failed: {key: "Payment Failed"},
+  Refund_initiated: {key: "Refund Initiated"},
+}
 
 export const ID_PROOFS = ["Passport", "Driving License", "Aadhaar"]
 
