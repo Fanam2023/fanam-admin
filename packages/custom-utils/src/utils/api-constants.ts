@@ -1,5 +1,3 @@
-import {TypeNetworkFX} from "../model"
-
 export const API_AUTH = "/auth"
 export const API_SIGNUP = `${API_AUTH}/signup`
 export const API_LOGIN = `${API_AUTH}/login`
@@ -33,8 +31,7 @@ export const apiLoginStart = (credentialId: string) => `/passkey/login-start?cre
 export const API_LOGIN_FINISH = "/passkey/login-finish"
 export const API_POPULAR_CORRIDORS = "/payment/popularCorridors-visa"
 export const API_CREATE_ORDER = "/order"
-export const apiPayout = (transacionId: string, partner: TypeNetworkFX) =>
-  partner === "Visa" ? `/payment/visa-payout/${transacionId}` : `/payment/masterCard-payout/${transacionId}`
+export const apiPayout = (transacionId: string) => `/payment/send-payout/${transacionId}`
 
 /* KYC Endpoints */
 export const API_PAN_VERIFY = `${API_USER}/pan-verification`
