@@ -6,7 +6,7 @@ import useHandler from "./handler"
 import styles from "./sender.module.sass"
 
 const SenderForm = () => {
-  const {individualForm, individualKYCElements, businessForm, individualType, onSubmit, isValid} = useHandler(styles)
+  const {individualForm, individualKYCElements, businessForm, individualType, onSubmit} = useHandler(styles)
 
   return (
     <BaseContainer

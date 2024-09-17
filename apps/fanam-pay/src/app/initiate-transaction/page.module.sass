@@ -24,7 +24,7 @@
 .button_container
   gap: $size-20px
 
-.txt_wrapper
+.txt_wrapper, .recipient_txt
   color: $dark-grey
   margin:
     left: auto
@@ -139,7 +139,7 @@
     overflow-y: scroll
 
   .currency_wrapper
-    display: block
+    display: block !important
 
   .convert_img
     margin-top: $size-16px
@@ -150,3 +150,13 @@
 
   .header_wrapper
     margin: $size-16px
+    padding-top: $size-24px
+
+  .convert_img
+    display: none !important
+
+  .recipient_txt
+    margin-top: $size-14px
+
+  .conversion_wrapper
+    margin-top: $size-10px

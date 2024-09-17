@@ -7,8 +7,8 @@ import {
   IResponseOrder,
   IUser,
   TypeAccount,
+  TypeOrderStatus,
   TypePurpose,
-  TypeTransactionStatus,
 } from "../model"
 
 export interface ITransaction {
@@ -29,22 +29,22 @@ export interface ITransaction {
   recipient: IRecipient
   recipient_relationship: string
   beneficiary: IBeneficiary
-  status?: TypeTransactionStatus
   order?: IResponseOrder
   transfer_time?: ITransferTime
   created_at?: string
+  paymentMode?: string
 }
 
 export interface ITransactionDetails extends ITransaction {
   month: string
   date: string
   paymentId: string
-  paymentMode: string
   paymentDuration: string
 }
 
-export interface StatusSelect {
-  status: IFormData<TypeTransactionStatus> | null
+export interface IQueryTransaction {
+  status: IFormData<TypeOrderStatus | "">
+  date: string
 }
 
 export interface IBankAccount {

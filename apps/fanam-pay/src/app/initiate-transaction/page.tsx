@@ -58,7 +58,7 @@ const InitiateTransactionPage = () => {
             </section>
             <ImageView src={assets.ic_conversion} alt="convert" imgSize={40} wrapperClass={styles.convert_img} />
             <section>
-              <h5 className={`bold ${styles.txt_wrapper}`}>Recipient receives</h5>
+              <h5 className={`bold ${styles.recipient_txt}`}>Recipient receives</h5>
               <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
                 <section className={styles.amount}>
                   <input

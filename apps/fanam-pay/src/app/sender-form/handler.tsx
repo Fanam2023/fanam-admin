@@ -155,13 +155,15 @@ const useHandler = (styles: IStyle) => {
     mutationFn: verifyPanCard,
     onSuccess: ({result, errorData}) => {
       const {message} = errorData || {}
-      if (result)
+      if (result) {
+        const {user} = result
+        updateUserData(user)
         toggleNotify({
           title: "Success",
           description: "PAN card verified successfully!",
           type: "success",
         })
-      else
+      } else
         toggleNotify({
           title: "Error - PAN Verification",
           description: message || "PAN verification failed. Please try again.",
@@ -805,7 +807,6 @@ const useHandler = (styles: IStyle) => {
     businessForm,
     individualType,
     onSubmit,
-    isValid,
   }
 }
 

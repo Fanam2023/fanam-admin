@@ -102,11 +102,11 @@
   justify-content: space-between
 
 .source_amount,.view_more,.activity_wrapper
-  display: none
+  display: none !important
 
 @include mixin-responsive
   .id_wrapper,.source_wrapper,.duration_wrapper,.destination_amount,.button_wrapper
-    display: none
+    display: none !important
 
   .detail_wrapper
     gap: 0
@@ -115,18 +115,18 @@
     padding: 0
 
   .source_amount
-    display: flex
+    display: flex !important
     color: $alert-green
     margin-top: $size-8px
 
   .view_more
-    display: flex
-    color: $primary
+    display: flex !important
+    color: $theme
     gap: $size-8px
-    margin-left: auto
+    justify-content: flex-end
 
   .activity_wrapper
-    display: flex
+    display: flex !important
     gap: $size-8px
     margin-top: 5%
     color: $primary
@@ -134,3 +134,12 @@
   .container_wrapper
     box-shadow: none
     padding: 0
+
+  .head_wrapper
+    display: none !important
+
+  .month,.date_wrapper
+    font-size: $size-14px
+
+  .name_wrapper
+    margin-left: $size-12px

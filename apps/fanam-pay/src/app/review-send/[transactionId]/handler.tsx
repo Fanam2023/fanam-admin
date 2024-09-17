@@ -1,13 +1,21 @@
 import {IFormData} from "@fanam-pkg/core-utils"
-import {useRouter} from "next/navigation"
-import {useEffect, useMemo, useState} from "react"
-import {useMutation} from "@tanstack/react-query"
-import {usePaymentController} from "controller"
-import {useSingleton} from "hooks"
-import {routeToTransactionDetail} from "utils"
+import {useParams, useRouter} from "next/navigation"
+import {useMemo, useState} from "react"
+import {useMutation, useQuery} from "@tanstack/react-query"
+import {usePaymentController, useTransactionController} from "controller"
+import {QUERY_TRANSACTION, routeToTransactionDetail} from "utils"
 
 const useHandler = () => {
-  const {transData, refetchTransaction, transId, user} = useSingleton()
+  const {transactionId} = useParams()
+
+  const {getTransactionDetails} = useTransactionController()
+
+  const {data: transactionDetail} = useQuery({
+    queryKey: [QUERY_TRANSACTION.concat(transactionId as string)],
+    queryFn: () => getTransactionDetails(transactionId as string),
+    enabled: !!transactionId,
+  })
+
   const {sendPayout} = usePaymentController()
   const [showDetails, setShowDetails] = useState({
     recipient: false,
@@ -27,16 +35,12 @@ const useHandler = () => {
     exchange_amount,
     final_amount,
     order,
-  } = transData || {}
+  } = transactionDetail || {}
 
   const isDisabled = !order
 
   const {currency} = source_country || {}
   const {currency: destinationCountryValue} = destination_country || {}
-
-  useEffect(() => {
-    if (transId) refetchTransaction()
-  }, [])
 
   const recipientDetails = useMemo(() => {
     const {
@@ -81,7 +85,7 @@ const useHandler = () => {
     ]
 
     return recipientDetails
-  }, [transData])
+  }, [transactionDetail])
 
   const beneficiaryDetails = useMemo(() => {
     const {first_name, last_name, address, email, phone_no, zip_code, country, city, state, relationship} =
@@ -104,7 +108,7 @@ const useHandler = () => {
     ]
 
     return beneficiaryDetails
-  }, [transData])
+  }, [transactionDetail])
 
   const paymentDetails = useMemo(() => {
     const paymentDetails: IFormData[] = [
@@ -115,14 +119,14 @@ const useHandler = () => {
     ]
 
     return paymentDetails
-  }, [transData])
+  }, [transactionDetail])
 
   const toggleDetails = (type: string) => setShowDetails(prev => ({...prev, [type]: !prev[type]}))
 
   const {mutate: completeTransaction} = useMutation({
     mutationFn: sendPayout,
     onSuccess: ({result}) => {
-      if (result) push(routeToTransactionDetail(transId))
+      if (result) push(routeToTransactionDetail(transactionId as string))
     },
   })
 
