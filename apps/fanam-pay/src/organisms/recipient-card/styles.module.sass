@@ -3,8 +3,8 @@
 .page_wrapper
   margin:
     top: 10%
-    left: $size-16px
-    right: $size-16px
+  left: $size-16px
+  right: $size-16px
 
 .check_box_wrapper
   gap: $size-12px
@@ -15,7 +15,6 @@
   padding: $size-20px $size-24px
   border: $size-1px solid $medium-grey
   border-radius: $size-10px
-  overflow-y: scroll
   margin-top: $size-16px
   background: $white
 
@@ -50,13 +49,16 @@
   margin:
     top: 4%
 
+.detail_wrapper
+  color: $black
+
 @include mixin-responsive
   .border_wrapper
     border-radius: $size-16px
 
   .details_wrapper
-    width: 86%
-    margin-top: $size-16px
+    width: 100%
+    box-sizing: border-box
 
   .account_wrapper
     width: 80%
@@ -64,3 +66,21 @@
 
   .page_wrapper
     margin-top: 19%
+
+  .field_wrapper,.detail_wrapper,
+  .text,.title_wrapper
+    font-size: $size-16px
+
+  .data_wrapper
+    margin-top: $size-12px
+
+  .card_wrapper
+    border-radius: $size-4px
+
+  .heading
+    color: $theme
+    font-size: $size-20px
+
+  .details
+    height: 70vh
+    overflow-y: scroll

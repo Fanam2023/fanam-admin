@@ -1,6 +1,6 @@
 "use client"
 
-import {ImageView} from "@fanam-pkg/core-ui-sass"
+import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {TypeTransactionStatus} from "@custom/utils"
 import assets from "assets"
 import {BaseContainer} from "organisms"
@@ -62,7 +62,6 @@ const TransactionStatusPage = () => {
         sla_timing_min !== sla_timing_max ? `${sla_timing_min} - ${sla_timing_max} hours` : `${sla_timing_min} hours`,
     },
   ]
-
   const renderPaymentDetails = ({label, value}: PaymentDetailsProps, index: number) => (
     <section className={`flex-sb-center ${styles.content}`} key={index}>
       <h5>{label}</h5>
@@ -72,15 +71,18 @@ const TransactionStatusPage = () => {
     </section>
   )
 
-  const DownloadReceipt = () => <h6 className={styles.receipt_text}>Download Receipt</h6>
+  const DownloadReceipt = () => (
+    <Button buttonType="primary-outlined" wrapperClass={styles.receipt_button}>
+      Download Receipt
+    </Button>
+  )
 
   return (
     <BaseContainer
       buttonText="Done"
       header="Payment Status"
-      footerChild={DownloadReceipt()}
+      footerChild={<DownloadReceipt />}
       childWrapper={styles.page_container}
-      skipBtn="Download Receipt"
       stepIndex="pending"
       onSubmit={routeHome}
       isStepper>

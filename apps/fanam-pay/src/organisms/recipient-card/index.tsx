@@ -12,13 +12,13 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
   const renderRecipientDetails = ({key, label}: IFormData, index: number) => (
     <li className={`flex-sb-center ${styles.data_wrapper}`} key={index}>
       <h5 className={styles.field_wrapper}>{key}</h5>
-      <h5>{label}</h5>
+      <h5 className={`bold ${styles.detail_wrapper}`}>{label}</h5>
     </li>
   )
 
   return (
     <section className={styles.page_wrapper}>
-      <h5 className="bold">Recipient</h5>
+      <h5 className={`bold ${styles.heading}`}>Recipient</h5>
       <section className={`flex-col ${styles.details_wrapper}`}>
         <section className={`flex-sb-center ${styles.card_wrapper}`}>
           <h5 className={styles.title_wrapper}>Recipient Details</h5>
@@ -30,7 +30,7 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
             onClick={onEdit.bind(null, recipient_id)}
           />
         </section>
-        <ul>{recipientDetails.map(renderRecipientDetails)}</ul>
+        <ul className={styles.details}>{recipientDetails.map(renderRecipientDetails)}</ul>
         <section>
           <section className={`flex ${styles.check_box_wrapper}`}>
             <Checkbox item={isPerson} name="is_same_person" onSelectItem={onChangeData} />

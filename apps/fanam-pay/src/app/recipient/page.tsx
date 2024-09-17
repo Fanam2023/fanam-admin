@@ -33,7 +33,7 @@ const RecipientPage = () => {
       stepIndex={0}
       onBack={onBack}>
       <section className={`flex-col ${styles.recipient_wrapper}`}>
-        <h3 className={`bold ${styles.title}`}>Add Recipient</h3>
+        <h3 className={`bold ${styles.title}`}>Add or Select Recipient</h3>
         <h5 className={styles.description}>Enter the Recipient details and their account details.</h5>
       </section>
       <section className={`flex ${styles.search_container}`}>

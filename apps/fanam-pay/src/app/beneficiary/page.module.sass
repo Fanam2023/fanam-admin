@@ -1,4 +1,5 @@
 @use "../../styles/index" as *
+
 .page_container
   width: 50%
   margin:
@@ -40,18 +41,10 @@
     display: none
 
   .search_container
-    width: 90%
-    margin:
-      left: $size-16px
-      top: 5%
+    margin-top: 5%
 
   .save_text
     margin-left: 0
-
-  .beneficiary_wrapper
-    margin:
-      top: 25%
-      left: 5%
 
   .add_text
     border: $size-1px solid $theme
@@ -61,13 +54,14 @@
 
   .members
     grid-template-columns: repeat(2, 0.5fr)
-    width: 90%
-    padding: 0 $size-16px
-    margin-left: 0
-    grid-column-gap: $size-12px
-    margin-bottom: 33%
+    grid-gap: $size-12px
 
   .save_text
-    margin-left: $size-16px
-    font-size: $size-16px
+    font-size: $size-20px
     color: $theme
+
+  .title
+    font-size: $size-20px
+
+  .description
+    font-size: $size-16px

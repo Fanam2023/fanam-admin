@@ -31,8 +31,10 @@ const BeneficiaryPage = () => {
       isStepper
       onBack={onBack}>
       <section className={`flex-col ${styles.beneficiary_wrapper}`}>
-        <h3 className="bold">Add Beneficiary</h3>
-        <h5>If your recipient and beneficiary are different, enter the beneficiary details..</h5>
+        <h3 className={`bold ${styles.title}`}>Add or Select Beneficiary</h3>
+        <h5 className={styles.description}>
+          If your recipient and beneficiary are different, enter the beneficiary details..
+        </h5>
       </section>
       <section className={`flex ${styles.search_container}`}>
         <TextField

@@ -108,31 +108,31 @@ export const BaseContainer = ({
           <section className={`${childWrapper} ${styles.children_wrapper}`}>{children}</section>
         )
       ) : (
-        <section>{children}</section>
+        <section className={styles.mobile_wrapper}>{children}</section>
       )}
 
-      {(buttonText || footerChild) && (
+      {(buttonText || skipBtn || footerChild) && (
         <footer className={`flex ${styles.footer_wrapper}`}>
-          {!!buttonText && (
-            <>
-              <Button
-                onClick={onClickBack}
-                wrapperClass={styles.skip_btn}
-                buttonType="primary-outlined"
-                leadingIcon={assets.ic_left_arrow_fill}>
-                {skipBtn}
-              </Button>
-              <Button
-                onClick={onSubmit}
-                wrapperClass={`${styles.button_wrapper} ${disabled ? styles.disable_btn : ""}`}
-                trailingIcon={assets.ic_right_arrow_fill}
-                trailingClass={styles.tail_class}
-                disabled={disabled}>
-                {buttonText}
-              </Button>
-            </>
-          )}
           {footerChild}
+          {skipBtn && (
+            <Button
+              onClick={onClickBack}
+              wrapperClass={styles.skip_btn}
+              buttonType="primary-outlined"
+              leadingIcon={assets.ic_left_arrow_fill}>
+              {skipBtn}
+            </Button>
+          )}
+          {buttonText && (
+            <Button
+              onClick={onSubmit}
+              wrapperClass={`${styles.button_wrapper} ${disabled ? styles.disable_btn : ""}`}
+              trailingIcon={assets.ic_right_arrow_fill}
+              trailingClass={styles.tail_class}
+              disabled={disabled}>
+              {buttonText}
+            </Button>
+          )}
         </footer>
       )}
     </>

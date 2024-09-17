@@ -75,6 +75,8 @@
 .skip_btn
   box-shadow: $size-6px $size-6px $size-10px $medium-grey
   height: $size-40px
+  &:hover
+    background: $theme
 
 .wrapper
   display: flex
@@ -157,16 +159,20 @@
     background: $white
     justify-content: center
     align-items: center
+    padding: $size-12px
+    box-sizing: border-box
 
   .skip_btn
-    display: none
+    width: 100%
+    padding: $size-24px
+    border: $size-1px solid $theme
+    color: $theme
 
   .button_wrapper
-    padding: $size-24px $size-24px
+    padding: $size-24px
     width: 100%
     box-shadow: $size-6px $size-6px $size-10px $medium-grey
     margin-right: 0
-    margin: 0 $size-16px
 
   .add_text
     display: block
@@ -179,3 +185,10 @@
 
   .language_text
     color: $black
+
+  .mobile_wrapper
+    margin:
+      top: 18%
+      bottom: 12vh
+      left: $size-16px
+      right: $size-16px
