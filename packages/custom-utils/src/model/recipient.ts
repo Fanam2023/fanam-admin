@@ -24,6 +24,7 @@ export interface IRecipient {
   bank_account: IBankAccount
   recipient_account_type: TypeAccount
   kyc_attachments: IAttachment[]
+  business_name: string
 }
 
 export interface IBaseRecipientData {
@@ -49,10 +50,12 @@ export interface IRecipientData extends IBaseRecipientData {
   branch_code: string
   bank_name: string
   branch_address: string
-  swift_code: string
+  swift_code?: string
   iban_no?: string
   routing_code?: string
+  bsb_code?: string
   account_type: TypeBankAccount
+  business_name: string
 }
 
 export interface IPayloadRecipient extends IBaseRecipientData {
@@ -63,6 +66,7 @@ export interface IPayloadRecipient extends IBaseRecipientData {
   bank_account: IPayloadRecipientBankAccount
   transaction_id?: string
   recipient_account_type?: string
+  business_name: string
 }
 
 export interface IPayloadUpdateRecipient extends IPayloadRecipient {
@@ -75,10 +79,10 @@ export interface IPayloadRecipientBankAccount {
   bank_name: string
   branch_code: string
   branch_address: string
-  swift_code: string
+  swift_code?: string
   iban_no?: string
   routing_code?: string
-  bank_code_type: string
+  bsb_code?: string
 }
 
 export interface IResponseRecipientBankAccount extends IPayloadRecipientBankAccount {
