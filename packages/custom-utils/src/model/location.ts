@@ -1,4 +1,11 @@
 // import {StaticImageData} from
+import {TypeBankCode} from "./enum"
+
+export interface IBankInput {
+  type: TypeBankCode
+  label: string
+  regEx: string
+}
 
 export interface ICountry {
   country_id: number
@@ -10,6 +17,7 @@ export interface ICountry {
   phone_code: string
   iso2: string
   iso3: string
+  bankInputs: IBankInput[]
 }
 
 export interface ICorridors {

@@ -4,11 +4,14 @@ import useHandler from "./handler"
 import styles from "./styles.module.sass"
 
 export const CreateRecipientDetails = ({recipient_id}: RecipientDetailsProp) => {
-  const {formElements, onSubmit} = useHandler(styles, recipient_id)
+  const {formElements, onSubmit, businessElements, recipientType} = useHandler(styles, recipient_id)
 
   return (
     <section>
-      <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
+      <GroupForm
+        formSections={recipientType === "Individual" ? formElements : businessElements}
+        wrapperClass={styles.input_wrapper}
+      />
       <Button wrapperClass={styles.btn_wrapper} onClick={onSubmit}>
         Add Recipient
       </Button>

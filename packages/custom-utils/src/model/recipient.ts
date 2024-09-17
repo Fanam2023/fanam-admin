@@ -1,6 +1,6 @@
 import {IFile, IFormData} from "@fanam-pkg/core-utils"
 import {IAttachment} from "./common"
-import {TypeAccount, TypeBankAccount} from "./enum"
+import {TypeAccount, TypeBankAccount, TypeBranchCode} from "./enum"
 import {ICity, ICountry, IState} from "./location"
 import {IBankAccount} from "./transaction"
 
@@ -24,6 +24,7 @@ export interface IRecipient {
   bank_account: IBankAccount
   recipient_account_type: TypeAccount
   kyc_attachments: IAttachment[]
+  business_name: string
 }
 
 export interface IBaseRecipientData {
@@ -53,6 +54,8 @@ export interface IRecipientData extends IBaseRecipientData {
   iban_no?: string
   routing_code?: string
   account_type: TypeBankAccount
+  business_name: string
+  branch_type: TypeBranchCode
 }
 
 export interface IPayloadRecipient extends IBaseRecipientData {
@@ -63,6 +66,8 @@ export interface IPayloadRecipient extends IBaseRecipientData {
   bank_account: IPayloadRecipientBankAccount
   transaction_id?: string
   recipient_account_type?: string
+  business_name: string
+  branch_type: TypeBranchCode
 }
 
 export interface IPayloadUpdateRecipient extends IPayloadRecipient {

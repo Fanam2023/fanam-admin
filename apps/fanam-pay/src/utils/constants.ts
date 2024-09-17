@@ -109,6 +109,8 @@ export const BUSINESS_TYPE = ["Sole_proprietor", "Partnership_firm", "Companies"
 
 export const BANK_ACCOUNT_TYPE = ["Current", "Savings", "Overdraft"]
 
+export const BANK_BRANCH_TYPE = ["Sort", "Swift", "BSB", "Routing", "IFSC", "IBAN"]
+
 export const RELATION_SHIP: IFormData<TypeRelation>[] = [
   {key: "Father", label: "Father"},
   {key: "Mother", label: "Mother"},

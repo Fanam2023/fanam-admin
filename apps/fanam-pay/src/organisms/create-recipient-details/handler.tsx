@@ -4,9 +4,10 @@ import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
 import {ButtonAccountType, useSlider} from "@custom/ui"
-import {IPayloadRecipient, IRecipientData, IStyle, TypeAccount, TypeBankAccount} from "@custom/utils"
+import {IBankInput, IPayloadRecipient, IRecipientData, IStyle, TypeAccount, TypeBankAccount} from "@custom/utils"
 import assets from "assets"
 import {useLocationController, useRecipientController} from "controller"
+import {useSingleton} from "hooks"
 import {
   BANK_ACCOUNT_TYPE,
   ID_PROOFS,
@@ -25,6 +26,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {refreshQuery} = useReactQuery()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {createRecipient, updateRecipient, getByRecipientId} = useRecipientController()
+  const {transData} = useSingleton()
+  const {destination_country} = transData || {}
 
   const {toggleNotify} = useNotifyPopup()
 
@@ -55,6 +58,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     id_number: "",
     kyc: [],
     account_type: "Current",
+    branch_type: "IBAN",
+    business_name: "",
   })
 
   const {
@@ -81,6 +86,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     kyc,
     recipient_account_type,
     account_type,
+    branch_type,
+    business_name,
   } = data
 
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
@@ -130,6 +137,10 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!account_type) errState = {...errState, errAccountType: "Please choose recipient account type", isValid: false}
 
+    if (!branch_type) errState = {...errState, errAccountType: "Please choose recipient branch type", isValid: false}
+
+    if (!business_name) errState = {...errState, errBusinessName: "Please enter business name", isValid: false}
+
     setErrData(errState)
     return errState
   }
@@ -154,6 +165,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     errIdNumber,
     errAccountType,
     errKyc,
+    errBusinessName,
   } = errData
 
   const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}, {data: recipientData}] = useQueries(
@@ -206,6 +218,21 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     [allCountries]
   )
 
+  const {ibanInput, swiftInput, bsbInput, routingInput} = useMemo(() => {
+    const verfications: {
+      ibanInput: null | IBankInput
+      swiftInput: null | IBankInput
+      routingInput: null | IBankInput
+      bsbInput: null | IBankInput
+    } = {ibanInput: null, swiftInput: null, routingInput: null, bsbInput: null}
+    const {bankInputs = []} = allCountries.find(({country_id}) => country_id === country?.key) || {}
+    verfications.ibanInput = bankInputs.find(({type}) => type === "IBAN")
+    verfications.swiftInput = bankInputs.find(({type}) => type === "Swift")
+    verfications.bsbInput = bankInputs.find(({type}) => type === "BSB")
+    verfications.routingInput = bankInputs.find(({type}) => type === "Routing")
+    return verfications
+  }, [])
+
   const states: IFormData<number>[] = useMemo(
     () => allStates.map(({state_id, state_name}) => ({label: state_name, key: state_id})),
     [allStates]
@@ -235,6 +262,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         bank_account,
         kyc_attachments,
         recipient_account_type,
+        business_name,
       } = recipientData
 
       const {account_no, account_type, bank_name, branch_address, branch_code, swift_code, routing_code, iban_no} =
@@ -268,6 +296,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         account_type: account_type as TypeBankAccount,
         kyc: kyc_attachments?.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
         recipient_account_type,
+        business_name,
+        branch_type: branch_type as TypeBranchCode,
       })
     }
   }, [recipientData])
@@ -294,6 +324,219 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       icon={item.key === "Individual" ? assets.ic_personal : assets.ic_business}
     />
   )
+
+  const recipientType = recipient_account_type
+  console.log("asds", recipientType)
+
+  const businessElements: FormSectionProps[] = [
+    {
+      title: "Recipient type",
+      wrapperClassGrid: styles.recipient_type_wrapper,
+      children: <ul className={`${styles.btn_container}`}>{RECIPIENT_TYPE?.map(renderAccType)}</ul>,
+    },
+    {
+      title: "Personal Information",
+      wrapperClass: styles.recipient_address,
+      wrapperClassGrid: styles.recipient_address_wrapper,
+      childElements: [
+        {
+          elementType: "input",
+          label: "Enter Business Name",
+          name: "business_name",
+          error: errBusinessName,
+          value: business_name,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Contact Person First Name",
+          name: "first_name",
+          error: errFirstName,
+          value: first_name,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Contact Person Last Name",
+          name: "last_name",
+          error: errLastName,
+          value: last_name,
+          onChangeValue,
+        },
+      ],
+    },
+    {
+      wrapperClassGrid: styles.personal,
+      childElements: [
+        {
+          elementType: "input",
+          label: "Enter Email",
+          name: "email",
+          error: errEmail,
+          value: email,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter PhoneNumber",
+          name: "phone_no",
+          error: errPhoneNo,
+          value: phone_no,
+          onChangeValue,
+          maxLength: 10,
+        },
+      ],
+    },
+    {
+      title: "Address",
+      wrapperClassGrid: styles.address_details,
+      childElements: [
+        {
+          elementType: "input",
+          label: "Address Line 1",
+          name: "address_line_1",
+          error: errAddressLine1,
+          value: address_line_1,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Address Line 2 (optional )",
+          name: "address_line_2",
+          value: address_line_2,
+          onChangeValue,
+        },
+      ],
+    },
+    {
+      wrapperClassGrid: styles.address_details,
+      childElements: [
+        {
+          elementType: "drop-down",
+          label: "Enter country",
+          name: "country",
+          options: countries,
+          error: errCountry,
+          value: country,
+          onChangeValue: onChangeCountry,
+        },
+        {
+          elementType: "drop-down",
+          label: "Enter State",
+          name: "state",
+          disabled: !country,
+          options: states,
+          error: errState,
+          value: state,
+          onChangeValue: onChangeState,
+        },
+        {
+          elementType: "drop-down",
+          label: "Enter City",
+          name: "city",
+          disabled: !state,
+          options: cities,
+          error: errCity,
+          value: city,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter ZipCode",
+          name: "zip_code",
+          error: errZipCode,
+          value: zip_code,
+          onChangeValue,
+        },
+      ],
+    },
+    {
+      title: "Bank Details",
+      wrapperClassGrid: styles.bank_details,
+      childElements: [
+        {
+          elementType: "drop-down",
+          label: "Account Type",
+          name: "account_type",
+          error: errAccountType,
+          value: account_type,
+          options: BANK_ACCOUNT_TYPE,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Account Number",
+          name: "account_no",
+          error: errAccountNo,
+          value: account_no,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Bank Name",
+          name: "bank_name",
+          error: errBankName,
+          value: bank_name,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Enter Branch Code ",
+          name: "branch_code",
+          error: errBranchCode,
+          value: branch_code,
+          onChangeValue,
+        },
+        {
+          elementType: "input",
+          label: "Branch",
+          name: "branch",
+          error: errBranchAddress,
+          value: branch_address,
+          onChangeValue,
+        },
+      ],
+    },
+    {
+      title: "Identification",
+      wrapperClassGrid: styles.id_types,
+      childElements: [
+        {
+          elementType: "drop-down",
+          label: "Select ID issued country",
+          name: "id_issued_country",
+          options: countries,
+          error: errIdIssuedCountry,
+          value: id_issued_country,
+          onChangeValue,
+        },
+        {
+          elementType: "drop-down",
+          label: "Select ID type",
+          options: ID_PROOFS,
+          name: "id_type",
+          error: errIdType,
+          value: id_type,
+          onChangeValue,
+        },
+      ],
+    },
+    {
+      wrapperClassGrid: styles.img_picker,
+      childElements: [
+        {
+          elementType: "file-picker",
+          fileType: ["image/*", "application/pdf"],
+          name: "kyc",
+          isMultiple: true,
+          children: <CustomUpload />,
+          value: kyc,
+          error: errKyc,
+          onChangeValue,
+        },
+      ],
+    },
+  ]
 
   const formElements: FormSectionProps[] = [
     {
@@ -566,6 +809,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           account_type,
           bank_code_type: "IBAN",
         },
+        business_name,
+        branch_type: "Sort",
       }
 
       if (recipientId) onUpdate({...payLoad, recipient_id: recipientId})
@@ -577,6 +822,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     onChangeValue,
     onSubmit,
     formElements,
+    businessElements,
+    recipientType,
     isDesktop,
     toggleSlider,
   }
@@ -614,4 +861,5 @@ const DEFAULT_ERR_STATE = {
   errAccountPurpose: "",
   errAccountType: "",
   errKyc: "",
+  errBusinessName: "",
 }
