@@ -15,7 +15,7 @@ const HomeScreen = () => {
     <BaseContainer childWrapper={styles.page_container}>
       <section className={styles.main_container}>
         <section className={`flex ${styles.name_wrapper}`}>
-          <h2 className={styles.title} >Good Afternoon,</h2>
+          <h2 className={styles.title}>Good Afternoon,</h2>
           <h2 className={styles.first_name}>{first_name}</h2>
         </section>
         <h5 className={styles.content}>Discover how your currency has been tracking with our exchange rate charts.</h5>

@@ -1,5 +1,5 @@
 import {IFormData} from "@fanam-pkg/core-utils"
-import {TypeAccount, TypePurpose, TypeRelation, TypeTransactionStatus} from "@custom/utils"
+import {TypeAccount, TypeOrderStatus, TypePurpose, TypeRelation} from "@custom/utils"
 import assets from "assets"
 import {IStepper} from "model"
 import {BankCartProps, BankListProps} from "props"
@@ -87,16 +87,16 @@ export const PURPOSES_BUSINESS: IFormData<TypePurpose>[] = [
   {label: "Others", key: "Others"},
 ]
 
-export const TRANSACTION_STATUS: Record<string, {key: string}> = {
-  Transaction_initiated: {key: "Transaction Initiated"},
-  Invoice_upload: {key: "Invoice Upload"},
-  Recipient_picked: {key: "Recipient Picked"},
-  Beneficiary_picked: {key: "Beneficiary Picked"},
-  Payment_initiated: {key: "Payment Initiated"},
-  Payment_pending: {key: "Payment Pending"},
-  Payment_successful: {key: "Payment Successful"},
-  Payment_failed: {key: "Payment Failed"},
-  Refund_initiated: {key: "Refund Initiated"},
+export const TRANSACTION_STATUS_OBJECT: Record<TypeOrderStatus, IFormData<TypeOrderStatus>> = {
+  Payment_initiated: {label: "Payment Initiated"},
+  Payment_failure: {label: "Payment Failure"},
+  Payment_in_transition: {label: "Payment In Transition"},
+  Transaction_canceled: {label: "Transaction Canceled"},
+  Transaction_failed: {label: "Transaction Failed"},
+  Transaction_pending: {label: "Transaction Pending"},
+  Transaction_rejected: {label: "Transaction Rejected"},
+  Transaction_returned: {label: "Transaction Returned"},
+  Transaction_success: {label: "Transaction Success"},
 }
 
 export const ID_PROOFS = ["Passport", "Driving License", "Aadhaar"]

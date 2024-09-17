@@ -69,3 +69,14 @@ export type TypeRelation =
   | "Nephew"
   | "Niece"
   | "Not_applicable"
+
+export type TypeOrderStatus =
+  | "Payment_initiated"
+  | "Payment_failure"
+  | "Payment_in_transition"
+  | "Transaction_rejected"
+  | "Transaction_canceled"
+  | "Transaction_returned"
+  | "Transaction_pending"
+  | "Transaction_success"
+  | "Transaction_failed"
