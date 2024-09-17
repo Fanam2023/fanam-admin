@@ -82,10 +82,10 @@
 
   .members
     grid-template-columns: repeat(2, 0.5fr)
-    width: 90%
     padding: 0 $size-16px
+    box-sizing: border-box
     margin-left: 0
-    grid-column-gap: $size-12px
+    grid-gap: $size-12px
     overflow-y: scroll
     margin-bottom: 33%
 
@@ -99,7 +99,14 @@
     margin-left: 0
     font-size: $size-16px
     color: $theme
+    font-size: $size-20px
 
   .tabs_container
     display: none
     width: max-content
+
+  .title
+    font-size: $size-20px
+
+  .description
+    font-size: $size-16px

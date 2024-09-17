@@ -75,18 +75,18 @@ const Otp = () => {
           <ul className={`flex ${styles.otp_field}`}>{otpValues?.map(renderInputNumber)}</ul>
         </section>
         <section className={`flex ${styles.otp_wrapper}`}>
-          <h5>Didn’t receive the otp?</h5>
+          <h5 className={styles.alert_text}>Didn’t receive the otp?</h5>
           <h5 className={`bold ${styles.otp}`} onClick={onResend}>
             RESEND OTP
           </h5>
-          <label>{timer}s</label>
+          <label className={styles.alert_text}>{timer}s</label>
         </section>
         {errOtp && <label className="error-text">{errOtp}</label>}
         <Button wrapperClass={styles.button_wrapper} onClick={onVerify}>
           Next
         </Button>
         <h6 className={styles.terms_wrapper}>
-          By continuing, you agree to the <label className={`bold ${styles.condition_text}`}>Terms of use</label> and{" "}
+          By continuing, you agree to the <label className={`bold ${styles.condition_text}`}>Terms of use</label> and
           <label className={`bold ${styles.condition_text}`}>Privacy Policy</label>.
         </h6>
         <section id="auth-proceed-button"></section>

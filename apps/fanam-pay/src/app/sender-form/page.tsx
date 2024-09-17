@@ -17,8 +17,10 @@ const SenderForm = () => {
       skipBtn="Back"
       // disabled={!isValid}
       stepIndex={0}>
-      <h4 className="bold">Complete Your Profile</h4>
-      <h6>Essential for verification and processing your transactions securely and efficiently.</h6>
+      <h4 className={`bold ${styles.title}`}>Complete Your Profile</h4>
+      <h6 className={styles.description}>
+        Essential for verification and processing your transactions securely and efficiently.
+      </h6>
       <section className={styles.sender_form_wrapper}>
         <h4 className={`semi-bold ${styles.type_wrapper}`}>Sender type</h4>
         <GroupForm formSections={individualType ? individualForm : businessForm} />
