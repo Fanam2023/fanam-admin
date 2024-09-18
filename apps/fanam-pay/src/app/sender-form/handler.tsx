@@ -3,8 +3,8 @@ import {
   IFormData,
   JSONObject,
   REG_EMAIL,
+  REG_VALID_NAME,
   REG_VALID_NUMBER,
-  REG_VALID_TEXT,
   useCommon,
   useDateTime,
 } from "@fanam-pkg/core-utils"
@@ -754,7 +754,7 @@ const useHandler = (styles: IStyle) => {
               value={pan}
               onChangeData={onChangeValue}
               disabled={!!verifiedPAN}
-              inputRegex={REG_VALID_TEXT}
+              inputRegex={REG_VALID_NAME}
               maxLength={10}
             />
             {verifiedPAN ? (
