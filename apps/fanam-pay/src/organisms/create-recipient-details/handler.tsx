@@ -280,7 +280,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const businessElements: FormSectionProps = {
     title: "Personal Information",
     wrapperClass: styles.recipient_address,
-    wrapperClassGrid: styles.recipient_address_wrapper,
+    wrapperClassGrid: styles.recipient_business_wrapper,
     childElements: [
       {
         elementType: "input",

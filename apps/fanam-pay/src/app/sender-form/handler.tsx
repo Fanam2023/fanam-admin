@@ -692,7 +692,7 @@ const useHandler = (styles: IStyle) => {
       childElements: [
         {
           childElement: (
-            <section className={styles.pan_wrapper}>
+            <section className={`flex ${styles.pan_wrapper}`}>
               <TextField
                 label="Enter Aaadhar Number"
                 name="aadhaarNumber"
@@ -735,7 +735,7 @@ const useHandler = (styles: IStyle) => {
     if (verifiedAadhaar && kyc_aadhaar) {
       elements.childElements.push({
         childElement: (
-          <section className={styles.pan_wrapper}>
+          <section className={`flex ${styles.pan_wrapper}`}>
             <TextField
               label="Enter Pan Number"
               name="pan"
