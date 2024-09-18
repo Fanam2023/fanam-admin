@@ -89,7 +89,8 @@ export const PURPOSES_BUSINESS: IFormData<TypePurpose>[] = [
 
 export const TRANSACTION_STATUS_OBJECT: Record<TypeOrderStatus, IFormData<TypeOrderStatus>> = {
   Payment_initiated: {label: "Payment Initiated"},
-  Payment_failure: {label: "Payment Failure"},
+  Payment_failed: {label: "Payment Failure"},
+  Payment_rejected: {label: "Payment Rejected"},
   Payment_in_transition: {label: "Payment In Transition"},
   Transaction_canceled: {label: "Transaction Canceled"},
   Transaction_failed: {label: "Transaction Failed"},
@@ -97,6 +98,10 @@ export const TRANSACTION_STATUS_OBJECT: Record<TypeOrderStatus, IFormData<TypeOr
   Transaction_rejected: {label: "Transaction Rejected"},
   Transaction_returned: {label: "Transaction Returned"},
   Transaction_success: {label: "Transaction Success"},
+  Refund_initiated: {label: "Refund Initiated"},
+  Refund_in_progress: {label: "Refund In Progress"},
+  Refunded_successfully: {label: "Refunded Successfully"},
+  Refund_failed: {label: "Refund Failed"},
 }
 
 export const ID_PROOFS = ["Passport", "Driving License", "Aadhaar"]

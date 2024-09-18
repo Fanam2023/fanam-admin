@@ -45,23 +45,38 @@ export interface IPayloadLogin {
   pin?: string
 }
 
-export interface IPayloadForgotPin {
-  country_code?: string | ICountry
+export interface IBaseForgotPin {
   newPin?: string
   confirmPin?: string
   phone_no?: string
 }
 
-export interface IUserBase {
-  country_code?: ICountry | string
+export interface IForgotPinData extends IBaseForgotPin {
+  country?: ICountry
+}
+
+export interface IPayloadForgotPin extends IBaseForgotPin {
+  country_id?: number
+}
+
+export interface IBaseSignup {
   phone_no?: string
   email?: string
   business_name?: string
   first_name?: string
   last_name?: string
-  account_type?: TypeAccount
   newPin?: string
   confirmPin?: string
+}
+
+export interface ISignupData extends IBaseSignup {
+  account_type: IFormData<TypeAccount>
+  country?: ICountry | null
+}
+
+export interface IPayloadSignup extends IBaseSignup {
+  country_id: number
+  account_type?: TypeAccount
 }
 
 export interface IUser {
@@ -91,6 +106,7 @@ export interface IBaseSyncUser {
   last_name: string
   email?: string
   phone_no: string
+  // account_no: string
   address_line_1: string
   address_line_2?: string
   zip_code: string
@@ -104,7 +120,6 @@ export interface ISyncUserData extends IBaseSyncUser {
   state: IFormData<number> | null
   city: IFormData<number> | null
   account_type: IFormData<TypeAccount>
-  account_no: string
   business_name: string
   pan: string
   aadhaarNumber: string
@@ -116,7 +131,6 @@ export interface IPayloadSyncUser extends IBaseSyncUser {
   state_id: number
   city_id: number
   bank_account?: IPayloadUserBankAccount
-  account_no: string
   account_type: string
   date_of_birth: string
 }
@@ -130,15 +144,15 @@ export interface IResponseBankAccount extends IPayloadUserBankAccount {
   account_id: string
 }
 
-export interface IBaseSignUp {
-  first_name: string
-  last_name: string
-  business_name?: string
-  email: string
-  phone_no: string
-  account_type: IFormData<TypeAccount>
-  country_code?: ICountry | string
-}
+// export interface IBaseSignUp {
+//   first_name: string
+//   last_name: string
+//   business_name?: string
+//   email: string
+//   phone_no: string
+//   account_type: IFormData<TypeAccount>
+//   country_id?: ICountry | number
+// }
 
 export interface ISignUpPin {
   newPin: string

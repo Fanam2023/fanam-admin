@@ -2,23 +2,28 @@ import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {JSONObject, REG_VALID_NUMBER, useCommon, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
-import {IPayloadForgotPin, SESSION_SIGNUP} from "@custom/utils"
-import {routeToOTP} from "utils"
+import {useQuery} from "@tanstack/react-query"
+import {IForgotPinData, SESSION_SIGNUP} from "@custom/utils"
+import {useLocationController} from "controller"
+import {QUERY_COUNTRIES, routeToOTP} from "utils"
 
 const useHandler = () => {
   const {push} = useRouter()
   const {setStorage} = useStorage()
   const {isValidInputByRegex} = useCommon()
   const {toggleNotify} = useNotifyPopup()
-  const [data, setData] = useState<IPayloadForgotPin>({
+  const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
+  const [data, setData] = useState<IForgotPinData>({
     phone_no: "",
-    country_code: "",
+    country: null,
   })
 
-  const {phone_no, country_code} = data
+  const {phone_no, country} = data
 
-  const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
   const {isClicked} = errData
+
+  const {getAllCountries} = useLocationController()
+  const {data: countries = []} = useQuery({queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries})
 
   const onValidate = () => {
     let errState = {
@@ -27,7 +32,13 @@ const useHandler = () => {
       isClicked: true,
     }
 
-    if (!phone_no) {
+    if (!country) {
+      errState = {
+        ...errState,
+        errPhoneNo: "Please select country",
+        isValid: false,
+      }
+    } else if (!phone_no) {
       errState = {
         ...errState,
         errPhoneNo: "Please enter Phone Number",
@@ -56,12 +67,7 @@ const useHandler = () => {
     const {isValid} = onValidate()
 
     if (isValid) {
-      const payload: IPayloadForgotPin = {
-        phone_no,
-        country_code: typeof country_code === "object" ? `+${country_code?.phone_code}` : "+91",
-      }
-
-      setStorage(SESSION_SIGNUP, payload)
+      setStorage(SESSION_SIGNUP, data)
       push(routeToOTP("reset"))
     }
   }
@@ -69,6 +75,7 @@ const useHandler = () => {
   return {
     data,
     errData,
+    countries,
     onChangeValue,
     onSubmit,
     setData,
@@ -79,7 +86,6 @@ const DEFAULT_ERR_STATE = {
   isClicked: false,
   isValid: false,
   errPhoneNo: "",
-  errPin: "",
 }
 
 export default useHandler

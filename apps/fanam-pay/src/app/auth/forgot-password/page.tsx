@@ -9,28 +9,23 @@ import useHandler from "./handler"
 import styles from "./page.module.sass"
 
 const Forgot_Password = () => {
-  const {onChangeValue, data, errData, onSubmit, setData} = useHandler()
+  const {onChangeValue, data, errData, onSubmit, setData, countries} = useHandler()
   const {toggleSlider} = useSlider()
-  const {phone_no, country_code} = data
+  const {phone_no, country} = data
   const {errPhoneNo} = errData
   const {getFlagUrl} = useCommon()
 
   const onSelectCountry = (country: ICountry) => {
     setData(prev => ({
       ...prev,
-      country_code: country,
+      country,
     }))
     toggleSlider()
   }
 
   const goToCountrySlider = () =>
     toggleSlider({
-      children: (
-        <CountryPopup
-          onSelect={onSelectCountry}
-          selCountry={typeof country_code === "object" ? (country_code as ICountry) : null}
-        />
-      ),
+      children: <CountryPopup onSelect={onSelectCountry} selCountry={country} countries={countries} />,
     })
 
   return (
@@ -43,12 +38,12 @@ const Forgot_Password = () => {
         <section className={`flex ${styles.input_wrapper}`}>
           <section className={`flex ${styles.country_wrapper}`} onClick={goToCountrySlider}>
             <ImageView
-              src={country_code ? getFlagUrl(country_code) : assets.ic_view}
+              src={country ? getFlagUrl(country) : assets.ic_view}
               alt="country-img"
               imgSize={24}
               wrapperClass={styles.flag}
             />
-            {country_code ? `+${(country_code as ICountry).phone_code}` : "+91"}
+            {country ? `+${country.phone_code}` : "-"}
           </section>
           <TextField
             label="Phone Number"

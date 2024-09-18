@@ -4,6 +4,7 @@ import {ICountry, IResponseFxRate, ITransaction, ITransferTime} from "@custom/ut
 export interface CountryPopupProps {
   onSelect: (currencyCode: ICountry) => void
   selCountry: ICountry | null
+  countries: ICountry[]
 }
 
 export interface ITransfer {

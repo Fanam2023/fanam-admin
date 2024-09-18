@@ -18,7 +18,7 @@ const getStatusData = (status: TypeOrderStatus) => {
         statusText: "Success",
       }
 
-    case "Payment_failure":
+    case "Payment_failed":
     case "Transaction_rejected":
     case "Transaction_canceled":
     case "Transaction_returned":

@@ -9,7 +9,8 @@ export const API_USER = "/user"
 export const API_GET_PROFILE = `${API_USER}/me`
 export const API_SYNC_USER = `${API_USER}/sync`
 export const API_LOCATION = "/location"
-export const API_COUNTRIES = `${API_LOCATION}/all-countries`
+export const apiCountries = (countryId?: number) =>
+  countryId ? `${API_LOCATION}/all-countries?country_id=${countryId}` : `${API_LOCATION}/all-countries`
 export const apiStates = (countryId: number) => `${API_LOCATION}/countries/${countryId}`
 export const apiCities = (stateId: number) => `${API_LOCATION}/states/${stateId}`
 export const API_PAYMENT = "/payment"

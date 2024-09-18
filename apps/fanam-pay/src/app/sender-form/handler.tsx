@@ -64,7 +64,7 @@ const useHandler = (styles: IStyle) => {
     state: null,
     zip_code: "",
     city: null,
-    account_no: "",
+    // account_no: "",
     account_type: ACCOUNT_TYPE[0],
     pan: "",
     aadhaarNumber: "",
@@ -80,7 +80,7 @@ const useHandler = (styles: IStyle) => {
     first_name,
     last_name,
     email,
-    account_no,
+    // account_no,
     phone_no,
     country,
     state,
@@ -363,7 +363,7 @@ const useHandler = (styles: IStyle) => {
         email,
         phone_no,
         zip_code,
-        account_no,
+        // account_no,
         account_type: ACCOUNT_TYPE.find(({key}) => key === account_type),
       }
 
@@ -427,7 +427,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!last_name) errState = {...errState, errLastName: "Please enter Last Name", isValid: false}
 
-    if (!account_no) errState = {...errState, errAccountNo: "Please enter Account Number", isValid: false}
+    // if (!account_no) errState = {...errState, errAccountNo: "Please enter Account Number", isValid: false}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please Confirm Your E-mail", isValid: false}
@@ -581,15 +581,15 @@ const useHandler = (styles: IStyle) => {
           disabled: !!user?.phone_no,
           onChangeValue,
         },
-        {
-          elementType: "input",
-          label: "Account Number",
-          name: "account_no",
-          disabled: !!user?.account_no,
-          error: errAccountNo,
-          value: account_no,
-          onChangeValue,
-        },
+        // {
+        //   elementType: "input",
+        //   label: "Account Number",
+        //   name: "account_no",
+        //   disabled: !!user?.account_no,
+        //   error: errAccountNo,
+        //   value: account_no,
+        //   onChangeValue,
+        // },
         {
           elementType: "input",
           type: "date",
@@ -793,7 +793,7 @@ const useHandler = (styles: IStyle) => {
         address_line_2,
         city_id: city.key as number,
         zip_code,
-        account_no,
+        // account_no,
         kyc_aadhaar: kyc_aadhaar.filter(({file}) => !!file),
         kyc_pan: kyc_pan.filter(({file}) => !!file),
         date_of_birth: formatDateUTC(date_of_birth),

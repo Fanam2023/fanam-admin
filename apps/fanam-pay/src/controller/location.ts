@@ -1,11 +1,19 @@
-import {API_COUNTRIES, ICity, ICountry, IState, apiCities, apiStates} from "@custom/utils"
+import {apiCities, apiCountries, apiStates, ICity, ICountry, IState} from "@custom/utils"
+import {useSingleton} from "hooks"
 import {useApi} from "./api"
 
 export const useLocationController = () => {
   const {getRequest} = useApi()
+  const {user} = useSingleton()
 
   const getAllCountries = async () => {
-    const {result} = await getRequest<ICountry[]>(API_COUNTRIES)
+    const {result} = await getRequest<ICountry[]>(apiCountries())
+    return result || []
+  }
+
+  const getTransactionCountries = async () => {
+    const {country} = user || {}
+    const {result} = await getRequest<ICountry[]>(apiCountries(country?.country_id))
     return result || []
   }
 
@@ -23,5 +31,6 @@ export const useLocationController = () => {
     getAllCountries,
     getStates,
     getCities,
+    getTransactionCountries,
   }
 }

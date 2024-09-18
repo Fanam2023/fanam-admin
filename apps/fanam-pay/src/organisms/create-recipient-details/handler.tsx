@@ -23,7 +23,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {toggleSlider} = useSlider()
   const {isValidInputByRegex} = useCommon()
   const {refreshQuery} = useReactQuery()
-  const {getAllCountries, getCities, getStates} = useLocationController()
+  const {getTransactionCountries, getCities, getStates} = useLocationController()
   const {createRecipient, updateRecipient, getByRecipientId} = useRecipientController()
 
   const {toggleNotify} = useNotifyPopup()
@@ -123,7 +123,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}, {data: recipientData}] = useQueries(
     {
       queries: [
-        {queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries},
+        {queryKey: [QUERY_COUNTRIES], queryFn: getTransactionCountries},
         {
           queryKey: [`${QUERY_STATES}-${country?.key}`, country],
           queryFn: () => getStates(country?.key),

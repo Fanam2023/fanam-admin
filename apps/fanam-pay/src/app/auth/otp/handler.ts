@@ -1,7 +1,7 @@
 import {REG_VALID_NUMBER, useCommon, useFirebase, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter, useSearchParams} from "next/navigation"
 import {ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState} from "react"
-import {IBaseSignUp, SESSION_SIGNUP, TypeScope} from "@custom/utils"
+import {ISignupData, SESSION_SIGNUP, TypeScope} from "@custom/utils"
 import {routeToPin} from "utils"
 
 const useHandler = () => {
@@ -14,11 +14,11 @@ const useHandler = () => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>(Array(6).fill(null))
   const [errState, setErrState] = useState({errOtp: "", isClicked: false, isValid: false})
   const {isClicked, errOtp} = errState
-  const [storedData, setStoredData] = useState<IBaseSignUp | null>(null)
-  const {phone_no, country_code} = storedData || {}
+  const [storedData, setStoredData] = useState<ISignupData | null>(null)
+  const {phone_no, country} = storedData || {}
   const scope = searchParams.get("scope")
 
-  const countryCode = typeof country_code === "string" ? country_code : `+${country_code?.phone_code}`
+  const countryCode = country ? `+${country?.phone_code}` : "-"
 
   const {sendOtp, verifyOTP} = useFirebase(
     () => push(routeToPin(scope as TypeScope)),
@@ -34,7 +34,7 @@ const useHandler = () => {
   }, [phone_no])
 
   useEffect(() => {
-    const storedData = getStorage<IBaseSignUp>(SESSION_SIGNUP)
+    const storedData = getStorage<ISignupData>(SESSION_SIGNUP)
     if (storedData) setStoredData(storedData)
   }, [])
 

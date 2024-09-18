@@ -72,7 +72,8 @@ export type TypeRelation =
 
 export type TypeOrderStatus =
   | "Payment_initiated"
-  | "Payment_failure"
+  | "Payment_failed"
+  | "Payment_rejected"
   | "Payment_in_transition"
   | "Transaction_rejected"
   | "Transaction_canceled"
@@ -80,3 +81,7 @@ export type TypeOrderStatus =
   | "Transaction_pending"
   | "Transaction_success"
   | "Transaction_failed"
+  | "Refund_initiated"
+  | "Refund_in_progress"
+  | "Refunded_successfully"
+  | "Refund_failed"

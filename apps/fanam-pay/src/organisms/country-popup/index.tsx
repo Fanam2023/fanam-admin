@@ -5,12 +5,12 @@ import {CountryPopupProps} from "props"
 import styles from "./country.module.sass"
 import {useHandler} from "./handler"
 
-export const CountryPopup = ({onSelect, selCountry}: CountryPopupProps) => {
-  const {allCountries, searchTerm, setSearchTerm} = useHandler()
+export const CountryPopup = ({onSelect, selCountry, countries}: CountryPopupProps) => {
+  const {searchTerm, setSearchTerm} = useHandler()
 
   const filteredCountry = useMemo(
-    () => allCountries?.filter(({country_name}) => country_name?.toLowerCase()?.includes(searchTerm?.toLowerCase())),
-    [searchTerm, allCountries]
+    () => countries?.filter(({country_name}) => country_name?.toLowerCase()?.includes(searchTerm?.toLowerCase())),
+    [searchTerm, countries]
   )
 
   const renderCountries = (country: ICountry) => {

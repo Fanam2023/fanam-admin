@@ -22,6 +22,7 @@ import {
   ILogOutPayload,
   IPayloadForgotPin,
   IPayloadLogin,
+  IPayloadSignup,
   IPayloadSyncUser,
   IResponseLogin,
   IResponseUpdateUser,
@@ -29,7 +30,6 @@ import {
   IResponseWebAuthRegistration,
   IResponseWebAuthRegistrationFinish,
   IUser,
-  IUserBase,
 } from "@custom/utils"
 import {useSingleton} from "hooks"
 import {LS_WEBAUTHN_CRED_ID} from "utils"
@@ -163,7 +163,7 @@ export const useAuthController = () => {
 
   const logout = async (payload: ILogOutPayload) => await postRequest<IResponseLogin>(API_LOGOUT, payload)
 
-  const signUp = async (payload: IUserBase) => {
+  const signUp = async (payload: IPayloadSignup) => {
     const {result, errorData} = await postRequest<IResponseUpdateUser>(API_SIGNUP, payload)
 
     if (result) {

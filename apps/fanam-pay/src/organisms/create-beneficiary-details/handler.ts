@@ -40,7 +40,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   const {refreshQuery} = useReactQuery()
   const {toggleNotify} = useNotifyPopup()
   const {isValidInputByRegex} = useCommon()
-  const {getAllCountries, getCities, getStates} = useLocationController()
+  const {getTransactionCountries, getCities, getStates} = useLocationController()
   const {getByBeneficiaryId, createBeneficiary, updateBeneficiary} = useBeneficiaryController()
   const {syncBeneficiary} = useTransactionController()
 
@@ -113,7 +113,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}, {data: beneficiaryData}] =
     useQueries({
       queries: [
-        {queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries},
+        {queryKey: [QUERY_COUNTRIES], queryFn: getTransactionCountries},
         {
           queryKey: [`${QUERY_STATES}-${country?.key}`, country],
           queryFn: () => getStates(country?.key),

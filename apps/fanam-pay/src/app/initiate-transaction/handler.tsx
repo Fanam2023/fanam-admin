@@ -6,12 +6,13 @@ import {useMutation, useQuery} from "@tanstack/react-query"
 import useRazorpay from "react-razorpay"
 import {useSlider} from "@custom/ui"
 import {ICountry, IPayloadFxRate, IResponseOrder, ITransactionData, ITransferTime} from "@custom/utils"
-import {useOrderController, usePaymentController, useTransactionController} from "controller"
+import {useLocationController, useOrderController, usePaymentController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
 import {CountryPopup} from "organisms"
 import {
   PURPOSES_BUSINESS,
   PURPOSES_INDIVIDUAL,
+  QUERY_COUNTRIES,
   QUERY_EXCHANGE,
   QUERY_ORDER,
   QUERY_TRANSACTION,
@@ -56,6 +57,9 @@ export const useHandler = () => {
     queryFn: () => getTransactionDetails(transId),
     enabled: !!transId,
   })
+
+  const {getTransactionCountries} = useLocationController()
+  const {data: countries = []} = useQuery({queryKey: [QUERY_COUNTRIES], queryFn: getTransactionCountries})
 
   const {recipient_account_type, recipient, transfer_time} = transactionDetail || {}
 
@@ -226,7 +230,7 @@ export const useHandler = () => {
 
   const showCountries = () =>
     toggleSlider({
-      children: <CountryPopup onSelect={onSelectCountry} selCountry={destination_country} />,
+      children: <CountryPopup onSelect={onSelectCountry} selCountry={destination_country} countries={countries} />,
     })
 
   const onValidate = () => {

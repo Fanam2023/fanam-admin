@@ -3,7 +3,7 @@ import {JSONObject, REG_VALID_NUMBER, useCommon, useStorage} from "@fanam-pkg/co
 import {useRouter, useSearchParams} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
-import {IBaseSignUp, ICountry, ISignUpPin, IStyle, IUserBase, SESSION_SIGNUP, TypeScope} from "@custom/utils"
+import {IPayloadSignup, ISignupData, ISignUpPin, IStyle, SESSION_SIGNUP, TypeScope} from "@custom/utils"
 import {useAuthController} from "controller"
 import {ROUTE_HOME, ROUTE_LOGIN} from "utils"
 
@@ -130,18 +130,18 @@ const useHandler = (styles: IStyle) => {
     const {isValid} = onValidate()
 
     if (isValid) {
-      const storedData = getStorage<IBaseSignUp>(SESSION_SIGNUP)
+      const storedData = getStorage<ISignupData>(SESSION_SIGNUP)
       if (storedData) {
         if (scope === "singup") {
-          const {account_type, country_code} = storedData
+          const {account_type, country} = storedData
           const accountType = account_type.key
-          const countryCode = `${(country_code as ICountry)?.phone_code}`
-          const payload: IUserBase = {
+          const countryId = country?.country_id
+          const payload: IPayloadSignup = {
             ...storedData,
             newPin,
             confirmPin,
             account_type: accountType,
-            country_code: countryCode,
+            country_id: countryId,
           }
 
           if (accountType === "Individual") delete payload.business_name
@@ -152,6 +152,7 @@ const useHandler = (styles: IStyle) => {
             phone_no: storedData.phone_no,
             newPin: stringToBase64(newPin),
             confirmPin: stringToBase64(confirmPin),
+            country_id: storedData?.country?.country_id,
           })
       } else push(ROUTE_LOGIN)
     }
