@@ -125,9 +125,7 @@ const useHandler = () => {
 
   const {mutate: completeTransaction} = useMutation({
     mutationFn: sendPayout,
-    onSuccess: ({result}) => {
-      if (result) push(routeToTransactionDetail(transactionId as string))
-    },
+    onSuccess: () => push(routeToTransactionDetail(transactionId as string)),
   })
 
   return {

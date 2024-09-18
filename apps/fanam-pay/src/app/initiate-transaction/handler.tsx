@@ -5,7 +5,7 @@ import {ChangeEvent, useEffect, useRef, useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import useRazorpay from "react-razorpay"
 import {useSlider} from "@custom/ui"
-import {ICountry, IPayloadFxRate, IResponseOrder, ITransactionData, ITransferTime} from "@custom/utils"
+import {ICountry, IPayloadFxRate, ITransaction, ITransactionData, ITransferTime} from "@custom/utils"
 import {useLocationController, useOrderController, usePaymentController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
 import {CountryPopup} from "organisms"
@@ -157,7 +157,8 @@ export const useHandler = () => {
     push(routeToTransactionDetail(transId))
   }
 
-  function showPaymentPopup({razorpay_order_id, amount}: IResponseOrder) {
+  function showPaymentPopup({order}: ITransaction) {
+    const {razorpay_order_id, amount} = order
     const fullName = `${first_name} ${last_name}`
 
     const rzp1 = new Razorpay({
