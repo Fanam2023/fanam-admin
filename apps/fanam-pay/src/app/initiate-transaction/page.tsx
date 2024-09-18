@@ -34,7 +34,7 @@ const InitiateTransactionPage = () => {
       stepIndex={3}>
       <section className={styles.container_wrapper}>
         <section className={styles.header_wrapper}>
-          <h2 className="bold">Payout Estimate</h2>
+          <h2 className={`bold ${styles.title}`}>Payout Estimate</h2>
           <h5 className={styles.description}>
             Estimated value for converting your money from one currency to another based on the current exchange rates.
           </h5>
@@ -79,7 +79,7 @@ const InitiateTransactionPage = () => {
           <TransferTime onSelect={onSelect} transferTimeRes={fxRes} />
           <section className={`flex-sb-center ${styles.total_background}`}>
             <section className={styles.receiver_wrapper}>
-              <h4>Receiver will get exactly</h4>
+              <h5>Receiver will get exactly</h5>
               <section className="flex">
                 <ImageView src={assets.ic_power} alt="" imgSize={24} />
                 <h5 className={styles.hour_wrapper}>

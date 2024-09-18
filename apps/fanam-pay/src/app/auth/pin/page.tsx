@@ -13,7 +13,7 @@ const AuthPin = () => {
       <Auth>
         <section className={`flex-col ${styles.heading}`}>
           <h4 className={`bold ${styles.login}`}>Create a PIN</h4>
-          <h5>
+          <h5 className={styles.description}>
             What takes seconds to create and gives you fast and secure login-in? A PIN only works on your device, so it
             stays off the web.
           </h5>

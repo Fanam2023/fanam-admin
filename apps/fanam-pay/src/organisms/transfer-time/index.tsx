@@ -56,7 +56,7 @@ export const TransferTime = ({onSelect, transferTimeRes}: PropsTransferTime) => 
 
   return (
     <section className={styles.container_wrapper}>
-      <h4 className="bold">Select Transfer Time</h4>
+      <h4 className={`semi-bold ${styles.sub_title}`}>Select Remittance Option</h4>
       <ul className={`flex-col ${styles.card_wrapper}`}>{transfer_times.map(renderTransferItem)}</ul>
     </section>
   )

@@ -19,13 +19,13 @@ const TransactionPurpose = () => {
       childWrapper={`flex-col-center ${styles.page_wrapper}`}
       onSubmit={onSubmit}>
       <section className={`flex-col ${styles.heading_wrapper}`}>
-        <h4 className="bold">Purpose of Sending Money</h4>
-        <h5>
+        <h4 className={`bold ${styles.title}`}>Purpose of Sending Money</h4>
+        <h5 className={styles.description}>
           Estimated value for converting your money from one currency to another based on the current exchange rates.
         </h5>
       </section>
       <section className={styles.card_wrapper}>
-        <h5 className="bold">Purpose of Sending Money</h5>
+        <h5 className={`bold ${styles.description}`}>Purpose of Sending Money</h5>
         <DropDown
           options={PURPOSES}
           wrapperClass={styles.drop_down_wrapper}
@@ -38,7 +38,7 @@ const TransactionPurpose = () => {
         <section className={styles.text_area_wrapper}>
           <TextArea
             maxLength={50}
-            wrapperClass={styles.text_area_wrapper}
+            wrapperClass={styles.text_area}
             label="Brief purpose of sending Money"
             name="reason"
             value={reason}
@@ -47,7 +47,7 @@ const TransactionPurpose = () => {
           />
         </section>
         <section className={styles.upload_wrapper}>
-          <h5 className="bold">Upload Supporting Document</h5>
+          <h5 className={`bold ${styles.title}`}>Upload Supporting Document</h5>
           <p className={styles.child_text}>
             Upload the supporting document related to the purpose like Invoice, Way bills etc...
           </p>

@@ -1,10 +1,5 @@
 @use "../../../styles/index" as *
 
-@mixin desktop_width
-  width: 40%
-
-@mixin mobile_width
-
 @mixin common-margin
   margin-top: $size-8px
 
@@ -75,23 +70,22 @@
 .receipt_text
   display: none
 
+.receipt_button
+  color: $theme
+  border: $size-1px solid $theme
+  padding: $size-10px $size-14px
+  &:hover
+    background: $theme
+
 @include mixin-responsive
   .page_container
-    @include mobile_width
     width: 100%
-
-  .mobile_wrapper
-    margin:
-      top: 16%
-      left: $size-16px
-      right: $size-16px
 
   .payment_status_wrapper
     border: 1px solid $dark-border-grey
     box-shadow: none
     background: none
     border-radius: $size-6px
-    @include mobile_width
 
   .source_payment_wrapper
     border: 1px solid $dark-border-grey
@@ -99,21 +93,19 @@
     border-radius: $size-6px
     background: none
 
-  .payment_details_wrapper
-    @include mobile_width
-
   .payment_helper_wrapper
-    @include mobile_width
     border: 1px solid $dark-border-grey
     box-shadow: none
     border-radius: $size-6px
     background: none
 
-  .receipt_text
-    display: block
-    text-decoration: underline
-    color: $primary
-    cursor: pointer
-    margin:
-      left: 34%
-      top: $size-10px
+  .receipt_button
+    padding: $size-14px $size-12px
+    width: 100%
+    font-size: $size-12px
+
+  .title
+    font-size: $size-20px
+
+  .description
+    font-size: $size-16px

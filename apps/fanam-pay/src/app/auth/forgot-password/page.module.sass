@@ -2,11 +2,12 @@
 
 .input_wrapper
   gap: $size-16px
+  margin-top: $size-16px
 
 .heading
   gap: $size-8px
 
-.Forgot
+.forgot
   color: $theme
 
 .country_container
@@ -39,3 +40,11 @@
 
 .flag
   border-radius: $size-12px
+
+@include mixin-responsive
+
+.forgot
+  font-size: $size-20px
+
+.description
+  font-size: $size-16px

@@ -1,6 +1,6 @@
 "use client"
 
-import {ImageView} from "@fanam-pkg/core-ui-sass"
+import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {TypeOrderStatus} from "@custom/utils"
 import assets from "assets"
 import {BaseContainer} from "organisms"
@@ -67,7 +67,6 @@ const TransactionStatusPage = () => {
         sla_timing_min !== sla_timing_max ? `${sla_timing_min} - ${sla_timing_max} hours` : `${sla_timing_min} hours`,
     },
   ]
-
   const renderPaymentDetails = ({label, value}: PaymentDetailsProps, index: number) => (
     <section className={`flex-sb-center ${styles.content}`} key={index}>
       <h5>{label}</h5>
@@ -77,22 +76,25 @@ const TransactionStatusPage = () => {
     </section>
   )
 
-  const DownloadReceipt = () => <h6 className={styles.receipt_text}>Download Receipt</h6>
+  const DownloadReceipt = () => (
+    <Button buttonType="primary-outlined" wrapperClass={styles.receipt_button}>
+      Download Receipt
+    </Button>
+  )
 
   return (
     <BaseContainer
       buttonText="Done"
       header="Payment Status"
-      footerChild={DownloadReceipt()}
+      footerChild={<DownloadReceipt />}
       childWrapper={styles.page_container}
-      skipBtn="Download Receipt"
       stepIndex="pending"
       onSubmit={routeHome}
       isStepper>
       <section className={styles.mobile_wrapper}>
         <section className={`flex-col ${styles.heading_wrapper}`}>
-          <h4 className="bold">Payment Status</h4>
-          <h5>Get the payment status after sending the money.</h5>
+          <h4 className={`bold ${styles.title}`}>Payment Status</h4>
+          <h5 className={styles.description}>Get the payment status after sending the money.</h5>
         </section>
         <section className={`flex-col-center ${styles.payment_status_wrapper}`}>
           <ImageView src={bigIcon} alt={"status-icon"} imgSize={56} />
