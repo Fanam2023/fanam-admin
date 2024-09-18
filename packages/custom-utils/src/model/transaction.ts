@@ -9,6 +9,7 @@ import {
   TypeAccount,
   TypeOrderStatus,
   TypePurpose,
+  TypeRelation,
 } from "../model"
 
 export interface ITransaction {
@@ -129,12 +130,12 @@ export interface IInvoiceData {
 
 export interface IMergeRecipientData {
   is_same_person: IFormData | null
-  recipient_relationship: string
+  recipient_relationship: IFormData<TypeRelation>
 }
 
 export interface IPayloadMergeRecipient {
   is_same_person: boolean
-  recipient_relationship: string
+  recipient_relationship: TypeRelation
 }
 
 export interface ITransactionPurpose {
