@@ -1,4 +1,5 @@
 import {IFormData, JSONObject} from "@fanam-pkg/core-utils"
+import {TypeRelation} from "@custom/utils"
 
 export interface RecipientPreviewProps {
   label: string
@@ -14,6 +15,6 @@ export interface RecipientCardProps {
   onChangeData?: (value: JSONObject) => void
   isSame?: boolean
   isPerson?: IFormData
-  relation?: string
+  relation?: IFormData<TypeRelation>
   error?: string
 }
