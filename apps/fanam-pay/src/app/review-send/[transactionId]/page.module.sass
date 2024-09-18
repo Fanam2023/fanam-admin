@@ -36,19 +36,29 @@
   border: $size-1px solid $medium-grey
   margin: $size-20px 0 $size-20px 0
 
-@include mixin-responsive
-  .page_wrapper
-    width: 100%
-    margin:
-      top: 22%
-      left: $size-16px
-      right: $size-16px
+.edit_text
+  color: $white
 
+@include mixin-responsive
   .card_wrapper
     box-shadow: none
     border-radius: $size-12px
     background: none
     border: 1px solid $dark-border-grey
+    padding: $size-12px
 
   .title_text
     color: $darker-grey
+    font-size: $size-14px
+
+  .title
+    font-size: $size-20px
+
+  .description,.edit_text,.amount_title
+    font-size: $size-16px
+
+  .detail
+    font-size: $size-14px
+
+  .amount
+    font-size: $size-18px

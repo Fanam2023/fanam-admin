@@ -11,7 +11,7 @@ export const Slider = ({slider, toggleSlider}: SliderProps) => {
       <section className={`blur ${styles.slider_wrapper}`}>
         <section className={`flex-col ${styles.main_container}`}>
           <header className={`flex-sb-center ${styles.header_wrapper}`}>
-            <h5 className={styles.title}>{title}</h5>
+            <h4 className={styles.title}>{title}</h4>
             <ImageView src={assets.ic_close} alt="close-icon" imgSize={24} onClick={toggleSlider.bind(null, null)} />
           </header>
           <section className={styles.child_wrapper}>{children}</section>

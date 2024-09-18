@@ -105,6 +105,7 @@
 
 .currency
   gap: $size-6px
+
 .convert_img
   margin-top: $size-40px
 
@@ -115,12 +116,6 @@
   margin-top: $size-24px
 
 @include mixin-responsive
-
-  .page_container
-    margin:
-      top: 8%
-      right: $size-12px
-      left: $size-12px
 
   .container_wrapper
     margin:
@@ -134,23 +129,13 @@
     border-radius: none
     box-shadow: none
     margin-top: $size-16px
-    padding: $size-16px $size-32px
-    height: 100vh
-    overflow-y: scroll
+    padding: $size-16px
 
   .currency_wrapper
     display: block !important
 
-  .convert_img
-    margin-top: $size-16px
-    transform: rotate(90deg)
-
-  .conversion_container
-    padding: $size-16px
-
   .header_wrapper
-    margin: $size-16px
-    padding-top: $size-24px
+    margin: 0
 
   .convert_img
     display: none !important
@@ -160,3 +145,14 @@
 
   .conversion_wrapper
     margin-top: $size-10px
+
+  .title
+    font-size: $size-20px
+
+  .description,
+  .txt_wrapper,
+  .recipient_txt
+    font-size: $size-16px
+
+  .sub_title
+    font-size: $size-18px

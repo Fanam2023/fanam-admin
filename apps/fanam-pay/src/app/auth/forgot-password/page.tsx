@@ -37,8 +37,8 @@ const Forgot_Password = () => {
     <BaseContainer profile bellIcon>
       <Auth>
         <section className={`flex-col ${styles.heading}`}>
-          <h3 className={`bold ${styles.Forgot}`}>Forgot PIN?</h3>
-          <h5>Enter your registered mobile number to receive a 6-digit code.</h5>
+          <h3 className={`bold ${styles.forgot}`}>Forgot PIN?</h3>
+          <h5 className={styles.description}>Enter your registered mobile number to receive a 6-digit code.</h5>
         </section>
         <section className={`flex ${styles.input_wrapper}`}>
           <section className={`flex ${styles.country_wrapper}`} onClick={goToCountrySlider}>
