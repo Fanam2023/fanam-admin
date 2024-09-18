@@ -15,6 +15,7 @@ const ReviewAndSend = () => {
     destination_amount,
     destinationCountryValue,
     isDisabled,
+    transactionId,
     completeTransaction,
   } = useHandler()
 
@@ -35,7 +36,7 @@ const ReviewAndSend = () => {
       skipBtn="Back"
       isStepper
       disabled={isDisabled}
-      onSubmit={completeTransaction}
+      onSubmit={completeTransaction.bind(null, transactionId)}
       childWrapper={styles.page_wrapper}
       stepIndex={4}>
       <section className={`flex-col ${styles.heading_wrapper}`}>
