@@ -258,6 +258,10 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     if (isClicked) setErrData(prev => ({...prev, ...onValidate()}))
   }, [data, isClicked])
 
+  useEffect(() => {
+    if (!id_issued_country && country) setData(prev => ({...prev, id_issued_country: country}))
+  }, [id_issued_country, country])
+
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
 
   const onChangeCountry = (value: JSONObject) => onChangeValue({...value, state: null, city: null})

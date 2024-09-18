@@ -1,5 +1,13 @@
 import {Button, FormSectionProps, ImageView, TextField, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
-import {IFormData, JSONObject, REG_EMAIL, useCommon, useDateTime} from "@fanam-pkg/core-utils"
+import {
+  IFormData,
+  JSONObject,
+  REG_EMAIL,
+  REG_VALID_NUMBER,
+  REG_VALID_TEXT,
+  useCommon,
+  useDateTime,
+} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
@@ -694,11 +702,13 @@ const useHandler = (styles: IStyle) => {
           childElement: (
             <section className={styles.pan_wrapper}>
               <TextField
-                label="Enter Aaadhar Number"
+                label="Enter Aadhaar Number"
                 name="aadhaarNumber"
                 value={aadhaarNumber}
                 disabled={!!verifiedAadhaar}
                 onChangeData={onChangeValue}
+                inputRegex={REG_VALID_NUMBER}
+                maxLength={12}
               />
               {verifiedAadhaar ? (
                 <section className={`flex ${styles.pan_verify}`}>
@@ -742,6 +752,8 @@ const useHandler = (styles: IStyle) => {
               value={pan}
               onChangeData={onChangeValue}
               disabled={!!verifiedPAN}
+              inputRegex={REG_VALID_TEXT}
+              maxLength={10}
             />
             {verifiedPAN ? (
               <section className={`flex ${styles.pan_verify}`}>

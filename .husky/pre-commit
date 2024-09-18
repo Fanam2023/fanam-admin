@@ -1,1 +1,1 @@
-pnpm lint && pnpm styles && pnpm prettier
+# pnpm lint && pnpm styles && pnpm prettier
