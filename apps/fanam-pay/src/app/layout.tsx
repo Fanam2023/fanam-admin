@@ -3,21 +3,16 @@
 import {UIProvider} from "@fanam-pkg/core-ui-sass"
 import "@fanam-pkg/core-ui-sass/src/styles/style.sass"
 import {useResize} from "@fanam-pkg/core-utils"
-import {Nunito, Poppins} from "next/font/google"
+import {Public_Sans} from "next/font/google"
 import {CustomProvider} from "@custom/ui"
 import {LibProvider} from "provider"
 import "../../../../packages/custom-ui/src/styles/index.css"
 import styles from "./layout.module.sass"
 
-const primaryFont = Poppins({
-  weight: ["400"],
-  subsets: ["latin"],
-  variable: "--primary-font",
-})
-const secondaryFont = Nunito({
+const primaryFont = Public_Sans({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
-  variable: "--secondary-font",
+  variable: "--primary-font",
 })
 
 // export const metadata = {
@@ -30,7 +25,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 
   return (
     <html lang="en">
-      <body className={`${secondaryFont.variable}  ${primaryFont.variable} ${isDesktop ? styles.background : ""}`}>
+      <body className={`${primaryFont.variable} ${isDesktop ? styles.background : ""}`}>
         <LibProvider>
           <CustomProvider>
             <UIProvider>{children}</UIProvider>
