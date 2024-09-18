@@ -358,8 +358,9 @@ const useHandler = (styles: IStyle) => {
         phone_no,
         state,
         zip_code,
-        account_no,
+        // account_no,
         account_type,
+        date_of_birth,
       } = user
 
       let payloadData: ISyncUserData = {
@@ -371,6 +372,7 @@ const useHandler = (styles: IStyle) => {
         email,
         phone_no,
         zip_code,
+        date_of_birth,
         // account_no,
         account_type: ACCOUNT_TYPE.find(({key}) => key === account_type),
       }
