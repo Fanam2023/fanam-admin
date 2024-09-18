@@ -639,7 +639,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     const {isValid} = onValidate()
 
     if (isValid) {
-      const payLoad: IPayloadRecipient = {
+      const payload: IPayloadRecipient = {
         first_name,
         last_name,
         address_line_1,
@@ -668,8 +668,18 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
       }
 
-      if (recipientId) onUpdate({...payLoad, recipient_id: recipientId})
-      else addRecipient(payLoad)
+      if (isIndividual) delete payload.business_name
+
+      if (!bsbInput) delete payload.bank_account.bsb_code
+
+      if (!swiftInput) delete payload.bank_account.swift_code
+
+      if (!routingInput) delete payload.bank_account.routing_code
+
+      if (!ibanInput) delete payload.bank_account.iban_no
+
+      if (recipientId) onUpdate({...payload, recipient_id: recipientId})
+      else addRecipient(payload)
     }
   }
 
