@@ -92,6 +92,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
 
   const {isClicked} = errData
+  const isIndividual = recipient_account_type === "Individual"
 
   const {
     errFirstName,
@@ -275,8 +276,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       icon={item.key === "Individual" ? assets.ic_personal : assets.ic_business}
     />
   )
-
-  const isIndividual = recipient_account_type === "Individual"
 
   const businessElements: FormSectionProps = {
     title: "Personal Information",
@@ -621,7 +620,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!account_type) errState = {...errState, errAccountType: "Please choose recipient account type", isValid: false}
 
-    if (!business_name) errState = {...errState, errBusinessName: "Please enter business name", isValid: false}
+    if (!isIndividual && !business_name)
+      errState = {...errState, errBusinessName: "Please enter business name", isValid: false}
 
     setErrData(errState)
     return errState
