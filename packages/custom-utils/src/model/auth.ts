@@ -33,7 +33,7 @@ export interface IJwtUser {
 }
 
 export interface ILogOutPayload {
-  refresh_token: string | null
+  refreshToken: string | null
   token?: string
   device?: string
 }

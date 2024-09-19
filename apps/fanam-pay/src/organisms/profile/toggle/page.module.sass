@@ -1,0 +1,31 @@
+@use "../../../styles/index" as *
+
+.toggle_btn
+  background-color: $light-grey
+  border: $size-1px solid $medium-grey
+  border-radius: $size-96px
+  width: $size-36px
+  height: $size-20px
+  transition: background-color 0.1s ease, border-color 0.2s ease
+  position: relative
+  padding: 0
+  cursor: pointer
+
+  .thumb
+    height: $size-16px
+    width: $size-16px
+    background-color: $white
+    border-radius: $size-96px
+    transition: left 0.15s ease
+    position: absolute
+    left: $size-3px
+    top: 50%
+    transform: translateY(-50%)
+
+.toggled
+  &.toggle_btn
+    background-color: $alert-danger
+    border: none
+
+    .thumb
+      left: calc(#{$size-36px} - #{$size-18px})

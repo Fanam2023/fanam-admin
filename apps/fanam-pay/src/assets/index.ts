@@ -6,6 +6,7 @@ import ic_arrow_right from "./icons/ic_arrow_right.svg"
 import ic_arrow_theme from "./icons/ic_arrow_theme.svg"
 import ic_back from "./icons/ic_back.svg"
 import ic_back_arrow_black from "./icons/ic_back_arrow_black.svg"
+import ic_blue_arrow from "./icons/ic_blue_arrow.svg"
 import ic_business from "./icons/ic_business.svg"
 import ic_checkbox from "./icons/ic_checkbox.svg"
 import ic_cloudUpload from "./icons/ic_cloudUpload.svg"
@@ -19,6 +20,7 @@ import ic_dropDown from "./icons/ic_dropDown.svg"
 import ic_edit from "./icons/ic_edit.svg"
 import ic_edit_theme from "./icons/ic_edit_theme.svg"
 import ic_edit_white from "./icons/ic_edit_white.svg"
+import ic_email from "./icons/ic_email.svg"
 import ic_empty_transaction from "./icons/ic_empty_transaction.svg"
 import ic_failure from "./icons/ic_failure.svg"
 import ic_failure_small from "./icons/ic_failure_small.svg"
@@ -27,14 +29,18 @@ import ic_help from "./icons/ic_help.svg"
 import ic_help_theme from "./icons/ic_help_theme.svg"
 import ic_left_arrow_fill from "./icons/ic_left_arrow_fill.svg"
 import ic_lend_money from "./icons/ic_lend_money.svg"
+import ic_logout from "./icons/ic_logout.svg"
 import ic_menu from "./icons/ic_menu.svg"
 import ic_money from "./icons/ic_money.svg"
 import ic_more from "./icons/ic_more.svg"
+import ic_notify from "./icons/ic_notify.svg"
 import ic_parachute from "./icons/ic_parachute.svg"
 import ic_pending from "./icons/ic_pending.svg"
 import ic_pending_small from "./icons/ic_pending_small.svg"
 import ic_personal from "./icons/ic_personal.svg"
+import ic_pin from "./icons/ic_pin.svg"
 import ic_power from "./icons/ic_power.svg"
+import ic_profile from "./icons/ic_profile.svg"
 import ic_refresh from "./icons/ic_refresh.svg"
 import ic_remove from "./icons/ic_remove.svg"
 import ic_right from "./icons/ic_right.svg"
@@ -51,6 +57,7 @@ import ic_up_arrow from "./icons/ic_up_arrow.svg"
 import ic_upload from "./icons/ic_upload.svg"
 import ic_us_flag from "./icons/ic_us_flag.svg"
 import ic_user from "./icons/ic_user.svg"
+import ic_white_security from "./icons/ic_white_security.svg"
 import ic_world from "./icons/ic_world.svg"
 import img_bank from "./images/img_bank.webp"
 import img_forgot_logo from "./images/img_forgot.webp"
@@ -116,6 +123,13 @@ const assets = {
   ic_menu,
   ic_empty_transaction,
   ic_arrow_right,
+  ic_pin,
+  ic_profile,
+  ic_white_security,
+  ic_email,
+  ic_notify,
+  ic_logout,
+  ic_blue_arrow,
 }
 
 export default assets

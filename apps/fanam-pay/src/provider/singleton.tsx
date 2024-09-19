@@ -2,7 +2,7 @@ import {useCookies, useReactQuery, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {PropsWithChildren, useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
-import {ITransaction, IUser} from "@custom/utils"
+import {ILogOutPayload, ITransaction, IUser} from "@custom/utils"
 import {SingletonContext} from "contexts"
 import {useAuthController, useTransactionController} from "controller"
 import {ISingleton} from "model"
@@ -75,6 +75,10 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   }, [transRes])
 
   const singOutUser = async () => {
+    let payload: ILogOutPayload = {refreshToken}
+    await logout(payload)
+    removeCookie(COOKIE_ACCESS_TOKEN)
+    removeCookie(COOKIE_REFRESH_TOKEN)
     updateToken(null)
     updateRefreshToken(null)
     updateTransData(null)

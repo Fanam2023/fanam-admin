@@ -139,3 +139,41 @@ export const RELATION_SHIP: IFormData<TypeRelation>[] = [
   {key: "Niece", label: "Niece"},
   {key: "Not_applicable", label: "NotApplicable"},
 ]
+
+export const PROFILE_ARR: IFormData[] = [
+  {
+    label: "Profile",
+    icon: assets.ic_profile,
+  },
+  {
+    label: "Security Settings",
+    icon: assets.ic_white_security,
+  },
+  {
+    label: "Notification",
+    icon: assets.ic_notify,
+  },
+]
+
+export const SECURITY_ARR: IFormData[] = [
+  {
+    label: "Change PIN",
+    icon: assets.ic_pin,
+  },
+  {
+    label: "Change Email",
+    icon: assets.ic_email,
+  },
+  {
+    label: "Log out of all devices",
+    icon: assets.ic_logout,
+  },
+]
+
+export const NOTIFY: IFormData[] = [
+  {label: "Allow Notification"},
+  {label: "Login Alert"},
+  {label: "Password Change Alert"},
+  {label: "Suspicious Activity Alert"},
+  {label: "Promotions and Offers"},
+]
