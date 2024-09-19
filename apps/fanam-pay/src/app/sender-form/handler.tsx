@@ -156,7 +156,7 @@ const useHandler = (styles: IStyle) => {
       const {message} = errorData || {}
       if (result) {
         const {user} = result
-        updateUserData(user)
+        updateUserData({...user, kyc_details: result?.user?.kyc_details})
         toggleNotify({
           title: "Success",
           description: "PAN card verified successfully!",
@@ -212,7 +212,7 @@ const useHandler = (styles: IStyle) => {
       const {message} = errorData || {}
       if (result) {
         const {user} = result
-        updateUserData(user)
+        updateUserData({...user, kyc_details: result?.user?.kyc_details})
         toggleNotify({
           title: "Aadhaar OTP",
           description: "OTP Sent successfully",
@@ -237,8 +237,7 @@ const useHandler = (styles: IStyle) => {
     onSuccess: ({result, errorData}) => {
       const {message} = errorData || {}
       if (result) {
-        const {user} = result
-        updateUserData(user)
+        updateUserData({...user, kyc_details: result?.user?.kyc_details})
         toggleNotify({
           title: "OTP Verification",
           description: "OTP Verified successfully",
@@ -707,7 +706,7 @@ const useHandler = (styles: IStyle) => {
               {verifiedAadhaar ? (
                 <section className={`flex ${styles.pan_verify}`}>
                   <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
-                  <h5 className={styles.verified_text}>Aadhaar is Verified</h5>
+                  <h5 className={styles.verified_text}>Aadhaar is Validated</h5>
                 </section>
               ) : (
                 <Button
@@ -751,7 +750,7 @@ const useHandler = (styles: IStyle) => {
             {verifiedPAN ? (
               <section className={`flex ${styles.pan_verify}`}>
                 <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
-                <h5 className={styles.verified_text}>PAN is Verified</h5>
+                <h5 className={styles.verified_text}>PAN is Validated</h5>
               </section>
             ) : (
               <Button disabled={!isValidInputByRegex(pan, REG_PAN)} onClick={onVerifyPan.bind(null, {pan})}>
@@ -778,7 +777,7 @@ const useHandler = (styles: IStyle) => {
     }
 
     return elements
-  }, [user, data])
+  }, [user, data, errData])
 
   const individualType = user?.account_type === "Individual"
 
