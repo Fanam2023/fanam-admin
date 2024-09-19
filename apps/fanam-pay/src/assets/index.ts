@@ -1,5 +1,6 @@
 import {assets as projectAssets} from "@fanam-pkg/core-ui-sass"
 import ic_account from "./icons/ic_account.svg"
+import ic_alarm from "./icons/ic_alarm.svg"
 import ic_alert from "./icons/ic_alert.svg"
 import ic_arrow_right from "./icons/ic_arrow_right.svg"
 import ic_arrow_theme from "./icons/ic_arrow_theme.svg"
@@ -70,6 +71,7 @@ const assets = {
   ic_up_arrow,
   ic_back,
   ic_dot,
+  ic_alarm,
   ic_debit_card,
   ic_right,
   img_bank,

@@ -16,6 +16,7 @@ const InitiateTransactionPage = () => {
     fxRes,
     showCountries,
     transfer_time,
+    durationTime,
   } = useHandler()
 
   const {sla_timing_min, sla_timing_max} = transfer_time || {}
@@ -40,6 +41,13 @@ const InitiateTransactionPage = () => {
           </h5>
         </section>
         <section className={styles.conversion_container}>
+          {!!durationTime && !!transfer_time && (
+            <section className={`flex ${styles.duration_wrapper}`}>
+              <ImageView src={assets.ic_alarm} imgSize={24} alt="alarm" />
+              <p>Your session will end when the timer reaches</p>
+              <h4 className={styles.duration_time}> {durationTime}</h4>
+            </section>
+          )}
           <section className={`flex-sb-center ${styles.currency_wrapper}`}>
             <section className={styles.sender_wrapper}>
               <h5 className={`bold ${styles.txt_wrapper}`}>You Send</h5>

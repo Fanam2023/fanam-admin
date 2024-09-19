@@ -1,6 +1,7 @@
 "use client"
 
 import {Button, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
+import {REG_VALID_NUMBER} from "@fanam-pkg/core-utils"
 import {useEffect} from "react"
 import {useSlider} from "@custom/ui"
 import {ICountry} from "@custom/utils"
@@ -41,7 +42,7 @@ const Forgot_Password = () => {
           <h3 className={`bold ${styles.forgot}`}>Forgot PIN?</h3>
           <h5 className={styles.description}>Enter your registered mobile number to receive a 6-digit code.</h5>
         </section>
-        <section className={`flex ${styles.input_wrapper}`}>
+        <section className={`flex-start ${styles.input_wrapper}`}>
           <section className={`flex ${styles.country_wrapper}`} onClick={goToCountrySlider}>
             <ImageView
               src={country ? getFlagUrl(country) : assets.ic_world}
@@ -57,6 +58,8 @@ const Forgot_Password = () => {
             value={phone_no}
             onChangeData={onChangeValue}
             error={errPhoneNo}
+            maxLength={10}
+            inputRegex={REG_VALID_NUMBER}
           />
         </section>
         <Button wrapperClass={styles.button_wrapper} onClick={onSubmit}>

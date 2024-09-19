@@ -14,6 +14,7 @@
   overflow-y: scroll
   margin-top: $size-16px
   background: $white
+  text-align: end
 
 .account_wrapper
   width: 60%
@@ -36,11 +37,15 @@
   cursor: pointer
 
 .data_wrapper
+  display: grid
+  grid-template-columns: 2fr 5fr
+  gap: 0 $size-16px
   margin-top: $size-8px
   padding: 0 $size-4px
 
 .field_wrapper
   opacity: $alpha-five
+  text-align: left
 
 @include mixin-responsive
   .border_wrapper

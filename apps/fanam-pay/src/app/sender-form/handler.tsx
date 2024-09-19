@@ -3,7 +3,16 @@ import {IFormData, JSONObject, REG_EMAIL, REG_VALID_NUMBER, useCommon, useDateTi
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
-import {IAadhaarCaptcha, IResponseKYC, IStyle, ISyncUserData, REG_AADHAAR, REG_INPUT_DATE, REG_PAN} from "@custom/utils"
+import {
+  DF_INPUT_DATE,
+  IAadhaarCaptcha,
+  IResponseKYC,
+  IStyle,
+  ISyncUserData,
+  REG_AADHAAR,
+  REG_INPUT_DATE,
+  REG_PAN,
+} from "@custom/utils"
 import assets from "assets"
 import {useAuthController, useKYCController, useLocationController} from "controller"
 import {useSingleton} from "hooks"
@@ -49,10 +58,10 @@ const useHandler = (styles: IStyle) => {
   const {syncUser} = useAuthController()
   const {verifyPanCard, generateAadhaarCaptcha, reGenerateAadhaarCaptcha, generateAadhaarOTP, verifyAadhaarOTP} =
     useKYCController()
-  const {formatDateUTC} = useDateTime()
+  const {formatDateUTC, formatDate} = useDateTime()
   const {toggleNotify} = useNotifyPopup()
   const {togglePopup} = usePopup()
-  const {updateUserData, user} = useSingleton()
+  const {user, updateUserData} = useSingleton()
   const [data, setData] = useState<ISyncUserData>({
     first_name: "",
     last_name: "",
@@ -138,9 +147,8 @@ const useHandler = (styles: IStyle) => {
     mutationKey: [QUERY_USER],
     mutationFn: syncUser,
     onSuccess: ({result, errorData}) => {
-      if (result) {
-        replace(ROUTE_HOME)
-      } else
+      if (result) replace(ROUTE_HOME)
+      else
         toggleNotify({
           title: "Error - Update User",
           description: errorData?.message || "Something went wrong",
@@ -237,6 +245,7 @@ const useHandler = (styles: IStyle) => {
     onSuccess: ({result, errorData}) => {
       const {message} = errorData || {}
       if (result) {
+        const {user} = result
         updateUserData({...user, kyc_details: result?.user?.kyc_details})
         toggleNotify({
           title: "OTP Verification",
@@ -355,17 +364,18 @@ const useHandler = (styles: IStyle) => {
 
       let payloadData: ISyncUserData = {
         ...data,
-        address_line_1,
-        address_line_2,
-        first_name,
-        last_name,
-        email,
-        phone_no,
-        zip_code,
-        date_of_birth,
-        // account_no,
-        account_type: ACCOUNT_TYPE.find(({key}) => key === account_type),
       }
+
+      if (address_line_1) payloadData.address_line_1 = address_line_1
+      if (address_line_2) payloadData.address_line_2 = address_line_2
+      if (first_name) payloadData.first_name = first_name
+      if (last_name) payloadData.last_name = last_name
+      if (email) payloadData.email = email
+      if (phone_no) payloadData.phone_no = phone_no
+      if (zip_code) payloadData.zip_code = zip_code
+      if (date_of_birth) payloadData.date_of_birth = formatDate(date_of_birth, DF_INPUT_DATE)
+      // if (account_no) payloadData.account_no = account_no
+      if (account_type) payloadData.account_type = ACCOUNT_TYPE.find(({key}) => key === account_type)
 
       if (country) {
         const {country_id, country_name} = country
@@ -693,7 +703,7 @@ const useHandler = (styles: IStyle) => {
       childElements: [
         {
           childElement: (
-            <section className={`flex ${styles.pan_wrapper}`}>
+            <section className={`flex-start ${styles.pan_wrapper}`}>
               <TextField
                 label="Enter Aadhaar Number"
                 name="aadhaarNumber"
@@ -704,7 +714,7 @@ const useHandler = (styles: IStyle) => {
                 maxLength={12}
               />
               {verifiedAadhaar ? (
-                <section className={`flex ${styles.pan_verify}`}>
+                <section className={`flex-start ${styles.pan_verify}`}>
                   <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
                   <h5 className={styles.verified_text}>Aadhaar is Validated</h5>
                 </section>
@@ -728,6 +738,7 @@ const useHandler = (styles: IStyle) => {
         name: "kyc_aadhaar",
         isMultiple: true,
         value: kyc_aadhaar,
+        maxCount: 2,
         error: errKycAadhaar,
         children: <CustomUpload />,
         disabled: !verifiedAadhaar,
@@ -738,7 +749,7 @@ const useHandler = (styles: IStyle) => {
     if (verifiedAadhaar && kyc_aadhaar) {
       elements.childElements.push({
         childElement: (
-          <section className={`flex ${styles.pan_wrapper}`}>
+          <section className={`flex-start ${styles.pan_wrapper}`}>
             <TextField
               label="Enter Pan Number"
               name="pan"
@@ -748,7 +759,7 @@ const useHandler = (styles: IStyle) => {
               maxLength={10}
             />
             {verifiedPAN ? (
-              <section className={`flex ${styles.pan_verify}`}>
+              <section className={`flex-start ${styles.pan_verify}`}>
                 <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
                 <h5 className={styles.verified_text}>PAN is Validated</h5>
               </section>
@@ -768,6 +779,7 @@ const useHandler = (styles: IStyle) => {
         fileType: ["image/*", "application/pdf"],
         name: "kyc_pan",
         isMultiple: true,
+        maxCount: 2,
         value: kyc_pan,
         error: errKycPAN,
         children: <CustomUpload />,

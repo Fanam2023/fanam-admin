@@ -15,4 +15,5 @@ export const SingletonContext = createContext<ISingleton>({
   updateUserData: () => {},
   updateToken: () => {},
   updateRefreshToken: () => {},
+  resetTransaction: () => {},
 })

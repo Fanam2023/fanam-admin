@@ -39,6 +39,7 @@ export const useRecipientController = () => {
 
       if (transResult) {
         const {transaction_id} = transResult
+        updateTransData(transResult)
 
         if (kyc.length && result) {
           const {result: transRecipientKyc, errorData: errKyc} = await uploadKyc(recipient_id, transaction_id, kyc)

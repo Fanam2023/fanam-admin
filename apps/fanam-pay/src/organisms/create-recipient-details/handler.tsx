@@ -237,8 +237,17 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         is_send_email,
       } = recipientData
 
-      const {account_no, account_type, bank_name, branch_address, branch_code, swift_code, routing_code, iban_no} =
-        bank_account
+      const {
+        account_no,
+        account_type,
+        bank_name,
+        branch_address,
+        branch_code,
+        swift_code,
+        routing_code,
+        iban_no,
+        bsb_code,
+      } = bank_account
       const {country_id, country_name} = country || {}
       const {country_id: idCountryId, country_name: idCountryName} = id_issued_country || {}
       const {state_id, state_name} = state || {}
@@ -265,6 +274,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         id_type,
         id_number,
         iban_no,
+        bsb_code,
         account_type: account_type as TypeBankAccount,
         kyc: kyc_attachments?.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
         recipient_account_type,
@@ -279,8 +289,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   }, [data, isClicked])
 
   useEffect(() => {
-    if (!id_issued_country && country) setData(prev => ({...prev, id_issued_country: country}))
-  }, [id_issued_country, country])
+    if (country) setData(prev => ({...prev, id_issued_country: country}))
+  }, [country])
 
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
 
@@ -408,7 +418,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (swiftInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "Enter bic",
+      label: "Enter Swift code",
       name: "swift_code",
       error: errSwiftCode,
       value: swift_code,
@@ -419,7 +429,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (ibanInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "Enter iban no",
+      label: "Enter IBAN no",
       name: "iban_no",
       value: iban_no,
       error: errIbanNo,
@@ -608,6 +618,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           children: <CustomUpload />,
           value: kyc,
           error: errKyc,
+          maxCount: 2,
           onChangeValue,
         },
       ],

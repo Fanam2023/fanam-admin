@@ -9,7 +9,8 @@ export const useOrderController = () => {
   const createOrder = async () =>
     await postRequest<ITransaction, IPayloadOrder, IFanamApiError<null>>(API_CREATE_ORDER, {transaction_id: transId})
 
-  const cancelTransaction = async () => await getRequest<ITransaction>(apiCancelTransaction(transId))
+  const cancelTransaction = async (transactionId: string) =>
+    await getRequest<ITransaction>(apiCancelTransaction(transactionId))
 
   return {
     createOrder,

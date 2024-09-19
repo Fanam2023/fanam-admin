@@ -10,7 +10,7 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
   const {recipientDetails, recipient_id} = useHandler()
 
   const renderRecipientDetails = ({key, label}: IFormData, index: number) => (
-    <li className={`flex-sb-center ${styles.data_wrapper}`} key={index}>
+    <li className={styles.data_wrapper} key={index}>
       <h5 className={styles.field_wrapper}>{key}</h5>
       <h5 className={`bold ${styles.detail_wrapper}`}>{label}</h5>
     </li>

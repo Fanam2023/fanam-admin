@@ -56,9 +56,10 @@ export interface IBankAccount {
   email: string
   country_code: string
   phone_no: string
-  iban_no: string
-  swift_code: string
-  routing_code: string
+  iban_no?: string
+  swift_code?: string
+  routing_code?: string
+  bsb_code?: string
   bank_name: string
   branch_code: string
   branch_address: string

@@ -1,11 +1,11 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {JSONObject, REG_VALID_NUMBER} from "@fanam-pkg/core-utils"
+import {JSONObject, REG_VALID_NUMBER, useDateTime} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {ChangeEvent, useEffect, useRef, useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import useRazorpay from "react-razorpay"
 import {useSlider} from "@custom/ui"
-import {ICountry, IPayloadFxRate, ITransaction, ITransactionData, ITransferTime} from "@custom/utils"
+import {ICountry, IPayloadFxRate, ITransaction, ITransactionData, ITransferTime, TF_MINS} from "@custom/utils"
 import {useLocationController, useOrderController, usePaymentController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
 import {CountryPopup} from "organisms"
@@ -37,12 +37,12 @@ let debounceTimer: null | NodeJS.Timeout = null
 export const useHandler = () => {
   const {push} = useRouter()
   const {getFxRate} = usePaymentController()
-  const {getTransactionDetails} = useTransactionController()
+  const {dayjs} = useDateTime()
   const {updateTransaction} = useTransactionController()
-  const {createOrder} = useOrderController()
+  const {createOrder, cancelTransaction} = useOrderController()
   const {toggleNotify} = useNotifyPopup()
   const [Razorpay] = useRazorpay()
-  const {user, transId, updateTransId, updateTransData} = useSingleton()
+  const {user, transId, transData} = useSingleton()
   const isFetched = useRef(false)
   const [data, setData] = useState<ITransactionData>({
     source_amount: "",
@@ -51,17 +51,12 @@ export const useHandler = () => {
     source_country: null,
   })
   const [errState, setErrState] = useState(DEFAULT_ERR_STATE)
-
-  const {data: transactionDetail} = useQuery({
-    queryKey: [QUERY_TRANSACTION.concat(transId)],
-    queryFn: () => getTransactionDetails(transId),
-    enabled: !!transId,
-  })
+  const [remainingTime, setRemainingTime] = useState(0)
 
   const {getTransactionCountries} = useLocationController()
   const {data: countries = []} = useQuery({queryKey: [QUERY_COUNTRIES], queryFn: getTransactionCountries})
 
-  const {recipient_account_type, recipient, transfer_time} = transactionDetail || {}
+  const {recipient_account_type, recipient, transfer_time, expiration_time} = transData || {}
 
   const {toggleSlider} = useSlider()
 
@@ -116,6 +111,19 @@ export const useHandler = () => {
           description: errorData?.message || "Something went wrong",
           type: "error",
         })
+    },
+  })
+
+  const {mutate: onCancelTransaction} = useMutation({
+    mutationFn: cancelTransaction,
+    onSuccess: () => {
+      toggleNotify({
+        title: "Cancelled Transaction",
+        description: "Cancelled Transaction due to timeout",
+        type: "error",
+      })
+
+      push(routeToTransactionDetail(transId))
     },
   })
 
@@ -190,8 +198,6 @@ export const useHandler = () => {
     })
 
     rzp1.open()
-    updateTransId("")
-    updateTransData(null)
 
     rzp1.on("payment.failed", (response: Record<string, JSONObject>) => {
       console.error(">>>>>>>>>>>>>>>> Payment is Failed", response, response?.error?.description)
@@ -254,8 +260,8 @@ export const useHandler = () => {
 
   useEffect(() => {
     const payloadData = {...data}
-    if (transactionDetail && user) {
-      const {source_country, destination_country} = transactionDetail
+    if (transData && user) {
+      const {source_country, destination_country} = transData
       if (destination_country) payloadData.destination_country = destination_country
       else if (recipient?.country) payloadData.destination_country = recipient.country
 
@@ -264,7 +270,25 @@ export const useHandler = () => {
     }
 
     setData(payloadData)
-  }, [transactionDetail, user])
+  }, [transData, user])
+
+  useEffect(() => {
+    if (remainingTime > 0) {
+      const debounceInterval = setInterval(() => setRemainingTime(remainingTime - 1000), 1000)
+
+      return () => {
+        clearInterval(debounceInterval)
+      }
+    } else if (expiration_time && transfer_time) onCancelTransaction(transId)
+  }, [remainingTime])
+
+  useEffect(() => {
+    if (expiration_time) {
+      const expirationDuration = new Date(expiration_time).valueOf() - new Date().valueOf()
+
+      if (expirationDuration) setRemainingTime(expirationDuration)
+    }
+  }, [expiration_time])
 
   useEffect(() => {
     const {isValid} = onValidateFxRate()
@@ -311,6 +335,8 @@ export const useHandler = () => {
     if (isValid) onCreateOrder()
   }
 
+  const durationTime = remainingTime > 0 ? dayjs(remainingTime).format(TF_MINS) : ""
+
   return {
     data,
     PURPOSES,
@@ -320,5 +346,6 @@ export const useHandler = () => {
     fxRes,
     onSelect: onUpdateTransaction,
     transfer_time,
+    durationTime,
   }
 }

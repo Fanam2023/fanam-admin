@@ -8,6 +8,7 @@ export const DF_FULL_DATE = "DD MMMM YYYY"
 export const DF_COMMON_DATE = "DD-MM-YYYY"
 export const DF_INPUT_DATE = "YYYY-MM-DD"
 export const DATE_PICKER_FORMAT = "dd-MM-yyyy"
+export const TF_MINS = "mm:ss"
 
 export const API_HEADER_FORM_DATA = {
   "Content-Type": "multipart/form-data",

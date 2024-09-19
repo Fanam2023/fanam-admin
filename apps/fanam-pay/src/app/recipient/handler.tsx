@@ -4,10 +4,10 @@ import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {useRecipientController, useTransactionController} from "controller"
 import {CreateRecipientDetails} from "organisms"
-import {ACCOUNT_TYPE, QUERY_RECIPIENT, QUERY_TRANSACTION, ROUTE_INVOICE, ROUTE_RECIPIENT_PREVIEW} from "utils"
+import {ACCOUNT_TYPE, QUERY_RECIPIENT, QUERY_TRANSACTION, ROUTE_RECIPIENT_PREVIEW} from "utils"
 
 export const useHandler = () => {
-  const {push} = useRouter()
+  const {push, back} = useRouter()
   const {toggleSlider} = useSlider()
   const {getAllRecipient} = useRecipientController()
   const {initiateTransaction} = useTransactionController()
@@ -52,7 +52,7 @@ export const useHandler = () => {
     })
   }
 
-  const onBack = () => push(ROUTE_INVOICE)
+  const onBack = () => back()
 
   return {
     recipients: filteredRecipients,

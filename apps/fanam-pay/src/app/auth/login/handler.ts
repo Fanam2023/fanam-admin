@@ -23,6 +23,7 @@ const useHandler = () => {
   const stringToBase64 = (inputString: string) => Buffer.from(inputString).toString("base64")
   const {mutate: loginWithCredential} = useMutation({
     mutationFn: login,
+    retry: false,
     onSuccess: ({result, errorData}) => {
       if (result) replace(ROUTE_HOME)
       else
