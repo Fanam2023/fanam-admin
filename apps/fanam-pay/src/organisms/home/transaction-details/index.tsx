@@ -12,8 +12,9 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
   const {formatDate} = useDateTime()
   const {recipientDetails, getFirstLetter} = useHandler(transaction)
   const {
-    source_amount,
+    source_country,
     destination_amount,
+    exchange_amount,
     recipient,
     created_at,
     order,
@@ -26,9 +27,10 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
   const {sla_timing_min, sla_timing_max} = transfer_time || {}
   const statusLabel = TRANSACTION_STATUS_OBJECT[order_status]?.label
   const {currency} = destination_country || {}
+  const {currency: source_currency} = source_country || {}
 
   return (
-    <section className="card">
+    <section className={`card ${styles.main_wrapper}`}>
       <h3 className={styles.txt_wrapper}>Transaction Details</h3>
       <section className={`flex ${styles.payment_wrapper}`}>
         <section className={`flex ${styles.profile_container}`}>
@@ -65,7 +67,9 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
         <section className={styles.amount_wrapper}>
           <h6 className={styles.payment_txt}>{statusLabel}</h6>
           <section className={`flex ${styles.amount_container}`}>
-            <h5 className={`semi-bold ${styles.amount_inr}`}>{source_amount}</h5>
+            <h5 className={`semi-bold ${styles.amount_inr}`}>
+              {exchange_amount} {source_currency}
+            </h5>
             <h5 className={`semi-bold ${styles.amount_usd}`}>
               {destination_amount} {currency}
             </h5>
