@@ -1,8 +1,10 @@
 "use client"
 
-import {assets, Button, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
+import {Button, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
+import {useEffect} from "react"
 import {useSlider} from "@custom/ui"
 import {ICountry} from "@custom/utils"
+import assets from "assets"
 import {useCommon} from "hooks"
 import {Auth, BaseContainer, CountryPopup} from "organisms"
 import useHandler from "./handler"
@@ -28,9 +30,13 @@ const Forgot_Password = () => {
       children: <CountryPopup onSelect={onSelectCountry} selCountry={country} countries={countries} />,
     })
 
+  useEffect(() => {
+    if (countries?.length) setData(prev => ({...prev, country: countries?.find(({iso2}) => iso2 === "IN")}))
+  }, [countries])
+
   return (
     <BaseContainer profile bellIcon>
-      <Auth>
+      <Auth isBack={true} authLogo={assets.img_forgot_logo}>
         <section className={`flex-col ${styles.heading}`}>
           <h3 className={`bold ${styles.forgot}`}>Forgot PIN?</h3>
           <h5 className={styles.description}>Enter your registered mobile number to receive a 6-digit code.</h5>
@@ -38,7 +44,7 @@ const Forgot_Password = () => {
         <section className={`flex ${styles.input_wrapper}`}>
           <section className={`flex ${styles.country_wrapper}`} onClick={goToCountrySlider}>
             <ImageView
-              src={country ? getFlagUrl(country) : assets.ic_view}
+              src={country ? getFlagUrl(country) : assets.ic_world}
               alt="country-img"
               imgSize={24}
               wrapperClass={styles.flag}

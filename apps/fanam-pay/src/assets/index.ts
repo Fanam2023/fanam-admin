@@ -52,6 +52,7 @@ import ic_us_flag from "./icons/ic_us_flag.svg"
 import ic_user from "./icons/ic_user.svg"
 import ic_world from "./icons/ic_world.svg"
 import img_bank from "./images/img_bank.webp"
+import img_forgot_logo from "./images/img_forgot.webp"
 import img_logo_in from "./images/img_log_in.webp"
 import img_logo from "./images/img_logo.webp"
 
@@ -94,6 +95,7 @@ const assets = {
   ic_us_flag,
   ic_cloudUpload,
   img_logo_in,
+  img_forgot_logo,
   ic_back_arrow_black,
   img_logo,
   ic_world,
