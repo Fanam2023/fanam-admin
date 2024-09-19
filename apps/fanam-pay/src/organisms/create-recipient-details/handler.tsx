@@ -75,6 +75,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     bsb_code: "",
     iban_no: "",
     routing_code: "",
+    is_send_email: {isSelected: false, label: "Send reconciliation report to your recipient’s Mail?"},
   })
 
   const {
@@ -103,6 +104,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     account_type,
     business_name,
     bsb_code,
+    is_send_email,
   } = data
 
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
@@ -232,6 +234,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         kyc_attachments,
         recipient_account_type,
         business_name,
+        is_send_email,
       } = recipientData
 
       const {account_no, account_type, bank_name, branch_address, branch_code, swift_code, routing_code, iban_no} =
@@ -266,6 +269,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         kyc: kyc_attachments?.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
         recipient_account_type,
         business_name,
+        is_send_email: {isSelected: is_send_email, label: "Send reconciliation report to your recipient’s Mail?"},
       })
     }
   }, [recipientData])
@@ -477,6 +481,27 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       ],
     },
     {
+      wrapperClassGrid: styles.border_wrapper,
+      childElements: [
+        {
+          elementType: "checkbox",
+          label: "Send reconciliation report to your recipient’s Mail?",
+          name: "is_send_email",
+          value: is_send_email,
+          option: is_send_email,
+          wrapperClass: styles.checkbox_container,
+          onChangeValue,
+          childBottom: (
+            <p className={styles.recon_wrapper}>
+              Reconciliation report includes all the details of the sender , the invoice, transaction details and the
+              purpose of sending money . It is sent to the recipient email id given above to help them clear the
+              invoices against the right sender.
+            </p>
+          ),
+        },
+      ],
+    },
+    {
       title: "Address",
       wrapperClassGrid: styles.address_details,
       childElements: [
@@ -677,6 +702,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         id_type,
         recipient_account_type,
         kyc: kyc.filter(({file}) => !!file),
+        is_send_email: is_send_email.isSelected,
         business_name,
         bank_account: {
           branch_address,

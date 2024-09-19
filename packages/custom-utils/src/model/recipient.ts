@@ -25,6 +25,7 @@ export interface IRecipient {
   recipient_account_type: TypeAccount
   kyc_attachments: IAttachment[]
   business_name: string
+  is_send_email: boolean
 }
 
 export interface IBaseRecipientData {
@@ -56,6 +57,7 @@ export interface IRecipientData extends IBaseRecipientData {
   bsb_code?: string
   account_type: TypeBankAccount
   business_name: string
+  is_send_email: IFormData
 }
 
 export interface IPayloadRecipient extends IBaseRecipientData {
@@ -67,6 +69,7 @@ export interface IPayloadRecipient extends IBaseRecipientData {
   transaction_id?: string
   recipient_account_type?: string
   business_name: string
+  is_send_email: boolean
 }
 
 export interface IPayloadUpdateRecipient extends IPayloadRecipient {
