@@ -1,17 +1,9 @@
 import {Button, FormSectionProps, ImageView, TextField, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
-import {
-  IFormData,
-  JSONObject,
-  REG_EMAIL,
-  REG_VALID_NAME,
-  REG_VALID_NUMBER,
-  useCommon,
-  useDateTime,
-} from "@fanam-pkg/core-utils"
+import {IFormData, JSONObject, REG_EMAIL, REG_VALID_NUMBER, useCommon, useDateTime} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
-import {IAadhaarCaptcha, IResponseKYC, IStyle, ISyncUserData, REG_AADHAAR, REG_PAN} from "@custom/utils"
+import {IAadhaarCaptcha, IResponseKYC, IStyle, ISyncUserData, REG_AADHAAR, REG_PAN, REG_VALID_DATE} from "@custom/utils"
 import assets from "assets"
 import {useAuthController, useKYCController, useLocationController} from "controller"
 import {useSingleton} from "hooks"
@@ -113,7 +105,6 @@ const useHandler = (styles: IStyle) => {
     errLastName,
     errEmail,
     errPhoneNo,
-    errAccountNo,
     errAccountType,
     errCountry,
     errState,
@@ -607,6 +598,7 @@ const useHandler = (styles: IStyle) => {
           name: "date_of_birth",
           error: errDateOfBirth,
           value: date_of_birth,
+          inputRegex: REG_VALID_DATE,
           onChangeValue,
         },
       ],
@@ -754,7 +746,6 @@ const useHandler = (styles: IStyle) => {
               value={pan}
               onChangeData={onChangeValue}
               disabled={!!verifiedPAN}
-              inputRegex={REG_VALID_NAME}
               maxLength={10}
             />
             {verifiedPAN ? (

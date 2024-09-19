@@ -15,3 +15,4 @@ export const API_HEADER_FORM_DATA = {
 
 export const REG_AADHAAR = /^\d{12}$/
 export const REG_PAN = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/
+export const REG_VALID_DATE = /^[a-zA-Z0-9 \- ]+$/g
