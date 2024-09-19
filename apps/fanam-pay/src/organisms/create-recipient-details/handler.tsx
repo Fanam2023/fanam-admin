@@ -290,8 +290,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
   const onSelectAccType = (accountType: TypeAccount) => onChangeValue({recipient_account_type: accountType})
 
-  // const onChangeData = (value: any) => onChangeValue({is_send_email: value})
-
   const renderAccType = (item: IFormData<TypeAccount>, index: number) => (
     <ButtonAccountType
       key={index}
