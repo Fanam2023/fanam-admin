@@ -29,7 +29,7 @@ export const useHandler = (transaction: ITransaction) => {
       {key: "Country", label: country_name},
       {key: "State", label: state_name},
       {key: "City/District", label: city_name},
-      {key: "Pin Code", label: zip_code},
+      {key: "Zip Code", label: zip_code},
     ]
     return {recipientDetails}
   }, [transaction])
