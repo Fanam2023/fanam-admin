@@ -1,14 +1,15 @@
 "use client"
 
-import {Button, ImageView, assets as projectAssets} from "@fanam-pkg/core-ui-sass"
+import {Button, ImageView, assets as projectAssets, usePopup} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import {usePathname, useRouter} from "next/navigation"
 import {useEffect} from "react"
 import assets from "assets"
 import {useSingleton} from "hooks"
 import {IStepper} from "model"
+import {ProfileDetails} from "organisms"
 import {BaseContainerProps} from "props"
-import {ROUTE_HOME, ROUTE_LOGIN, ROUTE_SENDER, SIDE_BAR} from "utils"
+import {ROUTE_HOME, ROUTE_LOGIN, SIDE_BAR} from "utils"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({
@@ -28,8 +29,9 @@ export const BaseContainer = ({
   const {user, token, transId} = useSingleton()
   const {first_name, last_name} = user || {}
   const {isDesktop} = useResize()
-  const {back, replace, push} = useRouter()
+  const {back, replace} = useRouter()
   const pathname = usePathname()
+  const {togglePopup} = usePopup()
 
   useEffect(() => {
     if (!pathname.includes("/auth/") && !token) replace(ROUTE_LOGIN)
@@ -40,7 +42,12 @@ export const BaseContainer = ({
     if (onBack) onBack()
     else back()
   }
-
+  const handleProfile = () => {
+    togglePopup({
+      title: "Settings",
+      children: <ProfileDetails />,
+    })
+  }
   const renderSideBar = ({title, description}: IStepper, index: number) => {
     const isLastStep = index < SIDE_BAR.length - 1
     const isActive = index === stepIndex
@@ -87,7 +94,7 @@ export const BaseContainer = ({
               {!bellIcon && <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />}
 
               {!profile && (
-                <section className={styles.profile_wrapper} onClick={() => push(ROUTE_SENDER)}>
+                <section className={styles.profile_wrapper} onClick={handleProfile}>
                   {first_name?.charAt(0).toUpperCase()}
                   {last_name?.charAt(0).toUpperCase()}
                 </section>

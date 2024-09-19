@@ -33,7 +33,7 @@ export interface IJwtUser {
 }
 
 export interface ILogOutPayload {
-  refresh_token: string | null
+  refreshToken: string | null
   token?: string
   device?: string
 }
@@ -99,6 +99,7 @@ export interface IUser {
   status: TypeStatus
   account_type: TypeAccount
   account_no: string
+  date_of_birth?: string
 }
 
 export interface IBaseSyncUser {
