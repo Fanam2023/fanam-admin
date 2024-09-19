@@ -1,10 +1,26 @@
 import {FormSectionProps, ImageView, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {IFormData, JSONObject, REG_EMAIL, useCommon, useReactQuery, useResize} from "@fanam-pkg/core-utils"
+import {
+  IFormData,
+  JSONObject,
+  REG_EMAIL,
+  REG_VALID_NUMBER,
+  useCommon,
+  useReactQuery,
+  useResize,
+} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
 import {ButtonAccountType, useSlider} from "@custom/ui"
-import {IBankInput, IPayloadRecipient, IRecipientData, IStyle, TypeAccount, TypeBankAccount} from "@custom/utils"
+import {
+  IBankInput,
+  IPayloadRecipient,
+  IRecipientData,
+  IStyle,
+  REG_INPUT_EMAIL,
+  TypeAccount,
+  TypeBankAccount,
+} from "@custom/utils"
 import assets from "assets"
 import {useLocationController, useRecipientController} from "controller"
 import {
@@ -443,6 +459,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           elementType: "input",
           label: "Enter Email",
           name: "email",
+          inputRegex: REG_INPUT_EMAIL,
           error: errEmail,
           value: email,
           onChangeValue,
@@ -451,6 +468,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           elementType: "input",
           label: "Enter PhoneNumber",
           name: "phone_no",
+          inputRegex: REG_VALID_NUMBER,
           error: errPhoneNo,
           value: phone_no,
           onChangeValue,

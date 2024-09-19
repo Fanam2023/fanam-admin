@@ -47,7 +47,7 @@ export const TransferTime = ({onSelect, transferTimeRes}: PropsTransferTime) => 
         </section>
         <ul className={`flex-col ${styles.fees_wrapper}`}>
           {renderItem("Exchange Amount", exchange_rate, isSelected)}
-          {renderItem("Fees", parseFloat(other_fees) + parseFloat(markup_fee), isSelected)}
+          {renderItem("Fees", (parseFloat(other_fees) + parseFloat(markup_fee)).toFixed(2), isSelected)}
           {renderItem("Total", final_rate, true)}
         </ul>
       </li>

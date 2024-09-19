@@ -34,6 +34,7 @@ export interface ITransaction {
   transfer_time?: ITransferTime
   created_at?: string
   paymentMode?: string
+  expiration_time?: string
 }
 
 export interface ITransactionDetails extends ITransaction {
