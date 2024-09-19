@@ -1,3 +1,4 @@
+import {StaticImageData} from "next/image"
 import {ReactNode} from "react"
 
 export interface AddAttachmentProps {
@@ -8,4 +9,5 @@ export interface AddAttachmentProps {
 export interface AuthProps {
   children: ReactNode
   isBack?: boolean
+  authLogo?: StaticImageData
 }
