@@ -63,6 +63,7 @@ const useHandler = (styles: IStyle) => {
     let errState = {...DEFAULT_ERR_STATE, isValid: true, isClicked: true}
 
     if (!newPin) errState = {...errState, errPin: "Please enter valid pin", isValid: false}
+    else if (newPin.length > 6) errState = {...errState, errPin: "Please enter the 6  digit pin", isValid: false}
 
     if (!confirmPin) errState = {...errState, errConfirmPin: "Please enter valid pin", isValid: false}
     else if (confirmPin !== newPin)

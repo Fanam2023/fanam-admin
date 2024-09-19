@@ -707,7 +707,7 @@ const useHandler = (styles: IStyle) => {
               {verifiedAadhaar ? (
                 <section className={`flex ${styles.pan_verify}`}>
                   <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
-                  <h5 className={styles.verified_text}>Aadhaar is Verified</h5>
+                  <h5 className={styles.verified_text}>Aadhaar is Validated</h5>
                 </section>
               ) : (
                 <Button
@@ -733,6 +733,7 @@ const useHandler = (styles: IStyle) => {
         children: <CustomUpload />,
         disabled: !verifiedAadhaar,
         onChangeValue,
+        maxCount: 2,
       })
     }
 
@@ -751,7 +752,7 @@ const useHandler = (styles: IStyle) => {
             {verifiedPAN ? (
               <section className={`flex ${styles.pan_verify}`}>
                 <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
-                <h5 className={styles.verified_text}>PAN is Verified</h5>
+                <h5 className={styles.verified_text}>PAN is Validated</h5>
               </section>
             ) : (
               <Button disabled={!isValidInputByRegex(pan, REG_PAN)} onClick={onVerifyPan.bind(null, {pan})}>
@@ -774,6 +775,7 @@ const useHandler = (styles: IStyle) => {
         children: <CustomUpload />,
         disabled: !verifyPanCard,
         onChangeValue,
+        maxCount: 2,
       })
     }
 

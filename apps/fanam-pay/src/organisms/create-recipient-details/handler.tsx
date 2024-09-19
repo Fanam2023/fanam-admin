@@ -408,7 +408,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (swiftInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "Enter bic",
+      label: "Enter Swift code",
       name: "swift_code",
       error: errSwiftCode,
       value: swift_code,
@@ -609,6 +609,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           value: kyc,
           error: errKyc,
           onChangeValue,
+          maxCount: 2,
         },
       ],
     },
