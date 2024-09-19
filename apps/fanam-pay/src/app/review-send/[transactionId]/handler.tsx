@@ -1,9 +1,8 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {IFormData, useDateTime} from "@fanam-pkg/core-utils"
+import {IFormData} from "@fanam-pkg/core-utils"
 import {useParams, useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
-import {TF_MINS} from "@custom/utils"
 import {useOrderController, usePaymentController, useTransactionController} from "controller"
 import {QUERY_TRANSACTION, routeToTransactionDetail} from "utils"
 
@@ -12,7 +11,6 @@ const useHandler = () => {
   const {toggleNotify} = useNotifyPopup()
   const {getTransactionDetails} = useTransactionController()
   const {cancelTransaction} = useOrderController()
-  const {dayjs} = useDateTime()
   const {sendPayout} = usePaymentController()
   const [showDetails, setShowDetails] = useState({
     recipient: false,
@@ -81,7 +79,14 @@ const useHandler = () => {
   const {currency} = source_country || {}
   const {currency: destinationCountryValue} = destination_country || {}
 
-  const durationTime = remainingTime > 0 ? dayjs(remainingTime).format(TF_MINS) : ""
+  // Get total seconds
+  const totalSeconds = Math.floor(remainingTime / 1000)
+
+  // Calculate minutes and seconds
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+
+  const durationTime = remainingTime > 0 ? `${minutes}:${seconds}` : ""
 
   const recipientDetails = useMemo(() => {
     const {
@@ -168,6 +173,8 @@ const useHandler = () => {
     mutationFn: sendPayout,
     onSuccess: () => push(routeToTransactionDetail(transactionId as string)),
   })
+
+  console.log(">>>>>>>>>>>>>>>>>: remainingTime ", remainingTime / (60 * 60))
 
   return {
     beneficiaryDetails,

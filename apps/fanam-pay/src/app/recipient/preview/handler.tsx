@@ -11,12 +11,11 @@ import {
   RELATION_SHIP,
   ROUTE_BENEFICIARIES,
   ROUTE_BENEFICIARY_PREVIEW,
-  ROUTE_RECIPIENTS,
   routeToRecipientDetails,
 } from "utils"
 
 export const useHandler = () => {
-  const {push} = useRouter()
+  const {push, back} = useRouter()
   const {toggleSlider} = useSlider()
   const {isDesktop} = useResize()
   const {syncRecipientAsBeneficiary} = useTransactionController()
@@ -32,7 +31,7 @@ export const useHandler = () => {
 
   const onRouteToBeneficiary = () => push(ROUTE_BENEFICIARIES)
 
-  const onBack = () => push(ROUTE_RECIPIENTS)
+  const onBack = () => back()
 
   const {mutate: linkRecipientAsBeneficiary} = useMutation({
     mutationKey: [QUERY_TRANSACTION],

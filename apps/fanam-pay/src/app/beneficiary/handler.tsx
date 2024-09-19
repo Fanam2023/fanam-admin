@@ -5,11 +5,11 @@ import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {useBeneficiaryController, useTransactionController} from "controller"
 import {CreateBeneficiaryDetails} from "organisms"
-import {QUERY_BENEFICIARY, QUERY_TRANSACTION, ROUTE_BENEFICIARY_PREVIEW, ROUTE_RECIPIENT_PREVIEW} from "utils"
+import {QUERY_BENEFICIARY, QUERY_TRANSACTION, ROUTE_BENEFICIARY_PREVIEW} from "utils"
 
 export const useHandler = () => {
   const {isDesktop} = useResize()
-  const {push} = useRouter()
+  const {push, back} = useRouter()
   const {toggleSlider} = useSlider()
   const [searchQuery, setSearchQuery] = useState("")
   const {getAllBeneficiary} = useBeneficiaryController()
@@ -23,7 +23,7 @@ export const useHandler = () => {
     },
   })
 
-  const onBack = () => push(ROUTE_RECIPIENT_PREVIEW)
+  const onBack = () => back()
 
   const {data: beneficiaries} = useQuery({
     queryKey: [QUERY_BENEFICIARY],

@@ -4,8 +4,20 @@ import {useSingleton} from "hooks"
 
 export const useHandler = () => {
   const {transData} = useSingleton()
-  const {first_name, last_name, address, email, country, zip_code, state, city, account_no, phone_no, beneficiary_id} =
-    transData?.beneficiary || {}
+  const {
+    first_name,
+    last_name,
+    address,
+    email,
+    country,
+    zip_code,
+    state,
+    city,
+    account_no,
+    phone_no,
+    beneficiary_id,
+    notes,
+  } = transData?.beneficiary || {}
 
   const {country_name} = country || {}
   const {state_name} = state || {}
@@ -22,8 +34,10 @@ export const useHandler = () => {
       {key: "State", label: state_name},
       {key: "City", label: city_name},
       {key: "ZIP Code", label: zip_code},
-      {key: "Account Number", label: account_no},
     ]
+
+    if (account_no) beneficiaryDetails.push({key: "Account Number", label: account_no})
+    if (notes) beneficiaryDetails.push({key: "Notes", label: notes})
 
     return {beneficiaryDetails}
   }, [transData])

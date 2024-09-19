@@ -1,11 +1,11 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {JSONObject, REG_VALID_NUMBER, useDateTime} from "@fanam-pkg/core-utils"
+import {JSONObject, REG_VALID_NUMBER} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {ChangeEvent, useEffect, useRef, useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import useRazorpay from "react-razorpay"
 import {useSlider} from "@custom/ui"
-import {ICountry, IPayloadFxRate, ITransaction, ITransactionData, ITransferTime, TF_MINS} from "@custom/utils"
+import {ICountry, IPayloadFxRate, ITransaction, ITransactionData, ITransferTime} from "@custom/utils"
 import {useLocationController, useOrderController, usePaymentController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
 import {CountryPopup} from "organisms"
@@ -37,7 +37,6 @@ let debounceTimer: null | NodeJS.Timeout = null
 export const useHandler = () => {
   const {push} = useRouter()
   const {getFxRate} = usePaymentController()
-  const {dayjs} = useDateTime()
   const {updateTransaction} = useTransactionController()
   const {createOrder, cancelTransaction} = useOrderController()
   const {toggleNotify} = useNotifyPopup()
@@ -86,7 +85,7 @@ export const useHandler = () => {
       if (result) {
         const {final_amount, destination_amount, source_country, destination_country} = result
         setData({
-          source_amount: `${final_amount}`,
+          source_amount: `${final_amount.toFixed(2)}`,
           destination_amount: `${destination_amount}`,
           source_country,
           destination_country,
@@ -335,7 +334,14 @@ export const useHandler = () => {
     if (isValid) onCreateOrder()
   }
 
-  const durationTime = remainingTime > 0 ? dayjs(remainingTime).format(TF_MINS) : ""
+  // Get total seconds
+  const totalSeconds = Math.floor(remainingTime / 1000)
+
+  // Calculate minutes and seconds
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+
+  const durationTime = remainingTime > 0 ? `${minutes}:${seconds}` : ""
 
   return {
     data,

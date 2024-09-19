@@ -1,5 +1,5 @@
 import {useCookies, useReactQuery, useStorage} from "@fanam-pkg/core-utils"
-import {useRouter} from "next/navigation"
+import {useParams, usePathname, useRouter} from "next/navigation"
 import {PropsWithChildren, useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
 import {ITransaction, IUser} from "@custom/utils"
@@ -12,7 +12,9 @@ import {
   COOKIE_TRANSACTION_ID,
   QUERY_TRANSACTION,
   QUERY_USER,
+  ROUTE_HOME,
   ROUTE_LOGIN,
+  ROUTE_SENDER,
 } from "utils"
 
 export const SingletonProvider = ({children}: PropsWithChildren) => {
@@ -22,6 +24,8 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   const {clearQueryCache} = useReactQuery()
   const {replace} = useRouter()
   const {clearAllStorage} = useStorage()
+  const {transactionId} = useParams()
+  const pathname = usePathname()
   const [user, setUser] = useState<IUser | null>(null)
   const [transData, setTransData] = useState<ITransaction | null>(null)
   const [token, setToken] = useState<string | null>(getCookie<string>(COOKIE_ACCESS_TOKEN))
@@ -73,6 +77,14 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   useEffect(() => {
     if (transRes) updateTransData(transRes)
   }, [transRes])
+
+  useEffect(() => {
+    if (pathname === ROUTE_HOME || pathname === ROUTE_SENDER || transactionId || pathname.includes("auth/")) {
+      console.log(">>>>>>>>>>>>: ", pathname)
+
+      resetTransaction()
+    }
+  }, [transactionId, pathname])
 
   const singOutUser = async () => {
     updateToken(null)

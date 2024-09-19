@@ -21,7 +21,8 @@ export const useHandler = () => {
   const {country_name} = country || {}
   const {state_name} = state || {}
   const {city_name} = city || {}
-  const {account_no, account_type, bank_name, branch_code, swift_code} = bank_account || {}
+  const {account_no, account_type, bank_name, branch_code, swift_code, bsb_code, iban_no, routing_code} =
+    bank_account || {}
 
   useEffect(() => {
     if (transId) refetchTransaction()
@@ -42,8 +43,12 @@ export const useHandler = () => {
       {key: "Account Type", label: account_type},
       {key: "Bank Name", label: bank_name},
       {key: "Branch", label: branch_code},
-      {key: "BIC", label: swift_code},
     ]
+
+    if (swift_code) recipientDetails.push({key: "Swift Code", label: swift_code})
+    if (bsb_code) recipientDetails.push({key: "BSB Code", label: bsb_code})
+    if (routing_code) recipientDetails.push({key: "Routing Code", label: routing_code})
+    if (iban_no) recipientDetails.push({key: "IBAN Number", label: iban_no})
 
     return {recipientDetails}
   }, [transData])
