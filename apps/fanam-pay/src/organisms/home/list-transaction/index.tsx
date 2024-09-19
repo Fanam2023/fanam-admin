@@ -51,7 +51,7 @@ export const ListTransaction = () => {
                 <h4 className={`bold ${styles.name_wrapper}`}>
                   {first_name} {last_name}
                 </h4>
-                <h5 className={`${styles.id_wrapper} ${order_no ? styles.has_order_no : ""}`}>{order_no}</h5>
+                <h5 className={`${styles.id_wrapper} ${order_no ? styles.order_no : ""}`}>{order_no}</h5>
               </section>
               <h5 className={`bold ${styles.exchange_amount}`}>{exchange_amount}</h5>
               <section className={`flex ${styles.duration_wrapper}`}>
