@@ -2,7 +2,6 @@ import {TypeScope} from "@custom/utils"
 
 export const ROUTE_INITIATE_TRANSACTION = "/initiate-transaction"
 export const ROUTE_SENDER = "/sender-form"
-export const ROUTE_INVOICE = "/invoice"
 export const ROUTE_RECIPIENTS = "/recipient"
 export const ROUTE_ADD_RECIPIENT = `${ROUTE_RECIPIENTS}/form`
 export const routeToRecipientDetails = (recipientId: string) => `${ROUTE_ADD_RECIPIENT}?recipientId=${recipientId}`

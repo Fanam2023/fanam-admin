@@ -1,15 +1,19 @@
-import {API_CREATE_ORDER, IFanamApiError, IPayloadOrder, IResponseOrder} from "@custom/utils"
+import {API_CREATE_ORDER, apiCancelTransaction, IFanamApiError, IPayloadOrder, ITransaction} from "@custom/utils"
 import {useSingleton} from "hooks"
 import {useApi} from "./api"
 
 export const useOrderController = () => {
-  const {postRequest} = useApi()
+  const {postRequest, getRequest} = useApi()
   const {transId} = useSingleton()
 
   const createOrder = async () =>
-    await postRequest<IResponseOrder, IPayloadOrder, IFanamApiError<null>>(API_CREATE_ORDER, {transaction_id: transId})
+    await postRequest<ITransaction, IPayloadOrder, IFanamApiError<null>>(API_CREATE_ORDER, {transaction_id: transId})
+
+  const cancelTransaction = async (transactionId: string) =>
+    await getRequest<ITransaction>(apiCancelTransaction(transactionId))
 
   return {
     createOrder,
+    cancelTransaction,
   }
 }

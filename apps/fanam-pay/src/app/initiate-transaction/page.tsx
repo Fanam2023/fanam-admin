@@ -16,6 +16,7 @@ const InitiateTransactionPage = () => {
     fxRes,
     showCountries,
     transfer_time,
+    durationTime,
   } = useHandler()
 
   const {sla_timing_min, sla_timing_max} = transfer_time || {}
@@ -40,24 +41,25 @@ const InitiateTransactionPage = () => {
           </h5>
         </section>
         <section className={styles.conversion_container}>
+          {!!durationTime && !!transfer_time && (
+            <section className={`flex ${styles.duration_wrapper}`}>
+              <ImageView src={assets.ic_alarm} imgSize={24} alt="alarm" />
+              <p>Your session will end when the timer reaches</p>
+              <h4 className={styles.duration_time}> {durationTime}</h4>
+            </section>
+          )}
           <section className={`flex-sb-center ${styles.currency_wrapper}`}>
             <section className={styles.sender_wrapper}>
               <h5 className={`bold ${styles.txt_wrapper}`}>You Send</h5>
               <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
-                <input
-                  type="text"
-                  value={source_amount}
-                  className={styles.input}
-                  name="source_amount"
-                  // onChange={onChangeValue}
-                />
+                <input type="text" value={source_amount} className={styles.input} name="source_amount" />
                 <section className={`flex ${styles.currency}`}>
                   <CountryFlag {...source_country} />
                 </section>
               </section>
             </section>
             <ImageView src={assets.ic_conversion} alt="convert" imgSize={40} wrapperClass={styles.convert_img} />
-            <section>
+            <section className={styles.recipient_wrapper}>
               <h5 className={`bold ${styles.recipient_txt}`}>Recipient receives</h5>
               <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
                 <section className={styles.amount}>
@@ -71,7 +73,7 @@ const InitiateTransactionPage = () => {
                 </section>
                 <section className={`flex ${styles.currency}`} onClick={showCountries}>
                   <CountryFlag {...destination_country} />
-                  <ImageView src={assets.ic_dropDown} alt={"Drop-Down"} imgSize={12} />
+                  <ImageView src={assets.ic_dropDown} alt="Drop-Down" imgSize={12} />
                 </section>
               </section>
             </section>

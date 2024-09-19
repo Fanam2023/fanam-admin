@@ -4,8 +4,12 @@ import {UIProvider} from "@fanam-pkg/core-ui-sass"
 import "@fanam-pkg/core-ui-sass/src/styles/style.sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import {Public_Sans} from "next/font/google"
+import {useParams, usePathname} from "next/navigation"
+import {useEffect} from "react"
 import {CustomProvider} from "@custom/ui"
+import {useSingleton} from "hooks"
 import {LibProvider} from "provider"
+import {ROUTE_HOME, ROUTE_SENDER} from "utils"
 import "../../../../packages/custom-ui/src/styles/index.css"
 import styles from "./layout.module.sass"
 
@@ -22,6 +26,14 @@ const primaryFont = Public_Sans({
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   const {isDesktop} = useResize()
+  const {transactionId} = useParams()
+  const pathname = usePathname()
+  const {resetTransaction} = useSingleton()
+
+  useEffect(() => {
+    if (pathname === ROUTE_HOME || pathname === ROUTE_SENDER || transactionId || pathname.includes("auth/"))
+      resetTransaction()
+  }, [transactionId, pathname])
 
   return (
     <html lang="en">

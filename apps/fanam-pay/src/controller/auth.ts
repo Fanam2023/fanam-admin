@@ -214,6 +214,8 @@ export const useAuthController = () => {
         } else response.errorData = errorData
       }
     } catch (error) {
+      console.log(">>>>>>>>>>>>>>>>>: Error while registerWebAuth: ", error)
+
       // ERROR_PASSTHROUGH_SEE_CAUSE_PROPERTY - NotAllowedError
       // ERROR_AUTHENTICATOR_PREVIOUSLY_REGISTERED - InvalidStateError
       if (error.code === "ERROR_AUTHENTICATOR_PREVIOUSLY_REGISTERED") {

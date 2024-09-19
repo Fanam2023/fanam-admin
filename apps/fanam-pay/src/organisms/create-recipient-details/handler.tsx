@@ -1,10 +1,26 @@
 import {FormSectionProps, ImageView, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {IFormData, JSONObject, REG_EMAIL, useCommon, useReactQuery, useResize} from "@fanam-pkg/core-utils"
+import {
+  IFormData,
+  JSONObject,
+  REG_EMAIL,
+  REG_VALID_NUMBER,
+  useCommon,
+  useReactQuery,
+  useResize,
+} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
 import {ButtonAccountType, useSlider} from "@custom/ui"
-import {IBankInput, IPayloadRecipient, IRecipientData, IStyle, TypeAccount, TypeBankAccount} from "@custom/utils"
+import {
+  IBankInput,
+  IPayloadRecipient,
+  IRecipientData,
+  IStyle,
+  REG_INPUT_EMAIL,
+  TypeAccount,
+  TypeBankAccount,
+} from "@custom/utils"
 import assets from "assets"
 import {useLocationController, useRecipientController} from "controller"
 import {
@@ -59,6 +75,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     bsb_code: "",
     iban_no: "",
     routing_code: "",
+    is_send_email: {isSelected: false, label: "Send reconciliation report to your recipient’s Mail?"},
   })
 
   const {
@@ -87,6 +104,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     account_type,
     business_name,
     bsb_code,
+    is_send_email,
   } = data
 
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
@@ -216,10 +234,20 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         kyc_attachments,
         recipient_account_type,
         business_name,
+        is_send_email,
       } = recipientData
 
-      const {account_no, account_type, bank_name, branch_address, branch_code, swift_code, routing_code, iban_no} =
-        bank_account
+      const {
+        account_no,
+        account_type,
+        bank_name,
+        branch_address,
+        branch_code,
+        swift_code,
+        routing_code,
+        iban_no,
+        bsb_code,
+      } = bank_account
       const {country_id, country_name} = country || {}
       const {country_id: idCountryId, country_name: idCountryName} = id_issued_country || {}
       const {state_id, state_name} = state || {}
@@ -246,10 +274,12 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         id_type,
         id_number,
         iban_no,
+        bsb_code,
         account_type: account_type as TypeBankAccount,
         kyc: kyc_attachments?.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
         recipient_account_type,
         business_name,
+        is_send_email: {isSelected: is_send_email, label: "Send reconciliation report to your recipient’s Mail?"},
       })
     }
   }, [recipientData])
@@ -257,6 +287,10 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   useEffect(() => {
     if (isClicked) setErrData(prev => ({...prev, ...onValidate()}))
   }, [data, isClicked])
+
+  useEffect(() => {
+    if (country) setData(prev => ({...prev, id_issued_country: country}))
+  }, [country])
 
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
 
@@ -280,7 +314,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const businessElements: FormSectionProps = {
     title: "Personal Information",
     wrapperClass: styles.recipient_address,
-    wrapperClassGrid: styles.recipient_address_wrapper,
+    wrapperClassGrid: styles.recipient_business_wrapper,
     childElements: [
       {
         elementType: "input",
@@ -384,7 +418,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (swiftInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "Enter bic",
+      label: "Enter Swift code",
       name: "swift_code",
       error: errSwiftCode,
       value: swift_code,
@@ -395,7 +429,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (ibanInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "Enter iban no",
+      label: "Enter IBAN no",
       name: "iban_no",
       value: iban_no,
       error: errIbanNo,
@@ -439,6 +473,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           elementType: "input",
           label: "Enter Email",
           name: "email",
+          inputRegex: REG_INPUT_EMAIL,
           error: errEmail,
           value: email,
           onChangeValue,
@@ -447,10 +482,32 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           elementType: "input",
           label: "Enter PhoneNumber",
           name: "phone_no",
+          inputRegex: REG_VALID_NUMBER,
           error: errPhoneNo,
           value: phone_no,
           onChangeValue,
           maxLength: 10,
+        },
+      ],
+    },
+    {
+      wrapperClassGrid: styles.border_wrapper,
+      childElements: [
+        {
+          elementType: "checkbox",
+          label: "Send reconciliation report to your recipient’s Mail?",
+          name: "is_send_email",
+          value: is_send_email,
+          option: is_send_email,
+          wrapperClass: styles.checkbox_container,
+          onChangeValue,
+          childBottom: (
+            <p className={styles.recon_wrapper}>
+              Reconciliation report includes all the details of the sender , the invoice, transaction details and the
+              purpose of sending money . It is sent to the recipient email id given above to help them clear the
+              invoices against the right sender.
+            </p>
+          ),
         },
       ],
     },
@@ -561,6 +618,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           children: <CustomUpload />,
           value: kyc,
           error: errKyc,
+          maxCount: 2,
           onChangeValue,
         },
       ],
@@ -655,6 +713,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         id_type,
         recipient_account_type,
         kyc: kyc.filter(({file}) => !!file),
+        is_send_email: is_send_email.isSelected,
         business_name,
         bank_account: {
           branch_address,

@@ -43,10 +43,15 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
 
   const updateTransData = (data: ITransaction | null) => setTransData(data)
 
-  const updateTransId = (transId: string) => {
+  const updateTransId = (transId: string | null) => {
     if (transId) setCookie(COOKIE_TRANSACTION_ID, transId)
     else removeCookie(COOKIE_TRANSACTION_ID)
     setTransId(transId)
+  }
+
+  const resetTransaction = () => {
+    updateTransData(null)
+    updateTransId(null)
   }
 
   const updateToken = (accessToken: string) => {
@@ -98,6 +103,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     updateRefreshToken,
     refetchUser,
     refetchTransaction,
+    resetTransaction,
   }
 
   return <SingletonContext.Provider value={value}>{children}</SingletonContext.Provider>

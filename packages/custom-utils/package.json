@@ -14,7 +14,7 @@
   },
   "private": true,
   "dependencies": {
-    "@fanam-pkg/core-utils": "^1.0.3",
+    "@fanam-pkg/core-utils": "^1.0.4",
     "axios": "^1.7.7",
     "react": "^18.3.1"
   },

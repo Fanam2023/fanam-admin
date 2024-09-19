@@ -11,14 +11,11 @@
     left: 5%
     right: 5%
 
-.header_wrapper
-  margin: $size-24px
-
 .container_wrapper
   margin:
     top: 10%
     bottom: 20%
-    right: 2%
+    right: 8%
   overflow-y: scroll
 
 .button_container
@@ -42,6 +39,10 @@
   border-radius: $size-16px
   box-shadow: 0 $size-1px $size-20px 0 rgba($black, $alpha-two)
 
+.sender_wrapper,.recipient_wrapper
+  flex: 1
+  min-width: 0
+
 .amount_wrapper
   margin-top: $size-16px
 
@@ -58,9 +59,6 @@
 .recipient_text
   margin-top: $size-36px
   @include common-color
-
-.flag_wrapper
-  gap: $size-10px
 
 .receiver_text
   color: $primary
@@ -93,9 +91,13 @@
   margin-top: $size-16px
   padding: $size-10px $size-8px
   border-radius: $size-8px
+  position: relative
 
 .description
   margin-top: $size-16px
+
+.convert_img
+  margin: 0 3%
 
 .input
   border: none
@@ -105,6 +107,12 @@
 
 .currency
   gap: $size-6px
+  position: absolute
+  margin-left: auto
+  top: 50%
+  right: $size-10px
+  transform: translateY(-50%)
+  z-index: 2
 
 .convert_img
   margin-top: $size-40px
@@ -114,6 +122,17 @@
   padding: $size-8px
   border-radius: $size-8px
   margin-top: $size-24px
+
+.duration_wrapper
+  border: $size-2px solid $alert-green
+  border-radius: $size-8px
+  font-size: $size-16px
+  gap: $size-16px
+  padding: $size-8px $size-16px
+  margin-bottom: $size-16px
+
+.duration_time
+  color: $alert-green
 
 @include mixin-responsive
 

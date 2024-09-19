@@ -99,7 +99,7 @@ export interface IUser {
   status: TypeStatus
   account_type: TypeAccount
   account_no: string
-  date_of_birth?: string
+  date_of_birth: string
 }
 
 export interface IBaseSyncUser {

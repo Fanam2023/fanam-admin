@@ -16,6 +16,7 @@ export type IBeneficiary = {
   transaction_id: string
   beneficiary_id?: string
   account_no?: string
+  notes?: string
 }
 
 export interface IBaseBeneficiary {
@@ -27,6 +28,7 @@ export interface IBaseBeneficiary {
   zip_code: string
   relationship: IFormData<string> | null
   account_no?: string
+  notes: string
 }
 
 export interface IBeneficiaryData extends IBaseBeneficiary {

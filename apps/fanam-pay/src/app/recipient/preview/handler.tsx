@@ -8,6 +8,7 @@ import {useTransactionController} from "controller"
 import {CreateRecipientDetails} from "organisms"
 import {
   QUERY_TRANSACTION,
+  RELATION_SHIP,
   ROUTE_BENEFICIARIES,
   ROUTE_BENEFICIARY_PREVIEW,
   ROUTE_RECIPIENTS,
@@ -21,7 +22,7 @@ export const useHandler = () => {
   const {syncRecipientAsBeneficiary} = useTransactionController()
   const [data, setData] = useState<IMergeRecipientData>({
     is_same_person: {isSelected: false},
-    recipient_relationship: "",
+    recipient_relationship: RELATION_SHIP[0],
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
   const {is_same_person, recipient_relationship} = data
@@ -70,7 +71,8 @@ export const useHandler = () => {
     const {isValid} = onValidate()
 
     if (isSamePerson) {
-      if (isValid) linkRecipientAsBeneficiary({is_same_person: isSamePerson, recipient_relationship})
+      if (isValid)
+        linkRecipientAsBeneficiary({is_same_person: isSamePerson, recipient_relationship: recipient_relationship.key})
     } else onRouteToBeneficiary()
   }
 

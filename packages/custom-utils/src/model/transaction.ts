@@ -9,6 +9,7 @@ import {
   TypeAccount,
   TypeOrderStatus,
   TypePurpose,
+  TypeRelation,
 } from "../model"
 
 export interface ITransaction {
@@ -33,6 +34,7 @@ export interface ITransaction {
   transfer_time?: ITransferTime
   created_at?: string
   paymentMode?: string
+  expiration_time?: string
 }
 
 export interface ITransactionDetails extends ITransaction {
@@ -54,9 +56,10 @@ export interface IBankAccount {
   email: string
   country_code: string
   phone_no: string
-  iban_no: string
-  swift_code: string
-  routing_code: string
+  iban_no?: string
+  swift_code?: string
+  routing_code?: string
+  bsb_code?: string
   bank_name: string
   branch_code: string
   branch_address: string
@@ -129,12 +132,12 @@ export interface IInvoiceData {
 
 export interface IMergeRecipientData {
   is_same_person: IFormData | null
-  recipient_relationship: string
+  recipient_relationship: IFormData<TypeRelation>
 }
 
 export interface IPayloadMergeRecipient {
   is_same_person: boolean
-  recipient_relationship: string
+  recipient_relationship: TypeRelation
 }
 
 export interface ITransactionPurpose {

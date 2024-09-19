@@ -104,7 +104,7 @@ export const TRANSACTION_STATUS_OBJECT: Record<TypeOrderStatus, IFormData<TypeOr
   Refund_failed: {label: "Refund Failed"},
 }
 
-export const ID_PROOFS = ["Passport", "Driving License", "Aadhaar"]
+export const ID_PROOFS = ["Passport", "Driving license", "Bank passbook"]
 
 export const ACCOUNT_TYPE: IFormData<TypeAccount>[] = [
   {label: "Individual", key: "Individual"},

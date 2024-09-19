@@ -27,7 +27,6 @@ const RecipientPage = () => {
       header={"Manage Recipients"}
       childWrapper={styles.page_container}
       backIcon
-      buttonText="Next"
       skipBtn="Back"
       isStepper
       stepIndex={0}

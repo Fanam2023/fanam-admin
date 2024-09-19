@@ -5,9 +5,14 @@ const useAuthHandler = () => {
   const {isDesktop} = useResize()
   const {back, push} = useRouter()
 
+  const onBack = (event: {stopPropagation: () => void}) => {
+    event.stopPropagation()
+    back()
+  }
+
   return {
     isDesktop,
-    back,
+    onBack,
     push,
   }
 }

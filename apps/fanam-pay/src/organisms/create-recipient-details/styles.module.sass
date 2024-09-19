@@ -16,6 +16,15 @@
     top: $size-20px
     bottom: $size-20px
 
+.recipient_business_wrapper
+  display: grid
+  grid-template-columns: repeat(1, 0.5fr)
+  width: 94vw
+  gap: $size-16px
+  margin:
+    top: $size-20px
+    bottom: $size-20px
+
 .recipient_address
   margin:
     top: $size-20px
@@ -79,12 +88,21 @@
 .input_wrapper
   margin-top: $size-20px
 
+.border_wrapper
+  display: block
+  padding: $size-8px
+  border: $size-1px solid $medium-grey
+  border-radius: $size-12px
+
+.recon_wrapper
+  margin-top: $size-12px
+
 @include mixin-responsive
   .input_wrapper
     margin-top: 6%
 
   .child_wrapper
     height: 100vh
-    overflow-y: scroll
+    overflow: hidden scroll
     padding-bottom: 15%
     width: 100%

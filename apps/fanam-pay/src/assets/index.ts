@@ -1,5 +1,6 @@
 import {assets as projectAssets} from "@fanam-pkg/core-ui-sass"
 import ic_account from "./icons/ic_account.svg"
+import ic_alarm from "./icons/ic_alarm.svg"
 import ic_alert from "./icons/ic_alert.svg"
 import ic_arrow_right from "./icons/ic_arrow_right.svg"
 import ic_arrow_theme from "./icons/ic_arrow_theme.svg"
@@ -59,6 +60,7 @@ import ic_user from "./icons/ic_user.svg"
 import ic_white_security from "./icons/ic_white_security.svg"
 import ic_world from "./icons/ic_world.svg"
 import img_bank from "./images/img_bank.webp"
+import img_forgot_logo from "./images/img_forgot.webp"
 import img_logo_in from "./images/img_log_in.webp"
 import img_logo from "./images/img_logo.webp"
 
@@ -76,6 +78,7 @@ const assets = {
   ic_up_arrow,
   ic_back,
   ic_dot,
+  ic_alarm,
   ic_debit_card,
   ic_right,
   img_bank,
@@ -101,6 +104,7 @@ const assets = {
   ic_us_flag,
   ic_cloudUpload,
   img_logo_in,
+  img_forgot_logo,
   ic_back_arrow_black,
   img_logo,
   ic_world,

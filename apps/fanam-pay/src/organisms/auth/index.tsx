@@ -6,8 +6,8 @@ import {AuthProps} from "props"
 import useHandler from "./handler"
 import styles from "./styles.module.sass"
 
-export const Auth = ({children, isBack}: AuthProps) => {
-  const {back} = useHandler()
+export const Auth = ({children, isBack, authLogo}: AuthProps) => {
+  const {onBack} = useHandler()
 
   return (
     <section className={`${styles.main_container}`}>
@@ -18,10 +18,10 @@ export const Auth = ({children, isBack}: AuthProps) => {
             alt="back-arrow"
             imgSize={40}
             wrapperClass={styles.arrow_wrapper}
-            onClick={back}
+            onClick={onBack}
           />
         )}
-        <ImageView src={assets.img_logo_in} alt="sign-logo" imgSize={494} />
+        <ImageView src={authLogo ? authLogo : assets.img_logo_in} alt="sign-logo" imgSize={494} />
       </section>
       <section className={styles.child_wrapper}>{children}</section>
     </section>

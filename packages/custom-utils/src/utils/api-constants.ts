@@ -33,6 +33,7 @@ export const API_LOGIN_FINISH = "/passkey/login-finish"
 export const API_POPULAR_CORRIDORS = "/payment/popularCorridors-visa"
 export const API_CREATE_ORDER = "/order"
 export const apiPayout = (transactionId: string) => `/payment/send-payout/${transactionId}`
+export const apiCancelTransaction = (transactionId: string) => `/api/order/create_refund/${transactionId}`
 
 /* KYC Endpoints */
 export const API_PAN_VERIFY = `${API_USER}/pan-verification`
