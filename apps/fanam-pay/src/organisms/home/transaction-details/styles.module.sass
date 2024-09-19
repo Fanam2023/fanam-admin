@@ -26,7 +26,6 @@
 
 .transaction_id
   margin-left: $size-16px
-  color: $dark-grey
   background-color: $light-grey
   padding: $size-4px $size-8px
   border-radius: $size-2px
@@ -89,9 +88,63 @@
   height: $size-20px
   color: $white
 
+.profile_container
+  gap: $size-24px
+
 @include mixin-responsive
   .transaction_container
     display: block !important
 
+  .order_wrapper
+    flex-direction: column
+
+  .transaction_id
+    margin-left: 0
+    margin-top: $size-6px
+
+  .transaction_wrapper
+    margin: 0
+    position: absolute
+    left: 0
+    top: 44%
+    padding-left: $size-18px
+
   .payment_wrapper
-    display: none !important
+    border-top: none
+    padding-bottom: 12%
+    flex-direction: column-reverse
+    align-items: flex-start
+    gap: $size-14px
+
+  .profile_container
+    padding-top: $size-18px
+    border-top: $size-1px solid $light-grey
+    width: 100%
+    gap: $size-12px
+
+  .amount_wrapper
+    margin-left: 0
+    display: flex
+    flex-direction: row-reverse
+    justify-content: space-between
+    width: 100%
+
+  .payment_txt
+    height: fit-content
+    font-size: $size-14px
+
+
+  .amount_container
+    flex-direction: column
+    margin-top: 0
+
+  .amount_usd
+    margin-left: $size-4px
+    margin-top: $size-8px
+    font-size: $size-16px
+
+  .amount_inr
+    font-size: $size-16px
+
+  .txt_wrapper
+    font-size: $size-20px
