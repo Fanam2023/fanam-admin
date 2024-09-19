@@ -26,7 +26,6 @@ const BeneficiaryPage = () => {
       childWrapper={styles.page_container}
       backIcon
       stepIndex={1}
-      buttonText="Next"
       skipBtn="Back"
       isStepper
       onBack={onBack}>
