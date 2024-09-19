@@ -51,7 +51,9 @@ const useHandler = () => {
     }
 
     if (!phone_no) errState = {...errState, errPhoneNo: "Please enter PhoneNumber", isValid: false}
+
     if (!pin) errState = {...errState, errPin: "Please enter valid PinNumber", isValid: false}
+    else if (pin.length !== 6) errState = {...errState, errPin: "PIN should contain 6 numbers", isValid: false}
 
     setErrData(errState)
     return errState

@@ -29,7 +29,7 @@ export const BeneficiaryCard = ({onEdit}: BeneficiaryCardProps) => {
             onClick={onEdit.bind(null, beneficiary_id)}
           />
         </section>
-        <ul className={styles.details}>{beneficiaryDetails?.map(renderRecipientDetails)}</ul>
+        <ul className={`flex-col ${styles.details}`}>{beneficiaryDetails?.map(renderRecipientDetails)}</ul>
       </section>
     </section>
   )

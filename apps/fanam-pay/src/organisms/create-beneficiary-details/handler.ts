@@ -66,10 +66,23 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     city: null,
     zip_code: "",
     account_no: "",
+    notes: "",
   })
 
-  const {first_name, last_name, phone_no, email, relationship, address, country, state, city, zip_code, account_no} =
-    data
+  const {
+    first_name,
+    last_name,
+    phone_no,
+    email,
+    relationship,
+    address,
+    country,
+    state,
+    city,
+    zip_code,
+    account_no,
+    notes,
+  } = data
 
   const [errState, setErrState] = useState(DEFAULT_ERROR_STATE)
 
@@ -209,6 +222,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         zip_code,
         address,
         account_no,
+        notes,
       } = beneficiaryData
 
       const {country_id, country_name} = country || {}
@@ -227,6 +241,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         phone_no,
         zip_code,
         account_no,
+        notes,
       })
     }
   }, [beneficiaryData])
@@ -314,7 +329,8 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         {
           elementType: "text-area",
           label: "Add Notes",
-          name: "description",
+          name: "notes",
+          value: notes,
           onChangeValue,
           maxLength: 50,
           wrapperClass: styles.text_area_wrapper,
@@ -404,6 +420,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         relationship: relationship?.key,
         transaction_id,
         account_no,
+        notes,
       }
       if (beneficiaryId) onUpdate({...payload, beneficiary_id: beneficiaryId})
       else addBeneficiary(payload)

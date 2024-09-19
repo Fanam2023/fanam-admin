@@ -30,7 +30,7 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
             onClick={onEdit.bind(null, recipient_id)}
           />
         </section>
-        <ul className={styles.details}>{recipientDetails.map(renderRecipientDetails)}</ul>
+        <ul className={`flex-col ${styles.details}`}>{recipientDetails.map(renderRecipientDetails)}</ul>
         <section>
           <section className={`flex ${styles.check_box_wrapper}`}>
             <Checkbox item={isPerson} name="is_same_person" onSelectItem={onChangeData} />
