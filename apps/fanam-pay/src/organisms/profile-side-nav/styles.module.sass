@@ -1,0 +1,51 @@
+@use "./styles/index" as *
+
+.container
+  padding:
+    bottom: $size-32px
+    left: $size-24px
+    right: $size-24px
+  background: $white
+  width: 70vw
+  height: 60vh
+
+.title
+  padding-top: $size-32px
+  color: $theme
+  border-bottom: $size-1px solid $darker-grey
+  position: fixed
+  z-index: 1
+  background: $white
+  width: 70vw
+
+.wrapper
+  gap: $size-8px
+  margin-top: $size-24px
+  padding:
+    top: $size-10px
+    bottom: $size-10px
+    left: $size-12px
+    right: $size-40px
+  border-radius: $size-8px
+
+.selected
+  background: $theme
+
+.nav_item
+  color: $black
+
+.selected_item
+  color: $white
+
+.children_wrapper
+  margin-left: 20vw
+  margin-top: $size-12px
+  height: 50vh
+  overflow-y: scroll
+  padding-top: 10vh
+
+.nav_wrapper
+  position: fixed
+  height: 50vh
+  overflow-y: scroll
+  padding-top: 10vh
