@@ -21,7 +21,7 @@ const HomeScreen = () => {
         <h5 className={styles.content}>Discover how your currency has been tracking with our exchange rate charts.</h5>
         <section className={`flex-sb-center ${styles.nav_wrapper}`}>
           <section className="flex">
-            <ImageView src={assets.ic_money} alt="money-icon" imgSize={32} />
+            <ImageView src={assets.ic_money} alt="money-icon" imgSize={60} />
             <h3 className={styles.heading}>Send your money instantly and effortlessly</h3>
           </section>
           {isKYCVerified ? (
