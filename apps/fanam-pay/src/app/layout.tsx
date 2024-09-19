@@ -9,7 +9,7 @@ import {useEffect} from "react"
 import {CustomProvider} from "@custom/ui"
 import {useSingleton} from "hooks"
 import {LibProvider} from "provider"
-import {ROUTE_HOME} from "utils"
+import {ROUTE_HOME, ROUTE_SENDER} from "utils"
 import "../../../../packages/custom-ui/src/styles/index.css"
 import styles from "./layout.module.sass"
 
@@ -31,8 +31,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   const {resetTransaction} = useSingleton()
 
   useEffect(() => {
-    if (pathname === ROUTE_HOME || transactionId || pathname.includes("auth/")) resetTransaction()
-  }, [])
+    if (pathname === ROUTE_HOME || pathname === ROUTE_SENDER || transactionId || pathname.includes("auth/"))
+      resetTransaction()
+  }, [transactionId, pathname])
 
   return (
     <html lang="en">
