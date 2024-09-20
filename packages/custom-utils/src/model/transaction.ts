@@ -46,7 +46,8 @@ export interface ITransactionDetails extends ITransaction {
 
 export interface IQueryTransaction {
   status: IFormData<TypeOrderStatus | "">
-  date: string
+  start_date: string
+  end_date: string
 }
 
 export interface IBankAccount {
