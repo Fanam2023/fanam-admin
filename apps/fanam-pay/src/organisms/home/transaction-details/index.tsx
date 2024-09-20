@@ -55,8 +55,7 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
               )}
               {sla_timing_min && (
                 <h5 className={styles.transaction_time}>
-                  Transfer Time:
-                  {sla_timing_min !== sla_timing_max
+                  Transfer Time: {sla_timing_min !== sla_timing_max
                     ? `${sla_timing_min} - ${sla_timing_max} hours`
                     : `${sla_timing_min} hours`}
                 </h5>
@@ -65,7 +64,7 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
           </section>
         </section>
         <section className={styles.amount_wrapper}>
-          <h6 className={styles.payment_txt}>{statusLabel}</h6>
+          <h6 className={`semi-bold ${styles.payment_txt}`}>{statusLabel}</h6>
           <section className={`flex ${styles.amount_container}`}>
             <h5 className={`semi-bold ${styles.amount_inr}`}>
               {exchange_amount} {source_currency}

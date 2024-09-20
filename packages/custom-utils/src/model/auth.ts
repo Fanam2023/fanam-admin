@@ -111,7 +111,7 @@ export interface IBaseSyncUser {
   address_line_1: string
   address_line_2?: string
   zip_code: string
-  business_type?: TypeBusiness
+  business_type?: IFormData<TypeBusiness> | null
   kyc_aadhaar?: IFile[]
   kyc_pan?: IFile[]
 }

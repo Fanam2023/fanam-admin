@@ -75,16 +75,22 @@
 .pan_wrapper
   gap: $size-20px
 
+.verify_btn
+  background-color: $theme
+  margin-bottom: 4.5%
+
 .verify_wrapper
-  grid-template-columns: 1fr 1fr
+  display: flex
+  flex-direction: column
+  width: 49%
 
 .verified_text
   color: $alert-green
   width: max-content
+  margin-top: $size-4px
 
 .pan_verify
   gap: $size-4px
-  margin-top: $size-20px
 
 .verify_btn
   height: $size-56px
@@ -117,3 +123,9 @@
   .description
     padding-top: $size-12px
     font-size: $size-16px
+
+  .verified_text
+    margin-top: $size-6px
+
+  .verify_btn
+    margin-bottom: 7.5%

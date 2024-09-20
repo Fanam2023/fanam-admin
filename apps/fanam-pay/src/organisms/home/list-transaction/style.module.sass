@@ -18,18 +18,19 @@
   color: $theme
 
 .status_wrapper
-  color: $alert-green
-  // background-color: $light-theme
-  border-radius: $size-6px
+  color: $green
+  background-color: $light-green
+  border-radius: $size-4px
+  width: max-content
+  margin-left: auto
   padding:
     top: $size-4px
     bottom: $size-4px
     right: $size-8px
     left: $size-8px
-    width: min-content
 
 .source_wrapper
-  color: $alert-green
+  color: $green
 
 .date_wrapper
   text-align: center
@@ -37,12 +38,6 @@
 .form_wrapper
   display: flex
   flex-direction: row
-
-.show_limited
-  max-height: 50vh
-
-.show_all
-  max-height: 80vh
 
 .filter_wrapper
   display: grid
@@ -102,12 +97,18 @@
 
 .list_wrapper
   margin-top: $size-32px
-  max-height: 50vh
+  max-height: 60vh
   overflow-y: auto
 
 .empty_transaction
   justify-content: center
-  margin: 8%
+  margin-top: 8%
+
+.empty_content
+  color: $dark-grey
+  text-align: center
+  margin-bottom: 8%
+  padding-top: $size-12px
 
 .head_wrapper
   justify-content: space-between
@@ -154,3 +155,9 @@
 
   .name_wrapper
     margin-left: $size-12px
+
+  .exchange_amount
+    display: flex !important
+    margin-left: $size-12px
+    margin-top: $size-10px
+    color: $green
