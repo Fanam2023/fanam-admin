@@ -43,7 +43,6 @@ const useHandler = () => {
   const {
     recipient,
     beneficiary,
-    recipient_relationship,
     source_country,
     destination_country,
     destination_amount,
@@ -106,8 +105,18 @@ const useHandler = () => {
     const {country_name} = country || {}
     const {state_name} = state || {}
     const {city_name} = city || {}
-    const {account_no, account_type, account_holder, branch_address, bank_name, branch_code, swift_code} =
-      bank_account || {}
+    const {
+      account_no,
+      account_type,
+      account_holder,
+      branch_address,
+      bank_name,
+      branch_code,
+      swift_code,
+      bsb_code,
+      iban_no,
+      routing_code,
+    } = bank_account || {}
 
     const recipientDetails: IFormData[] = [
       {key: "First Name", label: first_name},
@@ -116,7 +125,6 @@ const useHandler = () => {
       {key: "Address 2", label: address_line_2},
       {key: "Email", label: email},
       {key: "Phone Number", label: phone_no},
-      {key: "RelationShip", label: recipient_relationship},
       {key: "Country", label: country_name},
       {key: "State", label: state_name},
       {key: "City", label: city_name},
@@ -127,15 +135,31 @@ const useHandler = () => {
       {key: "Bank Name", label: bank_name},
       {key: "Branch", label: branch_code},
       {key: "Branch Address", label: branch_address},
-      {key: "BIC", label: swift_code},
     ]
+
+    if (swift_code) recipientDetails.push({key: "Swift Code", label: swift_code})
+    if (bsb_code) recipientDetails.push({key: "BSB Code", label: bsb_code})
+    if (routing_code) recipientDetails.push({key: "Routing Code", label: routing_code})
+    if (iban_no) recipientDetails.push({key: "IBAN Number", label: iban_no})
 
     return recipientDetails
   }, [transactionDetail])
 
   const beneficiaryDetails = useMemo(() => {
-    const {first_name, last_name, address, email, phone_no, zip_code, country, city, state, relationship} =
-      beneficiary || {}
+    const {
+      first_name,
+      last_name,
+      address,
+      email,
+      phone_no,
+      zip_code,
+      country,
+      city,
+      state,
+      relationship,
+      account_no,
+      notes,
+    } = beneficiary || {}
     const {country_name} = country || {}
     const {state_name} = state || {}
     const {city_name} = city || {}
@@ -152,6 +176,9 @@ const useHandler = () => {
       {key: "ZIP Code", label: zip_code},
       {key: "RelationShip", label: relationship},
     ]
+
+    if (account_no) beneficiaryDetails.push({key: "Account Number", label: account_no})
+    if (notes) beneficiaryDetails.push({key: "Notes", label: notes})
 
     return beneficiaryDetails
   }, [transactionDetail])
