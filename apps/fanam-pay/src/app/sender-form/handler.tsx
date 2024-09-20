@@ -210,7 +210,7 @@ const useHandler = (styles: IStyle) => {
               generateOTP={onGenerateOTP}
             />
           ),
-          isClosable: false,
+          isClosable: true,
         })
       } else
         toggleNotify({
@@ -238,7 +238,7 @@ const useHandler = (styles: IStyle) => {
         togglePopup({
           title: "Verify Aadhaar",
           children: <PopupAadhaarOTP verifyOTP={onVerifyOTP} />,
-          isClosable: false,
+          isClosable: true,
         })
       } else
         toggleNotify({
@@ -305,7 +305,7 @@ const useHandler = (styles: IStyle) => {
               generateOTP={onGenerateOTP}
             />
           ),
-          isClosable: false,
+          isClosable: true,
         })
       } else
         toggleNotify({
@@ -761,6 +761,7 @@ const useHandler = (styles: IStyle) => {
       elements.childElements.push({
         elementType: "file-picker",
         fileType: ["image/*", "application/pdf"],
+        wrapperClass: styles.img_picker,
         name: "kyc_aadhaar",
         isMultiple: true,
         value: kyc_aadhaar,
@@ -809,6 +810,7 @@ const useHandler = (styles: IStyle) => {
       elements.childElements.push({
         elementType: "file-picker",
         fileType: ["image/*", "application/pdf"],
+        wrapperClass: styles.img_picker,
         name: "kyc_pan",
         isMultiple: true,
         maxCount: 2,
