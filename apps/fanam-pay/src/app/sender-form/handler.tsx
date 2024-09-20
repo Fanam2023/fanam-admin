@@ -66,10 +66,11 @@ const useHandler = (styles: IStyle) => {
   const {syncUser} = useAuthController()
   const {verifyPanCard, generateAadhaarCaptcha, reGenerateAadhaarCaptcha, generateAadhaarOTP, verifyAadhaarOTP} =
     useKYCController()
-  const {formatDateUTC, formatDate} = useDateTime()
+  const {formatDateUTC, formatDate, dayjs} = useDateTime()
   const {toggleNotify} = useNotifyPopup()
   const {togglePopup} = usePopup()
   const {user, updateUserData} = useSingleton()
+  const currentDate = dayjs().format("YYYY-MM-DD")
   const [data, setData] = useState<ISyncUserData>({
     first_name: "",
     last_name: "",
@@ -482,6 +483,13 @@ const useHandler = (styles: IStyle) => {
 
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
 
+  const onChangeData = (value: JSONObject) => {
+    const formattedDate = formatDateUTC(value?.date_of_birth as string)
+    onChangeValue({...value, date_of_birth: formattedDate})
+  }
+
+  console.log(data, "data")
+
   const onChangeCountry = (value: JSONObject) => onChangeValue({...value, state: null, city: null})
 
   const onChangeState = (value: JSONObject) => onChangeValue({...value, city: null})
@@ -611,14 +619,17 @@ const useHandler = (styles: IStyle) => {
         //   onChangeValue,
         // },
         {
-          elementType: "input",
-          type: "date",
-          label: "Date of Birth",
-          name: "date_of_birth",
-          error: errDateOfBirth,
-          value: date_of_birth,
-          inputRegex: REG_INPUT_DATE,
-          onChangeValue,
+          childElement: (
+            <TextField
+              type="date"
+              label="Date of Birth"
+              name="date_of_birth"
+              value={formatDate(date_of_birth, DF_INPUT_DATE)}
+              error={errDateOfBirth}
+              inputRegex={REG_INPUT_DATE}
+              max={currentDate}
+              onChangeData={onChangeData}></TextField>
+          ),
         },
       ],
     },
