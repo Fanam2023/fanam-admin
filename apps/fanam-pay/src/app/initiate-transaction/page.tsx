@@ -52,7 +52,7 @@ const InitiateTransactionPage = () => {
             <section className={styles.sender_wrapper}>
               <h5 className={`bold ${styles.txt_wrapper}`}>You Send</h5>
               <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
-                <input type="text" value={source_amount} className={styles.input} name="source_amount" />
+                <input type="text" value={source_amount} className={styles.input} name="source_amount" disabled />
                 <section className={`flex ${styles.currency}`}>
                   <CountryFlag {...source_country} />
                 </section>
