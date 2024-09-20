@@ -52,8 +52,6 @@ export const useHandler = () => {
     })
   }
 
-  const onBack = () => back()
-
   return {
     recipients: filteredRecipients,
     searchQuery,
@@ -61,8 +59,8 @@ export const useHandler = () => {
     onChangeSearch,
     routeToDetails,
     onAdd,
-    onBack,
     linkRecipient,
     setSelIndex,
+    back,
   }
 }
