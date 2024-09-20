@@ -488,8 +488,6 @@ const useHandler = (styles: IStyle) => {
     onChangeValue({...value, date_of_birth: formattedDate})
   }
 
-  console.log(data, "data")
-
   const onChangeCountry = (value: JSONObject) => onChangeValue({...value, state: null, city: null})
 
   const onChangeState = (value: JSONObject) => onChangeValue({...value, city: null})
