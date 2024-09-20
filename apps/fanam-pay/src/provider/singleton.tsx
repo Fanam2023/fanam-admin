@@ -86,9 +86,17 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     }
   }, [transactionId, pathname])
 
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>: token OUTSIDE ", token)
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>: refreshToken OUTSIDE ", refreshToken)
+
   const singOutUser = async () => {
     let payload: ILogOutPayload = {refreshToken}
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>: payload ", payload)
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>: token ", token)
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>: refreshToken ", refreshToken)
+
     await logout(payload)
+    replace(ROUTE_LOGIN)
     removeCookie(COOKIE_ACCESS_TOKEN)
     removeCookie(COOKIE_REFRESH_TOKEN)
     updateToken(null)
@@ -98,7 +106,6 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     updateTransId(null)
     clearQueryCache()
     clearAllStorage()
-    replace(ROUTE_LOGIN)
   }
 
   const value: ISingleton = {
