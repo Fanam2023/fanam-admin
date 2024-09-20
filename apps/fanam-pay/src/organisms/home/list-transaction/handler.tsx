@@ -50,13 +50,19 @@ export const useHandler = (styles: IStyle) => {
 
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
 
-  const onChangeDate = (value: JSONObject) => {
-    const fieldName = Object.keys(value)[0]
-    const fieldValue = value[fieldName]
-    const formattedDate = formatDateUTC(fieldValue as string)
-
+  const onChangeStartDate = (value: JSONObject) => {
+    const formattedStartDate = formatDateUTC(value?.start_date as string)
     onChangeValue({
-      [fieldName]: formattedDate,
+      ...value,
+      start_date: formattedStartDate,
+    })
+  }
+
+  const onChangeEndDate = (value: JSONObject) => {
+    const formattedEndDate = formatDateUTC(value?.end_date as string)
+    onChangeValue({
+      ...value,
+      end_date: formattedEndDate,
     })
   }
 
@@ -77,7 +83,7 @@ export const useHandler = (styles: IStyle) => {
           childElement: (
             <>
               <TextField
-                onChangeData={onChangeDate}
+                onChangeData={onChangeStartDate}
                 value={formatDate(start_date, DF_INPUT_DATE)}
                 name="start_date"
                 type="date"
@@ -85,7 +91,7 @@ export const useHandler = (styles: IStyle) => {
                 label="Start Date"
               />
               <TextField
-                onChangeData={onChangeDate}
+                onChangeData={onChangeEndDate}
                 value={formatDate(end_date, DF_INPUT_DATE)}
                 name="end_date"
                 type="date"
