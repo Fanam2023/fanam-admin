@@ -9,7 +9,7 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const RecipientPage = () => {
-  const {recipients, searchQuery, selIndex, setSelIndex, onChangeSearch, routeToDetails, onAdd, onBack, linkRecipient} =
+  const {recipients, searchQuery, selIndex, setSelIndex, onChangeSearch, routeToDetails, onAdd, linkRecipient, back} =
     useHandler()
 
   const renderRecipients = ({first_name, last_name, email, recipient_id}: IRecipient) => (
@@ -30,7 +30,7 @@ const RecipientPage = () => {
       skipBtn="Back"
       isStepper
       stepIndex={0}
-      onBack={onBack}>
+      onBack={back}>
       <section className={`flex-col ${styles.recipient_wrapper}`}>
         <h3 className={`bold ${styles.title}`}>Add or Select Recipient</h3>
         <h5 className={styles.description}>Enter the Recipient details and their account details.</h5>
