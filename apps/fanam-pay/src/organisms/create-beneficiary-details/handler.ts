@@ -297,6 +297,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           name: "email",
           error: errEmail,
           value: email,
+          inputRegex: REG_EMAIL,
           onChangeValue,
         },
         {
@@ -324,6 +325,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           name: "account_no",
           error: errAccountNo,
           value: account_no,
+          inputRegex: REG_VALID_NUMBER,
           onChangeValue,
         },
         {

@@ -3,6 +3,7 @@ import {
   IFormData,
   JSONObject,
   REG_EMAIL,
+  REG_VALID_NAME,
   REG_VALID_NUMBER,
   useCommon,
   useReactQuery,
@@ -322,6 +323,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "business_name",
         error: errBusinessName,
         value: business_name,
+        inputRegex: REG_VALID_NAME,
         onChangeValue,
       },
       {
@@ -330,6 +332,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "first_name",
         error: errFirstName,
         value: first_name,
+        inputRegex: REG_VALID_NAME,
         onChangeValue,
       },
       {
@@ -338,6 +341,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "last_name",
         error: errLastName,
         value: last_name,
+        inputRegex: REG_VALID_NAME,
         onChangeValue,
       },
     ],
@@ -354,6 +358,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "first_name",
         error: errFirstName,
         value: first_name,
+        inputRegex: REG_VALID_NAME,
         onChangeValue,
       },
       {
@@ -362,6 +367,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "last_name",
         error: errLastName,
         value: last_name,
+        inputRegex: REG_VALID_NAME,
         onChangeValue,
       },
     ],
@@ -386,6 +392,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "account_no",
         error: errAccountNo,
         value: account_no,
+        inputRegex: REG_VALID_NUMBER,
         onChangeValue,
       },
       {
@@ -402,6 +409,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "branch_code",
         error: errBranchCode,
         value: branch_code,
+        inputRegex: REG_VALID_NAME,
         onChangeValue,
       },
       {
@@ -422,6 +430,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       name: "swift_code",
       error: errSwiftCode,
       value: swift_code,
+      inputRegex: REG_VALID_NAME,
       onChangeValue,
     })
   }
@@ -433,6 +442,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       name: "iban_no",
       value: iban_no,
       error: errIbanNo,
+      inputRegex: REG_VALID_NAME,
       onChangeValue,
     })
   }
@@ -444,6 +454,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       name: "routing_code",
       value: routing_code,
       error: errRoutingCode,
+      inputRegex: REG_VALID_NAME,
       onChangeValue,
     })
   }
@@ -455,6 +466,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       name: "routing_code",
       value: routing_code,
       error: errBsbCode,
+      inputRegex: REG_VALID_NAME,
       onChangeValue,
     })
   }
