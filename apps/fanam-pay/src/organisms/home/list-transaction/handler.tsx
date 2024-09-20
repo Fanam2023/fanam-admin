@@ -35,7 +35,8 @@ export const useHandler = (styles: IStyle) => {
 
   const {data: transactions = []} = useQuery({
     queryKey: [QUERY_TRANSACTION, status.key, start_date, end_date],
-    queryFn: () => getTransaction(status.key, start_date, end_date),
+    queryFn: () =>
+      getTransaction(status.key, start_date ? formatDateUTC(start_date) : "", end_date ? formatDateUTC(end_date) : ""),
   })
 
   const {mutate: fetchTransaction} = useMutation({
@@ -50,23 +51,7 @@ export const useHandler = (styles: IStyle) => {
 
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
 
-  const onChangeStartDate = (value: JSONObject) => {
-    const formattedStartDate = formatDateUTC(value?.start_date as string)
-    onChangeValue({
-      ...value,
-      start_date: formattedStartDate,
-    })
-  }
-
-  const onChangeEndDate = (value: JSONObject) => {
-    const formattedEndDate = formatDateUTC(value?.end_date as string)
-    onChangeValue({
-      ...value,
-      end_date: formattedEndDate,
-    })
-  }
-
-  const currentDate = dayjs().format("YYYY-MM-DD")
+  const currentDate = dayjs().format(DF_INPUT_DATE)
 
   const formElements: FormSectionProps[] = [
     {
@@ -78,12 +63,13 @@ export const useHandler = (styles: IStyle) => {
           name: "status",
           value: status,
           onChangeValue,
+          wrapperClass: styles.status_drop_down,
         },
         {
           childElement: (
-            <>
+            <section className={styles.date_filter_wrapper}>
               <TextField
-                onChangeData={onChangeStartDate}
+                onChangeData={onChangeValue}
                 value={formatDate(start_date, DF_INPUT_DATE)}
                 name="start_date"
                 type="date"
@@ -91,14 +77,14 @@ export const useHandler = (styles: IStyle) => {
                 label="Start Date"
               />
               <TextField
-                onChangeData={onChangeEndDate}
+                onChangeData={onChangeValue}
                 value={formatDate(end_date, DF_INPUT_DATE)}
                 name="end_date"
                 type="date"
                 max={currentDate}
                 label="End Date"
               />
-            </>
+            </section>
           ),
         },
       ],
