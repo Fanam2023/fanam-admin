@@ -47,7 +47,7 @@ const Login = () => {
             </h6>
           </section>
           <h6 className={`bold ${styles.login}`} onClick={routeTOForgotPin}>
-            Forget PIN? / Reset PIN
+            Forgot PIN? / Reset PIN
           </h6>
         </section>
         <Button wrapperClass={styles.button_wrapper} onClick={onSubmit}>
