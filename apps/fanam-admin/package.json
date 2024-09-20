@@ -18,7 +18,7 @@
   "dependencies": {
     "@custom/utils": "workspace:*",
     "@fanam-pkg/core-ui-sass": "^1.0.16",
-    "@fanam-pkg/core-utils": "^1.0.3",
+    "@fanam-pkg/core-utils": "^1.0.4",
     "@tanstack/react-query": "^5.55.4",
     "env-cmd": "^10.1.0",
     "next": "^14.2.9",

@@ -30,8 +30,8 @@ importers:
         specifier: ^1.0.16
         version: 1.0.16(@babel/core@7.25.2)(sass@1.78.0)
       '@fanam-pkg/core-utils':
-        specifier: ^1.0.3
-        version: 1.0.3(react@18.3.1)
+        specifier: ^1.0.4
+        version: 1.0.4(react@18.3.1)
       '@tanstack/react-query':
         specifier: ^5.55.4
         version: 5.55.4(react@18.3.1)
@@ -112,8 +112,8 @@ importers:
         specifier: ^1.0.16
         version: 1.0.16(@babel/core@7.25.2)(sass@1.78.0)
       '@fanam-pkg/core-utils':
-        specifier: ^1.0.3
-        version: 1.0.3(react@18.3.1)
+        specifier: ^1.0.4
+        version: 1.0.4(react@18.3.1)
       '@tanstack/react-query':
         specifier: ^5.55.4
         version: 5.55.4(react@18.3.1)
@@ -197,8 +197,8 @@ importers:
         specifier: ^1.0.16
         version: 1.0.16(@babel/core@7.25.2)(sass@1.78.0)
       '@fanam-pkg/core-utils':
-        specifier: ^1.0.3
-        version: 1.0.3(react@18.3.1)
+        specifier: ^1.0.4
+        version: 1.0.4(react@18.3.1)
       '@simplewebauthn/browser':
         specifier: ^10.0.0
         version: 10.0.0
@@ -291,8 +291,8 @@ importers:
         specifier: ^1.0.16
         version: 1.0.16(@babel/core@7.25.2)(sass@1.78.0)
       '@fanam-pkg/core-utils':
-        specifier: ^1.0.3
-        version: 1.0.3(react@18.3.1)
+        specifier: ^1.0.4
+        version: 1.0.4(react@18.3.1)
       next:
         specifier: ^14.2.9
         version: 14.2.9(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.78.0)
@@ -343,8 +343,8 @@ importers:
   packages/custom-utils:
     dependencies:
       '@fanam-pkg/core-utils':
-        specifier: ^1.0.3
-        version: 1.0.3(react@18.3.1)
+        specifier: ^1.0.4
+        version: 1.0.4(react@18.3.1)
       axios:
         specifier: ^1.7.7
         version: 1.7.7
@@ -1074,8 +1074,8 @@ packages:
   '@fanam-pkg/core-ui-sass@1.0.16':
     resolution: {integrity: sha512-HfCBtS2jJ9JskKhBBJN4AXCRqnmqSFfF9Jexl6hy7ZeSYi9Kr7/jlpfBniYEPZ8dPTONsZDjZKyGJTfhmNMMQQ==}
 
-  '@fanam-pkg/core-utils@1.0.3':
-    resolution: {integrity: sha512-d9cAKZUxzArqK+cn96u8iY60yMgWTr1/+9Jz7xh4uCb7jMdoSJWpM9p7Y1WNGGtt23y64naLkCcrUAmcfQgrCQ==}
+  '@fanam-pkg/core-utils@1.0.4':
+    resolution: {integrity: sha512-dyUsmbqAwu4G2SCfT9zpI8FRR12cC3ehqxcJXOx/9Dunx8stAeu85a1MmMJHDrPkhgopIad7PCNnTmzuInt9Fw==}
 
   '@fanam-pkg/eslint@1.0.0':
     resolution: {integrity: sha512-HmGP2kBQN6U1nolLuGGmt0lTpQGBUMkUf7xnShpknFYXInr4yyU7ph1yfzFNIzC/QvqRu/YDapPIiY4+UYg41A==}
@@ -5537,7 +5537,7 @@ snapshots:
 
   '@fanam-pkg/core-ui-sass@1.0.16(@babel/core@7.25.2)(sass@1.78.0)':
     dependencies:
-      '@fanam-pkg/core-utils': 1.0.3(react@18.3.1)
+      '@fanam-pkg/core-utils': 1.0.4(react@18.3.1)
       next: 14.2.9(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.78.0)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -5551,7 +5551,7 @@ snapshots:
       - debug
       - sass
 
-  '@fanam-pkg/core-utils@1.0.3(react@18.3.1)':
+  '@fanam-pkg/core-utils@1.0.4(react@18.3.1)':
     dependencies:
       '@googlemaps/js-api-loader': 1.16.8
       '@tanstack/react-query': 5.55.4(react@18.3.1)

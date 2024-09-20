@@ -2,6 +2,7 @@
 
 import {Button, GroupForm, ImageView} from "@fanam-pkg/core-ui-sass"
 import {useDateTime} from "@fanam-pkg/core-utils"
+import {useState} from "react"
 import {ITransactionDetails} from "@custom/utils"
 import assets from "assets"
 import {TRANSACTION_STATUS_OBJECT} from "utils"
@@ -12,10 +13,10 @@ export const ListTransaction = () => {
   const {transactions, formElements, fetchTransaction} = useHandler(styles)
   const {formatDate} = useDateTime()
 
+  const [showAll, setShowAll] = useState(false)
+
   const renderTransactionDetails = (
     {
-      month,
-      date,
       source_amount,
       destination_amount,
       paymentMode,
@@ -25,12 +26,15 @@ export const ListTransaction = () => {
       created_at,
       destination_country,
       transfer_time,
+      exchange_amount,
+      source_country,
     }: ITransactionDetails,
     index: number
   ) => {
     const {first_name, last_name} = recipient || {}
     const {order_no, order_status} = order || {}
     const {currency} = destination_country || {}
+    const {currency: source_currency} = source_country || {}
     const {sla_timing_min, sla_timing_max} = transfer_time || {}
     const statusLabel = TRANSACTION_STATUS_OBJECT[order_status]?.label
 
@@ -47,9 +51,9 @@ export const ListTransaction = () => {
                 <h4 className={`bold ${styles.name_wrapper}`}>
                   {first_name} {last_name}
                 </h4>
-                <h5 className={styles.id_wrapper}>{order_no}</h5>
+                <h5 className={`${styles.id_wrapper} ${order_no ? styles.order_no : ""}`}>{order_no}</h5>
               </section>
-              <h5 className={`bold ${styles.source_amount}`}>{source_amount}</h5>
+              <h5 className={`bold ${styles.exchange_amount}`}>{exchange_amount}</h5>
               <section className={`flex ${styles.duration_wrapper}`}>
                 {paymentMode && (
                   <>
@@ -59,7 +63,7 @@ export const ListTransaction = () => {
                 )}
                 {sla_timing_min && (
                   <h5>
-                    Transfer Time:
+                    Transfer Time:{" "}
                     {sla_timing_min !== sla_timing_max
                       ? `${sla_timing_min} - ${sla_timing_max} hours`
                       : `${sla_timing_min} hours`}
@@ -69,9 +73,11 @@ export const ListTransaction = () => {
             </section>
           </section>
           <section className={styles.price_wrapper}>
-            <h5 className={styles.status_wrapper}>{statusLabel}</h5>
+            <h5 className={`bold ${styles.status_wrapper}`}>{statusLabel}</h5>
             <section className={`flex ${styles.price_wrapper}`}>
-              <h5 className={`bold ${styles.source_wrapper}`}>{source_amount}</h5>
+              <h4 className={`bold ${styles.source_wrapper}`}>
+                {exchange_amount} {source_currency}
+              </h4>
               <h5 className={`bold ${styles.destination_amount}`}>
                 {destination_amount} {currency}
               </h5>
@@ -93,7 +99,9 @@ export const ListTransaction = () => {
         <GroupForm formSections={formElements} wrapperClass={styles.dropDown_wrapper} />
       </section>
       {transactions?.length ? (
-        <ul className={styles.list_wrapper}>{transactions.map(renderTransactionDetails)}</ul>
+        <ul className={`${styles.list_wrapper} ${showAll ? styles.show_all : styles.show_limited}`}>
+          {transactions.map(renderTransactionDetails)}
+        </ul>
       ) : (
         <ImageView
           src={assets.ic_empty_transaction}
@@ -102,9 +110,11 @@ export const ListTransaction = () => {
           wrapperClass={styles.empty_transaction}
         />
       )}
-      {transactions?.length > 0 && (
+      {transactions?.length > 5 && (
         <>
-          <Button wrapperClass={styles.button_wrapper}>See More Activity</Button>
+          <Button wrapperClass={styles.button_wrapper} onClick={() => setShowAll(!showAll)}>
+            {showAll ? "See Less Activity" : "See More Activity"}
+          </Button>
           <section className={`flex ${styles.activity_wrapper}`}>
             <h4 className={`bold ${styles.button_txt}`}>See More Activity</h4>
             <ImageView src={assets.ic_arrow_right} alt="arrow" imgSize={20} wrapperClass={styles.arrow} />

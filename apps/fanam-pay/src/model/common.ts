@@ -21,6 +21,7 @@ export interface ISingleton extends ISingletonData {
   updateRefreshToken: (token?: string) => void
   singOutUser: () => void
   refetchUser: () => void
+  resetTransaction: () => void
   refetchTransaction: () => void
 }
 

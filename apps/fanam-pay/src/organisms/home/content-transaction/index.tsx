@@ -2,9 +2,11 @@ import {ITransactionProps, ITransactionInfo} from "props"
 import styles from "./styles.module.sass"
 
 export const ContentTransaction = ({transactionDetail}: ITransactionProps) => {
-  const {markup_fee, order, exchange_amount, other_fee, final_amount, source_country} = transactionDetail || {}
+  const {markup_fee, order, exchange_amount, other_fee, destination_country, source_country, destination_amount} =
+    transactionDetail || {}
   const {order_no} = order || {}
   const {currency} = source_country || {}
+  const {currency: destination_currency} = destination_country || {}
 
   const transactionDetails = ({label, value}: ITransactionInfo) => (
     <section className={`flex ${styles.payment}`}>
@@ -22,7 +24,7 @@ export const ContentTransaction = ({transactionDetail}: ITransactionProps) => {
       <section className={`flex ${styles.total_wrapper}`}>
         <h5 className={styles.transaction_txt}>Receiver will get Exactly</h5>
         <h5 className={`semi-bold ${styles.total_usd}`}>
-          {final_amount} {currency}
+          {destination_amount} {destination_currency}
         </h5>
       </section>
       <section className={`flex ${styles.id_wrapper}`}>

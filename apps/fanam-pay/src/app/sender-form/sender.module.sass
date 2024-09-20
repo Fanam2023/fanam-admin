@@ -76,14 +76,15 @@
   gap: $size-20px
 
 .verify_wrapper
-  display: grid
+  grid-template-columns: 1fr 1fr
 
 .verified_text
   color: $alert-green
+  width: max-content
 
 .pan_verify
   gap: $size-4px
-  margin-top: $size-12px
+  margin-top: $size-20px
 
 @include mixin-responsive
   .page_container

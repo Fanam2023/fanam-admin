@@ -38,3 +38,21 @@ export interface PropsOTPField {
   otpValues: string[]
   onChangeInputs: (values: string[]) => void
 }
+
+export interface ToggleBtnProps {
+  onToggle?: (toggled: boolean) => void
+  toggled?: boolean
+}
+
+export interface ProfileSideNavProps {
+  selectedLabel: string
+  setSelectedLabel: (label: string) => void
+  children: React.ReactNode
+}
+
+export interface ProfileNavItemProps {
+  label?: string
+  icon?: string | StaticImageData
+  whiteIcon?: string
+  path?: string
+}

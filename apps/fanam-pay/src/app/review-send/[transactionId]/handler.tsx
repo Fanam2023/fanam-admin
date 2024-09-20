@@ -1,27 +1,44 @@
+import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {IFormData} from "@fanam-pkg/core-utils"
 import {useParams, useRouter} from "next/navigation"
-import {useMemo, useState} from "react"
+import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
-import {usePaymentController, useTransactionController} from "controller"
+import {useOrderController, usePaymentController, useTransactionController} from "controller"
 import {QUERY_TRANSACTION, routeToTransactionDetail} from "utils"
 
 const useHandler = () => {
-  const {transactionId} = useParams()
-
+  const [remainingTime, setRemainingTime] = useState(0)
+  const {toggleNotify} = useNotifyPopup()
   const {getTransactionDetails} = useTransactionController()
-
-  const {data: transactionDetail} = useQuery({
-    queryKey: [QUERY_TRANSACTION.concat(transactionId as string)],
-    queryFn: () => getTransactionDetails(transactionId as string),
-    enabled: !!transactionId,
-  })
-
+  const {cancelTransaction} = useOrderController()
   const {sendPayout} = usePaymentController()
   const [showDetails, setShowDetails] = useState({
     recipient: false,
     beneficiary: false,
   })
   const {push} = useRouter()
+
+  const params = useParams()
+  const transactionId = params.transactionId as string
+
+  const {data: transactionDetail} = useQuery({
+    queryKey: [QUERY_TRANSACTION.concat(transactionId)],
+    queryFn: () => getTransactionDetails(transactionId),
+    enabled: !!transactionId,
+  })
+
+  const {mutate: onCancelTransaction} = useMutation({
+    mutationFn: cancelTransaction,
+    onSuccess: () => {
+      toggleNotify({
+        title: "Cancelled Transaction",
+        description: "Cancelled Transaction due to timeout",
+        type: "error",
+      })
+
+      push(routeToTransactionDetail(transactionId))
+    },
+  })
 
   const {
     recipient,
@@ -35,12 +52,41 @@ const useHandler = () => {
     exchange_amount,
     final_amount,
     order,
+    expiration_time,
+    transfer_time,
   } = transactionDetail || {}
+
+  useEffect(() => {
+    if (remainingTime > 0) {
+      const debounceInterval = setInterval(() => setRemainingTime(remainingTime - 1000), 1000)
+
+      return () => {
+        clearInterval(debounceInterval)
+      }
+    } else if (expiration_time && transfer_time) onCancelTransaction(transactionId)
+  }, [remainingTime])
+
+  useEffect(() => {
+    if (expiration_time) {
+      const expirationDuration = new Date(expiration_time).valueOf() - new Date().valueOf()
+
+      if (expirationDuration) setRemainingTime(expirationDuration)
+    }
+  }, [expiration_time])
 
   const isDisabled = !order
 
   const {currency} = source_country || {}
   const {currency: destinationCountryValue} = destination_country || {}
+
+  // Get total seconds
+  const totalSeconds = Math.floor(remainingTime / 1000)
+
+  // Calculate minutes and seconds
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+
+  const durationTime = remainingTime > 0 ? `${minutes}:${seconds}` : ""
 
   const recipientDetails = useMemo(() => {
     const {
@@ -128,6 +174,8 @@ const useHandler = () => {
     onSuccess: () => push(routeToTransactionDetail(transactionId as string)),
   })
 
+  console.log(">>>>>>>>>>>>>>>>>: remainingTime ", remainingTime / (60 * 60))
+
   return {
     beneficiaryDetails,
     recipientDetails,
@@ -139,6 +187,8 @@ const useHandler = () => {
     isDisabled,
     completeTransaction,
     transactionId,
+    durationTime,
+    transfer_time,
   }
 }
 

@@ -1,5 +1,14 @@
 import {FormSectionProps, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {IFormData, JSONObject, REG_EMAIL, useCommon, useReactQuery, useResize} from "@fanam-pkg/core-utils"
+import {
+  IFormData,
+  JSONObject,
+  REG_EMAIL,
+  REG_VALID_NAME,
+  REG_VALID_NUMBER,
+  useCommon,
+  useReactQuery,
+  useResize,
+} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
@@ -43,6 +52,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   const {getTransactionCountries, getCities, getStates} = useLocationController()
   const {getByBeneficiaryId, createBeneficiary, updateBeneficiary} = useBeneficiaryController()
   const {syncBeneficiary} = useTransactionController()
+  const {recipient} = transData || {}
 
   const [data, setData] = useState<IBeneficiaryData>({
     first_name: "",
@@ -237,6 +247,13 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   }, [beneficiaryData])
 
   useEffect(() => {
+    if (!country && recipient) {
+      const {country_id, country_name} = recipient.country
+      setData(prev => ({...prev, country: {key: country_id, label: country_name}}))
+    }
+  }, [transData])
+
+  useEffect(() => {
     if (isClicked) setErrState(prev => ({...prev, ...onValidate()}))
   }, [data, isClicked])
 
@@ -257,6 +274,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           name: "first_name",
           error: errFirstName,
           value: first_name,
+          inputRegex: REG_VALID_NAME,
           onChangeValue,
         },
         {
@@ -265,6 +283,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           name: "last_name",
           error: errLastName,
           value: last_name,
+          inputRegex: REG_VALID_NAME,
           onChangeValue,
         },
       ],
@@ -288,6 +307,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           value: phone_no,
           onChangeValue,
           maxLength: 10,
+          inputRegex: REG_VALID_NUMBER,
         },
         {
           elementType: "drop-down",

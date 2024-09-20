@@ -1,8 +1,8 @@
 import {useCookies, useReactQuery, useStorage} from "@fanam-pkg/core-utils"
-import {useRouter} from "next/navigation"
+import {useParams, usePathname, useRouter} from "next/navigation"
 import {PropsWithChildren, useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
-import {ITransaction, IUser} from "@custom/utils"
+import {ILogOutPayload, ITransaction, IUser} from "@custom/utils"
 import {SingletonContext} from "contexts"
 import {useAuthController, useTransactionController} from "controller"
 import {ISingleton} from "model"
@@ -12,7 +12,9 @@ import {
   COOKIE_TRANSACTION_ID,
   QUERY_TRANSACTION,
   QUERY_USER,
+  ROUTE_HOME,
   ROUTE_LOGIN,
+  ROUTE_SENDER,
 } from "utils"
 
 export const SingletonProvider = ({children}: PropsWithChildren) => {
@@ -22,6 +24,8 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   const {clearQueryCache} = useReactQuery()
   const {replace} = useRouter()
   const {clearAllStorage} = useStorage()
+  const {transactionId} = useParams()
+  const pathname = usePathname()
   const [user, setUser] = useState<IUser | null>(null)
   const [transData, setTransData] = useState<ITransaction | null>(null)
   const [token, setToken] = useState<string | null>(getCookie<string>(COOKIE_ACCESS_TOKEN))
@@ -43,10 +47,15 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
 
   const updateTransData = (data: ITransaction | null) => setTransData(data)
 
-  const updateTransId = (transId: string) => {
+  const updateTransId = (transId: string | null) => {
     if (transId) setCookie(COOKIE_TRANSACTION_ID, transId)
     else removeCookie(COOKIE_TRANSACTION_ID)
     setTransId(transId)
+  }
+
+  const resetTransaction = () => {
+    updateTransData(null)
+    updateTransId(null)
   }
 
   const updateToken = (accessToken: string) => {
@@ -69,7 +78,19 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     if (transRes) updateTransData(transRes)
   }, [transRes])
 
+  useEffect(() => {
+    if (pathname === ROUTE_HOME || pathname === ROUTE_SENDER || transactionId || pathname.includes("auth/")) {
+      console.log(">>>>>>>>>>>>: ", pathname)
+
+      resetTransaction()
+    }
+  }, [transactionId, pathname])
+
   const singOutUser = async () => {
+    let payload: ILogOutPayload = {refreshToken}
+    await logout(payload)
+    removeCookie(COOKIE_ACCESS_TOKEN)
+    removeCookie(COOKIE_REFRESH_TOKEN)
     updateToken(null)
     updateRefreshToken(null)
     updateTransData(null)
@@ -94,6 +115,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     updateRefreshToken,
     refetchUser,
     refetchTransaction,
+    resetTransaction,
   }
 
   return <SingletonContext.Provider value={value}>{children}</SingletonContext.Provider>

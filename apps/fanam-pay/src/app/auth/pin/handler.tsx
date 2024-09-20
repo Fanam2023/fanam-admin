@@ -24,6 +24,7 @@ const useHandler = (styles: IStyle) => {
 
   const {mutate: createUser} = useMutation({
     mutationFn: signUp,
+    retry: false,
     onSuccess: async ({result, errorData}) => {
       if (result) {
         toggleNotify({
@@ -42,8 +43,9 @@ const useHandler = (styles: IStyle) => {
 
   const {mutate: resetPin} = useMutation({
     mutationFn: forgotPin,
+    retry: false,
     onSuccess: async ({result, errorData}) => {
-      const message = result ? "PIN resetted Successfully" : errorData?.message || "Something went wrong"
+      const message = result ? "PIN changed Successfully" : errorData?.message || "Something went wrong"
       toggleNotify({
         type: result ? "success" : "error",
         title: message,
@@ -63,7 +65,7 @@ const useHandler = (styles: IStyle) => {
     let errState = {...DEFAULT_ERR_STATE, isValid: true, isClicked: true}
 
     if (!newPin) errState = {...errState, errPin: "Please enter valid pin", isValid: false}
-    else if (newPin.length > 6) errState = {...errState, errPin: "Please enter the 6  digit pin", isValid: false}
+    else if (newPin.length !== 6) errState = {...errState, errPin: "PIN should contain 6 numbers", isValid: false}
 
     if (!confirmPin) errState = {...errState, errConfirmPin: "Please enter valid pin", isValid: false}
     else if (confirmPin !== newPin)
