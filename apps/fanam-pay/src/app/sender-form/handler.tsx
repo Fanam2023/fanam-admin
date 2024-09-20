@@ -210,7 +210,7 @@ const useHandler = (styles: IStyle) => {
               generateOTP={onGenerateOTP}
             />
           ),
-          isClosable: false,
+          isClosable: true,
         })
       } else
         toggleNotify({
@@ -238,7 +238,7 @@ const useHandler = (styles: IStyle) => {
         togglePopup({
           title: "Verify Aadhaar",
           children: <PopupAadhaarOTP verifyOTP={onVerifyOTP} />,
-          isClosable: false,
+          isClosable: true,
         })
       } else
         toggleNotify({
@@ -305,7 +305,7 @@ const useHandler = (styles: IStyle) => {
               generateOTP={onGenerateOTP}
             />
           ),
-          isClosable: false,
+          isClosable: true,
         })
       } else
         toggleNotify({
