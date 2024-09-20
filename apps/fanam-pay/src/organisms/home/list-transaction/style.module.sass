@@ -34,6 +34,9 @@
 .date_wrapper
   text-align: center
 
+.status_drop_down
+  width:100%
+
 .form_wrapper
   display: flex
   flex-direction: row
@@ -44,9 +47,9 @@
 .show_all
   max-height: 80vh
 
-.filter_wrapper
-  display: grid
-  grid-template-columns: repeat(3, 1fr)
+.filter_wrapper, .date_filter_wrapper
+  display: flex
+  gap: $size-16px
 
 .detail_wrapper
   gap: $size-24px
@@ -119,6 +122,10 @@
   .id_wrapper,.source_wrapper,.duration_wrapper,.destination_amount,.button_wrapper
     display: none !important
 
+  .head_wrapper
+    display: flex
+    flex-direction: column
+
   .detail_wrapper
     gap: 0
 
@@ -145,9 +152,6 @@
   .container_wrapper
     box-shadow: none
     padding: 0
-
-  .head_wrapper
-    display: none !important
 
   .month,.date_wrapper
     font-size: $size-14px

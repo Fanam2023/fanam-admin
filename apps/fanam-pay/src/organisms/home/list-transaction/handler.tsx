@@ -63,10 +63,11 @@ export const useHandler = (styles: IStyle) => {
           name: "status",
           value: status,
           onChangeValue,
+          wrapperClass: styles.status_drop_down,
         },
         {
           childElement: (
-            <>
+            <section className={styles.date_filter_wrapper}>
               <TextField
                 onChangeData={onChangeValue}
                 value={formatDate(start_date, DF_INPUT_DATE)}
@@ -83,7 +84,7 @@ export const useHandler = (styles: IStyle) => {
                 max={currentDate}
                 label="End Date"
               />
-            </>
+            </section>
           ),
         },
       ],
