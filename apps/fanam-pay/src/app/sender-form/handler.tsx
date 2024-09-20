@@ -743,7 +743,6 @@ const useHandler = (styles: IStyle) => {
         children: <CustomUpload />,
         disabled: !verifiedAadhaar,
         onChangeValue,
-        maxCount: 2,
       })
     }
 
@@ -786,7 +785,6 @@ const useHandler = (styles: IStyle) => {
         children: <CustomUpload />,
         disabled: !verifyPanCard,
         onChangeValue,
-        maxCount: 2,
       })
     }
 
