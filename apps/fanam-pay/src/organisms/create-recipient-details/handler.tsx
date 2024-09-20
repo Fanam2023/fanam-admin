@@ -620,7 +620,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           error: errKyc,
           maxCount: 2,
           onChangeValue,
-          maxCount: 2,
         },
       ],
     },
