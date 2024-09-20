@@ -23,6 +23,7 @@ import {
 } from "@custom/utils"
 import assets from "assets"
 import {useLocationController, useRecipientController} from "controller"
+import {useSingleton} from "hooks"
 import {
   BANK_ACCOUNT_TYPE,
   ID_PROOFS,
@@ -41,6 +42,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {refreshQuery} = useReactQuery()
   const {getTransactionCountries, getCities, getStates} = useLocationController()
   const {createRecipient, updateRecipient, getByRecipientId} = useRecipientController()
+  const {refetchTransaction} = useSingleton()
 
   const {toggleNotify} = useNotifyPopup()
 
@@ -161,7 +163,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     }
   )
 
-  const {mutate: addRecipient, data: addedRes} = useMutation({
+  const {mutate: addRecipient} = useMutation({
     mutationKey: [QUERY_RECIPIENT],
     mutationFn: createRecipient,
     onSuccess: ({result, errorData}) => {
@@ -169,17 +171,21 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         toggleNotify({type: "success", title: "Recipient created Successfully"})
         refreshQuery(QUERY_RECIPIENT.concat(recipient_account_type))
         push(ROUTE_RECIPIENT_PREVIEW)
+        toggleSlider()
       } else toggleNotify({type: "error", title: errorData.message})
     },
   })
 
-  const {mutate: onUpdate, data: updatedRes} = useMutation({
+  const {mutate: onUpdate} = useMutation({
     mutationKey: [QUERY_RECIPIENT],
     mutationFn: updateRecipient,
     onSuccess: ({result, errorData}) => {
       refreshQuery(QUERY_RECIPIENT.concat(recipient_account_type))
-      if (result) toggleNotify({type: "success", title: "Recipient updated Successfully"})
-      else toggleNotify({type: "error", title: errorData?.message})
+      if (result) {
+        refetchTransaction()
+        toggleNotify({type: "success", title: "Recipient updated Successfully"})
+        toggleSlider()
+      } else toggleNotify({type: "error", title: errorData?.message})
     },
   })
 
@@ -684,14 +690,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     setErrData(errState)
     return errState
   }
-
-  useEffect(() => {
-    if (addedRes) {
-      toggleSlider()
-    } else if (updatedRes) {
-      toggleSlider()
-    }
-  }, [addedRes, updatedRes])
 
   const onSubmit = () => {
     const {isValid} = onValidate()

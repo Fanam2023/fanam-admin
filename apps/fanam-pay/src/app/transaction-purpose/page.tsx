@@ -57,6 +57,7 @@ const TransactionPurpose = () => {
             onChangeData={onChangeValue}
             error={errDoc}
             isMultiple={true}
+            maxCount={2}
             fileType={["image/*", "application/pdf"]}
             value={doc}
           />

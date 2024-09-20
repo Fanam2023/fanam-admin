@@ -43,7 +43,7 @@ const DEFAULT_ERROR_STATE = {
 
 export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   const {isDesktop} = useResize()
-  const {transData, transId: transaction_id} = useSingleton()
+  const {transData, transId: transaction_id, refetchTransaction} = useSingleton()
   const {push} = useRouter()
   const {toggleSlider} = useSlider()
   const {refreshQuery} = useReactQuery()
@@ -170,7 +170,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     })
   }
 
-  const {mutate: addBeneficiary, data: addedRes} = useMutation({
+  const {mutate: addBeneficiary} = useMutation({
     mutationKey: [QUERY_BENEFICIARY],
     mutationFn: createBeneficiary,
     onSuccess: ({result, errorData}) => {
@@ -178,18 +178,23 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         const beneficiary_id = result?.beneficiary_id
         refreshQuery(QUERY_BENEFICIARY)
         syncBeneficiary(beneficiary_id)
+        toggleSlider()
+        push(ROUTE_BENEFICIARY_PREVIEW)
         onSuccess("Beneficiary added Successfully")
       } else onFailure(errorData.message)
     },
   })
 
-  const {mutate: onUpdate, data: updatedRes} = useMutation({
+  const {mutate: onUpdate} = useMutation({
     mutationKey: [QUERY_BENEFICIARY],
     mutationFn: updateBeneficiary,
     onSuccess: ({result, errorData}) => {
       refreshQuery(QUERY_BENEFICIARY)
-      if (result) onSuccess("Beneficiary Successfully updated")
-      else onFailure(errorData.message)
+      if (result) {
+        toggleSlider()
+        onSuccess("Beneficiary Successfully updated")
+        refetchTransaction()
+      } else onFailure(errorData.message)
     },
   })
 
@@ -394,15 +399,6 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
       ],
     },
   ]
-
-  useEffect(() => {
-    if (addedRes) {
-      toggleSlider()
-      push(ROUTE_BENEFICIARY_PREVIEW)
-    } else if (updatedRes) {
-      toggleSlider()
-    }
-  }, [addedRes, updatedRes])
 
   const onSubmit = () => {
     const {isValid} = onValidate()
