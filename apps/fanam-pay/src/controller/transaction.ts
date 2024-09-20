@@ -19,8 +19,8 @@ export const useTransactionController = () => {
   const {getRequest, postRequest, putRequest} = useApi()
   const {transId, updateTransData, updateTransId} = useSingleton()
 
-  const getTransaction = async (status: TypeOrderStatus | "") => {
-    const {result} = await getRequest<ITransactionDetails[]>(apiAllTransaction(status))
+  const getTransaction = async (status: TypeOrderStatus | "", start_date: string, end_date: string) => {
+    const {result} = await getRequest<ITransactionDetails[]>(apiAllTransaction(status, start_date, end_date))
     return result || []
   }
 
