@@ -83,7 +83,9 @@ const useHandler = () => {
 
   // Calculate minutes and seconds
   const minutes = Math.floor(totalSeconds / 60)
-  const seconds = totalSeconds % 60
+    .toString()
+    .padStart(2, "0")
+  const seconds = (totalSeconds % 60).toString().padStart(2, "0")
 
   const durationTime = remainingTime > 0 ? `${minutes}:${seconds}` : ""
 

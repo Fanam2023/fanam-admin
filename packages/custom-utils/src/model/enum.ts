@@ -13,7 +13,7 @@ export type TypePurpose =
   | "Travel"
   | "Hospital"
   | "Insurance"
-  | "Living_expense"
+  | "Living_expenses"
   | "Rent"
   | "Retail"
   | "Payroll_and_pension"
