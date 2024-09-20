@@ -23,7 +23,7 @@ export const ContentTransaction = ({transactionDetail}: ITransactionProps) => {
       {transactionDetails({label: "Exchange Rate", value: `${markup_fee} ${currency}`})}
       <section className={`flex ${styles.total_wrapper}`}>
         <h5 className={styles.transaction_txt}>Receiver will get Exactly</h5>
-        <h5 className={`semi-bold ${styles.total_usd}`}>
+        <h5 className={`bold ${styles.total_usd}`}>
           {destination_amount} {destination_currency}
         </h5>
       </section>

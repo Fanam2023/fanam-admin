@@ -34,15 +34,18 @@
   margin-left: auto
 
 .payment_txt
-  background-color: $light-grey
+  background-color: $light-green
   padding: $size-4px $size-8px
   border-radius: $size-2px
+  color: $green
+  width: max-content
+  margin-left: auto
 
 .amount_usd
   margin-left: $size-8px
 
 .amount_inr
-  color: $alert-green
+  color: $green
 
 .amount_container
   margin-top: $size-12px
@@ -100,7 +103,7 @@
 
   .order_wrapper
     flex-direction: column
-
+    align-items: flex-start
   .transaction_id
     margin-left: 0
     margin-top: $size-6px
@@ -109,12 +112,11 @@
     margin: 0
     position: absolute
     left: 0
-    top: 44%
     padding-left: $size-18px
 
   .payment_wrapper
     border-top: none
-    padding-bottom: 12%
+    padding-bottom: 9%
     flex-direction: column-reverse
     align-items: flex-start
     gap: $size-14px
@@ -139,9 +141,10 @@
   .amount_container
     flex-direction: column
     margin-top: 0
+    align-items: start
 
   .amount_usd
-    margin-left: $size-4px
+    margin-left: 0
     margin-top: $size-8px
     font-size: $size-16px
 
@@ -153,3 +156,6 @@
 
   .main_wrapper
     width: 91vw
+
+  .transaction_time
+    margin-top: 5%

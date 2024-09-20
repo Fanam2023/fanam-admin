@@ -29,10 +29,14 @@
 
 .captcha_wrapper
   display: grid
-  place-items: baseline
-  grid-template-columns: 1fr 0.4fr 0.4fr
+  grid-template-columns: 1fr 0.8fr 0.2fr
   gap: $size-12px
   margin-top: $size-20px
+  align-items: center
+
+.captcha
+  border: $size-1px solid $light-grey
+  border-radius: $size-8px
 
 .otp_text
   margin-top: $size-20px
@@ -41,3 +45,10 @@
   margin-top: $size-20px
   background: $theme
   width: 100%
+
+@include mixin-responsive
+  .captcha_wrapper
+    grid-template-columns: 1fr 1fr 0.2fr
+
+  .title
+    font-size: $size-24px
