@@ -70,7 +70,7 @@ export const LIST_OF_CART: BankCartProps[] = [
 
 export const PURPOSES_INDIVIDUAL: IFormData<TypePurpose>[] = [
   {label: "Education", key: "Tuition_fee"},
-  {label: "Family Expense", key: "Living_expense"},
+  {label: "Family Expense", key: "Living_expenses"},
   {label: "Rental", key: "Rent"},
   {label: "Insurance", key: "Insurance"},
   {label: "Others", key: "Others"},
