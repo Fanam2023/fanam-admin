@@ -3,6 +3,7 @@ import {
   IFormData,
   JSONObject,
   REG_EMAIL,
+  REG_VALID_NAME,
   REG_VALID_NUMBER,
   useCommon,
   useReactQuery,
@@ -23,6 +24,7 @@ import {
 } from "@custom/utils"
 import assets from "assets"
 import {useLocationController, useRecipientController} from "controller"
+import {useSingleton} from "hooks"
 import {
   BANK_ACCOUNT_TYPE,
   ID_PROOFS,
@@ -41,6 +43,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {refreshQuery} = useReactQuery()
   const {getTransactionCountries, getCities, getStates} = useLocationController()
   const {createRecipient, updateRecipient, getByRecipientId} = useRecipientController()
+  const {refetchTransaction} = useSingleton()
 
   const {toggleNotify} = useNotifyPopup()
 
@@ -161,7 +164,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     }
   )
 
-  const {mutate: addRecipient, data: addedRes} = useMutation({
+  const {mutate: addRecipient} = useMutation({
     mutationKey: [QUERY_RECIPIENT],
     mutationFn: createRecipient,
     onSuccess: ({result, errorData}) => {
@@ -169,17 +172,21 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         toggleNotify({type: "success", title: "Recipient created Successfully"})
         refreshQuery(QUERY_RECIPIENT.concat(recipient_account_type))
         push(ROUTE_RECIPIENT_PREVIEW)
+        toggleSlider()
       } else toggleNotify({type: "error", title: errorData.message})
     },
   })
 
-  const {mutate: onUpdate, data: updatedRes} = useMutation({
+  const {mutate: onUpdate} = useMutation({
     mutationKey: [QUERY_RECIPIENT],
     mutationFn: updateRecipient,
     onSuccess: ({result, errorData}) => {
       refreshQuery(QUERY_RECIPIENT.concat(recipient_account_type))
-      if (result) toggleNotify({type: "success", title: "Recipient updated Successfully"})
-      else toggleNotify({type: "error", title: errorData?.message})
+      if (result) {
+        refetchTransaction()
+        toggleNotify({type: "success", title: "Recipient updated Successfully"})
+        toggleSlider()
+      } else toggleNotify({type: "error", title: errorData?.message})
     },
   })
 
@@ -322,6 +329,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "business_name",
         error: errBusinessName,
         value: business_name,
+        inputRegex: REG_VALID_NAME,
         onChangeValue,
       },
       {
@@ -330,6 +338,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "first_name",
         error: errFirstName,
         value: first_name,
+        inputRegex: REG_VALID_NAME,
         onChangeValue,
       },
       {
@@ -338,6 +347,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "last_name",
         error: errLastName,
         value: last_name,
+        inputRegex: REG_VALID_NAME,
         onChangeValue,
       },
     ],
@@ -354,6 +364,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "first_name",
         error: errFirstName,
         value: first_name,
+        inputRegex: REG_VALID_NAME,
         onChangeValue,
       },
       {
@@ -362,6 +373,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "last_name",
         error: errLastName,
         value: last_name,
+        inputRegex: REG_VALID_NAME,
         onChangeValue,
       },
     ],
@@ -386,6 +398,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "account_no",
         error: errAccountNo,
         value: account_no,
+        inputRegex: REG_VALID_NUMBER,
         onChangeValue,
       },
       {
@@ -402,6 +415,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "branch_code",
         error: errBranchCode,
         value: branch_code,
+        inputRegex: REG_VALID_NAME,
         onChangeValue,
       },
       {
@@ -422,6 +436,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       name: "swift_code",
       error: errSwiftCode,
       value: swift_code,
+      inputRegex: REG_VALID_NAME,
       onChangeValue,
     })
   }
@@ -433,6 +448,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       name: "iban_no",
       value: iban_no,
       error: errIbanNo,
+      inputRegex: REG_VALID_NAME,
       onChangeValue,
     })
   }
@@ -444,6 +460,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       name: "routing_code",
       value: routing_code,
       error: errRoutingCode,
+      inputRegex: REG_VALID_NAME,
       onChangeValue,
     })
   }
@@ -455,6 +472,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       name: "routing_code",
       value: routing_code,
       error: errBsbCode,
+      inputRegex: REG_VALID_NAME,
       onChangeValue,
     })
   }
@@ -684,14 +702,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     setErrData(errState)
     return errState
   }
-
-  useEffect(() => {
-    if (addedRes) {
-      toggleSlider()
-    } else if (updatedRes) {
-      toggleSlider()
-    }
-  }, [addedRes, updatedRes])
 
   const onSubmit = () => {
     const {isValid} = onValidate()

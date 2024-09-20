@@ -1,5 +1,13 @@
 import {Button, FormSectionProps, ImageView, TextField, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
-import {IFormData, JSONObject, REG_EMAIL, REG_VALID_NUMBER, useCommon, useDateTime} from "@fanam-pkg/core-utils"
+import {
+  IFormData,
+  JSONObject,
+  REG_EMAIL,
+  REG_VALID_NAME,
+  REG_VALID_NUMBER,
+  useCommon,
+  useDateTime,
+} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
@@ -52,16 +60,17 @@ const DEFAULT_ERR_STATE = {
 }
 
 const useHandler = (styles: IStyle) => {
-  const {replace} = useRouter()
+  const {replace, push} = useRouter()
   const {isValidInputByRegex} = useCommon()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {syncUser} = useAuthController()
   const {verifyPanCard, generateAadhaarCaptcha, reGenerateAadhaarCaptcha, generateAadhaarOTP, verifyAadhaarOTP} =
     useKYCController()
-  const {formatDateUTC, formatDate} = useDateTime()
+  const {formatDateUTC, formatDate, dayjs} = useDateTime()
   const {toggleNotify} = useNotifyPopup()
   const {togglePopup} = usePopup()
   const {user, updateUserData} = useSingleton()
+  const currentDate = dayjs().format("YYYY-MM-DD")
   const [data, setData] = useState<ISyncUserData>({
     first_name: "",
     last_name: "",
@@ -474,6 +483,11 @@ const useHandler = (styles: IStyle) => {
 
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
 
+  const onChangeData = (value: JSONObject) => {
+    const formattedDate = formatDateUTC(value?.date_of_birth as string)
+    onChangeValue({...value, date_of_birth: formattedDate})
+  }
+
   const onChangeCountry = (value: JSONObject) => onChangeValue({...value, state: null, city: null})
 
   const onChangeState = (value: JSONObject) => onChangeValue({...value, city: null})
@@ -563,6 +577,7 @@ const useHandler = (styles: IStyle) => {
           name: "first_name",
           error: errFirstName,
           value: first_name,
+          inputRegex: REG_VALID_NAME,
           onChangeValue,
         },
         {
@@ -570,6 +585,7 @@ const useHandler = (styles: IStyle) => {
           label: "Last Name",
           name: "last_name",
           error: errLastName,
+          inputRegex: REG_VALID_NAME,
           value: last_name,
           onChangeValue,
         },
@@ -601,14 +617,17 @@ const useHandler = (styles: IStyle) => {
         //   onChangeValue,
         // },
         {
-          elementType: "input",
-          type: "date",
-          label: "Date of Birth",
-          name: "date_of_birth",
-          error: errDateOfBirth,
-          value: date_of_birth,
-          inputRegex: REG_INPUT_DATE,
-          onChangeValue,
+          childElement: (
+            <TextField
+              type="date"
+              label="Date of Birth"
+              name="date_of_birth"
+              value={formatDate(date_of_birth, DF_INPUT_DATE)}
+              error={errDateOfBirth}
+              inputRegex={REG_INPUT_DATE}
+              max={currentDate}
+              onChangeData={onChangeData}></TextField>
+          ),
         },
       ],
     },
@@ -658,6 +677,7 @@ const useHandler = (styles: IStyle) => {
           error: errFirstName,
           value: first_name,
           disabled: !!user?.first_name,
+          inputRegex: REG_VALID_NAME,
           onChangeValue,
         },
         {
@@ -667,6 +687,7 @@ const useHandler = (styles: IStyle) => {
           error: errLastName,
           value: last_name,
           disabled: !!user?.last_name,
+          inputRegex: REG_VALID_NAME,
           onChangeValue,
         },
         {
@@ -721,7 +742,8 @@ const useHandler = (styles: IStyle) => {
               ) : (
                 <Button
                   disabled={!isValidInputByRegex(aadhaarNumber, REG_AADHAAR)}
-                  onClick={generateCaptcha.bind(null, null)}>
+                  onClick={generateCaptcha.bind(null, null)}
+                  wrapperClass={styles.verify_btn}>
                   Verify
                 </Button>
               )}
@@ -764,7 +786,10 @@ const useHandler = (styles: IStyle) => {
                 <h5 className={styles.verified_text}>PAN is Validated</h5>
               </section>
             ) : (
-              <Button disabled={!isValidInputByRegex(pan, REG_PAN)} onClick={onVerifyPan.bind(null, {pan})}>
+              <Button
+                disabled={!isValidInputByRegex(pan, REG_PAN)}
+                onClick={onVerifyPan.bind(null, {pan})}
+                wrapperClass={styles.verify_btn}>
                 Verify
               </Button>
             )}
@@ -817,12 +842,15 @@ const useHandler = (styles: IStyle) => {
     }
   }
 
+  const onBack = () => push(ROUTE_HOME)
+
   return {
     individualKYCElements,
     individualForm,
     businessForm,
     individualType,
     onSubmit,
+    onBack,
   }
 }
 
