@@ -10,7 +10,7 @@ const AuthPin = () => {
 
   return (
     <BaseContainer profile bellIcon>
-      <Auth>
+      <Auth isBack>
         <section className={`flex-col ${styles.heading}`}>
           <h4 className={`bold ${styles.login}`}>Create a PIN</h4>
           <h5 className={styles.description}>
