@@ -88,7 +88,7 @@ const TransactionStatusPage = () => {
       header="Payment Status"
       footerChild={<DownloadReceipt />}
       childWrapper={styles.page_container}
-      stepIndex="pending"
+      stepIndex={5}
       onSubmit={routeHome}
       isStepper>
       <section className={styles.mobile_wrapper}>

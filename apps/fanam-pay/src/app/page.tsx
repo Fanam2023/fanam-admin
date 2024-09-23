@@ -4,13 +4,13 @@ import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import Link from "next/link"
 import assets from "assets"
-import {BaseContainer, ExchangeRate, ListTransaction} from "organisms"
+import {BaseContainer, ExchangeRate, ListTransaction, Stepper} from "organisms"
 import {ROUTE_RECIPIENTS, ROUTE_SENDER} from "utils"
 import useHandler from "./handler"
 import styles from "./page.module.sass"
 
 const HomeScreen = () => {
-  const {first_name, push, isKYCVerified} = useHandler()
+  const {first_name, push, isKYCVerified, kycStatus} = useHandler()
   const {isDesktop} = useResize()
 
   return (
@@ -21,6 +21,7 @@ const HomeScreen = () => {
           <h2 className={styles.first_name}>{first_name}</h2>
         </section>
         <h5 className={styles.content}>Discover how your currency has been tracking with our exchange rate charts.</h5>
+        <Stepper status={kycStatus} />
         <section className={`flex-sb-center ${styles.nav_wrapper}`}>
           <section className="flex">
             <ImageView src={assets.ic_money} alt="money-icon" imgSize={isDesktop ? 60 : 36} />
