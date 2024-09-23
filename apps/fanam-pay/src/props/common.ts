@@ -11,3 +11,7 @@ export interface AuthProps {
   isBack?: boolean
   authLogo?: StaticImageData
 }
+
+export interface StepperProp {
+  status: string
+}
