@@ -69,7 +69,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!confirmPin) errState = {...errState, errConfirmPin: "Please enter valid pin", isValid: false}
     else if (confirmPin !== newPin)
-      errState = {...errState, errConfirmPin: "Not Match confirm pin and pin", isValid: false}
+      errState = {...errState, errConfirmPin: "Please ensure your PIN and confirmation PIN match", isValid: false}
 
     setErrData(errState)
 
@@ -83,13 +83,19 @@ const useHandler = (styles: IStyle) => {
   }
 
   const onChangeValue = (value: JSONObject) => {
-    const pinValue = (value?.newPin as string) || (value?.confirmPin as string) || ""
-    const isValid = pinValue === "" || isValidInputByRegex(pinValue, REG_VALID_NUMBER)
+    const pinValue = (value.newPin || value.confirmPin || "") as string
+    const isPinValid = !pinValue || isValidInputByRegex(pinValue, REG_VALID_NUMBER)
+    const isPinSequential = pinValue.length === 6 && isSequential(pinValue)
     setData(prev => ({...prev, ...value}))
-    setIsNextDisabled(!isValid || (pinValue.length === 6 && isSequential(pinValue)))
-    if (!isValid) toggleNotify({type: "error", title: "Only numbers are allowed"})
-    else if (pinValue.length === 6 && isSequential(pinValue))
-      toggleNotify({type: "error", title: "PIN cannot be a continuous sequence"})
+    if (value.newPin) {
+      const shouldDisableConfirmPin = !isPinValid || isPinSequential
+      setIsNextDisabled(shouldDisableConfirmPin)
+      if (shouldDisableConfirmPin) setData(prev => ({...prev, confirmPin: ""}))
+      toggleNotify({
+        type: "error",
+        title: !isPinValid ? "Only numbers are allowed" : isPinSequential ? "PIN cannot be a continuous sequence" : "",
+      })
+    }
   }
 
   useEffect(() => {
