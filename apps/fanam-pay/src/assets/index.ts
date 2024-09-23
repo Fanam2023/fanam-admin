@@ -66,6 +66,7 @@ import img_bank from "./images/img_bank.webp"
 import img_forgot_logo from "./images/img_forgot.webp"
 import img_logo_in from "./images/img_log_in.webp"
 import img_logo from "./images/img_logo.webp"
+import img_yes_bank from "./images/img_yes_bank.webp"
 
 const assets = {
   ...projectAssets,
@@ -136,6 +137,7 @@ const assets = {
   ic_notify,
   ic_logout,
   ic_blue_arrow,
+  img_yes_bank,
 }
 
 export default assets
