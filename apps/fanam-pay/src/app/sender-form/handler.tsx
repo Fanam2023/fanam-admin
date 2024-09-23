@@ -81,7 +81,7 @@ const useHandler = (styles: IStyle) => {
     pan: "",
     aadhaarNumber: "",
     business_name: "",
-    business_type: {key: "Sole_proprietor", label: "Sole Proprietor"},
+    business_type: BUSINESS_TYPE[0],
     date_of_birth: "",
     kyc_aadhaar: [],
     kyc_pan: [],
@@ -742,12 +742,6 @@ const useHandler = (styles: IStyle) => {
                   </Button>
                 )}
               </section>
-              {verifiedAadhaar && (
-                <section className={`flex-start ${styles.pan_verify}`}>
-                  <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
-                  <h5 className={styles.verified_text}>Aadhaar is Validated</h5>
-                </section>
-              )}
             </>
           ),
         },
@@ -767,6 +761,19 @@ const useHandler = (styles: IStyle) => {
         children: <CustomUpload />,
         disabled: !verifiedAadhaar,
         onChangeValue,
+      })
+
+      elements.childElements.push({
+        childElement: (
+          <>
+            {verifiedAadhaar && (
+              <section className={`flex-start ${styles.pan_verify}`}>
+                <ImageView src={assets.ic_tick} alt="tick-image" imgSize={24} />
+                <h5 className={styles.verified_text}>Aadhaar is Validated</h5>
+              </section>
+            )}
+          </>
+        ),
       })
     }
 
@@ -792,12 +799,6 @@ const useHandler = (styles: IStyle) => {
                 </Button>
               )}
             </section>
-            {verifiedPAN && (
-              <section className={`flex-start ${styles.pan_verify}`}>
-                <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
-                <h5 className={styles.verified_text}>PAN is Validated</h5>
-              </section>
-            )}
           </>
         ),
       })
@@ -816,6 +817,19 @@ const useHandler = (styles: IStyle) => {
         children: <CustomUpload />,
         disabled: !verifyPanCard,
         onChangeValue,
+      })
+
+      elements.childElements.push({
+        childElement: (
+          <>
+            {verifiedPAN && (
+              <section className={`flex-start ${styles.pan_verify}`}>
+                <ImageView src={assets.ic_tick} alt="tick-image" imgSize={24} />
+                <h5 className={styles.verified_text}>PAN is Validated</h5>
+              </section>
+            )}
+          </>
+        ),
       })
     }
 
