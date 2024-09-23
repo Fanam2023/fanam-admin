@@ -1,5 +1,6 @@
 import {FormSectionProps} from "@fanam-pkg/core-ui-sass"
 import {useDateTime} from "@fanam-pkg/core-utils"
+import {REG_INPUT_NAME} from "@custom/utils"
 import {useSingleton} from "hooks"
 
 const useHandler = () => {
@@ -18,6 +19,7 @@ const useHandler = () => {
           label: "First Name",
           name: "first_name",
           value: first_name,
+          inputRegex: REG_INPUT_NAME,
           disabled: !!user?.first_name,
         },
         {
@@ -25,6 +27,7 @@ const useHandler = () => {
           label: "Last Name",
           name: "last_name",
           value: last_name,
+          inputRegex: REG_INPUT_NAME,
           disabled: !!user?.last_name,
         },
 

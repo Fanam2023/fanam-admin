@@ -19,6 +19,7 @@ import {
   IRecipientData,
   IStyle,
   REG_INPUT_EMAIL,
+  REG_INPUT_NAME,
   TypeAccount,
   TypeBankAccount,
 } from "@custom/utils"
@@ -338,7 +339,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "first_name",
         error: errFirstName,
         value: first_name,
-        inputRegex: REG_VALID_NAME,
+        inputRegex: REG_INPUT_NAME,
         onChangeValue,
       },
       {
@@ -347,7 +348,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "last_name",
         error: errLastName,
         value: last_name,
-        inputRegex: REG_VALID_NAME,
+        inputRegex: REG_INPUT_NAME,
         onChangeValue,
       },
     ],
@@ -364,7 +365,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "first_name",
         error: errFirstName,
         value: first_name,
-        inputRegex: REG_VALID_NAME,
+        inputRegex: REG_INPUT_NAME,
         onChangeValue,
       },
       {
@@ -373,7 +374,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         name: "last_name",
         error: errLastName,
         value: last_name,
-        inputRegex: REG_VALID_NAME,
+        inputRegex: REG_INPUT_NAME,
         onChangeValue,
       },
     ],
