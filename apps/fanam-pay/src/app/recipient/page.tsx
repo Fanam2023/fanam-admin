@@ -56,9 +56,7 @@ const RecipientPage = () => {
           isChip={true}
         />
       </section>
-      <section className={styles.content}>
-        <ul className={styles.members}>{recipients?.map(renderRecipients)}</ul>
-      </section>
+      <ul className={styles.members}>{recipients?.map(renderRecipients)}</ul>
     </BaseContainer>
   )
 }
