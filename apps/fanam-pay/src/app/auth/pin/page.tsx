@@ -6,11 +6,11 @@ import useHandler from "./handler"
 import styles from "./page.module.sass"
 
 const AuthPin = () => {
-  const {formElements, onSubmit} = useHandler(styles)
+  const {formElements, onSubmit, scope} = useHandler(styles)
 
   return (
     <BaseContainer profile bellIcon>
-      <Auth>
+      <Auth isBack={scope === "reset"}>
         <section className={`flex-col ${styles.heading}`}>
           <h4 className={`bold ${styles.login}`}>Create a PIN</h4>
           <h5 className={styles.description}>

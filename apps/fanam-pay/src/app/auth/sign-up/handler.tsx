@@ -76,7 +76,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!first_name) errState = {...errState, errFirstName: "Please enter FirstName", isValid: false}
 
-    if (!last_name || last_name.length < 2)
+    if (!last_name || last_name.length < 1)
       errState = {...errState, errLastName: "LastName must be longer than 2 characters", isValid: false}
 
     if (!phone_no) errState = {...errState, errPhoneNo: "Please enter PhoneNumber", isValid: false}
@@ -169,6 +169,7 @@ const useHandler = (styles: IStyle) => {
                 label="Phone Number"
                 name="phone_no"
                 value={phone_no}
+                maxLength={10}
                 onChangeData={onChangeValue}
                 error={errPhoneNo}
               />

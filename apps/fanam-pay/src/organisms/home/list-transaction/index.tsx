@@ -14,6 +14,9 @@ export const ListTransaction = () => {
   const {formatDate} = useDateTime()
 
   const [showAll, setShowAll] = useState(false)
+  const sortedTransactions = transactions
+    ?.slice()
+    .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
 
   const renderTransactionDetails = (
     {
@@ -101,7 +104,7 @@ export const ListTransaction = () => {
       </section>
       {transactions?.length ? (
         <ul className={styles.list_wrapper}>
-          {(showAll ? transactions : transactions?.slice(0, 5))?.map(renderTransactionDetails)}
+          {(showAll ? sortedTransactions : sortedTransactions?.slice(0, 5))?.map(renderTransactionDetails)}
         </ul>
       ) : (
         <>
@@ -121,12 +124,10 @@ export const ListTransaction = () => {
           <Button wrapperClass={styles.button_wrapper} onClick={() => setShowAll(!showAll)}>
             {showAll ? "See Less Activity" : "See More Activity"}
           </Button>
-          {!showAll && (
-            <section className={`flex ${styles.activity_wrapper}`}>
-              <h4 className={`bold ${styles.button_txt}`}>See More Activity</h4>
-              <ImageView src={assets.ic_arrow_right} alt="arrow" imgSize={20} wrapperClass={styles.arrow} />
-            </section>
-          )}
+          <section className={`flex ${styles.activity_wrapper}`} onClick={() => setShowAll(!showAll)}>
+            <h4 className={`bold ${styles.button_txt}`}>{showAll ? "See Less Activity" : "See More Activity"}</h4>
+            <ImageView src={assets.ic_arrow_right} alt="arrow" imgSize={20} wrapperClass={styles.arrow} />
+          </section>
         </>
       )}
     </section>

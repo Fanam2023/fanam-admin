@@ -9,7 +9,7 @@ export const PopupAadhaarOTP = (props: PropsPopupAadhaarOTP) => {
 
   return (
     <section className={styles.popup_wrapper}>
-      <h5 className="bold">Verify Aadhaar</h5>
+      <h5 className={`bold ${styles.title}`}>Verify Aadhaar</h5>
       <h5 className={`bold ${styles.otp_text}`}>Enter OTP</h5>
       <OTPField otpValues={otpValues} onChangeInputs={setOtpValues} error={errorText} />
       <Button wrapperClass={styles.button_wrapper} onClick={onSubmit}>
