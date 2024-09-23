@@ -70,7 +70,7 @@ export const useHandler = (styles: IStyle) => {
             <section className={styles.date_filter_wrapper}>
               <TextField
                 onChangeData={onChangeValue}
-                value={formatDate(start_date, DF_INPUT_DATE)}
+                value={start_date}
                 name="start_date"
                 type="date"
                 max={currentDate}
@@ -78,7 +78,7 @@ export const useHandler = (styles: IStyle) => {
               />
               <TextField
                 onChangeData={onChangeValue}
-                value={formatDate(end_date, DF_INPUT_DATE)}
+                value={end_date}
                 name="end_date"
                 type="date"
                 max={currentDate}
