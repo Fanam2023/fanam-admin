@@ -394,6 +394,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           label: "Zip Code",
           name: "zip_code",
           value: zip_code,
+          inputRegex: REG_VALID_NUMBER,
           error: errZipCode,
           onChangeValue,
         },

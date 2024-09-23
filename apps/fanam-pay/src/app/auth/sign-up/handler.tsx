@@ -169,6 +169,7 @@ const useHandler = (styles: IStyle) => {
                 label="Phone Number"
                 name="phone_no"
                 value={phone_no}
+                maxLength={10}
                 onChangeData={onChangeValue}
                 error={errPhoneNo}
               />

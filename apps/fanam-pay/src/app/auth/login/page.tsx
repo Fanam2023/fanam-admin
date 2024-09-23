@@ -24,6 +24,7 @@ const Login = () => {
           label="Enter Phone Number"
           name="phone_no"
           value={phone_no}
+          maxLength={10}
           onChangeData={onChangeValue}
           wrapperClass={styles.text_field_wrapper}
           error={errPhoneNo}
