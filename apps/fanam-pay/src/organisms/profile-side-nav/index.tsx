@@ -6,14 +6,18 @@ import {PROFILE_ARR} from "utils"
 import styles from "./styles.module.sass"
 
 export const ProfileSideNav = ({selectedLabel, setSelectedLabel, children}: ProfileSideNavProps) => {
-  const renderNavItems = ({label, icon}: ProfileNavItemProps, index: number) => {
+  const renderNavItems = ({label, icon, selectedIcon}: ProfileNavItemProps, index: number) => {
     const isSelected = label === selectedLabel
     return (
       <li
         className={`flex ${styles.wrapper} ${isSelected ? styles.selected : ""}`}
         key={index}
         onClick={() => setSelectedLabel(label)}>
-        <ImageView src={icon} imgSize={24} alt={label} />
+        {selectedLabel === label ? (
+          <ImageView src={selectedIcon} imgSize={24} alt={label} />
+        ) : (
+          <ImageView src={icon} imgSize={24} alt={label} />
+        )}
         <p className={`${styles.nav_item} ${isSelected ? styles.selected_item : ""}`}>{label}</p>
       </li>
     )
