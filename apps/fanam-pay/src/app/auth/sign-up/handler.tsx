@@ -4,7 +4,7 @@ import {useRouter} from "next/navigation"
 import {useCallback, useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
-import {ICountry, ISignupData, IStyle, SESSION_SIGNUP} from "@custom/utils"
+import {ICountry, ISignupData, IStyle, REG_INPUT_EMAIL, REG_INPUT_NAME, SESSION_SIGNUP} from "@custom/utils"
 import assets from "assets"
 import {useLocationController} from "controller"
 import {useCommon} from "hooks"
@@ -132,6 +132,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "input",
           label: "First Name",
           name: "first_name",
+          inputRegex: REG_INPUT_NAME,
           error: errFirstName,
           value: first_name,
           onChangeValue,
@@ -140,6 +141,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "input",
           label: "Last Name",
           name: "last_name",
+          inputRegex: REG_INPUT_NAME,
           error: errLastName,
           value: last_name,
           onChangeValue,
@@ -184,6 +186,7 @@ const useHandler = (styles: IStyle) => {
           name: "email",
           error: errEmail,
           value: email,
+          inputRegex: REG_INPUT_EMAIL,
           onChangeValue,
         },
       ],

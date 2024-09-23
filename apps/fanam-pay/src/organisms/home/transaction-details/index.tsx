@@ -55,7 +55,8 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
               )}
               {sla_timing_min && (
                 <h5 className={styles.transaction_time}>
-                  Transfer Time: {sla_timing_min !== sla_timing_max
+                  Transfer Time:{" "}
+                  {sla_timing_min !== sla_timing_max
                     ? `${sla_timing_min} - ${sla_timing_max} hours`
                     : `${sla_timing_min} hours`}
                 </h5>

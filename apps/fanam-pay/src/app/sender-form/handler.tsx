@@ -1,13 +1,5 @@
 import {Button, FormSectionProps, ImageView, TextField, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
-import {
-  IFormData,
-  JSONObject,
-  REG_EMAIL,
-  REG_VALID_NAME,
-  REG_VALID_NUMBER,
-  useCommon,
-  useDateTime,
-} from "@fanam-pkg/core-utils"
+import {IFormData, JSONObject, REG_EMAIL, REG_VALID_NUMBER, useCommon, useDateTime} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
@@ -19,6 +11,8 @@ import {
   ISyncUserData,
   REG_AADHAAR,
   REG_INPUT_DATE,
+  REG_INPUT_EMAIL,
+  REG_INPUT_NAME,
   REG_PAN,
 } from "@custom/utils"
 import assets from "assets"
@@ -613,7 +607,7 @@ const useHandler = (styles: IStyle) => {
           name: "first_name",
           error: errFirstName,
           value: first_name,
-          inputRegex: REG_VALID_NAME,
+          inputRegex: REG_INPUT_NAME,
           onChangeValue,
         },
         {
@@ -621,7 +615,7 @@ const useHandler = (styles: IStyle) => {
           label: "Last Name",
           name: "last_name",
           error: errLastName,
-          inputRegex: REG_VALID_NAME,
+          inputRegex: REG_INPUT_NAME,
           value: last_name,
           onChangeValue,
         },
@@ -632,6 +626,7 @@ const useHandler = (styles: IStyle) => {
           value: email,
           error: errEmail,
           disabled: !!user?.email,
+          inputRegex: REG_INPUT_EMAIL,
           onChangeValue,
         },
         {
@@ -713,7 +708,7 @@ const useHandler = (styles: IStyle) => {
           error: errFirstName,
           value: first_name,
           disabled: !!user?.first_name,
-          inputRegex: REG_VALID_NAME,
+          inputRegex: REG_INPUT_NAME,
           onChangeValue,
         },
         {
@@ -723,7 +718,7 @@ const useHandler = (styles: IStyle) => {
           error: errLastName,
           value: last_name,
           disabled: !!user?.last_name,
-          inputRegex: REG_VALID_NAME,
+          inputRegex: REG_INPUT_NAME,
           onChangeValue,
         },
         {
@@ -733,6 +728,7 @@ const useHandler = (styles: IStyle) => {
           value: email,
           error: errEmail,
           disabled: !!user?.email,
+          inputRegex: REG_INPUT_EMAIL,
           onChangeValue,
         },
         {
