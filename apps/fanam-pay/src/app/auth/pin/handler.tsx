@@ -173,6 +173,7 @@ const useHandler = (styles: IStyle) => {
     formElements,
     onSubmit,
     routeToLogin,
+    scope,
   }
 }
 
