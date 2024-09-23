@@ -730,7 +730,6 @@ const useHandler = (styles: IStyle) => {
                   disabled={!!verifiedAadhaar}
                   onChangeData={onChangeValue}
                   inputRegex={REG_VALID_NUMBER}
-                  maxLength={12}
                   wrapperClass={styles.text_field}
                 />
                 {!verifiedAadhaar && (
@@ -788,7 +787,6 @@ const useHandler = (styles: IStyle) => {
                 value={pan}
                 onChangeData={onChangeValue}
                 disabled={!!verifiedPAN}
-                maxLength={10}
               />
               {!verifiedPAN && (
                 <Button
