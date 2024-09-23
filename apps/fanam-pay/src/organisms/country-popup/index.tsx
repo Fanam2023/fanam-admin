@@ -43,7 +43,7 @@ export const CountryPopup = ({onSelect, selCountry, countries}: CountryPopupProp
         onChangeData={onSearchChange}
         wrapperClass={styles.search_wrapper}
       />
-      <h3 className={styles.select_country_text}>Select a country</h3>
+      <h3 className={styles.select_country_text}>Choose the recipiant currency</h3>
       {filteredCountry && filteredCountry.length > 0 ? (
         <ul className={styles.layout_wrapper}>{filteredCountry?.map(renderCountries)}</ul>
       ) : (
