@@ -13,11 +13,7 @@ export const ProfileSideNav = ({selectedLabel, setSelectedLabel, children}: Prof
         className={`flex ${styles.wrapper} ${isSelected ? styles.selected : ""}`}
         key={index}
         onClick={() => setSelectedLabel(label)}>
-        {selectedLabel === label ? (
-          <ImageView src={selectedIcon} imgSize={24} alt={label} />
-        ) : (
-          <ImageView src={icon} imgSize={24} alt={label} />
-        )}
+        <ImageView src={isSelected ? selectedIcon : icon} imgSize={24} alt={label} />
         <p className={`${styles.nav_item} ${isSelected ? styles.selected_item : ""}`}>{label}</p>
       </li>
     )
