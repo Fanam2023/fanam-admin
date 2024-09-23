@@ -1,9 +1,6 @@
 import {useEffect, useState} from "react"
+import {StepperProp} from "props"
 import styles from "./styles.module.sass"
-
-interface StepperProp {
-  status: string
-}
 
 export const Stepper = ({status}: StepperProp) => {
   const [currentStep, setCurrentStep] = useState(0)
