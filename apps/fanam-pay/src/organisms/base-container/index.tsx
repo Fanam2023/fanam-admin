@@ -2,14 +2,13 @@
 
 import {Button, ImageView, assets as projectAssets, usePopup} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
-import {usePathname, useRouter} from "next/navigation"
-import {useEffect} from "react"
+import {useRouter} from "next/navigation"
 import assets from "assets"
 import {useSingleton} from "hooks"
 import {IStepper} from "model"
 import {ProfileDetails} from "organisms"
 import {BaseContainerProps} from "props"
-import {ROUTE_HOME, ROUTE_LOGIN, SIDE_BAR} from "utils"
+import {SIDE_BAR} from "utils"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({
@@ -26,17 +25,11 @@ export const BaseContainer = ({
   isStepper = false,
   disabled = false,
 }: BaseContainerProps) => {
-  const {user, token, transId} = useSingleton()
+  const {user} = useSingleton()
   const {first_name, last_name} = user || {}
   const {isDesktop} = useResize()
-  const {back, replace} = useRouter()
-  const pathname = usePathname()
+  const {back} = useRouter()
   const {togglePopup} = usePopup()
-
-  useEffect(() => {
-    if (!pathname.includes("/auth/") && !token) replace(ROUTE_LOGIN)
-    else if (pathname.includes("/auth/") && token) replace(ROUTE_HOME)
-  }, [token, transId])
 
   const onClickBack = () => {
     if (onBack) onBack()
