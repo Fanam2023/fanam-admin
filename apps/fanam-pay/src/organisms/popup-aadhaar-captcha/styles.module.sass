@@ -32,7 +32,7 @@
   grid-template-columns: 1fr 0.8fr 0.2fr
   gap: $size-12px
   margin-top: $size-20px
-  align-items: center
+  align-items: start
 
 .captcha
   border: $size-1px solid $light-grey
@@ -46,9 +46,15 @@
   background: $theme
   width: 100%
 
+.refresh
+  margin-top: $size-12px
+
 @include mixin-responsive
   .captcha_wrapper
     grid-template-columns: 1fr 1fr 0.2fr
 
   .title
     font-size: $size-24px
+
+  .refresh
+    margin-top: $size-16px
