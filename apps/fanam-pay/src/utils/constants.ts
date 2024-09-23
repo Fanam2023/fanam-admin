@@ -2,7 +2,7 @@ import {IFormData} from "@fanam-pkg/core-utils"
 import {TypeAccount, TypeBusiness, TypeOrderStatus, TypePurpose, TypeRelation} from "@custom/utils"
 import assets from "assets"
 import {IStepper} from "model"
-import {BankCartProps, BankListProps} from "props"
+import {BankCartProps, BankListProps, ProfileNavItemProps} from "props"
 
 export const SIDE_BAR: IStepper[] = [
   {
@@ -144,18 +144,21 @@ export const RELATION_SHIP: IFormData<TypeRelation>[] = [
   {key: "Not_applicable", label: "NotApplicable"},
 ]
 
-export const PROFILE_ARR: IFormData[] = [
+export const PROFILE_ARR: ProfileNavItemProps[] = [
   {
     label: "Profile",
     icon: assets.ic_profile,
+    selectedIcon: assets.ic_white_profile,
   },
   {
     label: "Security Settings",
-    icon: assets.ic_white_security,
+    icon: assets.ic_black_security,
+    selectedIcon: assets.ic_white_security,
   },
   {
     label: "Notification",
     icon: assets.ic_notify,
+    selectedIcon: assets.ic_white_notify,
   },
 ]
 
