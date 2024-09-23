@@ -1,13 +1,5 @@
 import {Button, FormSectionProps, ImageView, TextField, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
-import {
-  IFormData,
-  JSONObject,
-  REG_EMAIL,
-  REG_VALID_NAME,
-  REG_VALID_NUMBER,
-  useCommon,
-  useDateTime,
-} from "@fanam-pkg/core-utils"
+import {IFormData, JSONObject, REG_EMAIL, REG_VALID_NUMBER, useCommon, useDateTime} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
@@ -19,6 +11,8 @@ import {
   ISyncUserData,
   REG_AADHAAR,
   REG_INPUT_DATE,
+  REG_INPUT_EMAIL,
+  REG_INPUT_NAME,
   REG_PAN,
 } from "@custom/utils"
 import assets from "assets"
@@ -87,7 +81,7 @@ const useHandler = (styles: IStyle) => {
     pan: "",
     aadhaarNumber: "",
     business_name: "",
-    business_type: "Sole_proprietor",
+    business_type: {key: "Sole_proprietor", label: "Sole Proprietor"},
     date_of_birth: "",
     kyc_aadhaar: [],
     kyc_pan: [],
@@ -210,7 +204,7 @@ const useHandler = (styles: IStyle) => {
               generateOTP={onGenerateOTP}
             />
           ),
-          isClosable: false,
+          isClosable: true,
         })
       } else
         toggleNotify({
@@ -238,7 +232,7 @@ const useHandler = (styles: IStyle) => {
         togglePopup({
           title: "Verify Aadhaar",
           children: <PopupAadhaarOTP verifyOTP={onVerifyOTP} />,
-          isClosable: false,
+          isClosable: true,
         })
       } else
         toggleNotify({
@@ -305,7 +299,7 @@ const useHandler = (styles: IStyle) => {
               generateOTP={onGenerateOTP}
             />
           ),
-          isClosable: false,
+          isClosable: true,
         })
       } else
         toggleNotify({
@@ -577,7 +571,7 @@ const useHandler = (styles: IStyle) => {
           name: "first_name",
           error: errFirstName,
           value: first_name,
-          inputRegex: REG_VALID_NAME,
+          inputRegex: REG_INPUT_NAME,
           onChangeValue,
         },
         {
@@ -585,7 +579,7 @@ const useHandler = (styles: IStyle) => {
           label: "Last Name",
           name: "last_name",
           error: errLastName,
-          inputRegex: REG_VALID_NAME,
+          inputRegex: REG_INPUT_NAME,
           value: last_name,
           onChangeValue,
         },
@@ -596,6 +590,7 @@ const useHandler = (styles: IStyle) => {
           value: email,
           error: errEmail,
           disabled: !!user?.email,
+          inputRegex: REG_INPUT_EMAIL,
           onChangeValue,
         },
         {
@@ -677,7 +672,7 @@ const useHandler = (styles: IStyle) => {
           error: errFirstName,
           value: first_name,
           disabled: !!user?.first_name,
-          inputRegex: REG_VALID_NAME,
+          inputRegex: REG_INPUT_NAME,
           onChangeValue,
         },
         {
@@ -687,7 +682,7 @@ const useHandler = (styles: IStyle) => {
           error: errLastName,
           value: last_name,
           disabled: !!user?.last_name,
-          inputRegex: REG_VALID_NAME,
+          inputRegex: REG_INPUT_NAME,
           onChangeValue,
         },
         {
@@ -697,6 +692,7 @@ const useHandler = (styles: IStyle) => {
           value: email,
           error: errEmail,
           disabled: !!user?.email,
+          inputRegex: REG_INPUT_EMAIL,
           onChangeValue,
         },
         {
@@ -724,30 +720,34 @@ const useHandler = (styles: IStyle) => {
       childElements: [
         {
           childElement: (
-            <section className={`flex-start ${styles.pan_wrapper}`}>
-              <TextField
-                label="Enter Aadhaar Number"
-                name="aadhaarNumber"
-                value={aadhaarNumber}
-                disabled={!!verifiedAadhaar}
-                onChangeData={onChangeValue}
-                inputRegex={REG_VALID_NUMBER}
-                maxLength={12}
-              />
-              {verifiedAadhaar ? (
+            <>
+              <section className={`flex-start ${styles.pan_wrapper} `}>
+                <TextField
+                  label="Enter Aadhaar Number"
+                  name="aadhaarNumber"
+                  value={aadhaarNumber}
+                  disabled={!!verifiedAadhaar}
+                  onChangeData={onChangeValue}
+                  inputRegex={REG_VALID_NUMBER}
+                  maxLength={12}
+                  wrapperClass={styles.text_field}
+                />
+                {!verifiedAadhaar && (
+                  <Button
+                    wrapperClass={styles.verify_btn}
+                    disabled={!isValidInputByRegex(aadhaarNumber, REG_AADHAAR)}
+                    onClick={generateCaptcha.bind(null, null)}>
+                    Verify
+                  </Button>
+                )}
+              </section>
+              {verifiedAadhaar && (
                 <section className={`flex-start ${styles.pan_verify}`}>
                   <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
                   <h5 className={styles.verified_text}>Aadhaar is Validated</h5>
                 </section>
-              ) : (
-                <Button
-                  disabled={!isValidInputByRegex(aadhaarNumber, REG_AADHAAR)}
-                  onClick={generateCaptcha.bind(null, null)}
-                  wrapperClass={styles.verify_btn}>
-                  Verify
-                </Button>
               )}
-            </section>
+            </>
           ),
         },
       ],
@@ -757,6 +757,7 @@ const useHandler = (styles: IStyle) => {
       elements.childElements.push({
         elementType: "file-picker",
         fileType: ["image/*", "application/pdf"],
+        wrapperClass: styles.img_picker,
         name: "kyc_aadhaar",
         isMultiple: true,
         value: kyc_aadhaar,
@@ -771,29 +772,32 @@ const useHandler = (styles: IStyle) => {
     if (verifiedAadhaar && kyc_aadhaar) {
       elements.childElements.push({
         childElement: (
-          <section className={`flex-start ${styles.pan_wrapper}`}>
-            <TextField
-              label="Enter Pan Number"
-              name="pan"
-              value={pan}
-              onChangeData={onChangeValue}
-              disabled={!!verifiedPAN}
-              maxLength={10}
-            />
-            {verifiedPAN ? (
+          <>
+            <section className={`flex-start ${styles.pan_wrapper}`}>
+              <TextField
+                label="Enter Pan Number"
+                name="pan"
+                value={pan}
+                onChangeData={onChangeValue}
+                disabled={!!verifiedPAN}
+                maxLength={10}
+              />
+              {!verifiedPAN && (
+                <Button
+                  disabled={!isValidInputByRegex(pan, REG_PAN)}
+                  onClick={onVerifyPan.bind(null, {pan})}
+                  wrapperClass={styles.verify_btn}>
+                  Verify
+                </Button>
+              )}
+            </section>
+            {verifiedPAN && (
               <section className={`flex-start ${styles.pan_verify}`}>
                 <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
                 <h5 className={styles.verified_text}>PAN is Validated</h5>
               </section>
-            ) : (
-              <Button
-                disabled={!isValidInputByRegex(pan, REG_PAN)}
-                onClick={onVerifyPan.bind(null, {pan})}
-                wrapperClass={styles.verify_btn}>
-                Verify
-              </Button>
             )}
-          </section>
+          </>
         ),
       })
     }
@@ -802,6 +806,7 @@ const useHandler = (styles: IStyle) => {
       elements.childElements.push({
         elementType: "file-picker",
         fileType: ["image/*", "application/pdf"],
+        wrapperClass: styles.img_picker,
         name: "kyc_pan",
         isMultiple: true,
         maxCount: 2,

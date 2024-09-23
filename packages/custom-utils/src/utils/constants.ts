@@ -18,3 +18,4 @@ export const REG_AADHAAR = /^\d{12}$/
 export const REG_PAN = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/
 export const REG_INPUT_DATE = /^[a-zA-Z0-9 \- ]+$/g
 export const REG_INPUT_EMAIL = /^[a-zA-Z0-9 \-@. ]+$/g
+export const REG_INPUT_NAME = /^[a-zA-Z ]+$/g

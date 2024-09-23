@@ -17,7 +17,6 @@ export const ListTransaction = () => {
 
   const renderTransactionDetails = (
     {
-      source_amount,
       destination_amount,
       paymentMode,
       transaction_id,
@@ -53,7 +52,9 @@ export const ListTransaction = () => {
                 </h4>
                 <h5 className={`${styles.id_wrapper} ${order_no ? styles.order_no : ""}`}>{order_no}</h5>
               </section>
-              <h5 className={`bold ${styles.exchange_amount}`}>{exchange_amount}</h5>
+              <h5 className={`bold ${styles.exchange_amount}`}>
+                {exchange_amount} {source_currency}
+              </h5>
               <section className={`flex ${styles.duration_wrapper}`}>
                 {paymentMode && (
                   <>
@@ -73,12 +74,12 @@ export const ListTransaction = () => {
             </section>
           </section>
           <section className={styles.price_wrapper}>
-            <h5 className={`bold ${styles.status_wrapper}`}>{statusLabel}</h5>
+            <h5 className={`semi-bold ${styles.status_wrapper}`}>{statusLabel}</h5>
             <section className={`flex ${styles.price_wrapper}`}>
-              <h4 className={`bold ${styles.source_wrapper}`}>
+              <h4 className={`semi-bold ${styles.source_wrapper}`}>
                 {exchange_amount} {source_currency}
               </h4>
-              <h5 className={`bold ${styles.destination_amount}`}>
+              <h5 className={`semi-bold ${styles.destination_amount}`}>
                 {destination_amount} {currency}
               </h5>
             </section>
@@ -99,26 +100,33 @@ export const ListTransaction = () => {
         <GroupForm formSections={formElements} wrapperClass={styles.dropDown_wrapper} />
       </section>
       {transactions?.length ? (
-        <ul className={`${styles.list_wrapper} ${showAll ? styles.show_all : styles.show_limited}`}>
-          {transactions.map(renderTransactionDetails)}
+        <ul className={styles.list_wrapper}>
+          {(showAll ? transactions : transactions?.slice(0, 5))?.map(renderTransactionDetails)}
         </ul>
       ) : (
-        <ImageView
-          src={assets.ic_empty_transaction}
-          alt="empty"
-          imgSize={180}
-          wrapperClass={styles.empty_transaction}
-        />
+        <>
+          <ImageView
+            src={assets.ic_empty_transaction}
+            alt="empty"
+            imgSize={180}
+            wrapperClass={styles.empty_transaction}
+          />
+          <h5 className={styles.empty_content}>
+            You haven't made any transactions yet. Your history will be displayed here once you do.
+          </h5>
+        </>
       )}
       {transactions?.length > 5 && (
         <>
           <Button wrapperClass={styles.button_wrapper} onClick={() => setShowAll(!showAll)}>
             {showAll ? "See Less Activity" : "See More Activity"}
           </Button>
-          <section className={`flex ${styles.activity_wrapper}`}>
-            <h4 className={`bold ${styles.button_txt}`}>See More Activity</h4>
-            <ImageView src={assets.ic_arrow_right} alt="arrow" imgSize={20} wrapperClass={styles.arrow} />
-          </section>
+          {!showAll && (
+            <section className={`flex ${styles.activity_wrapper}`}>
+              <h4 className={`bold ${styles.button_txt}`}>See More Activity</h4>
+              <ImageView src={assets.ic_arrow_right} alt="arrow" imgSize={20} wrapperClass={styles.arrow} />
+            </section>
+          )}
         </>
       )}
     </section>

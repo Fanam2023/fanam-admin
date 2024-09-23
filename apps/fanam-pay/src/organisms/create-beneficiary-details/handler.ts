@@ -3,7 +3,6 @@ import {
   IFormData,
   JSONObject,
   REG_EMAIL,
-  REG_VALID_NAME,
   REG_VALID_NUMBER,
   useCommon,
   useReactQuery,
@@ -13,7 +12,7 @@ import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
-import {IBeneficiaryData, IPayloadBeneficiary, IStyle} from "@custom/utils"
+import {IBeneficiaryData, IPayloadBeneficiary, IStyle, REG_INPUT_EMAIL, REG_INPUT_NAME} from "@custom/utils"
 import {useBeneficiaryController, useLocationController, useTransactionController} from "controller"
 import {useSingleton} from "hooks"
 import {
@@ -279,7 +278,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           name: "first_name",
           error: errFirstName,
           value: first_name,
-          inputRegex: REG_VALID_NAME,
+          inputRegex: REG_INPUT_NAME,
           onChangeValue,
         },
         {
@@ -288,7 +287,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           name: "last_name",
           error: errLastName,
           value: last_name,
-          inputRegex: REG_VALID_NAME,
+          inputRegex: REG_INPUT_NAME,
           onChangeValue,
         },
       ],
@@ -302,7 +301,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           name: "email",
           error: errEmail,
           value: email,
-          inputRegex: REG_EMAIL,
+          inputRegex: REG_INPUT_EMAIL,
           onChangeValue,
         },
         {
