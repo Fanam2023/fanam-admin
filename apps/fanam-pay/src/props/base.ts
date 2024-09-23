@@ -52,6 +52,7 @@ export interface ProfileSideNavProps {
 
 export interface ProfileNavItemProps {
   label?: string
+  selectedIcon?: string | StaticImageData
   icon?: string | StaticImageData
   whiteIcon?: string
   path?: string
