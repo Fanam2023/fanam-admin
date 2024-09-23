@@ -588,6 +588,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           label: "Enter ZipCode",
           name: "zip_code",
           error: errZipCode,
+          inputRegex: REG_VALID_NUMBER,
           value: zip_code,
           onChangeValue,
         },

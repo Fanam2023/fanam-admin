@@ -539,6 +539,7 @@ const useHandler = (styles: IStyle) => {
         label: "PinCode",
         name: "zip_code",
         value: zip_code,
+        inputRegex: REG_VALID_NUMBER,
         error: errZipCode,
         onChangeValue,
       },
