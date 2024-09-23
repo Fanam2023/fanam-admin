@@ -18,7 +18,7 @@
   "dependencies": {
     "@custom/ui": "workspace:*",
     "@custom/utils": "workspace:*",
-    "@fanam-pkg/core-ui-sass": "^1.0.18",
+    "@fanam-pkg/core-ui-sass": "^1.0.19",
     "@fanam-pkg/core-utils": "^1.0.4",
     "@simplewebauthn/browser": "^10.0.0",
     "@tanstack/react-query": "^5.55.4",
