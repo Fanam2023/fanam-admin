@@ -109,7 +109,7 @@ export const useAuthController = () => {
       }
     } catch (error) {
       // ERROR_CEREMONY_ABORTED - AbortError
-      response.errorData.message = error?.message || "Something went wrong"
+      console.error(">>>>>>>>>>>>>>>>>: Error while loginWebAuth: ", error)
     }
 
     return response
@@ -214,15 +214,13 @@ export const useAuthController = () => {
         } else response.errorData = errorData
       }
     } catch (error) {
-      console.log(">>>>>>>>>>>>>>>>>: Error while registerWebAuth: ", error)
+      console.error(">>>>>>>>>>>>>>>>>: Error while registerWebAuth: ", error)
 
       // ERROR_PASSTHROUGH_SEE_CAUSE_PROPERTY - NotAllowedError
       // ERROR_AUTHENTICATOR_PREVIOUSLY_REGISTERED - InvalidStateError
       if (error.code === "ERROR_AUTHENTICATOR_PREVIOUSLY_REGISTERED") {
         loginWebAuth()
       }
-
-      response.errorData.message = error?.message || "Something went wrong"
     }
 
     return response

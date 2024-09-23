@@ -80,24 +80,22 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
 
   useEffect(() => {
     if (pathname === ROUTE_HOME || pathname === ROUTE_SENDER || transactionId || pathname.includes("auth/")) {
-      console.log(">>>>>>>>>>>>: ", pathname)
-
       resetTransaction()
     }
   }, [transactionId, pathname])
 
   const singOutUser = async () => {
     await logout({refreshToken})
-    replace(ROUTE_LOGIN)
-    removeCookie(COOKIE_ACCESS_TOKEN)
-    removeCookie(COOKIE_REFRESH_TOKEN)
     updateToken(null)
     updateRefreshToken(null)
     updateTransData(null)
     updateUserData(null)
     updateTransId(null)
+    removeCookie(COOKIE_ACCESS_TOKEN)
+    removeCookie(COOKIE_REFRESH_TOKEN)
     clearQueryCache()
     clearAllStorage()
+    replace(ROUTE_LOGIN)
   }
 
   const value: ISingleton = {
