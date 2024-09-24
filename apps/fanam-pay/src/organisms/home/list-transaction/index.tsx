@@ -80,10 +80,10 @@ export const ListTransaction = () => {
             <h5 className={`semi-bold ${styles.status_wrapper}`}>{statusLabel}</h5>
             <section className={`flex ${styles.price_wrapper}`}>
               <h4 className={`semi-bold ${styles.source_wrapper}`}>
-                {exchange_amount} {source_currency}
+                {exchange_amount.toFixed(2)} {source_currency}
               </h4>
               <h5 className={`semi-bold ${styles.destination_amount}`}>
-                {destination_amount} {currency}
+                {destination_amount.toFixed(2)} {currency}
               </h5>
             </section>
             <section className={`flex ${styles.view_more}`}>

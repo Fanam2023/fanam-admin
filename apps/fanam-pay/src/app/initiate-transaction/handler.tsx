@@ -86,7 +86,7 @@ export const useHandler = () => {
         const {final_amount, destination_amount, source_country, destination_country} = result
         setData({
           source_amount: `${final_amount.toFixed(2)}`,
-          destination_amount: `${destination_amount}`,
+          destination_amount: `${destination_amount.toFixed(2)}`,
           source_country,
           destination_country,
         })

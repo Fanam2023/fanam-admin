@@ -44,7 +44,7 @@ const InitiateTransactionPage = () => {
           {!!durationTime && !!transfer_time && (
             <section className={`flex ${styles.duration_wrapper}`}>
               <ImageView src={assets.ic_alarm} imgSize={24} alt="alarm" />
-              <p>Your session will end when the timer reaches</p>
+              <p>Important Note: Session becomes invalid at timer’s expiration</p>
               <h4 className={styles.duration_time}> {durationTime}</h4>
             </section>
           )}

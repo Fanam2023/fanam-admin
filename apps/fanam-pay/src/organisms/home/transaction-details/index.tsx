@@ -68,10 +68,10 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
           <h6 className={`semi-bold ${styles.payment_txt}`}>{statusLabel}</h6>
           <section className={`flex ${styles.amount_container}`}>
             <h5 className={`semi-bold ${styles.amount_inr}`}>
-              {exchange_amount} {source_currency}
+              {exchange_amount.toFixed(2)} {source_currency}
             </h5>
             <h5 className={`semi-bold ${styles.amount_usd}`}>
-              {destination_amount} {currency}
+              {destination_amount.toFixed(2)} {currency}
             </h5>
           </section>
         </section>
