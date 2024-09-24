@@ -11,6 +11,7 @@ export const useHandler = () => {
     email,
     country,
     zip_code,
+    relationship,
     state,
     city,
     account_no,
@@ -34,6 +35,7 @@ export const useHandler = () => {
       {key: "State", label: state_name},
       {key: "City", label: city_name},
       {key: "ZIP Code", label: zip_code},
+      {key: "Relationship", label: relationship},
     ]
 
     if (account_no) beneficiaryDetails.push({key: "Account Number", label: account_no})

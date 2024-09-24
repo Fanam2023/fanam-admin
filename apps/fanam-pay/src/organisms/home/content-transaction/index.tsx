@@ -28,7 +28,7 @@ export const ContentTransaction = ({transactionDetail}: ITransactionProps) => {
         </h5>
       </section>
       <section className={`flex ${styles.id_wrapper}`}>
-        <h5 className={styles.transaction_txt}>Transaction Number</h5>
+        <h5 className={styles.transaction_txt}>Reference Number</h5>
         <h5 className={`semi-bold ${styles.transaction_number}`}>{order_no}</h5>
       </section>
     </section>
