@@ -12,6 +12,7 @@ import {
   API_LOGIN,
   API_LOGIN_FINISH,
   API_LOGOUT,
+  API_LOGOUT_ALL_DEVICE,
   API_REGISTER_FINISH,
   API_REGISTER_START,
   API_SIGNUP,
@@ -163,6 +164,8 @@ export const useAuthController = () => {
 
   const logout = async (payload: ILogOutPayload) => await postRequest<IResponseLogin>(API_LOGOUT, payload)
 
+  const logoutAllDevice = async () => await postRequest(API_LOGOUT_ALL_DEVICE, {})
+
   const signUp = async (payload: IPayloadSignup) => {
     const {result, errorData} = await postRequest<IResponseUpdateUser>(API_SIGNUP, payload)
 
@@ -232,6 +235,7 @@ export const useAuthController = () => {
     forgotPin,
     getUser,
     logout,
+    logoutAllDevice,
     syncUser,
     signUp,
     registerWebAuth,

@@ -19,10 +19,11 @@ export interface ISingleton extends ISingletonData {
   updateToken: (token?: string) => void
   updateTransId: (transactionId?: string) => void
   updateRefreshToken: (token?: string) => void
-  singOutUser: () => void
+  singOutUser: (isSignOutFromAllDevices?: boolean) => Promise<void>
   refetchUser: () => void
   resetTransaction: () => void
   refetchTransaction: () => void
+  isSignOutFromAllDevices?: boolean
 }
 
 export interface IExchange {

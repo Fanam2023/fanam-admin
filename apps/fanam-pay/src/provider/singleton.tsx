@@ -19,7 +19,7 @@ import {
 
 export const SingletonProvider = ({children}: PropsWithChildren) => {
   const {setCookie, getCookie, removeCookie} = useCookies()
-  const {getUser, logout} = useAuthController()
+  const {getUser, logout, logoutAllDevice} = useAuthController()
   const {getTransactionDetails} = useTransactionController()
   const {clearQueryCache} = useReactQuery()
   const {replace} = useRouter()
@@ -84,8 +84,13 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     }
   }, [transactionId, pathname])
 
-  const singOutUser = async () => {
-    await logout({refreshToken})
+  const singOutUser = async (isSignOutFromAllDevices: boolean = false) => {
+    if (isSignOutFromAllDevices) {
+      await logoutAllDevice()
+    } else {
+      await logout({refreshToken})
+    }
+
     updateToken(null)
     updateRefreshToken(null)
     updateTransData(null)

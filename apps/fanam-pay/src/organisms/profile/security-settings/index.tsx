@@ -3,7 +3,7 @@ import {useRouter} from "next/navigation"
 import assets from "assets"
 import {useSingleton} from "hooks"
 import {ProfileNavItemProps} from "props"
-import {ROUTE_FORGOT_PIN, ROUTE_LOGIN, SECURITY_ARR} from "utils"
+import {ROUTE_FORGOT_PIN, SECURITY_ARR} from "utils"
 import styles from "./styles.module.sass"
 
 export const SecuritySettings = () => {
@@ -12,9 +12,9 @@ export const SecuritySettings = () => {
   const {togglePopup} = usePopup()
   const {singOutUser} = useSingleton()
 
-  const handleLogoutClick = (callback?: () => void) => {
+  const handleLogoutClick = (isSignOutFromAllDevices = false, callback?: () => void) => {
     const onConfirm = () => {
-      singOutUser()
+      singOutUser(isSignOutFromAllDevices)
       if (callback) callback()
       toggleDialog()
     }
@@ -33,12 +33,15 @@ export const SecuritySettings = () => {
     togglePopup()
     switch (label) {
       case "Change PIN":
-        handleLogoutClick(() => push(ROUTE_FORGOT_PIN))
+        handleLogoutClick(false, () => push(ROUTE_FORGOT_PIN))
         break
       case "Change Email":
         break
-      case "Log out of all devices":
-        handleLogoutClick(() => push(ROUTE_LOGIN))
+      case "Log Out":
+        handleLogoutClick(false, () => singOutUser(false))
+        break
+      case "Log Out of all devices":
+        handleLogoutClick(false, () => singOutUser(true))
         break
       default:
         null
