@@ -18,9 +18,9 @@ export const ContentTransaction = ({transactionDetail}: ITransactionProps) => {
   return (
     <section className={`flex-col ${styles.payment_container}`}>
       <h4 className={`bold ${styles.txt_wrapper}`}>Details</h4>
-      {transactionDetails({label: "You were going to send", value: `${exchange_amount.toFixed(2)} ${currency}`})}
-      {transactionDetails({label: "Transfer Fee", value: `${other_fee.toFixed(2)} ${currency}`})}
-      {transactionDetails({label: "Exchange Rate", value: `${markup_fee.toFixed(2)} ${currency}`})}
+      {transactionDetails({label: "You were going to send", value: `${exchange_amount?.toFixed(2)} ${currency}`})}
+      {transactionDetails({label: "Transfer Fee", value: `${other_fee?.toFixed(2)} ${currency}`})}
+      {transactionDetails({label: "Exchange Rate", value: `${markup_fee?.toFixed(2)} ${currency}`})}
       <section className={`flex ${styles.total_wrapper}`}>
         <h5 className={styles.transaction_txt}>Receiver will get Exactly</h5>
         <h5 className={`bold ${styles.total_usd}`}>

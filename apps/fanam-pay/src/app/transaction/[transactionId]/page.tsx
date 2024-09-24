@@ -100,7 +100,7 @@ const TransactionStatusPage = () => {
           <ImageView src={bigIcon} alt={"status-icon"} imgSize={56} />
           <h4 className={`bold ${styles.payment_text}`}>{title}</h4>
           <h4 className={`bold  ${styles.currency_text}`}>
-            {destination_country?.currency_symbol} {destination_amount.toFixed(2)}
+            {destination_country?.currency_symbol} {destination_amount?.toFixed(2)}
           </h4>
         </section>
         <section className={styles.source_payment_wrapper}>
@@ -118,7 +118,7 @@ const TransactionStatusPage = () => {
               <h5>Total Payment</h5>
               <h5 className={styles.source_payment}>
                 {source_country?.currency_symbol}
-                {final_amount.toFixed(2)}
+                {final_amount?.toFixed(2)}
               </h5>
             </section>
           </section>

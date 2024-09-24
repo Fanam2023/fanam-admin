@@ -93,7 +93,7 @@ const InitiateTransactionPage = () => {
               </section>
             </section>
             <h4 className={`bold ${styles.total_wrapper}`}>
-              {parseFloat(destination_amount).toFixed(2)} {currency}
+              {parseFloat(destination_amount)?.toFixed(2)} {currency}
             </h4>
           </section>
         </section>

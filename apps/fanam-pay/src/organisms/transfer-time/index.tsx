@@ -46,9 +46,9 @@ export const TransferTime = ({onSelect, transferTimeRes}: PropsTransferTime) => 
           </h4>
         </section>
         <ul className={`flex-col ${styles.fees_wrapper}`}>
-          {renderItem("Exchange Amount", parseFloat(exchange_rate).toFixed(2), isSelected)}
-          {renderItem("Fees", (parseFloat(other_fees) + parseFloat(markup_fee)).toFixed(2), isSelected)}
-          {renderItem("Total", parseFloat(final_rate).toFixed(2), true)}
+          {renderItem("Exchange Amount", parseFloat(exchange_rate)?.toFixed(2), isSelected)}
+          {renderItem("Fees", (parseFloat(other_fees) + parseFloat(markup_fee))?.toFixed(2), isSelected)}
+          {renderItem("Total", parseFloat(final_rate)?.toFixed(2), true)}
         </ul>
       </li>
     )

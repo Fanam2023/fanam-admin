@@ -62,7 +62,7 @@ const ReviewAndSend = () => {
         <section className={`flex-sb-center`}>
           <h5 className={styles.amount_title}>Receiver will get exactly</h5>
           <h5 className={`bold ${styles.amount}`}>
-            {`${destination_amount.toFixed(2)}  
+            {`${destination_amount?.toFixed(2)}  
             ${destinationCountryValue}`}
           </h5>
         </section>
