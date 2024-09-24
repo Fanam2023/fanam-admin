@@ -236,7 +236,14 @@ export const useHandler = () => {
 
   const showCountries = () =>
     toggleSlider({
-      children: <CountryPopup onSelect={onSelectCountry} selCountry={destination_country} countries={countries} />,
+      children: (
+        <CountryPopup
+          onSelect={onSelectCountry}
+          selCountry={destination_country}
+          countries={countries}
+          title="Choose Recipient Country"
+        />
+      ),
     })
 
   const onValidate = () => {
