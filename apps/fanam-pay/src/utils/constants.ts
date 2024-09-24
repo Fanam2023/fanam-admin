@@ -172,7 +172,11 @@ export const SECURITY_ARR: IFormData[] = [
     icon: assets.ic_email,
   },
   {
-    label: "Log out of all devices",
+    label: "Log Out",
+    icon: assets.ic_logout,
+  },
+  {
+    label: "Log Out of all devices",
     icon: assets.ic_logout,
   },
 ]
