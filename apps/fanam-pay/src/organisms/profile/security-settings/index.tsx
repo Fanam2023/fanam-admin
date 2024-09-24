@@ -1,52 +1,44 @@
 import {ImageView, useDialog, usePopup} from "@fanam-pkg/core-ui-sass"
-import {useRouter} from "next/navigation"
+import {TypeSignOut} from "@custom/utils"
 import assets from "assets"
 import {useSingleton} from "hooks"
 import {ProfileNavItemProps} from "props"
-import {ROUTE_FORGOT_PIN, SECURITY_ARR} from "utils"
+import {SECURITY_ARR} from "utils"
 import styles from "./styles.module.sass"
 
 export const SecuritySettings = () => {
-  const {push} = useRouter()
   const {toggleDialog} = useDialog()
   const {togglePopup} = usePopup()
   const {signOutUser} = useSingleton()
 
-  const onClickLogout = (isSignOutFromAllDevices = false, callback?: () => void) => {
-    const onConfirm = () => {
-      signOutUser(isSignOutFromAllDevices)
-      if (callback) callback()
-      toggleDialog()
-    }
-
-    const onClose = () => toggleDialog()
-
+  const showActionPopup = (actionText: string, message: string, type: TypeSignOut) => {
     toggleDialog({
-      primaryButtonText: "Logout",
+      primaryButtonText: actionText,
       secondaryButtonText: "Cancel",
-      message: "Are you sure you want to logout?",
-      onClickPrimary: onConfirm,
-      onClickSecondary: onClose,
+      message,
+      onClickPrimary: signOutUser.bind(null, type),
     })
   }
-  const handleSecurityClick = (label: string) => {
+
+  const onClickAction = (label: string) => {
     togglePopup()
     switch (label) {
       case "Change PIN":
-        onClickLogout(false, () => push(ROUTE_FORGOT_PIN))
+        showActionPopup("Change PIN", "Are you sure you want to reset/change your PIN?", "forgot-pin")
         break
       case "Change Email":
         break
       case "Log Out":
-        onClickLogout(false, () => signOutUser(false))
+        showActionPopup("Logout", "Are you sure you want to logout?", "logout")
         break
       case "Log Out of all devices":
-        onClickLogout(false, () => signOutUser(true))
+        showActionPopup("Logout", "Are you sure you want to logout from all the active devices?", "logout-all")
         break
       default:
         null
     }
   }
+
   const renderSecurity = ({label, icon}: ProfileNavItemProps, index: number) => (
     <li className={`flex ${styles.wrapper}`} key={index}>
       <ImageView src={icon} imgSize={28} alt={label} wrapperClass={styles.icon_wrapper} />
@@ -54,9 +46,9 @@ export const SecuritySettings = () => {
       <ImageView
         src={assets.ic_blue_arrow}
         imgSize={24}
-        alt={""}
+        alt="arrow"
         wrapperClass={styles.arrow_wrapper}
-        onClick={() => handleSecurityClick(label)}
+        onClick={() => onClickAction(label)}
       />
     </li>
   )
