@@ -455,7 +455,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!state) errState = {...errState, errState: "Please enter State", isValid: false}
 
-    if (!city) errState = {...errState, errCity: "Please enter District", isValid: false}
+    if (!city) errState = {...errState, errCity: "Please enter City/District", isValid: false}
 
     if (!zip_code) errState = {...errState, errZipCode: "Please enter Zip Code", isValid: false}
 
@@ -538,6 +538,7 @@ const useHandler = (styles: IStyle) => {
         options: countries,
         error: errCountry,
         value: country,
+        disabled: !!user?.country,
         onChangeValue: onChangeCountry,
       },
       {
@@ -748,7 +749,7 @@ const useHandler = (styles: IStyle) => {
             <>
               <section className={`flex-start ${styles.pan_wrapper} `}>
                 <TextField
-                  label="Enter Aadhaar Number"
+                  label="Aadhaar Number"
                   name="aadhaarNumber"
                   value={aadhaarNumber}
                   disabled={!!verifiedAadhaar}
@@ -807,7 +808,7 @@ const useHandler = (styles: IStyle) => {
           <>
             <section className={`flex-start ${styles.pan_wrapper}`}>
               <TextField
-                label="Enter Pan Number"
+                label="Pan Number"
                 name="pan"
                 value={pan}
                 onChangeData={onChangeValue}

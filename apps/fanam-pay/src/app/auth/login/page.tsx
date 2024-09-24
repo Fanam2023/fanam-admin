@@ -21,7 +21,7 @@ const Login = () => {
           </h5>
         </section>
         <TextField
-          label="Enter Phone Number"
+          label="Phone Number"
           name="phone_no"
           value={phone_no}
           maxLength={10}
@@ -31,7 +31,7 @@ const Login = () => {
           autoComplete="off"
         />
         <TextField
-          label="Enter PIN"
+          label="PIN"
           name="pin"
           type="password"
           value={pin}

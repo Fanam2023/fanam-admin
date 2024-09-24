@@ -39,7 +39,7 @@ const TransactionPurpose = () => {
           <TextArea
             maxLength={50}
             wrapperClass={styles.text_area}
-            label="Brief purpose of sending Money"
+            label="Please provide a brief note on your purpose of sending money"
             name="reason"
             value={reason}
             onChangeData={onChangeValue}
@@ -47,7 +47,7 @@ const TransactionPurpose = () => {
           />
         </section>
         <section className={styles.upload_wrapper}>
-          <h5 className={`bold ${styles.title}`}>Upload Supporting Document</h5>
+          <h5 className={`bold ${styles.title}`}>Upload Supporting Document (Optional)</h5>
           <p className={styles.child_text}>
             Upload the supporting document related to the purpose like Invoice, Way bills etc...
           </p>
