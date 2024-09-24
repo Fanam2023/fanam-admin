@@ -241,7 +241,7 @@ export const useHandler = () => {
           onSelect={onSelectCountry}
           selCountry={destination_country}
           countries={countries}
-          title="Choose Recipient Country"
+          title="select a country to choose the recipient currency"
         />
       ),
     })

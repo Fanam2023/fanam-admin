@@ -188,8 +188,7 @@ const useHandler = () => {
   const paymentDetails = useMemo(() => {
     const paymentDetails: IFormData[] = [
       {key: "Exchange Amount", label: `${exchange_amount} ${currency}`},
-      {key: "Transfer Fee", label: `${other_fee} ${currency}`},
-      {key: "Exchange rate", label: `${markup_fee} ${currency}`},
+      {key: "Others", label: `${other_fee + markup_fee} ${currency}`},
       {key: "Total Fees", label: `${final_amount} ${currency}`},
     ]
 
