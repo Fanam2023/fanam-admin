@@ -455,7 +455,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!state) errState = {...errState, errState: "Please enter State", isValid: false}
 
-    if (!city) errState = {...errState, errCity: "Please enter District", isValid: false}
+    if (!city) errState = {...errState, errCity: "Please enter City/District", isValid: false}
 
     if (!zip_code) errState = {...errState, errZipCode: "Please enter Zip Code", isValid: false}
 
@@ -538,6 +538,7 @@ const useHandler = (styles: IStyle) => {
         options: countries,
         error: errCountry,
         value: country,
+        disabled: !!user?.country,
         onChangeValue: onChangeCountry,
       },
       {

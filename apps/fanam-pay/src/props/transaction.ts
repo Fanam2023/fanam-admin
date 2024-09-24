@@ -5,6 +5,7 @@ export interface CountryPopupProps {
   onSelect: (currencyCode: ICountry) => void
   selCountry: ICountry | null
   countries: ICountry[]
+  title?: string
 }
 
 export interface ITransfer {
