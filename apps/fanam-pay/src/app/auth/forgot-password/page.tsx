@@ -28,7 +28,9 @@ const Forgot_Password = () => {
 
   const goToCountrySlider = () =>
     toggleSlider({
-      children: <CountryPopup onSelect={onSelectCountry} selCountry={country} countries={countries} />,
+      children: (
+        <CountryPopup onSelect={onSelectCountry} selCountry={country} countries={countries} title="Select Country" />
+      ),
     })
 
   useEffect(() => {
