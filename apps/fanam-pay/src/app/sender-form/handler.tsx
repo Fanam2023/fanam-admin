@@ -749,7 +749,7 @@ const useHandler = (styles: IStyle) => {
             <>
               <section className={`flex-start ${styles.pan_wrapper} `}>
                 <TextField
-                  label="Enter Aadhaar Number"
+                  label="Aadhaar Number"
                   name="aadhaarNumber"
                   value={aadhaarNumber}
                   disabled={!!verifiedAadhaar}
@@ -808,7 +808,7 @@ const useHandler = (styles: IStyle) => {
           <>
             <section className={`flex-start ${styles.pan_wrapper}`}>
               <TextField
-                label="Enter Pan Number"
+                label="Pan Number"
                 name="pan"
                 value={pan}
                 onChangeData={onChangeValue}
