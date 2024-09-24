@@ -5,7 +5,7 @@ import {CountryPopupProps} from "props"
 import styles from "./country.module.sass"
 import {useHandler} from "./handler"
 
-export const CountryPopup = ({onSelect, selCountry, countries}: CountryPopupProps) => {
+export const CountryPopup = ({onSelect, selCountry, countries, title}: CountryPopupProps) => {
   const {searchTerm, setSearchTerm} = useHandler()
 
   const filteredCountry = useMemo(
@@ -43,7 +43,7 @@ export const CountryPopup = ({onSelect, selCountry, countries}: CountryPopupProp
         onChangeData={onSearchChange}
         wrapperClass={styles.search_wrapper}
       />
-      <h3 className={styles.select_country_text}>Choose the recipiant currency</h3>
+      <h3 className={styles.select_country_text}>{title}</h3>
       {filteredCountry && filteredCountry.length > 0 ? (
         <ul className={styles.layout_wrapper}>{filteredCountry?.map(renderCountries)}</ul>
       ) : (
