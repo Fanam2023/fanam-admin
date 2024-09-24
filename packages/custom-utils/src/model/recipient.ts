@@ -21,7 +21,6 @@ export interface IRecipient {
   id_type: string
   id_issued_country: ICountry
   recipient_id?: string
-  recipient_relationship?: string
   bank_account: IBankAccount
   recipient_account_type: TypeAccount
   kyc_attachments: IAttachment[]
