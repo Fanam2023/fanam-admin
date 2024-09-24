@@ -16,6 +16,7 @@ export const useHandler = () => {
     city,
     zip_code,
     recipient_id,
+    recipient_relationship,
   } = transData?.recipient || {}
 
   const {country_name} = country || {}
@@ -39,6 +40,7 @@ export const useHandler = () => {
       {key: "State", label: state_name},
       {key: "City", label: city_name},
       {key: "ZIP Code", label: zip_code},
+      {key: "Relationship", label: recipient_relationship || "-"},
       {key: "Account Number", label: account_no},
       {key: "Account Type", label: account_type},
       {key: "Bank Name", label: bank_name},
