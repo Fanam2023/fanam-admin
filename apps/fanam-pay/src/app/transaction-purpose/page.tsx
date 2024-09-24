@@ -39,7 +39,7 @@ const TransactionPurpose = () => {
           <TextArea
             maxLength={50}
             wrapperClass={styles.text_area}
-            label="please provide a brief note on your purpose of sending money"
+            label="Please provide a brief note on your purpose of sending money"
             name="reason"
             value={reason}
             onChangeData={onChangeValue}
