@@ -51,7 +51,7 @@ const ReviewAndSend = () => {
         {!!durationTime && !!transfer_time && (
           <section className={`flex ${styles.duration_wrapper}`}>
             <ImageView src={assets.ic_alarm} imgSize={24} alt="alarm" />
-            <p>Your session will end when the timer reaches</p>
+            <p>Important Note: Session becomes invalid at timer’s expiration</p>
             <h4 className={styles.duration_time}> {durationTime}</h4>
           </section>
         )}
@@ -62,7 +62,7 @@ const ReviewAndSend = () => {
         <section className={`flex-sb-center`}>
           <h5 className={styles.amount_title}>Receiver will get exactly</h5>
           <h5 className={`bold ${styles.amount}`}>
-            {`${destination_amount.toFixed(2)}  
+            {`${destination_amount?.toFixed(2)}  
             ${destinationCountryValue}`}
           </h5>
         </section>
