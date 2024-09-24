@@ -93,7 +93,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     if (!first_name) errState = {...errState, errFirstName: "Please enter first Name", isValid: false}
 
     if (!last_name) errState = {...errState, errLastName: "Please enter last Name", isValid: false}
-    else if (last_name.length < 1)
+    else if (last_name)
       errState = {...errState, errLastName: "LastName must be longer than 1 characters", isValid: false}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
