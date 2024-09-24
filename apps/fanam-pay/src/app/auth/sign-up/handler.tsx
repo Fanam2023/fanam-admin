@@ -99,10 +99,10 @@ const useHandler = (styles: IStyle) => {
     // else toggleNotify({type: "error", title: "Only numbers are allowed"})
   }
 
-  useEffect(() => {
-    const storedData = getStorage<ISignupData>(SESSION_SIGNUP)
-    if (storedData) setData(storedData)
-  }, [])
+  // useEffect(() => {
+  //   const storedData = getStorage<ISignupData>(SESSION_SIGNUP)
+  //   if (storedData) setData(storedData)
+  // }, [])
 
   useEffect(() => {
     if (isClicked) setErrData(prev => ({...prev, ...onValidate()}))

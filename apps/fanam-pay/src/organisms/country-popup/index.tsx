@@ -38,7 +38,7 @@ export const CountryPopup = ({onSelect, selCountry, countries}: CountryPopupProp
   return (
     <section>
       <TextField
-        label="Enter country name"
+        label="country name"
         value={searchTerm}
         onChangeData={onSearchChange}
         wrapperClass={styles.search_wrapper}
