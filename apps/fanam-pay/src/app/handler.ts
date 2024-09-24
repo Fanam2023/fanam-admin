@@ -9,13 +9,10 @@ const useHandler = () => {
   const isKYCVerified =
     status === "Active" && kyc_details.length && kyc_details.every(({is_verified}) => is_verified) && address_line_1
 
-  const kycStatus = isKYCVerified ? "success" : "pending"
-
   return {
     status,
     first_name,
     isKYCVerified,
-    kycStatus,
     push,
   }
 }

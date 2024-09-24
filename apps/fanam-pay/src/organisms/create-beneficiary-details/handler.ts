@@ -99,7 +99,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
 
-    if (!phone_no) errState = {...errState, errNumber: "Please Confirm Ac Number", isValid: false}
+    if (!phone_no) errState = {...errState, errNumber: "Please enter your phone Number", isValid: false}
 
     if (!relationship)
       errState = {...errState, errRelation: "Please enter Your Relationship with sender", isValid: false}
@@ -108,7 +108,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
 
     if (!country) errState = {...errState, errCountry: "Please enter Country Name", isValid: false}
 
-    if (!state) errState = {...errState, errStateName: "Please enter Sate Name", isValid: false}
+    if (!state) errState = {...errState, errStateName: "Please enter State Name", isValid: false}
 
     if (!city) errState = {...errState, errCity: "Please enter Your City/District", isValid: false}
 
@@ -334,7 +334,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "text-area",
-          label: "Add Notes",
+          label: "Add Notes (Optional)",
           name: "notes",
           value: notes,
           onChangeValue,

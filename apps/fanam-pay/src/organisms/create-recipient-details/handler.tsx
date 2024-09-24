@@ -685,7 +685,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!state) errState = {...errState, errState: "Please select State", isValid: false}
 
-    if (!city) errState = {...errState, errCity: "Please select City", isValid: false}
+    if (!city) errState = {...errState, errCity: "Please select City/District", isValid: false}
 
     if (!zip_code) errState = {...errState, errZipCode: "Please enter PinCode", isValid: false}
 
