@@ -84,7 +84,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     }
   }, [transactionId, pathname])
 
-  const singOutUser = async (isSignOutFromAllDevices: boolean = false) => {
+  const signOutUser = async (isSignOutFromAllDevices: boolean = false) => {
     if (isSignOutFromAllDevices) {
       await logoutAllDevice()
     } else {
@@ -109,7 +109,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     transId,
     transData,
     updateUserData,
-    singOutUser,
+    signOutUser,
     updateToken,
     updateTransId,
     updateTransData,

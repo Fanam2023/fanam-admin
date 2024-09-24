@@ -10,11 +10,11 @@ export const SecuritySettings = () => {
   const {push} = useRouter()
   const {toggleDialog} = useDialog()
   const {togglePopup} = usePopup()
-  const {singOutUser} = useSingleton()
+  const {signOutUser} = useSingleton()
 
-  const handleLogoutClick = (isSignOutFromAllDevices = false, callback?: () => void) => {
+  const onClickLogout = (isSignOutFromAllDevices = false, callback?: () => void) => {
     const onConfirm = () => {
-      singOutUser(isSignOutFromAllDevices)
+      signOutUser(isSignOutFromAllDevices)
       if (callback) callback()
       toggleDialog()
     }
@@ -33,15 +33,15 @@ export const SecuritySettings = () => {
     togglePopup()
     switch (label) {
       case "Change PIN":
-        handleLogoutClick(false, () => push(ROUTE_FORGOT_PIN))
+        onClickLogout(false, () => push(ROUTE_FORGOT_PIN))
         break
       case "Change Email":
         break
       case "Log Out":
-        handleLogoutClick(false, () => singOutUser(false))
+        onClickLogout(false, () => signOutUser(false))
         break
       case "Log Out of all devices":
-        handleLogoutClick(false, () => singOutUser(true))
+        onClickLogout(false, () => signOutUser(true))
         break
       default:
         null
