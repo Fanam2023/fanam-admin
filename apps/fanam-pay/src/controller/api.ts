@@ -7,14 +7,14 @@ import {COOKIE_ACCESS_TOKEN} from "../utils"
 export const useApi = () => {
   const {getCookie} = useCookies()
   const {getJwtToken} = useJWT()
-  const {singOutUser, refreshToken, updateRefreshToken, updateToken} = useSingleton()
+  const {signOutUser, refreshToken, updateRefreshToken, updateToken} = useSingleton()
   const {getRequest, postRequest, putRequest, deleteRequest, apiInstance} = useFanamApi({
     refreshToken,
     baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL!,
     headers: {},
     refreshTokenEndpoint: API_REFRESH_TOKEN,
     updateToken,
-    singOutUser,
+    signOutUser,
     updateRefreshToken,
     interceptRequest: config => {
       try {

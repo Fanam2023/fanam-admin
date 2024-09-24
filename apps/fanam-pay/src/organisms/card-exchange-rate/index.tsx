@@ -18,7 +18,7 @@ export const CardExchangeRate = ({destination_country, source_country, conversio
       </section>
       <section className={`flex ${styles.text_wrapper}`}>
         <h5 className="bold">{currency_symbol}</h5>
-        <h5 className="bold">{conversion_rate.toFixed(2)}</h5>
+        <h5 className="bold">{conversion_rate?.toFixed(2)}</h5>
       </section>
     </section>
   )

@@ -1,4 +1,4 @@
-import {ITransaction, IUser} from "@custom/utils"
+import {ITransaction, IUser, TypeSignOut} from "@custom/utils"
 
 export interface IStepper {
   title: string
@@ -19,7 +19,7 @@ export interface ISingleton extends ISingletonData {
   updateToken: (token?: string) => void
   updateTransId: (transactionId?: string) => void
   updateRefreshToken: (token?: string) => void
-  singOutUser: () => void
+  signOutUser: (action?: TypeSignOut) => void
   refetchUser: () => void
   resetTransaction: () => void
   refetchTransaction: () => void

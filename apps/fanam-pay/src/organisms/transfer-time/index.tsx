@@ -11,7 +11,7 @@ export const TransferTime = ({onSelect, transferTimeRes}: PropsTransferTime) => 
   const {transfer_time} = transData || {}
   const {currency} = sourceCountry || {}
 
-  const renderItem = (label: string, value: string | number, isSelected: boolean) => (
+  const renderItem = (label: string, value: string, isSelected: boolean) => (
     <li className={`flex-sb-center ${styles.transfer_wrapper}`}>
       <h5 className={`${styles.text} ${isSelected ? styles.selected_text : ""}`}>{label}</h5>
       <h5 className={`${styles.text} ${isSelected ? styles.selected_text : ""}`}>
@@ -46,9 +46,9 @@ export const TransferTime = ({onSelect, transferTimeRes}: PropsTransferTime) => 
           </h4>
         </section>
         <ul className={`flex-col ${styles.fees_wrapper}`}>
-          {renderItem("Exchange Amount", exchange_rate, isSelected)}
-          {renderItem("Fees", (parseFloat(other_fees) + parseFloat(markup_fee)).toFixed(2), isSelected)}
-          {renderItem("Total", final_rate, true)}
+          {renderItem("Exchange Amount", parseFloat(exchange_rate)?.toFixed(2), isSelected)}
+          {renderItem("Fees", (parseFloat(other_fees) + parseFloat(markup_fee))?.toFixed(2), isSelected)}
+          {renderItem("Total", parseFloat(final_rate)?.toFixed(2), true)}
         </ul>
       </li>
     )

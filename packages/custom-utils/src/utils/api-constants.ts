@@ -4,6 +4,7 @@ export const API_LOGIN = `${API_AUTH}/login`
 export const API_FORGOTPIN = `${API_AUTH}/forgot-pin`
 export const API_REFRESH_TOKEN = "/refresh-token"
 export const API_LOGOUT = `/auth/logout`
+export const API_LOGOUT_ALL_DEVICE = `/auth/logout-all`
 export const API_USER_FCM = `${API_AUTH}/fcm`
 export const API_USER = "/user"
 export const API_GET_PROFILE = `${API_USER}/me`

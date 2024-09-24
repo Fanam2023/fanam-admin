@@ -2,7 +2,7 @@ import {useCookies, useReactQuery, useStorage} from "@fanam-pkg/core-utils"
 import {useParams, usePathname, useRouter} from "next/navigation"
 import {PropsWithChildren, useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
-import {ITransaction, IUser} from "@custom/utils"
+import {ITransaction, IUser, TypeSignOut} from "@custom/utils"
 import {SingletonContext} from "contexts"
 import {useAuthController, useTransactionController} from "controller"
 import {ISingleton} from "model"
@@ -12,6 +12,7 @@ import {
   COOKIE_TRANSACTION_ID,
   QUERY_TRANSACTION,
   QUERY_USER,
+  ROUTE_FORGOT_PIN,
   ROUTE_HOME,
   ROUTE_LOGIN,
   ROUTE_SENDER,
@@ -19,7 +20,7 @@ import {
 
 export const SingletonProvider = ({children}: PropsWithChildren) => {
   const {setCookie, getCookie, removeCookie} = useCookies()
-  const {getUser, logout} = useAuthController()
+  const {getUser, logout, logoutAllDevice} = useAuthController()
   const {getTransactionDetails} = useTransactionController()
   const {clearQueryCache} = useReactQuery()
   const {replace} = useRouter()
@@ -84,8 +85,10 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     }
   }, [transactionId, pathname])
 
-  const singOutUser = async () => {
-    await logout({refreshToken})
+  const signOutUser = async (action: TypeSignOut = "logout") => {
+    if (action === "logout-all") await logoutAllDevice()
+    else await logout({refreshToken})
+
     updateToken(null)
     updateRefreshToken(null)
     updateTransData(null)
@@ -95,7 +98,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     removeCookie(COOKIE_REFRESH_TOKEN)
     clearQueryCache()
     clearAllStorage()
-    replace(ROUTE_LOGIN)
+    replace(action === "forgot-pin" ? ROUTE_FORGOT_PIN : ROUTE_LOGIN)
   }
 
   const value: ISingleton = {
@@ -104,7 +107,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     transId,
     transData,
     updateUserData,
-    singOutUser,
+    signOutUser,
     updateToken,
     updateTransId,
     updateTransData,

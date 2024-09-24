@@ -9,7 +9,7 @@ export const useFanamApi = ({
   headers = {},
   refreshTokenEndpoint,
   updateToken,
-  singOutUser,
+  signOutUser,
   updateRefreshToken,
   interceptRequest,
   interceptErrorResponse,
@@ -41,19 +41,19 @@ export const useFanamApi = ({
 
               return await apiInstance.request(err.config)
             } else {
-              singOutUser()
+              signOutUser()
               return interceptErrorResponse(Promise.reject(response))
             }
           } else {
-            singOutUser()
+            signOutUser()
             return interceptErrorResponse(Promise.reject(err))
           }
         } catch (error) {
           console.error(">>>>>>>>>>>>>>> ERROR while refreshing the token: ", error)
-          singOutUser()
+          signOutUser()
           return interceptErrorResponse(Promise.reject(error))
         }
-      } else if (status === 420) singOutUser()
+      } else if (status === 420) signOutUser()
       return interceptErrorResponse(Promise.reject(err))
     },
   })

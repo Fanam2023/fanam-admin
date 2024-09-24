@@ -25,5 +25,5 @@ export interface IFanamApiManager extends IApiManagerData {
   refreshTokenEndpoint: string
   updateToken: (token: string) => void
   updateRefreshToken: (token: string) => void
-  singOutUser: () => void
+  signOutUser: () => void
 }

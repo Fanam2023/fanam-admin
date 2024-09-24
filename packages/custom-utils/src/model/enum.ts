@@ -85,3 +85,5 @@ export type TypeOrderStatus =
   | "Refund_in_progress"
   | "Refunded_successfully"
   | "Refund_failed"
+
+export type TypeSignOut = "logout" | "forgot-pin" | "logout-all"
