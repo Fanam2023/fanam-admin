@@ -24,7 +24,7 @@ export const ContentTransaction = ({transactionDetail}: ITransactionProps) => {
       <section className={`flex ${styles.total_wrapper}`}>
         <h5 className={styles.transaction_txt}>Receiver will get Exactly</h5>
         <h5 className={`bold ${styles.total_usd}`}>
-          {destination_amount} {destination_currency}
+          {destination_amount?.toFixed(2)} {destination_currency}
         </h5>
       </section>
       <section className={`flex ${styles.id_wrapper}`}>

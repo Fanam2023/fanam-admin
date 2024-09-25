@@ -79,23 +79,27 @@ const InitiateTransactionPage = () => {
             </section>
           </section>
           <TransferTime onSelect={onSelect} transferTimeRes={fxRes} />
-          <section className={`flex-sb-center ${styles.total_background}`}>
-            <section className={styles.receiver_wrapper}>
-              <h5>Receiver will get exactly</h5>
-              <section className="flex">
-                <ImageView src={assets.ic_power} alt="" imgSize={24} />
-                <h5 className={styles.hour_wrapper}>
-                  Transfer in
-                  {sla_timing_min !== sla_timing_max
-                    ? `${sla_timing_min} - ${sla_timing_max} hours`
-                    : `${sla_timing_min} hours`}
-                </h5>
+          {destination_amount ? (
+            <section className={`flex-sb-center ${styles.total_background}`}>
+              <section className={styles.receiver_wrapper}>
+                <h5>Receiver will get exactly</h5>
+                <section className="flex">
+                  <ImageView src={assets.ic_power} alt="" imgSize={24} />
+                  <h5 className={styles.hour_wrapper}>
+                    Transfer in
+                    {sla_timing_min !== sla_timing_max
+                      ? `${sla_timing_min} - ${sla_timing_max} hours`
+                      : `${sla_timing_min} hours`}
+                  </h5>
+                </section>
               </section>
+              <h4 className={`bold ${styles.total_wrapper}`}>
+                {parseFloat(destination_amount)?.toFixed(2)} {currency}
+              </h4>
             </section>
-            <h4 className={`bold ${styles.total_wrapper}`}>
-              {parseFloat(destination_amount)?.toFixed(2)} {currency}
-            </h4>
-          </section>
+          ) : (
+            <></>
+          )}
         </section>
       </section>
     </BaseContainer>
