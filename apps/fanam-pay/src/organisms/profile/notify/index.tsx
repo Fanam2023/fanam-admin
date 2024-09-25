@@ -1,18 +1,18 @@
 "use client"
 
-import {useState} from "react"
 import {ToggleButton} from "organisms"
 import {ProfileNavItemProps} from "props"
 import {NOTIFY} from "utils"
+import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const Notify = () => {
-  const [toggle, setToggle] = useState(false)
+  const {handleToggle, toggles} = useHandler()
 
   const renderNotification = ({label}: ProfileNavItemProps, index: number) => (
     <li className={`flex-sb-center ${styles.wrapper}`} key={index}>
       <p className={styles.security_name}>{label}</p>
-      <ToggleButton toggled={toggle} onToggle={setToggle} />
+      <ToggleButton toggled={!!toggles[index]} onToggle={() => handleToggle(index)} />
     </li>
   )
 
