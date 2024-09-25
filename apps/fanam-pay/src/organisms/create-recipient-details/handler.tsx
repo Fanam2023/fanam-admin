@@ -43,7 +43,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {isValidInputByRegex} = useCommon()
   const {refreshQuery} = useReactQuery()
   const {getTransactionCountries, getCities, getStates} = useLocationController()
-  const {createRecipient, updateRecipient, getByRecipientId} = useRecipientController()
+  const {createRecipient, removeAttachment, updateRecipient, getByRecipientId} = useRecipientController()
   const {refetchTransaction} = useSingleton()
 
   const {toggleNotify} = useNotifyPopup()
@@ -142,28 +142,31 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     errRoutingCode,
   } = errData
 
-  const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}, {data: recipientData}] = useQueries(
-    {
-      queries: [
-        {queryKey: [QUERY_COUNTRIES], queryFn: getTransactionCountries},
-        {
-          queryKey: [`${QUERY_STATES}-${country?.key}`, country],
-          queryFn: () => getStates(country?.key),
-          enabled: !!country,
-        },
-        {
-          queryKey: [`${QUERY_CITIES}-${state?.key}`, state],
-          queryFn: () => getCities(state?.key),
-          enabled: !!state,
-        },
-        {
-          queryKey: [`${QUERY_RECIPIENT}-${recipientId}`, state],
-          queryFn: () => getByRecipientId(recipientId),
-          enabled: !!recipientId,
-        },
-      ],
-    }
-  )
+  const [
+    {data: allCountries = []},
+    {data: allStates = []},
+    {data: allCities = []},
+    {data: recipientData, refetch: refetchRecipient},
+  ] = useQueries({
+    queries: [
+      {queryKey: [QUERY_COUNTRIES], queryFn: getTransactionCountries},
+      {
+        queryKey: [`${QUERY_STATES}-${country?.key}`, country],
+        queryFn: () => getStates(country?.key),
+        enabled: !!country,
+      },
+      {
+        queryKey: [`${QUERY_CITIES}-${state?.key}`, state],
+        queryFn: () => getCities(state?.key),
+        enabled: !!state,
+      },
+      {
+        queryKey: [`${QUERY_RECIPIENT}-${recipientId}`, state],
+        queryFn: () => getByRecipientId(recipientId),
+        enabled: !!recipientId,
+      },
+    ],
+  })
 
   const {mutate: addRecipient} = useMutation({
     mutationKey: [QUERY_RECIPIENT],
@@ -188,6 +191,26 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         toggleNotify({type: "success", title: "Recipient updated Successfully"})
         toggleSlider()
       } else toggleNotify({type: "error", title: errorData?.message})
+    },
+  })
+
+  const {mutate: deleteFile} = useMutation({
+    mutationKey: [QUERY_RECIPIENT],
+    mutationFn: removeAttachment,
+    onSuccess: ({result, errorData}) => {
+      const {message} = errorData || {}
+      if (result) {
+        toggleNotify({
+          type: "success",
+          title: "Removed attachment successfully",
+        })
+      } else {
+        toggleNotify({
+          type: "error",
+          title: message || "Something went wrong",
+        })
+      }
+      refetchRecipient()
     },
   })
 
@@ -284,7 +307,10 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         iban_no,
         bsb_code,
         account_type: account_type as TypeBankAccount,
-        kyc: kyc_attachments?.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
+        kyc: kyc_attachments?.map(({url, attachment_id}) => ({
+          attachment: {id: attachment_id, url},
+          onClickRemove: deleteFile.bind(null, attachment_id),
+        })),
         recipient_account_type,
         business_name,
         is_send_email: {isSelected: is_send_email, label: "Send reconciliation report to your recipient’s Mail?"},
@@ -758,6 +784,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     formElements,
     isDesktop,
     toggleSlider,
+    deleteFile,
   }
 }
 
