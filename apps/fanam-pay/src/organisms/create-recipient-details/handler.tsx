@@ -197,8 +197,11 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {mutate: deleteFile} = useMutation({
     mutationKey: [QUERY_RECIPIENT],
     mutationFn: removeAttachment,
-    onSuccess: ({result, errorData}) => {
+    onSuccess: ({result, errorData}, attachmentId) => {
       const {message} = errorData || {}
+      const curData = {...data}
+      curData.kyc = curData.kyc.filter(({attachment}) => attachment.id !== attachmentId)
+      setData(curData)
       if (result) {
         toggleNotify({
           type: "success",
@@ -210,7 +213,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           title: message || "Something went wrong",
         })
       }
-      refetchRecipient()
     },
   })
 
