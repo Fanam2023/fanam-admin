@@ -13,13 +13,14 @@ export type TypePurpose =
   | "Travel"
   | "Hospital"
   | "Insurance"
-  | "Living_expenses"
+  | "Living_expense"
   | "Rent"
   | "Retail"
   | "Payroll_and_pension"
   | "Import_and_export"
   | "Legal_fees"
   | "Others"
+  | "Goods_purchase"
 
 export type TypeStatus = "Active" | "Blocked" | "locked" | "In_active"
 
