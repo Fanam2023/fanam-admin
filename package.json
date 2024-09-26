@@ -19,7 +19,7 @@
     "start:pay": "cd apps/fanam-pay && pnpm start",
     "start:crm": "cd apps/fanam-crm && pnpm start",
     "start:admin": "cd apps/fanam-admin && pnpm start",
-    "build": "pnpm build:pay && pnpm build:crm && pnpm build:admin"
+    "build": "pnpm build:pay"
   },
   "devDependencies": {
     "@turbo/gen": "^2.1.1",
