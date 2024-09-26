@@ -6,9 +6,10 @@ import {useRouter} from "next/navigation"
 import assets from "assets"
 import {useSingleton} from "hooks"
 import {IStepper} from "model"
-import {ProfileDetails} from "organisms"
+import {ProfileDetails, SidePanel} from "organisms"
 import {BaseContainerProps} from "props"
 import {SIDE_BAR} from "utils"
+import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({
@@ -30,6 +31,7 @@ export const BaseContainer = ({
   const {isDesktop} = useResize()
   const {back} = useRouter()
   const {togglePopup} = usePopup()
+  const {sideNav, setSideNav} = useHandler()
 
   const onClickBack = () => {
     if (onBack) onBack()
@@ -94,10 +96,11 @@ export const BaseContainer = ({
               )}
             </>
           ) : (
-            <ImageView src={assets.ic_menu} alt="menu-icon" imgSize={24} />
+            <ImageView src={assets.ic_menu} alt="menu-icon" imgSize={24} onClick={setSideNav.bind(null, !sideNav)} />
           )}
         </section>
       </header>
+      {sideNav && <SidePanel />}
       {isDesktop ? (
         isStepper ? (
           <section className={`flex-start ${styles.children_wrapper}`}>
