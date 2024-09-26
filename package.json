@@ -1,7 +1,6 @@
 {
   "name": "fanam-pay-web-pwa",
   "scripts": {
-    "build-dev": "turbo run build-dev --no-daemon --concurrency=15",
     "start": "turbo run start --no-daemon --concurrency=15",
     "dev": "turbo run dev --parallel --no-daemon --concurrency=15",
     "lint": "turbo run lint --parallel --no-daemon --concurrency=15",
@@ -17,13 +16,9 @@
     "build:pay": "cd apps/fanam-pay && pnpm build",
     "build:crm": "cd apps/fanam-crm && pnpm build",
     "build:admin": "cd apps/fanam-admin && pnpm build",
-    "build-dev:pay": "cd apps/fanam-pay && pnpm build-dev",
-    "build-dev:crm": "cd apps/fanam-crm && pnpm build-dev",
-    "build-dev:admin": "cd apps/fanam-admin && pnpm build-dev",
     "start:pay": "cd apps/fanam-pay && pnpm start",
     "start:crm": "cd apps/fanam-crm && pnpm start",
     "start:admin": "cd apps/fanam-admin && pnpm start",
-    "build:dev": "pnpm build-dev:pay && pnpm build-dev:crm && pnpm build-dev:admin",
     "build": "pnpm build:pay && pnpm build:crm && pnpm build:admin"
   },
   "devDependencies": {
