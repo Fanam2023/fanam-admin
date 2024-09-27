@@ -188,8 +188,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/custom-utils
       '@fanam-pkg/core-ui-sass':
-        specifier: ^1.0.22
-        version: 1.0.22(@babel/core@7.25.2)(sass@1.78.0)
+        specifier: ^1.0.23
+        version: 1.0.23(@babel/core@7.25.2)(sass@1.78.0)
       '@fanam-pkg/core-utils':
         specifier: ^1.0.4
         version: 1.0.4(react@18.3.1)
@@ -1064,6 +1064,9 @@ packages:
 
   '@fanam-pkg/core-ui-sass@1.0.22':
     resolution: {integrity: sha512-E3OuqW3jkGAGMAZ8ndw8/EGxHLwoTp67inHtWpgM6PpQ58dwpecB1ZamWYb9L9IyCFGmFG+tXpPDhqkk7Nwmig==}
+
+  '@fanam-pkg/core-ui-sass@1.0.23':
+    resolution: {integrity: sha512-g1duUbQxqlG+8mZ05PxomGbfguUj1J4Q3uKuKbZ+jOCgFMPgajFCDk+eO6EJKBk/MYB/oNfxAEx5mPHL7amLYA==}
 
   '@fanam-pkg/core-utils@1.0.4':
     resolution: {integrity: sha512-dyUsmbqAwu4G2SCfT9zpI8FRR12cC3ehqxcJXOx/9Dunx8stAeu85a1MmMJHDrPkhgopIad7PCNnTmzuInt9Fw==}
@@ -5518,6 +5521,22 @@ snapshots:
   '@eslint/js@8.57.0': {}
 
   '@fanam-pkg/core-ui-sass@1.0.22(@babel/core@7.25.2)(sass@1.78.0)':
+    dependencies:
+      '@fanam-pkg/core-utils': 1.0.4(react@18.3.1)
+      next: 14.2.9(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.78.0)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-multi-carousel: 2.8.5
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@opentelemetry/api'
+      - '@playwright/test'
+      - '@react-native-async-storage/async-storage'
+      - babel-plugin-macros
+      - debug
+      - sass
+
+  '@fanam-pkg/core-ui-sass@1.0.23(@babel/core@7.25.2)(sass@1.78.0)':
     dependencies:
       '@fanam-pkg/core-utils': 1.0.4(react@18.3.1)
       next: 14.2.9(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.78.0)
