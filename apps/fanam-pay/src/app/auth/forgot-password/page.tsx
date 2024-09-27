@@ -1,7 +1,7 @@
 "use client"
 
 import {Button, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
-import {REG_VALID_NUMBER} from "@fanam-pkg/core-utils"
+import {REG_VALID_NUMBER, useResize} from "@fanam-pkg/core-utils"
 import {useEffect} from "react"
 import {useSlider} from "@custom/ui"
 import {ICountry} from "@custom/utils"
@@ -17,6 +17,7 @@ const Forgot_Password = () => {
   const {phone_no, country} = data
   const {errPhoneNo} = errData
   const {getFlagUrl} = useCommon()
+  const {isDesktop} = useResize()
 
   const onSelectCountry = (country: ICountry) => {
     setData(prev => ({
@@ -45,24 +46,32 @@ const Forgot_Password = () => {
           <h5 className={styles.description}>Enter your registered mobile number to receive a 6-digit code.</h5>
         </section>
         <section className={`flex-start ${styles.input_wrapper}`}>
-          <section className={`flex ${styles.country_wrapper}`} onClick={goToCountrySlider}>
+          <section className={`flex ${styles.country_wrapper}`}>
             <ImageView
               src={country ? getFlagUrl(country) : assets.ic_world}
               alt="country-img"
-              imgSize={24}
+              imgSize={isDesktop ? 30 : 26}
               wrapperClass={styles.flag}
             />
             {country ? `+${country.phone_code}` : "-"}
+            <ImageView
+              src={assets.ic_down_arrow_theme}
+              alt="down-arrow"
+              imgSize={32}
+              onClick={goToCountrySlider}
+              wrapperClass={styles.country_arrow}
+            />
+            <TextField
+              label="Phone Number"
+              name="phone_no"
+              value={phone_no}
+              onChangeData={onChangeValue}
+              error={errPhoneNo}
+              wrapperClass={styles.phone_number}
+              inputRegex={REG_VALID_NUMBER}
+              isRequired={false}
+            />
           </section>
-          <TextField
-            label="Phone Number"
-            name="phone_no"
-            value={phone_no}
-            onChangeData={onChangeValue}
-            error={errPhoneNo}
-            maxLength={10}
-            inputRegex={REG_VALID_NUMBER}
-          />
         </section>
         <Button wrapperClass={styles.button_wrapper} onClick={onSubmit}>
           Next

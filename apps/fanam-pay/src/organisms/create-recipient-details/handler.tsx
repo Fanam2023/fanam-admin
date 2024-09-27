@@ -613,7 +613,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "ZipCode",
+          label: "PIN Code",
           name: "zip_code",
           error: errZipCode,
           inputRegex: REG_VALID_NUMBER,
@@ -715,7 +715,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!city) errState = {...errState, errCity: "Please select City/District", isValid: false}
 
-    if (!zip_code) errState = {...errState, errZipCode: "Please enter PinCode", isValid: false}
+    if (!zip_code) errState = {...errState, errZipCode: "Please enter PIN Code", isValid: false}
 
     if (!id_issued_country)
       errState = {...errState, errIdIssuedCountry: "Please Select ID issued Country", isValid: false}
