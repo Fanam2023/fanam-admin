@@ -78,7 +78,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!first_name) errState = {...errState, errFirstName: "Please enter FirstName", isValid: false}
 
-    if (!last_name) errState = {...errState, errLastName: "LastName must be longer than 1 characters", isValid: false}
+    if (!last_name) errState = {...errState, errLastName: "Please enter LastName", isValid: false}
 
     if (!phone_no) errState = {...errState, errPhoneNo: "Please enter PhoneNumber", isValid: false}
     else if (!country) errState = {...errState, errCountryCode: "Please choose your country code", isValid: false}

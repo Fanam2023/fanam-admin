@@ -90,14 +90,14 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   const onValidate = () => {
     let errState = {...DEFAULT_ERROR_STATE, isValid: true, isClicked: true}
 
-    if (!first_name) errState = {...errState, errFirstName: "Please enter first Name", isValid: false}
+    if (!first_name) errState = {...errState, errFirstName: "Please enter FirstName", isValid: false}
 
-    if (!last_name) errState = {...errState, errLastName: "LastName must be longer than 1 characters", isValid: false}
+    if (!last_name) errState = {...errState, errLastName: "Please enter LastName", isValid: false}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
 
-    if (!phone_no) errState = {...errState, errNumber: "Please enter your phone Number", isValid: false}
+    if (!phone_no) errState = {...errState, errNumber: "Please enter your PhoneNumber", isValid: false}
 
     if (!relationship)
       errState = {...errState, errRelation: "Please enter Your Relationship with sender", isValid: false}

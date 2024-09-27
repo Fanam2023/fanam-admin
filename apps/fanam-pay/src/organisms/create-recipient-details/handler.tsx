@@ -542,7 +542,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       childElements: [
         {
           elementType: "checkbox",
-          label: "Send reconciliation report to your recipient’s Mail?",
           name: "is_send_email",
           value: is_send_email,
           option: is_send_email,
@@ -680,7 +679,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!first_name) errState = {...errState, errFirstName: "Please enter FirstName", isValid: false}
 
-    if (!last_name) errState = {...errState, errLastName: "LastName must be longer than 1 characters", isValid: false}
+    if (!last_name) errState = {...errState, errLastName: "Please enter LastName", isValid: false}
 
     if (!account_no) errState = {...errState, errAccountNo: "Please enter AccountNumber", isValid: false}
 

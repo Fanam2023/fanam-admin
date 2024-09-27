@@ -12,7 +12,7 @@ const SenderForm = () => {
     <BaseContainer
       childWrapper={styles.page_container}
       backIcon={false}
-      buttonText="Next"
+      buttonText="Submit"
       onSubmit={onSubmit}
       skipBtn="Back"
       // disabled={!isValid}
