@@ -328,43 +328,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     if (country) setData(prev => ({...prev, id_issued_country: country}))
   }, [country])
 
-  const validateField = (value: string, regex: RegExp, errorMessage: string, errorKey: string) => {
-    const isValid = regex.test(value)
-    setErrData(prev => ({
-      ...prev,
-      [errorKey]: isValid ? "" : errorMessage,
-    }))
-    return isValid
-  }
-
-  const validateFields = (value: JSONObject) => {
-    let isValid = true
-    if (typeof value.first_name === "string")
-      isValid =
-        validateField(
-          value.first_name,
-          /^[a-zA-Z]*$/,
-          "First Name can only contain alphabetic characters.",
-          "errFirstName"
-        ) && isValid
-
-    if (typeof value.last_name === "string")
-      isValid =
-        validateField(
-          value.last_name,
-          /^[a-zA-Z]*$/,
-          "Last Name can only contain alphabetic characters.",
-          "errLastName"
-        ) && isValid
-
-    if (typeof value.zip_code === "string")
-      isValid = validateField(value.zip_code, /^\d*$/, "Zip code must be numeric only", "errZipCode") && isValid
-    return isValid
-  }
-
-  const onChangeValue = (value: JSONObject) => {
-    if (validateFields(value)) setData(prev => ({...prev, ...value}))
-  }
+  const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
 
   const onChangeCountry = (value: JSONObject) => onChangeValue({...value, state: null, city: null})
 
