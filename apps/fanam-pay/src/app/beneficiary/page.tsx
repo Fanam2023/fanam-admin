@@ -39,7 +39,7 @@ const BeneficiaryPage = () => {
         <TextField
           type="text"
           isRequired={false}
-          label="Search beneficiary.."
+          label="Search beneficiary..."
           wrapperClass={styles.search_wrapper}
           leadingIcon={searchQuery.length ? null : assets.ic_search}
           onChangeData={onChangeSearch}></TextField>

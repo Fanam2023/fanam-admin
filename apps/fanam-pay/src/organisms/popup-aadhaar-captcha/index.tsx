@@ -14,7 +14,13 @@ export const PopupAadhaarCaptcha = (props: PropsPopupAadhaarCaptcha) => {
     <section className={styles.popup_wrapper}>
       <h4 className={`bold ${styles.title}`}>Verify Aadhaar</h4>
       <section className={`${styles.captcha_wrapper}`}>
-        <TextField label="Enter Captcha" onChangeData={onChangeData} value={captcha} error={errorText} />
+        <TextField
+          label="Enter Captcha"
+          onChangeData={onChangeData}
+          value={captcha}
+          error={errorText}
+          isRequired={false}
+        />
         <ImageView
           src={`data:image/jpeg;base64,${captchaCode}`}
           alt="captcha"

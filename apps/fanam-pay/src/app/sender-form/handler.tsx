@@ -457,7 +457,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!city) errState = {...errState, errCity: "Please enter City/District", isValid: false}
 
-    if (!zip_code) errState = {...errState, errZipCode: "Please enter Zip Code", isValid: false}
+    if (!zip_code) errState = {...errState, errZipCode: "Please enter PIN Code", isValid: false}
 
     if (!account_type) errState = {...errState, errAccountType: "Please enter account type", isValid: false}
 
@@ -529,6 +529,7 @@ const useHandler = (styles: IStyle) => {
         label: "Address Line 2 (Optional)",
         name: "address_line_2",
         value: address_line_2,
+        isRequired: false,
         onChangeValue,
       },
       {
