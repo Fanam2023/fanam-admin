@@ -58,7 +58,7 @@ const ReviewAndSend = () => {
         <section className={`flex-sb-center ${styles.header}`}>
           <h5 className={styles.edit_text}>Conversion Details</h5>
         </section>
-        <ul>{paymentDetails?.map(renderPaymentDetails)}</ul>
+        <ul className={styles.details_wrapper}>{paymentDetails?.map(renderPaymentDetails)}</ul>
         <section className={`flex-sb-center`}>
           <h5 className={styles.amount_title}>Receiver will get exactly</h5>
           <h5 className={`bold ${styles.amount}`}>
@@ -70,7 +70,9 @@ const ReviewAndSend = () => {
         <section className={`flex-sb-center ${styles.header}`}>
           <h5 className={styles.edit_text}>Recipient Details</h5>
         </section>
-        <ul>{(recipient ? recipientDetails : recipientDetails?.slice(0, 4))?.map(renderPaymentDetails)}</ul>
+        <ul className={styles.details_wrapper}>
+          {(recipient ? recipientDetails : recipientDetails?.slice(0, 4))?.map(renderPaymentDetails)}
+        </ul>
         <h6 className={`bold ${styles.amount}`} onClick={() => toggleDetails("recipient")}>
           {recipient ? "See less" : "See more"}
         </h6>
@@ -78,7 +80,9 @@ const ReviewAndSend = () => {
         <section className={`flex-sb-center ${styles.header}`}>
           <h5 className={styles.edit_text}>Beneficiary Details</h5>
         </section>
-        <ul>{(beneficiary ? beneficiaryDetails : beneficiaryDetails?.slice(0, 4))?.map(renderPaymentDetails)}</ul>
+        <ul className={styles.details_wrapper}>
+          {(beneficiary ? beneficiaryDetails : beneficiaryDetails?.slice(0, 4))?.map(renderPaymentDetails)}
+        </ul>
         <h6 className={`bold ${styles.amount}`} onClick={() => toggleDetails("beneficiary")}>
           {beneficiary ? "See less" : "See more"}
         </h6>

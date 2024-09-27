@@ -1,5 +1,5 @@
 import {FormSectionProps, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
-import {JSONObject, REG_EMAIL, REG_INDIAN_MOBILE, REG_VALID_NUMBER, useResize, useStorage} from "@fanam-pkg/core-utils"
+import {JSONObject, REG_EMAIL, REG_INDIAN_MOBILE, REG_VALID_NUMBER, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useCallback, useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
@@ -16,7 +16,6 @@ const useHandler = (styles: IStyle) => {
   const {getStorage, setStorage} = useStorage()
   const {toggleSlider} = useSlider()
   const {push} = useRouter()
-  const {isDesktop} = useResize()
   const [data, setData] = useState<ISignupData>({
     business_name: "",
     first_name: "",
@@ -160,7 +159,8 @@ const useHandler = (styles: IStyle) => {
                 <ImageView
                   src={country ? getFlagUrl(country) : assets.ic_world}
                   alt="country-img"
-                  imgSize={isDesktop ? 30 : 26}
+                  imgHeight={27}
+                  imgWidth={35}
                   wrapperClass={styles.flag}
                 />
                 <h5 className={styles.country_code}>{country ? `+${country.phone_code}` : "-"}</h5>

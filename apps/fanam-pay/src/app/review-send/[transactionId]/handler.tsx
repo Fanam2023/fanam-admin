@@ -53,6 +53,7 @@ const useHandler = () => {
     order,
     expiration_time,
     transfer_time,
+    recipient_relationship,
   } = transactionDetail || {}
 
   useEffect(() => {
@@ -137,6 +138,7 @@ const useHandler = () => {
       {key: "Bank Name", label: bank_name},
       {key: "Branch", label: branch_code},
       {key: "Branch Address", label: branch_address},
+      !!recipient_relationship && {key: "Sender's relationship with the Recipient", label: recipient_relationship},
     ]
 
     if (swift_code) recipientDetails.push({key: "Swift Code", label: swift_code})
@@ -176,7 +178,7 @@ const useHandler = () => {
       {key: "State", label: state_name},
       {key: "City", label: city_name},
       {key: "PIN Code", label: zip_code},
-      {key: "RelationShip", label: relationship},
+      {key: "Sender's relationship with the Beneficiary", label: relationship},
     ]
 
     if (account_no) beneficiaryDetails.push({key: "Account Number", label: account_no})
