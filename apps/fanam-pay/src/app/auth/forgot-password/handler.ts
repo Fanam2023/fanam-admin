@@ -53,8 +53,8 @@ const useHandler = () => {
   const onChangeValue = (value: JSONObject) => {
     const phoneNO = (value?.phone_no as string) || ""
     const isValid = phoneNO === "" || isValidInputByRegex(phoneNO, REG_VALID_NUMBER)
-    if (isValid) setData(prev => ({...prev, ...value}))
-    else toggleNotify({type: "error", title: "Only numbers are allowed"})
+    if (isValid && phoneNO.length <= 10) setData(prev => ({...prev, ...value}))
+    // else toggleNotify({type: "error", title: "Enter valid mobile"})
   }
 
   useEffect(() => {

@@ -45,25 +45,27 @@
 
 .country_container
   display: grid
-  grid-template-columns: 0.2fr 2fr
-  gap: $size-24px
-  margin-top: $size-20px
+  grid-template-columns: 1fr
 
 .country_wrapper
   border: $size-1px solid $medium-grey
-  width: $size-64px
-  padding: $size-16px
+  padding: 0 $size-8px
   border-radius: $size-10px
-  height: fit-content
 
 .flag
-  border-radius: $size-12px
+  border-radius: 50%
+
+.phone_number
+  border: none !important
+
+.country_code
+  margin-left: $size-6px
 
 @include mixin-responsive
 .sub_heading
   font-size: $size-20px
 
-.description
+.description,.country_code
   font-size: $size-16px
 
 .terms_wrapper

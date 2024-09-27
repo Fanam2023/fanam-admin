@@ -1,5 +1,5 @@
 import {FormSectionProps, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
-import {JSONObject, REG_EMAIL, REG_INDIAN_MOBILE, REG_VALID_NUMBER, useStorage} from "@fanam-pkg/core-utils"
+import {JSONObject, REG_EMAIL, REG_INDIAN_MOBILE, REG_VALID_NUMBER, useResize, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useCallback, useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
@@ -16,6 +16,7 @@ const useHandler = (styles: IStyle) => {
   const {getStorage, setStorage} = useStorage()
   const {toggleSlider} = useSlider()
   const {push} = useRouter()
+  const {isDesktop} = useResize()
   const [data, setData] = useState<ISignupData>({
     business_name: "",
     first_name: "",
@@ -155,25 +156,30 @@ const useHandler = (styles: IStyle) => {
         {
           childElement: (
             <>
-              <section
-                className={`flex ${styles.country_wrapper} ${errCountryCode ? styles.error_border : ""}`}
-                onClick={goToCountrySlider}>
+              <section className={`flex ${styles.country_wrapper} ${errCountryCode ? styles.error_border : ""}`}>
                 <ImageView
                   src={country ? getFlagUrl(country) : assets.ic_world}
                   alt="country-img"
-                  imgSize={24}
+                  imgSize={isDesktop ? 30 : 26}
                   wrapperClass={styles.flag}
                 />
-                {country ? `+${country.phone_code}` : "-"}
+                <h5 className={styles.country_code}>{country ? `+${country.phone_code}` : "-"}</h5>
+                <ImageView
+                  src={assets.ic_down_arrow_theme}
+                  alt="down-arrow"
+                  imgSize={24}
+                  onClick={goToCountrySlider}
+                  wrapperClass={styles.country_arrow}
+                />
+                <TextField
+                  label="Phone Number"
+                  name="phone_no"
+                  value={phone_no}
+                  onChangeData={onChangeValue}
+                  error={errPhoneNo}
+                  wrapperClass={styles.phone_number}
+                />
               </section>
-              <TextField
-                label="Phone Number"
-                name="phone_no"
-                value={phone_no}
-                maxLength={10}
-                onChangeData={onChangeValue}
-                error={errPhoneNo}
-              />
             </>
           ),
         },
