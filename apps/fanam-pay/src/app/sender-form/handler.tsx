@@ -762,7 +762,7 @@ const useHandler = (styles: IStyle) => {
                   <Button
                     wrapperClass={styles.verify_btn}
                     disabled={!isValidInputByRegex(aadhaarNumber, REG_AADHAAR)}
-                    onClick={aadhaarNumber.length === 12 && generateCaptcha.bind(null, null)}>
+                    onClick={generateCaptcha.bind(null, null)}>
                     Verify
                   </Button>
                 )}
@@ -818,7 +818,7 @@ const useHandler = (styles: IStyle) => {
               {!verifiedPAN && (
                 <Button
                   disabled={!isValidInputByRegex(pan, REG_PAN)}
-                  onClick={pan.length === 10 && onVerifyPan.bind(null, {pan})}
+                  onClick={onVerifyPan.bind(null, {pan})}
                   wrapperClass={styles.verify_btn}>
                   Verify
                 </Button>
