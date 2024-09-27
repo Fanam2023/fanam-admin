@@ -27,8 +27,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/custom-utils
       '@fanam-pkg/core-ui-sass':
-        specifier: ^1.0.21
-        version: 1.0.21(@babel/core@7.25.2)(sass@1.78.0)
+        specifier: ^1.0.22
+        version: 1.0.22(@babel/core@7.25.2)(sass@1.78.0)
       '@fanam-pkg/core-utils':
         specifier: ^1.0.4
         version: 1.0.4(react@18.3.1)
@@ -106,8 +106,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/custom-utils
       '@fanam-pkg/core-ui-sass':
-        specifier: ^1.0.21
-        version: 1.0.21(@babel/core@7.25.2)(sass@1.78.0)
+        specifier: ^1.0.22
+        version: 1.0.22(@babel/core@7.25.2)(sass@1.78.0)
       '@fanam-pkg/core-utils':
         specifier: ^1.0.4
         version: 1.0.4(react@18.3.1)
@@ -188,8 +188,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/custom-utils
       '@fanam-pkg/core-ui-sass':
-        specifier: ^1.0.21
-        version: 1.0.21(@babel/core@7.25.2)(sass@1.78.0)
+        specifier: ^1.0.22
+        version: 1.0.22(@babel/core@7.25.2)(sass@1.78.0)
       '@fanam-pkg/core-utils':
         specifier: ^1.0.4
         version: 1.0.4(react@18.3.1)
@@ -279,8 +279,8 @@ importers:
         specifier: workspace:*
         version: link:../custom-utils
       '@fanam-pkg/core-ui-sass':
-        specifier: ^1.0.21
-        version: 1.0.21(@babel/core@7.25.2)(sass@1.78.0)
+        specifier: ^1.0.22
+        version: 1.0.22(@babel/core@7.25.2)(sass@1.78.0)
       '@fanam-pkg/core-utils':
         specifier: ^1.0.4
         version: 1.0.4(react@18.3.1)
@@ -1062,8 +1062,8 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@fanam-pkg/core-ui-sass@1.0.21':
-    resolution: {integrity: sha512-phMZwPsyyOEuJrk2pisw/aYYkddUVdrtD+ICFR4tKCxrnW2sQ8sStAvHYDT8Mym1CIkvnkWN/5tBbEtEdpVrpg==}
+  '@fanam-pkg/core-ui-sass@1.0.22':
+    resolution: {integrity: sha512-E3OuqW3jkGAGMAZ8ndw8/EGxHLwoTp67inHtWpgM6PpQ58dwpecB1ZamWYb9L9IyCFGmFG+tXpPDhqkk7Nwmig==}
 
   '@fanam-pkg/core-utils@1.0.4':
     resolution: {integrity: sha512-dyUsmbqAwu4G2SCfT9zpI8FRR12cC3ehqxcJXOx/9Dunx8stAeu85a1MmMJHDrPkhgopIad7PCNnTmzuInt9Fw==}
@@ -5517,7 +5517,7 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
-  '@fanam-pkg/core-ui-sass@1.0.21(@babel/core@7.25.2)(sass@1.78.0)':
+  '@fanam-pkg/core-ui-sass@1.0.22(@babel/core@7.25.2)(sass@1.78.0)':
     dependencies:
       '@fanam-pkg/core-utils': 1.0.4(react@18.3.1)
       next: 14.2.9(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.78.0)
