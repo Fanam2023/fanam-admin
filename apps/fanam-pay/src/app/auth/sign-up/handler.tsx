@@ -163,14 +163,14 @@ const useHandler = (styles: IStyle) => {
                   imgSize={isDesktop ? 30 : 26}
                   wrapperClass={styles.flag}
                 />
-                  <h5 className={styles.country_code}>{country ? `+${country.phone_code}` : "-"}</h5>
-                  <ImageView
-                    src={assets.ic_down_arrow_theme}
-                    alt="down-arrow"
-                    imgSize={24}
-                    onClick={goToCountrySlider}
-                    wrapperClass={styles.country_arrow}
-                  />
+                <h5 className={styles.country_code}>{country ? `+${country.phone_code}` : "-"}</h5>
+                <ImageView
+                  src={assets.ic_down_arrow_theme}
+                  alt="down-arrow"
+                  imgSize={24}
+                  onClick={goToCountrySlider}
+                  wrapperClass={styles.country_arrow}
+                />
                 <TextField
                   label="Phone Number"
                   name="phone_no"
