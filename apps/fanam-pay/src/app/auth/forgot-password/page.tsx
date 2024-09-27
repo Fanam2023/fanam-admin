@@ -1,7 +1,7 @@
 "use client"
 
 import {Button, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
-import {REG_VALID_NUMBER, useResize} from "@fanam-pkg/core-utils"
+import {REG_VALID_NUMBER} from "@fanam-pkg/core-utils"
 import {useEffect} from "react"
 import {useSlider} from "@custom/ui"
 import {ICountry} from "@custom/utils"
@@ -17,7 +17,6 @@ const Forgot_Password = () => {
   const {phone_no, country} = data
   const {errPhoneNo} = errData
   const {getFlagUrl} = useCommon()
-  const {isDesktop} = useResize()
 
   const onSelectCountry = (country: ICountry) => {
     setData(prev => ({
@@ -50,7 +49,8 @@ const Forgot_Password = () => {
             <ImageView
               src={country ? getFlagUrl(country) : assets.ic_world}
               alt="country-img"
-              imgSize={isDesktop ? 30 : 26}
+              imgHeight={27}
+              imgWidth={35}
               wrapperClass={styles.flag}
             />
             {country ? `+${country.phone_code}` : "-"}
