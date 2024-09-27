@@ -462,9 +462,9 @@ const useHandler = (styles: IStyle) => {
     if (!account_type) errState = {...errState, errAccountType: "Please enter account type", isValid: false}
 
     if (!kyc_aadhaar.length)
-      errState = {...errState, errKycAadhaar: "Please choose valid Aadhaar KYC documents", isValid: false}
+      errState = {...errState, errKycAadhaar: "Please upload valid Aadhaar KYC documents", isValid: false}
 
-    if (!kyc_pan.length) errState = {...errState, errKycPAN: "Please choose valid PAN KYC documents", isValid: false}
+    if (!kyc_pan.length) errState = {...errState, errKycPAN: "Please upload valid PAN KYC documents", isValid: false}
 
     if (user?.account_type === "Business") {
       if (!business_name) errState = {...errState, errBusinessName: "Please enter the company name", isValid: false}

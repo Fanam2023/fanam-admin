@@ -59,11 +59,11 @@ export const useHandler = (styles: IStyle) => {
       childElements: [
         {
           elementType: "drop-down",
+          isRequired: false,
           options: formattedStatusOptions,
           name: "status",
           value: status,
           onChangeValue,
-          isRequired: false,
           wrapperClass: styles.status_drop_down,
         },
         {
@@ -74,18 +74,18 @@ export const useHandler = (styles: IStyle) => {
                 value={start_date}
                 name="start_date"
                 type="date"
+                isRequired={false}
                 max={currentDate}
                 label="Start Date"
-                isRequired={false}
               />
               <TextField
                 onChangeData={onChangeValue}
                 value={end_date}
+                isRequired={false}
                 name="end_date"
                 type="date"
                 max={currentDate}
                 label="End Date"
-                isRequired={false}
               />
             </section>
           ),

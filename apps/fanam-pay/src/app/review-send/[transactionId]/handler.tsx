@@ -124,7 +124,7 @@ const useHandler = () => {
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
       {key: "Address 1", label: address_line_1},
-      {key: "Address 2", label: address_line_2},
+      !!address_line_2 && {key: "Address 2", label: address_line_2},
       {key: "Email", label: email},
       {key: "Phone Number", label: phone_no},
       {key: "Country", label: country_name},

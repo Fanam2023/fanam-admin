@@ -38,8 +38,8 @@ const BeneficiaryPage = () => {
       <section className={`flex ${styles.search_container}`}>
         <TextField
           type="text"
-          label="Search beneficiary.."
           isRequired={false}
+          label="Search beneficiary..."
           wrapperClass={styles.search_wrapper}
           leadingIcon={searchQuery.length ? null : assets.ic_search}
           onChangeData={onChangeSearch}></TextField>

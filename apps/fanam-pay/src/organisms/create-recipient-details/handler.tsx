@@ -542,7 +542,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       childElements: [
         {
           elementType: "checkbox",
-          label: "Send reconciliation report to your recipient’s Mail?",
           name: "is_send_email",
           value: is_send_email,
           option: is_send_email,
@@ -572,9 +571,10 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "Address Line 2 (optional )",
+          label: "Address Line 2",
           name: "address_line_2",
           value: address_line_2,
+          isRequired: false,
           onChangeValue,
         },
       ],
@@ -664,6 +664,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           name: "kyc",
           isMultiple: true,
           children: <CustomUpload />,
+          label: "Identity Proof",
           value: kyc,
           error: errKyc,
           maxCount: 2,
@@ -678,7 +679,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!first_name) errState = {...errState, errFirstName: "Please enter FirstName", isValid: false}
 
-    if (!last_name) errState = {...errState, errLastName: "LastName must be longer than 1 characters", isValid: false}
+    if (!last_name) errState = {...errState, errLastName: "Please enter LastName", isValid: false}
 
     if (!account_no) errState = {...errState, errAccountNo: "Please enter AccountNumber", isValid: false}
 
@@ -704,7 +705,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!country) errState = {...errState, errCountry: "Please select Country", isValid: false}
 
-    if (!phone_no) errState = {...errState, errPhoneNo: "Please enter PhoneNumber", isValid: false}
+    if (!phone_no || phone_no.length !== 10)
+      errState = {...errState, errPhoneNo: "Please enter a valid Phone Number", isValid: false}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
@@ -783,6 +785,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   return {
     onChangeValue,
     onSubmit,
+    createRecipient,
     formElements,
     isDesktop,
     toggleSlider,

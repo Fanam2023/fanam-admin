@@ -69,24 +69,24 @@ export const LIST_OF_CART: BankCartProps[] = [
 ]
 
 export const PURPOSES_INDIVIDUAL: IFormData<TypePurpose>[] = [
-  {label: "Education", key: "Tuition_fee"},
-  {label: "Family Expense", key: "Living_expense"},
-  {label: "Rental", key: "Rent"},
+  {label: "Tuition fee", key: "Tuition_fee"},
+  {label: "Living expenses", key: "Living_expense"},
+  {label: "Rent", key: "Rent"},
   {label: "Insurance", key: "Insurance"},
-  {label: "Others", key: "Others"},
-  {label: "Retail Business", key: "Retail"},
+  {label: "Retail", key: "Retail"},
   {label: "Hospital", key: "Hospital"},
   {label: "Travel", key: "Travel"},
+  {label: "Others", key: "Others"},
 ]
 
 export const PURPOSES_BUSINESS: IFormData<TypePurpose>[] = [
   {label: "Import and Export", key: "Import_and_export"},
-  {label: "Legal Charges", key: "Legal_fees"},
+  {label: "Legal fees", key: "Legal_fees"},
   {label: "Insurance", key: "Insurance"},
-  {label: "Rental", key: "Rent"},
-  {label: "Salary", key: "Payroll_and_pension"},
-  {label: "Others", key: "Others"},
+  {label: "Rent", key: "Rent"},
+  {label: "Payroll and pension", key: "Payroll_and_pension"},
   {label: "Goods Purchase", key: "Goods_purchase"},
+  {label: "Others", key: "Others"},
 ]
 
 export const TRANSACTION_STATUS_OBJECT: Record<TypeOrderStatus, IFormData<TypeOrderStatus>> = {

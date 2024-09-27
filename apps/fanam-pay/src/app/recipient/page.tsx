@@ -38,8 +38,8 @@ const RecipientPage = () => {
       <section className={`flex ${styles.search_container}`}>
         <TextField
           type="text"
-          label="Search Recipient.."
           isRequired={false}
+          label="Search Recipient..."
           wrapperClass={styles.search_wrapper}
           leadingIcon={searchQuery.length ? null : assets.ic_search}
           onChangeData={onChangeSearch}></TextField>

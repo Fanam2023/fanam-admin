@@ -4,10 +4,12 @@ import {useSingleton} from "hooks"
 
 export const useHandler = () => {
   const {transData, refetchTransaction, transId} = useSingleton()
+  const {recipient_relationship} = transData || {}
   const {
     first_name,
     last_name,
     address_line_1,
+    address_line_2,
     email,
     phone_no,
     bank_account,
@@ -32,7 +34,8 @@ export const useHandler = () => {
     const recipientDetails: IFormData[] = [
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
-      {key: "Address", label: address_line_1},
+      {key: "Address Line 1", label: address_line_1},
+      !!address_line_2 && {key: "Address Line 2", label: address_line_2},
       {key: "Email", label: email},
       {key: "Phone Number", label: phone_no},
       {key: "Country", label: country_name},
@@ -43,6 +46,7 @@ export const useHandler = () => {
       {key: "Account Type", label: account_type},
       {key: "Bank Name", label: bank_name},
       {key: "Branch", label: branch_code},
+      !!recipient_relationship && {key: "Sender's relationship with the Recipient", label: recipient_relationship},
     ]
 
     if (swift_code) recipientDetails.push({key: "Swift Code", label: swift_code})
