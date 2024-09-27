@@ -3,6 +3,7 @@ import {
   API_INVOICE,
   API_TRANSACTION,
   apiAllTransaction,
+  apiDeleteAttachment,
   apiTransaction,
   IFanamApiError,
   IPayloadMergeRecipient,
@@ -16,7 +17,7 @@ import {useSingleton} from "hooks"
 import {useApi} from "./api"
 
 export const useTransactionController = () => {
-  const {getRequest, postRequest, putRequest} = useApi()
+  const {getRequest, postRequest, putRequest, deleteRequest} = useApi()
   const {transId, updateTransData, updateTransId} = useSingleton()
 
   const getTransaction = async (status: TypeOrderStatus | "", start_date: string, end_date: string) => {
@@ -118,6 +119,12 @@ export const useTransactionController = () => {
     return {result, errorData}
   }
 
+  const removeAttachment = async (attachmentId: string) => {
+    const {result, errorData} = await deleteRequest<ITransaction>(apiDeleteAttachment(attachmentId))
+
+    return {result, errorData}
+  }
+
   return {
     getTransaction,
     createTransaction,
@@ -128,5 +135,6 @@ export const useTransactionController = () => {
     initiateTransaction,
     syncRecipientAsBeneficiary,
     sendingPurpose,
+    removeAttachment,
   }
 }

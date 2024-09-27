@@ -2,14 +2,14 @@
 
 import {Button, ImageView, assets as projectAssets, usePopup} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
-import {usePathname, useRouter} from "next/navigation"
-import {useEffect} from "react"
+import {useRouter} from "next/navigation"
 import assets from "assets"
 import {useSingleton} from "hooks"
 import {IStepper} from "model"
-import {ProfileDetails} from "organisms"
+import {ProfileDetails, SidePanel} from "organisms"
 import {BaseContainerProps} from "props"
-import {ROUTE_HOME, ROUTE_LOGIN, SIDE_BAR} from "utils"
+import {SIDE_BAR} from "utils"
+import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({
@@ -26,17 +26,12 @@ export const BaseContainer = ({
   isStepper = false,
   disabled = false,
 }: BaseContainerProps) => {
-  const {user, token, transId} = useSingleton()
+  const {user} = useSingleton()
   const {first_name, last_name} = user || {}
   const {isDesktop} = useResize()
-  const {back, replace} = useRouter()
-  const pathname = usePathname()
+  const {back} = useRouter()
   const {togglePopup} = usePopup()
-
-  useEffect(() => {
-    if (!pathname.includes("/auth/") && !token) replace(ROUTE_LOGIN)
-    else if (pathname.includes("/auth/") && token) replace(ROUTE_HOME)
-  }, [token, transId])
+  const {sideNav, setSideNav} = useHandler()
 
   const onClickBack = () => {
     if (onBack) onBack()
@@ -73,7 +68,7 @@ export const BaseContainer = ({
     <>
       <header className={`flex-sb-center ${styles.header_wrapper}`}>
         <section className={`flex ${styles.logo_wrapper}`}>
-          <ImageView src={assets.img_logo} alt={"logo"} imgHeight={isDesktop ? 29 : 20} />
+          <ImageView src={assets.img_yes_bank} alt={"logo"} imgWidth={isDesktop ? 150 : 120} />
         </section>
         <section className={`flex ${styles.language_section}`}>
           <section className={`flex ${styles.language_wrapper}`}>
@@ -101,10 +96,11 @@ export const BaseContainer = ({
               )}
             </>
           ) : (
-            <ImageView src={assets.ic_menu} alt="menu-icon" imgSize={24} />
+            <ImageView src={assets.ic_menu} alt="menu-icon" imgSize={24} onClick={setSideNav.bind(null, !sideNav)} />
           )}
         </section>
       </header>
+      {sideNav && <SidePanel />}
       {isDesktop ? (
         isStepper ? (
           <section className={`flex-start ${styles.children_wrapper}`}>

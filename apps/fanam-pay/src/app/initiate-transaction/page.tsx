@@ -44,7 +44,7 @@ const InitiateTransactionPage = () => {
           {!!durationTime && !!transfer_time && (
             <section className={`flex ${styles.duration_wrapper}`}>
               <ImageView src={assets.ic_alarm} imgSize={24} alt="alarm" />
-              <p>Your session will end when the timer reaches</p>
+              <p>Important Note: Session becomes invalid at timer’s expiration</p>
               <h4 className={styles.duration_time}> {durationTime}</h4>
             </section>
           )}
@@ -79,23 +79,27 @@ const InitiateTransactionPage = () => {
             </section>
           </section>
           <TransferTime onSelect={onSelect} transferTimeRes={fxRes} />
-          <section className={`flex-sb-center ${styles.total_background}`}>
-            <section className={styles.receiver_wrapper}>
-              <h5>Receiver will get exactly</h5>
-              <section className="flex">
-                <ImageView src={assets.ic_power} alt="" imgSize={24} />
-                <h5 className={styles.hour_wrapper}>
-                  Transfer in
-                  {sla_timing_min !== sla_timing_max
-                    ? `${sla_timing_min} - ${sla_timing_max} hours`
-                    : `${sla_timing_min} hours`}
-                </h5>
+          {destination_amount ? (
+            <section className={`flex-sb-center ${styles.total_background}`}>
+              <section className={styles.receiver_wrapper}>
+                <h5>Receiver will get exactly</h5>
+                <section className="flex">
+                  <ImageView src={assets.ic_power} alt="" imgSize={24} />
+                  <h5 className={styles.hour_wrapper}>
+                    Transfer in
+                    {sla_timing_min !== sla_timing_max
+                      ? `${sla_timing_min} - ${sla_timing_max} hours`
+                      : `${sla_timing_min} hours`}
+                  </h5>
+                </section>
               </section>
+              <h4 className={`bold ${styles.total_wrapper}`}>
+                {parseFloat(destination_amount)?.toFixed(2)} {currency}
+              </h4>
             </section>
-            <h4 className={`bold ${styles.total_wrapper}`}>
-              {destination_amount} {currency}
-            </h4>
-          </section>
+          ) : (
+            <></>
+          )}
         </section>
       </section>
     </BaseContainer>

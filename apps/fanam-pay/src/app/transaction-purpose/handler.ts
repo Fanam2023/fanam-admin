@@ -20,7 +20,7 @@ const useHandler = () => {
   const {push} = useRouter()
   const {transData} = useSingleton()
   const {toggleNotify} = useNotifyPopup()
-  const {sendingPurpose} = useTransactionController()
+  const {sendingPurpose, removeAttachment} = useTransactionController()
   const {recipient_account_type} = transData || {}
   const [data, setData] = useState<ITransactionPurpose>({
     purpose: null,
@@ -55,6 +55,28 @@ const useHandler = () => {
     },
   })
 
+  const {mutate: deleteFile} = useMutation({
+    mutationKey: [QUERY_TRANSACTION],
+    mutationFn: removeAttachment,
+    onSuccess: ({result, errorData}, attachmentId) => {
+      const {message} = errorData || {}
+      const curData = {...data}
+      curData.doc = curData.doc.filter(({attachment}) => attachment.id !== attachmentId)
+      setData(curData)
+      if (result) {
+        toggleNotify({
+          type: "success",
+          title: "Removed attachment successfully",
+        })
+      } else {
+        toggleNotify({
+          type: "error",
+          title: message || "Something went wrong",
+        })
+      }
+    },
+  })
+
   useEffect(() => {
     if (isClicked) setErrState(prev => ({...prev, ...onValidate()}))
   }, [data, isClicked])
@@ -66,7 +88,10 @@ const useHandler = () => {
         ...prev,
         purpose: PURPOSES.find(({key}) => key === purpose),
         reason,
-        doc: invoice.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
+        doc: invoice?.map(({url, attachment_id}) => ({
+          attachment: {id: attachment_id, url},
+          onClickRemove: deleteFile.bind(null, attachment_id),
+        })),
       }))
     }
   }, [transData])
@@ -82,8 +107,6 @@ const useHandler = () => {
     if (!purpose) errState = {...errState, errPurpose: "Please choose valid purpose", isValid: false}
 
     if (!reason) errState = {...errState, errReason: "Please type your valid reason", isValid: false}
-
-    // if (!doc) errState = {...errState, errDoc: "Please choose valid reason", isValid: false}
 
     setErrState(errState)
 

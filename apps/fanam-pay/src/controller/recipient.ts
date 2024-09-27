@@ -7,6 +7,7 @@ import {
   IPayloadUpdateRecipient,
   IRecipient,
   ITransaction,
+  apiDeleteAttachment,
   apiRecipient,
   apiRecipientType,
 } from "@custom/utils"
@@ -15,7 +16,7 @@ import {useApi} from "./api"
 import {useTransactionController} from "./transaction"
 
 export const useRecipientController = () => {
-  const {getRequest, postRequest, putRequest} = useApi()
+  const {getRequest, deleteRequest, postRequest, putRequest} = useApi()
   const {initiateTransaction} = useTransactionController()
   const {updateTransData} = useSingleton()
 
@@ -92,10 +93,17 @@ export const useRecipientController = () => {
     return result
   }
 
+  const removeAttachment = async (attachmentId: string) => {
+    const {result, errorData} = await deleteRequest<IRecipient>(apiDeleteAttachment(attachmentId))
+
+    return {result, errorData}
+  }
+
   return {
     getAllRecipient,
     getByRecipientId,
     updateRecipient,
     createRecipient,
+    removeAttachment,
   }
 }

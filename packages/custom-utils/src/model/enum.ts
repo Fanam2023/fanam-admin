@@ -13,13 +13,14 @@ export type TypePurpose =
   | "Travel"
   | "Hospital"
   | "Insurance"
-  | "Living_expenses"
+  | "Living_expense"
   | "Rent"
   | "Retail"
   | "Payroll_and_pension"
   | "Import_and_export"
   | "Legal_fees"
   | "Others"
+  | "Goods_purchase"
 
 export type TypeStatus = "Active" | "Blocked" | "locked" | "In_active"
 
@@ -85,3 +86,5 @@ export type TypeOrderStatus =
   | "Refund_in_progress"
   | "Refunded_successfully"
   | "Refund_failed"
+
+export type TypeSignOut = "logout" | "forgot-pin" | "logout-all"

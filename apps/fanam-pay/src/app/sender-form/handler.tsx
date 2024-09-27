@@ -6,6 +6,7 @@ import {useMutation, useQueries} from "@tanstack/react-query"
 import {
   DF_INPUT_DATE,
   IAadhaarCaptcha,
+  IPayloadSyncUser,
   IResponseKYC,
   IStyle,
   ISyncUserData,
@@ -14,6 +15,7 @@ import {
   REG_INPUT_EMAIL,
   REG_INPUT_NAME,
   REG_PAN,
+  TypeBusiness,
 } from "@custom/utils"
 import assets from "assets"
 import {useAuthController, useKYCController, useLocationController} from "controller"
@@ -81,7 +83,7 @@ const useHandler = (styles: IStyle) => {
     pan: "",
     aadhaarNumber: "",
     business_name: "",
-    business_type: {key: "Sole_proprietor", label: "Sole Proprietor"},
+    business_type: BUSINESS_TYPE[0],
     date_of_birth: "",
     kyc_aadhaar: [],
     kyc_pan: [],
@@ -453,7 +455,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!state) errState = {...errState, errState: "Please enter State", isValid: false}
 
-    if (!city) errState = {...errState, errCity: "Please enter District", isValid: false}
+    if (!city) errState = {...errState, errCity: "Please enter City/District", isValid: false}
 
     if (!zip_code) errState = {...errState, errZipCode: "Please enter Zip Code", isValid: false}
 
@@ -522,6 +524,30 @@ const useHandler = (styles: IStyle) => {
 
   const onChangeState = (value: JSONObject) => onChangeValue({...value, city: null})
 
+  const getBusinessNameLabel = (businessType: TypeBusiness | null): string => {
+    switch (businessType) {
+      case "Sole_proprietor":
+        return "Name of the Proprietor"
+      case "Partnership_firm":
+        return "Name of the Partnership Firm"
+      case "Companies":
+        return "Name of the Company"
+      case "Limited_liability_partnership":
+        return "Name of the LLP"
+      default:
+        return "Business Name"
+    }
+  }
+
+  const getBusinessName = (businessType: TypeBusiness | null, name: string): string => {
+    switch (businessType) {
+      case "Sole_proprietor":
+        return `Contact Person ${name}`
+      default:
+        return `Authorised Person ${name}`
+    }
+  }
+
   const addressForm: FormSectionProps = {
     title: "Address",
     wrapperClassGrid: styles.address_details,
@@ -548,6 +574,7 @@ const useHandler = (styles: IStyle) => {
         options: countries,
         error: errCountry,
         value: country,
+        disabled: !!user?.country,
         onChangeValue: onChangeCountry,
       },
       {
@@ -575,6 +602,7 @@ const useHandler = (styles: IStyle) => {
         label: "PinCode",
         name: "zip_code",
         value: zip_code,
+        inputRegex: REG_VALID_NUMBER,
         error: errZipCode,
         onChangeValue,
       },
@@ -695,7 +723,7 @@ const useHandler = (styles: IStyle) => {
       childElements: [
         {
           elementType: "input",
-          label: "Company Name",
+          label: getBusinessNameLabel(business_type?.key),
           name: "business_name",
           error: errBusinessName,
           value: business_name,
@@ -703,21 +731,19 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Contact Person First Name",
+          label: getBusinessName(business_type?.key, "First name"),
           name: "first_name",
           error: errFirstName,
           value: first_name,
-          disabled: !!user?.first_name,
           inputRegex: REG_INPUT_NAME,
           onChangeValue,
         },
         {
           elementType: "input",
-          label: "Contact Person Last Name",
+          label: getBusinessName(business_type.key, "Last Name"),
           name: "last_name",
           error: errLastName,
           value: last_name,
-          disabled: !!user?.last_name,
           inputRegex: REG_INPUT_NAME,
           onChangeValue,
         },
@@ -759,13 +785,13 @@ const useHandler = (styles: IStyle) => {
             <>
               <section className={`flex-start ${styles.pan_wrapper} `}>
                 <TextField
-                  label="Enter Aadhaar Number"
+                  label="Aadhaar Number"
                   name="aadhaarNumber"
                   value={aadhaarNumber}
                   disabled={!!verifiedAadhaar}
                   onChangeData={onChangeValue}
                   inputRegex={REG_VALID_NUMBER}
-                  maxLength={12}
+                  maxLength={!verifiedAadhaar && 12}
                   wrapperClass={styles.text_field}
                 />
                 {!verifiedAadhaar && (
@@ -777,12 +803,6 @@ const useHandler = (styles: IStyle) => {
                   </Button>
                 )}
               </section>
-              {verifiedAadhaar && (
-                <section className={`flex-start ${styles.pan_verify}`}>
-                  <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
-                  <h5 className={styles.verified_text}>Aadhaar is Validated</h5>
-                </section>
-              )}
             </>
           ),
         },
@@ -803,6 +823,19 @@ const useHandler = (styles: IStyle) => {
         disabled: !verifiedAadhaar,
         onChangeValue,
       })
+
+      elements.childElements.push({
+        childElement: (
+          <>
+            {verifiedAadhaar && (
+              <section className={`flex-start ${styles.pan_verify}`}>
+                <ImageView src={assets.ic_tick} alt="tick-image" imgSize={24} />
+                <h5 className={styles.verified_text}>Aadhaar is Validated</h5>
+              </section>
+            )}
+          </>
+        ),
+      })
     }
 
     if (verifiedAadhaar && kyc_aadhaar) {
@@ -811,12 +844,12 @@ const useHandler = (styles: IStyle) => {
           <>
             <section className={`flex-start ${styles.pan_wrapper}`}>
               <TextField
-                label="Enter Pan Number"
+                label="Pan Number"
                 name="pan"
                 value={pan}
                 onChangeData={onChangeValue}
                 disabled={!!verifiedPAN}
-                maxLength={10}
+                maxLength={!verifiedPAN && 10}
               />
               {!verifiedPAN && (
                 <Button
@@ -827,12 +860,6 @@ const useHandler = (styles: IStyle) => {
                 </Button>
               )}
             </section>
-            {verifiedPAN && (
-              <section className={`flex-start ${styles.pan_verify}`}>
-                <ImageView src={assets.ic_tick} alt="tick-image " imgSize={24} />
-                <h5 className={styles.verified_text}>PAN is Validated</h5>
-              </section>
-            )}
           </>
         ),
       })
@@ -852,6 +879,19 @@ const useHandler = (styles: IStyle) => {
         disabled: !verifyPanCard,
         onChangeValue,
       })
+
+      elements.childElements.push({
+        childElement: (
+          <>
+            {verifiedPAN && (
+              <section className={`flex-start ${styles.pan_verify}`}>
+                <ImageView src={assets.ic_tick} alt="tick-image" imgSize={24} />
+                <h5 className={styles.verified_text}>PAN is Validated</h5>
+              </section>
+            )}
+          </>
+        ),
+      })
     }
 
     return elements
@@ -863,7 +903,7 @@ const useHandler = (styles: IStyle) => {
     const {isValid} = onValidate()
 
     if (isValid) {
-      updateUser({
+      const payload: IPayloadSyncUser = {
         account_type: account_type.key,
         first_name,
         last_name,
@@ -879,7 +919,10 @@ const useHandler = (styles: IStyle) => {
         kyc_aadhaar: kyc_aadhaar.filter(({file}) => !!file),
         kyc_pan: kyc_pan.filter(({file}) => !!file),
         date_of_birth: formatDateUTC(date_of_birth),
-      })
+      }
+
+      if (!individualType) delete payload.date_of_birth
+      updateUser(payload)
     }
   }
 

@@ -79,7 +79,8 @@ const useHandler = (styles: IStyle) => {
   const isSequential = (pin: string): boolean => {
     const ascending = "1234567890"
     const descending = "0987654321"
-    return ascending.includes(pin) || descending.includes(pin)
+    const isRepeated = pin.split("").every(char => char === pin[0])
+    return ascending.includes(pin) || descending.includes(pin) || isRepeated
   }
 
   const onChangeValue = (value: JSONObject) => {
@@ -173,6 +174,7 @@ const useHandler = (styles: IStyle) => {
     formElements,
     onSubmit,
     routeToLogin,
+    scope,
   }
 }
 

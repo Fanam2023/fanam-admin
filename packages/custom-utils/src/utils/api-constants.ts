@@ -3,7 +3,8 @@ export const API_SIGNUP = `${API_AUTH}/signup`
 export const API_LOGIN = `${API_AUTH}/login`
 export const API_FORGOTPIN = `${API_AUTH}/forgot-pin`
 export const API_REFRESH_TOKEN = "/refresh-token"
-export const API_LOGOUT = `${API_AUTH}/logOut`
+export const API_LOGOUT = `/auth/logout`
+export const API_LOGOUT_ALL_DEVICE = `/auth/logout-all`
 export const API_USER_FCM = `${API_AUTH}/fcm`
 export const API_USER = "/user"
 export const API_GET_PROFILE = `${API_USER}/me`
@@ -35,6 +36,7 @@ export const API_POPULAR_CORRIDORS = "/payment/popularCorridors-visa"
 export const API_CREATE_ORDER = "/order"
 export const apiPayout = (transactionId: string) => `/payment/send-payout/${transactionId}`
 export const apiCancelTransaction = (transactionId: string) => `/order/create_refund/${transactionId}`
+export const apiDeleteAttachment = (attachmentId: string) => `/file-upload/${attachmentId}`
 
 /* KYC Endpoints */
 export const API_PAN_VERIFY = `${API_USER}/pan-verification`

@@ -12,8 +12,8 @@ const useHandler = () => {
   return {
     status,
     first_name,
-    push,
     isKYCVerified,
+    push,
   }
 }
 

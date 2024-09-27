@@ -6,6 +6,7 @@ import ic_arrow_right from "./icons/ic_arrow_right.svg"
 import ic_arrow_theme from "./icons/ic_arrow_theme.svg"
 import ic_back from "./icons/ic_back.svg"
 import ic_back_arrow_black from "./icons/ic_back_arrow_black.svg"
+import ic_black_security from "./icons/ic_black_security.svg"
 import ic_blue_arrow from "./icons/ic_blue_arrow.svg"
 import ic_business from "./icons/ic_business.svg"
 import ic_checkbox from "./icons/ic_checkbox.svg"
@@ -57,16 +58,22 @@ import ic_up_arrow from "./icons/ic_up_arrow.svg"
 import ic_upload from "./icons/ic_upload.svg"
 import ic_us_flag from "./icons/ic_us_flag.svg"
 import ic_user from "./icons/ic_user.svg"
+import ic_white_notify from "./icons/ic_white_notify.svg"
+import ic_white_profile from "./icons/ic_white_profile.svg"
 import ic_white_security from "./icons/ic_white_security.svg"
 import ic_world from "./icons/ic_world.svg"
 import img_bank from "./images/img_bank.webp"
 import img_forgot_logo from "./images/img_forgot.webp"
 import img_logo_in from "./images/img_log_in.webp"
 import img_logo from "./images/img_logo.webp"
+import img_yes_bank from "./images/img_yes_bank.webp"
 
 const assets = {
   ...projectAssets,
   ic_account,
+  ic_black_security,
+  ic_white_profile,
+  ic_white_notify,
   ic_more,
   ic_rocket,
   ic_dropDown,
@@ -130,6 +137,7 @@ const assets = {
   ic_notify,
   ic_logout,
   ic_blue_arrow,
+  img_yes_bank,
 }
 
 export default assets

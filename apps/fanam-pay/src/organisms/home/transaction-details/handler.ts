@@ -6,9 +6,8 @@ import {useCommon} from "hooks"
 export const useHandler = (transaction: ITransaction) => {
   const {getFirstLetter} = useCommon()
 
-  const {recipient} = transaction || {}
-  const {first_name, last_name, address_line_1, email, phone_no, bank_account, country, state, city, zip_code} =
-    recipient || {}
+  const {recipient, recipient_relationship} = transaction || {}
+  const {first_name, last_name, email, phone_no, bank_account, country, state, city, zip_code} = recipient || {}
 
   const {country_name} = country || {}
   const {state_name} = state || {}
@@ -30,6 +29,7 @@ export const useHandler = (transaction: ITransaction) => {
       {key: "State", label: state_name},
       {key: "City/District", label: city_name},
       {key: "Zip Code", label: zip_code},
+      {key: "Recipient Relationship", label: recipient_relationship},
     ]
     return {recipientDetails}
   }, [transaction])

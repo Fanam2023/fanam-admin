@@ -12,6 +12,7 @@ import {
   API_LOGIN,
   API_LOGIN_FINISH,
   API_LOGOUT,
+  API_LOGOUT_ALL_DEVICE,
   API_REGISTER_FINISH,
   API_REGISTER_START,
   API_SIGNUP,
@@ -109,7 +110,7 @@ export const useAuthController = () => {
       }
     } catch (error) {
       // ERROR_CEREMONY_ABORTED - AbortError
-      response.errorData.message = error?.message || "Something went wrong"
+      console.error(">>>>>>>>>>>>>>>>>: Error while loginWebAuth: ", error)
     }
 
     return response
@@ -163,6 +164,8 @@ export const useAuthController = () => {
 
   const logout = async (payload: ILogOutPayload) => await postRequest<IResponseLogin>(API_LOGOUT, payload)
 
+  const logoutAllDevice = async () => await postRequest(API_LOGOUT_ALL_DEVICE, {})
+
   const signUp = async (payload: IPayloadSignup) => {
     const {result, errorData} = await postRequest<IResponseUpdateUser>(API_SIGNUP, payload)
 
@@ -214,15 +217,13 @@ export const useAuthController = () => {
         } else response.errorData = errorData
       }
     } catch (error) {
-      console.log(">>>>>>>>>>>>>>>>>: Error while registerWebAuth: ", error)
+      console.error(">>>>>>>>>>>>>>>>>: Error while registerWebAuth: ", error)
 
       // ERROR_PASSTHROUGH_SEE_CAUSE_PROPERTY - NotAllowedError
       // ERROR_AUTHENTICATOR_PREVIOUSLY_REGISTERED - InvalidStateError
       if (error.code === "ERROR_AUTHENTICATOR_PREVIOUSLY_REGISTERED") {
         loginWebAuth()
       }
-
-      response.errorData.message = error?.message || "Something went wrong"
     }
 
     return response
@@ -234,6 +235,7 @@ export const useAuthController = () => {
     forgotPin,
     getUser,
     logout,
+    logoutAllDevice,
     syncUser,
     signUp,
     registerWebAuth,

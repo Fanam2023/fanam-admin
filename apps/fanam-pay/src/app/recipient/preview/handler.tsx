@@ -6,13 +6,7 @@ import {useSlider} from "@custom/ui"
 import {IMergeRecipientData} from "@custom/utils"
 import {useTransactionController} from "controller"
 import {CreateRecipientDetails} from "organisms"
-import {
-  QUERY_TRANSACTION,
-  RELATION_SHIP,
-  ROUTE_BENEFICIARIES,
-  ROUTE_BENEFICIARY_PREVIEW,
-  routeToRecipientDetails,
-} from "utils"
+import {QUERY_TRANSACTION, RELATION_SHIP, ROUTE_BENEFICIARIES, ROUTE_BENEFICIARY_PREVIEW} from "utils"
 
 export const useHandler = () => {
   const {push, back} = useRouter()
@@ -42,12 +36,10 @@ export const useHandler = () => {
   })
 
   const onToggle = (recipient_id: string) => {
-    if (isDesktop) {
-      toggleSlider({
-        children: <CreateRecipientDetails recipient_id={recipient_id} />,
-        title: "Edit Recipient Details",
-      })
-    } else push(routeToRecipientDetails(recipient_id))
+    toggleSlider({
+      children: <CreateRecipientDetails recipient_id={recipient_id} />,
+      title: "Edit Recipient Details",
+    })
   }
 
   useEffect(() => {

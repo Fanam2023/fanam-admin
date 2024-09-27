@@ -1,0 +1,108 @@
+@use "../../styles/index" as *
+
+.stepper_container
+  padding: $size-24px $size-24px
+  background: $white
+  border-radius: $size-10px
+  margin-top: $size-24px
+
+.step_wrapper
+  display: flex
+  justify-content: space-between
+  text-align: center
+  position: relative
+
+.wrapper
+  position: relative
+  align-items: center
+  z-index: 1
+
+.progress_bar_container
+  position: absolute
+  top: 40%
+  left: 0
+  right: 0
+  height: $size-2px
+  display: flex
+  justify-content: space-between
+  align-items: center
+  z-index: 0
+  margin:
+    right: 8%
+    left: 8%
+
+.progress_bar
+  flex-grow: 1
+  height: $size-2px
+  background: $dark-border-grey
+  transition: background-color 0.8s ease-in-out
+
+.progress_bar_completed
+  background: $alert-green
+
+.stepper
+  color: $white
+  background: $white
+  border-radius: 50%
+  padding: $size-6px $size-6px
+  width: $size-20px
+  height: $size-20px
+  border: $size-1px solid $dark-border-grey
+  text-align: center
+  z-index: 1
+  transition: width 0.8s ease-in-out, background-color 0.8s ease-in-out
+
+.active
+  border-color: $alert-green
+  background: $alert-green
+  color: $white
+
+.completed
+  border-color: $alert-green
+  background: $alert-green
+  color: $white
+
+.greenDot
+  color: $alert-green
+  display: inline-block
+  width: $size-8px
+  height: $size-8px
+  background-color: $alert-green
+  border-radius: 50%
+
+.pending
+  border-color: $alert-green
+  background: $white
+
+.active_title
+  font-weight: bold
+
+.inactive_title
+  opacity: $alpha-five
+
+@include mixin-responsive
+
+  .step_wrapper
+    flex-direction: column
+    gap: $size-20px
+
+  .progress_bar_container
+    top: $size-20px
+    left: 5%
+    right: auto
+    width: $size-2px
+    height: 40%
+    margin: 0
+    display: block
+
+  .progress_bar
+    width: $size-2px
+    height: 100%
+
+  .wrapper
+    flex-direction: row
+    align-items: center
+    gap: $size-12px
+
+  .stepper_container
+    border: $size-1px solid $medium-grey

@@ -85,7 +85,7 @@ export const useHandler = () => {
       if (result) {
         const {final_amount, destination_amount, source_country, destination_country} = result
         setData({
-          source_amount: `${final_amount.toFixed(2)}`,
+          source_amount: `${final_amount?.toFixed(2)}`,
           destination_amount: `${destination_amount}`,
           source_country,
           destination_country,
@@ -236,7 +236,14 @@ export const useHandler = () => {
 
   const showCountries = () =>
     toggleSlider({
-      children: <CountryPopup onSelect={onSelectCountry} selCountry={destination_country} countries={countries} />,
+      children: (
+        <CountryPopup
+          onSelect={onSelectCountry}
+          selCountry={destination_country}
+          countries={countries}
+          title="select a country to choose the recipient currency"
+        />
+      ),
     })
 
   const onValidate = () => {

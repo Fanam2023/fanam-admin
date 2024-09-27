@@ -1,5 +1,5 @@
 import {FormSectionProps} from "@fanam-pkg/core-ui-sass"
-import {useDateTime} from "@fanam-pkg/core-utils"
+import {DF_INPUT_DATE, useDateTime} from "@fanam-pkg/core-utils"
 import {REG_INPUT_NAME} from "@custom/utils"
 import {useSingleton} from "hooks"
 
@@ -40,10 +40,10 @@ const useHandler = () => {
         },
         {
           elementType: "input",
-          type: "date",
+          type: "text",
           label: "Date of Birth",
           name: "date_of_birth",
-          value: formatDate(date_of_birth),
+          value: formatDate(date_of_birth, DF_INPUT_DATE),
           disabled: !!user?.date_of_birth,
         },
       ],

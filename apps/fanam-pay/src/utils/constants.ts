@@ -2,7 +2,7 @@ import {IFormData} from "@fanam-pkg/core-utils"
 import {TypeAccount, TypeBusiness, TypeOrderStatus, TypePurpose, TypeRelation} from "@custom/utils"
 import assets from "assets"
 import {IStepper} from "model"
-import {BankCartProps, BankListProps} from "props"
+import {BankCartProps, BankListProps, ProfileNavItemProps} from "props"
 
 export const SIDE_BAR: IStepper[] = [
   {
@@ -70,11 +70,13 @@ export const LIST_OF_CART: BankCartProps[] = [
 
 export const PURPOSES_INDIVIDUAL: IFormData<TypePurpose>[] = [
   {label: "Education", key: "Tuition_fee"},
-  {label: "Family Expense", key: "Living_expenses"},
+  {label: "Family Expense", key: "Living_expense"},
   {label: "Rental", key: "Rent"},
   {label: "Insurance", key: "Insurance"},
   {label: "Others", key: "Others"},
   {label: "Retail Business", key: "Retail"},
+  {label: "Hospital", key: "Hospital"},
+  {label: "Travel", key: "Travel"},
 ]
 
 export const PURPOSES_BUSINESS: IFormData<TypePurpose>[] = [
@@ -84,6 +86,7 @@ export const PURPOSES_BUSINESS: IFormData<TypePurpose>[] = [
   {label: "Rental", key: "Rent"},
   {label: "Salary", key: "Payroll_and_pension"},
   {label: "Others", key: "Others"},
+  {label: "Goods Purchase", key: "Goods_purchase"},
 ]
 
 export const TRANSACTION_STATUS_OBJECT: Record<TypeOrderStatus, IFormData<TypeOrderStatus>> = {
@@ -144,18 +147,21 @@ export const RELATION_SHIP: IFormData<TypeRelation>[] = [
   {key: "Not_applicable", label: "NotApplicable"},
 ]
 
-export const PROFILE_ARR: IFormData[] = [
+export const PROFILE_ARR: ProfileNavItemProps[] = [
   {
     label: "Profile",
     icon: assets.ic_profile,
+    selectedIcon: assets.ic_white_profile,
   },
   {
     label: "Security Settings",
-    icon: assets.ic_white_security,
+    icon: assets.ic_black_security,
+    selectedIcon: assets.ic_white_security,
   },
   {
     label: "Notification",
     icon: assets.ic_notify,
+    selectedIcon: assets.ic_white_notify,
   },
 ]
 
@@ -169,7 +175,11 @@ export const SECURITY_ARR: IFormData[] = [
     icon: assets.ic_email,
   },
   {
-    label: "Log out of all devices",
+    label: "Log Out",
+    icon: assets.ic_logout,
+  },
+  {
+    label: "Log Out of all devices",
     icon: assets.ic_logout,
   },
 ]

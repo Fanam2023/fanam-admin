@@ -10,7 +10,7 @@ export const CreateBeneficiaryDetails = ({beneficiary_id}: BeneficiaryDetailsPro
     <section>
       <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
       <Button wrapperClass={styles.btn_wrapper} onClick={onSubmit}>
-        Add Beneficiary
+        {beneficiary_id ? "Update Beneficiary" : "Add Beneficiary"}
       </Button>
     </section>
   )

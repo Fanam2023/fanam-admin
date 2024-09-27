@@ -21,16 +21,17 @@ const Login = () => {
           </h5>
         </section>
         <TextField
-          label="Enter Phone Number"
+          label="Phone Number"
           name="phone_no"
           value={phone_no}
+          maxLength={10}
           onChangeData={onChangeValue}
           wrapperClass={styles.text_field_wrapper}
           error={errPhoneNo}
           autoComplete="off"
         />
         <TextField
-          label="Enter PIN"
+          label="PIN"
           name="pin"
           type="password"
           value={pin}

@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "env-cmd -f ./.env.development next dev --port 3002",
-    "build-dev": "env-cmd -f ./.env.staging next build",
-    "build": "env-cmd -f ./.env.production next build",
+    "dev": "next dev --port 3002",
+    "build": "next build",
     "start": "next start --port 3002",
     "prettier": "prettier --write \"src/**/*.{ts,tsx,json}\"",
     "lint": "next lint",
@@ -17,10 +16,9 @@
   "private": true,
   "dependencies": {
     "@custom/utils": "workspace:*",
-    "@fanam-pkg/core-ui-sass": "^1.0.17",
+    "@fanam-pkg/core-ui-sass": "^1.0.21",
     "@fanam-pkg/core-utils": "^1.0.4",
     "@tanstack/react-query": "^5.55.4",
-    "env-cmd": "^10.1.0",
     "next": "^14.2.9",
     "next-pwa": "^5.6.0",
     "react": "^18.3.1",

@@ -1,0 +1,48 @@
+@use "../../styles/index" as *
+
+@keyframes scroll-left
+  0%
+    transform: translateX(100%)
+
+  100%
+    transform: translateX(0)
+
+.profile_container
+  position: fixed
+  left: 0
+  top: 0
+  height: 100vh
+  width: calc(100% - $size-32px)
+  animation: scroll-left 0.5s
+  background-color: white
+  padding: $size-16px
+  z-index: 1
+  margin-top:$size-48px
+
+.profile_side_nav
+  gap: $size-16px
+  margin: $size-24px 0 $size-24px 0
+
+.list_wrapper
+  justify-content: space-evenly
+  gap: $size-8px
+  display: flex
+  padding: $size-20px 0
+  border-bottom: $size-1px solid $light-grey
+
+.back_arrow
+  margin-left: auto
+  transform: rotate(270deg)
+
+.nav_item
+  padding-left: $size-14px
+  font-size: $size-16px
+
+.description_wrapper
+  gap: $size-4px
+
+.edit_profile
+  color: $primary
+
+.profile_wrapper
+  margin-top: $size-20px

@@ -11,7 +11,7 @@ export const SingletonContext = createContext<ISingleton>({
   transId: null,
   updateTransId: () => {},
   updateTransData: () => {},
-  singOutUser: () => {},
+  signOutUser: () => {},
   updateUserData: () => {},
   updateToken: () => {},
   updateRefreshToken: () => {},

@@ -27,6 +27,7 @@ export const PopupAadhaarCaptcha = (props: PropsPopupAadhaarCaptcha) => {
           alt="regenerate-captcha"
           imgSize={isDesktop ? 32 : 28}
           onClick={regenerateCaptcha}
+          wrapperClass={styles.refresh}
         />
       </section>
       <Button wrapperClass={styles.button_wrapper} onClick={onSubmit}>

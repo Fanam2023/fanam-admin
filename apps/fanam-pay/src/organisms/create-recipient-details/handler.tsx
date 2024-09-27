@@ -43,7 +43,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {isValidInputByRegex} = useCommon()
   const {refreshQuery} = useReactQuery()
   const {getTransactionCountries, getCities, getStates} = useLocationController()
-  const {createRecipient, updateRecipient, getByRecipientId} = useRecipientController()
+  const {createRecipient, removeAttachment, updateRecipient, getByRecipientId} = useRecipientController()
   const {refetchTransaction} = useSingleton()
 
   const {toggleNotify} = useNotifyPopup()
@@ -142,28 +142,31 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     errRoutingCode,
   } = errData
 
-  const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}, {data: recipientData}] = useQueries(
-    {
-      queries: [
-        {queryKey: [QUERY_COUNTRIES], queryFn: getTransactionCountries},
-        {
-          queryKey: [`${QUERY_STATES}-${country?.key}`, country],
-          queryFn: () => getStates(country?.key),
-          enabled: !!country,
-        },
-        {
-          queryKey: [`${QUERY_CITIES}-${state?.key}`, state],
-          queryFn: () => getCities(state?.key),
-          enabled: !!state,
-        },
-        {
-          queryKey: [`${QUERY_RECIPIENT}-${recipientId}`, state],
-          queryFn: () => getByRecipientId(recipientId),
-          enabled: !!recipientId,
-        },
-      ],
-    }
-  )
+  const [
+    {data: allCountries = []},
+    {data: allStates = []},
+    {data: allCities = []},
+    {data: recipientData, refetch: refetchRecipient},
+  ] = useQueries({
+    queries: [
+      {queryKey: [QUERY_COUNTRIES], queryFn: getTransactionCountries},
+      {
+        queryKey: [`${QUERY_STATES}-${country?.key}`, country],
+        queryFn: () => getStates(country?.key),
+        enabled: !!country,
+      },
+      {
+        queryKey: [`${QUERY_CITIES}-${state?.key}`, state],
+        queryFn: () => getCities(state?.key),
+        enabled: !!state,
+      },
+      {
+        queryKey: [`${QUERY_RECIPIENT}-${recipientId}`, state],
+        queryFn: () => getByRecipientId(recipientId),
+        enabled: !!recipientId,
+      },
+    ],
+  })
 
   const {mutate: addRecipient} = useMutation({
     mutationKey: [QUERY_RECIPIENT],
@@ -188,6 +191,28 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         toggleNotify({type: "success", title: "Recipient updated Successfully"})
         toggleSlider()
       } else toggleNotify({type: "error", title: errorData?.message})
+    },
+  })
+
+  const {mutate: deleteFile} = useMutation({
+    mutationKey: [QUERY_RECIPIENT],
+    mutationFn: removeAttachment,
+    onSuccess: ({result, errorData}, attachmentId) => {
+      const {message} = errorData || {}
+      const curData = {...data}
+      curData.kyc = curData.kyc.filter(({attachment}) => attachment.id !== attachmentId)
+      setData(curData)
+      if (result) {
+        toggleNotify({
+          type: "success",
+          title: "Removed attachment successfully",
+        })
+      } else {
+        toggleNotify({
+          type: "error",
+          title: message || "Something went wrong",
+        })
+      }
     },
   })
 
@@ -284,7 +309,10 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         iban_no,
         bsb_code,
         account_type: account_type as TypeBankAccount,
-        kyc: kyc_attachments?.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
+        kyc: kyc_attachments?.map(({url, attachment_id}) => ({
+          attachment: {id: attachment_id, url},
+          onClickRemove: deleteFile.bind(null, attachment_id),
+        })),
         recipient_account_type,
         business_name,
         is_send_email: {isSelected: is_send_email, label: "Send reconciliation report to your recipient’s Mail?"},
@@ -362,7 +390,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     childElements: [
       {
         elementType: "input",
-        label: "Enter Business Name",
+        label: "Business Name",
         name: "business_name",
         error: errBusinessName,
         value: business_name,
@@ -397,7 +425,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     childElements: [
       {
         elementType: "input",
-        label: "Enter FirstName",
+        label: "FirstName",
         name: "first_name",
         error: errFirstName,
         value: first_name,
@@ -406,7 +434,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "Enter LastName",
+        label: "LastName",
         name: "last_name",
         error: errLastName,
         value: last_name,
@@ -431,7 +459,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "Enter Account Number",
+        label: "Account Number",
         name: "account_no",
         error: errAccountNo,
         value: account_no,
@@ -440,7 +468,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "Enter BankName",
+        label: "BankName",
         name: "bank_name",
         error: errBankName,
         value: bank_name,
@@ -448,7 +476,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "Enter Branch code",
+        label: "Branch code",
         name: "branch_code",
         error: errBranchCode,
         value: branch_code,
@@ -457,7 +485,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "Enter Branch Address ",
+        label: "Branch Address ",
         name: "branch_address",
         error: errBranchAddress,
         value: branch_address,
@@ -469,7 +497,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (swiftInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "Enter Swift code",
+      label: "Swift code",
       name: "swift_code",
       error: errSwiftCode,
       value: swift_code,
@@ -481,7 +509,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (ibanInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "Enter IBAN no",
+      label: "IBAN no",
       name: "iban_no",
       value: iban_no,
       error: errIbanNo,
@@ -493,7 +521,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (routingInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "Enter Routing code",
+      label: "Routing Number",
       name: "routing_code",
       value: routing_code,
       error: errRoutingCode,
@@ -505,7 +533,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (bsbInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "Enter BSB code",
+      label: "BSB code",
       name: "routing_code",
       value: routing_code,
       error: errBsbCode,
@@ -526,7 +554,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       childElements: [
         {
           elementType: "input",
-          label: "Enter Email",
+          label: "Email",
           name: "email",
           inputRegex: REG_INPUT_EMAIL,
           error: errEmail,
@@ -535,7 +563,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "Enter PhoneNumber",
+          label: "PhoneNumber",
           name: "phone_no",
           inputRegex: REG_VALID_NUMBER,
           error: errPhoneNo,
@@ -592,7 +620,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       childElements: [
         {
           elementType: "drop-down",
-          label: "Enter country",
+          label: "country",
           name: "country",
           options: countries,
           error: errCountry,
@@ -601,7 +629,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "drop-down",
-          label: "Enter State",
+          label: "State",
           name: "state",
           disabled: !country,
           options: states,
@@ -611,7 +639,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "drop-down",
-          label: "Enter City",
+          label: "City",
           name: "city",
           disabled: !state,
           options: cities,
@@ -621,9 +649,10 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "Enter ZipCode",
+          label: "ZipCode",
           name: "zip_code",
           error: errZipCode,
+          inputRegex: REG_VALID_NUMBER,
           value: zip_code,
           onChangeValue,
         },
@@ -654,7 +683,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "Enter ID number",
+          label: "ID number",
           name: "id_number",
           error: errIdNumber,
           value: id_number,
@@ -685,9 +714,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!first_name) errState = {...errState, errFirstName: "Please enter FirstName", isValid: false}
 
-    if (!last_name) errState = {...errState, errLastName: "Please enter the last name", isValid: false}
-    else if (last_name.length < 2)
-      errState = {...errState, errLastName: "LastName must be longer than 2 characters", isValid: false}
+    if (!last_name) errState = {...errState, errLastName: "LastName must be longer than 1 characters", isValid: false}
 
     if (!account_no) errState = {...errState, errAccountNo: "Please enter AccountNumber", isValid: false}
 
@@ -720,7 +747,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!state) errState = {...errState, errState: "Please select State", isValid: false}
 
-    if (!city) errState = {...errState, errCity: "Please select City", isValid: false}
+    if (!city) errState = {...errState, errCity: "Please select City/District", isValid: false}
 
     if (!zip_code) errState = {...errState, errZipCode: "Please enter PinCode", isValid: false}
 
@@ -796,6 +823,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     formElements,
     isDesktop,
     toggleSlider,
+    deleteFile,
   }
 }
 
