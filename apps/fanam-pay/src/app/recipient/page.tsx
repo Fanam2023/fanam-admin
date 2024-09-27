@@ -39,6 +39,7 @@ const RecipientPage = () => {
         <TextField
           type="text"
           label="Search Recipient.."
+          isRequired={false}
           wrapperClass={styles.search_wrapper}
           leadingIcon={searchQuery.length ? null : assets.ic_search}
           onChangeData={onChangeSearch}></TextField>

@@ -34,7 +34,7 @@ export const useHandler = () => {
       {key: "Country", label: country_name},
       {key: "State", label: state_name},
       {key: "City", label: city_name},
-      {key: "ZIP Code", label: zip_code},
+      {key: "PIN Code", label: zip_code},
       {key: "Relationship", label: relationship},
     ]
 

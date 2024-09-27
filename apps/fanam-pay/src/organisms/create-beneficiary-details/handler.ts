@@ -328,6 +328,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           error: errAccountNo,
           value: account_no,
           inputRegex: REG_VALID_NUMBER,
+          isRequired: false,
           onChangeValue,
         },
         {
@@ -337,6 +338,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           value: notes,
           onChangeValue,
           maxLength: 50,
+          isRequired: false,
           wrapperClass: styles.text_area_wrapper,
         },
       ],
@@ -389,7 +391,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "input",
-          label: "Zip Code",
+          label: "PIN Code",
           name: "zip_code",
           value: zip_code,
           inputRegex: REG_VALID_NUMBER,

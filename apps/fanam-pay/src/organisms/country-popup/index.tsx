@@ -42,6 +42,7 @@ export const CountryPopup = ({onSelect, selCountry, countries, title}: CountryPo
         value={searchTerm}
         onChangeData={onSearchChange}
         wrapperClass={styles.search_wrapper}
+        isRequired={false}
       />
       <h3 className={styles.select_country_text}>{title}</h3>
       {filteredCountry && filteredCountry.length > 0 ? (

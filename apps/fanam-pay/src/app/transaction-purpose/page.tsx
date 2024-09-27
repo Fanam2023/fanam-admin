@@ -60,6 +60,7 @@ const TransactionPurpose = () => {
             maxCount={2}
             fileType={["image/*", "application/pdf"]}
             value={doc}
+            isRequired={false}
           />
         </section>
       </section>
