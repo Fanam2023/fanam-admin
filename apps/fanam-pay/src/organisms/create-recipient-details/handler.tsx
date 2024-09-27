@@ -608,9 +608,10 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "Address Line 2 (optional )",
+          label: "Address Line 2",
           name: "address_line_2",
           value: address_line_2,
+          isRequired: false,
           onChangeValue,
         },
       ],
@@ -700,6 +701,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           name: "kyc",
           isMultiple: true,
           children: <CustomUpload />,
+          label: "Identity Proof",
           value: kyc,
           error: errKyc,
           maxCount: 2,
@@ -740,7 +742,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!country) errState = {...errState, errCountry: "Please select Country", isValid: false}
 
-    if (!phone_no) errState = {...errState, errPhoneNo: "Please enter PhoneNumber", isValid: false}
+    if (!phone_no || phone_no.length !== 10)
+      errState = {...errState, errPhoneNo: "Please enter a valid Phone Number", isValid: false}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}

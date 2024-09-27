@@ -359,7 +359,8 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "input",
-          label: "Account Number (Optional)",
+          label: "Account Number",
+          isRequired: false,
           name: "account_no",
           error: errAccountNo,
           value: account_no,
@@ -368,7 +369,8 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "text-area",
-          label: "Add Notes (Optional)",
+          label: "Add Notes",
+          isRequired: false,
           name: "notes",
           value: notes,
           onChangeValue,

@@ -47,7 +47,7 @@ const TransactionPurpose = () => {
           />
         </section>
         <section className={styles.upload_wrapper}>
-          <h5 className={`bold ${styles.title}`}>Upload Supporting Document (Optional)</h5>
+          <h5 className={`bold ${styles.title}`}>Upload Supporting Document</h5>
           <p className={styles.child_text}>
             Upload the supporting document related to the purpose like Invoice, Way bills etc...
           </p>
@@ -55,6 +55,7 @@ const TransactionPurpose = () => {
             wrapperClass={styles.file_upload}
             name="doc"
             onChangeData={onChangeValue}
+            isRequired={false}
             error={errDoc}
             isMultiple={true}
             maxCount={2}

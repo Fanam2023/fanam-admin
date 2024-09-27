@@ -38,6 +38,7 @@ const BeneficiaryPage = () => {
       <section className={`flex ${styles.search_container}`}>
         <TextField
           type="text"
+          isRequired={false}
           label="Search beneficiary.."
           wrapperClass={styles.search_wrapper}
           leadingIcon={searchQuery.length ? null : assets.ic_search}
