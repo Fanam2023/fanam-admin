@@ -42,7 +42,7 @@ const useHandler = () => {
       if (result) {
         toggleNotify({
           title: "Success",
-          description: "create Successfully",
+          description: "Transaction Purpose Updated",
           type: "success",
         })
         push(ROUTE_INITIATE_TRANSACTION)

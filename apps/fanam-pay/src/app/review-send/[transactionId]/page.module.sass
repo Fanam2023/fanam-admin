@@ -31,6 +31,8 @@
 
 .payment_wrapper
   margin: $size-12px 0 $size-12px 0
+  display: grid
+  grid-template-columns: 2fr 5fr
 
 .separator
   border: $size-1px solid $medium-grey
@@ -49,6 +51,10 @@
 
 .duration_time
   color: $alert-green
+
+.detail
+  text-align: right
+  word-break: break-all
 
 @include mixin-responsive
   .card_wrapper
