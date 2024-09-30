@@ -45,15 +45,15 @@ const Forgot_Password = () => {
           <h5 className={styles.description}>Enter your registered mobile number to receive a 6-digit code.</h5>
         </section>
         <section className={`flex-start ${styles.input_wrapper}`}>
-          <section className={`flex ${styles.country_wrapper}`}>
+          <section className={`flex ${styles.country_wrapper} ${errPhoneNo ? styles.error_border : ""}`}>
             <ImageView
               src={country ? getFlagUrl(country) : assets.ic_world}
               alt="country-img"
-              imgHeight={27}
+              imgHeight={25}
               imgWidth={35}
               wrapperClass={styles.flag}
             />
-            {country ? `+${country.phone_code}` : "-"}
+            <h5 className={styles.country_code}>{country ? `+${country.phone_code}` : "-"}</h5>
             <ImageView
               src={assets.ic_down_arrow_theme}
               alt="down-arrow"
@@ -66,13 +66,13 @@ const Forgot_Password = () => {
               name="phone_no"
               value={phone_no}
               onChangeData={onChangeValue}
-              error={errPhoneNo}
               wrapperClass={styles.phone_number}
               inputRegex={REG_VALID_NUMBER}
               isRequired={false}
             />
           </section>
         </section>
+        {errPhoneNo && <p className={styles.error_message}>{errPhoneNo}</p>}
         <Button wrapperClass={styles.button_wrapper} onClick={onSubmit}>
           Next
         </Button>

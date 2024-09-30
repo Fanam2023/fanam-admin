@@ -16,6 +16,7 @@ const useHandler = () => {
       childElements: [
         {
           elementType: "input",
+          isRequired: false,
           label: "First Name",
           name: "first_name",
           value: first_name,
@@ -24,6 +25,7 @@ const useHandler = () => {
         },
         {
           elementType: "input",
+          isRequired: false,
           label: "Last Name",
           name: "last_name",
           value: last_name,
@@ -33,6 +35,7 @@ const useHandler = () => {
 
         {
           elementType: "input",
+          isRequired: false,
           label: "Phone Number",
           name: "phone_no",
           value: phone_no,
@@ -40,6 +43,7 @@ const useHandler = () => {
         },
         {
           elementType: "input",
+          isRequired: false,
           type: "text",
           label: "Date of Birth",
           name: "date_of_birth",

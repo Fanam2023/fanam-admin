@@ -13,8 +13,8 @@
   grid-template-columns: 1fr
   margin-top: $size-20px
 
-.error_border
-  border: $size-1px solid $alert-danger
+.country_wrapper.error_border
+  border-color: $alert-danger
 
 .form_wrapper
   margin-top: $size-24px
@@ -60,6 +60,10 @@
 
 .country_code
   margin-left: $size-6px
+  white-space: nowrap
+
+.error_message
+  color: $alert-danger
 
 @include mixin-responsive
 .sub_heading
