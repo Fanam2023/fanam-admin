@@ -26,6 +26,8 @@ export interface IRecipient {
   kyc_attachments: IAttachment[]
   business_name: string
   is_send_email: boolean
+  is_same_person: boolean
+  relationship: string
 }
 
 export interface IBaseRecipientData {
