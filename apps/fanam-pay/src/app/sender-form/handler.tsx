@@ -466,6 +466,8 @@ const useHandler = (styles: IStyle) => {
 
     if (!kyc_pan.length) errState = {...errState, errKycPAN: "Please upload valid PAN KYC documents", isValid: false}
 
+    if (!date_of_birth) errState = {...errState, errDateOfBirth: "Please enter Date of Birth", isValid: false}
+
     if (user?.account_type === "Business") {
       if (!business_name) errState = {...errState, errBusinessName: "Please enter the company name", isValid: false}
     }
