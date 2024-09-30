@@ -16,11 +16,28 @@ const HomeScreen = () => {
   return (
     <BaseContainer childWrapper={styles.page_container}>
       <section className={styles.main_container}>
-        <section className={`flex ${styles.name_wrapper}`}>
-          <h2 className={styles.title}>Good Afternoon,</h2>
-          <h2 className={styles.first_name}>{first_name}</h2>
+        <section className={`${isDesktop ? "flex" : "flex-col"} ${styles.kyc_status_card}`}>
+          <section className="flex-col">
+            <section className={`flex ${styles.name_wrapper}`}>
+              <h2 className={styles.title}>Good Afternoon,</h2>
+              <h2 className={styles.first_name}>{first_name}</h2>
+            </section>
+            <h5 className={styles.content}>
+              Discover how your currency has been tracking with our exchange rate charts.
+            </h5>
+          </section>
+          {isKYCVerified ? (
+            <Button wrapperClass={styles.kyc_success_btn} buttonType="primary-outlined">
+              <ImageView src={assets.ic_check} alt="checked" imgSize={24} />
+              KYC Verified
+            </Button>
+          ) : (
+            <Button wrapperClass={styles.kyc_pending_btn} buttonType="primary-outlined">
+              <ImageView src={assets.ic_failure_small} alt="checked" imgSize={20} />
+              KYC Pending
+            </Button>
+          )}
         </section>
-        <h5 className={styles.content}>Discover how your currency has been tracking with our exchange rate charts.</h5>
         <section className={`flex-sb-center ${styles.nav_wrapper}`}>
           <section className="flex">
             <ImageView src={assets.ic_money} alt="money-icon" imgSize={isDesktop ? 60 : 36} />
