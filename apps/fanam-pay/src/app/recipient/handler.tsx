@@ -27,7 +27,7 @@ export const useHandler = () => {
     queryFn: () => getAllRecipient(selectType),
   })
 
-  const {mutate: linkRecipient, data: res} = useMutation({
+  const {mutate: linkRecipient} = useMutation({
     mutationKey: [QUERY_TRANSACTION],
     mutationFn: initiateTransaction,
     onSuccess: ({result}) => {
