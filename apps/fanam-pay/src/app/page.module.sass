@@ -15,7 +15,27 @@
 .heading
   padding-left: $size-20px
 
-.danger_button
+.kyc_success_btn
+  border: $size-1px solid $darker-grey
+  color: $black
+  padding: $size-8px $size-14px
+  border-radius:$size-32px
+  background-color: $white
+  gap: $size-8px
+  &:hover
+    background-color: $white
+    color: $black
+
+.kyc_pending_btn
+  padding: $size-8px $size-14px
+  border-radius:$size-32px
+  gap: $size-8px
+
+
+.kyc_status_card
+  justify-content: space-between
+
+.danger_button, .kyc_pending_btn
   border-color: $alert-danger
   color: $alert-danger
   &:hover
@@ -26,6 +46,7 @@
 
 .name_wrapper
   gap: $size-12px
+  margin-bottom: $size-12px
 
 .first_name
   text-transform: capitalize
@@ -38,7 +59,7 @@
     margin: 0
 
   .name_wrapper
-    margin-top: 25%
+    margin-top: 5%
 
   .nav_wrapper
     flex-direction: column
@@ -62,7 +83,7 @@
 
   .content
     font-size: $size-14px
-    margin-top: $size-8px
+    margin-bottom: $size-10px
 
   .heading
     font-size: $size-16px
