@@ -31,10 +31,8 @@ export const useHandler = () => {
     mutationKey: [QUERY_TRANSACTION],
     mutationFn: initiateTransaction,
     onSuccess: ({result}) => {
-      const isSamePerson = result?.recipient?.is_same_person
-      const relation = result?.recipient?.relationship
-      if (!!isSamePerson || relation) push(ROUTE_TRANSACTION_PURPOSE)
-      else push(ROUTE_RECIPIENT_PREVIEW)
+      const {is_same_person, relationship} = result?.recipient || {}
+      push(is_same_person || relationship ? ROUTE_TRANSACTION_PURPOSE : ROUTE_RECIPIENT_PREVIEW)
     },
   })
 
