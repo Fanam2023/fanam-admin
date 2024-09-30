@@ -155,11 +155,12 @@ const useHandler = (styles: IStyle) => {
         {
           childElement: (
             <>
-              <section className={`flex ${styles.country_wrapper} ${errCountryCode ? styles.error_border : ""}`}>
+              <section
+                className={`flex ${styles.country_wrapper} ${errCountryCode || errPhoneNo ? styles.error_border : ""}`}>
                 <ImageView
                   src={country ? getFlagUrl(country) : assets.ic_world}
                   alt="country-img"
-                  imgHeight={27}
+                  imgHeight={25}
                   imgWidth={35}
                   wrapperClass={styles.flag}
                 />
@@ -176,10 +177,10 @@ const useHandler = (styles: IStyle) => {
                   name="phone_no"
                   value={phone_no}
                   onChangeData={onChangeValue}
-                  error={errPhoneNo}
                   wrapperClass={styles.phone_number}
                 />
               </section>
+              {errPhoneNo && <p className={styles.error_message}>{errPhoneNo}</p>}
             </>
           ),
         },
