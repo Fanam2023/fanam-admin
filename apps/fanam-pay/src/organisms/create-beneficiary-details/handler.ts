@@ -391,7 +391,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "input",
-          label: "PIN Code",
+          label: "PinCode",
           name: "zip_code",
           value: zip_code,
           inputRegex: REG_VALID_NUMBER,

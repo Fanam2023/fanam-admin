@@ -9,6 +9,7 @@ import ic_back_arrow_black from "./icons/ic_back_arrow_black.svg"
 import ic_black_security from "./icons/ic_black_security.svg"
 import ic_blue_arrow from "./icons/ic_blue_arrow.svg"
 import ic_business from "./icons/ic_business.svg"
+import ic_check from "./icons/ic_check_circle.svg"
 import ic_checkbox from "./icons/ic_checkbox.svg"
 import ic_cloudUpload from "./icons/ic_cloudUpload.svg"
 import ic_conversion from "./icons/ic_conversion.svg"
@@ -78,6 +79,7 @@ const assets = {
   ic_more,
   ic_rocket,
   ic_dropDown,
+  ic_check,
   ic_power,
   ic_conversion,
   ic_parachute,
