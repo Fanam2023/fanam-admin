@@ -76,7 +76,7 @@ const ReviewAndSend = () => {
         <h6 className={`bold ${styles.amount}`} onClick={() => toggleDetails("recipient")}>
           {recipient ? "See less" : "See more"}
         </h6>
-        {!!beneficiary && (
+        {!!beneficiaryDetails && (
           <>
             <section className={styles.separator}></section>
             <section className={`flex-sb-center ${styles.header}`}>

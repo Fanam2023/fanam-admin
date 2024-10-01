@@ -18,6 +18,8 @@ export const useHandler = () => {
     city,
     zip_code,
     recipient_id,
+    relationship,
+    is_same_person,
   } = transData?.recipient || {}
 
   const {country_name} = country || {}
@@ -29,6 +31,8 @@ export const useHandler = () => {
   useEffect(() => {
     if (transId) refetchTransaction()
   }, [])
+
+  const isSamePerson = is_same_person || relationship
 
   const {recipientDetails} = useMemo(() => {
     const recipientDetails: IFormData[] = [
@@ -57,5 +61,5 @@ export const useHandler = () => {
     return {recipientDetails}
   }, [transData])
 
-  return {recipientDetails, recipient_id}
+  return {recipientDetails, recipient_id, isSamePerson}
 }
