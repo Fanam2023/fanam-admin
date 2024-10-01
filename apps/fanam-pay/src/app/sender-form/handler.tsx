@@ -551,7 +551,7 @@ const useHandler = (styles: IStyle) => {
           errState = {...errState, errIdentityIdType: "Please choose identity Id type", isValid: false}
         if (!identityIdNumber)
           errState = {...errState, errIdentityIdNumber: "Please enter identity Id number", isValid: false}
-        if (!identityAttachments.length)
+        if (!identityAttachments?.length)
           errState = {...errState, errIdentityAttachments: "Please choose identity attachments", isValid: false}
       }
 
@@ -559,7 +559,7 @@ const useHandler = (styles: IStyle) => {
         if (!addressIdType) errState = {...errState, errAddressIdType: "Please choose address Id type", isValid: false}
         if (!addressIdNumber)
           errState = {...errState, errAddressIdNumber: "Please enter address Id number", isValid: false}
-        if (!addressAttachments.length)
+        if (!addressAttachments?.length)
           errState = {...errState, errAddressAttachments: "Please choose address attachments", isValid: false}
       }
 
@@ -568,7 +568,7 @@ const useHandler = (styles: IStyle) => {
           errState = {...errState, errBusinessIdType: "Please choose business Id type", isValid: false}
         if (!businessIdNumber)
           errState = {...errState, errBusinessIdNumber: "Please enter business Id number", isValid: false}
-        if (!businessAttachments.length)
+        if (!businessAttachments?.length)
           errState = {...errState, errBusinessAttachments: "Please choose business attachments", isValid: false}
       }
 
@@ -577,7 +577,7 @@ const useHandler = (styles: IStyle) => {
           errState = {...errState, errAuthorityIdType: "Please choose authority Id type", isValid: false}
         if (!authorityIdNumber)
           errState = {...errState, errAuthorityIdNumber: "Please enter authority Id number", isValid: false}
-        if (!authorityAttachments.length)
+        if (!authorityAttachments?.length)
           errState = {...errState, errAuthorityAttachments: "Please choose authority attachments", isValid: false}
       }
 
@@ -586,7 +586,7 @@ const useHandler = (styles: IStyle) => {
           errState = {...errState, errPartnersIdType: "Please choose partners Id type", isValid: false}
         if (!partnersIdNumber)
           errState = {...errState, errPartnersIdNumber: "Please enter partners Id number", isValid: false}
-        if (!partnersAttachments.length)
+        if (!partnersAttachments?.length)
           errState = {...errState, errPartnersAttachments: "Please choose partners attachments", isValid: false}
       }
     }
@@ -998,7 +998,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Select Anyone",
+          label: "Identity Id Number",
           name: "identityIdNumber",
           error: errIdentityIdNumber,
           value: identityIdNumber,
@@ -1032,7 +1032,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Select Anyone",
+          label: "Address Id Number",
           name: "addressIdNumber",
           error: errAddressIdNumber,
           value: addressIdNumber,
@@ -1068,7 +1068,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Select Anyone",
+          label: "Business Id Number",
           name: "businessIdNumber",
           error: errBusinessIdNumber,
           value: businessIdNumber,
@@ -1104,7 +1104,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Select Anyone",
+          label: "Authority Id Number",
           name: "authorityIdNumber",
           error: errAuthorityIdNumber,
           value: authorityIdNumber,
@@ -1138,10 +1138,9 @@ const useHandler = (styles: IStyle) => {
           onChangeValue: onChangeKYC.bind(null, partnersIdType),
         },
         {
-          elementType: "drop-down",
-          label: "Id number",
+          elementType: "input",
+          label: "Partners Id Number",
           name: "partnersIdNumber",
-          options: ID_PROOFS,
           error: errPartnersIdNumber,
           value: partnersIdNumber,
           onChangeValue: onChangeKYC.bind(null, partnersIdNumber),
