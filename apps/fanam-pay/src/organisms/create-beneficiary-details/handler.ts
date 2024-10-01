@@ -110,7 +110,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
 
     if (!city) errState = {...errState, errCity: "Please enter Your City/District", isValid: false}
 
-    if (!zip_code) errState = {...errState, errZipCode: "Please enter Your ZipCode", isValid: false}
+    if (!zip_code) errState = {...errState, errZipCode: "Please enter PinCode", isValid: false}
 
     setErrState(errState)
     return errState

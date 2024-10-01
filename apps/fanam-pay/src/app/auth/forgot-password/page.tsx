@@ -2,6 +2,7 @@
 
 import {Button, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
 import {REG_VALID_NUMBER} from "@fanam-pkg/core-utils"
+import ReactCountryFlag from "react-country-flag"
 import {useEffect} from "react"
 import {useSlider} from "@custom/ui"
 import {ICountry} from "@custom/utils"
@@ -16,7 +17,7 @@ const Forgot_Password = () => {
   const {toggleSlider} = useSlider()
   const {phone_no, country} = data
   const {errPhoneNo} = errData
-  const {getFlagUrl} = useCommon()
+  const {getCountryCode} = useCommon()
 
   const onSelectCountry = (country: ICountry) => {
     setData(prev => ({
@@ -46,12 +47,11 @@ const Forgot_Password = () => {
         </section>
         <section className={`flex-start ${styles.input_wrapper}`}>
           <section className={`flex ${styles.country_wrapper} ${errPhoneNo ? styles.error_border : ""}`}>
-            <ImageView
-              src={country ? getFlagUrl(country) : assets.ic_world}
-              alt="country-img"
-              imgHeight={25}
-              imgWidth={35}
-              wrapperClass={styles.flag}
+            <ReactCountryFlag
+              countryCode={getCountryCode(country)}
+              svg
+              style={{width: "24px", height: "24px"}}
+              className={styles.flag}
             />
             <h5 className={styles.country_code}>{country ? `+${country.phone_code}` : "-"}</h5>
             <ImageView
