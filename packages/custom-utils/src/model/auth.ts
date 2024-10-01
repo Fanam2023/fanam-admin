@@ -116,6 +116,12 @@ export interface IBaseSyncUser {
   kyc_pan?: IFile[]
 }
 
+interface IPayloadBusinessKYC {
+  id_number?: string
+  id_type: string
+  attachment: IFile[] | null
+}
+
 export interface ISyncUserData extends IBaseSyncUser {
   country: IFormData<number> | null
   state: IFormData<number> | null
@@ -125,6 +131,11 @@ export interface ISyncUserData extends IBaseSyncUser {
   pan: string
   aadhaarNumber: string
   date_of_birth: string
+  identity_proof?: IPayloadBusinessKYC | null
+  address_proof?: IPayloadBusinessKYC | null
+  authority_proof?: IPayloadBusinessKYC | null
+  business_proof?: IPayloadBusinessKYC | null
+  partners_proof?: IPayloadBusinessKYC[]
 }
 
 export interface IPayloadSyncUser extends IBaseSyncUser {
@@ -134,6 +145,11 @@ export interface IPayloadSyncUser extends IBaseSyncUser {
   bank_account?: IPayloadUserBankAccount
   account_type: string
   date_of_birth: string
+  identity_proof?: IPayloadBusinessKYC | null
+  address_proof?: IPayloadBusinessKYC | null
+  authority_proof?: IPayloadBusinessKYC | null
+  business_proof?: IPayloadBusinessKYC | null
+  partners_proof?: IPayloadBusinessKYC[]
 }
 
 export interface IPayloadUserBankAccount {
