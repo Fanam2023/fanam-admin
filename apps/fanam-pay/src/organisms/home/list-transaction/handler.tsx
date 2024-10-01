@@ -37,6 +37,7 @@ export const useHandler = (styles: IStyle) => {
     queryKey: [QUERY_TRANSACTION, status.key, start_date, end_date],
     queryFn: () =>
       getTransaction(status.key, start_date ? formatDateUTC(start_date) : "", end_date ? formatDateUTC(end_date) : ""),
+    refetchInterval: 120000,
   })
 
   const {mutate: fetchTransaction} = useMutation({

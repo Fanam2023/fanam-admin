@@ -224,8 +224,8 @@ const useHandler = (styles: IStyle) => {
     onSuccess: ({result, errorData}) => {
       const {message} = errorData || {}
       if (result) {
-        const {user} = result
-        updateUserData({...user, kyc_details: result?.user?.kyc_details})
+        // const {user} = result
+        // updateUserData({...user, kyc_details: result?.user?.kyc_details})
         toggleNotify({
           title: "Aadhaar OTP",
           description: "OTP Sent successfully",
@@ -414,7 +414,10 @@ const useHandler = (styles: IStyle) => {
         payloadData = {
           ...payloadData,
           aadhaarNumber: kyc_number,
-          kyc_aadhaar: attachments.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
+          kyc_aadhaar: [
+            ...kyc_aadhaar,
+            ...attachments.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
+          ],
         }
       }
 
@@ -423,7 +426,7 @@ const useHandler = (styles: IStyle) => {
         payloadData = {
           ...payloadData,
           pan: kyc_number,
-          kyc_pan: attachments.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}})),
+          kyc_pan: [...kyc_pan, ...attachments.map(({url, attachment_id}) => ({attachment: {id: attachment_id, url}}))],
         }
       }
 
