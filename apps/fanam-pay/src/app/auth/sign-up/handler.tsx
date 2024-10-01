@@ -82,7 +82,7 @@ const useHandler = (styles: IStyle) => {
     if (!last_name) errState = {...errState, errLastName: "Please enter LastName", isValid: false}
 
     if (!phone_no || phone_no.length !== 10)
-      errState = {...errState, errPhoneNo: "Please enter PhoneNumber", isValid: false}
+      errState = {...errState, errPhoneNo: "Please enter Valid PhoneNumber", isValid: false}
     else if (!country) errState = {...errState, errCountryCode: "Please choose your country code", isValid: false}
 
     if (!account_type) errState = {...errState, errAccountType: "Please enter AccountType", isValid: false}
