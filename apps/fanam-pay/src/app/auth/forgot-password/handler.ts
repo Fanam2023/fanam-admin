@@ -38,10 +38,10 @@ const useHandler = () => {
         errPhoneNo: "Please select country",
         isValid: false,
       }
-    } else if (!phone_no) {
+    } else if (!phone_no || phone_no.length !== 10) {
       errState = {
         ...errState,
-        errPhoneNo: "Please enter Phone Number",
+        errPhoneNo: "Please enter Valid Phone Number",
         isValid: false,
       }
     }
