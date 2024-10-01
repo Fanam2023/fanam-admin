@@ -490,7 +490,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!city) errState = {...errState, errCity: "Please enter City/District", isValid: false}
 
-    if (!zip_code) errState = {...errState, errZipCode: "Please enter PIN Code", isValid: false}
+    if (!zip_code) errState = {...errState, errZipCode: "Please enter PinCode", isValid: false}
 
     if (!account_type) errState = {...errState, errAccountType: "Please enter account type", isValid: false}
 
@@ -498,6 +498,8 @@ const useHandler = (styles: IStyle) => {
       errState = {...errState, errKycAadhaar: "Please upload valid Aadhaar KYC documents", isValid: false}
 
     if (!kyc_pan.length) errState = {...errState, errKycPAN: "Please upload valid PAN KYC documents", isValid: false}
+
+    if (!date_of_birth) errState = {...errState, errDateOfBirth: "Please enter Date of Birth", isValid: false}
 
     if (user?.account_type === "Business") {
       if (!business_name) errState = {...errState, errBusinessName: "Please enter the company name", isValid: false}

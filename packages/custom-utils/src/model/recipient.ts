@@ -1,6 +1,6 @@
 import {IFile, IFormData} from "@fanam-pkg/core-utils"
 import {IAttachment} from "./common"
-import {TypeAccount, TypeBankAccount} from "./enum"
+import {TypeAccount, TypeBankAccount, TypeRelation} from "./enum"
 import {ICity, ICountry, IState} from "./location"
 import {IBankAccount} from "./transaction"
 
@@ -26,6 +26,8 @@ export interface IRecipient {
   kyc_attachments: IAttachment[]
   business_name: string
   is_send_email: boolean
+  is_same_person: boolean
+  relationship: TypeRelation
 }
 
 export interface IBaseRecipientData {

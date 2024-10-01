@@ -80,7 +80,8 @@ const useHandler = (styles: IStyle) => {
 
     if (!last_name) errState = {...errState, errLastName: "Please enter LastName", isValid: false}
 
-    if (!phone_no) errState = {...errState, errPhoneNo: "Please enter PhoneNumber", isValid: false}
+    if (!phone_no || phone_no.length !== 10)
+      errState = {...errState, errPhoneNo: "Please enter PhoneNumber", isValid: false}
     else if (!country) errState = {...errState, errCountryCode: "Please choose your country code", isValid: false}
 
     if (!account_type) errState = {...errState, errAccountType: "Please enter AccountType", isValid: false}
@@ -155,11 +156,12 @@ const useHandler = (styles: IStyle) => {
         {
           childElement: (
             <>
-              <section className={`flex ${styles.country_wrapper} ${errCountryCode ? styles.error_border : ""}`}>
+              <section
+                className={`flex ${styles.country_wrapper} ${errCountryCode || errPhoneNo ? styles.error_border : ""}`}>
                 <ImageView
                   src={country ? getFlagUrl(country) : assets.ic_world}
                   alt="country-img"
-                  imgHeight={27}
+                  imgHeight={25}
                   imgWidth={35}
                   wrapperClass={styles.flag}
                 />
@@ -176,10 +178,10 @@ const useHandler = (styles: IStyle) => {
                   name="phone_no"
                   value={phone_no}
                   onChangeData={onChangeValue}
-                  error={errPhoneNo}
                   wrapperClass={styles.phone_number}
                 />
               </section>
+              {errPhoneNo && <p className={styles.error_message}>{errPhoneNo}</p>}
             </>
           ),
         },

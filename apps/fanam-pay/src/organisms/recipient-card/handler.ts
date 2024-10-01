@@ -35,7 +35,7 @@ export const useHandler = () => {
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
       {key: "Address Line 1", label: address_line_1},
-      !!address_line_2 && {key: "Address Line 2", label: address_line_2},
+      ...(address_line_2 ? [{key: "Address Line 2", label: address_line_2}] : []),
       {key: "Email", label: email},
       {key: "Phone Number", label: phone_no},
       {key: "Country", label: country_name},

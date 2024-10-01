@@ -76,16 +76,20 @@ const ReviewAndSend = () => {
         <h6 className={`bold ${styles.amount}`} onClick={() => toggleDetails("recipient")}>
           {recipient ? "See less" : "See more"}
         </h6>
-        <section className={styles.separator}></section>
-        <section className={`flex-sb-center ${styles.header}`}>
-          <h5 className={styles.edit_text}>Beneficiary Details</h5>
-        </section>
-        <ul className={styles.details_wrapper}>
-          {(beneficiary ? beneficiaryDetails : beneficiaryDetails?.slice(0, 4))?.map(renderPaymentDetails)}
-        </ul>
-        <h6 className={`bold ${styles.amount}`} onClick={() => toggleDetails("beneficiary")}>
-          {beneficiary ? "See less" : "See more"}
-        </h6>
+        {!!beneficiary && (
+          <>
+            <section className={styles.separator}></section>
+            <section className={`flex-sb-center ${styles.header}`}>
+              <h5 className={styles.edit_text}>Beneficiary Details</h5>
+            </section>
+            <ul className={styles.details_wrapper}>
+              {(beneficiary ? beneficiaryDetails : beneficiaryDetails?.slice(0, 4))?.map(renderPaymentDetails)}
+            </ul>
+            <h6 className={`bold ${styles.amount}`} onClick={() => toggleDetails("beneficiary")}>
+              {beneficiary ? "See less" : "See more"}
+            </h6>
+          </>
+        )}
       </section>
     </BaseContainer>
   )
