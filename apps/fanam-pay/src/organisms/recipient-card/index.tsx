@@ -7,7 +7,7 @@ import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation, error}: RecipientCardProps) => {
-  const {recipientDetails, recipient_id} = useHandler()
+  const {recipientDetails, recipient_id, isSamePerson} = useHandler()
 
   const renderRecipientDetails = ({key, label}: IFormData, index: number) => (
     <li className={styles.data_wrapper} key={index}>
@@ -32,20 +32,24 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
         </section>
         <ul className={`flex-col ${styles.details}`}>{recipientDetails.map(renderRecipientDetails)}</ul>
         <section>
-          <section className={`flex ${styles.check_box_wrapper}`}>
-            <Checkbox item={isPerson} name="is_same_person" onSelectItem={onChangeData} />
-            <h5 className={styles.text}>Are the recipient and the beneficiary the same</h5>
-          </section>
-          {isSame && (
-            <DropDown
-              label="Sender's relationship with the Recipient"
-              options={RELATION_SHIP}
-              onChangeData={onChangeData}
-              name="recipient_relationship"
-              selected={relation}
-              wrapperClass={styles.drop_down}
-              error={error}
-            />
+          {!isSamePerson && (
+            <>
+              <section className={`flex ${styles.check_box_wrapper}`}>
+                <Checkbox item={isPerson} name="is_same_person" onSelectItem={onChangeData} />
+                <h5 className={styles.text}>Are the recipient and the beneficiary the same</h5>
+              </section>
+              {isSame && (
+                <DropDown
+                  label="Sender's relationship with the Recipient"
+                  options={RELATION_SHIP}
+                  onChangeData={onChangeData}
+                  name="recipient_relationship"
+                  selected={relation}
+                  wrapperClass={styles.drop_down}
+                  error={error}
+                />
+              )}
+            </>
           )}
         </section>
       </section>

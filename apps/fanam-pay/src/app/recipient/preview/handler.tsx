@@ -5,6 +5,7 @@ import {useMutation} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {IMergeRecipientData} from "@custom/utils"
 import {useTransactionController} from "controller"
+import {useSingleton} from "hooks"
 import {CreateRecipientDetails} from "organisms"
 import {
   QUERY_TRANSACTION,
@@ -18,6 +19,7 @@ export const useHandler = () => {
   const {push, back} = useRouter()
   const {toggleSlider} = useSlider()
   const {isDesktop} = useResize()
+  const {transData} = useSingleton()
   const {syncRecipientAsBeneficiary} = useTransactionController()
   const [data, setData] = useState<IMergeRecipientData>({
     is_same_person: {isSelected: false},
@@ -28,6 +30,8 @@ export const useHandler = () => {
   const {isClicked} = errData
 
   const isSamePerson = is_same_person.isSelected
+
+  const {is_same_person: isSame} = transData?.recipient || {}
 
   const onRouteToBeneficiary = () => push(ROUTE_BENEFICIARIES)
 
@@ -71,6 +75,8 @@ export const useHandler = () => {
     if (isSamePerson) {
       if (isValid)
         linkRecipientAsBeneficiary({is_same_person: isSamePerson, recipient_relationship: recipient_relationship.key})
+    } else if (isSame) {
+      push(ROUTE_TRANSACTION_PURPOSE)
     } else onRouteToBeneficiary()
   }
 
