@@ -1,5 +1,6 @@
 import {FormSectionProps, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
 import {JSONObject, REG_EMAIL, REG_INDIAN_MOBILE, REG_VALID_NUMBER, useStorage} from "@fanam-pkg/core-utils"
+import ReactCountryFlag from "react-country-flag"
 import {useRouter} from "next/navigation"
 import {useCallback, useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
@@ -12,7 +13,7 @@ import {CountryPopup} from "organisms"
 import {ACCOUNT_TYPE, QUERY_COUNTRIES, ROUTE_LOGIN, routeToOTP} from "utils"
 
 const useHandler = (styles: IStyle) => {
-  const {isValidInputByRegex, getFlagUrl} = useCommon()
+  const {isValidInputByRegex, getCountryCode} = useCommon()
   const {getStorage, setStorage} = useStorage()
   const {toggleSlider} = useSlider()
   const {push} = useRouter()
@@ -158,12 +159,11 @@ const useHandler = (styles: IStyle) => {
             <>
               <section
                 className={`flex ${styles.country_wrapper} ${errCountryCode || errPhoneNo ? styles.error_border : ""}`}>
-                <ImageView
-                  src={country ? getFlagUrl(country) : assets.ic_world}
-                  alt="country-img"
-                  imgHeight={25}
-                  imgWidth={35}
-                  wrapperClass={styles.flag}
+                <ReactCountryFlag
+                  countryCode={getCountryCode(country)}
+                  svg
+                  style={{width: "24px", height: "24px"}}
+                  className={styles.flag}
                 />
                 <h5 className={styles.country_code}>{country ? `+${country.phone_code}` : "-"}</h5>
                 <ImageView

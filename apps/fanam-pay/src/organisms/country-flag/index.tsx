@@ -1,14 +1,15 @@
-import {ImageView} from "@fanam-pkg/core-ui-sass"
+import ReactCountryFlag from "react-country-flag"
 import {ICountry} from "@custom/utils"
 import styles from "./styles.module.sass"
 
 export const CountryFlag = ({iso2, country_name, currency}: ICountry) => (
   <section className={`flex ${styles.flag_wrapper} ${styles.sender_wrapper}`}>
-    <ImageView
-      src={`https://flagcdn.com/w40/${iso2?.toLowerCase()}.png`}
+    <ReactCountryFlag
+      countryCode={iso2?.toUpperCase()}
+      svg
       alt={country_name}
-      imgSize={16}
-      wrapperClass={styles.country_wrapper}
+      style={{width: "24px", height: "24px"}}
+      className={styles.flag}
     />
     <h3 className={styles.currency_text}>{currency}</h3>
   </section>
