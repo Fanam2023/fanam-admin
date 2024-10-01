@@ -130,7 +130,6 @@ export const RELATION_SHIP: IFormData<TypeRelation>[] = [
   {key: "Son", label: "Son"},
   {key: "Brother", label: "Brother"},
   {key: "Sister", label: "Sister"},
-  {key: "Others", label: "Others"},
   {key: "Cousin", label: "Cousin"},
   {key: "Daughter", label: "Daughter"},
   {key: "Friend", label: "Friend"},

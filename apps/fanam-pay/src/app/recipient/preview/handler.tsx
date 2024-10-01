@@ -6,7 +6,13 @@ import {useSlider} from "@custom/ui"
 import {IMergeRecipientData} from "@custom/utils"
 import {useTransactionController} from "controller"
 import {CreateRecipientDetails} from "organisms"
-import {QUERY_TRANSACTION, RELATION_SHIP, ROUTE_BENEFICIARIES, ROUTE_BENEFICIARY_PREVIEW} from "utils"
+import {
+  QUERY_TRANSACTION,
+  RELATION_SHIP,
+  ROUTE_BENEFICIARIES,
+  ROUTE_BENEFICIARY_PREVIEW,
+  ROUTE_TRANSACTION_PURPOSE,
+} from "utils"
 
 export const useHandler = () => {
   const {push, back} = useRouter()
@@ -31,7 +37,8 @@ export const useHandler = () => {
     mutationKey: [QUERY_TRANSACTION],
     mutationFn: syncRecipientAsBeneficiary,
     onSuccess: ({result}) => {
-      if (result) push(ROUTE_BENEFICIARY_PREVIEW)
+      const {is_same_person, relationship} = result?.recipient || {}
+      push(is_same_person || relationship ? ROUTE_TRANSACTION_PURPOSE : ROUTE_BENEFICIARY_PREVIEW)
     },
   })
 
