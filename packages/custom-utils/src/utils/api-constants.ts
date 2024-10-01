@@ -37,7 +37,6 @@ export const API_CREATE_ORDER = "/order"
 export const apiPayout = (transactionId: string) => `/payment/send-payout/${transactionId}`
 export const apiCancelTransaction = (transactionId: string) => `/order/create_refund/${transactionId}`
 export const apiDeleteAttachment = (attachmentId: string) => `/file-upload/${attachmentId}`
-
 /* KYC Endpoints */
 export const API_PAN_VERIFY = `${API_USER}/pan-verification`
 export const API_KYC_AADHAAR_INITIATE_CAPTCHA = `${API_USER}/initiateCaptcha-aadhaar`
@@ -45,3 +44,4 @@ export const API_KYC_AADHAAR_REGENERATE_CAPTCHA = `${API_USER}/reGenerateCaptcha
 export const API_KYC_AADHAAR_GENERATE_OTP = `${API_USER}/generateOtp-aadhaar`
 export const API_KYC_AADHAAR_OTP_VERIFICATION = `${API_USER}/aadhaarOtp-verification`
 export const API_KYC_GST_VERIFICATION = `${API_USER}/gst-verification`
+export const API_BUSINESS_KYC = `${API_USER}/business-kyc`

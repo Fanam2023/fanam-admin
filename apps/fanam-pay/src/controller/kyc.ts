@@ -1,10 +1,12 @@
 import {
+  API_BUSINESS_KYC,
   API_KYC_AADHAAR_GENERATE_OTP,
   API_KYC_AADHAAR_INITIATE_CAPTCHA,
   API_KYC_AADHAAR_OTP_VERIFICATION,
   API_KYC_AADHAAR_REGENERATE_CAPTCHA,
   API_KYC_GST_VERIFICATION,
   API_PAN_VERIFY,
+  IPayloadBusinessKYC,
   IPayloadGenerateAadhaarOTP,
   IPayloadPan,
   IPayloadVerifyAadhaarOTP,
@@ -36,6 +38,9 @@ export const useKYCController = () => {
   const verifyGST = async (payload: IPayloadVerifyGST) =>
     await postRequest<IResponsePan>(API_KYC_GST_VERIFICATION, payload)
 
+  const verifyBusinessKyc = async (payload: IPayloadBusinessKYC) =>
+    await postRequest<IPayloadBusinessKYC>(API_BUSINESS_KYC, payload)
+
   return {
     verifyPanCard,
     generateAadhaarCaptcha,
@@ -43,5 +48,6 @@ export const useKYCController = () => {
     generateAadhaarOTP,
     verifyAadhaarOTP,
     verifyGST,
+    verifyBusinessKyc,
   }
 }

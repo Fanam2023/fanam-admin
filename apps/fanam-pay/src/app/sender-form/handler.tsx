@@ -54,11 +54,21 @@ const DEFAULT_ERR_STATE = {
   errPan: "",
   errAadhaarNumber: "",
   errBusinessType: "",
-  errIdentityProof: "",
-  errAddressProof: "",
-  errAuthorityProof: "",
-  errBusinessProof: "",
-  errPartnersProof: "",
+  errIdentityIdType: "",
+  errIdentityIdNumber: "",
+  errIdentityAttachments: "",
+  errAddressIdType: "",
+  errAddressIdNumber: "",
+  errAddressAttachments: "",
+  errBusinessIdType: "",
+  errBusinessIdNumber: "",
+  errBusinessAttachments: "",
+  errAuthorityIdType: "",
+  errAuthorityIdNumber: "",
+  errAuthorityAttachments: "",
+  errPartnersIdType: "",
+  errPartnersIdNumber: "",
+  errPartnersAttachments: "",
 }
 
 const useHandler = (styles: IStyle) => {
@@ -66,8 +76,14 @@ const useHandler = (styles: IStyle) => {
   const {isValidInputByRegex} = useCommon()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {syncUser} = useAuthController()
-  const {verifyPanCard, generateAadhaarCaptcha, reGenerateAadhaarCaptcha, generateAadhaarOTP, verifyAadhaarOTP} =
-    useKYCController()
+  const {
+    verifyPanCard,
+    generateAadhaarCaptcha,
+    reGenerateAadhaarCaptcha,
+    generateAadhaarOTP,
+    verifyAadhaarOTP,
+    verifyBusinessKyc,
+  } = useKYCController()
   const {formatDateUTC, formatDate, dayjs} = useDateTime()
   const {toggleNotify} = useNotifyPopup()
   const {togglePopup} = usePopup()
@@ -93,22 +109,10 @@ const useHandler = (styles: IStyle) => {
     date_of_birth: "",
     kyc_aadhaar: [],
     kyc_pan: [],
-    identity_proof: {
-      id_type: ID_PROOFS[0],
-      attachment: [],
-    },
-    address_proof: {
-      id_type: ID_PROOFS[0],
-      attachment: [],
-    },
-    authority_proof: {
-      id_type: ID_PROOFS[0],
-      attachment: [],
-    },
-    business_proof: {
-      id_type: ID_PROOFS[0],
-      attachment: [],
-    },
+    identity_proof: null,
+    address_proof: null,
+    authority_proof: null,
+    business_proof: null,
     partners_proof: [],
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
@@ -158,12 +162,43 @@ const useHandler = (styles: IStyle) => {
     errBusinessName,
     errBusinessType,
     errDateOfBirth,
-    errIdentityProof,
-    errAddressProof,
-    errAuthorityProof,
-    errBusinessProof,
-    errPartnersProof,
+    errIdentityIdType,
+    errIdentityIdNumber,
+    errIdentityAttachments,
+    errAddressIdType,
+    errAddressIdNumber,
+    errAddressAttachments,
+    errBusinessIdType,
+    errBusinessIdNumber,
+    errBusinessAttachments,
+    errAuthorityIdType,
+    errAuthorityIdNumber,
+    errAuthorityAttachments,
+    errPartnersIdType,
+    errPartnersIdNumber,
+    errPartnersAttachments,
   } = errData
+
+  const isSoleProprietor = business_type.key === "Sole_proprietor"
+  const isCompanies = business_type.key === "Companies"
+  const isLimitedLiabilityPartnership = business_type.key === "Limited_liability_partnership"
+  const isPartnershipFirm = business_type.key === "Partnership_firm"
+
+  const isIdentityProof = isSoleProprietor || isCompanies || isLimitedLiabilityPartnership || isPartnershipFirm
+  const isAddressProof = isSoleProprietor || isCompanies || isLimitedLiabilityPartnership
+  const isBusinessProof = isSoleProprietor
+  const isAuthorityProof = isPartnershipFirm || isCompanies
+  const isPartnersProof = isPartnershipFirm || isCompanies || isLimitedLiabilityPartnership
+
+  const {id_type: identityIdType, id_number: identityIdNumber, kyc: identityAttachments} = identity_proof || {}
+
+  const {id_type: addressIdType, id_number: addressIdNumber, kyc: addressAttachments} = address_proof || {}
+
+  const {id_type: businessIdType, id_number: businessIdNumber, kyc: businessAttachments} = business_proof || {}
+
+  const {id_type: authorityIdType, id_number: authorityIdNumber, kyc: authorityAttachments} = authority_proof || {}
+
+  const {id_type: partnersIdType, id_number: partnersIdNumber, kyc: partnersAttachments} = partners_proof || {}
 
   const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}] = useQueries({
     queries: [
@@ -505,24 +540,61 @@ const useHandler = (styles: IStyle) => {
       if (!business_name) errState = {...errState, errBusinessName: "Please enter the company name", isValid: false}
     }
 
-    if (!business_type) errState = {...errState, errBusinessType: "Please enter the Business type", isValid: false}
+    if (!business_type) {
+      errState = {...errState, errBusinessType: "Please choose business type", isValid: false}
+    } else {
+      if (isIdentityProof) {
+        if (!identityIdType)
+          errState = {...errState, errIdentityIdType: "Please choose identity Id type", isValid: false}
+        if (!identityIdNumber)
+          errState = {...errState, errIdentityIdNumber: "Please enter identity Id number", isValid: false}
+        if (!identityAttachments.length)
+          errState = {...errState, errIdentityAttachments: "Please choose identity attachments", isValid: false}
+      }
 
-    if (!address_proof) errState = {...errState, errAddressProof: "Please choose Address Proof", isValid: false}
+      if (isAddressProof) {
+        if (!addressIdType) errState = {...errState, errAddressIdType: "Please choose address Id type", isValid: false}
+        if (!addressIdNumber)
+          errState = {...errState, errAddressIdNumber: "Please enter address Id number", isValid: false}
+        if (!addressAttachments.length)
+          errState = {...errState, errAddressAttachments: "Please choose address attachments", isValid: false}
+      }
 
-    if (!identity_proof) errState = {...errState, errIdentityProof: "Please choose Id Proof", isValid: false}
+      if (isBusinessProof) {
+        if (!businessIdType)
+          errState = {...errState, errBusinessIdType: "Please choose business Id type", isValid: false}
+        if (!businessIdNumber)
+          errState = {...errState, errBusinessIdNumber: "Please enter business Id number", isValid: false}
+        if (!businessAttachments.length)
+          errState = {...errState, errBusinessAttachments: "Please choose business attachments", isValid: false}
+      }
 
-    if (!business_proof) errState = {...errState, errBusinessProof: "Please choose Business Proof", isValid: false}
+      if (isAuthorityProof) {
+        if (!authorityIdType)
+          errState = {...errState, errAuthorityIdType: "Please choose authority Id type", isValid: false}
+        if (!authorityIdNumber)
+          errState = {...errState, errAuthorityIdNumber: "Please enter authority Id number", isValid: false}
+        if (!authorityAttachments.length)
+          errState = {...errState, errAuthorityAttachments: "Please choose authority attachments", isValid: false}
+      }
 
-    if (!authority_proof) errState = {...errState, errAuthorityProof: "Please choose Authority Proof", isValid: false}
-
-    if (!partners_proof) errState = {...errState, errPartnersProof: "Please choose Partners Proof", isValid: false}
-
+      if (isPartnersProof) {
+        if (!partnersIdType)
+          errState = {...errState, errPartnersIdType: "Please choose partners Id type", isValid: false}
+        if (!partnersIdNumber)
+          errState = {...errState, errPartnersIdNumber: "Please enter partners Id number", isValid: false}
+        if (!partnersAttachments.length)
+          errState = {...errState, errPartnersAttachments: "Please choose partners attachments", isValid: false}
+      }
+    }
     setErrData(errState)
 
     return errState
   }
 
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
+
+  const onChangeKYC = (key: string, value: JSONObject) => setData(prev => ({...prev, [key]: {...prev[key], ...value}}))
 
   const onChangeData = (value: JSONObject) => {
     const formattedDate = formatDateUTC(value?.date_of_birth as string)
@@ -907,145 +979,184 @@ const useHandler = (styles: IStyle) => {
     return elements
   }, [user, data, errData])
 
-  const businessKYCElements: FormSectionProps[] = [
-    {
+  const businessKYCElements: FormSectionProps[] = []
+  if (isIdentityProof) {
+    businessKYCElements.push({
       title: "Identity Proof",
       childElements: [
         {
           elementType: "drop-down",
           label: "Select Anyone",
-          name: "identity_proof",
+          name: "identityIdType",
           options: ID_PROOFS,
-          error: errCountry,
-          value: identity_proof?.id_type || null,
-          onChangeValue,
+          error: errIdentityIdType,
+          value: identityIdType,
+          onChangeValue: onChangeKYC.bind(null, identityIdType),
+        },
+        {
+          elementType: "input",
+          label: "Select Anyone",
+          name: "identityIdNumber",
+          error: errIdentityIdNumber,
+          value: identityIdNumber,
+          onChangeValue: onChangeKYC.bind(null, identityIdNumber),
         },
         {
           elementType: "file-picker",
           fileType: ["image/*", "application/pdf"],
           wrapperClass: styles.img_picker,
-          name: "identity_proof",
-          value: identity_proof as unknown as JSONObject,
+          name: "identityAttachments",
+          value: identityAttachments,
           maxCount: 1,
-          error: errIdentityProof,
-          onChangeValue,
+          error: errIdentityAttachments,
+          onChangeValue: onChangeKYC.bind(null, identityAttachments),
         },
       ],
-    },
-    (business_type.key === "Sole_proprietor" ||
-      business_type.key === "Companies" ||
-      business_type.key === "Limited_liability_partnership") && {
-      title: "Address proof",
+    })
+  }
+  if (isAddressProof) {
+    businessKYCElements.push({
+      title: "Address Proof",
       childElements: [
         {
           elementType: "drop-down",
           label: "Select Anyone",
-          name: "address_proof",
+          name: "addressIdType",
           options: ID_PROOFS,
-          error: errAddressProof,
-          value: address_proof?.id_type || null,
-          onChangeValue,
+          error: errAddressIdType,
+          value: addressIdType,
+          onChangeValue: onChangeKYC.bind(null, addressIdType),
+        },
+        {
+          elementType: "input",
+          label: "Select Anyone",
+          name: "addressIdNumber",
+          error: errAddressIdNumber,
+          value: addressIdNumber,
+          onChangeValue: onChangeKYC.bind(null, addressIdNumber),
         },
         {
           elementType: "file-picker",
           fileType: ["image/*", "application/pdf"],
           wrapperClass: styles.img_picker,
-          name: "address_proof",
+          name: "addressAttachments",
           isMultiple: true,
-          value: address_proof as unknown as JSONObject,
+          value: addressAttachments,
           maxCount: 2,
-          error: errAddressProof,
-          onChangeValue,
+          error: errAddressAttachments,
+          onChangeValue: onChangeKYC.bind(null, addressAttachments),
         },
       ],
-    },
+    })
+  }
 
-    business_type.key === "Sole_proprietor" && {
+  if (isBusinessProof) {
+    businessKYCElements.push({
       title: "Business Proof",
       childElements: [
         {
           elementType: "drop-down",
           label: "Select Anyone",
-          name: "business_proof",
+          name: "businessIdType",
           options: ID_PROOFS,
-          error: errBusinessProof,
-          value: business_proof?.id_type || null,
-          onChangeValue,
+          error: errBusinessIdType,
+          value: businessIdType,
+          onChangeValue: onChangeKYC.bind(null, businessIdType),
+        },
+        {
+          elementType: "input",
+          label: "Select Anyone",
+          name: "businessIdNumber",
+          error: errBusinessIdNumber,
+          value: businessIdNumber,
+          onChangeValue: onChangeKYC.bind(null, businessIdNumber),
         },
         {
           elementType: "file-picker",
           fileType: ["image/*", "application/pdf"],
           wrapperClass: styles.img_picker,
-          name: "business_proof",
+          name: "businessAttachments",
           isMultiple: true,
-          value: business_proof as unknown as JSONObject,
+          value: businessAttachments,
           maxCount: 2,
-          error: errBusinessProof,
-          onChangeValue,
+          error: errBusinessAttachments,
+          onChangeValue: onChangeKYC.bind(null, businessAttachments),
         },
       ],
-    },
-    (business_type.key === "Partnership_firm" || business_type.key === "Companies") && {
+    })
+  }
+
+  if (isAuthorityProof) {
+    businessKYCElements.push({
       title: "Authority Proof",
-      wrapperClassGrid: "",
       childElements: [
         {
           elementType: "drop-down",
           label: "Select Anyone",
-          name: "authority_proof",
+          name: "authorityIdType",
           options: ID_PROOFS,
-          error: errAuthorityProof,
-          value: authority_proof?.id_type || null,
-          onChangeValue,
+          error: errAuthorityIdType,
+          value: authorityIdType,
+          onChangeValue: onChangeKYC.bind(null, authorityIdType),
+        },
+        {
+          elementType: "input",
+          label: "Select Anyone",
+          name: "authorityIdNumber",
+          error: errAuthorityIdNumber,
+          value: authorityIdNumber,
+          onChangeValue: onChangeKYC.bind(null, authorityIdNumber),
         },
         {
           elementType: "file-picker",
           fileType: ["image/*", "application/pdf"],
           wrapperClass: styles.img_picker,
-          name: "authority_proof",
-          value: authority_proof as unknown as JSONObject,
+          name: "authorityAttachments",
+          value: authorityAttachments,
           maxCount: 1,
-          error: errKycAadhaar,
-          onChangeValue,
+          error: errAuthorityAttachments,
+          onChangeValue: onChangeKYC.bind(null, authorityAttachments),
         },
       ],
-    },
+    })
+  }
 
-    (business_type.key === "Partnership_firm" ||
-      business_type.key === "Companies" ||
-      business_type.key === "Limited_liability_partnership") && {
+  if (isPartnersProof) {
+    businessKYCElements.push({
       title: "Identity and Address Proof of the Authorized Signatories",
-      wrapperClassGrid: "",
       childElements: [
         {
           elementType: "drop-down",
           label: "Select Anyone",
-          name: "partners_proof",
+          name: "partnersIdType",
           options: ID_PROOFS,
-          error: errPartnersProof,
-          onChangeValue,
+          error: errPartnersIdType,
+          value: partnersIdType,
+          onChangeValue: onChangeKYC.bind(null, partnersIdType),
         },
         {
           elementType: "drop-down",
           label: "Id number",
-          name: "partners_proof",
+          name: "partnersIdNumber",
           options: ID_PROOFS,
-          error: errPartnersProof,
-          onChangeValue,
+          error: errPartnersIdNumber,
+          value: partnersIdNumber,
+          onChangeValue: onChangeKYC.bind(null, partnersIdNumber),
         },
         {
           elementType: "file-picker",
           fileType: ["image/*", "application/pdf"],
           wrapperClass: styles.img_picker,
-          name: "partners_proof",
+          name: "partnersAttachments",
           isMultiple: true,
           maxCount: 2,
-          error: errPartnersProof,
-          onChangeValue,
+          error: errPartnersAttachments,
+          value: partnersAttachments,
+          onChangeValue: onChangeKYC.bind(null, partnersAttachments),
         },
       ],
-    },
-  ]
+    })
+  }
 
   const individualType = user?.account_type === "Individual"
 

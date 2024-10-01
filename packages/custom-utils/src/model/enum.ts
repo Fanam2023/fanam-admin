@@ -88,3 +88,10 @@ export type TypeOrderStatus =
   | "Refund_failed"
 
 export type TypeSignOut = "logout" | "forgot-pin" | "logout-all"
+
+export type TypeBusinessKYC =
+  | "Address_proof"
+  | "Identity_proof"
+  | "Business_proof"
+  | "Authority_proof"
+  | "Identity_and_address_proof"
