@@ -206,17 +206,18 @@ const useHandler = () => {
 
   return {
     beneficiaryDetails,
+    beneficiary,
     recipientDetails,
     paymentDetails,
     showDetails,
-    toggleDetails,
     destination_amount,
     destinationCountryValue,
     isDisabled,
-    completeTransaction,
     transactionId,
     durationTime,
     transfer_time,
+    toggleDetails,
+    completeTransaction,
   }
 }
 
