@@ -677,8 +677,19 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const onValidate = () => {
     let errState = {...DEFAULT_ERR_STATE, isValid: true, isClicked: true}
 
-    if (!first_name) errState = {...errState, errFirstName: "Please enter FirstName", isValid: false}
-
+    if (!first_name) {
+      errState = {
+        ...errState,
+        errFirstName: "Please enter FirstName",
+        isValid: false,
+      }
+    } else if (first_name.length < 2) {
+      errState = {
+        ...errState,
+        errFirstName: "FirstName must be longer than or equal to 2 characters",
+        isValid: false,
+      }
+    }
     if (!last_name) errState = {...errState, errLastName: "Please enter LastName", isValid: false}
 
     if (!account_no) errState = {...errState, errAccountNo: "Please enter AccountNumber", isValid: false}
