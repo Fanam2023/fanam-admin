@@ -21,6 +21,7 @@ const ReviewAndSend = () => {
     completeTransaction,
     durationTime,
     transfer_time,
+    beneficiary: beneficiaryDetail,
   } = useHandler()
 
   const {recipient, beneficiary} = showDetails
@@ -76,7 +77,7 @@ const ReviewAndSend = () => {
         <h6 className={`bold ${styles.amount}`} onClick={() => toggleDetails("recipient")}>
           {recipient ? "See less" : "See more"}
         </h6>
-        {!!beneficiaryDetails && (
+        {!!beneficiaryDetail && (
           <>
             <section className={styles.separator}></section>
             <section className={`flex-sb-center ${styles.header}`}>
