@@ -34,7 +34,8 @@ export const ListTransaction = () => {
     index: number
   ) => {
     const {first_name, last_name} = recipient || {}
-    const {order_no, order_status} = order || {}
+    const {order_no, order_status, payment} = order || {}
+    const {paymentMethod} = payment || {}
     const {currency} = destination_country || {}
     const {currency: source_currency} = source_country || {}
     const {sla_timing_min, sla_timing_max} = transfer_time || {}
@@ -59,9 +60,9 @@ export const ListTransaction = () => {
                 {exchange_amount} {source_currency}
               </h5>
               <section className={`flex ${styles.duration_wrapper}`}>
-                {paymentMode && (
+                {paymentMethod && (
                   <>
-                    <h5>Mode: {paymentMode}</h5>
+                    <h5>Mode: {paymentMethod}</h5>
                     <ImageView src={assets.ic_dot} alt="dot" imgSize={6} className={styles.dot_wrapper} />
                   </>
                 )}

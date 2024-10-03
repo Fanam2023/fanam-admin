@@ -19,7 +19,7 @@ const SenderForm = () => {
       // disabled={!isValid}
       stepIndex={0}
       onBack={onBack}>
-      <h4 className={`bold ${styles.title}`}>Complete Your Profile</h4>
+      <h4 className={`bold ${styles.title}`}>Update Profile</h4>
       <h6 className={styles.description}>
         Essential for verification and processing your transactions securely and efficiently.
       </h6>

@@ -52,7 +52,7 @@ const HomeScreen = () => {
               wrapperClass={styles.danger_button}
               buttonType="primary-outlined"
               onClick={() => push(ROUTE_SENDER)}>
-              Complete Your Profile
+              Update Profile
             </Button>
           )}
         </section>

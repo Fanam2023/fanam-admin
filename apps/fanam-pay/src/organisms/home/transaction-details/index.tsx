@@ -23,7 +23,8 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
     destination_country,
   } = transaction || {}
   const {first_name, last_name} = recipient || {}
-  const {order_no, order_status} = order || {}
+  const {order_no, order_status, payment} = order || {}
+  const {paymentMethod} = payment || {}
   const {sla_timing_min, sla_timing_max} = transfer_time || {}
   const statusLabel = TRANSACTION_STATUS_OBJECT[order_status]?.label
   const {currency} = destination_country || {}
@@ -47,9 +48,9 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
               <h6 className={styles.transaction_id}>{order_no}</h6>
             </section>
             <section className={`flex ${styles.transaction_wrapper}`}>
-              {paymentMode && (
+              {paymentMethod && (
                 <>
-                  <h5 className={styles.transaction_mode}>Mode: {paymentMode}</h5>
+                  <h5 className={styles.transaction_mode}>Mode: {paymentMethod}</h5>
                   <ImageView src={assets.ic_dot} alt="dot" imgSize={6} className={styles.dot_wrapper} />
                 </>
               )}
