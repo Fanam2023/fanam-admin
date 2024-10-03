@@ -86,7 +86,7 @@ const InitiateTransactionPage = () => {
                 <section className="flex">
                   <ImageView src={assets.ic_power} alt="" imgSize={24} />
                   <h5 className={styles.hour_wrapper}>
-                    Transfer in
+                    Transfer in {" "}
                     {sla_timing_min !== sla_timing_max
                       ? `${sla_timing_min} - ${sla_timing_max} hours`
                       : `${sla_timing_min} hours`}
