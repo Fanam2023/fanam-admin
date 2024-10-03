@@ -121,7 +121,6 @@ export interface IBaseSyncUser {
   address_line_1: string
   address_line_2?: string
   zip_code: string
-  business_type?: IFormData<TypeBusiness> | null
   kyc_aadhaar?: IFile[]
   kyc_pan?: IFile[]
 }
@@ -130,23 +129,24 @@ export interface IPayloadBusinessKYC {
   id_number: string
   id_type: string
   kyc: IFile[] | null
-  kyc_id: string
+  kyc_id?: string
   kyc_type?: TypeBusinessKYC
 }
 
 export interface ISyncUserData extends IBaseSyncUser {
-  country: IFormData<number> | null
-  state: IFormData<number> | null
-  city: IFormData<number> | null
-  account_type: IFormData<TypeAccount>
   business_name: string
   pan: string
   aadhaarNumber: string
   date_of_birth: string
-  identity_proof?: IPayloadBusinessKYC | null
-  address_proof?: IPayloadBusinessKYC | null
-  authority_proof?: IPayloadBusinessKYC | null
-  business_proof?: IPayloadBusinessKYC | null
+  country: IFormData<number> | null
+  state: IFormData<number> | null
+  city: IFormData<number> | null
+  account_type: IFormData<TypeAccount>
+  business_type?: IFormData<TypeBusiness> | null
+  identity_proof?: IPayloadBusinessKYC
+  address_proof?: IPayloadBusinessKYC
+  authority_proof?: IPayloadBusinessKYC
+  business_proof?: IPayloadBusinessKYC
   partners_proof?: IPayloadBusinessKYC[]
 }
 
@@ -154,14 +154,11 @@ export interface IPayloadSyncUser extends IBaseSyncUser {
   country_id: number
   state_id: number
   city_id: number
-  bank_account?: IPayloadUserBankAccount
-  account_type: string
+  account_type: TypeAccount
   date_of_birth?: string
-  identity_proof?: IPayloadBusinessKYC | null
-  address_proof?: IPayloadBusinessKYC | null
-  authority_proof?: IPayloadBusinessKYC | null
-  business_proof?: IPayloadBusinessKYC | null
-  partners_proof?: IPayloadBusinessKYC[]
+  bank_account?: IPayloadUserBankAccount
+  business_proofs?: IPayloadBusinessKYC[]
+  business_type?: TypeBusiness
 }
 
 export interface IPayloadUserBankAccount {

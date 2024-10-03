@@ -38,8 +38,11 @@ export const useKYCController = () => {
   const verifyGST = async (payload: IPayloadVerifyGST) =>
     await postRequest<IResponsePan>(API_KYC_GST_VERIFICATION, payload)
 
-  const verifyBusinessKyc = async (payload: IPayloadBusinessKYC) =>
-    await postRequest<IPayloadBusinessKYC>(API_BUSINESS_KYC, payload)
+  const verifyBusinessKyc = async (payloadArr: IPayloadBusinessKYC[]) => {
+    const promises = payloadArr.map(payload => postRequest<IPayloadBusinessKYC>(API_BUSINESS_KYC, payload))
+
+    return await Promise.all(promises)
+  }
 
   return {
     verifyPanCard,

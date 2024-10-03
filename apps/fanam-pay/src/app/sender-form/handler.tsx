@@ -6,6 +6,7 @@ import {useMutation, useQueries} from "@tanstack/react-query"
 import {
   DF_INPUT_DATE,
   IAadhaarCaptcha,
+  IPayloadBusinessKYC,
   IPayloadSyncUser,
   IResponseKYC,
   IStyle,
@@ -32,6 +33,8 @@ import {
   QUERY_USER,
   ROUTE_HOME,
 } from "utils"
+
+const DEFAULT_ERR_PARTNERSHIP = {errPartnersIdType: "", errPartnersIdNumber: "", errPartnersAttachments: ""}
 
 const DEFAULT_ERR_STATE = {
   isClicked: false,
@@ -66,9 +69,8 @@ const DEFAULT_ERR_STATE = {
   errAuthorityIdType: "",
   errAuthorityIdNumber: "",
   errAuthorityAttachments: "",
-  errPartnersIdType: "",
-  errPartnersIdNumber: "",
-  errPartnersAttachments: "",
+  errPartnershipProof: "",
+  errPartnershipProofArr: [DEFAULT_ERR_PARTNERSHIP],
 }
 
 const useHandler = (styles: IStyle) => {
@@ -76,14 +78,8 @@ const useHandler = (styles: IStyle) => {
   const {isValidInputByRegex} = useCommon()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {syncUser} = useAuthController()
-  const {
-    verifyPanCard,
-    generateAadhaarCaptcha,
-    reGenerateAadhaarCaptcha,
-    generateAadhaarOTP,
-    verifyAadhaarOTP,
-    verifyBusinessKyc,
-  } = useKYCController()
+  const {verifyPanCard, generateAadhaarCaptcha, reGenerateAadhaarCaptcha, generateAadhaarOTP, verifyAadhaarOTP} =
+    useKYCController()
   const {formatDateUTC, formatDate, dayjs} = useDateTime()
   const {toggleNotify} = useNotifyPopup()
   const {togglePopup} = usePopup()
@@ -109,11 +105,11 @@ const useHandler = (styles: IStyle) => {
     date_of_birth: "",
     kyc_aadhaar: [],
     kyc_pan: [],
-    identity_proof: null,
-    address_proof: null,
-    authority_proof: null,
-    business_proof: null,
-    partners_proof: [],
+    identity_proof: {id_number: "", id_type: ID_PROOFS[0], kyc: []},
+    address_proof: {id_number: "", id_type: ID_PROOFS[0], kyc: []},
+    authority_proof: {id_number: "", id_type: ID_PROOFS[0], kyc: []},
+    business_proof: {id_number: "", id_type: ID_PROOFS[0], kyc: []},
+    partners_proof: [{id_number: "", id_type: ID_PROOFS[0], kyc: []}],
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
 
@@ -174,9 +170,8 @@ const useHandler = (styles: IStyle) => {
     errAuthorityIdType,
     errAuthorityIdNumber,
     errAuthorityAttachments,
-    errPartnersIdType,
-    errPartnersIdNumber,
-    errPartnersAttachments,
+    errPartnershipProofArr,
+    errPartnershipProof,
   } = errData
 
   const isSoleProprietor = business_type.key === "Sole_proprietor"
@@ -197,8 +192,6 @@ const useHandler = (styles: IStyle) => {
   const {id_type: businessIdType, id_number: businessIdNumber, kyc: businessAttachments} = business_proof || {}
 
   const {id_type: authorityIdType, id_number: authorityIdNumber, kyc: authorityAttachments} = authority_proof || {}
-
-  const {id_type: partnersIdType, id_number: partnersIdNumber, kyc: partnersAttachments} = partners_proof || {}
 
   const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}] = useQueries({
     queries: [
@@ -582,14 +575,43 @@ const useHandler = (styles: IStyle) => {
       }
 
       if (isPartnersProof) {
-        if (!partnersIdType)
-          errState = {...errState, errPartnersIdType: "Please choose partners Id type", isValid: false}
-        if (!partnersIdNumber)
-          errState = {...errState, errPartnersIdNumber: "Please enter partners Id number", isValid: false}
-        if (!partnersAttachments?.length)
-          errState = {...errState, errPartnersAttachments: "Please choose partners attachments", isValid: false}
+        if (partners_proof?.length) {
+          const errPartnershipProofArr = []
+          partners_proof?.forEach(({id_number, id_type, kyc}) => {
+            let errPartnershipProof = {...DEFAULT_ERR_PARTNERSHIP}
+
+            if (!id_type) {
+              errPartnershipProof = {...errPartnershipProof, errPartnersIdType: "Please choose partners Id type"}
+              errState = {...errState, isValid: false}
+            }
+
+            if (!id_number) {
+              errPartnershipProof = {...errPartnershipProof, errPartnersIdNumber: "Please enter partners Id number"}
+              errState = {...errState, isValid: false}
+            }
+
+            if (!kyc?.length) {
+              errPartnershipProof = {
+                ...errPartnershipProof,
+                errPartnersAttachments: "Please choose partners attachments",
+              }
+              errState = {...errState, isValid: false}
+            }
+
+            errPartnershipProofArr.push(errPartnershipProof)
+          })
+
+          errState = {...errState, errPartnershipProofArr: errPartnershipProofArr}
+        } else {
+          errState = {
+            ...errState,
+            errPartnershipProof: "Please add minimum one Partnership Proof to proceed",
+            isValid: false,
+          }
+        }
       }
     }
+
     setErrData(errState)
 
     return errState
@@ -598,6 +620,23 @@ const useHandler = (styles: IStyle) => {
   const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
 
   const onChangeKYC = (key: string, value: JSONObject) => setData(prev => ({...prev, [key]: {...prev[key], ...value}}))
+
+  const onChangeBusinessKYC = (index: number, value: JSONObject) => {
+    const payloadData = {...data}
+    payloadData.partners_proof[index] = {
+      ...(payloadData.partners_proof[index] || {
+        id_number: "",
+        id_type: "",
+        kyc_type: "Identity_and_address_proof",
+        kyc: [],
+      }),
+      ...value,
+    }
+    setData(payloadData)
+  }
+
+  const onAddPartner = () =>
+    setData(prev => ({...prev, partners_proof: [...partners_proof, {id_number: "", id_type: ID_PROOFS[0], kyc: []}]}))
 
   const onChangeData = (value: JSONObject) => {
     const formattedDate = formatDateUTC(value?.date_of_birth as string)
@@ -867,28 +906,26 @@ const useHandler = (styles: IStyle) => {
       childElements: [
         {
           childElement: (
-            <>
-              <section className={`flex-start ${styles.pan_wrapper} `}>
-                <TextField
-                  label="Aadhaar Number"
-                  name="aadhaarNumber"
-                  value={aadhaarNumber}
-                  disabled={!!verifiedAadhaar}
-                  onChangeData={onChangeValue}
-                  inputRegex={REG_VALID_NUMBER}
-                  maxLength={!verifiedAadhaar && 12}
-                  wrapperClass={styles.text_field}
-                />
-                {!verifiedAadhaar && (
-                  <Button
-                    wrapperClass={styles.verify_btn}
-                    disabled={!isValidInputByRegex(aadhaarNumber, REG_AADHAAR)}
-                    onClick={generateCaptcha.bind(null, null)}>
-                    Verify
-                  </Button>
-                )}
-              </section>
-            </>
+            <section className={`flex-start ${styles.pan_wrapper} `}>
+              <TextField
+                label="Aadhaar Number"
+                name="aadhaarNumber"
+                value={aadhaarNumber}
+                disabled={!!verifiedAadhaar}
+                onChangeData={onChangeValue}
+                inputRegex={REG_VALID_NUMBER}
+                maxLength={!verifiedAadhaar && 12}
+                wrapperClass={styles.text_field}
+              />
+              {!verifiedAadhaar && (
+                <Button
+                  wrapperClass={styles.verify_btn}
+                  disabled={!isValidInputByRegex(aadhaarNumber, REG_AADHAAR)}
+                  onClick={generateCaptcha.bind(null, null)}>
+                  Verify
+                </Button>
+              )}
+            </section>
           ),
         },
       ],
@@ -910,15 +947,11 @@ const useHandler = (styles: IStyle) => {
       })
 
       elements.childElements.push({
-        childElement: (
-          <>
-            {verifiedAadhaar && (
-              <section className={`flex-start ${styles.pan_verify}`}>
-                <ImageView src={assets.ic_tick} alt="tick-image" imgSize={24} />
-                <h5 className={styles.verified_text}>Aadhaar is Validated</h5>
-              </section>
-            )}
-          </>
+        childElement: verifiedAadhaar && (
+          <section className={`flex-start ${styles.pan_verify}`}>
+            <ImageView src={assets.ic_tick} alt="tick-image" imgSize={24} />
+            <h5 className={styles.verified_text}>Aadhaar is Validated</h5>
+          </section>
         ),
       })
     }
@@ -926,26 +959,24 @@ const useHandler = (styles: IStyle) => {
     if (verifiedAadhaar && kyc_aadhaar) {
       elements.childElements.push({
         childElement: (
-          <>
-            <section className={`flex-start ${styles.pan_wrapper}`}>
-              <TextField
-                label="Pan Number"
-                name="pan"
-                value={pan}
-                onChangeData={onChangeValue}
-                disabled={!!verifiedPAN}
-                maxLength={!verifiedPAN && 10}
-              />
-              {!verifiedPAN && (
-                <Button
-                  disabled={!isValidInputByRegex(pan, REG_PAN)}
-                  onClick={onVerifyPan.bind(null, {pan})}
-                  wrapperClass={styles.verify_btn}>
-                  Verify
-                </Button>
-              )}
-            </section>
-          </>
+          <section className={`flex-start ${styles.pan_wrapper}`}>
+            <TextField
+              label="Pan Number"
+              name="pan"
+              value={pan}
+              onChangeData={onChangeValue}
+              disabled={!!verifiedPAN}
+              maxLength={!verifiedPAN && 10}
+            />
+            {!verifiedPAN && (
+              <Button
+                disabled={!isValidInputByRegex(pan, REG_PAN)}
+                onClick={onVerifyPan.bind(null, {pan})}
+                wrapperClass={styles.verify_btn}>
+                Verify
+              </Button>
+            )}
+          </section>
         ),
       })
     }
@@ -966,15 +997,11 @@ const useHandler = (styles: IStyle) => {
       })
 
       elements.childElements.push({
-        childElement: (
-          <>
-            {verifiedPAN && (
-              <section className={`flex-start ${styles.pan_verify}`}>
-                <ImageView src={assets.ic_tick} alt="tick-image" imgSize={24} />
-                <h5 className={styles.verified_text}>PAN is Validated</h5>
-              </section>
-            )}
-          </>
+        childElement: verifiedPAN && (
+          <section className={`flex-start ${styles.pan_verify}`}>
+            <ImageView src={assets.ic_tick} alt="tick-image" imgSize={24} />
+            <h5 className={styles.verified_text}>PAN is Validated</h5>
+          </section>
         ),
       })
     }
@@ -983,6 +1010,7 @@ const useHandler = (styles: IStyle) => {
   }, [user, data, errData])
 
   const businessKYCElements: FormSectionProps[] = []
+
   if (isIdentityProof) {
     businessKYCElements.push({
       title: "Identity Proof",
@@ -990,33 +1018,34 @@ const useHandler = (styles: IStyle) => {
         {
           elementType: "drop-down",
           label: "Select Anyone",
-          name: "identityIdType",
+          name: "id_type",
           options: ID_PROOFS,
           error: errIdentityIdType,
           value: identityIdType,
-          onChangeValue: onChangeKYC.bind(null, identityIdType),
+          onChangeValue: onChangeKYC.bind(null, "identity_proof"),
         },
         {
           elementType: "input",
           label: "Identity Id Number",
-          name: "identityIdNumber",
+          name: "id_number",
           error: errIdentityIdNumber,
           value: identityIdNumber,
-          onChangeValue: onChangeKYC.bind(null, identityIdNumber),
+          onChangeValue: onChangeKYC.bind(null, "identity_proof"),
         },
         {
           elementType: "file-picker",
           fileType: ["image/*", "application/pdf"],
           wrapperClass: styles.img_picker,
-          name: "identityAttachments",
+          name: "kyc",
           value: identityAttachments,
           maxCount: 1,
           error: errIdentityAttachments,
-          onChangeValue: onChangeKYC.bind(null, identityAttachments),
+          onChangeValue: onChangeKYC.bind(null, "identity_proof"),
         },
       ],
     })
   }
+
   if (isAddressProof) {
     businessKYCElements.push({
       title: "Address Proof",
@@ -1024,30 +1053,30 @@ const useHandler = (styles: IStyle) => {
         {
           elementType: "drop-down",
           label: "Select Anyone",
-          name: "addressIdType",
+          name: "id_type",
           options: ID_PROOFS,
           error: errAddressIdType,
           value: addressIdType,
-          onChangeValue: onChangeKYC.bind(null, addressIdType),
+          onChangeValue: onChangeKYC.bind(null, "address_proof"),
         },
         {
           elementType: "input",
           label: "Address Id Number",
-          name: "addressIdNumber",
+          name: "id_number",
           error: errAddressIdNumber,
           value: addressIdNumber,
-          onChangeValue: onChangeKYC.bind(null, addressIdNumber),
+          onChangeValue: onChangeKYC.bind(null, "address_proof"),
         },
         {
           elementType: "file-picker",
           fileType: ["image/*", "application/pdf"],
           wrapperClass: styles.img_picker,
-          name: "addressAttachments",
+          name: "kyc",
           isMultiple: true,
           value: addressAttachments,
           maxCount: 2,
           error: errAddressAttachments,
-          onChangeValue: onChangeKYC.bind(null, addressAttachments),
+          onChangeValue: onChangeKYC.bind(null, "address_proof"),
         },
       ],
     })
@@ -1060,30 +1089,30 @@ const useHandler = (styles: IStyle) => {
         {
           elementType: "drop-down",
           label: "Select Anyone",
-          name: "businessIdType",
+          name: "id_type",
           options: ID_PROOFS,
           error: errBusinessIdType,
           value: businessIdType,
-          onChangeValue: onChangeKYC.bind(null, businessIdType),
+          onChangeValue: onChangeKYC.bind(null, "business_proof"),
         },
         {
           elementType: "input",
           label: "Business Id Number",
-          name: "businessIdNumber",
+          name: "id_number",
           error: errBusinessIdNumber,
           value: businessIdNumber,
-          onChangeValue: onChangeKYC.bind(null, businessIdNumber),
+          onChangeValue: onChangeKYC.bind(null, "business_proof"),
         },
         {
           elementType: "file-picker",
           fileType: ["image/*", "application/pdf"],
           wrapperClass: styles.img_picker,
-          name: "businessAttachments",
+          name: "kyc",
           isMultiple: true,
           value: businessAttachments,
           maxCount: 2,
           error: errBusinessAttachments,
-          onChangeValue: onChangeKYC.bind(null, businessAttachments),
+          onChangeValue: onChangeKYC.bind(null, "business_proof"),
         },
       ],
     })
@@ -1096,67 +1125,84 @@ const useHandler = (styles: IStyle) => {
         {
           elementType: "drop-down",
           label: "Select Anyone",
-          name: "authorityIdType",
+          name: "id_type",
           options: ID_PROOFS,
           error: errAuthorityIdType,
           value: authorityIdType,
-          onChangeValue: onChangeKYC.bind(null, authorityIdType),
+          onChangeValue: onChangeKYC.bind(null, "authority_proof"),
         },
         {
           elementType: "input",
           label: "Authority Id Number",
-          name: "authorityIdNumber",
+          name: "id_number",
           error: errAuthorityIdNumber,
           value: authorityIdNumber,
-          onChangeValue: onChangeKYC.bind(null, authorityIdNumber),
+          onChangeValue: onChangeKYC.bind(null, "authority_proof"),
         },
         {
           elementType: "file-picker",
           fileType: ["image/*", "application/pdf"],
           wrapperClass: styles.img_picker,
-          name: "authorityAttachments",
+          name: "kyc",
           value: authorityAttachments,
           maxCount: 1,
           error: errAuthorityAttachments,
-          onChangeValue: onChangeKYC.bind(null, authorityAttachments),
+          onChangeValue: onChangeKYC.bind(null, "authority_proof"),
         },
       ],
     })
   }
 
   if (isPartnersProof) {
-    businessKYCElements.push({
+    const businessPartnershipElement: FormSectionProps = {
       title: "Identity and Address Proof of the Authorized Signatories",
-      childElements: [
-        {
-          elementType: "drop-down",
-          label: "Select Anyone",
-          name: "partnersIdType",
-          options: ID_PROOFS,
-          error: errPartnersIdType,
-          value: partnersIdType,
-          onChangeValue: onChangeKYC.bind(null, partnersIdType),
-        },
-        {
-          elementType: "input",
-          label: "Partners Id Number",
-          name: "partnersIdNumber",
-          error: errPartnersIdNumber,
-          value: partnersIdNumber,
-          onChangeValue: onChangeKYC.bind(null, partnersIdNumber),
-        },
-        {
-          elementType: "file-picker",
-          fileType: ["image/*", "application/pdf"],
-          wrapperClass: styles.img_picker,
-          name: "partnersAttachments",
-          isMultiple: true,
-          maxCount: 2,
-          error: errPartnersAttachments,
-          value: partnersAttachments,
-          onChangeValue: onChangeKYC.bind(null, partnersAttachments),
-        },
-      ],
+      childElements: [],
+    }
+
+    if (errPartnershipProofArr)
+      businessPartnershipElement.childElements.push({children: <p className="error-text">{errPartnershipProof}</p>})
+
+    partners_proof?.forEach(({id_number, id_type, kyc}, index) => {
+      const {
+        errPartnersAttachments = "",
+        errPartnersIdNumber = "",
+        errPartnersIdType = "",
+      } = errPartnershipProofArr[index] || {}
+
+      businessPartnershipElement.childElements.push({
+        elementType: "drop-down",
+        label: "Select Anyone",
+        name: "id_type",
+        options: ID_PROOFS,
+        error: errPartnersIdType,
+        value: id_type,
+        onChangeValue: onChangeBusinessKYC.bind(null, index),
+      })
+
+      businessPartnershipElement.childElements.push({
+        elementType: "input",
+        label: "Partners Id Number",
+        name: "id_number",
+        error: errPartnersIdNumber,
+        value: id_number,
+        onChangeValue: onChangeBusinessKYC.bind(null, index),
+      })
+
+      businessPartnershipElement.childElements.push({
+        elementType: "file-picker",
+        fileType: ["image/*", "application/pdf"],
+        wrapperClass: styles.img_picker,
+        name: "kyc",
+        isMultiple: true,
+        maxCount: 2,
+        error: errPartnersAttachments,
+        value: kyc,
+        onChangeValue: onChangeBusinessKYC.bind(null, index),
+      })
+    })
+
+    businessPartnershipElement.childElements.push({
+      children: <Button onClick={onAddPartner}>+ Add more Partner</Button>,
     })
   }
 
@@ -1165,23 +1211,33 @@ const useHandler = (styles: IStyle) => {
   const onSubmit = () => {
     const {isValid} = onValidate()
 
+    const businessKYCProofs: IPayloadBusinessKYC[] = []
+
+    if (isIdentityProof) businessKYCProofs.push(identity_proof)
+    if (isAuthorityProof) businessKYCProofs.push(authority_proof)
+    if (isAddressProof) businessKYCProofs.push(address_proof)
+    if (isBusinessProof) businessKYCProofs.push(business_proof)
+    if (isPartnersProof) businessKYCProofs.concat(partners_proof)
+
     if (isValid) {
       const payload: IPayloadSyncUser = {
-        account_type: account_type.key,
         first_name,
         last_name,
         email,
         phone_no,
-        country_id: country.key as number,
-        state_id: state.key as number,
         address_line_1,
         address_line_2,
-        city_id: city.key as number,
         zip_code,
         // account_no,
+        account_type: account_type.key,
+        business_type: business_type.key,
+        country_id: country.key as number,
+        state_id: state.key as number,
+        city_id: city.key as number,
         kyc_aadhaar: kyc_aadhaar.filter(({file}) => !!file),
         kyc_pan: kyc_pan.filter(({file}) => !!file),
         date_of_birth: formatDateUTC(date_of_birth),
+        business_proofs: businessKYCProofs,
       }
 
       if (!individualType) delete payload.date_of_birth
