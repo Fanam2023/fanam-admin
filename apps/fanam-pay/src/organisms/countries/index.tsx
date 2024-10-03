@@ -2,11 +2,11 @@ import ReactCountryFlag from "react-country-flag"
 import {Country} from "props"
 import styles from "./page.module.sass"
 
-export const Countries = ({iso2}: Country) => (
+export const CountryFlags = ({countryCode, wrapperClass}: Country) => (
   <ReactCountryFlag
-    countryCode={iso2?.toUpperCase()}
+    countryCode={countryCode?.toUpperCase()}
     svg
     style={{width: "40px", height: "40px"}}
-    className={styles.flag_wrapper}
+    className={`${styles.flag_wrapper} ${wrapperClass}`}
   />
 )

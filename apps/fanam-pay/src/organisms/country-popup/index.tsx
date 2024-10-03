@@ -1,7 +1,7 @@
 import {TextField} from "@fanam-pkg/core-ui-sass"
 import {useMemo} from "react"
 import {ICountry} from "@custom/utils"
-import {Countries} from "organisms/countries"
+import {CountryFlags} from "organisms/countries"
 import {CountryPopupProps} from "props"
 import styles from "./country.module.sass"
 import {useHandler} from "./handler"
@@ -21,7 +21,7 @@ export const CountryPopup = ({onSelect, selCountry, countries, title}: CountryPo
         key={country_id}
         className={`flex ${styles.country_wrapper} ${iso2 === selCountry?.iso2 ? styles.selected : ""}`}
         onClick={onSelect.bind(null, country)}>
-        <Countries iso2={iso2} />
+        <CountryFlags countryCode={iso2} />
         {country_name}
       </li>
     )
