@@ -14,4 +14,11 @@ export interface IResponseOrder {
   transaction_id: string
   payment_id: null
   user_id: string
+  payment?: PaymentDetail
+}
+
+export interface PaymentDetail extends IResponseOrder {
+  paymentMethod: string
+  razorpay_payment_id: string
+  amount: number
 }

@@ -798,7 +798,7 @@ const useHandler = (styles: IStyle) => {
         childElement: (
           <>
             {verifiedAadhaar && (
-              <section className={`flex-start ${styles.pan_verify}`}>
+              <section className={`flex-start ${styles.pan_verify} ${errKycAadhaar && styles.pan_aadhar_verify}`}>
                 <ImageView src={assets.ic_tick} alt="tick-image" imgSize={24} />
                 <h5 className={styles.verified_text}>Aadhaar is Validated</h5>
               </section>
@@ -854,7 +854,7 @@ const useHandler = (styles: IStyle) => {
         childElement: (
           <>
             {verifiedPAN && (
-              <section className={`flex-start ${styles.pan_verify}`}>
+              <section className={`flex-start ${styles.pan_verify} ${errKycPAN && styles.pan_aadhar_verify} `}>
                 <ImageView src={assets.ic_tick} alt="tick-image" imgSize={24} />
                 <h5 className={styles.verified_text}>PAN is Validated</h5>
               </section>
