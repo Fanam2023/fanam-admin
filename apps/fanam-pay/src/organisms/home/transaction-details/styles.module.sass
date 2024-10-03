@@ -97,6 +97,31 @@
 .main_wrapper
   width: 60vw
 
+.payment_cancel_wrapper
+  padding:
+    top: $size-20px
+    bottom: $size-20px
+  border-bottom: $size-1px solid $light-grey
+
+.cancel_btn_wrapper
+  border-color: $black
+  color: $black
+  background: $white
+  &:hover
+    background: $white
+    color: $black
+
+.textfield_wrapper
+  border: none
+  resize: none
+
+.cancel_payment_btn
+  justify-content: flex-end
+  margin-top: $size-16px
+
+.cancel_btn
+  background: $theme
+
 @include mixin-responsive
   .transaction_container
     display: block !important

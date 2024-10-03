@@ -1,12 +1,22 @@
-import {IFormData} from "@fanam-pkg/core-utils"
-import {useMemo} from "react"
+import {usePopup} from "@fanam-pkg/core-ui-sass"
+import {IFormData, JSONObject} from "@fanam-pkg/core-utils"
+import {useMemo, useState} from "react"
+import {useMutation} from "@tanstack/react-query"
 import {ITransaction} from "@custom/utils"
+import {useTransactionController} from "controller"
 import {useCommon} from "hooks"
+import {QUERY_CANCEL_ORDER} from "utils"
 
 export const useHandler = (transaction: ITransaction) => {
   const {getFirstLetter} = useCommon()
+  const {cancelTransaction} = useTransactionController()
+  const {togglePopup} = usePopup()
+  const [isCancelClicked, setCancelClicked] = useState(false)
+  const [data, setData] = useState({
+    cancel_reason: "",
+  })
 
-  const {recipient, recipient_relationship} = transaction || {}
+  const {recipient, recipient_relationship, transaction_id} = transaction || {}
   const {first_name, last_name, email, phone_no, bank_account, country, state, city, zip_code} = recipient || {}
 
   const {country_name} = country || {}
@@ -34,8 +44,28 @@ export const useHandler = (transaction: ITransaction) => {
     return {recipientDetails}
   }, [transaction])
 
+  const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
+
+  const {mutate: onCancel} = useMutation({
+    mutationKey: [QUERY_CANCEL_ORDER],
+    mutationFn: cancelTransaction,
+    onSuccess: result => {
+      if (result) togglePopup()
+    },
+  })
+
+  const onSubmit = () => {
+    const {cancel_reason} = data
+    onCancel({transaction_id, cancel_reason})
+  }
+
   return {
+    data,
     recipientDetails,
+    isCancelClicked,
+    setCancelClicked,
     getFirstLetter,
+    onChangeValue,
+    onSubmit,
   }
 }

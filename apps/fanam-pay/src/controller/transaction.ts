@@ -1,11 +1,13 @@
 import {IFile} from "@fanam-pkg/core-utils"
 import {
+  API_CANCEL_TRANSACTION,
   API_INVOICE,
   API_TRANSACTION,
   apiAllTransaction,
   apiDeleteAttachment,
   apiTransaction,
   IFanamApiError,
+  IPayloadCancelOrder,
   IPayloadMergeRecipient,
   IPayloadTransaction,
   IPayloadTransactionPurpose,
@@ -125,6 +127,11 @@ export const useTransactionController = () => {
     return {result, errorData}
   }
 
+  const cancelTransaction = async (payload: IPayloadCancelOrder) => {
+    const {result, errorData} = await postRequest(API_CANCEL_TRANSACTION, payload)
+    return {result, errorData}
+  }
+
   return {
     getTransaction,
     createTransaction,
@@ -136,5 +143,6 @@ export const useTransactionController = () => {
     syncRecipientAsBeneficiary,
     sendingPurpose,
     removeAttachment,
+    cancelTransaction,
   }
 }

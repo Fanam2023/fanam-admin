@@ -1,4 +1,4 @@
-import {ImageView} from "@fanam-pkg/core-ui-sass"
+import {Button, ImageView, TextArea} from "@fanam-pkg/core-ui-sass"
 import {useDateTime} from "@fanam-pkg/core-utils"
 import assets from "assets"
 import {PropsTransactionDetails} from "props"
@@ -10,7 +10,8 @@ import styles from "./styles.module.sass"
 
 export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
   const {formatDate} = useDateTime()
-  const {recipientDetails, getFirstLetter} = useHandler(transaction)
+  const {recipientDetails, isCancelClicked, data, getFirstLetter, onChangeValue, onSubmit, setCancelClicked} =
+    useHandler(transaction)
   const {
     source_country,
     destination_amount,
@@ -29,6 +30,8 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
   const statusLabel = TRANSACTION_STATUS_OBJECT[order_status]?.label
   const {currency} = destination_country || {}
   const {currency: source_currency} = source_country || {}
+
+  const {cancel_reason} = data
 
   return (
     <section className={`card ${styles.main_wrapper}`}>
@@ -77,6 +80,41 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
           </section>
         </section>
       </section>
+      {statusLabel === "Transaction Pending" && (
+        <>
+          <section className={`flex-sb-center ${styles.payment_cancel_wrapper}`}>
+            <h4 className="bold">
+              {isCancelClicked ? "Do you want to cancel the Payment?" : "Do you want to cancel the transfer?"}
+            </h4>
+            {!isCancelClicked && (
+              <Button
+                buttonType="primary-outlined"
+                wrapperClass={styles.cancel_btn_wrapper}
+                onClick={setCancelClicked.bind(null, !isCancelClicked)}>
+                Cancel Transaction
+              </Button>
+            )}
+          </section>
+          {isCancelClicked && (
+            <section className="flex-col">
+              <TextArea
+                label="Enter the reason for cancellation (Optional)"
+                name="cancel_reason"
+                value={cancel_reason}
+                onChangeData={onChangeValue}
+                wrapperClass={styles.textfield_wrapper}
+                isRequired={false}
+                maxLength={160}
+              />
+              <section className={`flex ${styles.cancel_payment_btn}`}>
+                <Button className={styles.cancel_btn} onClick={onSubmit}>
+                  Cancel Payment
+                </Button>
+              </section>
+            </section>
+          )}
+        </>
+      )}
       <section className={styles.transaction_container}>
         <ContentTransaction transactionDetail={transaction} />
         <RecipientDetails recipientData={recipientDetails} />

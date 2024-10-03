@@ -22,3 +22,7 @@ export interface PaymentDetail extends IResponseOrder {
   razorpay_payment_id: string
   amount: number
 }
+
+export interface IPayloadCancelOrder extends IPayloadOrder {
+  cancel_reason?: string
+}
