@@ -39,7 +39,21 @@ export const useKYCController = () => {
     await postRequest<IResponsePan>(API_KYC_GST_VERIFICATION, payload)
 
   const verifyBusinessKyc = async (payloadArr: IPayloadBusinessKYC[]) => {
-    const promises = payloadArr.map(payload => postRequest<IPayloadBusinessKYC>(API_BUSINESS_KYC, payload))
+    const promises = payloadArr.map(({id_number, id_type, kyc_type, kyc_id, kyc = []}) => {
+      const formData = new FormData()
+
+      if (id_number) formData.append("", id_number)
+      if (id_type) formData.append("", id_type)
+      if (kyc_type) formData.append("", kyc_type)
+      if (kyc_id) formData.append("", kyc_id)
+      if (kyc?.length) {
+        kyc.forEach(({file}) => {
+          formData.append("kyc", file)
+        })
+      }
+
+      return postRequest<IPayloadBusinessKYC>(API_BUSINESS_KYC, formData)
+    })
 
     return await Promise.all(promises)
   }

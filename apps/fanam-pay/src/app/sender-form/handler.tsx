@@ -1213,11 +1213,46 @@ const useHandler = (styles: IStyle) => {
 
     const businessKYCProofs: IPayloadBusinessKYC[] = []
 
-    if (isIdentityProof) businessKYCProofs.push(identity_proof)
-    if (isAuthorityProof) businessKYCProofs.push(authority_proof)
-    if (isAddressProof) businessKYCProofs.push(address_proof)
-    if (isBusinessProof) businessKYCProofs.push(business_proof)
-    if (isPartnersProof) businessKYCProofs.concat(partners_proof)
+    if (isIdentityProof)
+      businessKYCProofs.push({
+        ...identity_proof,
+        kyc_type: "Identity_proof",
+        kyc: identity_proof?.kyc?.filter(({file}) => !!file),
+      })
+
+    if (isAuthorityProof) {
+      businessKYCProofs.push({
+        ...authority_proof,
+        kyc_type: "Authority_proof",
+        kyc: authority_proof?.kyc?.filter(({file}) => !!file),
+      })
+    }
+
+    if (isAddressProof) {
+      businessKYCProofs.push({
+        ...address_proof,
+        kyc_type: "Address_proof",
+        kyc: address_proof?.kyc?.filter(({file}) => !!file),
+      })
+    }
+
+    if (isBusinessProof) {
+      businessKYCProofs.push({
+        ...business_proof,
+        kyc_type: "Business_proof",
+        kyc: business_proof?.kyc?.filter(({file}) => !!file),
+      })
+    }
+
+    if (isPartnersProof) {
+      businessKYCProofs.concat(
+        partners_proof?.map(proof => ({
+          ...proof,
+          kyc_type: "Identity_and_address_proof",
+          kyc: proof?.kyc?.filter(({file}) => !!file),
+        }))
+      )
+    }
 
     if (isValid) {
       const payload: IPayloadSyncUser = {
