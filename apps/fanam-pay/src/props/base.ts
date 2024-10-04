@@ -57,3 +57,8 @@ export interface ProfileNavItemProps {
   whiteIcon?: string
   path?: string
 }
+
+export interface PropsCountryFlag {
+  countryCode: string
+  wrapperClass?: string
+}
