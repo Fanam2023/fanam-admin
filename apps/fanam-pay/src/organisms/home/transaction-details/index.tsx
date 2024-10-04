@@ -30,8 +30,6 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
   const {currency} = destination_country || {}
   const {currency: source_currency} = source_country || {}
 
-  console.log(order_status, "order")
-
   const {cancel_reason} = data
 
   return (

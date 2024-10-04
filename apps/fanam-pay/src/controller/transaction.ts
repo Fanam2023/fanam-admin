@@ -127,10 +127,7 @@ export const useTransactionController = () => {
     return {result, errorData}
   }
 
-  const cancelTransaction = async (payload: IPayloadCancelOrder) => {
-    const {result, errorData} = await postRequest(API_CANCEL_TRANSACTION, payload)
-    return {result, errorData}
-  }
+  const cancelTransaction = async (payload: IPayloadCancelOrder) => await postRequest(API_CANCEL_TRANSACTION, payload)
 
   return {
     getTransaction,
