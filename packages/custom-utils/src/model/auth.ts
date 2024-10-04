@@ -111,6 +111,8 @@ export interface IUser {
   account_type: TypeAccount
   account_no: string
   date_of_birth: string
+  business_type: string
+  business_name: TypeBusiness
 }
 
 export interface IBaseSyncUser {

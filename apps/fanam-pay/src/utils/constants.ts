@@ -107,6 +107,15 @@ export const ID_PROOFS: IFormData<TypeKYC>[] = [
   {label: "Bank passbook", key: "Passbook"},
 ]
 
+export const ID_PROOFS_INDIA: IFormData<TypeKYC>[] = [
+  {label: "Passport", key: "Passport"},
+  {label: "Driving license", key: "Driving_License"},
+  {label: "Bank passbook", key: "Passbook"},
+  {label: "Aadhaar Card", key: "Aadhaar"},
+  {label: "PAN Card", key: "PAN"},
+  {label: "GST Certificate", key: "GST"},
+]
+
 export const ACCOUNT_TYPE: IFormData<TypeAccount>[] = [
   {label: "Individual", key: "Individual"},
   {label: "Business", key: "Business"},
