@@ -10,7 +10,7 @@ import styles from "./styles.module.sass"
 
 export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
   const {formatDate} = useDateTime()
-  const {recipientDetails, isCancelClicked, data, getFirstLetter, onChangeValue, onSubmit, setCancelClicked} =
+  const {recipientDetails, showReason, data, getFirstLetter, onChangeValue, onSubmit, setShowReason} =
     useHandler(transaction)
   const {
     source_country,
@@ -30,6 +30,8 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
   const statusLabel = TRANSACTION_STATUS_OBJECT[order_status]?.label
   const {currency} = destination_country || {}
   const {currency: source_currency} = source_country || {}
+
+  console.log(order_status, "order")
 
   const {cancel_reason} = data
 
@@ -80,22 +82,22 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
           </section>
         </section>
       </section>
-      {statusLabel === "Transaction Pending" && (
+      {order_status === "Transaction_pending" && (
         <>
           <section className={`flex-sb-center ${styles.payment_cancel_wrapper}`}>
             <h4 className="bold">
-              {isCancelClicked ? "Do you want to cancel the Payment?" : "Do you want to cancel the transfer?"}
+              {showReason ? "Do you want to cancel the Payment?" : "Do you want to cancel the transfer?"}
             </h4>
-            {!isCancelClicked && (
+            {!showReason && (
               <Button
                 buttonType="primary-outlined"
                 wrapperClass={styles.cancel_btn_wrapper}
-                onClick={setCancelClicked.bind(null, !isCancelClicked)}>
+                onClick={setShowReason.bind(null, !showReason)}>
                 Cancel Transaction
               </Button>
             )}
           </section>
-          {isCancelClicked && (
+          {showReason && (
             <section className="flex-col">
               <TextArea
                 label="Enter the reason for cancellation (Optional)"

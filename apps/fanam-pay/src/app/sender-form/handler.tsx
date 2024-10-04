@@ -486,6 +486,10 @@ const useHandler = (styles: IStyle) => {
 
   const onChangeData = (value: JSONObject) => {
     const formattedDate = formatDateUTC(value?.date_of_birth as string)
+    if (dayjs(formattedDate).isAfter(currentDate)) {
+      return
+    }
+
     onChangeValue({...value, date_of_birth: formattedDate})
   }
 

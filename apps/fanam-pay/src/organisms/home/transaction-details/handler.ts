@@ -11,7 +11,7 @@ export const useHandler = (transaction: ITransaction) => {
   const {getFirstLetter} = useCommon()
   const {cancelTransaction} = useTransactionController()
   const {togglePopup} = usePopup()
-  const [isCancelClicked, setCancelClicked] = useState(false)
+  const [showReason, setShowReason] = useState(false)
   const [data, setData] = useState({
     cancel_reason: "",
   })
@@ -62,8 +62,8 @@ export const useHandler = (transaction: ITransaction) => {
   return {
     data,
     recipientDetails,
-    isCancelClicked,
-    setCancelClicked,
+    showReason,
+    setShowReason,
     getFirstLetter,
     onChangeValue,
     onSubmit,
