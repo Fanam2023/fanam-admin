@@ -90,15 +90,10 @@ export const PURPOSES_BUSINESS: IFormData<TypePurpose>[] = [
 ]
 
 export const TRANSACTION_STATUS_OBJECT: Record<TypeOrderStatus, IFormData<TypeOrderStatus>> = {
-  Payment_initiated: {label: "Payment Initiated"},
-  Payment_failed: {label: "Payment Failure"},
-  Payment_rejected: {label: "Payment Rejected"},
   Payment_in_transition: {label: "Payment In Transition"},
   Transaction_canceled: {label: "Transaction Canceled"},
   Transaction_failed: {label: "Transaction Failed"},
   Transaction_pending: {label: "Transaction Pending"},
-  Transaction_rejected: {label: "Transaction Rejected"},
-  Transaction_returned: {label: "Transaction Returned"},
   Transaction_success: {label: "Transaction Success"},
   Refund_initiated: {label: "Refund Initiated"},
   Refund_in_progress: {label: "Refund In Progress"},
