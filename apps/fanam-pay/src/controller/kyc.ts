@@ -15,6 +15,7 @@ import {
   IResponseAadhaarGenerateOTP,
   IResponseAadhaarVerifyOTP,
   IResponsePan,
+  IUser,
 } from "@custom/utils"
 import {useApi} from "./api"
 
@@ -43,7 +44,7 @@ export const useKYCController = () => {
       const formData = new FormData()
 
       if (id_number) formData.append("id_number", id_number)
-      if (id_type) formData.append("id_type", id_type)
+      if (id_type) formData.append("id_type", id_type as string)
       if (kyc_type) formData.append("kyc_type", kyc_type)
       if (kyc_id) formData.append("kyc_id", kyc_id)
       if (kyc?.length) {
@@ -52,7 +53,7 @@ export const useKYCController = () => {
         })
       }
 
-      return postRequest<IPayloadBusinessKYC>(API_BUSINESS_KYC, formData)
+      return postRequest<IUser>(API_BUSINESS_KYC, formData)
     })
 
     return await Promise.all(promises)

@@ -78,14 +78,14 @@ const useHandler = (styles: IStyle) => {
   const {replace, push} = useRouter()
   const {isValidInputByRegex} = useCommon()
   const {getAllCountries, getCities, getStates} = useLocationController()
-  const {createRecipient, removeAttachment, updateRecipient, getByRecipientId} = useRecipientController()
+  const {removeAttachment} = useRecipientController()
   const {syncUser} = useAuthController()
   const {verifyPanCard, generateAadhaarCaptcha, reGenerateAadhaarCaptcha, generateAadhaarOTP, verifyAadhaarOTP} =
     useKYCController()
   const {formatDateUTC, formatDate, dayjs} = useDateTime()
   const {toggleNotify} = useNotifyPopup()
   const {togglePopup} = usePopup()
-  const {user, updateUserData} = useSingleton()
+  const {user, updateUserData, refetchUser} = useSingleton()
   const currentDate = dayjs().format("YYYY-MM-DD")
   const [data, setData] = useState<ISyncUserData>({
     first_name: "",
@@ -216,8 +216,10 @@ const useHandler = (styles: IStyle) => {
     mutationKey: [QUERY_USER],
     mutationFn: syncUser,
     onSuccess: ({result, errorData}) => {
-      if (result) replace(ROUTE_HOME)
-      else
+      if (result) {
+        replace(ROUTE_HOME)
+        refetchUser()
+      } else
         toggleNotify({
           title: "Error - Update User",
           description: errorData?.message || "Something went wrong",
@@ -237,6 +239,7 @@ const useHandler = (styles: IStyle) => {
           type: "success",
           title: "Removed attachment successfully",
         })
+        refetchUser()
       } else {
         toggleNotify({
           type: "error",
@@ -1407,8 +1410,6 @@ const useHandler = (styles: IStyle) => {
         date_of_birth: formatDateUTC(date_of_birth),
         business_proofs: businessKYCProofs,
       }
-
-      console.log(">>>>>>>>>>>>>>>>>>>> payload: ", payload, isPartnersProof)
 
       if (!individualType) delete payload.date_of_birth
       updateUser(payload)
