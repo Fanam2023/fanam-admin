@@ -2,13 +2,12 @@
 
 import {Button, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
 import {REG_VALID_NUMBER} from "@fanam-pkg/core-utils"
-import ReactCountryFlag from "react-country-flag"
 import {useEffect} from "react"
 import {useSlider} from "@custom/ui"
 import {ICountry} from "@custom/utils"
 import assets from "assets"
 import {useCommon} from "hooks"
-import {Auth, BaseContainer, CountryPopup} from "organisms"
+import {Auth, BaseContainer, CountryFlag, CountryPopup} from "organisms"
 import useHandler from "./handler"
 import styles from "./page.module.sass"
 
@@ -47,12 +46,7 @@ const Forgot_Password = () => {
         </section>
         <section className={`flex-start ${styles.input_wrapper}`}>
           <section className={`flex ${styles.country_wrapper} ${errPhoneNo ? styles.error_border : ""}`}>
-            <ReactCountryFlag
-              countryCode={getCountryCode(country)}
-              svg
-              style={{width: "24px", height: "24px"}}
-              className={styles.flag}
-            />
+            <CountryFlag countryCode={getCountryCode(country)} wrapperClass={styles.flag} />
             <h5 className={styles.country_code}>{country ? `+${country.phone_code}` : "-"}</h5>
             <ImageView
               src={assets.ic_down_arrow_theme}
