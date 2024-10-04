@@ -4,13 +4,7 @@ import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {useRecipientController, useTransactionController} from "controller"
 import {CreateRecipientDetails} from "organisms"
-import {
-  ACCOUNT_TYPE,
-  QUERY_RECIPIENT,
-  QUERY_TRANSACTION,
-  ROUTE_RECIPIENT_PREVIEW,
-  ROUTE_TRANSACTION_PURPOSE,
-} from "utils"
+import {ACCOUNT_TYPE, QUERY_RECIPIENT, QUERY_TRANSACTION, ROUTE_RECIPIENT_PREVIEW} from "utils"
 
 export const useHandler = () => {
   const {push, back} = useRouter()
@@ -31,8 +25,7 @@ export const useHandler = () => {
     mutationKey: [QUERY_TRANSACTION],
     mutationFn: initiateTransaction,
     onSuccess: ({result}) => {
-      const {is_same_person, relationship} = result?.recipient || {}
-      push(is_same_person || relationship ? ROUTE_TRANSACTION_PURPOSE : ROUTE_RECIPIENT_PREVIEW)
+      push(ROUTE_RECIPIENT_PREVIEW)
     },
   })
 
