@@ -1,6 +1,5 @@
 import {FormSectionProps, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
 import {JSONObject, REG_EMAIL, REG_INDIAN_MOBILE, REG_VALID_NUMBER, useStorage} from "@fanam-pkg/core-utils"
-import ReactCountryFlag from "react-country-flag"
 import {useRouter} from "next/navigation"
 import {useCallback, useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
@@ -9,7 +8,7 @@ import {ICountry, ISignupData, IStyle, REG_INPUT_EMAIL, REG_INPUT_NAME, SESSION_
 import assets from "assets"
 import {useLocationController} from "controller"
 import {useCommon} from "hooks"
-import {CountryPopup} from "organisms"
+import {CountryFlag, CountryPopup} from "organisms"
 import {ACCOUNT_TYPE, QUERY_COUNTRIES, ROUTE_LOGIN, routeToOTP} from "utils"
 
 const useHandler = (styles: IStyle) => {
@@ -156,10 +155,10 @@ const useHandler = (styles: IStyle) => {
       childElements: [
         {
           childElement: (
-            <>
+            <section>
               <section
                 className={`flex ${styles.country_wrapper} ${errCountryCode || errPhoneNo ? styles.error_border : ""}`}>
-                <ReactCountryFlag countryCode={getCountryCode(country)} svg className={styles.flag_container} />
+                <CountryFlag countryCode={getCountryCode(country)} wrapperClass={styles.flag} />
                 <h5 className={styles.country_code}>{country ? `+${country.phone_code}` : "-"}</h5>
                 <ImageView
                   src={assets.ic_down_arrow_theme}
@@ -177,7 +176,7 @@ const useHandler = (styles: IStyle) => {
                 />
               </section>
               {errPhoneNo && <p className={styles.error_message}>{errPhoneNo}</p>}
-            </>
+            </section>
           ),
         },
       ],
