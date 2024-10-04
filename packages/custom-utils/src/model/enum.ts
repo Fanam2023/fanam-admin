@@ -47,7 +47,7 @@ export type TypeOKycCode =
   | "request_not_found"
   | "internal_server_error"
 
-export type TypeKYC = "Aadhaar" | "PAN" | "GST" | "Passport" | "Driving_License"
+export type TypeKYC = "Aadhaar" | "PAN" | "GST" | "Passport" | "Driving_License" | "Passbook"
 
 export type TypeRelation =
   | "Father"
@@ -83,3 +83,10 @@ export type TypeOrderStatus =
   | "Refund_failed"
 
 export type TypeSignOut = "logout" | "forgot-pin" | "logout-all"
+
+export type TypeBusinessKYC =
+  | "Address_proof"
+  | "Identity_proof"
+  | "Business_proof"
+  | "Authority_proof"
+  | "Identity_and_address_proof"

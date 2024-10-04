@@ -35,10 +35,12 @@ import {
 import {useSingleton} from "hooks"
 import {LS_WEBAUTHN_CRED_ID} from "utils"
 import {useApi} from "./api"
+import {useKYCController} from "./kyc"
 
 export const useAuthController = () => {
   const {postRequest, getRequest, putRequest} = useApi()
   const {updateToken, updateRefreshToken, updateUserData} = useSingleton()
+  const {verifyBusinessKyc} = useKYCController()
   const {getStorage, setStorage} = useStorage()
 
   const login = async (payload: IPayloadLogin) => {
@@ -122,9 +124,10 @@ export const useAuthController = () => {
   }
 
   const syncUser = async (payload: IPayloadSyncUser) => {
-    const {kyc_aadhaar, kyc_pan} = payload
+    const {kyc_aadhaar, kyc_pan, business_proofs, account_type} = payload
     delete payload.kyc_aadhaar
     delete payload.kyc_pan
+    delete payload.business_proofs
 
     let {result, errorData} = await putRequest<IUser>(API_SYNC_USER, payload)
 
@@ -143,7 +146,7 @@ export const useAuthController = () => {
         const response = await putRequest<IUser>(apiSenderKYC(aadhaarKycId), formData)
         result = {...result, ...response.result}
         errorData = response.errorData
-        updateUserData(result)
+        if (result) updateUserData(result)
       }
 
       if (kyc_pan.length && panKycId) {
@@ -155,7 +158,14 @@ export const useAuthController = () => {
         const response = await putRequest<IUser>(apiSenderKYC(panKycId), formData)
         result = {...result, ...response.result}
         errorData = response.errorData
-        updateUserData(result)
+        if (result) updateUserData(result)
+      }
+
+      if (business_proofs?.length && account_type === "Business") {
+        const responseArr = await verifyBusinessKyc(business_proofs)
+        errorData = responseArr?.find(({errorData}) => !!errorData)?.errorData
+        result = {...result, ...responseArr?.filter(({result}) => !!result)?.[-1]?.result}
+        if (result) updateUserData(result)
       }
     }
 

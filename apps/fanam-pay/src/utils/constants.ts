@@ -1,5 +1,5 @@
 import {IFormData} from "@fanam-pkg/core-utils"
-import {TypeAccount, TypeBusiness, TypeOrderStatus, TypePurpose, TypeRelation} from "@custom/utils"
+import {TypeAccount, TypeBusiness, TypeKYC, TypeOrderStatus, TypePurpose, TypeRelation} from "@custom/utils"
 import assets from "assets"
 import {IStepper} from "model"
 import {BankCartProps, BankListProps, ProfileNavItemProps} from "props"
@@ -101,7 +101,20 @@ export const TRANSACTION_STATUS_OBJECT: Record<TypeOrderStatus, IFormData<TypeOr
   Refund_failed: {label: "Refund Failed"},
 }
 
-export const ID_PROOFS = ["Passport", "Driving license", "Bank passbook"]
+export const ID_PROOFS: IFormData<TypeKYC>[] = [
+  {label: "Passport", key: "Passport"},
+  {label: "Driving license", key: "Driving_License"},
+  {label: "Bank passbook", key: "Passbook"},
+]
+
+export const ID_PROOFS_INDIA: IFormData<TypeKYC>[] = [
+  {label: "Passport", key: "Passport"},
+  {label: "Driving license", key: "Driving_License"},
+  {label: "Bank passbook", key: "Passbook"},
+  {label: "Aadhaar Card", key: "Aadhaar"},
+  {label: "PAN Card", key: "PAN"},
+  {label: "GST Certificate", key: "GST"},
+]
 
 export const ACCOUNT_TYPE: IFormData<TypeAccount>[] = [
   {label: "Individual", key: "Individual"},
