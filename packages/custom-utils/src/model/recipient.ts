@@ -1,6 +1,6 @@
 import {IFile, IFormData} from "@fanam-pkg/core-utils"
 import {IAttachment} from "./common"
-import {TypeAccount, TypeBankAccount, TypeRelation} from "./enum"
+import {TypeAccount, TypeBankAccount, TypeKYC, TypeRelation} from "./enum"
 import {ICity, ICountry, IState} from "./location"
 import {IBankAccount} from "./transaction"
 
@@ -18,7 +18,7 @@ export interface IRecipient {
   zip_code: string
   transaction_id: string
   id_number: string
-  id_type: string
+  id_type: TypeKYC
   id_issued_country: ICountry
   recipient_id?: string
   bank_account: IBankAccount
@@ -39,7 +39,6 @@ export interface IBaseRecipientData {
   address_line_2?: string
   zip_code: string
   id_number: string
-  id_type: string
   kyc?: IFile[]
 }
 
@@ -60,6 +59,7 @@ export interface IRecipientData extends IBaseRecipientData {
   account_type: TypeBankAccount
   business_name: string
   is_send_email: IFormData
+  id_type: IFormData<TypeKYC>
 }
 
 export interface IPayloadRecipient extends IBaseRecipientData {
@@ -68,6 +68,7 @@ export interface IPayloadRecipient extends IBaseRecipientData {
   state_id: number
   city_id: number
   bank_account: IPayloadRecipientBankAccount
+  id_type: TypeKYC
   transaction_id?: string
   recipient_account_type?: string
   business_name: string

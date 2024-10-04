@@ -17,6 +17,7 @@ import {
   REG_INPUT_NAME,
   REG_PAN,
   TypeBusiness,
+  TypeKYC,
 } from "@custom/utils"
 import assets from "assets"
 import {useAuthController, useKYCController, useLocationController} from "controller"
@@ -628,7 +629,7 @@ const useHandler = (styles: IStyle) => {
     payloadData.partners_proof[index] = {
       ...(payloadData.partners_proof[index] || {
         id_number: "",
-        id_type: "",
+        id_type: ID_PROOFS[0],
         kyc_type: "Identity_and_address_proof",
         kyc: [],
       }),
@@ -1219,44 +1220,57 @@ const useHandler = (styles: IStyle) => {
 
     const businessKYCProofs: IPayloadBusinessKYC[] = []
 
-    if (isIdentityProof)
+    if (isIdentityProof) {
+      const {id_type, kyc} = identity_proof
       businessKYCProofs.push({
         ...identity_proof,
         kyc_type: "Identity_proof",
-        kyc: identity_proof?.kyc?.filter(({file}) => !!file),
+        id_type: (id_type as IFormData<TypeKYC>)?.key,
+        kyc: kyc?.filter(({file}) => !!file),
       })
+    }
 
     if (isAuthorityProof) {
+      const {id_type, kyc} = authority_proof
       businessKYCProofs.push({
         ...authority_proof,
         kyc_type: "Authority_proof",
-        kyc: authority_proof?.kyc?.filter(({file}) => !!file),
+        id_type: (id_type as IFormData<TypeKYC>)?.key,
+        kyc: kyc?.filter(({file}) => !!file),
       })
     }
 
     if (isAddressProof) {
+      const {id_type, kyc} = address_proof
       businessKYCProofs.push({
         ...address_proof,
         kyc_type: "Address_proof",
-        kyc: address_proof?.kyc?.filter(({file}) => !!file),
+        id_type: (id_type as IFormData<TypeKYC>)?.key,
+        kyc: kyc?.filter(({file}) => !!file),
       })
     }
 
     if (isBusinessProof) {
+      const {id_type, kyc} = business_proof
       businessKYCProofs.push({
         ...business_proof,
         kyc_type: "Business_proof",
-        kyc: business_proof?.kyc?.filter(({file}) => !!file),
+        id_type: (id_type as IFormData<TypeKYC>)?.key,
+        kyc: kyc?.filter(({file}) => !!file),
       })
     }
 
     if (isPartnersProof) {
       businessKYCProofs.concat(
-        partners_proof?.map(proof => ({
-          ...proof,
-          kyc_type: "Identity_and_address_proof",
-          kyc: proof?.kyc?.filter(({file}) => !!file),
-        }))
+        partners_proof?.map(proof => {
+          const {id_type, kyc} = proof
+          return {
+            ...proof,
+            kyc_type: "Identity_and_address_proof",
+            id_type: (id_type as IFormData<TypeKYC>)?.key,
+            kyc: kyc?.filter(({file}) => !!file),
+          }
+        })
       )
     }
 

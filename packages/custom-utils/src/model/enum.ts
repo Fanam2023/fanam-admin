@@ -47,7 +47,7 @@ export type TypeOKycCode =
   | "request_not_found"
   | "internal_server_error"
 
-export type TypeKYC = "Aadhaar" | "PAN" | "GST" | "Passport" | "Driving_License"
+export type TypeKYC = "Aadhaar" | "PAN" | "GST" | "Passport" | "Driving_License" | "Passbook"
 
 export type TypeRelation =
   | "Father"

@@ -8,6 +8,7 @@ import {
   TypeAccount,
   TypeBusiness,
   TypeBusinessKYC,
+  TypeKYC,
   TypeStatus,
   TypeUserRole,
 } from "../model"
@@ -127,7 +128,7 @@ export interface IBaseSyncUser {
 
 export interface IPayloadBusinessKYC {
   id_number: string
-  id_type: string
+  id_type: TypeKYC | IFormData<TypeKYC>
   kyc: IFile[] | null
   kyc_id?: string
   kyc_type?: TypeBusinessKYC
