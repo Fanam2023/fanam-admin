@@ -15,7 +15,7 @@
   "private": true,
   "dependencies": {
     "@custom/utils": "workspace:*",
-    "@fanam-pkg/core-ui-sass": "^1.0.23",
+    "@fanam-pkg/core-ui-sass": "^1.0.24",
     "@fanam-pkg/core-utils": "^1.0.4",
     "next": "^14.2.9",
     "react": "^18.3.1",

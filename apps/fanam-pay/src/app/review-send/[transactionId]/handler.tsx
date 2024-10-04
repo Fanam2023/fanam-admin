@@ -125,7 +125,7 @@ const useHandler = () => {
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
       {key: "Address 1", label: address_line_1},
-      !!address_line_2 && {key: "Address 2", label: address_line_2},
+      ...(address_line_2 ? [{key: "Address 2", label: address_line_2}] : []),
       {key: "Email", label: email},
       {key: "Phone Number", label: phone_no},
       {key: "Country", label: country_name},
@@ -206,17 +206,18 @@ const useHandler = () => {
 
   return {
     beneficiaryDetails,
+    beneficiary,
     recipientDetails,
     paymentDetails,
     showDetails,
-    toggleDetails,
     destination_amount,
     destinationCountryValue,
     isDisabled,
-    completeTransaction,
     transactionId,
     durationTime,
     transfer_time,
+    toggleDetails,
+    completeTransaction,
   }
 }
 

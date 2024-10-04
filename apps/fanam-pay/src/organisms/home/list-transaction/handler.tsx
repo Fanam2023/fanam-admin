@@ -88,6 +88,7 @@ export const useHandler = (styles: IStyle) => {
                 max={currentDate}
                 label="End Date"
                 min={formatDate(start_date, DF_INPUT_DATE)}
+                wrapperClass={styles.end_date_wrapper}
               />
             </section>
           ),
