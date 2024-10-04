@@ -1,10 +1,12 @@
 import {
+  API_BUSINESS_KYC,
   API_KYC_AADHAAR_GENERATE_OTP,
   API_KYC_AADHAAR_INITIATE_CAPTCHA,
   API_KYC_AADHAAR_OTP_VERIFICATION,
   API_KYC_AADHAAR_REGENERATE_CAPTCHA,
   API_KYC_GST_VERIFICATION,
   API_PAN_VERIFY,
+  IPayloadBusinessKYC,
   IPayloadGenerateAadhaarOTP,
   IPayloadPan,
   IPayloadVerifyAadhaarOTP,
@@ -13,6 +15,7 @@ import {
   IResponseAadhaarGenerateOTP,
   IResponseAadhaarVerifyOTP,
   IResponsePan,
+  IUser,
 } from "@custom/utils"
 import {useApi} from "./api"
 
@@ -36,6 +39,26 @@ export const useKYCController = () => {
   const verifyGST = async (payload: IPayloadVerifyGST) =>
     await postRequest<IResponsePan>(API_KYC_GST_VERIFICATION, payload)
 
+  const verifyBusinessKyc = async (payloadArr: IPayloadBusinessKYC[]) => {
+    const promises = payloadArr.map(({id_number, id_type, kyc_type, kyc_id, kyc = []}) => {
+      const formData = new FormData()
+
+      if (id_number) formData.append("id_number", id_number)
+      if (id_type) formData.append("id_type", id_type as string)
+      if (kyc_type) formData.append("kyc_type", kyc_type)
+      if (kyc_id) formData.append("kyc_id", kyc_id)
+      if (kyc?.length) {
+        kyc.forEach(({file}) => {
+          formData.append("kyc", file)
+        })
+      }
+
+      return postRequest<IUser>(API_BUSINESS_KYC, formData)
+    })
+
+    return await Promise.all(promises)
+  }
+
   return {
     verifyPanCard,
     generateAadhaarCaptcha,
@@ -43,5 +66,6 @@ export const useKYCController = () => {
     generateAadhaarOTP,
     verifyAadhaarOTP,
     verifyGST,
+    verifyBusinessKyc,
   }
 }

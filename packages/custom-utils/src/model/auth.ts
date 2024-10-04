@@ -1,6 +1,17 @@
 import {IFile, IFormData} from "@fanam-pkg/core-utils"
 import type {AuthenticationResponseJSON, RegistrationResponseJSON} from "@simplewebauthn/types"
-import {ICity, ICountry, IResponseKYC, IState, TypeAccount, TypeBusiness, TypeStatus, TypeUserRole} from "../model"
+import {
+  ICity,
+  ICountry,
+  IResponseKYC,
+  IState,
+  TypeAccount,
+  TypeBusiness,
+  TypeBusinessKYC,
+  TypeKYC,
+  TypeStatus,
+  TypeUserRole,
+} from "../model"
 
 export interface IResponseLogin {
   access_token: string
@@ -100,6 +111,8 @@ export interface IUser {
   account_type: TypeAccount
   account_no: string
   date_of_birth: string
+  business_type: string
+  business_name: TypeBusiness
 }
 
 export interface IBaseSyncUser {
@@ -111,29 +124,44 @@ export interface IBaseSyncUser {
   address_line_1: string
   address_line_2?: string
   zip_code: string
-  business_type?: IFormData<TypeBusiness> | null
   kyc_aadhaar?: IFile[]
   kyc_pan?: IFile[]
 }
 
+export interface IPayloadBusinessKYC {
+  id_number: string
+  id_type: TypeKYC | IFormData<TypeKYC>
+  kyc: IFile[] | null
+  kyc_id?: string
+  kyc_type?: TypeBusinessKYC
+}
+
 export interface ISyncUserData extends IBaseSyncUser {
-  country: IFormData<number> | null
-  state: IFormData<number> | null
-  city: IFormData<number> | null
-  account_type: IFormData<TypeAccount>
   business_name: string
   pan: string
   aadhaarNumber: string
   date_of_birth: string
+  country: IFormData<number> | null
+  state: IFormData<number> | null
+  city: IFormData<number> | null
+  account_type: IFormData<TypeAccount>
+  business_type?: IFormData<TypeBusiness> | null
+  identity_proof?: IPayloadBusinessKYC
+  address_proof?: IPayloadBusinessKYC
+  authority_proof?: IPayloadBusinessKYC
+  business_proof?: IPayloadBusinessKYC
+  partners_proof?: IPayloadBusinessKYC[]
 }
 
 export interface IPayloadSyncUser extends IBaseSyncUser {
   country_id: number
   state_id: number
   city_id: number
+  account_type: TypeAccount
+  date_of_birth?: string
   bank_account?: IPayloadUserBankAccount
-  account_type: string
-  date_of_birth: string
+  business_proofs?: IPayloadBusinessKYC[]
+  business_type?: TypeBusiness
 }
 
 export interface IPayloadUserBankAccount {

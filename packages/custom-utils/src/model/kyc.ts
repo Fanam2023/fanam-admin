@@ -1,4 +1,4 @@
-import {IAttachment, ICountry, IUser, TypeKYC, TypeOKycCode} from "../model"
+import {IAttachment, ICountry, IUser, TypeBusinessKYC, TypeKYC, TypeOKycCode} from "../model"
 
 export interface IPayloadPan {
   pan: string
@@ -20,6 +20,7 @@ export interface IResponseKYC {
   kyc_id: string
   type: TypeKYC
   kyc_number: string
+  kyc_type: TypeBusinessKYC
   issued_country: ICountry
   attachments: IAttachment[]
   request_id: string
