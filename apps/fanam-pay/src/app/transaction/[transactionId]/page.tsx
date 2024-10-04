@@ -47,7 +47,7 @@ const TransactionStatusPage = () => {
     transactionDetail || {}
 
   const {order_no, order_status, payment} = order || {}
-  
+
   const {paymentMethod} = payment || {}
 
   const {bigIcon, smallIcon, title, statusText} = getStatusData(order_status)
