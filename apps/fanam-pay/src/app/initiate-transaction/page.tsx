@@ -54,7 +54,10 @@ const InitiateTransactionPage = () => {
               <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
                 <input type="text" value={source_amount} className={styles.input} name="source_amount" disabled />
                 <section className={`flex ${styles.currency}`}>
-                  <CountryFlag {...source_country} />
+                  <section className={`flex ${styles.flag_container} ${styles.sender_wrapper}`}>
+                    <CountryFlag countryCode={source_country?.iso2} wrapperClass={styles.flag} />
+                    <h3 className={styles.currency_text}>{currency}</h3>
+                  </section>
                 </section>
               </section>
             </section>
@@ -72,14 +75,17 @@ const InitiateTransactionPage = () => {
                   />
                 </section>
                 <section className={`flex ${styles.currency}`} onClick={showCountries}>
-                  <CountryFlag {...destination_country} />
+                  <section className={`flex ${styles.flag_container} ${styles.sender_wrapper}`}>
+                    <CountryFlag countryCode={destination_country?.iso2} wrapperClass={styles.flag} />
+                    <h3 className={styles.currency_text}>{currency}</h3>
+                  </section>
                   <ImageView src={assets.ic_dropDown} alt="Drop-Down" imgSize={12} />
                 </section>
               </section>
             </section>
           </section>
           <TransferTime onSelect={onSelect} transferTimeRes={fxRes} />
-          {destination_amount ? (
+          {destination_amount && (
             <section className={`flex-sb-center ${styles.total_background}`}>
               <section className={styles.receiver_wrapper}>
                 <h5>Receiver will get exactly</h5>
@@ -97,8 +103,6 @@ const InitiateTransactionPage = () => {
                 {parseFloat(destination_amount)?.toFixed(2)} {currency}
               </h4>
             </section>
-          ) : (
-            <></>
           )}
         </section>
       </section>
