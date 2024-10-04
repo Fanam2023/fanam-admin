@@ -159,12 +159,7 @@ const useHandler = (styles: IStyle) => {
             <>
               <section
                 className={`flex ${styles.country_wrapper} ${errCountryCode || errPhoneNo ? styles.error_border : ""}`}>
-                <ReactCountryFlag
-                  countryCode={getCountryCode(country)}
-                  svg
-                  style={{width: "24px", height: "24px"}}
-                  className={styles.flag}
-                />
+                <ReactCountryFlag countryCode={getCountryCode(country)} svg className={styles.flag_container} />
                 <h5 className={styles.country_code}>{country ? `+${country.phone_code}` : "-"}</h5>
                 <ImageView
                   src={assets.ic_down_arrow_theme}

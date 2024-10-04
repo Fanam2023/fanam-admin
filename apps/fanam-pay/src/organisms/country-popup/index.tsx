@@ -21,7 +21,7 @@ export const CountryPopup = ({onSelect, selCountry, countries, title}: CountryPo
         key={country_id}
         className={`flex ${styles.country_wrapper} ${iso2 === selCountry?.iso2 ? styles.selected : ""}`}
         onClick={onSelect.bind(null, country)}>
-        <CountryFlag countryCode={iso2} />
+        <CountryFlag countryCode={iso2} wrapperClass={styles.flag} />
         {country_name}
       </li>
     )

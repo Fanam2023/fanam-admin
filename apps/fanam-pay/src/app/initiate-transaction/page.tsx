@@ -55,7 +55,7 @@ const InitiateTransactionPage = () => {
                 <input type="text" value={source_amount} className={styles.input} name="source_amount" disabled />
                 <section className={`flex ${styles.currency}`}>
                   <section className={`flex ${styles.flag_container} ${styles.sender_wrapper}`}>
-                    <CountryFlag countryCode={source_country?.iso2} />
+                    <CountryFlag countryCode={source_country?.iso2} wrapperClass={styles.flag} />
                     <h3 className={styles.currency_text}>{currency}</h3>
                   </section>
                 </section>
@@ -76,7 +76,7 @@ const InitiateTransactionPage = () => {
                 </section>
                 <section className={`flex ${styles.currency}`} onClick={showCountries}>
                   <section className={`flex ${styles.flag_container} ${styles.sender_wrapper}`}>
-                    <CountryFlag countryCode={destination_country?.iso2} />
+                    <CountryFlag countryCode={destination_country?.iso2} wrapperClass={styles.flag} />
                     <h3 className={styles.currency_text}>{currency}</h3>
                   </section>
                   <ImageView src={assets.ic_dropDown} alt="Drop-Down" imgSize={12} />
