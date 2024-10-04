@@ -174,6 +174,7 @@ const useHandler = (styles: IStyle) => {
     errPartnershipProof,
   } = errData
 
+  const isIndividual = account_type.key === "Individual"
   const isSoleProprietor = business_type.key === "Sole_proprietor"
   const isCompanies = business_type.key === "Companies"
   const isLimitedLiabilityPartnership = business_type.key === "Limited_liability_partnership"
@@ -525,88 +526,89 @@ const useHandler = (styles: IStyle) => {
 
     if (!account_type) errState = {...errState, errAccountType: "Please enter account type", isValid: false}
 
-    if (!kyc_aadhaar.length)
-      errState = {...errState, errKycAadhaar: "Please upload valid Aadhaar KYC documents", isValid: false}
+    if (isIndividual) {
+      if (!kyc_aadhaar.length)
+        errState = {...errState, errKycAadhaar: "Please upload valid Aadhaar KYC documents", isValid: false}
 
-    if (!kyc_pan.length) errState = {...errState, errKycPAN: "Please upload valid PAN KYC documents", isValid: false}
+      if (!kyc_pan.length) errState = {...errState, errKycPAN: "Please upload valid PAN KYC documents", isValid: false}
 
-    if (!date_of_birth) errState = {...errState, errDateOfBirth: "Please enter Date of Birth", isValid: false}
-
-    if (user?.account_type === "Business") {
-      if (!business_name) errState = {...errState, errBusinessName: "Please enter the company name", isValid: false}
-    }
-
-    if (!business_type) {
-      errState = {...errState, errBusinessType: "Please choose business type", isValid: false}
+      if (!date_of_birth) errState = {...errState, errDateOfBirth: "Please enter Date of Birth", isValid: false}
     } else {
-      if (isIdentityProof) {
-        if (!identityIdType)
-          errState = {...errState, errIdentityIdType: "Please choose identity Id type", isValid: false}
-        if (!identityIdNumber)
-          errState = {...errState, errIdentityIdNumber: "Please enter identity Id number", isValid: false}
-        if (!identityAttachments?.length)
-          errState = {...errState, errIdentityAttachments: "Please choose identity attachments", isValid: false}
-      }
+      if (!business_name) errState = {...errState, errBusinessName: "Please enter the company name", isValid: false}
 
-      if (isAddressProof) {
-        if (!addressIdType) errState = {...errState, errAddressIdType: "Please choose address Id type", isValid: false}
-        if (!addressIdNumber)
-          errState = {...errState, errAddressIdNumber: "Please enter address Id number", isValid: false}
-        if (!addressAttachments?.length)
-          errState = {...errState, errAddressAttachments: "Please choose address attachments", isValid: false}
-      }
+      if (!business_type) {
+        errState = {...errState, errBusinessType: "Please choose business type", isValid: false}
+      } else {
+        if (isIdentityProof) {
+          if (!identityIdType)
+            errState = {...errState, errIdentityIdType: "Please choose identity Id type", isValid: false}
+          if (!identityIdNumber)
+            errState = {...errState, errIdentityIdNumber: "Please enter identity Id number", isValid: false}
+          if (!identityAttachments?.length)
+            errState = {...errState, errIdentityAttachments: "Please choose identity attachments", isValid: false}
+        }
 
-      if (isBusinessProof) {
-        if (!businessIdType)
-          errState = {...errState, errBusinessIdType: "Please choose business Id type", isValid: false}
-        if (!businessIdNumber)
-          errState = {...errState, errBusinessIdNumber: "Please enter business Id number", isValid: false}
-        if (!businessAttachments?.length)
-          errState = {...errState, errBusinessAttachments: "Please choose business attachments", isValid: false}
-      }
+        if (isAddressProof) {
+          if (!addressIdType)
+            errState = {...errState, errAddressIdType: "Please choose address Id type", isValid: false}
+          if (!addressIdNumber)
+            errState = {...errState, errAddressIdNumber: "Please enter address Id number", isValid: false}
+          if (!addressAttachments?.length)
+            errState = {...errState, errAddressAttachments: "Please choose address attachments", isValid: false}
+        }
 
-      if (isAuthorityProof) {
-        if (!authorityIdType)
-          errState = {...errState, errAuthorityIdType: "Please choose authority Id type", isValid: false}
-        if (!authorityIdNumber)
-          errState = {...errState, errAuthorityIdNumber: "Please enter authority Id number", isValid: false}
-        if (!authorityAttachments?.length)
-          errState = {...errState, errAuthorityAttachments: "Please choose authority attachments", isValid: false}
-      }
+        if (isBusinessProof) {
+          if (!businessIdType)
+            errState = {...errState, errBusinessIdType: "Please choose business Id type", isValid: false}
+          if (!businessIdNumber)
+            errState = {...errState, errBusinessIdNumber: "Please enter business Id number", isValid: false}
+          if (!businessAttachments?.length)
+            errState = {...errState, errBusinessAttachments: "Please choose business attachments", isValid: false}
+        }
 
-      if (isPartnersProof) {
-        if (partners_proof?.length) {
-          const errPartnershipProofArr = []
-          partners_proof?.forEach(({id_number, id_type, kyc}) => {
-            let errPartnershipProof = {...DEFAULT_ERR_PARTNERSHIP}
+        if (isAuthorityProof) {
+          if (!authorityIdType)
+            errState = {...errState, errAuthorityIdType: "Please choose authority Id type", isValid: false}
+          if (!authorityIdNumber)
+            errState = {...errState, errAuthorityIdNumber: "Please enter authority Id number", isValid: false}
+          if (!authorityAttachments?.length)
+            errState = {...errState, errAuthorityAttachments: "Please choose authority attachments", isValid: false}
+        }
 
-            if (!id_type) {
-              errPartnershipProof = {...errPartnershipProof, errPartnersIdType: "Please choose partners Id type"}
-              errState = {...errState, isValid: false}
-            }
+        if (isPartnersProof) {
+          if (partners_proof?.length) {
+            const errPartnershipProofArr = []
+            partners_proof?.forEach(({id_number, id_type, kyc}) => {
+              let errPartnershipProof = {...DEFAULT_ERR_PARTNERSHIP}
 
-            if (!id_number) {
-              errPartnershipProof = {...errPartnershipProof, errPartnersIdNumber: "Please enter partners Id number"}
-              errState = {...errState, isValid: false}
-            }
-
-            if (!kyc?.length) {
-              errPartnershipProof = {
-                ...errPartnershipProof,
-                errPartnersAttachments: "Please choose partners attachments",
+              if (!id_type) {
+                errPartnershipProof = {...errPartnershipProof, errPartnersIdType: "Please choose partners Id type"}
+                errState = {...errState, isValid: false}
               }
-              errState = {...errState, isValid: false}
+
+              if (!id_number) {
+                errPartnershipProof = {...errPartnershipProof, errPartnersIdNumber: "Please enter partners Id number"}
+                errState = {...errState, isValid: false}
+              }
+
+              if (!kyc?.length) {
+                errPartnershipProof = {
+                  ...errPartnershipProof,
+                  errPartnersAttachments: "Please choose partners attachments",
+                }
+                errState = {...errState, isValid: false}
+              }
+
+              errPartnershipProofArr.push(errPartnershipProof)
+            })
+
+            errState = {...errState, errPartnershipProofArr: errPartnershipProofArr}
+          } else {
+            errState = {
+              ...errState,
+              errPartnershipProof: "Please add minimum one Partnership Proof to proceed",
+              isValid: false,
             }
-
-            errPartnershipProofArr.push(errPartnershipProof)
-          })
-
-          errState = {...errState, errPartnershipProofArr: errPartnershipProofArr}
-        } else {
-          errState = {
-            ...errState,
-            errPartnershipProof: "Please add minimum one Partnership Proof to proceed",
-            isValid: false,
           }
         }
       }
@@ -1038,7 +1040,8 @@ const useHandler = (styles: IStyle) => {
           wrapperClass: styles.img_picker,
           name: "kyc",
           value: identityAttachments,
-          maxCount: 1,
+          isMultiple: true,
+          maxCount: 2,
           error: errIdentityAttachments,
           onChangeValue: onChangeKYC.bind(null, "identity_proof"),
         },
@@ -1145,7 +1148,8 @@ const useHandler = (styles: IStyle) => {
           wrapperClass: styles.img_picker,
           name: "kyc",
           value: authorityAttachments,
-          maxCount: 1,
+          isMultiple: true,
+          maxCount: 2,
           error: errAuthorityAttachments,
           onChangeValue: onChangeKYC.bind(null, "authority_proof"),
         },
@@ -1202,8 +1206,10 @@ const useHandler = (styles: IStyle) => {
     })
 
     businessPartnershipElement.childElements.push({
-      children: <Button onClick={onAddPartner}>+ Add more Partner</Button>,
+      childElement: <Button onClick={onAddPartner}>+ Add more Partner</Button>,
     })
+
+    businessKYCElements.push(businessPartnershipElement)
   }
 
   const individualType = user?.account_type === "Individual"

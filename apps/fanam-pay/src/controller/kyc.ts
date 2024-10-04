@@ -42,10 +42,10 @@ export const useKYCController = () => {
     const promises = payloadArr.map(({id_number, id_type, kyc_type, kyc_id, kyc = []}) => {
       const formData = new FormData()
 
-      if (id_number) formData.append("", id_number)
-      if (id_type) formData.append("", id_type)
-      if (kyc_type) formData.append("", kyc_type)
-      if (kyc_id) formData.append("", kyc_id)
+      if (id_number) formData.append("id_number", id_number)
+      if (id_type) formData.append("id_type", id_type)
+      if (kyc_type) formData.append("kyc_type", kyc_type)
+      if (kyc_id) formData.append("kyc_id", kyc_id)
       if (kyc?.length) {
         kyc.forEach(({file}) => {
           formData.append("kyc", file)
