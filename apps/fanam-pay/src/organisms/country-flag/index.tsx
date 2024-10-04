@@ -1,10 +1,7 @@
-import {ICountry} from "@custom/utils"
-import {CountryFlags} from "organisms/countries"
-import styles from "./styles.module.sass"
+import ReactCountryFlag from "react-country-flag"
+import {PropsCountryFlag} from "props"
+import styles from "./style.module.sass"
 
-export const CountryFlag = ({iso2, currency}: ICountry) => (
-  <section className={`flex ${styles.flag_wrapper} ${styles.sender_wrapper}`}>
-    <CountryFlags countryCode={iso2} />
-    <h3 className={styles.currency_text}>{currency}</h3>
-  </section>
+export const CountryFlag = ({countryCode, wrapperClass}: PropsCountryFlag) => (
+  <ReactCountryFlag countryCode={countryCode?.toUpperCase()} svg className={`${styles.flag_wrapper} ${wrapperClass}`} />
 )

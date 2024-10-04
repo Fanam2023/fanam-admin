@@ -1,7 +1,7 @@
 "use client"
 
 import {ICorridors} from "@custom/utils"
-import {CountryFlags} from "organisms/countries"
+import {CountryFlag} from "organisms/country-flag"
 import styles from "./styles.module.sass"
 
 export const CardExchangeRate = ({destination_country, source_country, conversion_rate}: ICorridors) => {
@@ -11,7 +11,7 @@ export const CardExchangeRate = ({destination_country, source_country, conversio
   return (
     <section className={styles.card_wrapper}>
       <section className={`flex ${styles.country_wrapper}`}>
-        <CountryFlags countryCode={iso2} wrapperClass={styles.flag} />
+        <CountryFlag countryCode={iso2} wrapperClass={styles.flag} />
         <h5 className="bold">{sourceCountryName}</h5>
       </section>
       <section className={`flex ${styles.text_wrapper}`}>
