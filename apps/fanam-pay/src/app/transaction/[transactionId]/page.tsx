@@ -44,7 +44,7 @@ const TransactionStatusPage = () => {
     transactionDetail || {}
 
   const {order_no, order_status, payment} = order || {}
-  
+
   const {paymentMethod} = payment || {}
 
   const {bigIcon, smallIcon, title, statusText} = getStatusData(order_status)
@@ -106,7 +106,7 @@ const TransactionStatusPage = () => {
           <h4 className={styles.source_payment}>Source of Payment</h4>
           <section className={`flex ${styles.account_wrapper}`}>
             <ImageView src={assets.ic_account} alt="bank-image" imgSize={20} />
-            <h5>{paymentMethod}</h5>
+            <h5 className={styles.payment_method}>{paymentMethod}</h5>
           </section>
           <hr className={styles.separator} />
           <section>
