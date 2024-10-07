@@ -26,8 +26,8 @@ export const useHandler = (transaction: ITransaction) => {
 
   const {recipientDetails} = useMemo(() => {
     const recipientDetails: IFormData[] = [
-      {key: "First Name", label: first_name},
-      {key: "Last Name", label: last_name},
+      {key: "First Name", label: `${first_name.charAt(0).toUpperCase()}${first_name.slice(1).toLowerCase()}`},
+      {key: "Last Name", label: `${last_name.charAt(0).toUpperCase()}${last_name.slice(1).toLowerCase()}`},
       {key: "Email", label: email},
       {key: "Phone Number", label: phone_no},
       {key: "Account Type", label: account_type},
