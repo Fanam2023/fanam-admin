@@ -19,10 +19,12 @@ export const BaseContainer = ({
   onBack,
   childWrapper,
   skipBtn,
+  cancelBtn,
   stepIndex,
   profile,
   bellIcon,
   onSubmit,
+  onCancel,
   isStepper = false,
   disabled = false,
 }: BaseContainerProps) => {
@@ -114,7 +116,7 @@ export const BaseContainer = ({
         <section className={styles.mobile_wrapper}>{children}</section>
       )}
 
-      {(buttonText || skipBtn || footerChild) && (
+      {(buttonText || skipBtn || cancelBtn || footerChild) && (
         <footer className={`flex ${styles.footer_wrapper}`}>
           {footerChild}
           {skipBtn && (
@@ -124,6 +126,15 @@ export const BaseContainer = ({
               buttonType="primary-outlined"
               leadingIcon={assets.ic_left_arrow_fill}>
               {skipBtn}
+            </Button>
+          )}
+          {cancelBtn && (
+            <Button
+              onClick={onCancel}
+              wrapperClass={styles.skip_btn}
+              trailingClass={styles.tail_class}
+              buttonType="primary-outlined">
+              {cancelBtn}
             </Button>
           )}
           {buttonText && (

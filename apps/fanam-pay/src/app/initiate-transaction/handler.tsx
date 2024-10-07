@@ -341,6 +341,18 @@ export const useHandler = () => {
     if (isValid) onCreateOrder()
   }
 
+  const onCancel = () => {
+    onCancelTransaction(transId, {
+      onSuccess: () => {
+        toggleNotify({
+          title: "Cancelled Payment",
+          description: "You have cancelled the payment.",
+          type: "error",
+        })
+      },
+    })
+  }
+
   // Get total seconds
   const totalSeconds = Math.floor(remainingTime / 1000)
 
@@ -357,6 +369,7 @@ export const useHandler = () => {
     PURPOSES,
     onChangeValue,
     onSubmit,
+    onCancel,
     showCountries,
     fxRes,
     onSelect: onUpdateTransaction,
