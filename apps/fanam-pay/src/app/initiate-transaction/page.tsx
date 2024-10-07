@@ -58,7 +58,7 @@ const InitiateTransactionPage = () => {
                 <section className={`flex ${styles.currency}`}>
                   <section className={`flex ${styles.flag_container} ${styles.sender_wrapper}`}>
                     <CountryFlag countryCode={source_country?.iso2} wrapperClass={styles.flag} />
-                    <h3 className={styles.currency_text}>{currency}</h3>
+                    <h3 className={styles.currency_text}>{source_country?.currency}</h3>
                   </section>
                 </section>
               </section>
