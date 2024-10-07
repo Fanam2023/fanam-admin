@@ -27,7 +27,6 @@ const InitiateTransactionPage = () => {
     <BaseContainer
       header="Cross Border Remittance"
       buttonText="Confirm"
-      skipBtn="Back"
       onSubmit={onSubmit}
       childWrapper={styles.page_container}
       isStepper
@@ -56,7 +55,7 @@ const InitiateTransactionPage = () => {
                 <section className={`flex ${styles.currency}`}>
                   <section className={`flex ${styles.flag_container} ${styles.sender_wrapper}`}>
                     <CountryFlag countryCode={source_country?.iso2} wrapperClass={styles.flag} />
-                    <h3 className={styles.currency_text}>{currency}</h3>
+                    <h3 className={styles.currency_text}>{source_country?.currency}</h3>
                   </section>
                 </section>
               </section>
