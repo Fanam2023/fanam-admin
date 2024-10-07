@@ -692,13 +692,61 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     }
     if (!last_name) errState = {...errState, errLastName: "Please enter LastName", isValid: false}
 
-    if (!account_no) errState = {...errState, errAccountNo: "Please enter AccountNumber", isValid: false}
+    if (!account_no) {
+      errState = {
+        ...errState,
+        errAccountNo: "Please enter Account number",
+        isValid: false,
+      }
+    } else if (account_no.length < 5) {
+      errState = {
+        ...errState,
+        errAccountNo: "Account number must be longer than or equal to 5 characters",
+        isValid: false,
+      }
+    }
 
-    if (!bank_name) errState = {...errState, errBankName: "Please enter BankName", isValid: false}
+    if (!bank_name) {
+      errState = {
+        ...errState,
+        errBankName: "Please enter Bank name",
+        isValid: false,
+      }
+    } else if (bank_name.length < 2) {
+      errState = {
+        ...errState,
+        errBankName: "Bank name must be longer than or equal to 2 characters",
+        isValid: false,
+      }
+    }
 
-    if (!branch_code) errState = {...errState, errBranchCode: "Please enter Branch code", isValid: false}
+    if (!branch_code) {
+      errState = {
+        ...errState,
+        errBranchCode: "Please enter Branch code",
+        isValid: false,
+      }
+    } else if (branch_code.length < 2) {
+      errState = {
+        ...errState,
+        errBranchCode: "Branch code must be longer than or equal to 2 characters",
+        isValid: false,
+      }
+    }
 
-    if (!branch_address) errState = {...errState, errBranchAddress: "Please enter Branch address", isValid: false}
+    if (!branch_address) {
+      errState = {
+        ...errState,
+        errBranchAddress: "Please enter Branch address",
+        isValid: false,
+      }
+    } else if (branch_address.length < 5) {
+      errState = {
+        ...errState,
+        errBranchAddress: "Branch address must be longer than or equal to 5 characters",
+        isValid: false,
+      }
+    }
 
     if (swiftInput && !isValidInputByRegex(swift_code, swiftInput.regEx))
       errState = {...errState, errSwiftCode: "Please enter Swift code", isValid: false}
@@ -733,8 +781,19 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!id_type) errState = {...errState, errIdType: "Please Select ID type", isValid: false}
 
-    if (!id_number) errState = {...errState, errIdNumber: "Please enter ID number", isValid: false}
-
+    if (!id_number) {
+      errState = {
+        ...errState,
+        errIdNumber: "Please enter Id number",
+        isValid: false,
+      }
+    } else if (id_number.length < 4) {
+      errState = {
+        ...errState,
+        errIdNumber: "Id number must be longer than or equal to 4 characters",
+        isValid: false,
+      }
+    }
     if (!account_type) errState = {...errState, errAccountType: "Please choose recipient account type", isValid: false}
 
     if (!isIndividual && !business_name)
