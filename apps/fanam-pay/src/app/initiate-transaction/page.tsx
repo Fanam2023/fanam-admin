@@ -13,7 +13,6 @@ const InitiateTransactionPage = () => {
     onChangeValue,
     onSubmit,
     onSelect,
-    onCancel,
     fxRes,
     showCountries,
     transfer_time,
@@ -28,9 +27,7 @@ const InitiateTransactionPage = () => {
     <BaseContainer
       header="Cross Border Remittance"
       buttonText="Confirm"
-      cancelBtn="Cancel Payment"
       onSubmit={onSubmit}
-      onCancel={onCancel}
       childWrapper={styles.page_container}
       isStepper
       backIcon={false}
