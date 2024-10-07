@@ -132,27 +132,30 @@ export const BANK_ACCOUNT_TYPE = ["Current", "Savings", "Overdraft"]
 
 export const BANK_BRANCH_TYPE = ["Sort", "Swift", "BSB", "Routing", "IFSC", "IBAN"]
 
-export const RELATION_SHIP: IFormData<TypeRelation>[] = [
-  {key: "Father", label: "Father"},
-  {key: "Mother", label: "Mother"},
-  {key: "Son", label: "Son"},
-  {key: "Brother", label: "Brother"},
-  {key: "Sister", label: "Sister"},
-  {key: "Cousin", label: "Cousin"},
-  {key: "Daughter", label: "Daughter"},
-  {key: "Friend", label: "Friend"},
-  {key: "Uncle", label: "Uncle"},
-  {key: "Aunty", label: "Aunty"},
-  {key: "Grandmother", label: "GrandMother"},
-  {key: "Grandfather", label: "GrandFather"},
-  {key: "Sister_in_law", label: "SisterInLaw"},
-  {key: "Father_in_law", label: "FatherInLaw"},
-  {key: "Mother_in_law", label: "MotherInLaw"},
-  {key: "Brother_in_law", label: "BrotherInLaw"},
-  {key: "Nephew", label: "Nephew"},
-  {key: "Niece", label: "Niece"},
-  {key: "Not_applicable", label: "NotApplicable"},
-]
+export const RELATION_SHIP_DATA: Record<TypeRelation, IFormData<TypeRelation>> = {
+  Father: {key: "Father", label: "Father"},
+  Mother: {key: "Mother", label: "Mother"},
+  Son: {key: "Son", label: "Son"},
+  Brother: {key: "Brother", label: "Brother"},
+  Sister: {key: "Sister", label: "Sister"},
+  Cousin: {key: "Cousin", label: "Cousin"},
+  Daughter: {key: "Daughter", label: "Daughter"},
+  Friend: {key: "Friend", label: "Friend"},
+  Uncle: {key: "Uncle", label: "Uncle"},
+  Aunty: {key: "Aunty", label: "Aunty"},
+  Grandmother: {key: "Grandmother", label: "Grand mother"},
+  Grandfather: {key: "Grandfather", label: "Grand father"},
+  Sister_in_law: {key: "Sister_in_law", label: "Sister-in-law"},
+  Father_in_law: {key: "Father_in_law", label: "Father-in-law"},
+  Mother_in_law: {key: "Mother_in_law", label: "Mother-in-law"},
+  Brother_in_law: {key: "Brother_in_law", label: "Brother-in-law"},
+  Nephew: {key: "Nephew", label: "Nephew"},
+  Niece: {key: "Niece", label: "Niece"},
+  Not_applicable: {key: "Not_applicable", label: "Not Applicable"},
+  Others: {key: "Others", label: "Others"},
+}
+
+export const RELATION_SHIP: IFormData<TypeRelation>[] = Object.values(RELATION_SHIP_DATA)
 
 export const PROFILE_ARR: ProfileNavItemProps[] = [
   {
