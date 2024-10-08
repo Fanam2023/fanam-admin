@@ -1,5 +1,13 @@
 import {Button, FormSectionProps, ImageView, TextField, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
-import {IFormData, JSONObject, REG_EMAIL, REG_VALID_NUMBER, useCommon, useDateTime} from "@fanam-pkg/core-utils"
+import {
+  IFormData,
+  JSONObject,
+  REG_EMAIL,
+  REG_VALID_NAME,
+  REG_VALID_NUMBER,
+  useCommon,
+  useDateTime,
+} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
@@ -1148,6 +1156,7 @@ const useHandler = (styles: IStyle) => {
           name: "id_number",
           error: errIdentityIdNumber,
           value: identityIdNumber,
+          inputRegex: REG_VALID_NAME,
           onChangeValue: onChangeKYC.bind(null, "identity_proof"),
         },
         {
@@ -1185,6 +1194,7 @@ const useHandler = (styles: IStyle) => {
           name: "id_number",
           error: errAddressIdNumber,
           value: addressIdNumber,
+          inputRegex: REG_VALID_NAME,
           onChangeValue: onChangeKYC.bind(null, "address_proof"),
         },
         {
@@ -1222,6 +1232,7 @@ const useHandler = (styles: IStyle) => {
           name: "id_number",
           error: errBusinessIdNumber,
           value: businessIdNumber,
+          inputRegex: REG_VALID_NAME,
           onChangeValue: onChangeKYC.bind(null, "business_proof"),
         },
         {
@@ -1259,6 +1270,7 @@ const useHandler = (styles: IStyle) => {
           name: "id_number",
           error: errAuthorityIdNumber,
           value: authorityIdNumber,
+          inputRegex: REG_VALID_NAME,
           onChangeValue: onChangeKYC.bind(null, "authority_proof"),
         },
         {
@@ -1309,6 +1321,7 @@ const useHandler = (styles: IStyle) => {
         name: "id_number",
         error: errPartnersIdNumber,
         value: id_number,
+        inputRegex: REG_VALID_NAME,
         onChangeValue: onChangeBusinessKYC.bind(null, index),
       })
 
