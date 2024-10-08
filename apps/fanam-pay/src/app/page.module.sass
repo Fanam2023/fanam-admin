@@ -26,21 +26,27 @@
   &:hover
     background-color: $white
     color: $black
+  &:active
+    transform: translate(0)
 
 .kyc_pending_btn
   padding: $size-8px $size-14px
   border-radius:$size-32px
   gap: $size-8px
   cursor: auto
+  background-color: $white
+  &:active
+    transform: translate(0)
 
 .kyc_status_card
   justify-content: space-between
 
 .danger_button, .kyc_pending_btn
   border-color: $alert-danger
-  color: $alert-danger
+  color: $alert-danger 
   &:hover
-    background-color: $alert-danger
+    background-color: $alert-danger 
+    color: $white
 
 .button_wrapper
   background-color: $theme
