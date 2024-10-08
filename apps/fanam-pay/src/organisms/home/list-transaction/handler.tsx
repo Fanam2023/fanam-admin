@@ -78,6 +78,7 @@ export const useHandler = (styles: IStyle) => {
                 isRequired={false}
                 max={currentDate}
                 label="Start Date"
+                onKeyDown={e => e.preventDefault()} // Disable typing
               />
               <TextField
                 onChangeData={onChangeValue}
@@ -85,10 +86,10 @@ export const useHandler = (styles: IStyle) => {
                 isRequired={false}
                 name="end_date"
                 type="date"
-                max={currentDate}
                 label="End Date"
                 min={formatDate(start_date, DF_INPUT_DATE)}
                 wrapperClass={styles.end_date_wrapper}
+                onKeyDown={e => e.preventDefault()} // Disable typing
               />
             </section>
           ),

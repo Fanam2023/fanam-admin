@@ -18,9 +18,11 @@ export interface BaseContainerProps {
   backIcon?: boolean
   onBack?: () => void
   skipBtn?: string
+  cancelBtn?: string
   stepIndex?: number | "success" | "pending" | "failed"
   containerClass?: string
   onSubmit?: () => void
+  onCancel?: () => void
   isStepper?: boolean
   disabled?: boolean
   childWrapper?: string

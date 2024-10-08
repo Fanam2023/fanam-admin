@@ -28,7 +28,6 @@ const InitiateTransactionPage = () => {
     <BaseContainer
       header="Cross Border Remittance"
       buttonText="Confirm"
-      skipBtn="Back"
       onSubmit={onSubmit}
       childWrapper={styles.page_container}
       isStepper

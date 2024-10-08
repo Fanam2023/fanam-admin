@@ -5,7 +5,7 @@ import {useMutation} from "@tanstack/react-query"
 import {ITransaction} from "@custom/utils"
 import {useTransactionController} from "controller"
 import {useCommon} from "hooks"
-import {QUERY_CANCEL_ORDER} from "utils"
+import {QUERY_CANCEL_ORDER, RELATION_SHIP_DATA} from "utils"
 
 export const useHandler = (transaction: ITransaction) => {
   const {getFirstLetter} = useCommon()
@@ -16,8 +16,9 @@ export const useHandler = (transaction: ITransaction) => {
     cancel_reason: "",
   })
 
-  const {recipient, recipient_relationship, transaction_id} = transaction || {}
-  const {first_name, last_name, email, phone_no, bank_account, country, state, city, zip_code} = recipient || {}
+  const {recipient, transaction_id, beneficiary} = transaction || {}
+  const {first_name, last_name, email, phone_no, bank_account, country, state, city, zip_code, relationship} =
+    recipient || {}
 
   const {country_name} = country || {}
   const {state_name} = state || {}
@@ -39,7 +40,10 @@ export const useHandler = (transaction: ITransaction) => {
       {key: "State", label: state_name},
       {key: "City/District", label: city_name},
       {key: "PinCode", label: zip_code},
-      {key: "Recipient Relationship", label: recipient_relationship},
+      {
+        key: "Recipient Relationship",
+        label: RELATION_SHIP_DATA[relationship || beneficiary?.relationship]?.label,
+      },
     ]
     return {recipientDetails}
   }, [transaction])
