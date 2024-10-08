@@ -88,6 +88,7 @@ export const useHandler = (styles: IStyle) => {
                 type="date"
                 label="End Date"
                 min={formatDate(start_date, DF_INPUT_DATE)}
+                max={currentDate}
                 wrapperClass={styles.end_date_wrapper}
                 onKeyDown={e => e.preventDefault()} // Disable typing
               />
