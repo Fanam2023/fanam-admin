@@ -22,6 +22,7 @@ const InitiateTransactionPage = () => {
   const {sla_timing_min, sla_timing_max} = transfer_time || {}
 
   const {currency} = destination_country || {}
+  const {currency: source_currency} = source_country || {}
 
   return (
     <BaseContainer
@@ -56,7 +57,7 @@ const InitiateTransactionPage = () => {
                 <section className={`flex ${styles.currency}`}>
                   <section className={`flex ${styles.flag_container} ${styles.sender_wrapper}`}>
                     <CountryFlag countryCode={source_country?.iso2} wrapperClass={styles.flag} />
-                    <h3 className={styles.currency_text}>{currency}</h3>
+                    <h3 className={styles.currency_text}>{source_currency}</h3>
                   </section>
                 </section>
               </section>
