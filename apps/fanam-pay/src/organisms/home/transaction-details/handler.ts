@@ -23,19 +23,19 @@ export const useHandler = (transaction: ITransaction) => {
   const {country_name} = country || {}
   const {state_name} = state || {}
   const {city_name} = city || {}
-  const {account_no, account_type, bank_name, branch_code, swift_code} = bank_account || {}
+  const {account_no, account_type, bank_name, branch_code, swift_code, iban_no, bsb_code, routing_code} =
+    bank_account || {}
 
   const {recipientDetails} = useMemo(() => {
     const recipientDetails: IFormData[] = [
-      {key: "First Name", label: `${first_name.charAt(0).toUpperCase()}${first_name.slice(1).toLowerCase()}`},
-      {key: "Last Name", label: `${last_name.charAt(0).toUpperCase()}${last_name.slice(1).toLowerCase()}`},
+      {key: "First Name", label: first_name},
+      {key: "Last Name", label: last_name},
       {key: "Email", label: email},
       {key: "Phone Number", label: phone_no},
       {key: "Account Type", label: account_type},
       {key: "Account Number", label: account_no},
       {key: "Bank Name", label: bank_name},
       {key: "Branch", label: branch_code},
-      {key: "BIC", label: swift_code},
       {key: "Country", label: country_name},
       {key: "State", label: state_name},
       {key: "City/District", label: city_name},
@@ -45,6 +45,10 @@ export const useHandler = (transaction: ITransaction) => {
         label: RELATION_SHIP_DATA[relationship || beneficiary?.relationship]?.label,
       },
     ]
+    if (swift_code) recipientDetails.push({key: "Swift Code", label: swift_code})
+    if (bsb_code) recipientDetails.push({key: "BSB Code", label: bsb_code})
+    if (routing_code) recipientDetails.push({key: "Routing Code", label: routing_code})
+    if (iban_no) recipientDetails.push({key: "IBAN Number", label: iban_no})
     return {recipientDetails}
   }, [transaction])
 

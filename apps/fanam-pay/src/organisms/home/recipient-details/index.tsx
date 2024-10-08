@@ -6,7 +6,10 @@ export const RecipientDetails = ({recipientData}: ITransactionProps) => {
   const renderRecipientDetails = ({label, key}: IFormData, index: number) => (
     <section key={index} className={`flex ${styles.recipient}`}>
       <h5 className={styles.header}>{key}</h5>
-      <h5 className={`semi-bold ${styles.detail}`}>{label}</h5>
+      <h5
+        className={`semi-bold ${styles.detail} ${key === "First Name" || key === "Last Name" ? styles.name_wrapper : ""}`}>
+        {label}
+      </h5>
     </section>
   )
 
