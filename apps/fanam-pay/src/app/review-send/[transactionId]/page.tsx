@@ -31,7 +31,7 @@ const ReviewAndSend = () => {
       <section className={`flex-sb-center ${styles.payment_wrapper}`}>
         <h6 className={styles.title_text}>{key}</h6>
         <h6
-          className={`semi-bold ${styles.detail} ${key === "First Name" || key === "Last Name" || "Account Holder" ? styles.name_wrapper : ""}`}>
+          className={`semi-bold ${styles.detail} ${key === "First Name" || key === "Last Name" || key === "Account Holder" ? styles.name_wrapper : ""}`}>
           {label}
         </h6>
       </section>
