@@ -28,7 +28,7 @@ const useHandler = () => {
     doc: [],
   })
 
-  const {purpose, reason = "", doc} = data
+  const {purpose, reason, doc} = data
   const [errState, setErrState] = useState(DEFAULT_ERR_STATE)
 
   const isIndividual = recipient_account_type === "Individual"
