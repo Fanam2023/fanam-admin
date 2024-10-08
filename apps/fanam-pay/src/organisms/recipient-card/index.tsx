@@ -12,7 +12,10 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
   const renderRecipientDetails = ({key, label}: IFormData, index: number) => (
     <li className={styles.data_wrapper} key={index}>
       <h5 className={styles.field_wrapper}>{key}</h5>
-      <h5 className={`bold ${styles.detail_wrapper}`}>{label}</h5>
+      <h5
+        className={`bold ${styles.detail_wrapper} ${key === "First Name" || key === "Last Name" ? styles.name_wrapper : ""}`}>
+        {label}
+      </h5>
     </li>
   )
 

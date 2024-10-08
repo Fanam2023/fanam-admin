@@ -28,7 +28,7 @@ const useHandler = () => {
     doc: [],
   })
 
-  const {purpose, reason = "", doc} = data
+  const {purpose, reason, doc} = data
   const [errState, setErrState] = useState(DEFAULT_ERR_STATE)
 
   const isIndividual = recipient_account_type === "Individual"
@@ -87,7 +87,7 @@ const useHandler = () => {
       setData(prev => ({
         ...prev,
         purpose: PURPOSES.find(({key}) => key === purpose),
-        reason,
+        reason: reason || "",
         doc: invoice?.map(({url, attachment_id}) => ({
           attachment: {id: attachment_id, url},
           onClickRemove: deleteFile.bind(null, attachment_id),
