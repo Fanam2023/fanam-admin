@@ -41,7 +41,7 @@ const TransactionPurpose = () => {
             wrapperClass={styles.text_area}
             label="Please provide a brief note on your purpose of sending money"
             name="reason"
-            value={reason || ""}
+            value={reason}
             onChangeData={onChangeValue}
             error={errReason}
           />

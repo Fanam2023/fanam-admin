@@ -122,8 +122,8 @@ const useHandler = () => {
     } = bank_account || {}
 
     const recipientDetails: IFormData[] = [
-      {key: "First Name", label: first_name},
-      {key: "Last Name", label: last_name},
+      {key: "First Name", label: `${first_name.charAt(0).toUpperCase()}${first_name.slice(1).toLowerCase()}`},
+      {key: "Last Name", label: `${last_name.charAt(0).toUpperCase()}${last_name.slice(1).toLowerCase()}`},
       {key: "Address 1", label: address_line_1},
       ...(address_line_2 ? [{key: "Address 2", label: address_line_2}] : []),
       {key: "Email", label: email},
