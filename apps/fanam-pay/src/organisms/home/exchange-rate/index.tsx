@@ -1,12 +1,14 @@
 "use client"
 
+import MultiCarousel from "react-multi-carousel"
+import "react-multi-carousel/lib/styles.css"
 import {ICorridors} from "@custom/utils"
 import {CardExchangeRate} from "organisms"
 import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const ExchangeRate = () => {
-  const {isLoading, getPopularCorridors} = useHandler()
+  const {isLoading, getPopularCorridors, responsive} = useHandler()
 
   const Spinner = () => <section className={styles.spinner}></section>
 
@@ -24,8 +26,20 @@ export const ExchangeRate = () => {
   return (
     <section className={styles.container_wrapper}>
       <h4 className={`bold ${styles.txt_wrapper}`}>Current exchange rate for popular corridors</h4>
-      <section className={`flex ${isLoading ? styles.details_wrapper : styles.detail_wrapper}`}>
-        {isLoading ? <Spinner /> : getPopularCorridors?.map(renderCards)}
+      <section className={styles.carousel_wrapper}>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <MultiCarousel
+            responsive={responsive}
+            infinite={true}
+            autoPlay={true}
+            autoPlaySpeed={2000}
+            transitionDuration={500}
+            arrows={false}>
+            {getPopularCorridors?.map(renderCards)}
+          </MultiCarousel>
+        )}
       </section>
     </section>
   )
