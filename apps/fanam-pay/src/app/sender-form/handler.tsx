@@ -1052,7 +1052,7 @@ const useHandler = (styles: IStyle) => {
         elementType: "file-picker",
         label: "Upload the Aadhaar Document to verify KYC",
         fileType: ["image/*", "application/pdf"],
-        wrapperClass: styles.img_picker,
+        wrapperClass: `flex-col ${styles.img_picker}`,
         name: "kyc_aadhaar",
         isMultiple: true,
         value: kyc_aadhaar,
@@ -1103,7 +1103,7 @@ const useHandler = (styles: IStyle) => {
         elementType: "file-picker",
         label: "Upload the PAN Card Document to verify KYC",
         fileType: ["image/*", "application/pdf"],
-        wrapperClass: styles.img_picker,
+        wrapperClass: `flex-col ${styles.img_picker}`,
         name: "kyc_pan",
         isMultiple: true,
         maxCount: 2,
@@ -1154,7 +1154,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "file-picker",
           label: "Upload the supporting document related to the Identity Proof",
           fileType: ["image/*", "application/pdf"],
-          wrapperClass: styles.img_picker,
+          wrapperClass: `flex-col ${styles.img_picker}`,
           name: "kyc",
           value: identityAttachments,
           isMultiple: true,
@@ -1191,7 +1191,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "file-picker",
           label: "Upload the supporting document related to the Address Proof",
           fileType: ["image/*", "application/pdf"],
-          wrapperClass: styles.img_picker,
+          wrapperClass: `flex-col ${styles.img_picker}`,
           name: "kyc",
           isMultiple: true,
           value: addressAttachments,
@@ -1228,7 +1228,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "file-picker",
           label: "Upload the supporting document related to the Business Proof",
           fileType: ["image/*", "application/pdf"],
-          wrapperClass: styles.img_picker,
+          wrapperClass: `flex-col ${styles.img_picker}`,
           name: "kyc",
           isMultiple: true,
           value: businessAttachments,
@@ -1265,7 +1265,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "file-picker",
           fileType: ["image/*", "application/pdf"],
           label: "Upload the supporting document related to the Authority Proof",
-          wrapperClass: styles.img_picker,
+          wrapperClass: `flex-col ${styles.img_picker}`,
           name: "kyc",
           value: authorityAttachments,
           isMultiple: true,
@@ -1316,7 +1316,7 @@ const useHandler = (styles: IStyle) => {
         elementType: "file-picker",
         label: "Upload the supporting document related to the Partnership Proof",
         fileType: ["image/*", "application/pdf"],
-        wrapperClass: styles.img_picker,
+        wrapperClass: `flex-col ${styles.img_picker}`,
         name: "kyc",
         isMultiple: true,
         maxCount: 2,
@@ -1327,7 +1327,12 @@ const useHandler = (styles: IStyle) => {
     })
 
     businessPartnershipElement.childElements.push({
-      childElement: <Button onClick={onAddPartner}>+ Add more Partner</Button>,
+      childElement: (
+        <section className={`flex ${styles.upload_btn_wrapper}`} onClick={onAddPartner}>
+          <ImageView src={assets.ic_add} alt="plus-icon" imgSize={24} />
+          <h5 className={styles.upload_btn_text}>Add more Signatories to upload</h5>
+        </section>
+      ),
     })
 
     businessKYCElements.push(businessPartnershipElement)
