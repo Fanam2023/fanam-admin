@@ -44,7 +44,7 @@ export const TransactionDetails = ({transaction}: PropsTransactionDetails) => {
           </section>
           <section>
             <section className={`flex ${styles.order_wrapper}`}>
-              <h4 className={`bold ${styles.name_wrapper}`}>
+              <h4 className={`bold ${styles.detail_container}`}>
                 {first_name} {last_name}
               </h4>
               <h6 className={styles.transaction_id}>{order_no}</h6>

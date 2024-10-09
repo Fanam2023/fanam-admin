@@ -51,7 +51,7 @@ export const ListTransaction = () => {
             </section>
             <section>
               <section className="flex">
-                <h4 className={`bold ${styles.name_wrapper}`}>
+                <h4 className={`bold ${styles.detail_container}`}>
                   {first_name} {last_name}
                 </h4>
                 <h5 className={`${styles.id_wrapper} ${order_no ? styles.order_no : ""}`}>{order_no}</h5>
