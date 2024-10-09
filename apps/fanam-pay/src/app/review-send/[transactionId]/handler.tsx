@@ -136,9 +136,11 @@ const useHandler = () => {
       {key: "Account Holder", label: account_holder},
       {key: "Account Type", label: account_type},
       {key: "Bank Name", label: bank_name},
-      {key: "Branch", label: branch_code},
+      {key: "Branch Code", label: branch_code},
       {key: "Branch Address", label: branch_address},
-      !!recipient_relationship && {key: "Sender's relationship with the Recipient", label: recipient_relationship},
+      ...(recipient_relationship
+        ? [{key: "Sender's relationship with the Recipient", label: recipient_relationship}]
+        : []),
     ]
 
     if (swift_code) recipientDetails.push({key: "Swift Code", label: swift_code})
