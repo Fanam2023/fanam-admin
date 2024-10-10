@@ -23,8 +23,17 @@ export const useHandler = (transaction: ITransaction) => {
   const {country_name} = country || {}
   const {state_name} = state || {}
   const {city_name} = city || {}
-  const {account_no, account_type, bank_name, branch_code, swift_code, iban_no, bsb_code, routing_code} =
-    bank_account || {}
+  const {
+    account_no,
+    account_type,
+    bank_name,
+    branch_code,
+    swift_code,
+    iban_no,
+    bsb_code,
+    routing_code,
+    branch_address,
+  } = bank_account || {}
 
   const {recipientDetails} = useMemo(() => {
     const recipientDetails: IFormData[] = [
@@ -35,7 +44,8 @@ export const useHandler = (transaction: ITransaction) => {
       {key: "Account Type", label: account_type},
       {key: "Account Number", label: account_no},
       {key: "Bank Name", label: bank_name},
-      {key: "Branch", label: branch_code},
+      {key: "Branch Code", label: branch_code},
+      {key: "Branch Address", label: branch_address},
       {key: "Country", label: country_name},
       {key: "State", label: state_name},
       {key: "City/District", label: city_name},

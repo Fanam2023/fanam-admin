@@ -25,8 +25,17 @@ export const useHandler = () => {
   const {country_name} = country || {}
   const {state_name} = state || {}
   const {city_name} = city || {}
-  const {account_no, account_type, bank_name, branch_code, swift_code, bsb_code, iban_no, routing_code} =
-    bank_account || {}
+  const {
+    account_no,
+    account_type,
+    bank_name,
+    branch_code,
+    swift_code,
+    bsb_code,
+    iban_no,
+    routing_code,
+    branch_address,
+  } = bank_account || {}
 
   useEffect(() => {
     if (transId) refetchTransaction()
@@ -49,8 +58,11 @@ export const useHandler = () => {
       {key: "Account Number", label: account_no},
       {key: "Account Type", label: account_type},
       {key: "Bank Name", label: bank_name},
-      {key: "Branch", label: branch_code},
-      !!recipient_relationship && {key: "Sender's relationship with the Recipient", label: recipient_relationship},
+      {key: "Branch Code", label: branch_code},
+      {key: "Branch Address", label: branch_address},
+      ...(recipient_relationship
+        ? [{key: "Sender's relationship with the Recipient", label: recipient_relationship}]
+        : []),
     ]
 
     if (swift_code) recipientDetails.push({key: "Swift Code", label: swift_code})
