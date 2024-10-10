@@ -2,6 +2,7 @@
 
 import {ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
+import {BrowserBackNavigation} from "atoms"
 import {BaseContainer, CountryFlag} from "organisms"
 import {TransferTime} from "../../organisms/transfer-time"
 import {useHandler} from "./handler"
@@ -33,6 +34,7 @@ const InitiateTransactionPage = () => {
       isStepper
       backIcon={false}
       stepIndex={3}>
+      <BrowserBackNavigation />
       <section className={styles.container_wrapper}>
         <section className={styles.header_wrapper}>
           <h2 className={`bold ${styles.title}`}>Payout Estimate</h2>

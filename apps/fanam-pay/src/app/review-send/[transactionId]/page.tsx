@@ -3,6 +3,7 @@
 import {ImageView} from "@fanam-pkg/core-ui-sass"
 import {IFormData} from "@fanam-pkg/core-utils"
 import assets from "assets"
+import {BrowserBackNavigation} from "atoms"
 import {BaseContainer} from "organisms"
 import useHandler from "./handler"
 import styles from "./page.module.sass"
@@ -47,6 +48,7 @@ const ReviewAndSend = () => {
       onSubmit={completeTransaction.bind(null, transactionId)}
       childWrapper={styles.page_wrapper}
       stepIndex={4}>
+      <BrowserBackNavigation />
       <section className={`flex-col ${styles.heading_wrapper}`}>
         <h4 className={`bold ${styles.title}`}>Review and Send</h4>
         <p className={styles.description}>Review the details of the recipient details and their account details.</p>
