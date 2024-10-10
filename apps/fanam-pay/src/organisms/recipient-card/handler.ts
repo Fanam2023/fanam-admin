@@ -45,7 +45,7 @@ export const useHandler = () => {
       {key: "Country", label: country_name},
       {key: "State", label: state_name},
       {key: "City", label: city_name},
-      {key: "PIN Code", label: zip_code},
+      {key: "Pin Code", label: zip_code},
       {key: "Account Number", label: account_no},
       {key: "Account Type", label: account_type},
       {key: "Bank Name", label: bank_name},

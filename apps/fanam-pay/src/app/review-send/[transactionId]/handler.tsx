@@ -32,7 +32,7 @@ const useHandler = () => {
     onSuccess: () => {
       toggleNotify({
         title: "Cancelled Transaction",
-        description: "Cancelled Transaction due to timeout",
+        description: "Cancelled Transaction Due to Timeout",
         type: "error",
       })
 
@@ -131,7 +131,7 @@ const useHandler = () => {
       {key: "Country", label: country_name},
       {key: "State", label: state_name},
       {key: "City", label: city_name},
-      {key: "PinCode", label: zip_code},
+      {key: "Pin Code", label: zip_code},
       {key: "Account Number", label: account_no},
       {key: "Account Holder", label: account_holder},
       {key: "Account Type", label: account_type},
@@ -177,8 +177,8 @@ const useHandler = () => {
       {key: "Country", label: country_name},
       {key: "State", label: state_name},
       {key: "City", label: city_name},
-      {key: "PinCode", label: zip_code},
-      {key: "Sender's relationship with the Beneficiary", label: relationship},
+      {key: "Pin Code", label: zip_code},
+      {key: "Sender's Relationship with the Beneficiary", label: relationship},
     ]
 
     if (account_no) beneficiaryDetails.push({key: "Account Number", label: account_no})

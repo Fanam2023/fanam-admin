@@ -103,15 +103,15 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         isValid: false,
       }
 
-    if (!last_name) errState = {...errState, errLastName: "Please enter LastName", isValid: false}
+    if (!last_name) errState = {...errState, errLastName: "Please enter Last Name", isValid: false}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
 
-    if (!phone_no) errState = {...errState, errNumber: "Please enter your PhoneNumber", isValid: false}
+    if (!phone_no) errState = {...errState, errNumber: "Please enter your Phone Number", isValid: false}
 
     if (!relationship)
-      errState = {...errState, errRelation: "Please enter Your Relationship with sender", isValid: false}
+      errState = {...errState, errRelation: "Please enter your Relationship with sender", isValid: false}
 
     if (!address) errState = {...errState, errAddress: "Please enter Beneficiary Address", isValid: false}
 
@@ -119,9 +119,9 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
 
     if (!state) errState = {...errState, errStateName: "Please enter State Name", isValid: false}
 
-    if (!city) errState = {...errState, errCity: "Please enter Your City/District", isValid: false}
+    if (!city) errState = {...errState, errCity: "Please enter your City/District", isValid: false}
 
-    if (!zip_code) errState = {...errState, errZipCode: "Please enter PinCode", isValid: false}
+    if (!zip_code) errState = {...errState, errZipCode: "Please enter Pin Code", isValid: false}
 
     setErrState(errState)
     return errState
@@ -402,7 +402,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "input",
-          label: "PinCode",
+          label: "Pin Code",
           name: "zip_code",
           value: zip_code,
           inputRegex: REG_VALID_NUMBER,
