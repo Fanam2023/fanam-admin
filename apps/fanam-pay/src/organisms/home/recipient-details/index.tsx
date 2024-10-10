@@ -7,7 +7,7 @@ export const RecipientDetails = ({recipientData}: ITransactionProps) => {
     <section key={index} className={`flex ${styles.recipient}`}>
       <h5 className={styles.header}>{key}</h5>
       <h5
-        className={`semi-bold ${styles.detail} ${key === "First Name" || key === "Last Name" ? styles.detail_container : ""}`}>
+        className={`semi-bold ${styles.detail} ${key === "First Name" || key === "Last Name" || key === "Account Holder" ? styles.detail_container : ""}`}>
         {label}
       </h5>
     </section>

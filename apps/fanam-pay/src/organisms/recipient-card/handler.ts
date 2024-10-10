@@ -35,6 +35,7 @@ export const useHandler = () => {
     iban_no,
     routing_code,
     branch_address,
+    account_holder,
   } = bank_account || {}
 
   useEffect(() => {
@@ -47,14 +48,15 @@ export const useHandler = () => {
     const recipientDetails: IFormData[] = [
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
-      {key: "Address Line 1", label: address_line_1},
-      ...(address_line_2 ? [{key: "Address Line 2", label: address_line_2}] : []),
       {key: "Email", label: email},
       {key: "Phone Number", label: phone_no},
+      {key: "Address Line 1", label: address_line_1},
+      ...(address_line_2 ? [{key: "Address Line 2", label: address_line_2}] : []),
       {key: "Country", label: country_name},
       {key: "State", label: state_name},
       {key: "City", label: city_name},
       {key: "Pin Code", label: zip_code},
+      {key: "Account Holder", label: account_holder},
       {key: "Account Number", label: account_no},
       {key: "Account Type", label: account_type},
       {key: "Bank Name", label: bank_name},
