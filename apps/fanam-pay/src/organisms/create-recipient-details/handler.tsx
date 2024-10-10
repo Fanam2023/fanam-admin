@@ -473,7 +473,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (ibanInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "IBAN Number",
+      label: "IBAN Code",
       name: "iban_no",
       value: iban_no,
       error: errIbanNo,
@@ -485,7 +485,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (routingInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "Routing Number",
+      label: "Routing Code",
       name: "routing_code",
       value: routing_code,
       error: errRoutingCode,
