@@ -1356,6 +1356,9 @@ const useHandler = (styles: IStyle) => {
   const onSubmit = () => {
     const {isValid} = onValidate()
 
+    const trimmedFirstName = first_name.trimEnd()
+    const trimmedLastName = last_name.trimEnd()
+
     let businessKYCProofs: IPayloadBusinessKYC[] = []
 
     if (isIdentityProof) {
@@ -1414,8 +1417,8 @@ const useHandler = (styles: IStyle) => {
 
     if (isValid) {
       const payload: IPayloadSyncUser = {
-        first_name,
-        last_name,
+        first_name: trimmedFirstName,
+        last_name: trimmedLastName,
         email,
         phone_no,
         address_line_1,
