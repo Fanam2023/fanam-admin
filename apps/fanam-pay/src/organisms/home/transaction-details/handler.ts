@@ -48,7 +48,7 @@ export const useHandler = (transaction: ITransaction) => {
     if (swift_code) recipientDetails.push({key: "Swift Code", label: swift_code})
     if (bsb_code) recipientDetails.push({key: "BSB Code", label: bsb_code})
     if (routing_code) recipientDetails.push({key: "Routing Code", label: routing_code})
-    if (iban_no) recipientDetails.push({key: "IBAN Number", label: iban_no})
+    if (iban_no) recipientDetails.push({key: "IBAN Code", label: iban_no})
     return {recipientDetails}
   }, [transaction])
 
