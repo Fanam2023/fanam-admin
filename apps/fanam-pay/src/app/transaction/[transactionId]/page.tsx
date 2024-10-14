@@ -3,6 +3,7 @@
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {TypeOrderStatus} from "@custom/utils"
 import assets from "assets"
+import {BrowserBackNavigation} from "atoms"
 import {BaseContainer} from "organisms"
 import {PaymentDetailsProps} from "props"
 import {useHandler} from "./handler"
@@ -90,6 +91,7 @@ const TransactionStatusPage = () => {
       stepIndex={5}
       onSubmit={routeHome}
       isStepper>
+      <BrowserBackNavigation />
       <section className={styles.mobile_wrapper}>
         <section className={`flex-col ${styles.heading_wrapper}`}>
           <h4 className={`bold ${styles.title}`}>Payment Status</h4>
