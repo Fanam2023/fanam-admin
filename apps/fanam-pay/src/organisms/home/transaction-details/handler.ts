@@ -17,8 +17,20 @@ export const useHandler = (transaction: ITransaction) => {
   })
 
   const {recipient, transaction_id, beneficiary} = transaction || {}
-  const {first_name, last_name, email, phone_no, bank_account, country, state, city, zip_code, relationship} =
-    recipient || {}
+  const {
+    first_name,
+    last_name,
+    email,
+    phone_no,
+    bank_account,
+    country,
+    state,
+    city,
+    zip_code,
+    relationship,
+    address_line_1,
+    address_line_2,
+  } = recipient || {}
 
   const {country_name} = country || {}
   const {state_name} = state || {}
@@ -33,6 +45,7 @@ export const useHandler = (transaction: ITransaction) => {
     bsb_code,
     routing_code,
     branch_address,
+    account_holder,
   } = bank_account || {}
 
   const {recipientDetails} = useMemo(() => {
@@ -41,24 +54,27 @@ export const useHandler = (transaction: ITransaction) => {
       {key: "Last Name", label: last_name},
       {key: "Email", label: email},
       {key: "Phone Number", label: phone_no},
-      {key: "Account Type", label: account_type},
-      {key: "Account Number", label: account_no},
-      {key: "Bank Name", label: bank_name},
-      {key: "Branch Code", label: branch_code},
-      {key: "Branch Address", label: branch_address},
-      {key: "Country", label: country_name},
-      {key: "State", label: state_name},
-      {key: "City/District", label: city_name},
-      {key: "PinCode", label: zip_code},
       {
         key: "Recipient Relationship",
         label: RELATION_SHIP_DATA[relationship || beneficiary?.relationship]?.label,
       },
+      {key: "Address Line 1", label: address_line_1},
+      ...(address_line_2 ? [{key: "Address Line 2", label: address_line_2}] : []),
+      {key: "Country", label: country_name},
+      {key: "State", label: state_name},
+      {key: "City/District", label: city_name},
+      {key: "Pin Code", label: zip_code},
+      {key: "Account Number", label: account_no},
+      {key: "Account Holder", label: account_holder},
+      {key: "Account Type", label: account_type},
+      {key: "Bank Name", label: bank_name},
+      {key: "Branch Code", label: branch_code},
+      {key: "Branch Address", label: branch_address},
     ]
     if (swift_code) recipientDetails.push({key: "Swift Code", label: swift_code})
     if (bsb_code) recipientDetails.push({key: "BSB Code", label: bsb_code})
     if (routing_code) recipientDetails.push({key: "Routing Code", label: routing_code})
-    if (iban_no) recipientDetails.push({key: "IBAN Number", label: iban_no})
+    if (iban_no) recipientDetails.push({key: "IBAN Code", label: iban_no})
     return {recipientDetails}
   }, [transaction])
 

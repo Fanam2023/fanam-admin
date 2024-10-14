@@ -389,7 +389,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     childElements: [
       {
         elementType: "input",
-        label: "FirstName",
+        label: "First Name",
         name: "first_name",
         error: errFirstName,
         value: first_name,
@@ -398,7 +398,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "LastName",
+        label: "Last Name",
         name: "last_name",
         error: errLastName,
         value: last_name,
@@ -432,7 +432,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "BankName",
+        label: "Bank Name",
         name: "bank_name",
         error: errBankName,
         value: bank_name,
@@ -440,7 +440,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "Branch code",
+        label: "Branch Code",
         name: "branch_code",
         error: errBranchCode,
         value: branch_code,
@@ -461,7 +461,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (swiftInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "Swift code",
+      label: "Swift Code",
       name: "swift_code",
       error: errSwiftCode,
       value: swift_code,
@@ -473,7 +473,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (ibanInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "IBAN no",
+      label: "IBAN Code",
       name: "iban_no",
       value: iban_no,
       error: errIbanNo,
@@ -485,7 +485,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (routingInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "Routing Number",
+      label: "Routing Code",
       name: "routing_code",
       value: routing_code,
       error: errRoutingCode,
@@ -497,7 +497,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (bsbInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "BSB code",
+      label: "BSB Code",
       name: "routing_code",
       value: routing_code,
       error: errBsbCode,
@@ -527,7 +527,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "PhoneNumber",
+          label: "Phone Number",
           name: "phone_no",
           inputRegex: REG_VALID_NUMBER,
           error: errPhoneNo,
@@ -584,7 +584,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       childElements: [
         {
           elementType: "drop-down",
-          label: "country",
+          label: "Country",
           name: "country",
           options: countries,
           error: errCountry,
@@ -613,7 +613,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "PinCode",
+          label: "Pin Code",
           name: "zip_code",
           error: errZipCode,
           inputRegex: REG_VALID_NUMBER,
@@ -629,7 +629,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       childElements: [
         {
           elementType: "drop-down",
-          label: "Select ID issued country",
+          label: "Select ID Issued Country",
           name: "id_issued_country",
           options: countries,
           error: errIdIssuedCountry,
@@ -638,7 +638,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "drop-down",
-          label: "Select ID type",
+          label: "Select ID Type",
           options: ID_PROOFS,
           name: "id_type",
           error: errIdType,
@@ -647,7 +647,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "ID number",
+          label: "ID Number",
           name: "id_number",
           error: errIdNumber,
           value: id_number,
@@ -690,7 +690,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         isValid: false,
       }
     }
-    if (!last_name) errState = {...errState, errLastName: "Please enter LastName", isValid: false}
+    if (!last_name) errState = {...errState, errLastName: "Please enter Last Name", isValid: false}
 
     if (!account_no) {
       errState = {
@@ -755,7 +755,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       errState = {...errState, errRoutingCode: "Please enter valid Routing code", isValid: false}
 
     if (ibanInput && isValidInputByRegex(iban_no, ibanInput.regEx))
-      errState = {...errState, errIbanNo: "Please enter valid iban code", isValid: false}
+      errState = {...errState, errIbanNo: "Please enter valid Iban code", isValid: false}
 
     if (bsbInput && isValidInputByRegex(bsb_code, bsbInput.regEx))
       errState = {...errState, errBsbCode: "Please enter valid BSB code", isValid: false}
@@ -774,23 +774,23 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!city) errState = {...errState, errCity: "Please select City/District", isValid: false}
 
-    if (!zip_code) errState = {...errState, errZipCode: "Please enter PinCode", isValid: false}
+    if (!zip_code) errState = {...errState, errZipCode: "Please enter Pin code", isValid: false}
 
     if (!id_issued_country)
-      errState = {...errState, errIdIssuedCountry: "Please Select ID issued Country", isValid: false}
+      errState = {...errState, errIdIssuedCountry: "Please select ID issued country", isValid: false}
 
-    if (!id_type) errState = {...errState, errIdType: "Please Select ID type", isValid: false}
+    if (!id_type) errState = {...errState, errIdType: "Please select ID type", isValid: false}
 
     if (!id_number) {
       errState = {
         ...errState,
-        errIdNumber: "Please enter Id number",
+        errIdNumber: "Please enter ID number",
         isValid: false,
       }
     } else if (id_number.length < 4) {
       errState = {
         ...errState,
-        errIdNumber: "Id number must be longer than or equal to 4 characters",
+        errIdNumber: "ID number must be longer than or equal to 4 characters",
         isValid: false,
       }
     }

@@ -32,7 +32,7 @@ const useHandler = () => {
     onSuccess: () => {
       toggleNotify({
         title: "Cancelled Transaction",
-        description: "Cancelled Transaction due to timeout",
+        description: "Cancelled Transaction Due to Timeout",
         type: "error",
       })
 
@@ -124,16 +124,16 @@ const useHandler = () => {
     const recipientDetails: IFormData[] = [
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
-      {key: "Address 1", label: address_line_1},
-      ...(address_line_2 ? [{key: "Address 2", label: address_line_2}] : []),
       {key: "Email", label: email},
       {key: "Phone Number", label: phone_no},
+      {key: "Address 1", label: address_line_1},
+      ...(address_line_2 ? [{key: "Address 2", label: address_line_2}] : []),
       {key: "Country", label: country_name},
       {key: "State", label: state_name},
       {key: "City", label: city_name},
-      {key: "PinCode", label: zip_code},
-      {key: "Account Number", label: account_no},
+      {key: "Pin Code", label: zip_code},
       {key: "Account Holder", label: account_holder},
+      {key: "Account Number", label: account_no},
       {key: "Account Type", label: account_type},
       {key: "Bank Name", label: bank_name},
       {key: "Branch Code", label: branch_code},
@@ -146,7 +146,7 @@ const useHandler = () => {
     if (swift_code) recipientDetails.push({key: "Swift Code", label: swift_code})
     if (bsb_code) recipientDetails.push({key: "BSB Code", label: bsb_code})
     if (routing_code) recipientDetails.push({key: "Routing Code", label: routing_code})
-    if (iban_no) recipientDetails.push({key: "IBAN Number", label: iban_no})
+    if (iban_no) recipientDetails.push({key: "IBAN Code", label: iban_no})
 
     return recipientDetails
   }, [transactionDetail])
@@ -179,8 +179,8 @@ const useHandler = () => {
       {key: "Country", label: country_name},
       {key: "State", label: state_name},
       {key: "City", label: city_name},
-      {key: "PinCode", label: zip_code},
-      {key: "Sender's relationship with the Beneficiary", label: relationship},
+      {key: "Pin Code", label: zip_code},
+      {key: "Sender's Relationship with the Beneficiary", label: relationship},
     ]
 
     if (account_no) beneficiaryDetails.push({key: "Account Number", label: account_no})
