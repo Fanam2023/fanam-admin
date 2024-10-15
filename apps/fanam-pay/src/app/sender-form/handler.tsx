@@ -1332,17 +1332,19 @@ const useHandler = (styles: IStyle) => {
         onChangeValue: onChangeBusinessKYC.bind(null, index),
       })
 
-      businessPartnershipElement.childElements.push({
-        childElement: (
-          <section
-            key={index}
-            className={`flex ${styles.upload_btn_wrapper}`}
-            onClick={onRemovePartner.bind(null, index)}>
-            <ImageView src={assets.ic_add} alt="plus-icon" imgSize={24} />
-            <h5 className={styles.upload_btn_text}>Remove Signatories</h5>
-          </section>
-        ),
-      })
+      if (partners_proof.length > 1) {
+        businessPartnershipElement.childElements.push({
+          childElement: (
+            <section
+              key={index}
+              className={`flex ${styles.upload_btn_wrapper}`}
+              onClick={onRemovePartner.bind(null, index)}>
+              <ImageView src={assets.ic_add} alt="plus-icon" imgSize={24} />
+              <h5 className={styles.upload_btn_text}>Remove Signatories</h5>
+            </section>
+          ),
+        })
+      }
 
       businessPartnershipElement.childElements.push({
         elementType: "file-picker",
