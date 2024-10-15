@@ -10,7 +10,7 @@ import useHandler from "./handler"
 import styles from "./page.module.sass"
 
 const HomeScreen = () => {
-  const {first_name, push, isKYCVerified} = useHandler()
+  const {first_name, isKYCVerified, greeting, push} = useHandler()
   const {isDesktop} = useResize()
 
   return (
@@ -19,7 +19,7 @@ const HomeScreen = () => {
         <section className={`${isDesktop ? "flex" : "flex-col"} ${styles.kyc_status_card}`}>
           <section className="flex-col">
             <section className={`flex ${styles.name_wrapper}`}>
-              <h2 className={styles.title}>Good Afternoon,</h2>
+              <h2 className={styles.title}>{greeting},</h2>
               <h2 className={styles.first_name}>{first_name}</h2>
             </section>
             <h5 className={styles.content}>

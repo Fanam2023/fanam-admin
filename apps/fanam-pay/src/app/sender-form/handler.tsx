@@ -757,6 +757,13 @@ const useHandler = (styles: IStyle) => {
       partners_proof: [...partners_proof, {id_number: "", id_type: ID_PROOFS_INDIA[0], kyc: []}],
     }))
 
+  const onRemovePartner = (index: number) => {
+    setData(prev => ({
+      ...prev,
+      partners_proof: prev.partners_proof.filter((_, i) => i !== index),
+    }))
+  }
+
   const onChangeData = (value: JSONObject) => {
     const formattedDate = formatDateUTC(value?.date_of_birth as string)
     if (dayjs(formattedDate).isAfter(currentDate)) {
@@ -1324,6 +1331,20 @@ const useHandler = (styles: IStyle) => {
         inputRegex: REG_VALID_NAME,
         onChangeValue: onChangeBusinessKYC.bind(null, index),
       })
+
+      if (partners_proof.length > 1) {
+        businessPartnershipElement.childElements.push({
+          childElement: (
+            <section
+              key={index}
+              className={`flex ${styles.upload_btn_wrapper}`}
+              onClick={onRemovePartner.bind(null, index)}>
+              <ImageView src={assets.ic_delete} alt="plus-icon" imgSize={24} />
+              <h5 className={styles.upload_btn_text}>Remove Signatories</h5>
+            </section>
+          ),
+        })
+      }
 
       businessPartnershipElement.childElements.push({
         elementType: "file-picker",
