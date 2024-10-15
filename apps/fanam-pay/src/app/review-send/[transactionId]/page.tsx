@@ -42,7 +42,6 @@ const ReviewAndSend = () => {
   return (
     <BaseContainer
       buttonText="Send money"
-      skipBtn="Back"
       isStepper
       disabled={isDisabled}
       onSubmit={completeTransaction.bind(null, transactionId)}
