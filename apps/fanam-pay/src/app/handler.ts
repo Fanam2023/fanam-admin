@@ -1,11 +1,13 @@
+import {useDateTime} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useSingleton} from "hooks"
 
 const useHandler = () => {
   const {push} = useRouter()
   const {user} = useSingleton()
+  const {dayjs} = useDateTime()
 
-  const currentHour = new Date().getHours()
+  const currentHour = dayjs().hour()
 
   const getGreeting = () => {
     if (currentHour >= 5 && currentHour < 12) return "Good Morning"
