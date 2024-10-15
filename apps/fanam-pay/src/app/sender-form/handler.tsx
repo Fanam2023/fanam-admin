@@ -1339,7 +1339,7 @@ const useHandler = (styles: IStyle) => {
               key={index}
               className={`flex ${styles.upload_btn_wrapper}`}
               onClick={onRemovePartner.bind(null, index)}>
-              <ImageView src={assets.ic_add} alt="plus-icon" imgSize={24} />
+              <ImageView src={assets.ic_delete} alt="plus-icon" imgSize={24} />
               <h5 className={styles.upload_btn_text}>Remove Signatories</h5>
             </section>
           ),
