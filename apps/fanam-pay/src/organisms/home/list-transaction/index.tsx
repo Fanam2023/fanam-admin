@@ -14,9 +14,10 @@ export const ListTransaction = () => {
   const {formatDate} = useDateTime()
 
   const [showAll, setShowAll] = useState(false)
+
   const sortedTransactions = transactions
     ?.slice()
-    .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 
   const renderTransactionDetails = (
     {
