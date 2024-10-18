@@ -4,6 +4,7 @@ import {
   API_INVOICE,
   API_TRANSACTION,
   apiAllTransaction,
+  apiCancelPayment,
   apiDeleteAttachment,
   apiTransaction,
   IFanamApiError,
@@ -20,7 +21,7 @@ import {useApi} from "./api"
 
 export const useTransactionController = () => {
   const {getRequest, postRequest, putRequest, deleteRequest} = useApi()
-  const {transId, updateTransData, updateTransId} = useSingleton()
+  const {transId, updateTransData, updateTransId, transData} = useSingleton()
 
   const getTransaction = async (status: TypeOrderStatus | "", start_date: string, end_date: string) => {
     const {result} = await getRequest<ITransactionDetails[]>(apiAllTransaction(status, start_date, end_date))
@@ -129,6 +130,8 @@ export const useTransactionController = () => {
 
   const cancelTransaction = async (payload: IPayloadCancelOrder) => await postRequest(API_CANCEL_TRANSACTION, payload)
 
+  const cancelPayment = async (transactionId: string) => await putRequest(apiCancelPayment(transactionId), {transData})
+
   return {
     getTransaction,
     createTransaction,
@@ -141,5 +144,6 @@ export const useTransactionController = () => {
     sendingPurpose,
     removeAttachment,
     cancelTransaction,
+    cancelPayment,
   }
 }

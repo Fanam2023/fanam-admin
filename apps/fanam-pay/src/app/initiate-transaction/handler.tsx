@@ -16,6 +16,7 @@ import {
   QUERY_EXCHANGE,
   QUERY_ORDER,
   QUERY_TRANSACTION,
+  ROUTE_HOME,
   routeToReviewSend,
   routeToTransactionDetail,
 } from "utils"
@@ -37,7 +38,7 @@ let debounceTimer: null | NodeJS.Timeout = null
 export const useHandler = () => {
   const {push} = useRouter()
   const {getFxRate} = usePaymentController()
-  const {updateTransaction} = useTransactionController()
+  const {updateTransaction, cancelPayment} = useTransactionController()
   const {createOrder, cancelTransaction} = useOrderController()
   const {toggleNotify} = useNotifyPopup()
   const [Razorpay] = useRazorpay()
@@ -123,6 +124,19 @@ export const useHandler = () => {
       })
 
       push(routeToTransactionDetail(transId))
+    },
+  })
+
+  const {mutate: onCancelPayment} = useMutation({
+    mutationFn: cancelPayment,
+    onSuccess: () => {
+      toggleNotify({
+        title: "Cancelled Payment",
+        description: "You have cancelled the payment",
+        type: "error",
+      })
+
+      push(ROUTE_HOME)
     },
   })
 
@@ -352,11 +366,24 @@ export const useHandler = () => {
 
   const durationTime = remainingTime > 0 ? `${minutes}:${seconds}` : ""
 
+  const onCancel = () => {
+    onCancelPayment(transId, {
+      onSuccess: () => {
+        toggleNotify({
+          title: "Cancelled Payment",
+          description: "You have cancelled the payment.",
+          type: "error",
+        })
+      },
+    })
+  }
+
   return {
     data,
     PURPOSES,
     onChangeValue,
     onSubmit,
+    onCancel,
     showCountries,
     fxRes,
     onSelect: onUpdateTransaction,

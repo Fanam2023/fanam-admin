@@ -37,6 +37,7 @@ export const apiPayout = (transactionId: string) => `/payment/send-payout/${tran
 export const apiCancelTransaction = (transactionId: string) => `/order/create_refund/${transactionId}`
 export const apiDeleteAttachment = (attachmentId: string) => `/file-upload/${attachmentId}`
 export const API_CANCEL_TRANSACTION = `${API_PAYMENT}/cancelPayout`
+export const apiCancelPayment = (transactionId: string) => `/transaction/cancel/${transactionId}`
 
 /* KYC Endpoints */
 export const API_PAN_VERIFY = `/user/pan-verification`
