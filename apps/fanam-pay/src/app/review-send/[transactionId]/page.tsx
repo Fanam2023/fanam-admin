@@ -29,7 +29,7 @@ const ReviewAndSend = () => {
 
   const renderPaymentDetails = ({label, key}: IFormData) => {
     return (
-      <section className={`flex-sb-center ${styles.payment_wrapper}`}>
+      <section className={styles.payment_wrapper}>
         <h6 className={styles.title_text}>{key}</h6>
         <h6
           className={`semi-bold ${styles.detail} ${key === "First Name" || key === "Last Name" || key === "Account Holder" ? styles.detail_container : ""}`}>

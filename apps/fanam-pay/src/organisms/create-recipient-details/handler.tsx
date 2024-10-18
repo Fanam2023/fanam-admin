@@ -834,7 +834,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           bank_name,
           branch_code,
           account_type,
-          bsb_code
+          bsb_code,
         },
       }
 
