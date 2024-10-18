@@ -8,18 +8,20 @@
 
 .header
   color: $dark-grey
-  width: 65%
 
 .detail
+  text-align: justify
   margin-left: auto
-  text-align: end
 
 .recipient
-  margin-bottom: $size-12px
-  align-items: start
+  display: grid
+  grid-template-columns: 3.8fr 5fr
+  gap: 0 $size-16px
+  margin-top: $size-8px
+  padding: 0 $size-4px
 
 .detail_container
-  text-transform: capitalize 
+  text-transform: capitalize
 
 @include mixin-responsive
   .txt_wrapper
