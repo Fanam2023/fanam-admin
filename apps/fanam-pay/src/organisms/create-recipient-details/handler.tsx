@@ -498,8 +498,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     bankElements.childElements.push({
       elementType: "input",
       label: "BSB Code",
-      name: "routing_code",
-      value: routing_code,
+      name: "bsb_code",
+      value: bsb_code,
       error: errBsbCode,
       inputRegex: REG_VALID_NAME,
       onChangeValue,
@@ -834,6 +834,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           bank_name,
           branch_code,
           account_type,
+          bsb_code
         },
       }
 

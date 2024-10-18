@@ -10,8 +10,8 @@ export const ContentTransaction = ({transactionDetail}: ITransactionProps) => {
 
   const transactionDetails = ({label, value}: ITransactionInfo) => (
     <section className={`flex ${styles.payment}`}>
-      <h5 className={styles.transaction_details}>{label}</h5>
-      <h5 className={`semi-bold ${styles.payment_amount}`}>{value}</h5>
+      <h6 className={styles.transaction_details}>{label}</h6>
+      <h6 className={`semi-bold ${styles.payment_amount}`}>{value}</h6>
     </section>
   )
 
@@ -22,14 +22,14 @@ export const ContentTransaction = ({transactionDetail}: ITransactionProps) => {
       {transactionDetails({label: "Transfer Fee", value: `${other_fee?.toFixed(2)} ${currency}`})}
       {transactionDetails({label: "Exchange Rate", value: `${markup_fee?.toFixed(2)} ${currency}`})}
       <section className={`flex ${styles.total_wrapper}`}>
-        <h5 className={styles.transaction_txt}>Receiver will get Exactly</h5>
-        <h5 className={`bold ${styles.total_usd}`}>
+        <h6 className={styles.transaction_txt}>Receiver will get Exactly</h6>
+        <h6 className={`bold ${styles.total_usd}`}>
           {destination_amount?.toFixed(2)} {destination_currency}
-        </h5>
+        </h6>
       </section>
       <section className={`flex ${styles.id_wrapper}`}>
-        <h5 className={styles.transaction_txt}>Reference Number</h5>
-        <h5 className={`semi-bold ${styles.transaction_number}`}>{order_no}</h5>
+        <h6 className={styles.transaction_txt}>Reference Number</h6>
+        <h6 className={`semi-bold ${styles.transaction_number}`}>{order_no}</h6>
       </section>
     </section>
   )
