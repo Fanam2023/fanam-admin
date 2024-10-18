@@ -41,12 +41,21 @@ const getStatusData = (status: TypeOrderStatus) => {
 const TransactionStatusPage = () => {
   const {transactionDetail, routeHome} = useHandler()
 
-  const {transfer_time, final_amount, destination_amount, destination_country, source_country, order} =
-    transactionDetail || {}
+  const {
+    transfer_time,
+    final_amount,
+    destination_amount,
+    destination_country,
+    source_country,
+    order,
+    reconciliation_report,
+  } = transactionDetail || {}
 
   const {order_no, order_status, payment} = order || {}
 
   const {paymentMethod} = payment || {}
+
+  const {url} = reconciliation_report || {}
 
   const {bigIcon, smallIcon, title, statusText} = getStatusData(order_status)
 
@@ -77,16 +86,18 @@ const TransactionStatusPage = () => {
   )
 
   const DownloadReceipt = () => (
-    <Button buttonType="primary-outlined" wrapperClass={styles.receipt_button}>
-      Download Receipt
-    </Button>
+    <a href={url}>
+      <Button buttonType="primary-outlined" wrapperClass={styles.receipt_button}>
+        Download Receipt
+      </Button>
+    </a>
   )
 
   return (
     <BaseContainer
       buttonText="Done"
       header="Payment Status"
-      footerChild={<DownloadReceipt />}
+      footerChild={order_status === "Transaction_success" && <DownloadReceipt />}
       childWrapper={styles.page_container}
       stepIndex={5}
       onSubmit={routeHome}

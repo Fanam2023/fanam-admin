@@ -35,6 +35,7 @@ export interface ITransaction {
   created_at?: string
   paymentMode?: string
   expiration_time?: string
+  reconciliation_report?: IAttachment
 }
 
 export interface ITransactionDetails extends ITransaction {
