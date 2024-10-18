@@ -18,6 +18,7 @@ const InitiateTransactionPage = () => {
     showCountries,
     transfer_time,
     durationTime,
+    onCancel,
   } = useHandler()
 
   const {sla_timing_min, sla_timing_max} = transfer_time || {}
@@ -30,6 +31,8 @@ const InitiateTransactionPage = () => {
       header="Cross Border Remittance"
       buttonText="Confirm"
       onSubmit={onSubmit}
+      cancelBtn="Cancel Payment"
+      onCancel={onCancel}
       childWrapper={styles.page_container}
       isStepper
       backIcon={false}
