@@ -70,7 +70,7 @@ export const BaseContainer = ({
     <>
       <header className={`flex-sb-center ${styles.header_wrapper}`}>
         <section className={`flex ${styles.logo_wrapper}`}>
-          <ImageView src={assets.img_yes_bank} alt={"logo"} imgWidth={isDesktop ? 150 : 120} />
+          <ImageView src={assets.img_cub_bank} alt={"logo"} imgWidth={isDesktop ? 150 : 120} />
         </section>
         <section className={`flex ${styles.language_section}`}>
           <section className={`flex ${styles.language_wrapper}`}>

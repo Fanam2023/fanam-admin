@@ -66,6 +66,7 @@ import ic_white_profile from "./icons/ic_white_profile.svg"
 import ic_white_security from "./icons/ic_white_security.svg"
 import ic_world from "./icons/ic_world.svg"
 import img_bank from "./images/img_bank.webp"
+import img_cub_bank from "./images/img_cub_bank.jpg"
 import img_forgot_logo from "./images/img_forgot.webp"
 import img_logo_in from "./images/img_log_in.webp"
 import img_logo from "./images/img_logo.webp"
@@ -75,6 +76,7 @@ const assets = {
   ...projectAssets,
   ic_account,
   ic_black_security,
+  img_cub_bank,
   ic_white_profile,
   ic_white_notify,
   ic_more,
