@@ -59,6 +59,8 @@
   line-height: 1.4
   text-align: justify
   margin-left: auto
+  word-break: keep-all
+  overflow-wrap: break-word
 
 .details
   overflow-wrap: anywhere
@@ -67,6 +69,9 @@
 .detail_container
   text-transform: capitalize
 
+.content
+  text-align: left
+
 @include mixin-responsive
   .border_wrapper
     border-radius: $size-16px
@@ -74,6 +79,7 @@
   .details_wrapper
     width: 100%
     box-sizing: border-box
+    padding: $size-20px $size-10px
 
   .account_wrapper
     width: 80%
@@ -83,12 +89,12 @@
     margin-top: 19%
 
   .field_wrapper,.detail_wrapper,
-  .text,.title_wrapper
-    font-size: $size-16px
+  .content,.title_wrapper
+    font-size: $size-14px
 
   .data_wrapper
     margin-top: $size-12px
-    grid-template-columns: 1fr 1fr
+    grid-template-columns: 1.3fr 2fr
     gap: 0
 
   .card_wrapper
