@@ -65,8 +65,8 @@
   justify-content: space-between
 
 .detail_container
-  text-transform: capitalize 
-  
+  text-transform: capitalize
+
 @include mixin-responsive
   .border_wrapper
     border-radius: $size-16px
@@ -88,6 +88,8 @@
 
   .data_wrapper
     margin-top: $size-12px
+    grid-template-columns: 1fr 1fr
+    gap: 0
 
   .card_wrapper
     border-radius: $size-4px

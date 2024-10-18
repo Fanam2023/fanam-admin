@@ -31,7 +31,7 @@
 
 .payment_wrapper
   margin: $size-12px 0 $size-12px 0
-  display: grid
+  display: grid !important
   grid-template-columns: 2fr 5fr
   align-items: flex-start
 
@@ -88,3 +88,6 @@
 
   .amount
     font-size: $size-18px
+
+  .payment_wrapper
+    grid-template-columns: 1fr 1fr
