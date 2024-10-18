@@ -56,6 +56,22 @@
 .user_img
   cursor: pointer
 
+.user_name
+  display: none
+  padding: $size-4px $size-8px
+  background: $white
+  position: absolute
+  box-shadow: 0 $size-4px $size-16px rgba(0, 0, 0, 0.5)
+  width: 8.3% 
+  white-space: normal 
+  overflow-wrap: anywhere
+  margin-top: $size-10px
+  text-align: center
+  z-index: 2
+
+.user_details:hover + .user_name 
+  display: block
+
 @include mixin-responsive
   .container
     margin-top: 0
@@ -88,3 +104,7 @@
   .profile_wrapper
     height: $size-72px
     width: $size-72px
+
+  .user_name
+    width: 33%
+    font-size:  $size-16px
