@@ -20,6 +20,9 @@ export const useHandler = () => {
     recipient_id,
     relationship,
     is_same_person,
+    id_issued_country,
+    id_number,
+    id_type,
   } = transData?.recipient || {}
 
   const {country_name} = country || {}
@@ -62,6 +65,9 @@ export const useHandler = () => {
       {key: "Bank Name", label: bank_name},
       {key: "Branch Code", label: branch_code},
       {key: "Branch Address", label: branch_address},
+      {key: "ID Issued Country", label: id_issued_country?.country_name},
+      {key: "ID Type", label: id_type},
+      {key: "ID Number", label: id_number},
       ...(recipient_relationship
         ? [{key: "Sender's relationship with the Recipient", label: recipient_relationship}]
         : []),
