@@ -17,6 +17,7 @@ const InitiateTransactionPage = () => {
     fxRes,
     showCountries,
     transfer_time,
+    onDisable,
     durationTime,
     onCancel,
   } = useHandler()
@@ -30,6 +31,7 @@ const InitiateTransactionPage = () => {
     <BaseContainer
       header="Cross Border Remittance"
       buttonText="Confirm"
+      disabled={onDisable(destination_amount)}
       onSubmit={onSubmit}
       cancelBtn="Cancel Payment"
       onCancel={onCancel}

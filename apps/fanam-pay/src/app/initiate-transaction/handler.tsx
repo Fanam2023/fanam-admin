@@ -349,6 +349,10 @@ export const useHandler = () => {
     setData({...data, ...payloadData})
   }
 
+  const onDisable = (value: string) => {
+    return value.trim() === ""
+  }
+
   const onSubmit = () => {
     const {isValid} = onValidate()
 
@@ -384,6 +388,7 @@ export const useHandler = () => {
     onChangeValue,
     onSubmit,
     onCancel,
+    onDisable,
     showCountries,
     fxRes,
     onSelect: onUpdateTransaction,
