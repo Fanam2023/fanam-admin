@@ -34,7 +34,7 @@ import {PopupAadhaarCaptcha, PopupAadhaarOTP} from "organisms"
 import {
   ACCOUNT_TYPE,
   BUSINESS_TYPE,
-  ID_PROOFS_INDIA,
+  CONFIG_BUSINESS_PROOF,
   QUERY_CITIES,
   QUERY_COUNTRIES,
   QUERY_PAN_CARD,
@@ -95,6 +95,7 @@ const useHandler = (styles: IStyle) => {
   const {togglePopup} = usePopup()
   const {user, updateUserData, refetchUser} = useSingleton()
   const currentDate = dayjs().format("YYYY-MM-DD")
+
   const [data, setData] = useState<ISyncUserData>({
     first_name: "",
     last_name: "",
@@ -106,7 +107,6 @@ const useHandler = (styles: IStyle) => {
     state: null,
     zip_code: "",
     city: null,
-    // account_no: "",
     account_type: ACCOUNT_TYPE[0],
     pan: "",
     aadhaarNumber: "",
@@ -115,11 +115,11 @@ const useHandler = (styles: IStyle) => {
     date_of_birth: "",
     kyc_aadhaar: [],
     kyc_pan: [],
-    identity_proof: {id_number: "", id_type: ID_PROOFS_INDIA[0], kyc: []},
-    address_proof: {id_number: "", id_type: ID_PROOFS_INDIA[0], kyc: []},
-    authority_proof: {id_number: "", id_type: ID_PROOFS_INDIA[0], kyc: []},
-    business_proof: {id_number: "", id_type: ID_PROOFS_INDIA[0], kyc: []},
-    partners_proof: [{id_number: "", id_type: ID_PROOFS_INDIA[0], kyc: []}],
+    identity_proof: {id_number: "", id_type: null, kyc: []},
+    address_proof: {id_number: "", id_type: null, kyc: []},
+    authority_proof: {id_number: "", id_type: null, kyc: []},
+    business_proof: {id_number: "", id_type: null, kyc: []},
+    partners_proof: [{id_number: "", id_type: null, kyc: []}],
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
 
@@ -127,7 +127,6 @@ const useHandler = (styles: IStyle) => {
     first_name,
     last_name,
     email,
-    // account_no,
     phone_no,
     country,
     state,
@@ -184,17 +183,58 @@ const useHandler = (styles: IStyle) => {
     errPartnershipProof,
   } = errData
 
+  const businessProofConfig = CONFIG_BUSINESS_PROOF?.[business_type.key] || {}
+
   const isIndividual = account_type.key === "Individual"
   const isSoleProprietor = business_type.key === "Sole_proprietor"
   const isCompanies = business_type.key === "Companies"
   const isLimitedLiabilityPartnership = business_type.key === "Limited_liability_partnership"
   const isPartnershipFirm = business_type.key === "Partnership_firm"
 
+  const idProofOption: IFormData[] = businessProofConfig["identity_proof"] || []
+  const addressProofOption: IFormData[] = businessProofConfig["address_proof"] || []
+  const businessProofOption: IFormData[] = businessProofConfig["business_proof"] || []
+  const authorityProofOption: IFormData[] = businessProofConfig["authority_proof"] || []
+  const partnersProofOption: IFormData[] = businessProofConfig["partners_proof"] || []
+
   const isIdentityProof = isSoleProprietor || isCompanies || isLimitedLiabilityPartnership || isPartnershipFirm
-  const isAddressProof = isSoleProprietor || isCompanies || isLimitedLiabilityPartnership
+  const isAddressProof = isSoleProprietor || isCompanies
   const isBusinessProof = isSoleProprietor
-  const isAuthorityProof = isPartnershipFirm || isCompanies
+  const isAuthorityProof = isPartnershipFirm || isCompanies || isLimitedLiabilityPartnership
   const isPartnersProof = isPartnershipFirm || isCompanies || isLimitedLiabilityPartnership
+
+  useEffect(() => {
+    setData(prev => ({
+      ...prev,
+      identity_proof: {
+        id_number: "",
+        id_type: isIdentityProof ? businessProofConfig["identity_proof"][0] : null,
+        kyc: [],
+      },
+      address_proof: {
+        id_number: "",
+        id_type: isAddressProof ? businessProofConfig["address_proof"][0] : null,
+        kyc: [],
+      },
+      authority_proof: {
+        id_number: "",
+        id_type: isAuthorityProof ? businessProofConfig["authority_proof"][0] : null,
+        kyc: [],
+      },
+      business_proof: {
+        id_number: "",
+        id_type: isBusinessProof ? businessProofConfig["business_proof"][0] : null,
+        kyc: [],
+      },
+      partners_proof: [
+        {
+          id_number: "",
+          id_type: isPartnersProof ? businessProofConfig["partners_proof"][0] : null,
+          kyc: [],
+        },
+      ],
+    }))
+  }, [business_type])
 
   const {id_type: identityIdType, id_number: identityIdNumber, kyc: identityAttachments} = identity_proof || {}
 
@@ -537,7 +577,7 @@ const useHandler = (styles: IStyle) => {
             id_number: kyc_number,
             kyc_id,
             kyc_type,
-            id_type: ID_PROOFS_INDIA.find(({key}) => key === type),
+            id_type: businessProofConfig["partners_proof"].find(({key}) => key === type),
             kyc: attachments?.map(({url, attachment_id}) => ({
               attachment: {id: attachment_id, url},
               onClickRemove: deleteFile.bind(null, attachment_id),
@@ -742,7 +782,7 @@ const useHandler = (styles: IStyle) => {
     payloadData.partners_proof[index] = {
       ...(payloadData.partners_proof[index] || {
         id_number: "",
-        id_type: ID_PROOFS_INDIA[0],
+        id_type: businessProofConfig["partners_proof"] ? businessProofConfig["partners_proof"][0] : null,
         kyc_type: "Identity_and_address_proof",
         kyc: [],
       }),
@@ -754,7 +794,7 @@ const useHandler = (styles: IStyle) => {
   const onAddPartner = () =>
     setData(prev => ({
       ...prev,
-      partners_proof: [...partners_proof, {id_number: "", id_type: ID_PROOFS_INDIA[0], kyc: []}],
+      partners_proof: [...partners_proof, {id_number: "", id_type: businessProofConfig["partners_proof"][0], kyc: []}],
     }))
 
   const onRemovePartner = (index: number) => {
@@ -1152,7 +1192,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "drop-down",
           label: "Select Anyone",
           name: "id_type",
-          options: ID_PROOFS_INDIA,
+          options: idProofOption,
           error: errIdentityIdType,
           value: identityIdType,
           onChangeValue: onChangeKYC.bind(null, "identity_proof"),
@@ -1190,7 +1230,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "drop-down",
           label: "Select Anyone",
           name: "id_type",
-          options: ID_PROOFS_INDIA,
+          options: addressProofOption,
           error: errAddressIdType,
           value: addressIdType,
           onChangeValue: onChangeKYC.bind(null, "address_proof"),
@@ -1228,7 +1268,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "drop-down",
           label: "Select Anyone",
           name: "id_type",
-          options: ID_PROOFS_INDIA,
+          options: businessProofOption,
           error: errBusinessIdType,
           value: businessIdType,
           onChangeValue: onChangeKYC.bind(null, "business_proof"),
@@ -1266,7 +1306,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "drop-down",
           label: "Select Anyone",
           name: "id_type",
-          options: ID_PROOFS_INDIA,
+          options: authorityProofOption,
           error: errAuthorityIdType,
           value: authorityIdType,
           onChangeValue: onChangeKYC.bind(null, "authority_proof"),
@@ -1316,7 +1356,7 @@ const useHandler = (styles: IStyle) => {
         elementType: "drop-down",
         label: "Select Anyone",
         name: "id_type",
-        options: ID_PROOFS_INDIA,
+        options: partnersProofOption,
         error: errPartnersIdType,
         value: id_type,
         onChangeValue: onChangeBusinessKYC.bind(null, index),

@@ -8,6 +8,8 @@ export type TypeBankCode = "Swift" | "BSB" | "Routing" | "IBAN"
 
 export type TypeBusiness = "Sole_proprietor" | "Partnership_firm" | "Companies" | "Limited_liability_partnership"
 
+export type TypeProof = "identity_proof" | "address_proof" | "authority_proof" | "business_proof" | "partners_proof"
+
 export type TypePurpose =
   | "Tuition_fee"
   | "Travel"
