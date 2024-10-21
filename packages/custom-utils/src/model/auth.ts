@@ -1,5 +1,5 @@
-import {IFile, IFormData} from "@fanam-pkg/core-utils"
-import type {AuthenticationResponseJSON, RegistrationResponseJSON} from "@simplewebauthn/types"
+import { IFile, IFormData } from "@fanam-pkg/core-utils"
+import type { AuthenticationResponseJSON, RegistrationResponseJSON } from "@simplewebauthn/types"
 import {
   ICity,
   ICountry,
@@ -162,6 +162,7 @@ export interface IPayloadSyncUser extends IBaseSyncUser {
   bank_account?: IPayloadUserBankAccount
   business_proofs?: IPayloadBusinessKYC[]
   business_type?: TypeBusiness
+  business_name?:string
 }
 
 export interface IPayloadUserBankAccount {

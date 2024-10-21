@@ -1,16 +1,3 @@
-import {Button, FormSectionProps, ImageView, TextField, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
-import {
-  IFormData,
-  JSONObject,
-  REG_EMAIL,
-  REG_VALID_NAME,
-  REG_VALID_NUMBER,
-  useCommon,
-  useDateTime,
-} from "@fanam-pkg/core-utils"
-import {useRouter} from "next/navigation"
-import {useEffect, useMemo, useState} from "react"
-import {useMutation, useQueries} from "@tanstack/react-query"
 import {
   DF_INPUT_DATE,
   IAadhaarCaptcha,
@@ -27,10 +14,23 @@ import {
   TypeBusiness,
   TypeKYC,
 } from "@custom/utils"
+import { Button, FormSectionProps, ImageView, TextField, useNotifyPopup, usePopup } from "@fanam-pkg/core-ui-sass"
+import {
+  IFormData,
+  JSONObject,
+  REG_EMAIL,
+  REG_VALID_NAME,
+  REG_VALID_NUMBER,
+  useCommon,
+  useDateTime,
+} from "@fanam-pkg/core-utils"
+import { useMutation, useQueries } from "@tanstack/react-query"
 import assets from "assets"
-import {useAuthController, useKYCController, useLocationController, useRecipientController} from "controller"
-import {useSingleton} from "hooks"
-import {PopupAadhaarCaptcha, PopupAadhaarOTP} from "organisms"
+import { useAuthController, useKYCController, useLocationController, useRecipientController } from "controller"
+import { useSingleton } from "hooks"
+import { useRouter } from "next/navigation"
+import { PopupAadhaarCaptcha, PopupAadhaarOTP } from "organisms"
+import { useEffect, useMemo, useState } from "react"
 import {
   ACCOUNT_TYPE,
   BUSINESS_TYPE,
@@ -1488,6 +1488,7 @@ const useHandler = (styles: IStyle) => {
         // account_no,
         account_type: account_type.key,
         business_type: business_type.key,
+        business_name,
         country_id: country.key,
         state_id: state.key,
         city_id: city.key,
