@@ -185,39 +185,6 @@ const useHandler = (styles: IStyle) => {
 
   const businessProofConfig = CONFIG_BUSINESS_PROOF?.[business_type.key] || {}
 
-  useEffect(() => {
-    setData(prev => ({
-      ...prev,
-      identity_proof: {
-        id_number: "",
-        id_type: businessProofConfig["identity_proof"] ? businessProofConfig["identity_proof"][0] : null,
-        kyc: [],
-      },
-      address_proof: {
-        id_number: "",
-        id_type: businessProofConfig["address_proof"] ? businessProofConfig["address_proof"][0] : null,
-        kyc: [],
-      },
-      authority_proof: {
-        id_number: "",
-        id_type: businessProofConfig["authority_proof"] ? businessProofConfig["authority_proof"][0] : null,
-        kyc: [],
-      },
-      business_proof: {
-        id_number: "",
-        id_type: businessProofConfig["business_proof"] ? businessProofConfig["business_proof"][0] : null,
-        kyc: [],
-      },
-      partners_proof: [
-        {
-          id_number: "",
-          id_type: businessProofConfig["partners_proof"] ? businessProofConfig["partners_proof"][0] : null,
-          kyc: [],
-        },
-      ],
-    }))
-  }, [business_type])
-
   const isIndividual = account_type.key === "Individual"
   const isSoleProprietor = business_type.key === "Sole_proprietor"
   const isCompanies = business_type.key === "Companies"
@@ -235,6 +202,39 @@ const useHandler = (styles: IStyle) => {
   const isBusinessProof = isSoleProprietor
   const isAuthorityProof = isPartnershipFirm || isCompanies || isLimitedLiabilityPartnership
   const isPartnersProof = isPartnershipFirm || isCompanies || isLimitedLiabilityPartnership
+
+  useEffect(() => {
+    setData(prev => ({
+      ...prev,
+      identity_proof: {
+        id_number: "",
+        id_type: isIdentityProof ? businessProofConfig["identity_proof"][0] : null,
+        kyc: [],
+      },
+      address_proof: {
+        id_number: "",
+        id_type: isAddressProof ? businessProofConfig["address_proof"][0] : null,
+        kyc: [],
+      },
+      authority_proof: {
+        id_number: "",
+        id_type: isAuthorityProof ? businessProofConfig["authority_proof"][0] : null,
+        kyc: [],
+      },
+      business_proof: {
+        id_number: "",
+        id_type: isBusinessProof ? businessProofConfig["business_proof"][0] : null,
+        kyc: [],
+      },
+      partners_proof: [
+        {
+          id_number: "",
+          id_type: isPartnersProof ? businessProofConfig["partners_proof"][0] : null,
+          kyc: [],
+        },
+      ],
+    }))
+  }, [business_type])
 
   const {id_type: identityIdType, id_number: identityIdNumber, kyc: identityAttachments} = identity_proof || {}
 
