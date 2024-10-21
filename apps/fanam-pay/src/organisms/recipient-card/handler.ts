@@ -1,6 +1,7 @@
 import {IFormData} from "@fanam-pkg/core-utils"
 import {useEffect, useMemo} from "react"
 import {useSingleton} from "hooks"
+import {RELATION_SHIP_DATA} from "utils"
 
 export const useHandler = () => {
   const {transData, refetchTransaction, transId} = useSingleton()
@@ -48,6 +49,7 @@ export const useHandler = () => {
   const isSamePerson = is_same_person || relationship
 
   const {recipientDetails} = useMemo(() => {
+    const recipientRelationship = RELATION_SHIP_DATA[recipient_relationship]?.label
     const recipientDetails: IFormData[] = [
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
@@ -69,7 +71,7 @@ export const useHandler = () => {
       {key: "ID Type", label: id_type},
       {key: "ID Number", label: id_number},
       ...(recipient_relationship
-        ? [{key: "Sender's relationship with the Recipient", label: recipient_relationship}]
+        ? [{key: "Sender's relationship with the Recipient", label: recipientRelationship}]
         : []),
     ]
 
