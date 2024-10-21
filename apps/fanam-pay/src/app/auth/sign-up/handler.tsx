@@ -174,8 +174,8 @@ const useHandler = (styles: IStyle) => {
                   onChangeData={onChangeValue}
                   wrapperClass={styles.phone_number}
                 />
+                {errPhoneNo && <p className={styles.error_message}>{errPhoneNo}</p>}
               </section>
-              {errPhoneNo && <p className={styles.error_message}>{errPhoneNo}</p>}
             </section>
           ),
         },
