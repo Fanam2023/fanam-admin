@@ -9,7 +9,7 @@ import {QUERY_CANCEL_ORDER, RELATION_SHIP_DATA} from "utils"
 
 export const useHandler = (transaction: ITransaction) => {
   const {getFirstLetter} = useCommon()
-  const {cancelTransaction} = useTransactionController()
+  const {cancelPayout} = useTransactionController()
   const {togglePopup} = usePopup()
   const [showReason, setShowReason] = useState(false)
   const [data, setData] = useState({
@@ -82,7 +82,7 @@ export const useHandler = (transaction: ITransaction) => {
 
   const {mutate: onCancel} = useMutation({
     mutationKey: [QUERY_CANCEL_ORDER],
-    mutationFn: cancelTransaction,
+    mutationFn: cancelPayout,
     onSuccess: result => {
       if (result) togglePopup()
     },

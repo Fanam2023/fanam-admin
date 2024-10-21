@@ -128,7 +128,7 @@ export const useTransactionController = () => {
     return {result, errorData}
   }
 
-  const cancelTransaction = async (payload: IPayloadCancelOrder) => await postRequest(API_CANCEL_TRANSACTION, payload)
+  const cancelPayout = async (payload: IPayloadCancelOrder) => await postRequest(API_CANCEL_TRANSACTION, payload)
 
   const cancelPayment = async (transactionId: string) => await putRequest(apiCancelPayment(transactionId), {transData})
 
@@ -143,7 +143,7 @@ export const useTransactionController = () => {
     syncRecipientAsBeneficiary,
     sendingPurpose,
     removeAttachment,
-    cancelTransaction,
+    cancelPayout,
     cancelPayment,
   }
 }
