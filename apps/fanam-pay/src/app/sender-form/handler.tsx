@@ -1500,7 +1500,7 @@ const useHandler = (styles: IStyle) => {
 
       if (!individualType) delete payload.date_of_birth
       if (individualType) delete payload.business_type
-
+      if (individualType) delete payload.business_name
       updateUser(payload)
     }
   }
