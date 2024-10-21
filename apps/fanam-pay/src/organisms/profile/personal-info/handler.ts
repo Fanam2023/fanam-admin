@@ -6,6 +6,8 @@ import {useSingleton} from "hooks"
 const useHandler = () => {
   const {user} = useSingleton()
 
+  const individualType = user?.account_type === "Individual"
+
   const {formatDate} = useDateTime()
 
   const {first_name, last_name, phone_no, date_of_birth} = user || {}
@@ -41,6 +43,13 @@ const useHandler = () => {
           value: phone_no,
           disabled: !!user?.phone_no,
         },
+      ],
+    },
+  ]
+
+  if (individualType) {
+    formElements.push({
+      childElements: [
         {
           elementType: "input",
           isRequired: false,
@@ -51,9 +60,8 @@ const useHandler = () => {
           disabled: !!user?.date_of_birth,
         },
       ],
-    },
-  ]
-
+    })
+  }
   return {
     formElements,
   }

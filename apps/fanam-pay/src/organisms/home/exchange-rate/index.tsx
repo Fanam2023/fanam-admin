@@ -34,7 +34,7 @@ export const ExchangeRate = () => {
             responsive={responsive}
             infinite={true}
             autoPlay={true}
-            autoPlaySpeed={2000}
+            autoPlaySpeed={1000}
             transitionDuration={500}
             arrows={false}>
             {getPopularCorridors?.map(renderCards)}
