@@ -4,7 +4,7 @@ import {useParams, useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import {useOrderController, usePaymentController, useTransactionController} from "controller"
-import {QUERY_TRANSACTION, routeToTransactionDetail} from "utils"
+import {QUERY_TRANSACTION, RELATION_SHIP_DATA, routeToTransactionDetail} from "utils"
 
 const useHandler = () => {
   const [remainingTime, setRemainingTime] = useState(0)
@@ -120,6 +120,7 @@ const useHandler = () => {
       iban_no,
       routing_code,
     } = bank_account || {}
+    const recipientRelationship = RELATION_SHIP_DATA[recipient_relationship]?.label
 
     const recipientDetails: IFormData[] = [
       {key: "First Name", label: first_name},
@@ -139,7 +140,7 @@ const useHandler = () => {
       {key: "Branch Code", label: branch_code},
       {key: "Branch Address", label: branch_address},
       ...(recipient_relationship
-        ? [{key: "Sender's relationship with the Recipient", label: recipient_relationship}]
+        ? [{key: "Sender's relationship with the Recipient", label: recipientRelationship}]
         : []),
     ]
 
@@ -169,6 +170,7 @@ const useHandler = () => {
     const {country_name} = country || {}
     const {state_name} = state || {}
     const {city_name} = city || {}
+    const beneficiaryRelationship = RELATION_SHIP_DATA[relationship]?.label
 
     const beneficiaryDetails: IFormData[] = [
       {key: "First Name", label: first_name},
@@ -180,7 +182,7 @@ const useHandler = () => {
       {key: "State", label: state_name},
       {key: "City", label: city_name},
       {key: "Pin Code", label: zip_code},
-      {key: "Sender's Relationship with the Beneficiary", label: relationship},
+      {key: "Sender's Relationship with the Beneficiary", label: beneficiaryRelationship},
     ]
 
     if (account_no) beneficiaryDetails.push({key: "Account Number", label: account_no})

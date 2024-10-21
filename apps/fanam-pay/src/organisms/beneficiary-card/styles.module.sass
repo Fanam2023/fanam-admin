@@ -55,18 +55,22 @@
   justify-content: space-between
 
 .detail_wrapper
-  word-break: break-all
+  word-break: break-word
+  overflow-wrap: break-word
+  text-align: justify
+  margin-left: auto
 
 .detail_container
-  text-transform: capitalize 
+  text-transform: capitalize
 
 @include mixin-responsive
   .border_wrapper
     border-radius: $size-16px
 
   .details_wrapper
-    width: 86%
+    width: unset
     margin-top: $size-16px
+    padding: $size-20px $size-10px
 
   .account_wrapper
     width: 80%

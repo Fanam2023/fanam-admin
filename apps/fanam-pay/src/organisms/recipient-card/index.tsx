@@ -39,7 +39,7 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
             <>
               <section className={`flex ${styles.check_box_wrapper}`}>
                 <Checkbox item={isPerson} name="is_same_person" onSelectItem={onChangeData} />
-                <h5 className={styles.text}>Are the recipient and the beneficiary the same</h5>
+                <h5 className={styles.content}>Are the recipient and the beneficiary the same</h5>
               </section>
               {isSame && (
                 <DropDown
