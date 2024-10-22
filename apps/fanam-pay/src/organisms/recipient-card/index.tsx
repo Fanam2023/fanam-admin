@@ -6,8 +6,16 @@ import {RELATION_SHIP} from "utils"
 import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
-export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation, error}: RecipientCardProps) => {
-  const {recipientDetails, recipient_id, isSamePerson} = useHandler()
+export const RecipientCard = ({
+  onEdit,
+  isSame,
+  isPerson,
+  onChangeData,
+  relation,
+  error,
+  isTransactionCompleted,
+}: RecipientCardProps) => {
+  const {recipientDetails, recipient_id, isSamePerson, relationship} = useHandler()
 
   const renderRecipientDetails = ({key, label}: IFormData, index: number) => (
     <li className={styles.data_wrapper} key={index}>
@@ -53,6 +61,18 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
                 />
               )}
             </>
+          )}
+          {isSamePerson && isTransactionCompleted && (
+            <DropDown
+              label="Sender's relationship with the Recipient"
+              options={RELATION_SHIP}
+              onChangeData={onChangeData}
+              name="recipient_relationship"
+              selected={relationship}
+              disabled
+              wrapperClass={styles.drop_down}
+              error={error}
+            />
           )}
         </section>
       </section>

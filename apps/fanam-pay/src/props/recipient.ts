@@ -12,6 +12,7 @@ export interface RecipientDetailsProp {
 
 export interface RecipientCardProps {
   onEdit?: (id?: string) => void
+  isTransactionCompleted?: boolean
   onChangeData?: (value: JSONObject) => void
   isSame?: boolean
   isPerson?: IFormData
