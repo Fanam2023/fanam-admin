@@ -1,7 +1,7 @@
 import {IFormData} from "@fanam-pkg/core-utils"
 import {useEffect, useMemo} from "react"
 import {useSingleton} from "hooks"
-import {RELATION_SHIP_DATA} from "utils"
+import {ID_PROOFS_INDIA, RELATION_SHIP_DATA} from "utils"
 
 export const useHandler = () => {
   const {transData, refetchTransaction, transId} = useSingleton()
@@ -50,6 +50,7 @@ export const useHandler = () => {
 
   const {recipientDetails} = useMemo(() => {
     const recipientRelationship = RELATION_SHIP_DATA[recipient_relationship]?.label
+    const idType = ID_PROOFS_INDIA.find(item => item.key === id_type)?.label
     const recipientDetails: IFormData[] = [
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
@@ -68,7 +69,7 @@ export const useHandler = () => {
       {key: "Branch Code", label: branch_code},
       {key: "Branch Address", label: branch_address},
       {key: "ID Issued Country", label: id_issued_country?.country_name},
-      {key: "ID Type", label: id_type},
+      {key: "ID Type", label: idType},
       {key: "ID Number", label: id_number},
       ...(recipient_relationship
         ? [{key: "Sender's relationship with the Recipient", label: recipientRelationship}]
