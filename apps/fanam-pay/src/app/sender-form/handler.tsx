@@ -676,7 +676,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!city) errState = {...errState, errCity: "Please enter City/District", isValid: false}
 
-    if (!zip_code) errState = {...errState, errZipCode: "Please enter PinCode", isValid: false}
+    if (!zip_code) errState = {...errState, errZipCode: "Please enter Pin Code", isValid: false}
 
     if (!account_type) errState = {...errState, errAccountType: "Please enter account type", isValid: false}
 
@@ -893,7 +893,7 @@ const useHandler = (styles: IStyle) => {
       },
       {
         elementType: "input",
-        label: "PinCode",
+        label: "Pin Code",
         name: "zip_code",
         value: zip_code,
         inputRegex: REG_VALID_NUMBER,
