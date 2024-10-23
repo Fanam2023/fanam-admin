@@ -83,5 +83,5 @@ export const useHandler = () => {
     return {recipientDetails}
   }, [transData])
 
-  return {recipientDetails, recipient_id, isSamePerson}
+  return {recipientDetails, recipient_id, isSamePerson, relationship}
 }

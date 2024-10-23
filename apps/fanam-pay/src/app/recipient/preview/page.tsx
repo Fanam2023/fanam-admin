@@ -26,6 +26,7 @@ const RecipientPreview = () => {
         onChangeData={onChangeValue}
         relation={recipient_relationship}
         error={errRelationShip}
+        isTransactionCompleted
       />
     </BaseContainer>
   )
