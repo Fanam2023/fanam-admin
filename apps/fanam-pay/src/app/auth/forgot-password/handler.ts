@@ -1,16 +1,17 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {JSONObject, REG_VALID_NUMBER, useCommon, useStorage} from "@fanam-pkg/core-utils"
+import {JSONObject, REG_VALID_NUMBER, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
 import {IForgotPinData, SESSION_SIGNUP} from "@custom/utils"
 import {useLocationController} from "controller"
+import {useCommon} from "hooks"
 import {QUERY_COUNTRIES, routeToOTP} from "utils"
 
 const useHandler = () => {
   const {push} = useRouter()
   const {setStorage} = useStorage()
-  const {isValidInputByRegex} = useCommon()
+  const {getNationalNumber, isValidInputByRegex} = useCommon()
   const {toggleNotify} = useNotifyPopup()
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
   const [data, setData] = useState<IForgotPinData>({
@@ -19,11 +20,12 @@ const useHandler = () => {
   })
 
   const {phone_no, country} = data
-
   const {isClicked} = errData
 
   const {getAllCountries} = useLocationController()
   const {data: countries = []} = useQuery({queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries})
+
+  const nationalNumberLength = country ? getNationalNumber(country.iso2)?.length : 0
 
   const onValidate = () => {
     let errState = {
@@ -38,10 +40,10 @@ const useHandler = () => {
         errPhoneNo: "Please select country",
         isValid: false,
       }
-    } else if (!phone_no || phone_no.length !== 10) {
+    } else if (!phone_no || phone_no.length !== nationalNumberLength) {
       errState = {
         ...errState,
-        errPhoneNo: "Please enter Valid Phone Number",
+        errPhoneNo: `Please enter a valid phone number with ${nationalNumberLength} digits`,
         isValid: false,
       }
     }
@@ -53,9 +55,14 @@ const useHandler = () => {
   const onChangeValue = (value: JSONObject) => {
     const phoneNO = (value?.phone_no as string) || ""
     const isValid = phoneNO === "" || isValidInputByRegex(phoneNO, REG_VALID_NUMBER)
-    if (isValid && phoneNO.length <= 10) setData(prev => ({...prev, ...value}))
-    // else toggleNotify({type: "error", title: "Enter valid mobile"})
+    if (isValid && phoneNO.length <= nationalNumberLength) setData(prev => ({...prev, ...value}))
   }
+
+  useEffect(() => {
+    if (country) {
+      setData(prev => ({...prev, phone_no: ""}))
+    }
+  }, [country])
 
   useEffect(() => {
     if (isClicked) {

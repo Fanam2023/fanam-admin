@@ -364,6 +364,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           name: "address",
           error: errAddress,
           value: address,
+          maxLength: 75,
           onChangeValue,
         },
       ],
