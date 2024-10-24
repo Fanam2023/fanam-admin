@@ -1,7 +1,8 @@
-import { useCommon as usePkgCommon } from "@fanam-pkg/core-utils"
-import { ICountry } from "@custom/utils"
-import { getExampleNumber, CountryCode } from 'libphonenumber-js'
-import examples from 'libphonenumber-js/mobile/examples'
+import {useCommon as usePkgCommon} from "@fanam-pkg/core-utils"
+import {getExampleNumber} from "libphonenumber-js"
+import examples from "libphonenumber-js/mobile/examples"
+import {CountryCode} from "libphonenumber-js/types"
+import {ICountry} from "@custom/utils"
 
 export const useCommon = () => {
   const commonHook = usePkgCommon()
@@ -25,6 +26,6 @@ export const useCommon = () => {
     ...commonHook,
     getCountryCode,
     getFirstLetter,
-    getNationalNumber
+    getNationalNumber,
   }
 }

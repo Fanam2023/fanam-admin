@@ -5,7 +5,7 @@ import {useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
 import {IForgotPinData, SESSION_SIGNUP} from "@custom/utils"
 import {useLocationController} from "controller"
-import {useCommon} from "hooks/common"
+import {useCommon} from "hooks"
 import {QUERY_COUNTRIES, routeToOTP} from "utils"
 
 const useHandler = () => {
@@ -55,9 +55,7 @@ const useHandler = () => {
   const onChangeValue = (value: JSONObject) => {
     const phoneNO = (value?.phone_no as string) || ""
     const isValid = phoneNO === "" || isValidInputByRegex(phoneNO, REG_VALID_NUMBER)
-    if (isValid && phoneNO.length <= nationalNumberLength) {
-      setData(prev => ({...prev, ...value}))
-    }
+    if (isValid && phoneNO.length <= nationalNumberLength) setData(prev => ({...prev, ...value}))
   }
 
   useEffect(() => {

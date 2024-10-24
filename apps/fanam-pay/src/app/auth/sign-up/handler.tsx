@@ -12,7 +12,7 @@ import {CountryFlag, CountryPopup} from "organisms"
 import {ACCOUNT_TYPE, QUERY_COUNTRIES, ROUTE_LOGIN, routeToOTP} from "utils"
 
 const useHandler = (styles: IStyle) => {
-  const {isValidInputByRegex, getCountryCode} = useCommon()
+  const {isValidInputByRegex, getCountryCode, getNationalNumber} = useCommon()
   const {getStorage, setStorage} = useStorage()
   const {toggleSlider} = useSlider()
   const {push} = useRouter()
@@ -37,10 +37,13 @@ const useHandler = (styles: IStyle) => {
 
   const {isClicked} = errData
 
+  const nationalNumberLength = country ? getNationalNumber(country.iso2)?.length : 0
+
   const onSelectCountry = (country: ICountry) => {
     setData(prev => ({
       ...prev,
       country,
+      phone_no: "",
     }))
     toggleSlider()
   }
@@ -97,7 +100,7 @@ const useHandler = (styles: IStyle) => {
   const onChangeValue = (value: JSONObject) => {
     const phoneNO = (value?.phone_no as string) || ""
     const isValid = phoneNO === "" || isValidInputByRegex(phoneNO, REG_VALID_NUMBER)
-    if (isValid && phoneNO.length <= 10) setData(prev => ({...prev, ...value}))
+    if (isValid && phoneNO.length <= nationalNumberLength) setData(prev => ({...prev, ...value}))
     // else toggleNotify({type: "error", title: "Only numbers are allowed"})
   }
 
