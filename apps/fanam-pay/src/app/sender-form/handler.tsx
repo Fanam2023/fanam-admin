@@ -1485,7 +1485,7 @@ const useHandler = (styles: IStyle) => {
         email,
         phone_no,
         address_line_1,
-        address_line_2,
+        address_line_2: address_line_2 === "" && null,
         zip_code,
         // account_no,
         account_type: account_type.key,

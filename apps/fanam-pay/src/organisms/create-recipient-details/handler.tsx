@@ -578,7 +578,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           isRequired: false,
           maxLength: 75,
           onChangeValue,
-
         },
       ],
     },
@@ -814,7 +813,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         first_name,
         last_name,
         address_line_1,
-        address_line_2,
+        address_line_2: address_line_2 === "" && null,
         email,
         phone_no,
         zip_code,
