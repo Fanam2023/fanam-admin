@@ -567,6 +567,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           name: "address_line_1",
           error: errAddressLine1,
           value: address_line_1,
+          maxLength: 75,
           onChangeValue,
         },
         {
@@ -575,7 +576,9 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           name: "address_line_2",
           value: address_line_2,
           isRequired: false,
+          maxLength: 75,
           onChangeValue,
+
         },
       ],
     },
