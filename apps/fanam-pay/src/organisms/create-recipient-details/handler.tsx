@@ -807,13 +807,12 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
   const onSubmit = () => {
     const {isValid} = onValidate()
-
     if (isValid) {
       const payload: IPayloadRecipient = {
         first_name,
         last_name,
         address_line_1,
-        address_line_2: address_line_2 === "" && null,
+        address_line_2,
         email,
         phone_no,
         zip_code,
@@ -849,6 +848,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       if (!routingInput) delete payload.bank_account.routing_code
 
       if (!ibanInput) delete payload.bank_account.iban_no
+
+      if (!address_line_2) delete payload.address_line_2
 
       if (recipientId) onUpdate({...payload, recipient_id: recipientId})
       else addRecipient(payload)

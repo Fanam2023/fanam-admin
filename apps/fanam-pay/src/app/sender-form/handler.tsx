@@ -1485,7 +1485,7 @@ const useHandler = (styles: IStyle) => {
         email,
         phone_no,
         address_line_1,
-        address_line_2: address_line_2 === "" && null,
+        address_line_2,
         zip_code,
         // account_no,
         account_type: account_type.key,
@@ -1503,6 +1503,7 @@ const useHandler = (styles: IStyle) => {
       if (!individualType) delete payload.date_of_birth
       if (individualType) delete payload.business_type
       if (individualType) delete payload.business_name
+      if (!address_line_2) delete payload.address_line_2
       updateUser(payload)
     }
   }

@@ -24,7 +24,7 @@ export const API_TRANSACTION = "/transaction"
 export const apiAllTransaction = (status: string, start_date: string, end_date: string) =>
   `${API_TRANSACTION}?status=${status}&start_date=${start_date}&end_date=${end_date}`
 export const apiTransaction = (transaction_id: string) => `${API_TRANSACTION}/${transaction_id}`
-export const apiSenderKYC = (kycId: string) => `/file-upload/sender-kyc/${kycId}`
+export const apiSenderKYC = () => `/file-upload/sender-kyc`
 export const API_RECIPIENT_KYC = "/file-upload/recipient-kyc"
 export const API_INVOICE = "/file-upload/invoice"
 export const API_REGISTER_START = "/passkey/register-start"
