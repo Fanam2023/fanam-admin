@@ -44,9 +44,9 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {refreshQuery} = useReactQuery()
   const {getTransactionCountries, getCities, getStates} = useLocationController()
   const {createRecipient, removeAttachment, updateRecipient, getByRecipientId} = useRecipientController()
-  const {refetchTransaction} = useSingleton()
-
+  const {refetchTransaction, transData} = useSingleton()
   const {toggleNotify} = useNotifyPopup()
+  const {transaction_id} = transData || {}
 
   const RECIPIENT_TYPE: IFormData<TypeAccount>[] = [
     {label: "Individual", key: "Individual"},
@@ -851,7 +851,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
       if (!address_line_2) delete payload.address_line_2
 
-      if (recipientId) onUpdate({...payload, recipient_id: recipientId})
+      if (recipientId) onUpdate({...payload, recipient_id: recipientId, transaction_id: transaction_id})
       else addRecipient(payload)
     }
   }
