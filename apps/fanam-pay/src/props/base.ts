@@ -1,5 +1,3 @@
-import { ICountry } from "@custom/utils"
-import { IFormData } from "@fanam-pkg/core-utils"
 import {StaticImageData} from "next/image"
 import {ReactNode} from "react"
 

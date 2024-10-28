@@ -44,7 +44,7 @@ export interface IBaseRecipientData {
 
 export interface IRecipientData extends IBaseRecipientData {
   recipient_account_type?: TypeAccount
-  country: IFormData<number> | null  
+  country: IFormData<number> | null
   id_issued_country: IFormData<number> | null
   state: IFormData<number> | null
   city: IFormData<number> | null
