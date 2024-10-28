@@ -13,7 +13,7 @@ export const BrowserBackNavigation = () => {
       window.history.go(1)
       toggleNotify({
         title: "Disabled",
-        description: "Back navigation is disabled on this page.",
+        description: "Back navigation is disabled. Please choose to cancel the transaction or proceed forward",
         type: "error",
       })
     }
