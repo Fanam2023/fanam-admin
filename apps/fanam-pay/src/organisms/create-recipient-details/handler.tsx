@@ -44,9 +44,9 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {refreshQuery} = useReactQuery()
   const {getTransactionCountries, getCities, getStates} = useLocationController()
   const {createRecipient, removeAttachment, updateRecipient, getByRecipientId} = useRecipientController()
-  const {refetchTransaction} = useSingleton()
-
+  const {refetchTransaction, transData} = useSingleton()
   const {toggleNotify} = useNotifyPopup()
+  const {transaction_id} = transData || {}
 
   const RECIPIENT_TYPE: IFormData<TypeAccount>[] = [
     {label: "Individual", key: "Individual"},
@@ -868,13 +868,12 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
   const onSubmit = () => {
     const {isValid} = onValidate()
-
     if (isValid) {
       const payload: IPayloadRecipient = {
         first_name,
         last_name,
         address_line_1,
-        address_line_2: address_line_2 === "" && null,
+        address_line_2,
         email,
         phone_no,
         zip_code,
@@ -911,7 +910,9 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
       if (!ibanInput) delete payload.bank_account.iban_no
 
-      if (recipientId) onUpdate({...payload, recipient_id: recipientId})
+      if (!address_line_2) delete payload.address_line_2
+
+      if (recipientId) onUpdate({...payload, recipient_id: recipientId, transaction_id: transaction_id})
       else addRecipient(payload)
     }
   }

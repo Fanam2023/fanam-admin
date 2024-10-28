@@ -85,7 +85,7 @@ export const useRecipientController = () => {
     formData.append("transaction_id", transactionId)
     formData.append("recipient_id", recipientId)
 
-    return await putRequest<ITransaction>(API_RECIPIENT_KYC, formData)
+    return await postRequest<ITransaction>(API_RECIPIENT_KYC, formData)
   }
 
   const getByRecipientId = async (recipient_id: string) => {

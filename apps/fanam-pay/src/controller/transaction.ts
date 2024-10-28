@@ -59,7 +59,7 @@ export const useTransactionController = () => {
 
     formData.append("transaction_id", transId)
 
-    const {result, errorData} = await putRequest<ITransaction>(API_INVOICE, formData)
+    const {result, errorData} = await postRequest<ITransaction>(API_INVOICE, formData)
     if (result) updateTransData(result)
 
     return {result, errorData}

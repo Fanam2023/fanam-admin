@@ -1,16 +1,17 @@
 import {usePopup} from "@fanam-pkg/core-ui-sass"
-import {IFormData, JSONObject} from "@fanam-pkg/core-utils"
+import {IFormData, JSONObject, useReactQuery} from "@fanam-pkg/core-utils"
 import {useMemo, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import {ITransaction} from "@custom/utils"
 import {useTransactionController} from "controller"
 import {useCommon} from "hooks"
-import {QUERY_CANCEL_ORDER, RELATION_SHIP_DATA} from "utils"
+import {QUERY_CANCEL_ORDER, QUERY_TRANSACTION, RELATION_SHIP_DATA} from "utils"
 
 export const useHandler = (transaction: ITransaction) => {
   const {getFirstLetter} = useCommon()
   const {cancelPayout} = useTransactionController()
   const {togglePopup} = usePopup()
+  const {refreshQuery} = useReactQuery()
   const [showReason, setShowReason] = useState(false)
   const [data, setData] = useState({
     cancel_reason: "",
@@ -84,6 +85,7 @@ export const useHandler = (transaction: ITransaction) => {
     mutationKey: [QUERY_CANCEL_ORDER],
     mutationFn: cancelPayout,
     onSuccess: result => {
+      refreshQuery(QUERY_TRANSACTION)
       if (result) togglePopup()
     },
   })
