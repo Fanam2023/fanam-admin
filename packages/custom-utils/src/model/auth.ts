@@ -193,6 +193,11 @@ export interface ILogin {
   phone_no: string
   pin: string
 }
+
+export interface IBaseLogin extends ILogin {
+  country?: ICountry
+}
+
 export interface IForgotPin {
   newPin?: string
   confirmPin?: string

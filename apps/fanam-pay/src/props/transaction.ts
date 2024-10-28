@@ -6,6 +6,8 @@ export interface CountryPopupProps {
   selCountry: ICountry | null
   countries: ICountry[]
   title?: string
+  wrapperClass?:string
+  showDropdown?:boolean
 }
 
 export interface ITransfer {

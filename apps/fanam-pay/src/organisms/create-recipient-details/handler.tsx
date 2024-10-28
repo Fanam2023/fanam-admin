@@ -1,11 +1,10 @@
-import {FormSectionProps, ImageView, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
+import {FormSectionProps, ImageView, TextField, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
 import {
   IFormData,
   JSONObject,
   REG_EMAIL,
   REG_VALID_NAME,
   REG_VALID_NUMBER,
-  useCommon,
   useReactQuery,
   useResize,
 } from "@fanam-pkg/core-utils"
@@ -25,7 +24,8 @@ import {
 } from "@custom/utils"
 import assets from "assets"
 import {useLocationController, useRecipientController} from "controller"
-import {useSingleton} from "hooks"
+import {useCommon, useSingleton} from "hooks"
+import {CountryFlag} from "organisms"
 import {
   BANK_ACCOUNT_TYPE,
   ID_PROOFS,
@@ -221,6 +221,37 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     [allCountries]
   )
 
+  const {getCountryCode, getNationalNumber} = useCommon()
+  const [showCountry, setShowCountry] = useState(false)
+  const selectedCountry = data.country ? allCountries?.find(country => country?.country_id === data.country.key) : null
+  const nationalNumberLength = selectedCountry ? getNationalNumber(selectedCountry?.iso2)?.length : 0
+
+  const onSelectCountry = country => {
+    setData(prev => ({
+      ...prev,
+      country: {
+        key: country.country_id,
+        label: country.phone_code,
+      },
+      phone_no: "",
+    }))
+    setShowCountry(false)
+  }
+
+  const goToCountry = () => {
+    setShowCountry(!showCountry)
+  }
+
+  useEffect(() => {
+    if (allCountries?.length) {
+      const initialCountry = allCountries.find(country => country.iso2 === "US")
+      setData(prev => ({
+        ...prev,
+        country: initialCountry ? {key: initialCountry.country_id, label: initialCountry.country_name} : prev.country,
+      }))
+    }
+  }, [allCountries])
+
   const {ibanInput, swiftInput, bsbInput, routingInput} = useMemo(() => {
     const verification: {
       ibanInput: null | IBankInput
@@ -328,8 +359,12 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     if (country) setData(prev => ({...prev, id_issued_country: country}))
   }, [country])
 
-  const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
-
+  const onChangeValue = (value: JSONObject) => {
+    const phoneNO = (value?.phone_no as string) || ""
+    const isValid = phoneNO === "" || isValidInputByRegex(phoneNO, REG_VALID_NUMBER)
+    if (isValid && phoneNO.length <= nationalNumberLength) setData(prev => ({...prev, ...value}))
+    // else toggleNotify({type: "error", title: "Only numbers are allowed"})
+  }
   const onChangeCountry = (value: JSONObject) => onChangeValue({...value, state: null, city: null})
 
   const onChangeState = (value: JSONObject) => onChangeValue({...value, city: null})
@@ -505,7 +540,6 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       onChangeValue,
     })
   }
-
   const formElements: FormSectionProps[] = [
     {
       title: "Recipient type",
@@ -526,14 +560,33 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           onChangeValue,
         },
         {
-          elementType: "input",
-          label: "Phone Number",
-          name: "phone_no",
-          inputRegex: REG_VALID_NUMBER,
-          error: errPhoneNo,
-          value: phone_no,
-          onChangeValue,
-          maxLength: 10,
+          childElement: (
+            <>
+              <section className={`flex-start ${styles.input_wrapper}`}>
+                <section className={`flex ${styles.country_wrapper} ${errPhoneNo ? styles.error_border : ""}`}>
+                  <CountryFlag countryCode={getCountryCode(selectedCountry)} wrapperClass={styles.flag} />
+                  <h5 className={styles.country_code}>{selectedCountry ? `+${selectedCountry.phone_code}` : "-"}</h5>
+                  <ImageView
+                    src={assets.ic_down_arrow_theme}
+                    alt="down-arrow"
+                    imgSize={24}
+                    onClick={goToCountry}
+                    wrapperClass={styles.country_arrow}
+                  />
+                  <TextField
+                    label="Phone Number"
+                    name="phone_no"
+                    value={phone_no}
+                    onChangeData={onChangeValue}
+                    wrapperClass={styles.phone_number}
+                    autoComplete="off"
+                    inputRegex={REG_VALID_NUMBER}
+                  />
+                </section>
+              </section>
+              {errPhoneNo && <p className={styles.error_message}>{errPhoneNo}</p>}
+            </>
+          ),
         },
       ],
     },
@@ -764,11 +817,19 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!address_line_1) errState = {...errState, errAddressLine1: "Please enter Address", isValid: false}
 
-    if (!country) errState = {...errState, errCountry: "Please select Country", isValid: false}
-
-    if (!phone_no || phone_no.length !== 10)
-      errState = {...errState, errPhoneNo: "Please enter a valid Phone Number", isValid: false}
-
+    if (!country) {
+      errState = {
+        ...errState,
+        errPhoneNo: "Please select country",
+        isValid: false,
+      }
+    } else if (!phone_no || phone_no.length !== nationalNumberLength) {
+      errState = {
+        ...errState,
+        errPhoneNo: `Please enter a valid phone number with ${nationalNumberLength} digits`,
+        isValid: false,
+      }
+    }
     if (!isValidInputByRegex(email, REG_EMAIL))
       errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
 
@@ -863,6 +924,11 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     isDesktop,
     toggleSlider,
     deleteFile,
+    showCountry,
+    onSelectCountry,
+    data,
+    allCountries,
+    selectedCountry,
   }
 }
 

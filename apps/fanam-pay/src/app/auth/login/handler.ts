@@ -2,23 +2,27 @@ import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {JSONObject, REG_VALID_NUMBER} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
-import {useMutation} from "@tanstack/react-query"
-import {ILogin, IPayloadLogin} from "@custom/utils"
-import {useAuthController} from "controller"
+import {useMutation, useQuery} from "@tanstack/react-query"
+import {IBaseLogin, IPayloadLogin} from "@custom/utils"
+import {useAuthController, useLocationController} from "controller"
 import {useCommon} from "hooks"
-import {ROUTE_FORGOT_PIN, ROUTE_HOME, ROUTE_SIGN_UP} from "utils"
+import {QUERY_COUNTRIES, ROUTE_FORGOT_PIN, ROUTE_HOME, ROUTE_SIGN_UP} from "utils"
 
 const useHandler = () => {
   const {push, replace} = useRouter()
-  const {isValidInputByRegex} = useCommon()
+  const {isValidInputByRegex, getNationalNumber} = useCommon()
   const {toggleNotify} = useNotifyPopup()
   const {login, loginWebAuth} = useAuthController()
-  const [data, setData] = useState<ILogin>({
+  const {getAllCountries} = useLocationController()
+  const [data, setData] = useState<IBaseLogin>({
     phone_no: "",
     pin: "",
+    country: null,
   })
 
-  const {phone_no, pin} = data
+  const {phone_no, pin, country} = data
+  const nationalNumberLength = country ? getNationalNumber(country.iso2)?.length : 0
+  const {data: countries = []} = useQuery({queryKey: [QUERY_COUNTRIES], queryFn: getAllCountries})
 
   const stringToBase64 = (inputString: string) => Buffer.from(inputString).toString("base64")
   const {mutate: loginWithCredential} = useMutation({
@@ -35,6 +39,11 @@ const useHandler = () => {
     const {result} = await loginWebAuth()
     if (result) replace(ROUTE_HOME)
   }
+  useEffect(() => {
+    if (country) {
+      setData(prev => ({...prev, phone_no: ""}))
+    }
+  }, [country])
 
   useEffect(() => {
     executeWebAuthn()
@@ -50,7 +59,19 @@ const useHandler = () => {
       isClicked: true,
     }
 
-    if (!phone_no) errState = {...errState, errPhoneNo: "Please enter PhoneNumber", isValid: false}
+    if (!country) {
+      errState = {
+        ...errState,
+        errPhoneNo: "Please select country",
+        isValid: false,
+      }
+    } else if (!phone_no || phone_no.length !== nationalNumberLength) {
+      errState = {
+        ...errState,
+        errPhoneNo: `Please enter a valid phone number with ${nationalNumberLength} digits`,
+        isValid: false,
+      }
+    }
 
     if (!pin) errState = {...errState, errPin: "Please enter valid PinNumber", isValid: false}
     else if (pin.length !== 6) errState = {...errState, errPin: "PIN should contain 6 numbers", isValid: false}
@@ -62,8 +83,8 @@ const useHandler = () => {
   const onChangeValue = (value: JSONObject) => {
     const pinValue = (value?.phone_no as string) || (value?.pin as string) || ""
     const isValid = pinValue === "" || isValidInputByRegex(pinValue, REG_VALID_NUMBER)
-    if (isValid) setData(prev => ({...prev, ...value}))
-    else toggleNotify({type: "error", title: "Only numbers are allowed"})
+    if (isValid && pinValue.length <= nationalNumberLength) setData(prev => ({...prev, ...value}))
+    // else toggleNotify({type: "error", title: "Only numbers are allowed"})
   }
 
   useEffect(() => {
@@ -93,6 +114,8 @@ const useHandler = () => {
     onSubmit,
     routeToSignUp,
     routeTOForgotPin,
+    countries,
+    setData,
   }
 }
 
