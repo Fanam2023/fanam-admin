@@ -6,7 +6,7 @@ import {CountryPopupProps} from "props"
 import styles from "./country.module.sass"
 import {useHandler} from "./handler"
 
-export const CountryPopup = ({onSelect, selCountry, countries, title}: CountryPopupProps) => {
+export const CountryPopup = ({onSelect, selCountry, countries, title, wrapperClass}: CountryPopupProps) => {
   const {searchTerm, setSearchTerm} = useHandler()
 
   const filteredCountry = useMemo(
@@ -32,7 +32,7 @@ export const CountryPopup = ({onSelect, selCountry, countries, title}: CountryPo
   }
 
   return (
-    <section>
+    <section className={`${styles.main_country_wrapper} ${wrapperClass}`}>
       <TextField
         label="country name"
         value={searchTerm}

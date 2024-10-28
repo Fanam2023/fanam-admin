@@ -33,6 +33,30 @@
   margin-top: $size-12px
   cursor: pointer
 
+.phone_number
+  border: none !important
+
+.country_wrapper
+  border: $size-1px solid $medium-grey
+  width: 100%
+  padding: 0 $size-16px
+  border-radius: $size-10px
+  gap: $size-6px 
+
+.input_wrapper
+  gap: $size-16px
+  margin-top: $size-16px
+
+.error_message
+  color: $alert-danger
+  margin-top: $size-8px  
+
+.country_code
+  white-space: nowrap  
+
+.country_wrapper.error_border
+  border: $size-1px solid $alert-danger  
+   
 @include mixin-responsive
   .sub_heading
     font-size: $size-20px

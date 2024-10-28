@@ -1,15 +1,40 @@
 "use client"
 
-import {Button, TextField} from "@fanam-pkg/core-ui-sass"
-import {BaseContainer} from "organisms"
+import {Button, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
+import {useEffect} from "react"
+import {useSlider} from "@custom/ui"
+import {ICountry} from "@custom/utils"
+import assets from "assets"
+import {useCommon} from "hooks"
+import {BaseContainer, CountryFlag, CountryPopup} from "organisms"
 import {Auth} from "organisms/auth"
 import useHandler from "./handler"
 import styles from "./page.module.sass"
 
 const Login = () => {
-  const {data, errData, onChangeValue, onSubmit, routeToSignUp, routeTOForgotPin} = useHandler()
-  const {phone_no, pin} = data
+  const {data, errData, onChangeValue, onSubmit, setData, routeToSignUp, routeTOForgotPin, countries} = useHandler()
+  const {phone_no, pin, country} = data
   const {errPhoneNo, errPin} = errData
+  const {toggleSlider} = useSlider()
+  const {getCountryCode} = useCommon()
+  const onSelectCountry = (country: ICountry) => {
+    setData(prev => ({
+      ...prev,
+      country,
+    }))
+    toggleSlider()
+  }
+
+  const goToCountrySlider = () =>
+    toggleSlider({
+      children: (
+        <CountryPopup onSelect={onSelectCountry} selCountry={country} countries={countries} title="Select Country" />
+      ),
+    })
+
+  useEffect(() => {
+    if (countries?.length) setData(prev => ({...prev, country: countries?.find(({iso2}) => iso2 === "IN")}))
+  }, [countries])
 
   return (
     <BaseContainer profile bellIcon>
@@ -20,16 +45,28 @@ const Login = () => {
             Login in once and seamlessly access your account across all your devices.
           </h5>
         </section>
-        <TextField
-          label="Phone Number"
-          name="phone_no"
-          value={phone_no}
-          maxLength={10}
-          onChangeData={onChangeValue}
-          wrapperClass={styles.text_field_wrapper}
-          error={errPhoneNo}
-          autoComplete="off"
-        />
+        <section className={`flex-start ${styles.input_wrapper}`}>
+          <section className={`flex ${styles.country_wrapper} ${errPhoneNo ? styles.error_border : ""}`}>
+            <CountryFlag countryCode={getCountryCode(country)} wrapperClass={styles.flag} />
+            <h5 className={styles.country_code}>{country ? `+${country.phone_code}` : "-"}</h5>
+            <ImageView
+              src={assets.ic_down_arrow_theme}
+              alt="down-arrow"
+              imgSize={24}
+              onClick={goToCountrySlider}
+              wrapperClass={styles.country_arrow}
+            />
+            <TextField
+              label="Phone Number"
+              name="phone_no"
+              value={phone_no}
+              onChangeData={onChangeValue}
+              wrapperClass={styles.phone_number}
+              autoComplete="off"
+            />
+          </section>
+        </section>
+        {errPhoneNo && <p className={styles.error_message}>{errPhoneNo}</p>}
         <TextField
           label="PIN"
           name="pin"

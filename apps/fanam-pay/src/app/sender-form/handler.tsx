@@ -1,13 +1,5 @@
 import {Button, FormSectionProps, ImageView, TextField, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
-import {
-  IFormData,
-  JSONObject,
-  REG_EMAIL,
-  REG_VALID_NAME,
-  REG_VALID_NUMBER,
-  useCommon,
-  useDateTime,
-} from "@fanam-pkg/core-utils"
+import {IFormData, JSONObject, REG_EMAIL, REG_VALID_NAME, REG_VALID_NUMBER, useDateTime} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
@@ -29,8 +21,8 @@ import {
 } from "@custom/utils"
 import assets from "assets"
 import {useAuthController, useKYCController, useLocationController, useRecipientController} from "controller"
-import {useSingleton} from "hooks"
-import {PopupAadhaarCaptcha, PopupAadhaarOTP} from "organisms"
+import {useCommon, useSingleton} from "hooks"
+import {CountryFlag, PopupAadhaarCaptcha, PopupAadhaarOTP} from "organisms"
 import {
   ACCOUNT_TYPE,
   BUSINESS_TYPE,
@@ -84,7 +76,7 @@ const DEFAULT_ERR_STATE = {
 
 const useHandler = (styles: IStyle) => {
   const {replace, push} = useRouter()
-  const {isValidInputByRegex} = useCommon()
+  const {isValidInputByRegex, getCountryCode} = useCommon()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {removeAttachment} = useRecipientController()
   const {syncUser} = useAuthController()
@@ -94,6 +86,8 @@ const useHandler = (styles: IStyle) => {
   const {toggleNotify} = useNotifyPopup()
   const {togglePopup} = usePopup()
   const {user, updateUserData, refetchUser} = useSingleton()
+  const {country: Country} = user || {}
+  console.log(Country, "Aji")
   const currentDate = dayjs().format("YYYY-MM-DD")
 
   const [data, setData] = useState<ISyncUserData>({
@@ -954,13 +948,27 @@ const useHandler = (styles: IStyle) => {
           onChangeValue,
         },
         {
-          elementType: "input",
-          label: "Phone Number",
-          name: "phone_no",
-          error: errPhoneNo,
-          value: phone_no,
-          disabled: !!user?.phone_no,
-          onChangeValue,
+          childElement: (
+            <section className={`flex-start ${styles.input_wrappers}`}>
+              <section className={`flex ${styles.country_wrapper}`}>
+                <CountryFlag
+                  countryCode={getCountryCode(Country)}
+                  wrapperClass={`${styles.flag} ${Country ? styles.disabled : ""}`}
+                />
+                <h5 className={` ${styles.country_code} ${Country?.phone_code ? styles.disabled : ""}`}>
+                  {Country ? `+${Country?.phone_code}` : "-"}
+                </h5>
+                <TextField
+                  label="Phone Number"
+                  name="phone_no"
+                  value={phone_no}
+                  onChangeData={onChangeValue}
+                  wrapperClass={styles.phone_number}
+                  disabled={!!user?.phone_no}
+                />
+              </section>
+            </section>
+          ),
         },
         // {
         //   elementType: "input",
@@ -1055,13 +1063,26 @@ const useHandler = (styles: IStyle) => {
           onChangeValue,
         },
         {
-          elementType: "input",
-          label: "Company Phone Number",
-          name: "phone_no",
-          error: errPhoneNo,
-          value: phone_no,
-          disabled: !!user?.phone_no,
-          onChangeValue,
+          childElement: (
+            <section className={`flex-start ${styles.input_wrappers}`}>
+              <section className={`flex ${styles.country_wrapper}`}>
+                <CountryFlag
+                  countryCode={getCountryCode(Country)}
+                  wrapperClass={`${styles.flag}  ${user?.country ? styles.disabled : ""}`}
+                />
+                <h5 className={styles.country_code}>{Country ? `+${Country?.phone_code}` : "-"}</h5>
+                <TextField
+                  label="Company Phone Number"
+                  name="phone_no"
+                  value={phone_no}
+                  onChangeData={onChangeValue}
+                  wrapperClass={styles.phone_number}
+                  autoComplete="off"
+                  disabled={!!user?.phone_no}
+                />
+              </section>
+            </section>
+          ),
         },
       ],
     },

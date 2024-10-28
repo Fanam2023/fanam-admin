@@ -1,20 +1,14 @@
-import {FormSectionProps, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {
-  IFormData,
-  JSONObject,
-  REG_EMAIL,
-  REG_VALID_NUMBER,
-  useCommon,
-  useReactQuery,
-  useResize,
-} from "@fanam-pkg/core-utils"
+import {FormSectionProps, ImageView, TextField, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
+import {IFormData, JSONObject, REG_EMAIL, REG_VALID_NUMBER, useReactQuery, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {IBeneficiaryData, IPayloadBeneficiary, IStyle, REG_INPUT_EMAIL, REG_INPUT_NAME} from "@custom/utils"
+import assets from "assets"
 import {useBeneficiaryController, useLocationController, useTransactionController} from "controller"
-import {useSingleton} from "hooks"
+import {useCommon, useSingleton} from "hooks"
+import {CountryFlag} from "organisms"
 import {
   QUERY_BENEFICIARY,
   QUERY_CITIES,
@@ -51,6 +45,8 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   const {getTransactionCountries, getCities, getStates} = useLocationController()
   const {getByBeneficiaryId, createBeneficiary, updateBeneficiary} = useBeneficiaryController()
   const {syncBeneficiary} = useTransactionController()
+  const {getCountryCode, getNationalNumber} = useCommon()
+  const [showCountry, setShowCountry] = useState(false)
   const {recipient} = transData || {}
 
   const [data, setData] = useState<IBeneficiaryData>({
@@ -115,7 +111,19 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
 
     if (!address) errState = {...errState, errAddress: "Please enter Beneficiary Address", isValid: false}
 
-    if (!country) errState = {...errState, errCountry: "Please enter Country Name", isValid: false}
+    if (!country) {
+      errState = {
+        ...errState,
+        errNumber: "Please select country",
+        isValid: false,
+      }
+    } else if (!phone_no || phone_no.length !== nationalNumberLength) {
+      errState = {
+        ...errState,
+        errNumber: `Please enter a valid phone number with ${nationalNumberLength} digits`,
+        isValid: false,
+      }
+    }
 
     if (!state) errState = {...errState, errStateName: "Please enter State Name", isValid: false}
 
@@ -270,12 +278,44 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     if (isClicked) setErrState(prev => ({...prev, ...onValidate()}))
   }, [data, isClicked])
 
-  const onChangeValue = (value: JSONObject) => setData(prev => ({...prev, ...value}))
+  const onChangeValue = (value: JSONObject) => {
+    const phoneNO = (value?.phone_no as string) || ""
+    const isValid = phoneNO === "" || isValidInputByRegex(phoneNO, REG_VALID_NUMBER)
+    if (isValid && phoneNO.length <= nationalNumberLength) setData(prev => ({...prev, ...value}))
+  }
 
   const onChangeCountry = (value: JSONObject) => onChangeValue({...value, state: null, city: null})
 
   const onChangeState = (value: JSONObject) => onChangeValue({...value, city: null})
 
+  const selectedCountry = data.country ? allCountries?.find(country => country?.country_id === data.country.key) : null
+  const nationalNumberLength = selectedCountry ? getNationalNumber(selectedCountry?.iso2)?.length : 0
+
+  const onSelectCountry = country => {
+    setData(prev => ({
+      ...prev,
+      country: {
+        key: country.country_id,
+        label: country.phone_code,
+      },
+      phone_no: "",
+    }))
+    setShowCountry(false)
+  }
+
+  const goToCountry = () => {
+    setShowCountry(!showCountry)
+  }
+
+  useEffect(() => {
+    if (allCountries?.length) {
+      const initialCountry = allCountries.find(country => country.iso2 === "US")
+      setData(prev => ({
+        ...prev,
+        country: initialCountry ? {key: initialCountry.country_id, label: initialCountry.country_name} : prev.country,
+      }))
+    }
+  }, [allCountries])
   const formElements: FormSectionProps[] = [
     {
       title: "Personal Information",
@@ -301,6 +341,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
       ],
     },
+
     {
       wrapperClassGrid: styles.beneficiary_address_wrapper,
       childElements: [
@@ -314,14 +355,33 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           onChangeValue,
         },
         {
-          elementType: "input",
-          label: "Phone Number",
-          name: "phone_no",
-          error: errNumber,
-          value: phone_no,
-          onChangeValue,
-          maxLength: 10,
-          inputRegex: REG_VALID_NUMBER,
+          childElement: (
+            <>
+              <section className={`flex-start ${styles.input_wrapper}`}>
+                <section className={`flex ${styles.country_wrapper} ${errNumber ? styles.error_border : ""}`}>
+                  <CountryFlag countryCode={getCountryCode(selectedCountry)} wrapperClass={styles.flag} />
+                  <h5 className={styles.country_code}>{selectedCountry ? `+${selectedCountry.phone_code}` : "-"}</h5>
+                  <ImageView
+                    src={assets.ic_down_arrow_theme}
+                    alt="down-arrow"
+                    imgSize={24}
+                    onClick={goToCountry}
+                    wrapperClass={styles.country_arrow}
+                  />
+                  <TextField
+                    label="Phone Number"
+                    name="phone_no"
+                    value={phone_no}
+                    onChangeData={onChangeValue}
+                    wrapperClass={styles.phone_number}
+                    autoComplete="off"
+                    inputRegex={REG_VALID_NUMBER}
+                  />
+                </section>
+              </section>
+              <h5>{errNumber && <p className={styles.error_message}>{errNumber}</p>}</h5>
+            </>
+          ),
         },
         {
           elementType: "drop-down",
@@ -443,5 +503,10 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     onChangeValue,
     onSubmit,
     toggleSlider,
+    showCountry,
+    onSelectCountry,
+    data,
+    allCountries,
+    selectedCountry,
   }
 }
