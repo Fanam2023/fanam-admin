@@ -53,10 +53,8 @@ const useHandler = () => {
     order,
     expiration_time,
     transfer_time,
-    recipient_relationship,
     recipient_account_type,
   } = transactionDetail || {}
-  console.log(">>", recipient_relationship)
 
   useEffect(() => {
     if (remainingTime > 0) {
