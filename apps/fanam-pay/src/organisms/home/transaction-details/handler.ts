@@ -17,7 +17,7 @@ export const useHandler = (transaction: ITransaction) => {
     cancel_reason: "",
   })
 
-  const {recipient, transaction_id, beneficiary} = transaction || {}
+  const {recipient, transaction_id, beneficiary, recipient_account_type} = transaction || {}
   const {
     first_name,
     last_name,
@@ -31,6 +31,7 @@ export const useHandler = (transaction: ITransaction) => {
     relationship,
     address_line_1,
     address_line_2,
+    business_name,
   } = recipient || {}
 
   const {country_name} = country || {}
@@ -51,6 +52,8 @@ export const useHandler = (transaction: ITransaction) => {
 
   const {recipientDetails} = useMemo(() => {
     const recipientDetails: IFormData[] = [
+      {key: "Recipient Type", label: recipient_account_type},
+      ...(business_name ? [{key: "Business Name", label: business_name}] : []),
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
       {key: "Email", label: email},

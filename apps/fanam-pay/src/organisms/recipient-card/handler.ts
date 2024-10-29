@@ -5,7 +5,7 @@ import {ID_PROOFS_INDIA, RELATION_SHIP_DATA} from "utils"
 
 export const useHandler = () => {
   const {transData, refetchTransaction, transId} = useSingleton()
-  const {recipient_relationship} = transData || {}
+  const {recipient_relationship, recipient_account_type} = transData || {}
   const {
     first_name,
     last_name,
@@ -24,6 +24,7 @@ export const useHandler = () => {
     id_issued_country,
     id_number,
     id_type,
+    business_name,
   } = transData?.recipient || {}
 
   const {country_name} = country || {}
@@ -52,6 +53,8 @@ export const useHandler = () => {
     const recipientRelationship = RELATION_SHIP_DATA[recipient_relationship]?.label
     const idType = ID_PROOFS_INDIA.find(item => item.key === id_type)?.label
     const recipientDetails: IFormData[] = [
+      {key: "Recipient Type", label: recipient_account_type},
+      ...(business_name ? [{key: "Business Name", label: business_name}] : []),
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
       {key: "Email", label: email},

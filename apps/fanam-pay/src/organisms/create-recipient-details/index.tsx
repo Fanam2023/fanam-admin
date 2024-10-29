@@ -5,7 +5,7 @@ import useHandler from "./handler"
 import styles from "./styles.module.sass"
 
 export const CreateRecipientDetails = ({recipient_id}: RecipientDetailsProp) => {
-  const {formElements, onSubmit, showCountry, onSelectCountry, selectedCountry, allCountries} = useHandler(
+  const {formElements, onSubmit, showCountry, onSelectCountry, selectedCountry, allCountries,setShowCountry} = useHandler(
     styles,
     recipient_id
   )
@@ -19,11 +19,15 @@ export const CreateRecipientDetails = ({recipient_id}: RecipientDetailsProp) => 
           countries={allCountries}
           title="Select Your Country"
           wrapperClass={styles.main_country_wrapper}
-          showDropdown={showCountry}
+          showCountry={showCountry}
+          onShowCountry={setShowCountry} 
         />
       )}
-      <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-      <Button wrapperClass={styles.btn_wrapper} onClick={onSubmit}>
+      <GroupForm
+        formSections={formElements}
+        wrapperClass={`${styles.input_wrapper} ${showCountry ? styles.input_hidden : ""}`}
+      />
+      <Button wrapperClass={`${styles.btn_wrapper} ${showCountry ? styles.input_hidden : ""}`} onClick={onSubmit}>
         {recipient_id ? "Update Recipient" : "Add Recipient"}
       </Button>
     </section>

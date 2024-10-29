@@ -7,7 +7,8 @@ export interface CountryPopupProps {
   countries: ICountry[]
   title?: string
   wrapperClass?: string
-  showDropdown?: boolean
+  showCountry?: boolean
+  onShowCountry?: (show: boolean) => void
 }
 
 export interface ITransfer {

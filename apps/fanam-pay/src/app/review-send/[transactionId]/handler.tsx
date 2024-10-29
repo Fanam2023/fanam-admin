@@ -54,6 +54,7 @@ const useHandler = () => {
     expiration_time,
     transfer_time,
     recipient_relationship,
+    recipient_account_type,
   } = transactionDetail || {}
 
   useEffect(() => {
@@ -103,6 +104,7 @@ const useHandler = () => {
       state,
       city,
       zip_code,
+      business_name,
     } = recipient || {}
 
     const {country_name} = country || {}
@@ -123,6 +125,8 @@ const useHandler = () => {
     const recipientRelationship = RELATION_SHIP_DATA[recipient_relationship]?.label
 
     const recipientDetails: IFormData[] = [
+      {key: "Recipient Type", label: recipient_account_type},
+      ...(business_name ? [{key: "Business Name", label: business_name}] : []),
       {key: "First Name", label: first_name},
       {key: "Last Name", label: last_name},
       {key: "Email", label: email},

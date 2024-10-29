@@ -226,12 +226,12 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const selectedCountry = data.country ? allCountries?.find(country => country?.country_id === data.country.key) : null
   const nationalNumberLength = selectedCountry ? getNationalNumber(selectedCountry?.iso2)?.length : 0
 
-  const onSelectCountry = country => {
+  const onSelectCountry = selectedCountry => {
     setData(prev => ({
       ...prev,
       country: {
-        key: country.country_id,
-        label: country.phone_code,
+        key: selectedCountry.country_id,
+        label: selectedCountry.country_name,
       },
       phone_no: "",
     }))
@@ -365,7 +365,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     if (isValid && phoneNO.length <= nationalNumberLength) setData(prev => ({...prev, ...value}))
     // else toggleNotify({type: "error", title: "Only numbers are allowed"})
   }
-  const onChangeCountry = (value: JSONObject) => onChangeValue({...value, state: null, city: null})
+  const onChangeCountry = (value: JSONObject) => onChangeValue({...value, state: null, city: null, phone_no: ""})
 
   const onChangeState = (value: JSONObject) => onChangeValue({...value, city: null})
 
@@ -625,7 +625,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "Address Line 2",
+          label: "Address Line 2 (Optional)",
           name: "address_line_2",
           value: address_line_2,
           isRequired: false,
@@ -930,6 +930,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     data,
     allCountries,
     selectedCountry,
+    setShowCountry,
   }
 }
 

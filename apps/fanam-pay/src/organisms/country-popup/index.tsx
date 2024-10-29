@@ -1,4 +1,4 @@
-import {TextField} from "@fanam-pkg/core-ui-sass"
+import {assets, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
 import {useMemo} from "react"
 import {ICountry} from "@custom/utils"
 import {CountryFlag} from "organisms/country-flag"
@@ -6,7 +6,15 @@ import {CountryPopupProps} from "props"
 import styles from "./country.module.sass"
 import {useHandler} from "./handler"
 
-export const CountryPopup = ({onSelect, selCountry, countries, title, wrapperClass}: CountryPopupProps) => {
+export const CountryPopup = ({
+  onSelect,
+  selCountry,
+  countries,
+  title,
+  wrapperClass,
+  showCountry,
+  onShowCountry,
+}: CountryPopupProps) => {
   const {searchTerm, setSearchTerm} = useHandler()
 
   const filteredCountry = useMemo(
@@ -33,6 +41,15 @@ export const CountryPopup = ({onSelect, selCountry, countries, title, wrapperCla
 
   return (
     <section className={`${styles.main_country_wrapper} ${wrapperClass}`}>
+      {showCountry && (
+        <ImageView
+          src={assets.ic_close}
+          alt="close-icon"
+          imgSize={24}
+          onClick={() => onShowCountry(false)}
+          className={`flex ${styles.close_icon}`}
+        />
+      )}
       <TextField
         label="country name"
         value={searchTerm}
@@ -40,6 +57,7 @@ export const CountryPopup = ({onSelect, selCountry, countries, title, wrapperCla
         wrapperClass={styles.search_wrapper}
         isRequired={false}
       />
+
       <h3 className={styles.select_country_text}>{title}</h3>
       {filteredCountry && filteredCountry.length > 0 ? (
         <ul className={styles.layout_wrapper}>{filteredCountry?.map(renderCountries)}</ul>
