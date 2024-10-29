@@ -22,8 +22,11 @@ export const CreateBeneficiaryDetails = ({beneficiary_id}: BeneficiaryDetailsPro
           showDropdown={showCountry}
         />
       )}
-      <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-      <Button wrapperClass={styles.btn_wrapper} onClick={onSubmit}>
+      <GroupForm
+        formSections={formElements}
+        wrapperClass={`${styles.input_wrapper}  ${showCountry ? styles.input_hidden : ""}`}
+      />
+      <Button wrapperClass={`${styles.btn_wrapper}  ${showCountry ? styles.input_hidden : ""}`} onClick={onSubmit}>
         {beneficiary_id ? "Update Beneficiary" : "Add Beneficiary"}
       </Button>
     </section>

@@ -284,19 +284,19 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     if (isValid && phoneNO.length <= nationalNumberLength) setData(prev => ({...prev, ...value}))
   }
 
-  const onChangeCountry = (value: JSONObject) => onChangeValue({...value, state: null, city: null})
+  const onChangeCountry = (value: JSONObject) => onChangeValue({...value, state: null, city: null, phone_no: ""})
 
   const onChangeState = (value: JSONObject) => onChangeValue({...value, city: null})
 
   const selectedCountry = data.country ? allCountries?.find(country => country?.country_id === data.country.key) : null
   const nationalNumberLength = selectedCountry ? getNationalNumber(selectedCountry?.iso2)?.length : 0
 
-  const onSelectCountry = country => {
+  const onSelectCountry = selectedCountry => {
     setData(prev => ({
       ...prev,
       country: {
-        key: country.country_id,
-        label: country.phone_code,
+        key: selectedCountry.country_id,
+        label: selectedCountry.country_name,
       },
       phone_no: "",
     }))
@@ -323,7 +323,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
       childElements: [
         {
           elementType: "input",
-          label: "first Name",
+          label: "First Name",
           name: "first_name",
           error: errFirstName,
           value: first_name,
@@ -332,7 +332,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "input",
-          label: "last Name",
+          label: "Last Name",
           name: "last_name",
           error: errLastName,
           value: last_name,

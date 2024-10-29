@@ -1070,7 +1070,9 @@ const useHandler = (styles: IStyle) => {
                   countryCode={getCountryCode(Country)}
                   wrapperClass={`${styles.flag}  ${user?.country ? styles.disabled : ""}`}
                 />
-                <h5 className={styles.country_code}>{Country ? `+${Country?.phone_code}` : "-"}</h5>
+                <h5 className={`${styles.country_code} ${user?.country ? styles.disabled : ""}`}>
+                  {Country ? `+${Country?.phone_code}` : "-"}
+                </h5>
                 <TextField
                   label="Company Phone Number"
                   name="phone_no"

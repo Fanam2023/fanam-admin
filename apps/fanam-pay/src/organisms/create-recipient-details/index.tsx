@@ -22,8 +22,11 @@ export const CreateRecipientDetails = ({recipient_id}: RecipientDetailsProp) => 
           showDropdown={showCountry}
         />
       )}
-      <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-      <Button wrapperClass={styles.btn_wrapper} onClick={onSubmit}>
+      <GroupForm
+        formSections={formElements}
+        wrapperClass={`${styles.input_wrapper} ${showCountry ? styles.input_hidden : ""}`}
+      />
+      <Button wrapperClass={`${styles.btn_wrapper} ${showCountry ? styles.input_hidden : ""}`} onClick={onSubmit}>
         {recipient_id ? "Update Recipient" : "Add Recipient"}
       </Button>
     </section>
