@@ -93,7 +93,7 @@ export const useHandler = () => {
         })
       } else
         toggleNotify({
-          title: "Error - Initiate transaction",
+          title: "Please Enter a Valid Amount",
           description: errorData?.message || "Something went wrong",
           type: "error",
         })
@@ -294,12 +294,21 @@ export const useHandler = () => {
 
   useEffect(() => {
     if (remainingTime > 0) {
-      const debounceInterval = setInterval(() => setRemainingTime(remainingTime - 1000), 1000)
-
+      const debounceInterval = setInterval(
+        () =>
+          setRemainingTime(prevTime => {
+            const newTime = prevTime - 1000
+            if (newTime <= 0) {
+              onCancelTransaction(transId)
+            }
+            return newTime
+          }),
+        1000
+      )
       return () => {
         clearInterval(debounceInterval)
       }
-    } else if (expiration_time && transfer_time) onCancelTransaction(transId)
+    }
   }, [remainingTime])
 
   useEffect(() => {
@@ -341,8 +350,14 @@ export const useHandler = () => {
       return
     }
 
-    if (name === "destination_amount") payloadData.source_amount = ""
-    else if (name === "source_amount") payloadData.destination_amount = ""
+    if (name === "destination_amount" && value === "") {
+      setRemainingTime(0)
+      payloadData.source_amount = ""
+    } else if (name === "destination_amount") {
+      payloadData.source_amount = ""
+    } else if (name === "source_amount") {
+      payloadData.destination_amount = ""
+    }
 
     payloadData[name] = value
 
