@@ -508,5 +508,6 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     data,
     allCountries,
     selectedCountry,
+    setShowCountry
   }
 }

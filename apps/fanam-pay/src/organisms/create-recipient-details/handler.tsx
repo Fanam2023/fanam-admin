@@ -625,7 +625,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "Address Line 2",
+          label: "Address Line 2 (Optional)",
           name: "address_line_2",
           value: address_line_2,
           isRequired: false,
@@ -930,6 +930,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     data,
     allCountries,
     selectedCountry,
+    setShowCountry,
   }
 }
 

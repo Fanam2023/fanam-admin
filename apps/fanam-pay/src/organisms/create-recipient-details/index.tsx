@@ -5,7 +5,7 @@ import useHandler from "./handler"
 import styles from "./styles.module.sass"
 
 export const CreateRecipientDetails = ({recipient_id}: RecipientDetailsProp) => {
-  const {formElements, onSubmit, showCountry, onSelectCountry, selectedCountry, allCountries} = useHandler(
+  const {formElements, onSubmit, showCountry, onSelectCountry, selectedCountry, allCountries,setShowCountry} = useHandler(
     styles,
     recipient_id
   )
@@ -19,7 +19,8 @@ export const CreateRecipientDetails = ({recipient_id}: RecipientDetailsProp) => 
           countries={allCountries}
           title="Select Your Country"
           wrapperClass={styles.main_country_wrapper}
-          showDropdown={showCountry}
+          showCountry={showCountry}
+          onShowCountry={setShowCountry} 
         />
       )}
       <GroupForm
