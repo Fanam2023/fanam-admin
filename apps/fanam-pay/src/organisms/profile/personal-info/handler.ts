@@ -56,7 +56,7 @@ const useHandler = () => {
           type: "text",
           label: "Date of Birth",
           name: "date_of_birth",
-          value: formatDate(date_of_birth, DF_INPUT_DATE),
+          value: date_of_birth ? formatDate(date_of_birth, DF_INPUT_DATE) : "-",
           disabled: !!user?.date_of_birth,
         },
       ],

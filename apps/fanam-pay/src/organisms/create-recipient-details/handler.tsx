@@ -809,10 +809,10 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     if (routingInput && !isValidInputByRegex(routing_code, routingInput.regEx))
       errState = {...errState, errRoutingCode: "Please enter valid Routing code", isValid: false}
 
-    if (ibanInput && isValidInputByRegex(iban_no, ibanInput.regEx))
+    if (ibanInput && !isValidInputByRegex(iban_no, ibanInput.regEx))
       errState = {...errState, errIbanNo: "Please enter valid Iban code", isValid: false}
 
-    if (bsbInput && isValidInputByRegex(bsb_code, bsbInput.regEx))
+    if (bsbInput && !isValidInputByRegex(bsb_code, bsbInput.regEx))
       errState = {...errState, errBsbCode: "Please enter valid BSB code", isValid: false}
 
     if (!address_line_1) errState = {...errState, errAddressLine1: "Please enter Address", isValid: false}
