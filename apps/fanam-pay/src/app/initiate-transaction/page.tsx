@@ -77,7 +77,7 @@ const InitiateTransactionPage = () => {
                     type="text"
                     value={destination_amount}
                     name="destination_amount"
-                    className={styles.input}
+                    className={styles.input2}
                     onChange={onChangeValue}
                   />
                 </section>
@@ -91,7 +91,7 @@ const InitiateTransactionPage = () => {
               </section>
             </section>
           </section>
-          <TransferTime onSelect={onSelect} transferTimeRes={fxRes} />
+          {!!destination_amount && <TransferTime onSelect={onSelect} transferTimeRes={fxRes} />}
           {destination_amount && (
             <section className={`flex-sb-center ${styles.total_background}`}>
               <section className={styles.receiver_wrapper}>
