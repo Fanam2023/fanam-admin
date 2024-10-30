@@ -10,7 +10,7 @@ import {
 } from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
-import {useMutation, useQueries} from "@tanstack/react-query"
+import {useMutation, useQueries, useQuery} from "@tanstack/react-query"
 import {ButtonAccountType, useSlider} from "@custom/ui"
 import {
   IBankInput,
@@ -142,12 +142,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     errRoutingCode,
   } = errData
 
-  const [
-    {data: allCountries = []},
-    {data: allStates = []},
-    {data: allCities = []},
-    {data: recipientData, refetch: refetchRecipient},
-  ] = useQueries({
+  const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}] = useQueries({
     queries: [
       {queryKey: [QUERY_COUNTRIES], queryFn: getTransactionCountries},
       {
@@ -160,12 +155,12 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         queryFn: () => getCities(state?.key),
         enabled: !!state,
       },
-      {
-        queryKey: [`${QUERY_RECIPIENT}-${recipientId}`, state],
-        queryFn: () => getByRecipientId(recipientId),
-        enabled: !!recipientId,
-      },
     ],
+  })
+
+  const {data: recipientData} = useQuery({
+    queryKey: [QUERY_RECIPIENT.concat(recipientId)],
+    queryFn: () => getByRecipientId(recipientId),
   })
 
   const {mutate: addRecipient} = useMutation({
