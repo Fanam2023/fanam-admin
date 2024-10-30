@@ -810,7 +810,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       errState = {...errState, errRoutingCode: "Please enter valid Routing code", isValid: false}
 
     if (ibanInput && isValidInputByRegex(iban_no, ibanInput.regEx))
-      errState = {...errState, errIbanNo: "Please enter valid Iban code", isValid: false}
+      errState = {...errState, errIbanNo: "Please enter valid IBAN code", isValid: false}
 
     if (bsbInput && isValidInputByRegex(bsb_code, bsbInput.regEx))
       errState = {...errState, errBsbCode: "Please enter valid BSB code", isValid: false}
