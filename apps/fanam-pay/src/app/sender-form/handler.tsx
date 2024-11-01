@@ -892,7 +892,7 @@ const useHandler = (styles: IStyle) => {
         label: "Pin Code",
         name: "zip_code",
         value: zip_code,
-        inputRegex: REG_VALID_NUMBER,
+        inputRegex: REG_VALID_NAME,
         error: errZipCode,
         onChangeValue,
       },
