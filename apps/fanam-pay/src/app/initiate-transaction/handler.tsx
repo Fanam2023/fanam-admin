@@ -94,7 +94,6 @@ export const useHandler = () => {
       } else
         toggleNotify({
           title: "Please Enter a Valid Amount",
-          description: errorData?.message || "Something went wrong",
           type: "error",
         })
     },
