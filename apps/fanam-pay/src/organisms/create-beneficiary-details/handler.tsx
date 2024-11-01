@@ -2,7 +2,7 @@ import {FormSectionProps, ImageView, TextField, useNotifyPopup} from "@fanam-pkg
 import {IFormData, JSONObject, REG_EMAIL, REG_VALID_NAME, REG_VALID_NUMBER, useReactQuery, useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
-import {useMutation, useQueries} from "@tanstack/react-query"
+import {useMutation, useQueries, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {IBeneficiaryData, IPayloadBeneficiary, IStyle, REG_INPUT_EMAIL, REG_INPUT_NAME} from "@custom/utils"
 import assets from "assets"
@@ -149,27 +149,26 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     errAccountNo,
   } = errState
 
-  const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}, {data: beneficiaryData}] =
-    useQueries({
-      queries: [
-        {queryKey: [QUERY_COUNTRIES], queryFn: getTransactionCountries},
-        {
-          queryKey: [`${QUERY_STATES}-${country?.key}`, country],
-          queryFn: () => getStates(country?.key),
-          enabled: !!country,
-        },
-        {
-          queryKey: [`${QUERY_CITIES}-${state?.key}`, state],
-          queryFn: () => getCities(state?.key),
-          enabled: !!state,
-        },
-        {
-          queryKey: [`${QUERY_BENEFICIARY}-${beneficiaryId}`, state],
-          queryFn: () => getByBeneficiaryId(beneficiaryId as string),
-          enabled: !!beneficiaryId,
-        },
-      ],
-    })
+  const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}] = useQueries({
+    queries: [
+      {queryKey: [QUERY_COUNTRIES], queryFn: getTransactionCountries},
+      {
+        queryKey: [`${QUERY_STATES}-${country?.key}`, country],
+        queryFn: () => getStates(country?.key),
+        enabled: !!country,
+      },
+      {
+        queryKey: [`${QUERY_CITIES}-${state?.key}`, state],
+        queryFn: () => getCities(state?.key),
+        enabled: !!state,
+      },
+    ],
+  })
+
+  const {data: beneficiaryData} = useQuery({
+    queryKey: [QUERY_BENEFICIARY.concat(beneficiaryId)],
+    queryFn: () => getByBeneficiaryId(beneficiaryId),
+  })
 
   function onSuccess(message: string) {
     toggleNotify({
@@ -508,6 +507,6 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     data,
     allCountries,
     selectedCountry,
-    setShowCountry
+    setShowCountry,
   }
 }
