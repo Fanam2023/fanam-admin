@@ -46,7 +46,7 @@ export const CountryPopup = ({
           src={assets.ic_close}
           alt="close-icon"
           imgSize={24}
-          onClick={() => onShowCountry(false)}
+          onClick={onShowCountry.bind(null, false)}
           className={`flex ${styles.close_icon}`}
         />
       )}

@@ -50,7 +50,7 @@ export const useHandler = () => {
   const isSamePerson = is_same_person || relationship
 
   const {recipientDetails} = useMemo(() => {
-    const recipientRelationship = RELATION_SHIP_DATA[recipient_relationship]?.label
+    const recipientRelationship = RELATION_SHIP_DATA[relationship]?.label
     const idType = ID_PROOFS_INDIA.find(item => item.key === id_type)?.label
     const recipientDetails: IFormData[] = [
       {key: "Recipient Type", label: recipient_account_type},
@@ -74,7 +74,7 @@ export const useHandler = () => {
       {key: "ID Issued Country", label: id_issued_country?.country_name},
       {key: "ID Type", label: idType},
       {key: "ID Number", label: id_number},
-      ...(recipient_relationship
+      ...(relationship
         ? [{key: "Sender's relationship with the Recipient", label: recipientRelationship}]
         : []),
     ]
