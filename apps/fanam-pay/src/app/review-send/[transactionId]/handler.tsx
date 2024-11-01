@@ -53,7 +53,6 @@ const useHandler = () => {
     order,
     expiration_time,
     transfer_time,
-    recipient_relationship,
     recipient_account_type,
   } = transactionDetail || {}
 
@@ -100,6 +99,7 @@ const useHandler = () => {
       email,
       phone_no,
       bank_account,
+      relationship,
       country,
       state,
       city,
@@ -122,7 +122,7 @@ const useHandler = () => {
       iban_no,
       routing_code,
     } = bank_account || {}
-    const recipientRelationship = RELATION_SHIP_DATA[recipient_relationship]?.label
+    const recipientRelationship = RELATION_SHIP_DATA[relationship]?.label
 
     const recipientDetails: IFormData[] = [
       {key: "Recipient Type", label: recipient_account_type},
@@ -143,9 +143,7 @@ const useHandler = () => {
       {key: "Bank Name", label: bank_name},
       {key: "Branch Code", label: branch_code},
       {key: "Branch Address", label: branch_address},
-      ...(recipient_relationship
-        ? [{key: "Sender's relationship with the Recipient", label: recipientRelationship}]
-        : []),
+      ...(relationship ? [{key: "Sender's relationship with the Recipient", label: recipientRelationship}] : []),
     ]
 
     if (swift_code) recipientDetails.push({key: "Swift Code", label: swift_code})

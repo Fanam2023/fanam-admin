@@ -297,6 +297,7 @@ const useHandler = (styles: IStyle) => {
     onSuccess: ({result, errorData}) => {
       const {message} = errorData || {}
       if (result) {
+        refetchUser()
         const {user} = result
         updateUserData({...user, kyc_details: result?.user?.kyc_details})
         toggleNotify({
@@ -379,6 +380,7 @@ const useHandler = (styles: IStyle) => {
     onSuccess: ({result, errorData}) => {
       const {message} = errorData || {}
       if (result) {
+        refetchUser()
         const {user} = result
         updateUserData({...user, kyc_details: result?.user?.kyc_details})
         toggleNotify({
@@ -892,7 +894,7 @@ const useHandler = (styles: IStyle) => {
         label: "Pin Code",
         name: "zip_code",
         value: zip_code,
-        inputRegex: REG_VALID_NUMBER,
+        inputRegex: REG_VALID_NAME,
         error: errZipCode,
         onChangeValue,
       },
@@ -956,7 +958,7 @@ const useHandler = (styles: IStyle) => {
                   wrapperClass={`${styles.flag} ${Country ? styles.disabled : ""}`}
                 />
                 <h5 className={` ${styles.country_code} ${Country?.phone_code ? styles.disabled : ""}`}>
-                  {Country ? `+${Country?.phone_code}` : "-"}
+                  {Country?.phone_code ? `+${Country?.phone_code}` : "-"}
                 </h5>
                 <TextField
                   label="Phone Number"

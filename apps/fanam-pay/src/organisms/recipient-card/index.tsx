@@ -15,7 +15,7 @@ export const RecipientCard = ({
   error,
   isTransactionCompleted,
 }: RecipientCardProps) => {
-  const {recipientDetails, recipient_id, isSamePerson, relationship} = useHandler()
+  const {recipientDetails, recipient_id, isSamePerson} = useHandler()
 
   const renderRecipientDetails = ({key, label}: IFormData, index: number) => (
     <li className={styles.data_wrapper} key={index}>
@@ -68,7 +68,7 @@ export const RecipientCard = ({
               options={RELATION_SHIP}
               onChangeData={onChangeData}
               name="recipient_relationship"
-              selected={relationship}
+              selected={relation}
               disabled
               wrapperClass={styles.drop_down}
               error={error}

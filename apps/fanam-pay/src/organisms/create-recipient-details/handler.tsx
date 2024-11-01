@@ -10,7 +10,7 @@ import {
 } from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
-import {useMutation, useQueries} from "@tanstack/react-query"
+import {useMutation, useQueries, useQuery} from "@tanstack/react-query"
 import {ButtonAccountType, useSlider} from "@custom/ui"
 import {
   IBankInput,
@@ -142,12 +142,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     errRoutingCode,
   } = errData
 
-  const [
-    {data: allCountries = []},
-    {data: allStates = []},
-    {data: allCities = []},
-    {data: recipientData, refetch: refetchRecipient},
-  ] = useQueries({
+  const [{data: allCountries = []}, {data: allStates = []}, {data: allCities = []}] = useQueries({
     queries: [
       {queryKey: [QUERY_COUNTRIES], queryFn: getTransactionCountries},
       {
@@ -160,12 +155,12 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         queryFn: () => getCities(state?.key),
         enabled: !!state,
       },
-      {
-        queryKey: [`${QUERY_RECIPIENT}-${recipientId}`, state],
-        queryFn: () => getByRecipientId(recipientId),
-        enabled: !!recipientId,
-      },
     ],
+  })
+
+  const {data: recipientData} = useQuery({
+    queryKey: [QUERY_RECIPIENT.concat(recipientId)],
+    queryFn: () => getByRecipientId(recipientId),
   })
 
   const {mutate: addRecipient} = useMutation({
@@ -671,7 +666,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           label: "Pin Code",
           name: "zip_code",
           error: errZipCode,
-          inputRegex: REG_VALID_NUMBER,
+          inputRegex: REG_VALID_NAME,
           value: zip_code,
           onChangeValue,
         },
@@ -718,6 +713,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           fileType: ["image/*", "application/pdf"],
           name: "kyc",
           isMultiple: true,
+          wrapperClass: `flex-col ${styles.upload_img_picker}`,
           children: <CustomUpload />,
           label: "Identity Proof",
           value: kyc,
@@ -812,7 +808,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     if (ibanInput && isValidInputByRegex(iban_no, ibanInput.regEx))
       errState = {...errState, errIbanNo: "Please enter valid IBAN code", isValid: false}
 
-    if (bsbInput && isValidInputByRegex(bsb_code, bsbInput.regEx))
+    if (bsbInput && !isValidInputByRegex(bsb_code, bsbInput.regEx))
       errState = {...errState, errBsbCode: "Please enter valid BSB code", isValid: false}
 
     if (!address_line_1) errState = {...errState, errAddressLine1: "Please enter Address", isValid: false}

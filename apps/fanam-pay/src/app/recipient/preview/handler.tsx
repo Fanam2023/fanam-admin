@@ -23,7 +23,8 @@ export const useHandler = () => {
   const {syncRecipientAsBeneficiary} = useTransactionController()
   const [data, setData] = useState<IMergeRecipientData>({
     is_same_person: {isSelected: false},
-    recipient_relationship: RELATION_SHIP[0],
+    recipient_relationship:
+      RELATION_SHIP.find(item => item.key === transData?.recipient?.relationship) || RELATION_SHIP[0],
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
   const {is_same_person, recipient_relationship} = data
