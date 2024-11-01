@@ -1,5 +1,12 @@
 import {FormSectionProps, ImageView, TextField, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
-import {IFormData, JSONObject, REG_EMAIL, REG_VALID_NAME, REG_VALID_NUMBER, useReactQuery, useResize} from "@fanam-pkg/core-utils"
+import {
+  IFormData,
+  JSONObject,
+  REG_EMAIL,
+  REG_VALID_NUMBER,
+  useReactQuery,
+  useResize,
+} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries, useQuery} from "@tanstack/react-query"
@@ -465,7 +472,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
           label: "Pin Code",
           name: "zip_code",
           value: zip_code,
-          inputRegex: REG_VALID_NAME,
+          inputRegex: REG_VALID_NUMBER,
           error: errZipCode,
           onChangeValue,
         },
