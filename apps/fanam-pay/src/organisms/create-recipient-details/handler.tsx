@@ -666,7 +666,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           label: "Pin Code",
           name: "zip_code",
           error: errZipCode,
-          inputRegex: REG_VALID_NAME,
+          inputRegex: REG_VALID_NUMBER,
           value: zip_code,
           onChangeValue,
         },
@@ -805,7 +805,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     if (routingInput && !isValidInputByRegex(routing_code, routingInput.regEx))
       errState = {...errState, errRoutingCode: "Please enter valid Routing code", isValid: false}
 
-    if (ibanInput && isValidInputByRegex(iban_no, ibanInput.regEx))
+    if (ibanInput && !isValidInputByRegex(iban_no, ibanInput.regEx))
       errState = {...errState, errIbanNo: "Please enter valid IBAN code", isValid: false}
 
     if (bsbInput && !isValidInputByRegex(bsb_code, bsbInput.regEx))
