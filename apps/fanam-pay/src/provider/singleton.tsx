@@ -12,7 +12,6 @@ import {
   COOKIE_TRANSACTION_ID,
   QUERY_TRANSACTION,
   QUERY_USER,
-  ROUTE_FORGOT_PIN,
   ROUTE_HOME,
   ROUTE_LOGIN,
   ROUTE_SENDER,
@@ -98,7 +97,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     removeCookie(COOKIE_REFRESH_TOKEN)
     clearQueryCache()
     clearAllStorage()
-    replace(action === "forgot-pin" ? ROUTE_FORGOT_PIN : ROUTE_LOGIN)
+    replace(ROUTE_LOGIN)
   }
 
   const value: ISingleton = {
