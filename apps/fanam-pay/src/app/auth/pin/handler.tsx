@@ -49,6 +49,7 @@ const useHandler = (styles: IStyle) => {
       toggleNotify({
         type: result ? "success" : "error",
         title: message,
+        description: errorData && errorData?.error,
       })
       if (result) {
         removeStorage(SESSION_SIGNUP)
