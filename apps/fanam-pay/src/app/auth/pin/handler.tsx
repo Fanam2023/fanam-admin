@@ -36,7 +36,8 @@ const useHandler = (styles: IStyle) => {
       } else if (errorData?.message)
         toggleNotify({
           type: "error",
-          title: errorData?.message || "Something went wrong",
+          title: "Something went wrong",
+          description: errorData?.message,
         })
     },
   })
