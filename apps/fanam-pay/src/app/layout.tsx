@@ -27,9 +27,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="en">
       <body className={`${primaryFont.variable} ${isDesktop ? styles.background : ""}`}>
         <LibProvider>
-          <CustomProvider>
-            <UIProvider>{children}</UIProvider>
-          </CustomProvider>
+          <UIProvider>
+            <CustomProvider>{children} </CustomProvider>
+          </UIProvider>
         </LibProvider>
       </body>
     </html>
