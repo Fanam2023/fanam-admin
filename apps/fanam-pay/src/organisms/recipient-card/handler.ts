@@ -74,9 +74,7 @@ export const useHandler = () => {
       {key: "ID Issued Country", label: id_issued_country?.country_name},
       {key: "ID Type", label: idType},
       {key: "ID Number", label: id_number},
-      ...(relationship
-        ? [{key: "Sender's relationship with the Recipient", label: recipientRelationship}]
-        : []),
+      ...(relationship ? [{key: "Sender's relationship with the Recipient", label: recipientRelationship}] : []),
     ]
 
     if (swift_code) recipientDetails.push({key: "Swift Code", label: swift_code})
