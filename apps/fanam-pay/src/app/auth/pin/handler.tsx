@@ -36,7 +36,8 @@ const useHandler = (styles: IStyle) => {
       } else if (errorData?.message)
         toggleNotify({
           type: "error",
-          title: errorData?.message || "Something went wrong",
+          title: "Something went wrong",
+          description: errorData?.message,
         })
     },
   })
@@ -48,8 +49,8 @@ const useHandler = (styles: IStyle) => {
       const message = result ? "PIN changed Successfully" : errorData?.message || "Something went wrong"
       toggleNotify({
         type: result ? "success" : "error",
-        title: message,
-        description: errorData && errorData?.error,
+        title: result ? "PIN changed" : "Something went wrong",
+        description: message,
       })
       if (result) {
         removeStorage(SESSION_SIGNUP)
