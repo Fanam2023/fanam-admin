@@ -66,6 +66,7 @@ export const useRecipientController = () => {
   const updateRecipient = async (payload: IPayloadUpdateRecipient) => {
     const {recipient_id, kyc, transaction_id} = payload
     delete payload.recipient_id
+    delete payload.kyc
     let {result, errorData} = await putRequest<ITransaction>(apiRecipient(recipient_id), payload)
 
     if (result && kyc.length) {
@@ -82,9 +83,9 @@ export const useRecipientController = () => {
     kyc.forEach(({file}) => {
       formData.append("kyc", file)
     })
-    formData.append("transaction_id", transactionId)
-    formData.append("recipient_id", recipientId)
+    if (transactionId) formData.append("transaction_id", transactionId)
 
+    formData.append("recipient_id", recipientId)
     return await postRequest<ITransaction>(API_RECIPIENT_KYC, formData)
   }
 

@@ -86,7 +86,7 @@ const TransactionStatusPage = () => {
   )
 
   const DownloadReceipt = () => (
-    <a href={url}>
+    <a href={url} download>
       <Button buttonType="primary-outlined" wrapperClass={styles.receipt_button}>
         Download Receipt
       </Button>
