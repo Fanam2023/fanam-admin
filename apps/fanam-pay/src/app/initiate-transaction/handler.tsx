@@ -80,10 +80,9 @@ export const useHandler = () => {
   const {mutate: putTransaction} = useMutation({
     mutationKey: [QUERY_TRANSACTION],
     mutationFn: updateTransaction,
-    onSuccess: ({result, errorData}) => {
+    onSuccess: ({result}) => {
       isFetched.current = true
-
-      if (result) {
+      if (result && result.destination_amount) {
         const {final_amount, destination_amount, source_country, destination_country} = result
         setData({
           source_amount: `${final_amount?.toFixed(2)}`,
@@ -91,11 +90,13 @@ export const useHandler = () => {
           source_country,
           destination_country,
         })
-      } else
+      } else {
         toggleNotify({
           title: "Please Enter a Valid Amount",
+          description: "Enter a Valid Amount",
           type: "error",
         })
+      }
     },
   })
 
@@ -364,7 +365,7 @@ export const useHandler = () => {
   }
 
   const onDisable = (value: string) => {
-    return value.trim() === ""
+    return value.trim() === "" || value.trim() === "0"
   }
 
   const onSubmit = () => {
