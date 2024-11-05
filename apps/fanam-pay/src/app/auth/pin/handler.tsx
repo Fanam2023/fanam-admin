@@ -36,7 +36,7 @@ const useHandler = (styles: IStyle) => {
       } else if (errorData?.message)
         toggleNotify({
           type: "error",
-          title: "Something went wrong",
+          title: "User exists",
           description: errorData?.message,
         })
     },
@@ -97,6 +97,11 @@ const useHandler = (styles: IStyle) => {
       toggleNotify({
         type: "error",
         title: !isPinValid ? "Only numbers are allowed" : isPinSequential ? "PIN cannot be a continuous sequence" : "",
+        description: !isPinValid
+          ? "Only numbers are allowed"
+          : isPinSequential
+            ? "PIN cannot be a continuous sequence"
+            : "",
       })
     }
   }

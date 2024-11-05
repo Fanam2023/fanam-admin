@@ -17,6 +17,7 @@ import {
   IPayloadRecipient,
   IRecipientData,
   IStyle,
+  REG_INPUT_BSB,
   REG_INPUT_EMAIL,
   REG_INPUT_NAME,
   TypeAccount,
@@ -44,9 +45,8 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {refreshQuery} = useReactQuery()
   const {getTransactionCountries, getCities, getStates} = useLocationController()
   const {createRecipient, removeAttachment, updateRecipient, getByRecipientId} = useRecipientController()
-  const {refetchTransaction, transData} = useSingleton()
+  const {refetchTransaction, transId} = useSingleton()
   const {toggleNotify} = useNotifyPopup()
-  const {transaction_id} = transData || {}
 
   const RECIPIENT_TYPE: IFormData<TypeAccount>[] = [
     {label: "Individual", key: "Individual"},
@@ -531,7 +531,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       name: "bsb_code",
       value: bsb_code,
       error: errBsbCode,
-      inputRegex: REG_VALID_NAME,
+      inputRegex: REG_INPUT_BSB,
       onChangeValue,
     })
   }
@@ -916,7 +916,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
       if (!address_line_2) delete payload.address_line_2
 
-      if (recipientId) onUpdate({...payload, recipient_id: recipientId, transaction_id: transaction_id})
+      if (recipientId) onUpdate({...payload, recipient_id: recipientId, transaction_id: transId})
       else addRecipient(payload)
     }
   }
