@@ -101,8 +101,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
 
     if (!last_name) errState = {...errState, errLastName: "Please enter Last Name", isValid: false}
 
-    if (!isValidInputByRegex(email, REG_EMAIL))
-      errState = {...errState, errEmail: "Please enter Email", isValid: false}
+    if (!isValidInputByRegex(email, REG_EMAIL)) errState = {...errState, errEmail: "Please enter Email", isValid: false}
 
     if (!phone_no) errState = {...errState, errNumber: "Please enter your Phone Number", isValid: false}
 
