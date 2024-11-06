@@ -828,8 +828,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         isValid: false,
       }
     }
-    if (!isValidInputByRegex(email, REG_EMAIL))
-      errState = {...errState, errEmail: "Please enter Email", isValid: false}
+    if (!isValidInputByRegex(email, REG_EMAIL)) errState = {...errState, errEmail: "Please enter Email", isValid: false}
 
     if (!state) errState = {...errState, errState: "Please select State", isValid: false}
 
