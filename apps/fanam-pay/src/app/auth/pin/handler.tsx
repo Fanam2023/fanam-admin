@@ -49,7 +49,7 @@ const useHandler = (styles: IStyle) => {
       const message = result ? "PIN changed Successfully" : errorData?.message || "Something went wrong"
       toggleNotify({
         type: result ? "success" : "error",
-        title: result ? "PIN changed" : "Unable to Change PIN",
+        title: result ? "PIN changed" : "Unable to change PIN",
         description: message,
       })
       if (result) {
