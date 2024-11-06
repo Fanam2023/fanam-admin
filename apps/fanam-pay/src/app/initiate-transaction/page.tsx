@@ -48,7 +48,7 @@ const InitiateTransactionPage = () => {
           </h5>
         </section>
         <section className={styles.conversion_container}>
-          {!!durationTime && !!transfer_time && (
+          {!!durationTime && !!transfer_time && destination_amount !== "0" && destination_amount.trim() !== "" && (
             <section className={`flex ${styles.duration_wrapper}`}>
               <ImageView src={assets.ic_alarm} imgSize={24} alt="alarm" />
               <p>Important Note: Session becomes invalid at timer’s expiration</p>
@@ -94,7 +94,7 @@ const InitiateTransactionPage = () => {
           {!!destination_amount && destination_amount !== "0" && (
             <TransferTime onSelect={onSelect} transferTimeRes={fxRes} />
           )}
-          {destination_amount && (
+          {destination_amount && destination_amount !== "0" && (
             <section className={`flex-sb-center ${styles.total_background}`}>
               <section className={styles.receiver_wrapper}>
                 <h5>Receiver will get exactly</h5>
