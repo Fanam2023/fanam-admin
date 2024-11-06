@@ -1,6 +1,7 @@
 import {IFile, IFormData} from "@fanam-pkg/core-utils"
 import {
   IAttachment,
+  IAttachments,
   IBeneficiary,
   ICountry,
   IRecipient,
@@ -35,7 +36,7 @@ export interface ITransaction {
   created_at?: string
   paymentMode?: string
   expiration_time?: string
-  reconciliation_report?: IAttachment
+  reconciliation_report?: IAttachments
 }
 
 export interface ITransactionDetails extends ITransaction {

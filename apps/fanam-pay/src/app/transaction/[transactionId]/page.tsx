@@ -55,7 +55,7 @@ const TransactionStatusPage = () => {
 
   const {paymentMethod} = payment || {}
 
-  const {url} = reconciliation_report || {}
+  const {url, file_name} = reconciliation_report || {}
 
   const {bigIcon, smallIcon, title, statusText} = getStatusData(order_status)
 
@@ -86,7 +86,7 @@ const TransactionStatusPage = () => {
   )
 
   const DownloadReceipt = () => (
-    <a href={url} download>
+    <a href={url} download={file_name} target="_blank" rel="noopener noreferrer">
       <Button buttonType="primary-outlined" wrapperClass={styles.receipt_button}>
         Download Receipt
       </Button>

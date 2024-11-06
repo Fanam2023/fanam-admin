@@ -66,12 +66,14 @@ const useHandler = () => {
       if (result) {
         toggleNotify({
           type: "success",
-          title: "Removed attachment successfully",
+          title: "Removed attachment",
+          description: "Removed attachment successfully",
         })
       } else {
         toggleNotify({
           type: "error",
-          title: message || "Something went wrong",
+          title: "Unable to Remove ID Proof",
+          description: message || "Something went wrong",
         })
       }
     },
