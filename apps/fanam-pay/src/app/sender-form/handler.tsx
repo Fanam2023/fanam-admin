@@ -660,7 +660,7 @@ const useHandler = (styles: IStyle) => {
     // if (!account_no) errState = {...errState, errAccountNo: "Please enter Account Number", isValid: false}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
-      errState = {...errState, errEmail: "Please Confirm Your E-mail", isValid: false}
+      errState = {...errState, errEmail: "Please Confirm Your Email", isValid: false}
 
     if (!address_line_1) errState = {...errState, errAddress: "Please enter Sender Address", isValid: false}
 
@@ -674,7 +674,7 @@ const useHandler = (styles: IStyle) => {
 
     if (!zip_code) errState = {...errState, errZipCode: "Please enter Pin Code", isValid: false}
 
-    if (!account_type) errState = {...errState, errAccountType: "Please enter account type", isValid: false}
+    if (!account_type) errState = {...errState, errAccountType: "Please enter Account Type", isValid: false}
 
     if (isIndividual) {
       if (!kyc_aadhaar.length)
@@ -684,10 +684,10 @@ const useHandler = (styles: IStyle) => {
 
       if (!date_of_birth) errState = {...errState, errDateOfBirth: "Please enter Date of Birth", isValid: false}
     } else {
-      if (!business_name) errState = {...errState, errBusinessName: "Please enter the company name", isValid: false}
+      if (!business_name) errState = {...errState, errBusinessName: "Please enter the Company Name", isValid: false}
 
       if (!business_type) {
-        errState = {...errState, errBusinessType: "Please choose business type", isValid: false}
+        errState = {...errState, errBusinessType: "Please choose Business Type", isValid: false}
       } else {
         if (isIdentityProof) {
           if (!identityIdType)
@@ -704,7 +704,7 @@ const useHandler = (styles: IStyle) => {
           if (!addressIdNumber)
             errState = {...errState, errAddressIdNumber: "Please enter address Id number", isValid: false}
           if (!addressAttachments?.length)
-            errState = {...errState, errAddressAttachments: "Please choose address attachments", isValid: false}
+            errState = {...errState, errAddressAttachments: "Please upload address attachments", isValid: false}
         }
 
         if (isBusinessProof) {
@@ -713,7 +713,7 @@ const useHandler = (styles: IStyle) => {
           if (!businessIdNumber)
             errState = {...errState, errBusinessIdNumber: "Please enter business Id number", isValid: false}
           if (!businessAttachments?.length)
-            errState = {...errState, errBusinessAttachments: "Please choose business attachments", isValid: false}
+            errState = {...errState, errBusinessAttachments: "Please upload business attachments", isValid: false}
         }
 
         if (isAuthorityProof) {
@@ -722,7 +722,7 @@ const useHandler = (styles: IStyle) => {
           if (!authorityIdNumber)
             errState = {...errState, errAuthorityIdNumber: "Please enter authority Id number", isValid: false}
           if (!authorityAttachments?.length)
-            errState = {...errState, errAuthorityAttachments: "Please choose authority attachments", isValid: false}
+            errState = {...errState, errAuthorityAttachments: "Please upload authority attachments", isValid: false}
         }
 
         if (isPartnersProof) {
@@ -744,7 +744,7 @@ const useHandler = (styles: IStyle) => {
               if (!kyc?.length) {
                 errPartnershipProof = {
                   ...errPartnershipProof,
-                  errPartnersAttachments: "Please choose partners attachments",
+                  errPartnersAttachments: "Please upload partners attachments",
                 }
                 errState = {...errState, isValid: false}
               }
