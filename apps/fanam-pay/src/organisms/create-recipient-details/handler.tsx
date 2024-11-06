@@ -857,7 +857,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
 
     if (!isIndividual && !business_name)
       errState = {...errState, errBusinessName: "Please enter business name", isValid: false}
-    
+
     if (!kyc || kyc.length === 0) {
       errState = {
         ...errState,
@@ -865,7 +865,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         isValid: false,
       }
     }
-    
+
     setErrData(errState)
     return errState
   }
