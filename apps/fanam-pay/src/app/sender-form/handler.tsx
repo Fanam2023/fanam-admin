@@ -695,7 +695,7 @@ const useHandler = (styles: IStyle) => {
           if (!identityIdNumber)
             errState = {...errState, errIdentityIdNumber: "Please enter identity Id number", isValid: false}
           if (!identityAttachments?.length)
-            errState = {...errState, errIdentityAttachments: "Please choose identity attachments", isValid: false}
+            errState = {...errState, errIdentityAttachments: "Please upload identity attachments", isValid: false}
         }
 
         if (isAddressProof) {
