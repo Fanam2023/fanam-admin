@@ -731,7 +731,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     if (!first_name) {
       errState = {
         ...errState,
-        errFirstName: "Please enter FirstName",
+        errFirstName: "Please enter First Name",
         isValid: false,
       }
     } else if (first_name.length < 2) {
@@ -827,7 +827,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       }
     }
     if (!isValidInputByRegex(email, REG_EMAIL))
-      errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
+      errState = {...errState, errEmail: "Please enter Email", isValid: false}
 
     if (!state) errState = {...errState, errState: "Please select State", isValid: false}
 

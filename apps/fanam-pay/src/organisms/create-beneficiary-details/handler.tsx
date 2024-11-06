@@ -89,7 +89,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     if (!first_name) {
       errState = {
         ...errState,
-        errFirstName: "Please enter FirstName",
+        errFirstName: "Please enter First Name",
         isValid: false,
       }
     } else if (first_name.length < 2)
@@ -102,7 +102,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     if (!last_name) errState = {...errState, errLastName: "Please enter Last Name", isValid: false}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
-      errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
+      errState = {...errState, errEmail: "Please enter Email", isValid: false}
 
     if (!phone_no) errState = {...errState, errNumber: "Please enter your Phone Number", isValid: false}
 
@@ -346,7 +346,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
       childElements: [
         {
           elementType: "input",
-          label: "Email-ID",
+          label: "Email",
           name: "email",
           error: errEmail,
           value: email,
