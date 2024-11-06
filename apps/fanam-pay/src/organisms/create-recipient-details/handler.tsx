@@ -200,7 +200,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       if (result) {
         toggleNotify({
           type: "success",
-          title: "Attachment Removed",
+          title: "Removed Attachment",
           description: "Removed attachment successfully",
         })
       } else {
