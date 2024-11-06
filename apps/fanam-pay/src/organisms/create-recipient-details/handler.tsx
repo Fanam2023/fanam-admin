@@ -168,11 +168,11 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     mutationFn: createRecipient,
     onSuccess: ({result, errorData}) => {
       if (result) {
-        toggleNotify({type: "success", title: "Recipient created Successfully"})
+        toggleNotify({type: "success", title: "Recipient created", description: "Recipient created Successfully"})
         refreshQuery(QUERY_RECIPIENT.concat(recipient_account_type))
         push(ROUTE_RECIPIENT_PREVIEW)
         toggleSlider()
-      } else toggleNotify({type: "error", title: errorData.message})
+      } else toggleNotify({type: "error", title: "Recipient not created", description: errorData?.message})
     },
   })
 
@@ -183,9 +183,9 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       refreshQuery(QUERY_RECIPIENT.concat(recipient_account_type))
       if (result) {
         refetchTransaction()
-        toggleNotify({type: "success", title: "Recipient updated Successfully"})
+        toggleNotify({type: "success", title: "Recipient updated", description: "Recipient updated Successfully"})
         toggleSlider()
-      } else toggleNotify({type: "error", title: errorData?.message})
+      } else toggleNotify({type: "error", title: "Recipient not updated", description: errorData?.message})
     },
   })
 
@@ -200,12 +200,14 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       if (result) {
         toggleNotify({
           type: "success",
-          title: "Removed attachment successfully",
+          title: "Removed Attachment",
+          description: "Removed attachment successfully",
         })
       } else {
         toggleNotify({
           type: "error",
-          title: message || "Something went wrong",
+          title: "Unable to Remove ID Proof",
+          description: message || "Something went wrong",
         })
       }
     },
