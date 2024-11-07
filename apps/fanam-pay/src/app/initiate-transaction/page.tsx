@@ -56,10 +56,17 @@ const InitiateTransactionPage = () => {
             </section>
           )}
           <section className={`flex-sb-center ${styles.currency_wrapper}`}>
-            <section className={styles.sender_wrapper}>
+            <section className={styles.sender_wrapper} aria-readonly="true">
               <h5 className={`bold ${styles.txt_wrapper}`}>You Send</h5>
               <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
-                <input type="text" value={source_amount} className={styles.input} name="source_amount" disabled />
+                <input
+                  type="text"
+                  value={source_amount}
+                  className={styles.input}
+                  name="source_amount"
+                  disabled
+                  readOnly
+                />
                 <section className={`flex ${styles.currency}`}>
                   <section className={`flex ${styles.flag_container} ${styles.sender_wrapper}`}>
                     <CountryFlag countryCode={source_country?.iso2} wrapperClass={styles.flag} />
@@ -71,7 +78,7 @@ const InitiateTransactionPage = () => {
             <ImageView src={assets.ic_conversion} alt="convert" imgSize={40} wrapperClass={styles.convert_img} />
             <section className={styles.recipient_wrapper}>
               <h5 className={`bold ${styles.recipient_txt}`}>Recipient receives</h5>
-              <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
+              <section className={`flex-sb-center ${styles.conversion_wrapper}`} aria-readonly="true">
                 <section className={styles.amount}>
                   <input
                     type="text"
