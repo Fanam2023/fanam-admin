@@ -14,9 +14,15 @@ export const useCommon = () => {
     return initials?.join("")
   }
 
+  const createParams = (bankName: string) => {
+    const data = new URLSearchParams({bank_name: bankName}).toString()
+    return data
+  }
+
   return {
     ...commonHook,
     getCountryCode,
     getFirstLetter,
+    createParams,
   }
 }
