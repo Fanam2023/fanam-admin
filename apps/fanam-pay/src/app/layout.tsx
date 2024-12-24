@@ -4,6 +4,7 @@ import {UIProvider} from "@fanam-pkg/core-ui-sass"
 import "@fanam-pkg/core-ui-sass/src/styles/style.sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import {Public_Sans} from "next/font/google"
+import {useEffect} from "react"
 import {CustomProvider} from "@custom/ui"
 import {LibProvider} from "provider"
 import "../../../../packages/custom-ui/src/styles/index.css"
@@ -23,13 +24,33 @@ const primaryFont = Public_Sans({
 export default function RootLayout({children}: {children: React.ReactNode}) {
   const {isDesktop} = useResize()
 
+  useEffect(() => {
+    const manifestUrl = "https://fanampayin.blob.core.windows.net/fe-sample-assets/yes-bank-assets/manifest.json"
+    const linkManifest = document.createElement("link")
+    linkManifest.rel = "manifest"
+    linkManifest.href = manifestUrl
+    document.head.appendChild(linkManifest)
+
+    const cssUrl = "https://fanampayin.blob.core.windows.net/fe-sample-assets/yes-bank-assets/index.css"
+    const linkCss = document.createElement("link")
+    linkCss.rel = "stylesheet"
+    linkCss.href = cssUrl
+    document.head.appendChild(linkCss)
+  }, [])
+
   return (
     <html lang="en">
-      <body className={`${primaryFont.variable} ${isDesktop ? styles.background : ""}`}>
+      <head>
+        <title>Fanam Pay</title>
+        <meta name="description" content={"Cross border transaction application"} />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="theme-color" content="#3f56f2" />
+      </head>
+      <body className={`${isDesktop ? styles.background : ""}`}>
         <LibProvider>
-          <CustomProvider>
-            <UIProvider>{children}</UIProvider>
-          </CustomProvider>
+          <UIProvider>
+            <CustomProvider>{children} </CustomProvider>
+          </UIProvider>
         </LibProvider>
       </body>
     </html>
