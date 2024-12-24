@@ -34,6 +34,14 @@ export const BaseContainer = ({
   const {back} = useRouter()
   const {togglePopup} = usePopup()
   const {sideNav, setSideNav} = useHandler()
+  const yesBank = "yesBank"
+  const hdfcBank = "hdfcBank"
+  const bank = (bankName: string) => {
+    if (bankName === "yesBank") return "yes-bank-assets"
+    else return "hdfc-assets"
+  }
+
+  const logoUrl = `https://fanampayin.blob.core.windows.net/fe-sample-assets/${bank(yesBank)}/icon-512x512.png`
 
   const onClickBack = () => {
     if (onBack) onBack()
@@ -70,7 +78,7 @@ export const BaseContainer = ({
     <>
       <header className={`flex-sb-center ${styles.header_wrapper}`}>
         <section className={`flex ${styles.logo_wrapper}`}>
-          <ImageView src={assets.img_cub_bank} alt={"logo"} imgWidth={isDesktop ? 150 : 120} />
+          <ImageView src={logoUrl} alt={"logo"} imgWidth={isDesktop ? 150 : 120} imgHeight={100} />
         </section>
         <section className={`flex ${styles.language_section}`}>
           <section className={`flex ${styles.language_wrapper}`}>
