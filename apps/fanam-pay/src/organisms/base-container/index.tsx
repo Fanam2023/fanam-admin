@@ -3,6 +3,7 @@
 import {Button, ImageView, assets as projectAssets, usePopup} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
+import {AZURE_BASE_URL} from "@custom/utils"
 import assets from "assets"
 import {useSingleton} from "hooks"
 import {IStepper} from "model"
@@ -34,14 +35,8 @@ export const BaseContainer = ({
   const {back} = useRouter()
   const {togglePopup} = usePopup()
   const {sideNav, setSideNav} = useHandler()
-  const yesBank = "yesBank"
-  const hdfcBank = "hdfcBank"
-  const bank = (bankName: string) => {
-    if (bankName === "yesBank") return "yes-bank-assets"
-    else return "hdfc-assets"
-  }
 
-  const logoUrl = `https://fanampayin.blob.core.windows.net/fe-sample-assets/${bank(yesBank)}/icon-512x512.png`
+  const logoUrl = `${AZURE_BASE_URL}icon-512x512.png`
 
   const onClickBack = () => {
     if (onBack) onBack()

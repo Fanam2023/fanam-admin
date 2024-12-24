@@ -18,13 +18,13 @@ const useHandler = () => {
   const {mutate: fetchClientToken} = useMutation({
     mutationKey: ["bank-token"],
     mutationFn: getClientToken,
-    onSuccess: result => {
-      if (result) {
-        const {refresh_token, access_token} = result
-        updateToken(access_token)
-        updateRefreshToken(refresh_token)
-      }
-    },
+    // onSuccess: result => {
+    //   if (result) {
+    //     const {refresh_token, access_token} = result
+    //     updateToken(access_token)
+    //     updateRefreshToken(refresh_token)
+    //   }
+    // },
   })
 
   const {mutate: fetchClientId} = useMutation({
