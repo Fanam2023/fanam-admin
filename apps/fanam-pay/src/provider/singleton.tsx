@@ -12,9 +12,7 @@ import {
   COOKIE_TRANSACTION_ID,
   QUERY_TRANSACTION,
   QUERY_USER,
-  ROUTE_FORGOT_PIN,
   ROUTE_HOME,
-  ROUTE_LOGIN,
   ROUTE_SENDER,
 } from "utils"
 
@@ -32,6 +30,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   const [token, setToken] = useState<string | null>(getCookie<string>(COOKIE_ACCESS_TOKEN))
   const [transId, setTransId] = useState<string | null>(getCookie<string>(COOKIE_TRANSACTION_ID))
   const [refreshToken, setRefreshToken] = useState<string | null>(getCookie<string>(COOKIE_REFRESH_TOKEN))
+  const [bankName, setBankName] = useState<string | null>()
   const {data: userRes, refetch: refetchUser} = useQuery({
     enabled: !!token && !user,
     queryKey: [QUERY_USER],
@@ -85,6 +84,10 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     }
   }, [transactionId, pathname])
 
+  const updateBankName = (bankName: string) => {
+    if (bankName) setBankName(bankName)
+  }
+
   const signOutUser = async (action: TypeSignOut = "logout") => {
     if (action === "logout-all") await logoutAllDevice()
     else await logout({refreshToken})
@@ -98,7 +101,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     removeCookie(COOKIE_REFRESH_TOKEN)
     clearQueryCache()
     clearAllStorage()
-    replace(action === "forgot-pin" ? ROUTE_FORGOT_PIN : ROUTE_LOGIN)
+    // replace(action === "forgot-pin" ? ROUTE_FORGOT_PIN : ROUTE_LOGIN)
   }
 
   const value: ISingleton = {
@@ -106,6 +109,8 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     token,
     transId,
     transData,
+    bankName,
+    updateBankName,
     updateUserData,
     signOutUser,
     updateToken,

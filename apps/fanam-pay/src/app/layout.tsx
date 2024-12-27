@@ -4,9 +4,7 @@ import {UIProvider} from "@fanam-pkg/core-ui-sass"
 import "@fanam-pkg/core-ui-sass/src/styles/style.sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import {Public_Sans} from "next/font/google"
-import {useEffect} from "react"
 import {CustomProvider} from "@custom/ui"
-import {AZURE_BASE_URL} from "@custom/utils"
 import {LibProvider} from "provider"
 import "../../../../packages/custom-ui/src/styles/index.css"
 import styles from "./layout.module.sass"
@@ -24,20 +22,6 @@ const primaryFont = Public_Sans({
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
   const {isDesktop} = useResize()
-
-  useEffect(() => {
-    const manifestUrl = `${AZURE_BASE_URL}manifest.json`
-    const linkManifest = document.createElement("link")
-    linkManifest.rel = "manifest"
-    linkManifest.href = manifestUrl
-    document.head.appendChild(linkManifest)
-
-    const cssUrl = `${AZURE_BASE_URL}index.css`
-    const linkCss = document.createElement("link")
-    linkCss.rel = "stylesheet"
-    linkCss.href = cssUrl
-    document.head.appendChild(linkCss)
-  }, [])
 
   return (
     <html lang="en">

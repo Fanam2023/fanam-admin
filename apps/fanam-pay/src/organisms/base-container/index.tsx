@@ -3,9 +3,8 @@
 import {Button, ImageView, assets as projectAssets, usePopup} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
-import {AZURE_BASE_URL} from "@custom/utils"
 import assets from "assets"
-import {useSingleton} from "hooks"
+import {useCommon, useSingleton} from "hooks"
 import {IStepper} from "model"
 import {ProfileDetails, SidePanel} from "organisms"
 import {BaseContainerProps} from "props"
@@ -29,14 +28,22 @@ export const BaseContainer = ({
   isStepper = false,
   disabled = false,
 }: BaseContainerProps) => {
-  const {user} = useSingleton()
+  const {user, bankName} = useSingleton()
+  const {AZURE_BASE_URL} = useCommon()
   const {first_name, last_name} = user || {}
   const {isDesktop} = useResize()
   const {back} = useRouter()
   const {togglePopup} = usePopup()
   const {sideNav, setSideNav} = useHandler()
+  const bankStyles = {
+    Hdfc_bank: styles.hdfc,
+    Yes_bank: styles.yes,
+    City_union_bank: styles.union,
+    Sbi_bank: styles.sbi,
+    Icici_bank: styles.icici,
+  }
 
-  const logoUrl = `${AZURE_BASE_URL}icon-512x512.png`
+  const logoUrl = `${AZURE_BASE_URL}icon-96x96.png`
 
   const onClickBack = () => {
     if (onBack) onBack()
@@ -71,9 +78,9 @@ export const BaseContainer = ({
 
   return (
     <>
-      <header className={`flex-sb-center ${styles.header_wrapper}`}>
+      <header className={`flex-sb-center ${styles.header_wrapper}  ${bankStyles[bankName] || ""}`}>
         <section className={`flex ${styles.logo_wrapper}`}>
-          <ImageView src={logoUrl} alt={"logo"} imgWidth={isDesktop ? 150 : 120} imgHeight={100} />
+          <ImageView src={logoUrl} alt={"logo"} imgWidth={isDesktop ? 150 : 120} imgHeight={70} />
         </section>
         <section className={`flex ${styles.language_section}`}>
           <section className={`flex ${styles.language_wrapper}`}>
@@ -94,7 +101,9 @@ export const BaseContainer = ({
               {!bellIcon && <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />}
 
               {!profile && (
-                <section className={styles.profile_wrapper} onClick={handleProfile}>
+                <section
+                  className={`${styles.profile_wrapper}  ${bankStyles[bankName] || ""}  `}
+                  onClick={handleProfile}>
                   {first_name?.charAt(0).toUpperCase()}
                   {last_name?.charAt(0).toUpperCase()}
                 </section>
@@ -143,7 +152,7 @@ export const BaseContainer = ({
           {buttonText && (
             <Button
               onClick={onSubmit}
-              wrapperClass={`${styles.button_wrapper} ${disabled ? styles.disable_btn : ""}`}
+              wrapperClass={`${styles.button_wrapper} ${disabled ? styles.disable_btn : ""}  `}
               trailingIcon={assets.ic_right_arrow_fill}
               trailingClass={styles.tail_class}
               disabled={disabled}>

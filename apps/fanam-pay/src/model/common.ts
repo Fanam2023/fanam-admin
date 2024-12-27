@@ -11,6 +11,7 @@ export interface ISingletonData {
   transId: string | null
   transData: ITransaction | null
   refreshToken: string | null
+  bankName: string | null
 }
 
 export interface ISingleton extends ISingletonData {
@@ -23,6 +24,7 @@ export interface ISingleton extends ISingletonData {
   refetchUser: () => void
   resetTransaction: () => void
   refetchTransaction: () => void
+  updateBankName: (bankName: string) => void
 }
 
 export interface IExchange {
