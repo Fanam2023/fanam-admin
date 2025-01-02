@@ -4,6 +4,7 @@ import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import Link from "next/link"
 import assets from "assets"
+import {useSingleton} from "hooks"
 import {BaseContainer, ExchangeRate, ListTransaction} from "organisms"
 import {ROUTE_RECIPIENTS, ROUTE_SENDER} from "utils"
 import useHandler from "./handler"
@@ -12,6 +13,8 @@ import styles from "./page.module.sass"
 const HomeScreen = () => {
   const {first_name, isKYCVerified, greeting, push} = useHandler()
   const {isDesktop} = useResize()
+  const {bankName} = useSingleton()
+  console.log(bankName, "bankName")
 
   return (
     <BaseContainer childWrapper={styles.page_container}>

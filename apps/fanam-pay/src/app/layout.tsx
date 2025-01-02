@@ -5,9 +5,9 @@ import "@fanam-pkg/core-ui-sass/src/styles/style.sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import {Public_Sans} from "next/font/google"
 import {CustomProvider} from "@custom/ui"
+import {Body} from "organisms/body"
 import {LibProvider} from "provider"
 import "../../../../packages/custom-ui/src/styles/index.css"
-import styles from "./layout.module.sass"
 
 const primaryFont = Public_Sans({
   weight: ["400", "500", "600", "700"],
@@ -31,10 +31,12 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
         <meta name="theme-color" content="#3f56f2" />
       </head>
-      <body className={`${isDesktop ? styles.background : ""}`}>
+      <body>
         <LibProvider>
           <UIProvider>
-            <CustomProvider>{children} </CustomProvider>
+            <CustomProvider>
+              <Body>{children} </Body>
+            </CustomProvider>
           </UIProvider>
         </LibProvider>
       </body>
