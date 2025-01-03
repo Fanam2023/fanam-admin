@@ -4,5 +4,13 @@ import styles from "./styles.module.sass"
 
 export const Body = ({children}: PropsWithChildren) => {
   const {bankName} = useSingleton()
-  return <section className={`${bankName ? styles.backgrounds : styles.background}`}>{children}</section>
+  const bankStyles = {
+    Hdfc_bank: styles.hdfc,
+    Yes_bank: styles.yes,
+    City_union_bank: styles.union,
+    Sbi_bank: styles.sbi,
+    Icici_bank: styles.icici,
+  }
+
+  return <section className={`${bankName ? bankStyles[bankName] : styles.background}`}>{children}</section>
 }
