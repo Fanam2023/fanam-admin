@@ -1,5 +1,6 @@
 import {FormSectionProps, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
 import {JSONObject, REG_EMAIL, REG_INDIAN_MOBILE, REG_VALID_NUMBER, useStorage} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useRouter} from "next/navigation"
 import {useCallback, useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
@@ -14,6 +15,7 @@ import {ACCOUNT_TYPE, QUERY_COUNTRIES, ROUTE_LOGIN, routeToOTP} from "utils"
 const useHandler = (styles: IStyle) => {
   const {isValidInputByRegex, getCountryCode, getNationalNumber} = useCommon()
   const {getStorage, setStorage} = useStorage()
+  const {t} = useTranslation()
   const {toggleSlider} = useSlider()
   const {push} = useRouter()
   const [data, setData] = useState<ISignupData>({
@@ -51,19 +53,24 @@ const useHandler = (styles: IStyle) => {
   const goToCountrySlider = () =>
     toggleSlider({
       children: (
-        <CountryPopup onSelect={onSelectCountry} selCountry={country} countries={countries} title="Select Country" />
+        <CountryPopup
+          onSelect={onSelectCountry}
+          selCountry={country}
+          countries={countries}
+          title={t("select_country")}
+        />
       ),
     })
 
   const onPhoneNoValidate = useCallback(() => {
     let errText = ""
-    if (!phone_no) errText = "Please enter phone number"
+    if (!phone_no) errText = t("error.phone_required")
     else if (!isValidInputByRegex(phone_no, REG_INDIAN_MOBILE)) {
-      errText = "Please enter valid indian phone number"
+      errText = t("error.invalid_indian_phone")
     }
 
     return {errPhone: errText, isValid: !errText}
-  }, [phone_no])
+  }, [phone_no, t])
 
   useEffect(() => {
     if (countries?.length) setData(prev => ({...prev, country: countries?.find(({iso2}) => iso2 === "IN")}))
@@ -77,20 +84,20 @@ const useHandler = (styles: IStyle) => {
     let errState = {...DEFAULT_ERR_STATE, isValid: true, isClicked: true}
 
     if (!isIndividual && !business_name)
-      errState = {...errState, errBusinessName: "Please enter Business name", isValid: false}
+      errState = {...errState, errBusinessName: t("business_name_required"), isValid: false}
 
-    if (!first_name) errState = {...errState, errFirstName: "Please enter FirstName", isValid: false}
+    if (!first_name) errState = {...errState, errFirstName: t("first_name_required"), isValid: false}
 
-    if (!last_name) errState = {...errState, errLastName: "Please enter LastName", isValid: false}
+    if (!last_name) errState = {...errState, errLastName: t("last_name_required"), isValid: false}
 
     if (!phone_no || phone_no.length !== 10)
-      errState = {...errState, errPhoneNo: "Please enter valid PhoneNumber", isValid: false}
-    else if (!country) errState = {...errState, errCountryCode: "Please choose your country code", isValid: false}
+      errState = {...errState, errPhoneNo: t("valid_phone_required"), isValid: false}
+    else if (!country) errState = {...errState, errCountryCode: t("country_code_required"), isValid: false}
 
-    if (!account_type) errState = {...errState, errAccountType: "Please enter AccountType", isValid: false}
+    if (!account_type) errState = {...errState, errAccountType: t("account_type_required"), isValid: false}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
-      errState = {...errState, errEmail: "Please enter E-mail ID", isValid: false}
+      errState = {...errState, errEmail: t("valid_email_required"), isValid: false}
 
     setErrData(errState)
 
@@ -121,7 +128,7 @@ const useHandler = (styles: IStyle) => {
       childElements: [
         {
           elementType: "drop-down",
-          label: "Sender type",
+          label: t("sender_type"),
           name: "account_type",
           error: errAccountType,
           value: account_type,
@@ -135,7 +142,7 @@ const useHandler = (styles: IStyle) => {
       childElements: [
         {
           elementType: "input",
-          label: "First Name",
+          label: t("first_name"),
           name: "first_name",
           inputRegex: REG_INPUT_NAME,
           error: errFirstName,
@@ -144,7 +151,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Last Name",
+          label: t("last_name"),
           name: "last_name",
           inputRegex: REG_INPUT_NAME,
           error: errLastName,
@@ -171,7 +178,7 @@ const useHandler = (styles: IStyle) => {
                   wrapperClass={styles.country_arrow}
                 />
                 <TextField
-                  label="Phone Number"
+                  label={t("Phone Number")}
                   name="phone_no"
                   value={phone_no}
                   onChangeData={onChangeValue}
@@ -189,7 +196,7 @@ const useHandler = (styles: IStyle) => {
       childElements: [
         {
           elementType: "input",
-          label: "Email",
+          label: t("Email"),
           name: "email",
           error: errEmail,
           value: email,
@@ -207,7 +214,7 @@ const useHandler = (styles: IStyle) => {
       childElements: [
         {
           elementType: "input",
-          label: "Business Name",
+          label: t("Business Name"),
           name: "business_name",
           error: errBusinessName,
           value: business_name,
@@ -242,6 +249,7 @@ const useHandler = (styles: IStyle) => {
     formElements,
     onSubmit,
     routeToLogin,
+    t,
   }
 }
 

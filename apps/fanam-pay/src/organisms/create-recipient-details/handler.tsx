@@ -8,6 +8,7 @@ import {
   useReactQuery,
   useResize,
 } from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries, useQuery} from "@tanstack/react-query"
@@ -47,10 +48,11 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   const {createRecipient, removeAttachment, updateRecipient, getByRecipientId} = useRecipientController()
   const {refetchTransaction, transId} = useSingleton()
   const {toggleNotify} = useNotifyPopup()
+  const {t} = useTranslation()
 
   const RECIPIENT_TYPE: IFormData<TypeAccount>[] = [
-    {label: "Individual", key: "Individual"},
-    {label: "Business", key: "Business"},
+    {label: t("Individual"), key: "Individual"},
+    {label: t("Business"), key: "Business"},
   ]
 
   const [data, setData] = useState<IRecipientData>({
@@ -79,7 +81,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     bsb_code: "",
     iban_no: "",
     routing_code: "",
-    is_send_email: {isSelected: false, label: "Send reconciliation report to your recipient’s Mail?"},
+    is_send_email: {isSelected: false, label: t("Send reconciliation report to your recipient’s Mail?")},
   })
 
   const {
@@ -380,13 +382,13 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   )
 
   const businessElements: FormSectionProps = {
-    title: "Personal Information",
+    title: t("Personal Information"),
     wrapperClass: styles.recipient_address,
     wrapperClassGrid: styles.recipient_business_wrapper,
     childElements: [
       {
         elementType: "input",
-        label: "Business Name",
+        label: t("Business Name"),
         name: "business_name",
         error: errBusinessName,
         value: business_name,
@@ -395,7 +397,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "Contact Person First Name",
+        label: t("Contact Person First Name"),
         name: "first_name",
         error: errFirstName,
         value: first_name,
@@ -404,7 +406,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "Contact Person Last Name",
+        label: t("Contact Person Last Name"),
         name: "last_name",
         error: errLastName,
         value: last_name,
@@ -415,13 +417,13 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   }
 
   const personalElements: FormSectionProps = {
-    title: "Personal Information",
+    title: t("Personal Information"),
     wrapperClass: styles.recipient_address,
     wrapperClassGrid: styles.recipient_address_wrapper,
     childElements: [
       {
         elementType: "input",
-        label: "First Name",
+        label: t("First Name"),
         name: "first_name",
         error: errFirstName,
         value: first_name,
@@ -430,7 +432,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "Last Name",
+        label: t("Last Name"),
         name: "last_name",
         error: errLastName,
         value: last_name,
@@ -441,12 +443,12 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   }
 
   const bankElements: FormSectionProps = {
-    title: "Bank Details",
+    title: t("Bank Details"),
     wrapperClassGrid: styles.bank_details,
     childElements: [
       {
         elementType: "drop-down",
-        label: "Account Type",
+        label: t("Account Type"),
         name: "account_type",
         error: errAccountType,
         value: account_type,
@@ -455,7 +457,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "Account Number",
+        label: t("Account Number"),
         name: "account_no",
         error: errAccountNo,
         value: account_no,
@@ -464,7 +466,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "Bank Name",
+        label: t("Bank Name"),
         name: "bank_name",
         error: errBankName,
         value: bank_name,
@@ -472,7 +474,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "Branch Code",
+        label: t("Branch Code"),
         name: "branch_code",
         error: errBranchCode,
         value: branch_code,
@@ -481,7 +483,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       },
       {
         elementType: "input",
-        label: "Branch Address ",
+        label: t("Branch Address"),
         name: "branch_address",
         error: errBranchAddress,
         value: branch_address,
@@ -493,7 +495,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (swiftInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "Swift Code",
+      label: t("Swift Code"),
       name: "swift_code",
       error: errSwiftCode,
       value: swift_code,
@@ -505,7 +507,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (ibanInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "IBAN Code",
+      label: t("IBAN Code"),
       name: "iban_no",
       value: iban_no,
       error: errIbanNo,
@@ -517,7 +519,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (routingInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "Routing Code",
+      label: t("Routing Code"),
       name: "routing_code",
       value: routing_code,
       error: errRoutingCode,
@@ -529,7 +531,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   if (bsbInput) {
     bankElements.childElements.push({
       elementType: "input",
-      label: "BSB Code",
+      label: t("BSB Code"),
       name: "bsb_code",
       value: bsb_code,
       error: errBsbCode,
@@ -539,7 +541,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
   }
   const formElements: FormSectionProps[] = [
     {
-      title: "Recipient type",
+      title: t("Recipient type"),
       wrapperClassGrid: styles.recipient_type_wrapper,
       children: <ul className={`${styles.btn_container}`}>{RECIPIENT_TYPE?.map(renderAccType)}</ul>,
     },
@@ -549,7 +551,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       childElements: [
         {
           elementType: "input",
-          label: "Email",
+          label: t("Email"),
           name: "email",
           inputRegex: REG_INPUT_EMAIL,
           error: errEmail,
@@ -571,7 +573,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
                     wrapperClass={styles.country_arrow}
                   />
                   <TextField
-                    label="Phone Number"
+                    label={t("Phone Number")}
                     name="phone_no"
                     value={phone_no}
                     onChangeData={onChangeValue}
@@ -599,21 +601,21 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           onChangeValue,
           childBottom: (
             <p className={styles.recon_wrapper}>
-              Reconciliation report includes all the details of the sender , the invoice, transaction details and the
-              purpose of sending money . It is sent to the recipient email id given above to help them clear the
-              invoices against the right sender.
+              {t(
+                "Reconciliation report includes all the details of the sender , the invoice, transaction details and the purpose of sending money . It is sent to the recipient email id given above to help them clear the invoices against the right sender."
+              )}
             </p>
           ),
         },
       ],
     },
     {
-      title: "Address",
+      title: t("Address"),
       wrapperClassGrid: styles.address_details,
       childElements: [
         {
           elementType: "input",
-          label: "Address Line 1",
+          label: t("Address Line 1"),
           name: "address_line_1",
           error: errAddressLine1,
           value: address_line_1,
@@ -622,7 +624,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "Address Line 2 (Optional)",
+          label: t("Address Line 2 (Optional)"),
           name: "address_line_2",
           value: address_line_2,
           isRequired: false,
@@ -636,7 +638,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
       childElements: [
         {
           elementType: "drop-down",
-          label: "Country",
+          label: t("Country"),
           name: "country",
           options: countries,
           error: errCountry,
@@ -645,7 +647,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "drop-down",
-          label: "State",
+          label: t("State"),
           name: "state",
           disabled: !country,
           options: states,
@@ -655,7 +657,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "drop-down",
-          label: "City",
+          label: t("City"),
           name: "city",
           disabled: !state,
           options: cities,
@@ -665,7 +667,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "Pin Code",
+          label: t("Pin Code"),
           name: "zip_code",
           error: errZipCode,
           inputRegex: REG_VALID_NUMBER,
@@ -676,12 +678,12 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     },
     bankElements,
     {
-      title: "Identification",
+      title: t("Identification"),
       wrapperClassGrid: styles.id_types,
       childElements: [
         {
           elementType: "drop-down",
-          label: "Select ID Issued Country",
+          label: t("Select ID Issued Country"),
           name: "id_issued_country",
           options: countries,
           error: errIdIssuedCountry,
@@ -690,7 +692,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "drop-down",
-          label: "Select ID Type",
+          label: t("Select ID Type"),
           options: ID_PROOFS,
           name: "id_type",
           error: errIdType,
@@ -699,7 +701,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         },
         {
           elementType: "input",
-          label: "ID Number",
+          label: t("ID Number"),
           name: "id_number",
           error: errIdNumber,
           value: id_number,
@@ -717,7 +719,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
           isMultiple: true,
           wrapperClass: `flex-col ${styles.upload_img_picker}`,
           children: <CustomUpload />,
-          label: "Identity Proof",
+          label: t("Identity Proof"),
           value: kyc,
           error: errKyc,
           maxCount: 2,
@@ -733,28 +735,28 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     if (!first_name) {
       errState = {
         ...errState,
-        errFirstName: "Please enter First Name",
+        errFirstName: t("Please enter First Name"),
         isValid: false,
       }
     } else if (first_name.length < 2) {
       errState = {
         ...errState,
-        errFirstName: "FirstName must be longer than or equal to 2 characters",
+        errFirstName: t("FirstName must be longer than or equal to 2 characters"),
         isValid: false,
       }
     }
-    if (!last_name) errState = {...errState, errLastName: "Please enter Last Name", isValid: false}
+    if (!last_name) errState = {...errState, errLastName: t("Please enter Last Name"), isValid: false}
 
     if (!account_no) {
       errState = {
         ...errState,
-        errAccountNo: "Please enter Account number",
+        errAccountNo: t("Please enter Account number"),
         isValid: false,
       }
     } else if (account_no.length < 5) {
       errState = {
         ...errState,
-        errAccountNo: "Account number must be longer than or equal to 5 characters",
+        errAccountNo: t("Account number must be longer than or equal to 5 characters"),
         isValid: false,
       }
     }
@@ -762,13 +764,13 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     if (!bank_name) {
       errState = {
         ...errState,
-        errBankName: "Please enter Bank name",
+        errBankName: t("Please enter Bank name"),
         isValid: false,
       }
     } else if (bank_name.length < 2) {
       errState = {
         ...errState,
-        errBankName: "Bank name must be longer than or equal to 2 characters",
+        errBankName: t("Bank name must be longer than or equal to 2 characters"),
         isValid: false,
       }
     }
@@ -776,13 +778,13 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     if (!branch_code) {
       errState = {
         ...errState,
-        errBranchCode: "Please enter Branch code",
+        errBranchCode: t("Please enter Branch code"),
         isValid: false,
       }
     } else if (branch_code.length < 2) {
       errState = {
         ...errState,
-        errBranchCode: "Branch code must be longer than or equal to 2 characters",
+        errBranchCode: t("Branch code must be longer than or equal to 2 characters"),
         isValid: false,
       }
     }
@@ -790,35 +792,35 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     if (!branch_address) {
       errState = {
         ...errState,
-        errBranchAddress: "Please enter Branch address",
+        errBranchAddress: t("Please enter Branch address"),
         isValid: false,
       }
     } else if (branch_address.length < 5) {
       errState = {
         ...errState,
-        errBranchAddress: "Branch address must be longer than or equal to 5 characters",
+        errBranchAddress: t("Branch address must be longer than or equal to 5 characters"),
         isValid: false,
       }
     }
 
     if (swiftInput && !isValidInputByRegex(swift_code, swiftInput.regEx))
-      errState = {...errState, errSwiftCode: "Please enter Swift code", isValid: false}
+      errState = {...errState, errSwiftCode: t("Please enter Swift code"), isValid: false}
 
     if (routingInput && !isValidInputByRegex(routing_code, routingInput.regEx))
-      errState = {...errState, errRoutingCode: "Please enter valid Routing code", isValid: false}
+      errState = {...errState, errRoutingCode: t("Please enter valid Routing code"), isValid: false}
 
     if (ibanInput && !isValidInputByRegex(iban_no, ibanInput.regEx))
-      errState = {...errState, errIbanNo: "Please enter valid IBAN code", isValid: false}
+      errState = {...errState, errIbanNo: t("Please enter valid IBAN code"), isValid: false}
 
     if (bsbInput && !isValidInputByRegex(bsb_code, bsbInput.regEx))
-      errState = {...errState, errBsbCode: "Please enter valid BSB code", isValid: false}
+      errState = {...errState, errBsbCode: t("Please enter valid BSB code"), isValid: false}
 
-    if (!address_line_1) errState = {...errState, errAddressLine1: "Please enter Address", isValid: false}
+    if (!address_line_1) errState = {...errState, errAddressLine1: t("Please enter Address"), isValid: false}
 
     if (!country) {
       errState = {
         ...errState,
-        errPhoneNo: "Please select country",
+        errPhoneNo: t("Please select country"),
         isValid: false,
       }
     } else if (!phone_no || phone_no.length !== nationalNumberLength) {
@@ -828,23 +830,24 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
         isValid: false,
       }
     }
-    if (!isValidInputByRegex(email, REG_EMAIL)) errState = {...errState, errEmail: "Please enter Email", isValid: false}
+    if (!isValidInputByRegex(email, REG_EMAIL))
+      errState = {...errState, errEmail: t("Please enter E-mail ID"), isValid: false}
 
-    if (!state) errState = {...errState, errState: "Please select State", isValid: false}
+    if (!state) errState = {...errState, errState: t("Please select State"), isValid: false}
 
-    if (!city) errState = {...errState, errCity: "Please select City/District", isValid: false}
+    if (!city) errState = {...errState, errCity: t("Please select City/District"), isValid: false}
 
-    if (!zip_code) errState = {...errState, errZipCode: "Please enter Pin code", isValid: false}
+    if (!zip_code) errState = {...errState, errZipCode: t("Please enter Pin code"), isValid: false}
 
     if (!id_issued_country)
-      errState = {...errState, errIdIssuedCountry: "Please select ID issued country", isValid: false}
+      errState = {...errState, errIdIssuedCountry: t("Please select ID issued country"), isValid: false}
 
-    if (!id_type) errState = {...errState, errIdType: "Please select ID type", isValid: false}
+    if (!id_type) errState = {...errState, errIdType: t("Please select ID type"), isValid: false}
 
     if (!id_number) {
       errState = {
         ...errState,
-        errIdNumber: "Please enter ID number",
+        errIdNumber: t("Please enter ID number"),
         isValid: false,
       }
     } else if (id_number.length < 4) {
@@ -857,12 +860,12 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     if (!account_type) errState = {...errState, errAccountType: "Please choose recipient account type", isValid: false}
 
     if (!isIndividual && !business_name)
-      errState = {...errState, errBusinessName: "Please enter business name", isValid: false}
+      errState = {...errState, errBusinessName: t("Please enter business name"), isValid: false}
 
     if (!kyc || kyc.length === 0) {
       errState = {
         ...errState,
-        errKyc: "Please upload an identity proof",
+        errKyc: t("Please upload an identity proof"),
         isValid: false,
       }
     }
@@ -936,6 +939,7 @@ const useHandler = (styles: IStyle, recipientId?: string) => {
     allCountries,
     selectedCountry,
     setShowCountry,
+    t,
   }
 }
 

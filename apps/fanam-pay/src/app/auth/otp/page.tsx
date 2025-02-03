@@ -20,6 +20,7 @@ const Otp = () => {
     onResend,
     onPaste,
     onVerify,
+    t,
   } = useHandler()
 
   const renderInputNumber = (value: string, index: number) => (
@@ -68,26 +69,26 @@ const Otp = () => {
     <BaseContainer bellIcon profile>
       <Auth isBack>
         <section className={`flex-col ${styles.heading}`}>
-          <h4 className={`bold ${styles.otp}`}>OTP Verification </h4>
+          <h4 className={`bold ${styles.otp}`}>{t("OTP Verification")} </h4>
           <h5 className={styles.description}>
-            We have sent an OTP on given number {countryCode} {phone_no}
+            {t("We have sent an OTP on given number")} {countryCode} {phone_no}
           </h5>
           <ul className={`flex ${styles.otp_field}`}>{otpValues?.map(renderInputNumber)}</ul>
         </section>
         <section className={`flex ${styles.otp_wrapper}`}>
-          <h5 className={styles.alert_text}>Didn’t receive the otp?</h5>
+          <h5 className={styles.alert_text}>{t("Didn’t receive the otp?")}</h5>
           <h5 className={`bold ${styles.otp}`} onClick={onResend}>
-            RESEND OTP
+            {t("RESEND OTP")}
           </h5>
           <label className={styles.alert_text}>{timer}s</label>
         </section>
         {errOtp && <label className="error-text">{errOtp}</label>}
         <Button wrapperClass={styles.button_wrapper} onClick={onVerify}>
-          Next
+          {t("Next")}
         </Button>
         <h6 className={styles.terms_wrapper}>
-          By continuing, you agree to the <label className={`bold ${styles.condition_text}`}>Terms of use</label> and
-          <label className={`bold ${styles.condition_text}`}>Privacy Policy</label>.
+          {t("By_continuing")} <label className={`bold ${styles.condition_text}`}>{t("terms_of_use")}</label> {t("and")}
+          <label className={`bold ${styles.condition_text}`}>{t("privacy_policy")}</label>.
         </h6>
         <section id="auth-proceed-button"></section>
       </Auth>

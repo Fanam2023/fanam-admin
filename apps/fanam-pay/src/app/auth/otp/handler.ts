@@ -1,4 +1,5 @@
 import {REG_VALID_NUMBER, useCommon, useFirebase, useStorage} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useRouter, useSearchParams} from "next/navigation"
 import {ChangeEvent, KeyboardEvent, useCallback, useEffect, useRef, useState} from "react"
 import {ISignupData, SESSION_SIGNUP, TypeScope} from "@custom/utils"
@@ -7,6 +8,7 @@ import {routeToPin} from "utils"
 const useHandler = () => {
   const {isValidInputByRegex} = useCommon()
   const {push} = useRouter()
+  const {t} = useTranslation()
   const searchParams = useSearchParams()
   const {getStorage} = useStorage()
   const [otpValues, setOtpValues] = useState(Array(6).fill(""))
@@ -126,6 +128,7 @@ const useHandler = () => {
     onInputChange,
     onResend,
     onPaste,
+    t,
     onVerify,
   }
 }

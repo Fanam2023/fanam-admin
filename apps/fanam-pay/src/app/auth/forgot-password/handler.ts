@@ -1,5 +1,6 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {JSONObject, REG_VALID_NUMBER, useStorage} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
@@ -11,6 +12,7 @@ import {QUERY_COUNTRIES, routeToOTP} from "utils"
 const useHandler = () => {
   const {push} = useRouter()
   const {setStorage} = useStorage()
+  const {t} = useTranslation()
   const {getNationalNumber, isValidInputByRegex} = useCommon()
   const {toggleNotify} = useNotifyPopup()
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
@@ -86,6 +88,7 @@ const useHandler = () => {
     onChangeValue,
     onSubmit,
     setData,
+    t,
   }
 }
 

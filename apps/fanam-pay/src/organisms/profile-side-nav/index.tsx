@@ -1,6 +1,7 @@
 "use client"
 
 import {ImageView} from "@fanam-pkg/core-ui-sass"
+import {useTranslation} from "react-i18next"
 import {ProfileNavItemProps, ProfileSideNavProps} from "props"
 import {PROFILE_ARR} from "utils"
 import styles from "./styles.module.sass"
@@ -14,14 +15,16 @@ export const ProfileSideNav = ({selectedLabel, setSelectedLabel, children}: Prof
         key={index}
         onClick={() => setSelectedLabel(label)}>
         <ImageView src={isSelected ? selectedIcon : icon} imgSize={24} alt={label} />
-        <p className={`${styles.nav_item} ${isSelected ? styles.selected_item : ""}`}>{label}</p>
+        <p className={`${styles.nav_item} ${isSelected ? styles.selected_item : ""}`}>{t(label)}</p>
       </li>
     )
   }
 
+  const {t} = useTranslation()
+
   return (
     <section className={styles.container}>
-      <h4 className={`bold ${styles.title}`}>Settings</h4>
+      <h4 className={`bold ${styles.title}`}>{t("Settings")}</h4>
       <section className={`flex-start ${styles.profile_container}`}>
         <ul className={`flex-col ${styles.nav_wrapper}`}>{PROFILE_ARR.map(renderNavItems)}</ul>
         <section className={styles.children_wrapper}>{children}</section>

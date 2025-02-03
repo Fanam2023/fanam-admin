@@ -5,14 +5,14 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const RecipientPreview = () => {
-  const {onToggle, onBack, onRouteToPurpose} = useHandler()
+  const {onToggle, onBack, onRouteToPurpose, t} = useHandler()
 
   return (
     <BaseContainer
       header="Review Recipient Details"
-      buttonText="Next"
+      buttonText={t("Next")}
       childWrapper={styles.page_wrapper}
-      skipBtn="Back"
+      skipBtn={t("Back")}
       stepIndex={1}
       isStepper
       onSubmit={onRouteToPurpose}

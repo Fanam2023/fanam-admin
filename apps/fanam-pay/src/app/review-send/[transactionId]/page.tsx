@@ -23,6 +23,7 @@ const ReviewAndSend = () => {
     durationTime,
     transfer_time,
     beneficiary: beneficiaryDetail,
+    t,
   } = useHandler()
 
   const {recipient, beneficiary} = showDetails
@@ -41,7 +42,7 @@ const ReviewAndSend = () => {
 
   return (
     <BaseContainer
-      buttonText="Send money"
+      buttonText={t("Send money")}
       isStepper
       disabled={isDisabled}
       onSubmit={completeTransaction.bind(null, transactionId)}
@@ -49,8 +50,10 @@ const ReviewAndSend = () => {
       stepIndex={4}>
       <BrowserBackNavigation />
       <section className={`flex-col ${styles.heading_wrapper}`}>
-        <h4 className={`bold ${styles.title}`}>Review and Send</h4>
-        <p className={styles.description}>Review the details of the recipient details and their account details.</p>
+        <h4 className={`bold ${styles.title}`}>{t("Review and Send")}</h4>
+        <p className={styles.description}>
+          {t("Review the details of the recipient details and their account details.")}
+        </p>
       </section>
       <section className={styles.card_wrapper}>
         {!!durationTime && !!transfer_time && (
@@ -61,11 +64,11 @@ const ReviewAndSend = () => {
           </section>
         )}
         <section className={`flex-sb-center ${styles.header}`}>
-          <h5 className={styles.edit_text}>Conversion Details</h5>
+          <h5 className={styles.edit_text}>{t("Conversion Details")}</h5>
         </section>
         <ul className={styles.details_wrapper}>{paymentDetails?.map(renderPaymentDetails)}</ul>
         <section className={`flex-sb-center`}>
-          <h5 className={styles.amount_title}>Receiver will get exactly</h5>
+          <h5 className={styles.amount_title}>{t("Receiver will get exactly")}</h5>
           <h5 className={`bold ${styles.amount}`}>
             {`${destination_amount?.toFixed(2)}  
             ${destinationCountryValue}`}
@@ -73,19 +76,19 @@ const ReviewAndSend = () => {
         </section>
         <section className={styles.separator}></section>
         <section className={`flex-sb-center ${styles.header}`}>
-          <h5 className={styles.edit_text}>Recipient Details</h5>
+          <h5 className={styles.edit_text}>{t("Recipient Details")}</h5>
         </section>
         <ul className={styles.details_wrapper}>
           {(recipient ? recipientDetails : recipientDetails?.slice(0, 4))?.map(renderPaymentDetails)}
         </ul>
         <h6 className={`bold ${styles.amount}`} onClick={() => toggleDetails("recipient")}>
-          {recipient ? "See less" : "See more"}
+          {recipient ? t("See less") : t("See more")}
         </h6>
         {!!beneficiaryDetail && (
           <>
             <section className={styles.separator}></section>
             <section className={`flex-sb-center ${styles.header}`}>
-              <h5 className={styles.edit_text}>Beneficiary Details</h5>
+              <h5 className={styles.edit_text}>{t("Beneficiary Details")}</h5>
             </section>
             <ul className={styles.details_wrapper}>
               {(beneficiary ? beneficiaryDetails : beneficiaryDetails?.slice(0, 4))?.map(renderPaymentDetails)}

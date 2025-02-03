@@ -10,7 +10,7 @@ import useHandler from "./handler"
 import styles from "./page.module.sass"
 
 const HomeScreen = () => {
-  const {first_name, isKYCVerified, greeting, push} = useHandler()
+  const {first_name, isKYCVerified, greeting, push, t} = useHandler()
   const {isDesktop} = useResize()
 
   return (
@@ -23,13 +23,13 @@ const HomeScreen = () => {
               <h2 className={styles.first_name}>{first_name}</h2>
             </section>
             <h5 className={styles.content}>
-              Discover how your currency has been tracking with our exchange rate charts.
+              {t("Discover how your currency has been tracking with our exchange rate charts.")}
             </h5>
           </section>
           {isKYCVerified ? (
             <Button wrapperClass={styles.kyc_success_btn} buttonType="primary-outlined">
               <ImageView src={assets.ic_check} alt="checked" imgSize={24} />
-              KYC Verified
+              {t("KYC Verified")}
             </Button>
           ) : (
             <Button wrapperClass={styles.kyc_pending_btn} buttonType="primary-outlined">
@@ -41,18 +41,18 @@ const HomeScreen = () => {
         <section className={`flex-sb-center ${styles.nav_wrapper}`}>
           <section className="flex">
             <ImageView src={assets.ic_money} alt="money-icon" imgSize={isDesktop ? 60 : 36} />
-            <h3 className={styles.heading}>Send your money instantly and effortlessly</h3>
+            <h3 className={styles.heading}>{t("Send your money instantly and effortlessly")}</h3>
           </section>
           {isKYCVerified ? (
             <Link href={ROUTE_RECIPIENTS}>
-              <Button wrapperClass={styles.button_wrapper}>Send Money</Button>
+              <Button wrapperClass={styles.button_wrapper}>{t("Send Money")}</Button>
             </Link>
           ) : (
             <Button
               wrapperClass={styles.danger_button}
               buttonType="primary-outlined"
               onClick={() => push(ROUTE_SENDER)}>
-              Update Profile
+              {t("Update Profile")}
             </Button>
           )}
         </section>

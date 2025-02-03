@@ -20,6 +20,7 @@ const InitiateTransactionPage = () => {
     onDisable,
     durationTime,
     onCancel,
+    t,
   } = useHandler()
 
   const {sla_timing_min, sla_timing_max} = transfer_time || {}
@@ -42,9 +43,11 @@ const InitiateTransactionPage = () => {
       <BrowserBackNavigation />
       <section className={styles.container_wrapper}>
         <section className={styles.header_wrapper}>
-          <h2 className={`bold ${styles.title}`}>Payout Estimate</h2>
+          <h2 className={`bold ${styles.title}`}>{t("Payout Estimate")}</h2>
           <h5 className={styles.description}>
-            Estimated value for converting your money from one currency to another based on the current exchange rates.
+            {t(
+              "Estimated value for converting your money from one currency to another based on the current exchange rates."
+            )}
           </h5>
         </section>
         <section className={styles.conversion_container}>
@@ -57,7 +60,7 @@ const InitiateTransactionPage = () => {
           )}
           <section className={`flex-sb-center ${styles.currency_wrapper}`}>
             <section className={styles.sender_wrapper} aria-readonly="true">
-              <h5 className={`bold ${styles.txt_wrapper}`}>You Send</h5>
+              <h5 className={`bold ${styles.txt_wrapper}`}>{t("You Send")}</h5>
               <section className={`flex-sb-center ${styles.conversion_wrapper}`}>
                 <input
                   type="text"
@@ -77,7 +80,7 @@ const InitiateTransactionPage = () => {
             </section>
             <ImageView src={assets.ic_conversion} alt="convert" imgSize={40} wrapperClass={styles.convert_img} />
             <section className={styles.recipient_wrapper}>
-              <h5 className={`bold ${styles.recipient_txt}`}>Recipient receives</h5>
+              <h5 className={`bold ${styles.recipient_txt}`}>{t("Recipient receives")}</h5>
               <section className={`flex-sb-center ${styles.conversion_wrapper}`} aria-readonly="true">
                 <section className={styles.amount}>
                   <input
@@ -104,7 +107,7 @@ const InitiateTransactionPage = () => {
           {destination_amount && destination_amount !== "0" && (
             <section className={`flex-sb-center ${styles.total_background}`}>
               <section className={styles.receiver_wrapper}>
-                <h5>Receiver will get exactly</h5>
+                <h5>{t("Receiver will get exactly")}</h5>
                 <section className="flex">
                   <ImageView src={assets.ic_power} alt="" imgSize={24} />
                   <h5 className={styles.hour_wrapper}>

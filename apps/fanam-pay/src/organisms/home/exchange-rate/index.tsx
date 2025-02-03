@@ -8,7 +8,7 @@ import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const ExchangeRate = () => {
-  const {isLoading, getPopularCorridors, responsive} = useHandler()
+  const {isLoading, getPopularCorridors, responsive, t} = useHandler()
 
   const Spinner = () => <section className={styles.spinner}></section>
 
@@ -25,7 +25,7 @@ export const ExchangeRate = () => {
 
   return (
     <section className={styles.container_wrapper}>
-      <h4 className={`bold ${styles.txt_wrapper}`}>Current exchange rate for popular corridors</h4>
+      <h4 className={`bold ${styles.txt_wrapper}`}>{t("Current exchange rate for popular corridors")}</h4>
       <section className={styles.carousel_wrapper}>
         {isLoading ? (
           <Spinner />
