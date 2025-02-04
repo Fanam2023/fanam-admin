@@ -1,4 +1,4 @@
-import {ChatBot} from "./chat-bot/page"
+import Login from "./auth/login/page"
 import styles from "./page.module.sass"
 
 export default function Index() {
@@ -9,7 +9,7 @@ export default function Index() {
    */
   return (
     <div className={styles.page}>
-      <ChatBot />
+      <Login />
     </div>
   )
 }
