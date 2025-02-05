@@ -48,7 +48,8 @@ const Login = () => {
         <section className={`flex-start ${styles.input_wrapper}`}>
           <section className={`flex ${styles.country_wrapper} ${errPhoneNo ? styles.error_border : ""}`}>
             <CountryFlag countryCode={getCountryCode(country)} wrapperClass={styles.flag} />
-            <h5 className={styles.country_code}>{country ? `+${country.phone_code}` : "-"}</h5>
+            <h5 className={styles.country_code}>{country ? `+${country.phone_code}` : "-"}</h5> 
+            
             <ImageView
               src={assets.ic_down_arrow_theme}
               alt="down-arrow"
