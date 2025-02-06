@@ -1,5 +1,4 @@
 "use client"
-
 import {Button, Checkbox, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
 import {useState} from "react"
 import assets from "assets"
@@ -11,9 +10,9 @@ const Login = () => {
 
   return (
     <section className={`flex ${styles.container}`}>
-      <section className={styles.imageSection}>
-        <ImageView src={assets.img_fanam} alt="Fanam Poster" imgWidth={800} imgHeight={749} />
-      </section>
+     
+        <ImageView src={assets.img_fanam} alt="Fanam Poster" wrapperClass={styles.image_section}/>
+    
 
       <section className={styles.form_container}>
         <section className="flex-col">
