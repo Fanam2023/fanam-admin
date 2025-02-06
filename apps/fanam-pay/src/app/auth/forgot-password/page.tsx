@@ -12,7 +12,7 @@ import useHandler from "./handler"
 import styles from "./page.module.sass"
 
 const Forgot_Password = () => {
-  const {onChangeValue, data, errData, onSubmit, setData, countries} = useHandler()
+  const {onChangeValue, data, errData, onSubmit, setData, countries, t} = useHandler()
   const {toggleSlider} = useSlider()
   const {phone_no, country} = data
   const {errPhoneNo} = errData
@@ -42,8 +42,8 @@ const Forgot_Password = () => {
     <BaseContainer profile bellIcon>
       <Auth isBack={true} authLogo={assets.img_forgot_logo}>
         <section className={`flex-col ${styles.heading}`}>
-          <h3 className={`bold ${styles.forgot}`}>Forgot PIN?</h3>
-          <h5 className={styles.description}>Enter your registered mobile number to receive a 6-digit code.</h5>
+          <h3 className={`bold ${styles.forgot}`}>{t("Forgot PIN?")}</h3>
+          <h5 className={styles.description}>{t("Enter your registered mobile number to receive a 6-digit code")}</h5>
         </section>
         <section className={`flex-start ${styles.input_wrapper}`}>
           <section className={`flex ${styles.country_wrapper} ${errPhoneNo ? styles.error_border : ""}`}>
@@ -57,7 +57,7 @@ const Forgot_Password = () => {
               wrapperClass={styles.country_arrow}
             />
             <TextField
-              label="Phone Number"
+              label={t("phone_no")}
               name="phone_no"
               value={phone_no}
               onChangeData={onChangeValue}
@@ -69,7 +69,7 @@ const Forgot_Password = () => {
         </section>
         {errPhoneNo && <p className={styles.error_message}>{errPhoneNo}</p>}
         <Button wrapperClass={styles.button_wrapper} onClick={onSubmit}>
-          Next
+          {t("Next")}
         </Button>
       </Auth>
     </BaseContainer>

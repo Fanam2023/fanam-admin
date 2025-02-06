@@ -1,3 +1,4 @@
+import {useTranslation} from "react-i18next"
 import {useRouter} from "next/navigation"
 import {useSlider} from "@custom/ui"
 import {CreateBeneficiaryDetails} from "organisms"
@@ -6,6 +7,7 @@ import {ROUTE_TRANSACTION_PURPOSE} from "utils"
 export const useHandler = () => {
   const {push, back} = useRouter()
   const {toggleSlider} = useSlider()
+  const {t} = useTranslation()
 
   const onRouteToPurpose = () => push(ROUTE_TRANSACTION_PURPOSE)
 
@@ -22,5 +24,6 @@ export const useHandler = () => {
     onRouteToPurpose,
     onToggle,
     onBack,
+    t,
   }
 }

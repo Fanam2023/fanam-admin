@@ -1,11 +1,13 @@
 "use client"
 
+import {useTranslation} from "react-i18next"
 import {useQuery} from "@tanstack/react-query"
 import {useHomeController} from "controller"
 import {QUERY_POPULAR_CORRIDORS} from "utils"
 
 export const useHandler = () => {
   const {popularCorridors} = useHomeController()
+  const {t} = useTranslation()
 
   const {data: getPopularCorridors, isLoading} = useQuery({
     queryKey: [QUERY_POPULAR_CORRIDORS],
@@ -34,5 +36,6 @@ export const useHandler = () => {
     getPopularCorridors,
     isLoading,
     responsive,
+    t,
   }
 }

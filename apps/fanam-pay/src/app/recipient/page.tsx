@@ -9,8 +9,18 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const RecipientPage = () => {
-  const {recipients, searchQuery, selIndex, setSelIndex, onChangeSearch, routeToDetails, onAdd, linkRecipient, back} =
-    useHandler()
+  const {
+    recipients,
+    searchQuery,
+    selIndex,
+    setSelIndex,
+    onChangeSearch,
+    routeToDetails,
+    onAdd,
+    linkRecipient,
+    back,
+    t,
+  } = useHandler()
 
   const renderRecipients = ({first_name, last_name, email, recipient_id}: IRecipient) => (
     <ManageMembers
@@ -27,28 +37,28 @@ const RecipientPage = () => {
       header={"Manage Recipients"}
       childWrapper={styles.page_container}
       backIcon
-      skipBtn="Back"
+      skipBtn={t("Back")}
       isStepper
       stepIndex={0}
       onBack={back}>
       <section className={`flex-col ${styles.recipient_wrapper}`}>
-        <h3 className={`bold ${styles.title}`}>Add or Select Recipient</h3>
-        <h5 className={styles.description}>Enter the Recipient details and their account details.</h5>
+        <h3 className={`bold ${styles.title}`}>{t("Add or Select Recipient")}</h3>
+        <h5 className={styles.description}>{t("Enter the Recipient details and their account details.")}</h5>
       </section>
       <section className={`flex ${styles.search_container}`}>
         <TextField
           type="text"
           isRequired={false}
-          label="Search Recipient..."
+          label={t("Search Recipient...")}
           wrapperClass={styles.search_wrapper}
           leadingIcon={searchQuery.length ? null : assets.ic_search}
           onChangeData={onChangeSearch}></TextField>
         <h4 className={styles.add_text} onClick={onAdd}>
-          Add
+          {t("Add")}
         </h4>
       </section>
       <section className={`flex ${styles.saved_wrapper}`}>
-        <h5 className={`bold ${styles.save_text}`}>Saved Recipients</h5>
+        <h5 className={`bold ${styles.save_text}`}>{t("Saved Recipients")}</h5>
         <Tabs
           selIndex={selIndex}
           tabs={ACCOUNT_TYPE}

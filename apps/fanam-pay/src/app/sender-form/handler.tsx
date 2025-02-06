@@ -1,5 +1,6 @@
 import {Button, FormSectionProps, ImageView, TextField, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
 import {IFormData, JSONObject, REG_EMAIL, REG_VALID_NAME, REG_VALID_NUMBER, useDateTime} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
@@ -85,6 +86,7 @@ const useHandler = (styles: IStyle) => {
   const {formatDateUTC, formatDate, dayjs} = useDateTime()
   const {toggleNotify} = useNotifyPopup()
   const {togglePopup} = usePopup()
+  const {t} = useTranslation()
   const {user, updateUserData, refetchUser} = useSingleton()
   const {country: Country} = user || {}
   console.log(Country, "Aji")
@@ -838,12 +840,12 @@ const useHandler = (styles: IStyle) => {
   }
 
   const addressForm: FormSectionProps = {
-    title: "Address",
+    title: t("Address"),
     wrapperClassGrid: styles.address_details,
     childElements: [
       {
         elementType: "input",
-        label: "Address Line 1",
+        label: t("Address Line 1"),
         name: "address_line_1",
         error: errAddress,
         value: address_line_1,
@@ -852,7 +854,7 @@ const useHandler = (styles: IStyle) => {
       },
       {
         elementType: "input",
-        label: "Address Line 2 (Optional)",
+        label: t("Address Line 2 (Optional)"),
         name: "address_line_2",
         value: address_line_2,
         isRequired: false,
@@ -861,7 +863,7 @@ const useHandler = (styles: IStyle) => {
       },
       {
         elementType: "drop-down",
-        label: "Country",
+        label: t("Country"),
         name: "country",
         options: countries,
         error: errCountry,
@@ -871,7 +873,7 @@ const useHandler = (styles: IStyle) => {
       },
       {
         elementType: "drop-down",
-        label: "State",
+        label: t("State"),
         name: "state",
         options: states,
         error: errState,
@@ -881,7 +883,7 @@ const useHandler = (styles: IStyle) => {
       },
       {
         elementType: "drop-down",
-        label: "City/District",
+        label: t("City/District"),
         name: "city",
         options: cities,
         error: errCity,
@@ -891,7 +893,7 @@ const useHandler = (styles: IStyle) => {
       },
       {
         elementType: "input",
-        label: "Pin Code",
+        label: t("Pincode"),
         name: "zip_code",
         value: zip_code,
         inputRegex: REG_VALID_NUMBER,
@@ -908,7 +910,7 @@ const useHandler = (styles: IStyle) => {
         {
           elementType: "drop-down",
           name: "account_type",
-          label: "Select Account type",
+          label: t("Select Account type"),
           options: ACCOUNT_TYPE,
           value: account_type,
           error: errAccountType,
@@ -918,12 +920,12 @@ const useHandler = (styles: IStyle) => {
       ],
     },
     {
-      title: "Personal Information",
+      title: t("Personal Information"),
       wrapperClassGrid: styles.personal_details,
       childElements: [
         {
           elementType: "input",
-          label: "First Name",
+          label: t("First Name"),
           name: "first_name",
           error: errFirstName,
           value: first_name,
@@ -932,7 +934,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Last Name",
+          label: t("Last Name"),
           name: "last_name",
           error: errLastName,
           inputRegex: REG_INPUT_NAME,
@@ -941,7 +943,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "E-mail",
+          label: t("Email"),
           name: "email",
           value: email,
           error: errEmail,
@@ -961,7 +963,7 @@ const useHandler = (styles: IStyle) => {
                   {Country?.phone_code ? `+${Country?.phone_code}` : "-"}
                 </h5>
                 <TextField
-                  label="Phone Number"
+                  label={t("Phone Number")}
                   name="phone_no"
                   value={phone_no}
                   onChangeData={onChangeValue}
@@ -985,7 +987,7 @@ const useHandler = (styles: IStyle) => {
           childElement: (
             <TextField
               type="date"
-              label="Date of Birth"
+              label={t("Date of Birth")}
               name="date_of_birth"
               value={formatDate(date_of_birth, DF_INPUT_DATE)}
               error={errDateOfBirth}
@@ -1006,7 +1008,7 @@ const useHandler = (styles: IStyle) => {
         {
           elementType: "drop-down",
           name: "account_type",
-          label: "Select Account type",
+          label: t("Select Account type"),
           options: ACCOUNT_TYPE,
           value: account_type,
           error: errAccountType,
@@ -1014,7 +1016,7 @@ const useHandler = (styles: IStyle) => {
           onChangeValue,
         },
         {
-          label: "Business type",
+          label: t("Business type"),
           elementType: "drop-down",
           name: "business_type",
           options: BUSINESS_TYPE,
@@ -1025,12 +1027,12 @@ const useHandler = (styles: IStyle) => {
       ],
     },
     {
-      title: "Business Details",
+      title: t("Business Details"),
       wrapperClassGrid: styles.personal_details,
       childElements: [
         {
           elementType: "input",
-          label: getBusinessNameLabel(business_type?.key),
+          label: t(getBusinessNameLabel(business_type?.key)),
           name: "business_name",
           error: errBusinessName,
           value: business_name,
@@ -1038,7 +1040,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: getBusinessName(business_type?.key, "First name"),
+          label: t(getBusinessName(business_type?.key, t("First Name"))),
           name: "first_name",
           error: errFirstName,
           value: first_name,
@@ -1047,7 +1049,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: getBusinessName(business_type.key, "Last Name"),
+          label: t(getBusinessName(business_type.key, t("Last Name"))),
           name: "last_name",
           error: errLastName,
           value: last_name,
@@ -1056,7 +1058,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Company e-mail",
+          label: t("Company e-mail"),
           name: "email",
           value: email,
           error: errEmail,
@@ -1076,7 +1078,7 @@ const useHandler = (styles: IStyle) => {
                   {Country ? `+${Country?.phone_code}` : "-"}
                 </h5>
                 <TextField
-                  label="Company Phone Number"
+                  label={t("Company Phone Number")}
                   name="phone_no"
                   value={phone_no}
                   onChangeData={onChangeValue}
@@ -1099,14 +1101,14 @@ const useHandler = (styles: IStyle) => {
 
   const individualKYCElements: FormSectionProps = useMemo(() => {
     const elements: FormSectionProps = {
-      title: "Verification",
+      title: t("Verification"),
       wrapperClassGrid: styles.verify_wrapper,
       childElements: [
         {
           childElement: (
             <section className={`flex-start ${styles.pan_wrapper} `}>
               <TextField
-                label="Aadhaar Number"
+                label={t("Aadhaar Number")}
                 name="aadhaarNumber"
                 value={aadhaarNumber}
                 disabled={!!verifiedAadhaar}
@@ -1132,7 +1134,7 @@ const useHandler = (styles: IStyle) => {
     if (verifiedAadhaar) {
       elements.childElements.push({
         elementType: "file-picker",
-        label: "Upload the Aadhaar Document to verify KYC",
+        label: t("Upload the Aadhaar Document to verify KYC"),
         fileType: ["image/*", "application/pdf"],
         wrapperClass: `flex-col ${styles.upload_img_picker}`,
         name: "kyc_aadhaar",
@@ -1149,7 +1151,7 @@ const useHandler = (styles: IStyle) => {
         childElement: verifiedAadhaar && (
           <section className={`flex-start ${styles.pan_verify} ${errKycAadhaar && styles.pan_aadhar_verify}`}>
             <ImageView src={assets.ic_tick} alt="tick-image" imgSize={24} />
-            <h5 className={styles.verified_text}>Aadhaar is Validated</h5>
+            <h5 className={styles.verified_text}>{t("Aadhaar is Validated")}</h5>
           </section>
         ),
       })
@@ -1160,7 +1162,7 @@ const useHandler = (styles: IStyle) => {
         childElement: (
           <section className={`flex-start ${styles.pan_wrapper}`}>
             <TextField
-              label="Pan Number"
+              label={t("Pan Number")}
               name="pan"
               value={pan}
               onChangeData={onChangeValue}
@@ -1183,7 +1185,7 @@ const useHandler = (styles: IStyle) => {
     if (verifiedPAN) {
       elements.childElements.push({
         elementType: "file-picker",
-        label: "Upload the PAN Card Document to verify KYC",
+        label: t("Upload the PAN Card Document to verify KYC"),
         fileType: ["image/*", "application/pdf"],
         wrapperClass: `flex-col ${styles.upload_img_picker}`,
         name: "kyc_pan",
@@ -1200,7 +1202,7 @@ const useHandler = (styles: IStyle) => {
         childElement: verifiedPAN && (
           <section className={`flex-start ${styles.pan_verify} ${errKycPAN && styles.pan_aadhar_verify} `}>
             <ImageView src={assets.ic_tick} alt="tick-image" imgSize={24} />
-            <h5 className={styles.verified_text}>PAN is Validated</h5>
+            <h5 className={styles.verified_text}>{t("PAN is Validated")}</h5>
           </section>
         ),
       })
@@ -1226,7 +1228,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Identity Id Number",
+          label: t("Identity Id Number"),
           name: "id_number",
           error: errIdentityIdNumber,
           value: identityIdNumber,
@@ -1235,7 +1237,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "file-picker",
-          label: "Upload the supporting document related to the Identity Proof",
+          label: t("Upload the supporting document related to the Identity Proof"),
           fileType: ["image/*", "application/pdf"],
           wrapperClass: `flex-col ${styles.img_picker}`,
           name: "kyc",
@@ -1543,6 +1545,7 @@ const useHandler = (styles: IStyle) => {
     individualType,
     onSubmit,
     onBack,
+    t,
   }
 }
 

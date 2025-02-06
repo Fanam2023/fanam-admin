@@ -1,3 +1,4 @@
+import {useTranslation} from "react-i18next"
 import {useParams, useRouter} from "next/navigation"
 import {useQuery} from "@tanstack/react-query"
 import {useTransactionController} from "controller"
@@ -6,6 +7,7 @@ import {QUERY_TRANSACTION, ROUTE_HOME} from "utils"
 export const useHandler = () => {
   const {transactionId} = useParams()
   const {replace} = useRouter()
+  const {t} = useTranslation()
 
   const {getTransactionDetails} = useTransactionController()
 
@@ -20,5 +22,6 @@ export const useHandler = () => {
   return {
     transactionDetail,
     routeHome,
+    t,
   }
 }

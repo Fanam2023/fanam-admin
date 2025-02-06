@@ -8,7 +8,7 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const BeneficiaryPage = () => {
-  const {onNav, beneficiaries, onChangeSearch, routeToDetails, onBack, linkBeneficiary, searchQuery} = useHandler()
+  const {onNav, beneficiaries, onChangeSearch, routeToDetails, onBack, linkBeneficiary, searchQuery, t} = useHandler()
 
   const renderBeneficiary = ({first_name, last_name, email, beneficiary_id}: IBeneficiary) => (
     <ManageMembers
@@ -26,28 +26,28 @@ const BeneficiaryPage = () => {
       childWrapper={styles.page_container}
       backIcon
       stepIndex={1}
-      skipBtn="Back"
+      skipBtn={t("Back")}
       isStepper
       onBack={onBack}>
       <section className={`flex-col ${styles.beneficiary_wrapper}`}>
-        <h3 className={`bold ${styles.title}`}>Add or Select Beneficiary</h3>
+        <h3 className={`bold ${styles.title}`}>{t("Add or Select Beneficiary")}</h3>
         <h5 className={styles.description}>
-          If your recipient and beneficiary are different, enter the beneficiary details..
+          {t("If your recipient and beneficiary are different, enter the beneficiary details..")}
         </h5>
       </section>
       <section className={`flex ${styles.search_container}`}>
         <TextField
           type="text"
           isRequired={false}
-          label="Search beneficiary..."
+          label={t("Search beneficiary...")}
           wrapperClass={styles.search_wrapper}
           leadingIcon={searchQuery.length ? null : assets.ic_search}
           onChangeData={onChangeSearch}></TextField>
         <h4 className={styles.add_text} onClick={onNav}>
-          Add
+          {t("Add")}
         </h4>
       </section>
-      <h5 className={`bold ${styles.save_text}`}>Saved Beneficiary</h5>
+      <h5 className={`bold ${styles.save_text}`}>{t("Saved Beneficiary")}</h5>
       <ul className={styles.members}>{beneficiaries?.map(renderBeneficiary)}</ul>
     </BaseContainer>
   )

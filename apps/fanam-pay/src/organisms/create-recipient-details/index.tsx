@@ -5,7 +5,7 @@ import useHandler from "./handler"
 import styles from "./styles.module.sass"
 
 export const CreateRecipientDetails = ({recipient_id}: RecipientDetailsProp) => {
-  const {formElements, onSubmit, showCountry, onSelectCountry, selectedCountry, allCountries, setShowCountry} =
+  const {formElements, onSubmit, showCountry, onSelectCountry, selectedCountry, allCountries, setShowCountry, t} =
     useHandler(styles, recipient_id)
 
   return (
@@ -26,7 +26,7 @@ export const CreateRecipientDetails = ({recipient_id}: RecipientDetailsProp) => 
         wrapperClass={`${styles.input_wrapper} ${showCountry ? styles.input_hidden : ""}`}
       />
       <Button wrapperClass={`${styles.btn_wrapper} ${showCountry ? styles.input_hidden : ""}`} onClick={onSubmit}>
-        {recipient_id ? "Update Recipient" : "Add Recipient"}
+        {recipient_id ? t("Update Recipient") : t("Add Recipient")}
       </Button>
     </section>
   )

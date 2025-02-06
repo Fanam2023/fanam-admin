@@ -1,4 +1,5 @@
 import {ImageView} from "@fanam-pkg/core-ui-sass"
+import {useTranslation} from "react-i18next"
 import {ITransferTime} from "@custom/utils"
 import assets from "assets"
 import {useSingleton} from "hooks"
@@ -10,6 +11,7 @@ export const TransferTime = ({onSelect, transferTimeRes}: PropsTransferTime) => 
   const {sourceCountry, transfer_times = []} = transferTimeRes || {}
   const {transfer_time} = transData || {}
   const {currency} = sourceCountry || {}
+  const {t} = useTranslation()
 
   const renderItem = (label: string, value: string, isSelected: boolean) => (
     <li className={`flex-sb-center ${styles.transfer_wrapper}`}>
@@ -42,13 +44,13 @@ export const TransferTime = ({onSelect, transferTimeRes}: PropsTransferTime) => 
             imgSize={30}
           />
           <h4 className={`bold ${styles.txt_wrapper} ${isSelected ? styles.selected_txt : ""}`}>
-            In {sla_timing_max} Hours
+            {t(`In ${sla_timing_max} Hours`)}
           </h4>
         </section>
         <ul className={`flex-col ${styles.fees_wrapper}`}>
-          {renderItem("Exchange Amount", parseFloat(exchange_rate)?.toFixed(2), isSelected)}
-          {renderItem("Others", (parseFloat(other_fees) + parseFloat(markup_fee))?.toFixed(2), isSelected)}
-          {renderItem("Total", parseFloat(final_rate)?.toFixed(2), true)}
+          {renderItem(t("Exchange Amount"), parseFloat(exchange_rate)?.toFixed(2), isSelected)}
+          {renderItem(t("Others"), (parseFloat(other_fees) + parseFloat(markup_fee))?.toFixed(2), isSelected)}
+          {renderItem(t("Total"), parseFloat(final_rate)?.toFixed(2), true)}
         </ul>
       </li>
     )
@@ -56,7 +58,7 @@ export const TransferTime = ({onSelect, transferTimeRes}: PropsTransferTime) => 
 
   return (
     <section className={styles.container_wrapper}>
-      <h4 className={`semi-bold ${styles.sub_title}`}>Select Remittance Option</h4>
+      <h4 className={`semi-bold ${styles.sub_title}`}>{t("Select Remittance Option")}</h4>
       <ul className={`flex-col ${styles.card_wrapper}`}>{transfer_times.map(renderTransferItem)}</ul>
     </section>
   )

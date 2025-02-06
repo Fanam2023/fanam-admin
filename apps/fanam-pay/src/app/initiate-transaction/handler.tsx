@@ -1,5 +1,6 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {JSONObject, REG_VALID_NUMBER} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useRouter} from "next/navigation"
 import {ChangeEvent, useEffect, useRef, useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
@@ -44,6 +45,7 @@ export const useHandler = () => {
   const [Razorpay] = useRazorpay()
   const {user, transId, transData} = useSingleton()
   const isFetched = useRef(false)
+  const {t} = useTranslation()
   const [data, setData] = useState<ITransactionData>({
     source_amount: "",
     destination_amount: "",
@@ -409,5 +411,6 @@ export const useHandler = () => {
     onSelect: onUpdateTransaction,
     transfer_time,
     durationTime,
+    t,
   }
 }

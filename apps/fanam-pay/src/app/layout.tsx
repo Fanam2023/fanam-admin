@@ -3,10 +3,12 @@
 import {UIProvider} from "@fanam-pkg/core-ui-sass"
 import "@fanam-pkg/core-ui-sass/src/styles/style.sass"
 import {useResize} from "@fanam-pkg/core-utils"
+import {I18nextProvider} from "react-i18next"
 import {Public_Sans} from "next/font/google"
 import {CustomProvider} from "@custom/ui"
 import {LibProvider} from "provider"
 import "../../../../packages/custom-ui/src/styles/index.css"
+import i18n from "./i18n"
 import styles from "./layout.module.sass"
 
 const primaryFont = Public_Sans({
@@ -27,9 +29,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="en">
       <body className={`${primaryFont.variable} ${isDesktop ? styles.background : ""}`}>
         <LibProvider>
-          <UIProvider>
-            <CustomProvider>{children} </CustomProvider>
-          </UIProvider>
+          <I18nextProvider i18n={i18n}>
+            <UIProvider>
+              <CustomProvider>{children} </CustomProvider>
+            </UIProvider>
+          </I18nextProvider>
         </LibProvider>
       </body>
     </html>

@@ -1,5 +1,6 @@
 import {FormSectionProps, ImageView, TextField, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {IFormData, JSONObject, REG_EMAIL, REG_VALID_NUMBER, useReactQuery, useResize} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries, useQuery} from "@tanstack/react-query"
@@ -38,6 +39,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   const {isDesktop} = useResize()
   const {transData, transId: transaction_id, refetchTransaction} = useSingleton()
   const {push} = useRouter()
+  const {t} = useTranslation()
   const {toggleSlider} = useSlider()
   const {refreshQuery} = useReactQuery()
   const {toggleNotify} = useNotifyPopup()
@@ -89,31 +91,32 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     if (!first_name) {
       errState = {
         ...errState,
-        errFirstName: "Please enter First Name",
+        errFirstName: t("Please enter First Name"),
         isValid: false,
       }
     } else if (first_name.length < 2)
       errState = {
         ...errState,
-        errFirstName: "FirstName must be longer than or equal to 2 characters",
+        errFirstName: t("FirstName must be longer than or equal to 2 characters"),
         isValid: false,
       }
 
-    if (!last_name) errState = {...errState, errLastName: "Please enter Last Name", isValid: false}
+    if (!last_name) errState = {...errState, errLastName: t("Please enter Last Name"), isValid: false}
 
-    if (!isValidInputByRegex(email, REG_EMAIL)) errState = {...errState, errEmail: "Please enter Email", isValid: false}
+    if (!isValidInputByRegex(email, REG_EMAIL))
+      errState = {...errState, errEmail: t("Please enter Email"), isValid: false}
 
-    if (!phone_no) errState = {...errState, errNumber: "Please enter your Phone Number", isValid: false}
+    if (!phone_no) errState = {...errState, errNumber: t("Please enter your Phone Number"), isValid: false}
 
     if (!relationship)
-      errState = {...errState, errRelation: "Please enter your Relationship with sender", isValid: false}
+      errState = {...errState, errRelation: t("Please enter your Relationship with sender"), isValid: false}
 
-    if (!address) errState = {...errState, errAddress: "Please enter Beneficiary Address", isValid: false}
+    if (!address) errState = {...errState, errAddress: t("Please enter Beneficiary Address"), isValid: false}
 
     if (!country) {
       errState = {
         ...errState,
-        errNumber: "Please select country",
+        errNumber: t("Please select Country"),
         isValid: false,
       }
     } else if (!phone_no || phone_no.length !== nationalNumberLength) {
@@ -124,11 +127,11 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
       }
     }
 
-    if (!state) errState = {...errState, errStateName: "Please enter State Name", isValid: false}
+    if (!state) errState = {...errState, errStateName: t("Please select State"), isValid: false}
 
-    if (!city) errState = {...errState, errCity: "Please enter your City/District", isValid: false}
+    if (!city) errState = {...errState, errCity: t("Please select City/District"), isValid: false}
 
-    if (!zip_code) errState = {...errState, errZipCode: "Please enter Pin Code", isValid: false}
+    if (!zip_code) errState = {...errState, errZipCode: t("Please enter Pin code"), isValid: false}
 
     setErrState(errState)
     return errState
@@ -316,12 +319,12 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
   }, [allCountries])
   const formElements: FormSectionProps[] = [
     {
-      title: "Personal Information",
+      title: t("Personal Information"),
       wrapperClassGrid: styles.details_wrapper,
       childElements: [
         {
           elementType: "input",
-          label: "First Name",
+          label: t("First Name"),
           name: "first_name",
           error: errFirstName,
           value: first_name,
@@ -330,7 +333,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "input",
-          label: "Last Name",
+          label: t("Last Name"),
           name: "last_name",
           error: errLastName,
           value: last_name,
@@ -345,7 +348,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
       childElements: [
         {
           elementType: "input",
-          label: "Email",
+          label: t("Email"),
           name: "email",
           error: errEmail,
           value: email,
@@ -367,7 +370,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
                     wrapperClass={styles.country_arrow}
                   />
                   <TextField
-                    label="Phone Number"
+                    label={t("Phone Number")}
                     name="phone_no"
                     value={phone_no}
                     onChangeData={onChangeValue}
@@ -383,7 +386,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "drop-down",
-          label: "Relationship with the Sender",
+          label: t("Relationship with the Sender"),
           name: "relationship",
           error: errRelation,
           value: relationship,
@@ -392,7 +395,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "input",
-          label: "Account Number",
+          label: t("Account Number"),
           isRequired: false,
           name: "account_no",
           error: errAccountNo,
@@ -402,7 +405,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "text-area",
-          label: "Add Notes",
+          label: t("Add Notes"),
           isRequired: false,
           name: "notes",
           value: notes,
@@ -413,12 +416,12 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
       ],
     },
     {
-      title: "Address",
+      title: t("Address"),
       wrapperClassGrid: styles.address,
       childElements: [
         {
           elementType: "input",
-          label: "Home Address",
+          label: t("Home Address"),
           name: "address",
           error: errAddress,
           value: address,
@@ -432,7 +435,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
       childElements: [
         {
           elementType: "drop-down",
-          label: "Country",
+          label: t("Country"),
           name: "country",
           options: countries,
           error: errCountry,
@@ -441,7 +444,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "drop-down",
-          label: "State",
+          label: t("State"),
           name: "state",
           disabled: !country,
           options: states,
@@ -451,7 +454,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "drop-down",
-          label: "City/District",
+          label: t("City"),
           name: "city",
           disabled: !state,
           options: cities,
@@ -461,7 +464,7 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
         },
         {
           elementType: "input",
-          label: "Pin Code",
+          label: t("Pincode"),
           name: "zip_code",
           value: zip_code,
           inputRegex: REG_VALID_NUMBER,
@@ -507,5 +510,6 @@ export const useHandler = (styles: IStyle, beneficiaryId: string) => {
     allCountries,
     selectedCountry,
     setShowCountry,
+    t,
   }
 }

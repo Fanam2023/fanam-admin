@@ -1,5 +1,6 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {JSONObject} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
@@ -19,6 +20,7 @@ const DEFAULT_ERR_STATE = {
 const useHandler = () => {
   const {push} = useRouter()
   const {transData} = useSingleton()
+  const {t} = useTranslation()
   const {toggleNotify} = useNotifyPopup()
   const {sendingPurpose, removeAttachment} = useTransactionController()
   const {recipient_account_type} = transData || {}
@@ -138,6 +140,7 @@ const useHandler = () => {
     PURPOSES,
     onSubmit,
     errState,
+    t,
   }
 }
 
