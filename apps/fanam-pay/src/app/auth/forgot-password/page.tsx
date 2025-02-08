@@ -18,7 +18,6 @@ const Forgot_Password = () => {
   const {errPhoneNo} = errData
   const {getCountryCode} = useCommon()
 
-  
   const onSelectCountry = (country: ICountry) => {
     setData(prev => ({
       ...prev,

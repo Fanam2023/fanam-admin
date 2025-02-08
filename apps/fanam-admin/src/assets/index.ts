@@ -3,6 +3,7 @@ import ic_icon from "./icons/ic_icon.svg"
 import ic_plus from "./icons/ic_plus.svg"
 import ic_send from "./icons/ic_send.svg"
 import img_fanam from "./images/img_fanam.webp"
+
 const assets = {
   ic_compliance,
   ic_icon,
