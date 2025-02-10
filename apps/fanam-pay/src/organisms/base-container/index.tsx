@@ -1,15 +1,15 @@
 "use client"
 
-import {Button, ImageView, assets as projectAssets, usePopup} from "@fanam-pkg/core-ui-sass"
-import {useResize} from "@fanam-pkg/core-utils"
-import {useRouter} from "next/navigation"
+import { Button, ImageView, assets as projectAssets, usePopup } from "@fanam-pkg/core-ui-sass"
+import { useResize } from "@fanam-pkg/core-utils"
 import assets from "assets"
-import {useCommon, useSingleton} from "hooks"
-import {IStepper} from "model"
-import {ProfileDetails, SidePanel} from "organisms"
-import {BaseContainerProps} from "props"
-import {SIDE_BAR} from "utils"
-import {useHandler} from "./handler"
+import { useCommon, useSingleton } from "hooks"
+import { IStepper } from "model"
+import { useRouter } from "next/navigation"
+import { ProfileDetails, SidePanel } from "organisms"
+import { BaseContainerProps } from "props"
+import { SIDE_BAR } from "utils"
+import { useHandler } from "./handler"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({
@@ -80,7 +80,7 @@ export const BaseContainer = ({
     <>
       <header className={`flex-sb-center ${styles.header_wrapper}  ${bankStyles[bankName] || ""}`}>
         <section className={`flex ${styles.logo_wrapper}`}>
-          <ImageView src={logoUrl} alt={"logo"} imgWidth={isDesktop ? 150 : 120} imgHeight={70} />
+          <ImageView src={logoUrl} alt={"logo"} imgWidth={isDesktop ? 180 : 120} imgHeight={40} />
         </section>
         <section className={`flex ${styles.language_section}`}>
           <section className={`flex ${styles.language_wrapper}`}>
