@@ -1,20 +1,17 @@
 "use client"
 
 import {Button, Checkbox, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
+import {ROUTE_BANK} from "app/utils/routes"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
 import assets from "assets"
 import styles from "./page.module.sass"
 
 const Login = () => {
-  const router = useRouter()
+  const {push} = useRouter()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-
-  const handleLogin = () => {
-    router.push("/dashboard")
-  }
 
   return (
     <section className={`flex ${styles.container}`}>
@@ -45,7 +42,7 @@ const Login = () => {
             <Checkbox item={{label: "Remember me"}} />
             <h6 className={styles.forget_txt}>Forgot password ?</h6>
           </section>
-          <Button wrapperClass={styles.login_btn} onClick={handleLogin}>
+          <Button wrapperClass={styles.login_btn} onClick={() => push(ROUTE_BANK)}>
             Login
           </Button>
         </section>

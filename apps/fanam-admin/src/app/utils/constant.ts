@@ -78,20 +78,22 @@ export const NAV_ITEMS = [
     label: "Dashboard",
     icon: assets.img_menu_dashboard,
     activeIcon: assets.img_activeMenu_dashboard,
-    path: "/dashboard",
+    path: "/",
     subItems: [],
+    click: true,
   },
   {
     label: "User",
     icon: assets.img_menu_user,
     activeIcon: assets.img_activeMenu_user,
+    click: true,
     subItems: [
-      {label: "Bank List", path: "/banklist"},
-      {label: "Service offered", path: "/service"},
-      {label: "Location Details", path: "/location-details"},
-      {label: "Contact Details", path: "/contact-details"},
-      {label: "Legal Information", path: "/legal-info"},
-      {label: "Other options", path: "/other-options"},
+      {label: "Bank List", path: "/banklist", subClick: true},
+      {label: "Service offered", path: "/service", subClick: false},
+      {label: "Location Details", path: "/location-details", subClick: false},
+      {label: "Contact Details", path: "/contact-details", subClick: false},
+      {label: "Legal Information", path: "/legal-info", subClick: false},
+      {label: "Other options", path: "/other-options", subClick: false},
     ],
   },
   {
@@ -100,6 +102,7 @@ export const NAV_ITEMS = [
     activeIcon: assets.img_activeMenu_branch,
     path: "/branch",
     subItems: [],
+    click: false,
   },
   {
     label: "Privacy",
@@ -107,6 +110,7 @@ export const NAV_ITEMS = [
     activeIcon: assets.img_activeMenu_privacy,
     path: "/privacy",
     subItems: [],
+    click: false,
   },
   {
     label: "List",
@@ -114,6 +118,7 @@ export const NAV_ITEMS = [
     activeIcon: assets.img_activeMenu_list,
     path: "/list",
     subItems: [],
+    click: false,
   },
   {
     label: "Settings",
@@ -121,5 +126,6 @@ export const NAV_ITEMS = [
     activeIcon: assets.img_activeMenu_settings,
     path: "/settings",
     subItems: [],
+    click: false,
   },
 ]

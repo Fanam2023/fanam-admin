@@ -2,101 +2,13 @@
 
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {NAV_ITEMS} from "app/utils/constant"
-import {usePathname, useRouter} from "next/navigation"
-import {useEffect, useState} from "react"
 import assets from "assets"
+import {useNavigationHandler} from "./handle"
 import styles from "./styles.module.scss"
 
-export default function BaseContainer({children}) {
-  const pathname = usePathname()
-  const router = useRouter()
-  const [openMenu, setOpenMenu] = useState(null)
-  const [activeMenu, setActiveMenu] = useState("")
-  const [activeSubMenu, setActiveSubMenu] = useState(null)
-  const [title, setTitle] = useState("")
-  const [lastSubMenuPath, setLastSubMenuPath] = useState({})
-
-  useEffect(() => {
-    const activeNav = NAV_ITEMS.find(
-      item => item.subItems.some(sub => pathname.startsWith(sub.path)) || pathname.startsWith(item.path)
-    )
-
-    if (activeNav) {
-      setActiveMenu(activeNav.label)
-
-      if (activeNav.subItems.length > 0) {
-        const activeSub = activeNav.subItems.find(sub => pathname.startsWith(sub.path))
-
-        if (activeSub) {
-          setActiveSubMenu(activeNav.subItems.indexOf(activeSub))
-          setOpenMenu(NAV_ITEMS.indexOf(activeNav))
-          setTitle(activeSub.label)
-        } else {
-          const closestSub = activeNav.subItems.find(sub => pathname.includes(sub.path))
-          if (closestSub) {
-            setActiveSubMenu(activeNav.subItems.indexOf(closestSub))
-            setTitle(closestSub.label)
-          } else {
-            setActiveSubMenu(null)
-            setTitle(activeNav.label)
-          }
-        }
-      } else {
-        setActiveSubMenu(null)
-        setTitle(activeNav.label)
-      }
-
-      setOpenMenu(null)
-    }
-  }, [pathname])
-
-  const toggleSubMenu = index => {
-    const item = NAV_ITEMS[index]
-
-    if (item.subItems.length === 0) {
-      setActiveMenu(item.label)
-      setTitle(item.label)
-      router.replace(item.path)
-      setOpenMenu(null)
-    } else {
-      if (openMenu === index) {
-        setOpenMenu(null)
-      } else {
-        setOpenMenu(index)
-        setActiveMenu(item.label)
-
-        // Ensure last visited submenu path is restored
-        const lastPath = lastSubMenuPath[item.label] || pathname // Use `pathname` to persist detail pages
-        const activeSubIndex = item.subItems.findIndex(sub => sub.path === lastPath)
-
-        if (activeSubIndex !== -1) {
-          setActiveSubMenu(activeSubIndex)
-          setTitle(item.subItems[activeSubIndex]?.label || item.label)
-          router.replace(lastPath) // Navigate to the last visited submenu
-        }
-      }
-    }
-  }
-
-  const handleBackButtonClick = e => {
-    e.preventDefault()
-    setOpenMenu(null)
-  }
-
-  const handleSubMenuItemClick = (subIndex, subPath, e) => {
-    e.preventDefault()
-
-    setActiveSubMenu(subIndex)
-    setTitle(NAV_ITEMS[openMenu].subItems[subIndex].label)
-
-    // Persist last visited submenu path for this menu
-    setLastSubMenuPath(prev => ({
-      ...prev,
-      [NAV_ITEMS[openMenu].label]: subPath,
-    }))
-
-    router.replace(subPath)
-  }
+export default function BaseContainer({children}: {children: React.ReactNode}) {
+  const {openMenu, activeMenu, activeSubMenu, title, toggleSubMenu, handleBackButtonClick, handleSubMenuItemClick} =
+    useNavigationHandler()
 
   return (
     <div className={`${styles.app_container} ${openMenu !== null ? styles.submenu_open : ""}`}>
@@ -109,15 +21,13 @@ export default function BaseContainer({children}) {
             {NAV_ITEMS.map((item, index) => (
               <li key={index} className={styles.menu_item_container}>
                 <div
-                  className={`${styles.menu_item} ${activeMenu === item.label ? styles.menu_item_active : ""}`}
-                  onClick={() => toggleSubMenu(index)}
-                  data-selected={item.subItems.some(sub => pathname.startsWith(sub.path))}>
+                  className={`${styles.menu_item} ${activeMenu === item.label ? styles.menu_item_active : ""} ${
+                    !item.click ? styles.menu_item_disabled : "" // Add disabled style
+                  }`}
+                  onClick={() => item.click && toggleSubMenu(index)} // Only allow click if item.click is true
+                >
                   <ImageView
-                    src={
-                      pathname.startsWith(item.subItems[0]?.path) || openMenu === index || activeMenu === item.label
-                        ? item.activeIcon.src
-                        : item.icon.src
-                    }
+                    src={openMenu === index || activeMenu === item.label ? item.activeIcon.src : item.icon.src}
                     alt={item.label}
                     wrapperClass={styles.menu_icon}
                   />
@@ -140,8 +50,10 @@ export default function BaseContainer({children}) {
             {NAV_ITEMS[openMenu]?.subItems?.map((subItem, subIndex) => (
               <li
                 key={subIndex}
-                className={`${styles.menu_list_item} ${pathname.startsWith(subItem.path) ? styles.submenu_active : ""}`}
-                onClick={e => handleSubMenuItemClick(subIndex, subItem.path, e)}>
+                className={`${styles.menu_list_item} ${activeSubMenu === subIndex ? styles.submenu_active : ""} ${
+                  !subItem.subClick ? styles.submenu_disabled : "" // Add a disabled style
+                }`}
+                onClick={e => subItem.subClick && handleSubMenuItemClick(subIndex, subItem.path, e)}>
                 <div>{subItem.label}</div>
               </li>
             ))}
