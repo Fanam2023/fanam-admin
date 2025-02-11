@@ -1,3 +1,5 @@
+import assets from "assets"
+
 export const BANK_LIST = [
   {
     bankid: "FDB-2025-001",
@@ -68,5 +70,56 @@ export const BANK_LIST = [
     email: "contact@gmail.com",
     mobile: "12345677",
     contactPerson: "Rosario",
+  },
+]
+
+export const NAV_ITEMS = [
+  {
+    label: "Dashboard",
+    icon: assets.img_menu_dashboard,
+    activeIcon: assets.img_activeMenu_dashboard,
+    path: "/dashboard",
+    subItems: [],
+  },
+  {
+    label: "User",
+    icon: assets.img_menu_user,
+    activeIcon: assets.img_activeMenu_user,
+    subItems: [
+      {label: "Bank List", path: "/banklist"},
+      {label: "Service offered", path: "/service"},
+      {label: "Location Details", path: "/location-details"},
+      {label: "Contact Details", path: "/contact-details"},
+      {label: "Legal Information", path: "/legal-info"},
+      {label: "Other options", path: "/other-options"},
+    ],
+  },
+  {
+    label: "Branch",
+    icon: assets.img_menu_branch,
+    activeIcon: assets.img_activeMenu_branch,
+    path: "/branch",
+    subItems: [],
+  },
+  {
+    label: "Privacy",
+    icon: assets.img_menu_privacy,
+    activeIcon: assets.img_activeMenu_privacy,
+    path: "/privacy",
+    subItems: [],
+  },
+  {
+    label: "List",
+    icon: assets.img_menu_list,
+    activeIcon: assets.img_activeMenu_list,
+    path: "/list",
+    subItems: [],
+  },
+  {
+    label: "Settings",
+    icon: assets.img_menu_settings,
+    activeIcon: assets.img_activeMenu_settings,
+    path: "/settings",
+    subItems: [],
   },
 ]

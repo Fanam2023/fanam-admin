@@ -1,7 +1,13 @@
+import {redirect} from "next/navigation"
+import Login from "./auth/login/page"
 import styles from "./page.module.sass"
 
-const Dashboard = () => {
-  return <section className={styles.page}>Dashboard</section>
-}
+export default function Index() {
+  redirect("/auth/login")
 
-export default Dashboard
+  return (
+    <div className={styles.page}>
+      <Login />
+    </div>
+  )
+}
