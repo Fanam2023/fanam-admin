@@ -4,23 +4,23 @@ import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {NAV_ITEMS} from "app/utils/constant"
 import assets from "assets"
 import {useNavigationHandler} from "./handle"
-import styles from "./styles.module.scss"
+import styles from "./style.module.sass"
 
-export default function BaseContainer({children}: {children: React.ReactNode}) {
+export const BaseContainer = ({children}: {children: React.ReactNode}) => {
   const {openMenu, activeMenu, activeSubMenu, title, toggleSubMenu, handleBackButtonClick, handleSubMenuItemClick} =
     useNavigationHandler()
 
   return (
-    <div className={`${styles.app_container} ${openMenu !== null ? styles.submenu_open : ""}`}>
+    <section className={`${styles.app_container} ${openMenu !== null ? styles.submenu_open : ""}`}>
       <aside className={styles.sidebar}>
-        <div className={styles.sidebar_header}>
+        <section className={styles.sidebar_header}>
           <ImageView src={assets.img_Logo} alt="App Logo" wrapperClass={styles.logo} />
-        </div>
+        </section>
         <nav className={styles.sidebar_menu}>
           <ul>
             {NAV_ITEMS.map((item, index) => (
               <li key={index} className={styles.menu_item_container}>
-                <div
+                <section
                   className={`${styles.menu_item} ${activeMenu === item.label ? styles.menu_item_active : ""} ${
                     !item.click ? styles.menu_item_disabled : "" // Add disabled style
                   }`}
@@ -31,7 +31,7 @@ export default function BaseContainer({children}: {children: React.ReactNode}) {
                     alt={item.label}
                     wrapperClass={styles.menu_icon}
                   />
-                </div>
+                </section>
               </li>
             ))}
           </ul>
@@ -40,12 +40,12 @@ export default function BaseContainer({children}: {children: React.ReactNode}) {
 
       {openMenu !== null && (
         <aside className={styles.submenu_sidebar}>
-          <div className={styles.submenu_header}>
+          <section className={styles.submenu_header}>
             <span className={styles.submenu_title}>{title}</span>
             <Button wrapperClass={styles.back_button} onClick={handleBackButtonClick}>
               <ImageView src={assets.img_menu_back} alt="Back Button" wrapperClass={styles.back_icon} />
             </Button>
-          </div>
+          </section>
           <ul className={styles.menu_list}>
             {NAV_ITEMS[openMenu]?.subItems?.map((subItem, subIndex) => (
               <li
@@ -54,28 +54,28 @@ export default function BaseContainer({children}: {children: React.ReactNode}) {
                   !subItem.subClick ? styles.submenu_disabled : "" // Add a disabled style
                 }`}
                 onClick={e => subItem.subClick && handleSubMenuItemClick(subIndex, subItem.path, e)}>
-                <div>{subItem.label}</div>
+                <section>{subItem.label}</section>
               </li>
             ))}
           </ul>
         </aside>
       )}
 
-      <div className={`${styles.main_content} ${openMenu !== null ? styles.main_content_minimized : ""}`}>
+      <section className={`${styles.main_content} ${openMenu !== null ? styles.main_content_minimized : ""}`}>
         <header className={`${styles.topbar} ${openMenu !== null ? styles.topbar_minimized : ""}`}>
-          <div className={styles.header_font}>{title}</div>
+          <section className={styles.header_font}>{title}</section>
 
-          <div className={styles.topbar_right}>
+          <section className={styles.topbar_right}>
             <ImageView src={assets.img_header_bell} alt="Notification Bell" wrapperClass={styles.icon} />
-            <div className={styles.help}>
+            <section className={styles.help}>
               <ImageView src={assets.img_header_help} alt="Help Icon" wrapperClass={styles.icon} />
               <span className={styles["help-text"]}>Help</span>
-            </div>
+            </section>
             <ImageView src={assets.img_header_profile} alt="User Avatar" wrapperClass={styles.avatar} />
-          </div>
+          </section>
         </header>
         <main className={`${styles.main_page}`}>{children}</main>
-      </div>
-    </div>
+      </section>
+    </section>
   )
 }

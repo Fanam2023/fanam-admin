@@ -1,0 +1,175 @@
+@use "../../styles/index" as *
+
+$border-color: #e0e6f0
+$text-color: #6b7280
+$sidebar-width: $size-96px
+$submenu-width: 2 * $size-96px
+$submenu-expanded-width: $size-32px * 15 + $size-4px * 1.25
+$topbar-height: $size-64px
+
+.app_container
+  display: flex
+  height: 100vh
+  transition: margin-left 0.3s ease
+
+.sidebar
+  background-color: $primary-color
+  color: #fff
+  width: $sidebar-width
+  position: fixed
+  height: 100%
+  padding-top: $size-20px
+  display: flex
+  flex-direction: column
+
+  .sidebar_header
+    display: flex
+    justify-content: center
+    align-items: center
+    border-bottom: $size-1px solid #334465
+    margin: 0 $size-24px
+
+    .logo
+      margin-bottom: $size-20px
+      width: $size-40px
+      height: $size-36px
+
+  .menu_item_container
+    display: flex
+    justify-content: center
+    align-items: center
+    padding-top: $size-24px
+
+    .menu_item
+      display: flex
+      justify-content: center
+      align-items: center
+
+      .menu_icon
+        width: $size-48px
+        height: $size-40px
+        cursor: pointer
+
+.submenu_sidebar
+  background: white
+  width: $submenu-width
+  position: fixed
+  left: $sidebar-width
+  top: 0
+  height: 100%
+  transition: width 0.3s ease
+  border-right: $size-1px solid $border-color
+  padding-top: $size-18px
+
+  .submenu_header
+    display: flex
+    padding: $size-6px $size-12px
+    justify-content: space-between
+    align-items: center
+
+    .back_button
+      background: none
+      border: none
+      cursor: pointer
+      display: flex
+      align-items: center
+      padding: $size-4px
+
+    .back_icon
+      width: $size-20px
+      height: $size-20px
+
+    .submenu_title
+      font-size: $size-16px
+      font-weight: 600
+      margin-left: $size-10px
+
+  .menu_list
+    list-style: none
+    padding: 0
+    padding-top: $size-24px
+
+    .menu_list_item
+      padding: $size-10px $size-14px
+      transition: background-color 0.3s ease, color 0.3s ease
+      cursor: pointer
+      gap: $size-10px
+      display: flex
+      align-items: center
+
+      div
+        font-size: $size-14px
+        font-weight: 400
+
+      &.submenu_active
+        background-color: #fcfcfc
+        color: $secondary-color
+        border-left: $size-3px solid $secondary-color
+
+.main_content
+  margin-left: $sidebar-width
+  flex-grow: 1
+  display: flex
+  flex-direction: column
+  transition: margin-left 0.3s ease
+  height: calc(100vh - $topbar-height)
+  overflow-y: auto
+
+  .topbar
+    background-color: white
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: $size-10px $size-56px
+    border-bottom: $size-1px solid $border-color
+
+    .header_font
+      font-size: $size-14px
+      font-weight: 600
+
+    .topbar_right
+      display: flex
+      align-items: center
+      gap: $size-16px
+
+      .icon
+        width: $size-20px
+        height: $size-20px
+        color: $text-color
+        cursor: pointer
+
+      .help
+        display: flex
+        align-items: center
+        gap: $size-4px
+        cursor: pointer
+
+        .help-text
+          font-size: $size-12px
+          color: $text-color
+
+      .avatar
+        width: $size-32px
+        height: $size-32px
+        border-radius: 50%
+        object-fit: cover
+        cursor: pointer
+
+.submenu_open
+  .main_content
+    margin-left: $submenu-width + $sidebar-width
+  .topbar
+    width: calc(100% - #{112px})
+
+.main_content_minimized
+  margin-left: $submenu-expanded-width
+
+.topbar_minimized
+  width: calc(100% - #{$submenu-expanded-width})
+
+.add_btn
+  background-color: #007bff
+  color: white
+  border: none
+  padding: $size-4px $size-10px
+  cursor: pointer

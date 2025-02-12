@@ -2,13 +2,13 @@
 
 import {UIProvider} from "@fanam-pkg/core-ui-sass"
 import "@fanam-pkg/core-ui-sass/src/styles/style.sass"
-import {Inter} from "next/font/google"
+import {DM_Sans} from "next/font/google"
 import {usePathname} from "next/navigation"
 import "@custom/ui/src/styles/index.css"
-import BaseContainer from "organisms/base-conatiner"
-import "./layout.module.scss"
+import {BaseContainer} from "organisms"
+import "./layout.module.sass"
 
-const primaryFont = Inter({
+const primaryFont = DM_Sans({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--primary-font",
