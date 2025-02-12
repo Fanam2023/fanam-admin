@@ -1,0 +1,4 @@
+export const COOKIE_ACCESS_TOKEN = "__FANAM_GDBNEM__"
+export const COOKIE_REFRESH_TOKEN = "__FANAM_BDUNDK"
+
+export const QUERY_BANK = "__FANAM_NIVDIR"

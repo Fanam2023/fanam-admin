@@ -47,3 +47,8 @@ export const API_KYC_AADHAAR_GENERATE_OTP = `/user/generateOtp-aadhaar`
 export const API_KYC_AADHAAR_OTP_VERIFICATION = `/user/aadhaarOtp-verification`
 export const API_KYC_GST_VERIFICATION = `/user/gst-verification`
 export const API_BUSINESS_KYC = `/user/business-kyc`
+
+/*admin api */
+export const API_ADMIN_LOGIN = `/sso-admin-login`
+export const API_ADMIN_LOGOUT = `/sso-logout`
+export const API_GET_ALL_BANKS = `/sso-admin`
