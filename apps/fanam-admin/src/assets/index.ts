@@ -1,5 +1,5 @@
 import {assets as projectAssets} from "@fanam-pkg/core-ui-sass"
-import ic_backArrow from "./icons/ic_back.svg"
+import ic_back_arrow from "./icons/ic_back_arrow.svg"
 import ic_compliance from "./icons/ic_compliance.svg"
 import ic_docImg from "./icons/ic_doc.svg"
 import ic_edit from "./icons/ic_edit.svg"
@@ -17,7 +17,6 @@ import img_header_bell from "./images/img_header_bell.webp"
 import img_header_help from "./images/img_header_help.webp"
 import img_header_profile from "./images/img_header_profile.webp"
 import img_Logo from "./images/img_logo_1.webp"
-import img_menu_back from "./images/img_menu_back.webp"
 import img_menu_dashboard from "./images/img_menu_dashboard.webp"
 import img_menu_branch from "./images/img_menu_databranch.webp"
 import img_menu_list from "./images/img_menu_list.webp"
@@ -32,7 +31,6 @@ const assets = {
   ic_plus,
   ic_send,
   ic_edit,
-  ic_backArrow,
   ic_docImg,
   img_fanam,
   img_Logo,
@@ -51,7 +49,7 @@ const assets = {
   img_header_bell,
   img_header_help,
   img_header_profile,
-  img_menu_back,
+  ic_back_arrow,
 }
 
 export default assets

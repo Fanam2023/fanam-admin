@@ -1,27 +1,14 @@
 @use "../../styles/index" as *
 
-$border-color: #e0e6f0
-$sidebar-border-color: #334465
-$text-color: #6b7280
-$active-submenu-bg: #fcfcfc
-$sidebar-width: $size-96px
-$submenu-width: 2 * $size-96px
-$submenu-expanded-width: $size-32px * 15 + $size-4px * 1.25
-$submenu-open-margin: $submenu-width + $sidebar-width
-$main-content-margin-left: $submenu-expanded-width
-$topbar-minimized-width: calc(100% - #{$submenu-expanded-width})
-$topbar-submenu-width: calc(100% - #{112px})
-$topbar-height: $size-64px
-
 .app_container
   display: flex
   height: 100vh
   transition: margin-left 0.3s ease
 
 .sidebar
-  background-color: $primary-color
+  background-color: $dark-blue
   color: #fff
-  width: $sidebar-width
+  width: $size-96px
   position: fixed
   height: 100%
   padding-top: $size-20px
@@ -58,9 +45,9 @@ $topbar-height: $size-64px
 
 .submenu_sidebar
   background: white
-  width: $submenu-width
+  width: 2 * $size-96px
   position: fixed
-  left: $sidebar-width
+  left: 5.938rem
   top: 0
   height: 100%
   transition: width 0.3s ease
@@ -108,63 +95,75 @@ $topbar-height: $size-64px
 
       &.submenu_active
         background-color: $active-submenu-bg
-        color: $secondary-color
-        border-left: $size-3px solid $secondary-color
+        color: $dark-yellow
+        border-left: $size-2px solid $dark-yellow
 
 .main_content
-  margin-left: $sidebar-width
   flex-grow: 1
-  transition: margin-left 0.3s ease
-  height: calc(100vh - $topbar-height)
+  height: calc(100vh - $size-64px)
   overflow-y: auto
+  margin-left: $size-96px
+  transition: margin-left 0.3s ease
+  display: flex
+  flex-direction: column
 
   .topbar
+    position: sticky
+    top: 0
+    z-index: 100
     background-color: white
     display: flex
     justify-content: space-between
     align-items: center
     padding: $size-10px $size-56px
     border-bottom: $size-1px solid $border-color
+    height: $size-40px
 
-    .header_font
-      font-size: $size-14px
+  .header_font
+    font-size: $size-18px
 
-    .topbar_right
+  .topbar_right
+    display: flex
+    align-items: center
+    gap: $size-16px
+
+    .icon
+      width: $size-20px
+      height: $size-20px
+      color: $text-color
+      cursor: pointer
+
+    .help
       display: flex
       align-items: center
-      gap: $size-16px
+      gap: $size-4px
+      cursor: pointer
 
-      .icon
-        width: $size-20px
-        height: $size-20px
+      .help-text
+        font-size: $size-12px
         color: $text-color
-        cursor: pointer
 
-      .help
-        display: flex
-        align-items: center
-        gap: $size-4px
-        cursor: pointer
+    .avatar
+      width: $size-32px
+      height: $size-32px
+      border-radius: 50%
+      object-fit: cover
+      cursor: pointer
 
-        .help-text
-          font-size: $size-12px
-          color: $text-color
-
-      .avatar
-        width: $size-32px
-        height: $size-32px
-        border-radius: 50%
-        object-fit: cover
-        cursor: pointer
+.main_page
+  flex-grow: 1
+  overflow-y: auto
+  padding: $size-16px $size-20px
 
 .submenu_open
   .main_content
-    margin-left: $submenu_open_margin
+    margin-left: $size-96px + 2 * $size-96px
+
   .topbar
-    width: $topbar_submenu_width
+    width: calc(100% - #{112px})
 
 .main_content_minimized
-  margin-left: $main-content-margin-left
+  margin-left: $size-32px * 15 + $size-4px * 1.25
 
 .topbar_minimized
-  width: $topbar-minimized-width
+  width: calc(100% - #{$size-32px * 15 + $size-4px * 1.25})

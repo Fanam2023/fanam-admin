@@ -1,6 +1,6 @@
 import {IAction, TableHeaderProps} from "@fanam-pkg/core-ui-sass"
-import {BANK_LIST} from "app/utils/constant"
 import {useMemo} from "react"
+import {BANK_LIST} from "utils"
 
 export const useHandler = () => {
   const TABLE_HEADER: TableHeaderProps[] = [
@@ -17,6 +17,7 @@ export const useHandler = () => {
     () =>
       BANK_LIST?.map((item, index: number) => {
         const action: IAction[] = [{label: "View", action: "view", onClick: undefined}]
+
         return {
           ...item,
           index: index + 1,

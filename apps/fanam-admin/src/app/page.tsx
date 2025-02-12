@@ -3,7 +3,7 @@ import styles from "./page.module.sass"
 const Dashboard = () => {
   return (
     <section className={styles.page}>
-      <h3>Dashboard</h3>
+      <h3>Dashboard Page</h3>
     </section>
   )
 }

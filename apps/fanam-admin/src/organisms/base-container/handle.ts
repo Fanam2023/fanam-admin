@@ -1,8 +1,8 @@
 "use client"
 
-import {NAV_ITEMS} from "app/utils/constant"
 import {usePathname, useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
+import {NAV_ITEMS} from "utils"
 
 const useNavigationHandler = () => {
   const pathname = usePathname()
