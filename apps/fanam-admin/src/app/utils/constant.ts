@@ -1,4 +1,5 @@
 import assets from "assets"
+import {NavItemProps} from "props"
 
 export const BANK_LIST = [
   {
@@ -73,7 +74,7 @@ export const BANK_LIST = [
   },
 ]
 
-export const NAV_ITEMS = [
+export const NAV_ITEMS: NavItemProps[] = [
   {
     label: "Dashboard",
     icon: assets.img_menu_dashboard,

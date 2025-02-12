@@ -1,10 +1,16 @@
 @use "../../styles/index" as *
 
 $border-color: #e0e6f0
+$sidebar-border-color: #334465
 $text-color: #6b7280
+$active-submenu-bg: #fcfcfc
 $sidebar-width: $size-96px
 $submenu-width: 2 * $size-96px
 $submenu-expanded-width: $size-32px * 15 + $size-4px * 1.25
+$submenu-open-margin: $submenu-width + $sidebar-width
+$main-content-margin-left: $submenu-expanded-width
+$topbar-minimized-width: calc(100% - #{$submenu-expanded-width})
+$topbar-submenu-width: calc(100% - #{112px})
 $topbar-height: $size-64px
 
 .app_container
@@ -26,7 +32,7 @@ $topbar-height: $size-64px
     display: flex
     justify-content: center
     align-items: center
-    border-bottom: $size-1px solid #334465
+    border-bottom: $size-1px solid $sidebar-border-color
     margin: 0 $size-24px
 
     .logo
@@ -81,7 +87,6 @@ $topbar-height: $size-64px
 
     .submenu_title
       font-size: $size-16px
-      font-weight: 600
       margin-left: $size-10px
 
   .menu_list
@@ -102,15 +107,13 @@ $topbar-height: $size-64px
         font-weight: 400
 
       &.submenu_active
-        background-color: #fcfcfc
+        background-color: $active-submenu-bg
         color: $secondary-color
         border-left: $size-3px solid $secondary-color
 
 .main_content
   margin-left: $sidebar-width
   flex-grow: 1
-  display: flex
-  flex-direction: column
   transition: margin-left 0.3s ease
   height: calc(100vh - $topbar-height)
   overflow-y: auto
@@ -125,7 +128,6 @@ $topbar-height: $size-64px
 
     .header_font
       font-size: $size-14px
-      font-weight: 600
 
     .topbar_right
       display: flex
@@ -157,19 +159,12 @@ $topbar-height: $size-64px
 
 .submenu_open
   .main_content
-    margin-left: $submenu-width + $sidebar-width
+    margin-left: $submenu_open_margin
   .topbar
-    width: calc(100% - #{112px})
+    width: $topbar_submenu_width
 
 .main_content_minimized
-  margin-left: $submenu-expanded-width
+  margin-left: $main-content-margin-left
 
 .topbar_minimized
-  width: calc(100% - #{$submenu-expanded-width})
-
-.add_btn
-  background-color: #007bff
-  color: white
-  border: none
-  padding: $size-4px $size-10px
-  cursor: pointer
+  width: $topbar-minimized-width

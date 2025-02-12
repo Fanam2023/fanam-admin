@@ -3,7 +3,7 @@
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {NAV_ITEMS} from "app/utils/constant"
 import assets from "assets"
-import {useNavigationHandler} from "./handle"
+import useNavigationHandler from "./handle"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({children}: {children: React.ReactNode}) => {
@@ -41,7 +41,7 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
       {openMenu !== null && (
         <aside className={styles.submenu_sidebar}>
           <section className={styles.submenu_header}>
-            <span className={styles.submenu_title}>{title}</span>
+            <span className={`bold ${styles.submenu_title}`}>{title}</span>
             <Button wrapperClass={styles.back_button} onClick={handleBackButtonClick}>
               <ImageView src={assets.img_menu_back} alt="Back Button" wrapperClass={styles.back_icon} />
             </Button>
@@ -61,10 +61,9 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
         </aside>
       )}
 
-      <section className={`${styles.main_content} ${openMenu !== null ? styles.main_content_minimized : ""}`}>
+      <section className={`${styles.main_content} flex-col ${openMenu !== null ? styles.main_content_minimized : ""}`}>
         <header className={`${styles.topbar} ${openMenu !== null ? styles.topbar_minimized : ""}`}>
-          <section className={styles.header_font}>{title}</section>
-
+          <section className={`bold ${styles.header_font}`}>{title}</section>
           <section className={styles.topbar_right}>
             <ImageView src={assets.img_header_bell} alt="Notification Bell" wrapperClass={styles.icon} />
             <section className={styles.help}>

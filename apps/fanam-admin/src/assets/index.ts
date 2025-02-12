@@ -26,6 +26,7 @@ import img_menu_settings from "./images/img_menu_settings.webp"
 import img_menu_user from "./images/img_menu_user.webp"
 
 const assets = {
+  ...projectAssets,
   ic_compliance,
   ic_icon,
   ic_plus,
@@ -33,7 +34,6 @@ const assets = {
   ic_edit,
   ic_backArrow,
   ic_docImg,
-  ...projectAssets,
   img_fanam,
   img_Logo,
   img_menu_dashboard,

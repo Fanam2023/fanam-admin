@@ -4,7 +4,7 @@ import {NAV_ITEMS} from "app/utils/constant"
 import {usePathname, useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 
-export function useNavigationHandler() {
+const useNavigationHandler = () => {
   const pathname = usePathname()
   const {push} = useRouter()
   const [openMenu, setOpenMenu] = useState<number | null>(null)
@@ -105,3 +105,5 @@ export function useNavigationHandler() {
     handleSubMenuItemClick,
   }
 }
+
+export default useNavigationHandler

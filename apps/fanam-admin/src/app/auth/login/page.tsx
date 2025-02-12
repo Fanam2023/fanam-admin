@@ -1,7 +1,7 @@
 "use client"
 
 import {Button, Checkbox, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
-import {ROUTE_BANK} from "app/utils/routes"
+import {ROUTE_BANK} from "app/utils"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
 import assets from "assets"
