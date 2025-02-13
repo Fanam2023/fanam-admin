@@ -1,0 +1,121 @@
+@use "../../../styles/index" as *
+
+.header
+  background: white
+  padding: 0px
+
+.title
+  font-size: $size-16px
+  margin-top: $size-6px
+  gap: $size-6px
+  cursor: pointer
+
+.logo
+  width: $size-16px
+  height: $size-12px
+
+.edit_button
+  background: $alert-warning
+  color: $black
+  padding: $size-8px $size-24px $size-8px $size-16px
+  border-radius: $size-6px
+  border: none
+  font-size: $size-14px
+  cursor: pointer
+
+  .icon
+    width: $size-12px
+    height: $size-12px
+    margin-right: $size-10px
+
+.bank_details_container
+  margin: $size-20px 0
+  font-family: "Poppins", sans-serif
+  padding: 0px
+
+.section
+  padding: 0px
+  margin-bottom: $size-20px
+  border-radius: $size-8px
+
+.section_header
+  margin-top: $size-32px
+  font-size: $size-16px
+  padding: $size-10px $size-16px
+  background-color: $light-grey
+  border-radius: $size-6px
+  color: $black-primary
+
+.details_grid
+  display: grid
+  grid-template-columns: repeat(3, 1fr)
+  padding: 0px $size-16px
+  gap: $size-36px
+  margin-top: $size-20px
+
+.detail_item
+  font-size: $size-14px
+
+.color_item
+  font-size: $size-14px
+
+.label
+  color: $black-secondary
+
+.value
+  color: $black
+  padding-top: $size-6px
+
+.color_label
+  color: $black-secondary
+
+.color_value
+  padding-top: $size-6px
+
+  .color_preview
+    width: $size-20px
+    height: $size-20px
+    border-radius: $size-2px
+    border: 1px solid $medium-grey
+    margin-right: $size-8px
+
+  .color_code
+    font-size: $size-14px
+    color: $black-secondary
+
+.white_label_grid
+  display: grid
+  grid-template-columns: repeat(3, 1fr)
+  padding: 0px $size-16px
+  gap: $size-36px
+  margin: $size-24px 0px
+
+  .file_upload
+    gap: $size-8px
+
+    .label
+      font-size: $size-14px
+      color: $black-secondary
+
+    .file
+      gap: $size-10px
+      padding: $size-8px 0
+      font-size: $size-14px
+
+      .file_left_header
+        .icon
+          width: $size-24px
+          height: $size-24px
+
+      small
+        display: block
+        color: $darker-grey
+        font-size: $size-12px
+
+@media (max-width: 768px)
+  .details_grid, .white_label_grid
+    grid-template-columns: repeat(2, 1fr)
+
+@media (max-width: 480px)
+  .details_grid, .white_label_grid
+    grid-template-columns: 1fr
