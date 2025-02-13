@@ -1,16 +1,26 @@
 import {IAction, TableHeaderProps} from "@fanam-pkg/core-ui-sass"
 import {useMemo} from "react"
 import {useQuery} from "@tanstack/react-query"
+import {useSlider} from "@custom/ui"
 import {useBankController} from "controller"
+import {CreateBankDetails} from "organisms"
 import {QUERY_BANK} from "utils"
 
 export const useHandler = () => {
+  const {toggleSlider} = useSlider()
   const {getAllBanks} = useBankController()
 
   const {data: allBanks} = useQuery({
     queryKey: [QUERY_BANK],
     queryFn: getAllBanks,
   })
+
+  const onAdd = () => {
+    toggleSlider({
+      children: <CreateBankDetails />,
+      title: "Create Bank",
+    })
+  }
 
   const TABLE_HEADER: TableHeaderProps[] = [
     {rowKey: "index", title: "#"},
@@ -39,5 +49,7 @@ export const useHandler = () => {
   return {
     TABLE_HEADER,
     bankData,
+
+    onAdd,
   }
 }
