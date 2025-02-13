@@ -14,13 +14,15 @@ const useNavigationHandler = () => {
   const [lastSubMenuPath, setLastSubMenuPath] = useState<Record<string, string>>({})
 
   useEffect(() => {
-    const activeNav = NAV_ITEMS.find(item => item.subItems.some(sub => pathname === sub.path) || pathname === item.path)
+    const activeNav = NAV_ITEMS.find(
+      item => item.subItems.some(sub => pathname.startsWith(sub.path)) || pathname === item.path
+    )
 
     if (activeNav) {
       setActiveMenu(activeNav.label)
 
       if (activeNav.subItems.length > 0) {
-        const activeSub = activeNav.subItems.find(sub => pathname === sub.path)
+        const activeSub = activeNav.subItems.find(sub => pathname.startsWith(sub.path))
 
         if (activeSub) {
           setActiveSubMenu(activeNav.subItems.indexOf(activeSub))
