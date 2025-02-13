@@ -30,9 +30,9 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
     <li
       key={subIndex}
       className={`${styles.menu_list_item} ${activeSubMenu === subIndex ? styles.submenu_active : ""} ${
-        !subItem.subClick ? styles.submenu_disabled : ""
+        !subItem.sub_click ? styles.submenu_disabled : ""
       }`}
-      onClick={e => subItem.subClick && handleSubMenuItemClick(subIndex, subItem.path, e)}>
+      onClick={e => subItem.sub_click && handleSubMenuItemClick(subIndex, subItem.path, e)}>
       <section>{subItem.label}</section>
     </li>
   )
@@ -69,7 +69,7 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
             <ImageView src={assets.img_header_bell} alt="Notification Bell" wrapperClass={styles.icon} />
             <section className={styles.help}>
               <ImageView src={assets.img_header_help} alt="Help Icon" wrapperClass={styles.icon} />
-              <span className={styles["help-text"]}>Help</span>
+              <span className={styles.help_text}>Help</span>
             </section>
             <ImageView src={assets.img_header_profile} alt="User Avatar" wrapperClass={styles.avatar} />
           </section>

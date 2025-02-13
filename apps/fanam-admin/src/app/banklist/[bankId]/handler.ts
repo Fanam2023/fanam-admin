@@ -1,31 +1,13 @@
 "use client"
 
 import {useRouter} from "next/navigation"
+import {BankDetailProps} from "props"
 import {ROUTE_BANK} from "utils"
 
-export interface BankDetailProps {
-  breadcrumbValue: any
-  bankName: string
-  mobile: string
-  contactPerson: string
-  email: string
-  altMobile: string
-  designation: string
-  authMethod: string
-  authEndpoint: string
-  clientSecret: string
-  backgroundImage: string
-  uploadedLogo: string
-  primaryColor: string
-  secondaryColor: string
-  accentColor: string
-  font: string
-  customUrl: string
-  backgroundColor: string
-}
+export const useBankDetails = () => {
+  const {push} = useRouter()
 
-export const getBankDetails = (): BankDetailProps => {
-  return {
+  const getBankDetails = (): BankDetailProps => ({
     breadcrumbValue: ["Bank", "Bank List"],
     bankName: "State Bank of India",
     mobile: "+91 89467 37865",
@@ -44,10 +26,11 @@ export const getBankDetails = (): BankDetailProps => {
     font: "Poppins",
     customUrl: "www.poppinssdjdn.com",
     backgroundColor: "#DCAC26",
-  }
-}
+  })
 
-export const handleBreadcrump = () => {
-  const {push} = useRouter()
-  push(ROUTE_BANK)
+  const handleBreadcrumb = () => {
+    push(ROUTE_BANK)
+  }
+
+  return {getBankDetails, handleBreadcrumb}
 }

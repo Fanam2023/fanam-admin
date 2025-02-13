@@ -14,7 +14,7 @@
   width: $size-16px
   height: $size-12px
 
-.editButton
+.edit_button
   background: $alert-warning
   color: $black
   padding: $size-8px $size-24px $size-8px $size-16px
@@ -38,7 +38,7 @@
   margin-bottom: $size-20px
   border-radius: $size-8px
 
-.sectionheader
+.section_header
   margin-top: $size-32px
   font-size: $size-16px
   padding: $size-10px $size-16px
@@ -46,17 +46,17 @@
   border-radius: $size-6px
   color: $black-primary
 
-.detailsGrid
+.details_grid
   display: grid
   grid-template-columns: repeat(3, 1fr)
   padding: 0px $size-16px
   gap: $size-36px
   margin-top: $size-20px
 
-.detailItem
+.detail_item
   font-size: $size-14px
 
-.colorItem
+.color_item
   font-size: $size-14px
 
 .label
@@ -66,31 +66,31 @@
   color: $black
   padding-top: $size-6px
 
-.colorLabel
+.color_label
   color: $black-secondary
 
-.colorValue
+.color_value
   padding-top: $size-6px
 
-  .colorPreview
+  .color_preview
     width: $size-20px
     height: $size-20px
     border-radius: $size-2px
     border: 1px solid $medium-grey
     margin-right: $size-8px
 
-  .colorCode
+  .color_code
     font-size: $size-14px
     color: $black-secondary
 
-.whiteLabelGrid
+.white_label_grid
   display: grid
   grid-template-columns: repeat(3, 1fr)
   padding: 0px $size-16px
   gap: $size-36px
   margin: $size-24px 0px
 
-  .fileUpload
+  .file_upload
     gap: $size-8px
 
     .label
@@ -102,7 +102,7 @@
       padding: $size-8px 0
       font-size: $size-14px
 
-      .fileLeftHeader
+      .file_left_header
         .icon
           width: $size-24px
           height: $size-24px
@@ -113,9 +113,9 @@
         font-size: $size-12px
 
 @media (max-width: 768px)
-  .detailsGrid, .whiteLabelGrid
+  .details_grid, .white_label_grid
     grid-template-columns: repeat(2, 1fr)
 
 @media (max-width: 480px)
-  .detailsGrid, .whiteLabelGrid
+  .details_grid, .white_label_grid
     grid-template-columns: 1fr
