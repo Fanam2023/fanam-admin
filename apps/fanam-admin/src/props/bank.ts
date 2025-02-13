@@ -1,4 +1,3 @@
-export interface BankDetailsProp
-{
+export interface BankDetailsProp {
   client_id?: string
 }
