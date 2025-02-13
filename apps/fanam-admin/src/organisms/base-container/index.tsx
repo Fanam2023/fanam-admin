@@ -3,7 +3,7 @@
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
 import {NAV_ITEMS} from "utils"
-import useNavigationHandler from "./handle"
+import useNavigationHandler from "./handler"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({children}: {children: React.ReactNode}) => {

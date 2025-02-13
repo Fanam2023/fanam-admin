@@ -1,21 +1,11 @@
 @use "../../../styles/index" as *
 
 .header
-  display: flex
-  justify-content: space-between
-  align-items: center
   background: white
   padding: 0px
 
-.leftHeader
-  display: flex
-  flex-direction: column
-
 .title
-  display: flex
-  align-items: center
   font-size: $size-16px
-  font-weight: 700
   margin-top: $size-6px
   gap: $size-6px
   cursor: pointer
@@ -24,26 +14,21 @@
   width: $size-16px
   height: $size-12px
 
-.rightHeader
-  display: flex
-  align-items: center
+.editButton
+  background: $alert-warning
+  color: $black
+  padding: $size-8px $size-24px $size-8px $size-16px
+  border-radius: $size-6px
+  border: none
+  font-size: $size-14px
+  cursor: pointer
 
-  .editButton
-    background: $alert-warning
-    color: $black
-    padding: $size-8px $size-24px $size-8px $size-16px
-    border-radius: $size-6px
-    font-weight: 500
-    border: none
-    font-size: $size-14px
-    cursor: pointer
+  .icon
+    width: $size-12px
+    height: $size-12px
+    margin-right: $size-10px
 
-    .icon
-      width: $size-12px
-      height: $size-12px
-      margin-right: $size-10px
-
-.bankDetailsContainer
+.bank_details_container
   margin: $size-20px 0
   font-family: "Poppins", sans-serif
   padding: 0px
@@ -56,7 +41,6 @@
 .sectionheader
   margin-top: $size-32px
   font-size: $size-16px
-  font-weight: 600
   padding: $size-10px $size-16px
   background-color: $light-grey
   border-radius: $size-6px
@@ -70,31 +54,22 @@
   margin-top: $size-20px
 
 .detailItem
-  display: flex
-  flex-direction: column
   font-size: $size-14px
 
 .colorItem
-  display: flex
-  flex-direction: column
   font-size: $size-14px
 
 .label
-  font-weight: 400
   color: $black-secondary
 
 .value
-  font-weight: 500
   color: $black
   padding-top: $size-6px
 
 .colorLabel
-  font-weight: 400
   color: $black-secondary
 
 .colorValue
-  display: flex
-  align-items: center
   padding-top: $size-6px
 
   .colorPreview
@@ -106,7 +81,6 @@
 
   .colorCode
     font-size: $size-14px
-    font-weight: 500
     color: $black-secondary
 
 .whiteLabelGrid
@@ -117,46 +91,26 @@
   margin: $size-24px 0px
 
   .fileUpload
-    display: flex
-    flex-direction: column
     gap: $size-8px
 
     .label
-      font-weight: 400
       font-size: $size-14px
       color: $black-secondary
 
     .file
-      display: flex
-      align-items: center
       gap: $size-10px
       padding: $size-8px 0
       font-size: $size-14px
 
       .fileLeftHeader
-        display: flex
-        align-items: center
-        justify-content: center
-
         .icon
           width: $size-24px
           height: $size-24px
-
-      .fileRightHeader
-        display: flex
-        flex-direction: column
-        justify-content: center
 
       small
         display: block
         color: $darker-grey
         font-size: $size-12px
-
-.fontSelection, .customFontUrl
-  font-size: $size-14px
-
-  .value
-    font-weight: 600
 
 @media (max-width: 768px)
   .detailsGrid, .whiteLabelGrid
