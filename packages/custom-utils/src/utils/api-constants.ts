@@ -49,6 +49,8 @@ export const API_KYC_GST_VERIFICATION = `/user/gst-verification`
 export const API_BUSINESS_KYC = `/user/business-kyc`
 
 /*admin api */
-export const API_ADMIN_LOGIN = `/sso-admin-login`
-export const API_ADMIN_LOGOUT = `/sso-logout`
+export const API_ADMIN_LOGIN = `/sso-admin-login` /*sample endpoint*/
+export const API_ADMIN_LOGOUT = `/sso-logout` /*sample endpoint*/
 export const API_GET_ALL_BANKS = `/sso-admin`
+export const apiBank = (client_id: string) => `${API_GET_ALL_BANKS}/${client_id}`
+export const apiDeleteBank = (id: string) => `${API_GET_ALL_BANKS}/${id}`

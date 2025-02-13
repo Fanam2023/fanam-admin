@@ -6,4 +6,7 @@ export interface IBank {
   contact_person_name: string
 }
 
-export interface IPayloadBank extends IBank {}
+export interface IPayloadBank extends IBank {
+  designation: string
+  alternative_mobile: string
+}
