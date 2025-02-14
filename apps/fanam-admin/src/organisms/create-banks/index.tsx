@@ -11,10 +11,7 @@ export const CreateBankDetails = ({client_id}: BankDetailsProp) => {
     <section>
       <GroupForm formSections={formElements} wrapperClass={styles.main_container} />
       <section className={`flex ${styles.btn_container}`}>
-
-        <Button wrapperClass={`${styles.bank_discard_btn}`} >
-          Discard
-        </Button>
+        <Button wrapperClass={`${styles.bank_discard_btn}`}>Discard</Button>
         <Button wrapperClass={`${styles.bank_update_btn}`} onClick={onSubmit}>
           Save
         </Button>
