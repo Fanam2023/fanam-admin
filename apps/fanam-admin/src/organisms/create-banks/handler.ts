@@ -15,7 +15,7 @@ const DEFAULT_ERR_STATE = {
   errAlternative: "",
 }
 
-export const useHandler = (styles: IStyle, user: IBank) => {
+export const useHandler = (styles: IStyle) => {
   const [data, setData] = useState<IBank>({
     client_id: "",
     bank_name: "",
@@ -28,44 +28,31 @@ export const useHandler = (styles: IStyle, user: IBank) => {
 
   const [errState, setErrState] = useState(DEFAULT_ERR_STATE)
 
-  useEffect(() => {
-    if (user) {
-      setData({
-        client_id: user.client_id || "",
-        bank_name: user.bank_name || "",
-        mobile: user.mobile || "",
-        contact_person_name: user.contact_person_name || "",
-        email: user.email || "",
-        alternative: user.alternative || "",
-        designation: user.designation || "",
-      })
-    }
-  }, [user])
-
   const onValidate = () => {
     let newErrState = {...DEFAULT_ERR_STATE, isClicked: true, isValid: true}
+    const {bank_name, mobile, contact_person_name, email, designation, alternative} = data
 
-    if (!data.bank_name.trim()) {
+    if (bank_name) {
       newErrState.errBankName = "Bank name is required"
       newErrState.isValid = false
     }
-    if (!data.mobile.trim()) {
+    if (mobile) {
       newErrState.errMobile = "Mobile number is required"
       newErrState.isValid = false
     }
-    if (!data.contact_person_name.trim()) {
+    if (contact_person_name) {
       newErrState.errContactPerson = "Contact Person is required"
       newErrState.isValid = false
     }
-    if (!data.email.trim()) {
+    if (email) {
       newErrState.errEmail = "Email is required"
       newErrState.isValid = false
     }
-    if (!data.designation.trim()) {
+    if (designation) {
       newErrState.errDesignation = "Designation is required"
       newErrState.isValid = false
     }
-    if (!data.alternative.trim()) {
+    if (alternative) {
       newErrState.errAlternative = "Alternative is required"
       newErrState.isValid = false
     }
@@ -100,7 +87,6 @@ export const useHandler = (styles: IStyle, user: IBank) => {
         name: "bank_name",
         onChangeValue,
         isRequired: true,
-        error: errState.errBankName,
       },
       {
         elementType: "input",
@@ -108,7 +94,6 @@ export const useHandler = (styles: IStyle, user: IBank) => {
         name: "mobile",
         onChangeValue,
         isRequired: true,
-        error: errState.errMobile,
       },
       {
         elementType: "input",
@@ -116,7 +101,6 @@ export const useHandler = (styles: IStyle, user: IBank) => {
         name: "contact_person_name",
         onChangeValue,
         isRequired: true,
-        error: errState.errContactPerson,
       },
       {
         elementType: "input",
@@ -124,7 +108,6 @@ export const useHandler = (styles: IStyle, user: IBank) => {
         name: "email",
         onChangeValue,
         isRequired: true,
-        error: errState.errEmail,
       },
       {
         elementType: "input",
@@ -132,7 +115,6 @@ export const useHandler = (styles: IStyle, user: IBank) => {
         name: "alternative",
         onChangeValue,
         isRequired: false,
-        error: errState.errAlternative,
       },
       {
         elementType: "input",
@@ -140,7 +122,6 @@ export const useHandler = (styles: IStyle, user: IBank) => {
         name: "designation",
         onChangeValue,
         isRequired: true,
-        error: errState.errDesignation,
       },
     ],
   }
@@ -149,7 +130,6 @@ export const useHandler = (styles: IStyle, user: IBank) => {
     const {isValid} = onValidate()
     if (isValid) {
       const payload: IPayloadBank = {...data}
-      console.log("Submitting payload:", payload)
     }
   }
 
