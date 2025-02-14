@@ -48,19 +48,30 @@ const useNavigationHandler = () => {
     console.log("Toggling Submenu for:", item.label)
 
     if (item.subItems.length === 0) {
+      // If the item has no submenu, navigate to its path
       setActiveMenu(item.label)
       setTitle(item.label)
       push(item.path)
       setOpenMenu(null)
     } else {
+      // If the item has a submenu, open it
       setOpenMenu(index)
       setActiveMenu(item.label)
 
-      let activeSubIndex = item.subItems.findIndex(sub => pathname.startsWith(sub.path))
+      // Check if any submenu item matches the current path
+      const activeSubIndex = item.subItems.findIndex(sub => pathname.startsWith(sub.path))
 
       if (activeSubIndex !== -1) {
+        // If a submenu item matches the current path, activate it
         setActiveSubMenu(activeSubIndex)
         setTitle(item.subItems[activeSubIndex].label)
+      } else {
+        // If no submenu item matches the current path, activate the first submenu item by default
+        setActiveSubMenu(0) // Activate the first submenu item
+        setTitle(item.subItems[0].label)
+
+        // Navigate to the first submenu item's path
+        push(item.subItems[0].path) // Add this line to navigate to the default submenu item's path
       }
     }
   }

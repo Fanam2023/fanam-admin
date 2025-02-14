@@ -1,0 +1,32 @@
+@use './../../styles/index'as*
+
+.btn_container
+  gap: $size-20px
+  padding: $size-20px
+  justify-content: space-around
+  margin-top: 13%
+
+.bank_update_btn
+  background-color: $mustard-yellow
+  gap: $size-10px
+  padding: $size-8px $size-24px
+  border-radius: $size-6px
+  color: $black
+  &:hover
+    background-color: $mustard-yellow
+    color: $black
+
+.bank_discard_btn
+  background-color: $light-grey
+  color: $black
+  gap: $size-10px
+  padding: $size-8px $size-24px
+  border-width: $size-1px
+  border-radius: $size-6px
+  &:hover
+    background-color: $light-grey
+    color: $black
+
+.main_container
+  display: grid
+  grid-template-columns: 1fr !important

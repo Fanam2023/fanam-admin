@@ -1,12 +1,14 @@
 "use client"
 
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
+import {useSlider} from "@custom/ui"
 import assets from "assets"
 import {NAV_ITEMS} from "utils"
 import useNavigationHandler from "./handler"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({children}: {children: React.ReactNode}) => {
+  const {toggleSlider} = useSlider()
   const {openMenu, activeMenu, activeSubMenu, title, toggleSubMenu, handleBackButtonClick, handleSubMenuItemClick} =
     useNavigationHandler()
 
