@@ -28,37 +28,33 @@ export const useHandler = (styles: IStyle) => {
 
   const [errState, setErrState] = useState(DEFAULT_ERR_STATE)
 
+  const {bank_name, mobile, contact_person_name, email, designation, alternative} = data
+  const {errBankName, errMobile, errContactPerson, errEmail, errDesignation, errAlternative} = errState
+
   const onValidate = () => {
-    let newErrState = {...DEFAULT_ERR_STATE, isClicked: true, isValid: true}
-    const {bank_name, mobile, contact_person_name, email, designation, alternative} = data
+    let errState = {...DEFAULT_ERR_STATE, isClicked: true, isValid: true}
 
-    if (bank_name) {
-      newErrState.errBankName = "Bank name is required"
-      newErrState.isValid = false
+    if (!bank_name) {
+      errState = {...errState, errBankName: "Please enter Bank Name", isValid: false}
     }
-    if (mobile) {
-      newErrState.errMobile = "Mobile number is required"
-      newErrState.isValid = false
+    if (!mobile) {
+      errState = {...errState, errMobile: "Please enter Mobile Number", isValid: false}
     }
-    if (contact_person_name) {
-      newErrState.errContactPerson = "Contact Person is required"
-      newErrState.isValid = false
+    if (!contact_person_name) {
+      errState = {...errState, errContactPerson: "Please enter Contact Person", isValid: false}
     }
-    if (email) {
-      newErrState.errEmail = "Email is required"
-      newErrState.isValid = false
+    if (!email) {
+      errState = {...errState, errEmail: "Please enter Email", isValid: false}
     }
-    if (designation) {
-      newErrState.errDesignation = "Designation is required"
-      newErrState.isValid = false
+    if (!designation) {
+      errState = {...errState, errDesignation: "Please enter Designation", isValid: false}
     }
-    if (alternative) {
-      newErrState.errAlternative = "Alternative is required"
-      newErrState.isValid = false
+    if (!alternative) {
+      errState = {...errState, errAlternative: "Please enter Alternative Number", isValid: false}
     }
 
-    setErrState(newErrState)
-    return newErrState
+    setErrState(errState)
+    return errState
   }
 
   useEffect(() => {
@@ -67,10 +63,10 @@ export const useHandler = (styles: IStyle) => {
     }
   }, [data])
 
-  const onChangeValue = (data: JSONObject) => {
+  const onChangeValue = (newData: JSONObject) => {
     setData(prev => ({
       ...prev,
-      ...data,
+      ...newData,
     }))
 
     if (errState.isClicked) {
@@ -87,6 +83,8 @@ export const useHandler = (styles: IStyle) => {
         name: "bank_name",
         onChangeValue,
         isRequired: true,
+        value: bank_name,
+        error: errBankName,
       },
       {
         elementType: "input",
@@ -94,6 +92,8 @@ export const useHandler = (styles: IStyle) => {
         name: "mobile",
         onChangeValue,
         isRequired: true,
+        value: mobile,
+        error: errMobile,
       },
       {
         elementType: "input",
@@ -101,6 +101,8 @@ export const useHandler = (styles: IStyle) => {
         name: "contact_person_name",
         onChangeValue,
         isRequired: true,
+        value: contact_person_name,
+        error: errContactPerson,
       },
       {
         elementType: "input",
@@ -108,6 +110,8 @@ export const useHandler = (styles: IStyle) => {
         name: "email",
         onChangeValue,
         isRequired: true,
+        value: email,
+        error: errEmail,
       },
       {
         elementType: "input",
@@ -115,6 +119,8 @@ export const useHandler = (styles: IStyle) => {
         name: "alternative",
         onChangeValue,
         isRequired: false,
+        value: alternative,
+        error: errAlternative,
       },
       {
         elementType: "input",
@@ -122,6 +128,8 @@ export const useHandler = (styles: IStyle) => {
         name: "designation",
         onChangeValue,
         isRequired: true,
+        value: designation,
+        error: errDesignation,
       },
     ],
   }
