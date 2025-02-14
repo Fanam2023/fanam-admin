@@ -1,5 +1,3 @@
-"use client"
-
 import {usePathname, useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {NAV_ITEMS} from "utils"
@@ -29,11 +27,8 @@ const useNavigationHandler = () => {
           setOpenMenu(NAV_ITEMS.indexOf(activeNav))
           setTitle(activeSub.label)
         } else {
-          const firstSubItem = activeNav.subItems[0]
-          setActiveSubMenu(0)
-          setOpenMenu(NAV_ITEMS.indexOf(activeNav))
-          setTitle(firstSubItem.label)
-          push(firstSubItem.path)
+          setActiveSubMenu(null)
+          setTitle(activeNav.label)
         }
       } else {
         setActiveSubMenu(null)
@@ -50,7 +45,7 @@ const useNavigationHandler = () => {
   const toggleSubMenu = (index: number) => {
     const item = NAV_ITEMS[index]
 
-    if (!item.click) return
+    console.log("Toggling Submenu for:", item.label)
 
     if (item.subItems.length === 0) {
       setActiveMenu(item.label)
@@ -66,10 +61,6 @@ const useNavigationHandler = () => {
       if (activeSubIndex !== -1) {
         setActiveSubMenu(activeSubIndex)
         setTitle(item.subItems[activeSubIndex].label)
-      } else {
-        setActiveSubMenu(0)
-        setTitle(item.subItems[0].label)
-        push(item.subItems[0].path)
       }
     }
   }
@@ -82,18 +73,12 @@ const useNavigationHandler = () => {
   const handleSubMenuItemClick = (subIndex: number, subPath: string, e: React.MouseEvent) => {
     e.preventDefault()
 
-    const subItem = NAV_ITEMS[openMenu!].subItems[subIndex]
-
-    if (!subItem.subClick) return
+    console.log("Submenu Item Clicked - Path:", subPath)
 
     setActiveSubMenu(subIndex)
-    setTitle(subItem.label)
+    setTitle(NAV_ITEMS[openMenu!].subItems[subIndex].label)
 
-    setLastSubMenuPath(prev => ({
-      ...prev,
-      [NAV_ITEMS[openMenu!].label]: subPath,
-    }))
-
+    console.log("Navigating to:", subPath)
     push(subPath)
   }
 

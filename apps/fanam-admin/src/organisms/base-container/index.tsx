@@ -30,9 +30,14 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
     <li
       key={subIndex}
       className={`${styles.menu_list_item} ${activeSubMenu === subIndex ? styles.submenu_active : ""} ${
-        !subItem.sub_click ? styles.submenu_disabled : ""
+        !subItem.subClick ? styles.submenu_disabled : ""
       }`}
-      onClick={e => subItem.sub_click && handleSubMenuItemClick(subIndex, subItem.path, e)}>
+      onClick={e => {
+        console.log("Submenu Item Clicked:", subItem.label)
+        if (subItem.subClick) {
+          handleSubMenuItemClick(subIndex, subItem.path, e)
+        }
+      }}>
       <section>{subItem.label}</section>
     </li>
   )

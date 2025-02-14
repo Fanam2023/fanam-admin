@@ -90,11 +90,11 @@ export const NAV_ITEMS: NavItemProps[] = [
     click: true,
     subItems: [
       {label: "Bank List", path: "/banklist", subClick: true},
-      {label: "Service offered", path: "/service", subClick: false},
-      {label: "Location Details", path: "/location-details", subClick: false},
-      {label: "Contact Details", path: "/contact-details", subClick: false},
-      {label: "Legal Information", path: "/legal-info", subClick: false},
-      {label: "Other options", path: "/other-options", subClick: false},
+      {label: "Service offered", path: "/service", subClick: true},
+      {label: "Location Details", path: "/location-details", subClick: true},
+      {label: "Contact Details", path: "/contact-details", subClick: true},
+      {label: "Legal Information", path: "/legal-info", subClick: true},
+      {label: "Other options", path: "/other-options", subClick: true},
     ],
   },
   {
@@ -103,7 +103,7 @@ export const NAV_ITEMS: NavItemProps[] = [
     activeIcon: assets.img_activeMenu_branch,
     path: "/branch",
     subItems: [],
-    click: false,
+    click: true,
   },
   {
     label: "Privacy",
@@ -111,7 +111,7 @@ export const NAV_ITEMS: NavItemProps[] = [
     activeIcon: assets.img_activeMenu_privacy,
     path: "/privacy",
     subItems: [],
-    click: false,
+    click: true,
   },
   {
     label: "List",
@@ -119,7 +119,7 @@ export const NAV_ITEMS: NavItemProps[] = [
     activeIcon: assets.img_activeMenu_list,
     path: "/list",
     subItems: [],
-    click: false,
+    click: true,
   },
   {
     label: "Settings",
@@ -127,6 +127,6 @@ export const NAV_ITEMS: NavItemProps[] = [
     activeIcon: assets.img_activeMenu_settings,
     path: "/settings",
     subItems: [],
-    click: false,
+    click: true,
   },
 ]
