@@ -8,12 +8,12 @@ const BankList = () => {
   const {bankData, TABLE_HEADER, onAdd} = useHandler()
 
   return (
-    <>
+    <section className={styles.container}>
       <Button wrapperClass={`flex ${styles.create_btn}`} onClick={onAdd}>
         + Create
       </Button>
       <Table tableItems={bankData} tableHeaders={TABLE_HEADER} wrapperClass={styles.table_header} />
-    </>
+    </section>
   )
 }
 export default BankList
