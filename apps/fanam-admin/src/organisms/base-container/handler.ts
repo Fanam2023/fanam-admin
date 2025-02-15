@@ -95,21 +95,20 @@ const useNavigationHandler = () => {
     }))
 
     push(subPath)
-  } 
+  }
 
-  const useProfileHover=()=>
-  {
-    const[isHoverd,setIsHover]=useState(false)
+  const useProfileHover = () => {
+    const [isHoverd, setIsHover] = useState(false)
 
-    const [isHovered, setIsHovered] = useState(false);
+    const [isHovered, setIsHovered] = useState(false)
 
     const onMouseEnter = (event: React.MouseEvent<HTMLElement>) => {
-      setIsHovered(true);
-    };
-  
+      setIsHovered(true)
+    }
+
     const onMouseLeave = (event: React.MouseEvent<HTMLElement>) => {
-      setIsHovered(false);
-    };
+      setIsHovered(false)
+    }
   }
 
   return {
@@ -121,7 +120,6 @@ const useNavigationHandler = () => {
     handleBackButtonClick,
     handleSubMenuItemClick,
     useProfileHover,
-
   }
 }
 
