@@ -1,6 +1,7 @@
 "use client"
 
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
+import {useState} from "react"
 import {useSlider} from "@custom/ui"
 import assets from "assets"
 import {NAV_ITEMS} from "utils"
@@ -12,32 +13,8 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
   const {openMenu, activeMenu, activeSubMenu, title, toggleSubMenu, handleBackButtonClick, handleSubMenuItemClick} =
     useNavigationHandler()
 
-  const renderMainMenuItem = (item: any, index: number) => (
-    <li key={index} className={styles.menu_item_container}>
-      <section
-        className={`${styles.menu_item} ${activeMenu === item.label ? styles.menu_item_active : ""} ${
-          !item.click ? styles.menu_item_disabled : ""
-        }`}
-        onClick={() => item.click && toggleSubMenu(index)}>
-        <ImageView
-          src={openMenu === index || activeMenu === item.label ? item.activeIcon.src : item.icon.src}
-          alt={item.label}
-          wrapperClass={styles.menu_icon}
-        />
-      </section>
-    </li>
-  )
-
-  const renderSubMenuItem = (subItem: any, subIndex: number) => (
-    <li
-      key={subIndex}
-      className={`${styles.menu_list_item} ${activeSubMenu === subIndex ? styles.submenu_active : ""} ${
-        !subItem.sub_click ? styles.submenu_disabled : ""
-      }`}
-      onClick={e => subItem.sub_click && handleSubMenuItemClick(subIndex, subItem.path, e)}>
-      <section>{subItem.label}</section>
-    </li>
-  )
+  // Manage hover state
+  const [isHovered, setIsHovered] = useState(false)
 
   return (
     <section className={`${styles.app_container} ${openMenu !== null ? styles.submenu_open : ""}`}>
@@ -46,7 +23,23 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
           <ImageView src={assets.img_Logo} alt="App Logo" wrapperClass={styles.logo} />
         </section>
         <nav className={styles.sidebar_menu}>
-          <ul>{NAV_ITEMS.map((item, index) => renderMainMenuItem(item, index))}</ul>
+          <ul>
+            {NAV_ITEMS.map((item, index) => (
+              <li key={index} className={styles.menu_item_container}>
+                <section
+                  className={`${styles.menu_item} ${activeMenu === item.label ? styles.menu_item_active : ""} ${
+                    !item.click ? styles.menu_item_disabled : ""
+                  }`}
+                  onClick={() => item.click && toggleSubMenu(index)}>
+                  <ImageView
+                    src={openMenu === index || activeMenu === item.label ? item.activeIcon.src : item.icon.src}
+                    alt={item.label}
+                    wrapperClass={styles.menu_icon}
+                  />
+                </section>
+              </li>
+            ))}
+          </ul>
         </nav>
       </aside>
 
@@ -59,7 +52,16 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
             </Button>
           </section>
           <ul className={styles.menu_list}>
-            {NAV_ITEMS[openMenu]?.subItems?.map((subItem, subIndex) => renderSubMenuItem(subItem, subIndex))}
+            {NAV_ITEMS[openMenu]?.subItems?.map((subItem, subIndex) => (
+              <li
+                key={subIndex}
+                className={`${styles.menu_list_item} ${activeSubMenu === subIndex ? styles.submenu_active : ""} ${
+                  !subItem.subClick ? styles.submenu_disabled : ""
+                }`}
+                onClick={e => subItem.subClick && handleSubMenuItemClick(subIndex, subItem.path, e)}>
+                <section>{subItem.label}</section>
+              </li>
+            ))}
           </ul>
         </aside>
       )}
@@ -73,7 +75,25 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
               <ImageView src={assets.img_header_help} alt="Help Icon" wrapperClass={styles.icon} />
               <span className={styles.help_text}>Help</span>
             </section>
-            <ImageView src={assets.img_header_profile} alt="User Avatar" wrapperClass={styles.avatar} />
+
+            <section className={styles.topbar_right}>
+              <section
+                className={styles.profileContainer}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}>
+                <ImageView src={assets.img_header_profile} alt="User Avatar" wrapperClass={styles.profilePicture} />
+
+                {isHovered && (
+                  <section className={styles.dropdown}>
+                    <ImageView src={assets.img_header_profile} alt="User Avatar" wrapperClass={styles.profilePicture} />
+                    <p className={styles.name}>
+                      John Doe <span className={styles.sub_name}>Admin</span>
+                    </p>
+                    <button className={styles.logout}>Logout</button>
+                  </section>
+                )}
+              </section>
+            </section>
           </section>
         </header>
         <main className={`${styles.main_page}`}>{children}</main>
