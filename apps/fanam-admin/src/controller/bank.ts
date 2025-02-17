@@ -1,5 +1,5 @@
 import {API_GET_ALL_BANKS, apiBank, apiDeleteBank} from "@custom/utils"
-import {IBank, IPayloadBank} from "model"
+import {IBank, IBankDetail, IPayloadBank} from "model"
 import {useApi} from "./api"
 
 export const useBankController = () => {
@@ -16,7 +16,7 @@ export const useBankController = () => {
   }
 
   const getBank = async (client_id: string) => {
-    const {result, errorData} = await getRequest<IBank>(apiBank(client_id))
+    const {result, errorData} = await getRequest<IBankDetail>(apiBank(client_id))
     return {result, errorData}
   }
 

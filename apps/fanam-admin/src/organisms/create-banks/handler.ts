@@ -6,7 +6,6 @@ import {useSlider} from "@custom/ui"
 import {IStyle} from "@custom/utils"
 import {useBankController} from "controller"
 import {IPayloadBank} from "model"
-import {BankDetailsProp} from "props"
 import {QUERY_BANK, QUERY_BANK_DETAIL} from "utils"
 
 const DEFAULT_ERR_STATE = {
@@ -17,10 +16,9 @@ const DEFAULT_ERR_STATE = {
   errContactPerson: "",
   errEmail: "",
   errDesignation: "",
-  errAlternative: "",
 }
 
-export const useHandler = (styles: IStyle, details: BankDetailsProp) => {
+export const useHandler = (styles: IStyle, details: IPayloadBank, refetch: () => void) => {
   const {refreshQuery} = useReactQuery()
   const {toggleNotify} = useNotifyPopup()
   const {toggleSlider} = useSlider()
@@ -33,14 +31,13 @@ export const useHandler = (styles: IStyle, details: BankDetailsProp) => {
     mobile: "",
     contact_person_name: "",
     email: "",
-    alternative_mobile: "",
     designation: "",
   })
 
   const [errState, setErrState] = useState(DEFAULT_ERR_STATE)
 
-  const {bank_name, mobile, contact_person_name, email, designation, alternative_mobile} = data
-  const {errBankName, errMobile, errContactPerson, errEmail, errDesignation, errAlternative} = errState
+  const {bank_name, mobile, contact_person_name, email, designation} = data
+  const {errBankName, errMobile, errContactPerson, errEmail, errDesignation} = errState
 
   const {mutate: onCreateBank} = useMutation({
     mutationKey: [QUERY_BANK],
@@ -75,7 +72,8 @@ export const useHandler = (styles: IStyle, details: BankDetailsProp) => {
           title: "Update Bank",
           description: "Bank updated successfully",
         })
-        refreshQuery(QUERY_BANK_DETAIL)
+        // refreshQuery(QUERY_BANK_DETAIL)
+        refetch()
       } else {
         toggleNotify({
           type: "error",
@@ -103,9 +101,6 @@ export const useHandler = (styles: IStyle, details: BankDetailsProp) => {
     }
     if (!designation) {
       errState = {...errState, errDesignation: "Please enter Designation", isValid: false}
-    }
-    if (!alternative_mobile) {
-      errState = {...errState, errAlternative: "Please enter Alternative Number", isValid: false}
     }
 
     setErrState(errState)
@@ -175,15 +170,6 @@ export const useHandler = (styles: IStyle, details: BankDetailsProp) => {
       },
       {
         elementType: "input",
-        label: "Alternative Number",
-        name: "alternative_mobile",
-        onChangeValue,
-        isRequired: false,
-        value: alternative_mobile,
-        error: errAlternative,
-      },
-      {
-        elementType: "input",
         label: "Designation",
         name: "designation",
         onChangeValue,
@@ -197,10 +183,20 @@ export const useHandler = (styles: IStyle, details: BankDetailsProp) => {
   const onSubmit = () => {
     const {isValid} = onValidate()
     if (isValid) {
-      const payload: IPayloadBank = {...data, client_id: data.client_id}
-      if (details) onUpdateBank({...payload})
-      else delete payload.client_id
-      onCreateBank({...payload})
+      const payload: IPayloadBank = {
+        mobile,
+        designation,
+        bank_name,
+        contact_person_name,
+        email,
+        client_id: details?.onboard_client_id,
+      }
+      if (details) {
+        onUpdateBank(payload)
+      } else {
+        delete payload.client_id
+        onCreateBank(payload)
+      }
     }
   }
 
