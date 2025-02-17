@@ -1,28 +1,60 @@
-import {IAction, TableHeaderProps} from "@fanam-pkg/core-ui-sass"
+import {Button, IAction, TableHeaderProps, usePopup} from "@fanam-pkg/core-ui-sass"
 import {useRouter} from "next/navigation"
-import {useMemo, useState} from "react"
+import {useMemo} from "react"
 import {useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {useBankController} from "controller"
 import {CreateBankDetails} from "organisms"
 import {QUERY_BANK, routeToBankDetail} from "utils"
+import styles from "./page.module.sass"
 
 export const useHandler = () => {
+  const {togglePopup, closable} = usePopup()
   const {toggleSlider} = useSlider()
   const {getAllBanks} = useBankController()
   const {push} = useRouter()
-  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
 
   const handleDeleteClick = () => {
-    setDeleteModalOpen(true)
+    togglePopup({
+      title: "Delete Confirm",
+      children: (
+        <section className={styles.modal_dialog}>
+          <section className={styles.modal_content}>
+            {/* <section className={styles.modal_header}>
+              <h5 className={styles.modal_title}>Confirm Deletion</h5>
+            </section> */}
+            <section className={styles.modal_body}>
+              <p>Are you sure you want to delete?</p>
+            </section>
+            <section className={styles.modal_footer}>
+              <Button wrapperClass={styles.discard_btn} onClick={handleDiscard}>
+                Discard
+              </Button>
+              <Button wrapperClass={styles.confirm_btn} onClick={handleDeleteConfirm}>
+                Delete
+              </Button>
+            </section>
+          </section>
+        </section>
+      ),
+      isClosable: false,
+    })
   }
 
   const handleDiscard = () => {
-    setDeleteModalOpen(false)
+    togglePopup({
+      title: "",
+      children: null,
+      isClosable: false,
+    })
   }
 
   const handleDeleteConfirm = () => {
-    setDeleteModalOpen(false)
+    togglePopup({
+      title: "",
+      children: null,
+      isClosable: false,
+    })
   }
 
   const {data: allBanks} = useQuery({
@@ -71,9 +103,9 @@ export const useHandler = () => {
     TABLE_HEADER,
     bankData,
     onAdd,
-    isDeleteModalOpen,
     handleDeleteClick,
     handleDiscard,
     handleDeleteConfirm,
+    togglePopup,
   }
 }
