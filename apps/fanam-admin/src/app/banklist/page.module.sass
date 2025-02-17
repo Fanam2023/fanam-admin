@@ -1,16 +1,9 @@
-
-@use './../../styles/index'as*
+@use './../../styles/index' as *
 
 .table_header
   margin-top: $size-20px
   th
     background-color: $white
-
-.table_header
-  & section,
-  .page_wrapper
-    left: 22%
-    width: 50%
 
 .create_btn
   background-color: $mustard-yellow
@@ -20,5 +13,77 @@
   color: $black
   margin-left: auto
   &:hover
-    background-color: $mustard-yellow
+    background-color: darken($mustard-yellow, 10%)
     color: $black
+
+.modal
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  display: flex
+  align-items: center
+  justify-content: center
+  z-index: 1050
+
+.modal_dialog
+  background: $white
+  width: $modal-width
+  border-radius: $size-8px
+  overflow: hidden
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2)
+
+.modal_content
+  display: flex
+  flex-direction: column
+
+.modal_header
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: $size-4px $size-16px
+  background: $ash-grey
+  font-weight: bold
+  border-bottom: 1px solid $ash-grey
+
+.modal_title
+  font-size: $size-18px
+
+.close_btn
+  background: none
+  border: none
+  font-size: $size-20px
+  cursor: pointer
+  &:hover
+    color: $red
+
+.modal_body
+  padding: $size-24px $size-18px
+  font-size: $size-16px
+  height: $size-20px
+
+.modal_footer
+  display: flex
+  justify-content: flex-end
+  padding: $size-8px $size-16px
+  gap: $size-8px
+  border-top: 1px solid $ash-grey
+
+.discard_btn
+  background-color: $white
+  color: $dark-blue
+  padding: $size-8px $size-16px
+  border-radius: $size-6px
+  border: 1px solid $dark-blue
+  &:hover
+    background-color: $white
+    color: $dark-blue
+
+.confirm_btn
+  background-color: $dark-blue
+  color: $white
+  padding: $size-8px $size-16px
+  border-radius: $size-6px
+  &:hover
+    background-color: darken($dark-blue, 10%)

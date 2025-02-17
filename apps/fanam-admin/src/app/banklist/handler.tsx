@@ -1,6 +1,6 @@
 import {IAction, TableHeaderProps} from "@fanam-pkg/core-ui-sass"
 import {useRouter} from "next/navigation"
-import {useMemo} from "react"
+import {useMemo, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {useBankController} from "controller"
@@ -11,6 +11,19 @@ export const useHandler = () => {
   const {toggleSlider} = useSlider()
   const {getAllBanks} = useBankController()
   const {push} = useRouter()
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false)
+
+  const handleDeleteClick = () => {
+    setDeleteModalOpen(true)
+  }
+
+  const handleDiscard = () => {
+    setDeleteModalOpen(false)
+  }
+
+  const handleDeleteConfirm = () => {
+    setDeleteModalOpen(false)
+  }
 
   const {data: allBanks} = useQuery({
     queryKey: [QUERY_BANK],
@@ -33,13 +46,17 @@ export const useHandler = () => {
     {rowKey: "contact_person_name", title: "Contact person"},
     {rowKey: "action", title: "Action"},
   ]
+
   const routeToDetail = (client_id: string) => push(routeToBankDetail(client_id))
 
   const bankData = useMemo(
     () =>
       allBanks?.map((item, index: number) => {
         const {client_id} = item || {}
-        const action: IAction[] = [{label: "View", action: "view", onClick: routeToDetail.bind(null, client_id)}]
+        const action: IAction[] = [
+          {label: "View", action: "view", onClick: routeToDetail.bind(null, client_id)},
+          {label: "Delete", action: "delete", onClick: handleDeleteClick},
+        ]
 
         return {
           ...item,
@@ -53,7 +70,10 @@ export const useHandler = () => {
   return {
     TABLE_HEADER,
     bankData,
-
     onAdd,
+    isDeleteModalOpen,
+    handleDeleteClick,
+    handleDiscard,
+    handleDeleteConfirm,
   }
 }
