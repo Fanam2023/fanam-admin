@@ -2,11 +2,11 @@
 
 import {BreadCrumbs, Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
-import {useBankDetails} from "./handler"
+import {useBankDetailsHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const BankDetail = () => {
-  const {getBankDetails, handleBreadcrumb} = useBankDetails()
+  const {getBankDetails, handleBreadcrumb, onUpdate} = useBankDetailsHandler()
   const bankDetails = getBankDetails()
 
   return (
@@ -21,7 +21,7 @@ const BankDetail = () => {
             Bank Details
           </section>
         </section>
-        <section className={`${styles.right_header} flex flex-center`}>
+        <section className={`${styles.right_header} flex flex-center`} onClick={onUpdate}>
           <Button wrapperClass={`medium ${styles.edit_button} flex flex-center`}>
             <ImageView wrapperClass={styles.icon} src={assets.ic_edit} alt="Edit" />
             Edit

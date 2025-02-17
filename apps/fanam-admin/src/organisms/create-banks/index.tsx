@@ -1,12 +1,12 @@
 "use client"
 
 import {Button, GroupForm} from "@fanam-pkg/core-ui-sass"
-import {BankDetailsProp} from "props/bank"
+import {BankDetailsProp} from "props"
 import useHandler from "./handler"
 import styles from "./styles.module.sass"
 
-export const CreateBankDetails = ({client_id}: BankDetailsProp) => {
-  const {formElements, onSubmit} = useHandler(styles)
+export const CreateBankDetails = ({details}: BankDetailsProp) => {
+  const {formElements, onSubmit} = useHandler(styles, details)
   return (
     <section>
       <GroupForm formSections={formElements} wrapperClass={styles.main_container} />

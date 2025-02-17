@@ -1,14 +1,14 @@
 "use client"
 
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
-import {useSlider} from "@custom/ui"
+import {useState} from "react"
 import assets from "assets"
 import {NAV_ITEMS} from "utils"
 import useNavigationHandler from "./handler"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({children}: {children: React.ReactNode}) => {
-  const {toggleSlider} = useSlider()
+  const [isHovered, setIsHovered] = useState(false)
   const {openMenu, activeMenu, activeSubMenu, title, toggleSubMenu, handleBackButtonClick, handleSubMenuItemClick} =
     useNavigationHandler()
 
@@ -64,7 +64,16 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
             </Button>
           </section>
           <ul className={styles.menu_list}>
-            {NAV_ITEMS[openMenu]?.subItems?.map((subItem, subIndex) => renderSubMenuItem(subItem, subIndex))}
+            {NAV_ITEMS[openMenu]?.subItems?.map((subItem, subIndex) => (
+              <li
+                key={subIndex}
+                className={`${styles.menu_list_item} ${activeSubMenu === subIndex ? styles.submenu_active : ""} ${
+                  !subItem.subClick ? styles.submenu_disabled : ""
+                }`}
+                onClick={e => subItem.subClick && handleSubMenuItemClick(subIndex, subItem.path, e)}>
+                <section>{subItem.label}</section>
+              </li>
+            ))}
           </ul>
         </aside>
       )}
@@ -78,9 +87,32 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
               <ImageView src={assets.img_header_help} alt="Help Icon" wrapperClass={styles.icon} />
               <span className={styles.help_text}>Help</span>
             </section>
-            <ImageView src={assets.img_header_profile} alt="User Avatar" wrapperClass={styles.avatar} />
+
+            <section
+              className={`flex ${styles.profileContainer}`}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}>
+              <ImageView src={assets.img_header_profile} alt="User Avatar" wrapperClass={styles.profilePicture} />
+
+              {isHovered && (
+                <section className={styles.dropdown}>
+                  <section className={`flex ${styles.profileDetails}`}>
+                    <ImageView src={assets.img_header_profile} alt="User Avatar" wrapperClass={styles.profilePicture} />
+                    <section className={`flex ${styles.profileText}`}>
+                      <p className={styles.name}>John Doe</p>
+                      <span className={styles.sub_name}>Admin</span>
+                    </section>
+                  </section>
+                  <section className={`flex ${styles.logoutContainer}`}>
+                    <ImageView src={assets.ic_logout} alt="logout" wrapperClass={styles.logoutIcon} />
+                    <button className={styles.logout}>Logout</button>
+                  </section>
+                </section>
+              )}
+            </section>
           </section>
         </header>
+
         <main className={`${styles.main_page}`}>{children}</main>
       </section>
     </section>

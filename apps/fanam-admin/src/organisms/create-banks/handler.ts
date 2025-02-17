@@ -1,8 +1,13 @@
-import {FormSectionProps} from "@fanam-pkg/core-ui-sass"
-import {JSONObject} from "@fanam-pkg/core-utils"
+import {FormSectionProps, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
+import {JSONObject, useReactQuery} from "@fanam-pkg/core-utils"
 import {useEffect, useState} from "react"
+import {useMutation} from "@tanstack/react-query"
+import {useSlider} from "@custom/ui"
 import {IStyle} from "@custom/utils"
-import {IBank, IPayloadBank} from "model"
+import {useBankController} from "controller"
+import {IPayloadBank} from "model"
+import {BankDetailsProp} from "props"
+import {QUERY_BANK, QUERY_BANK_DETAIL} from "utils"
 
 const DEFAULT_ERR_STATE = {
   isClicked: false,
@@ -15,21 +20,71 @@ const DEFAULT_ERR_STATE = {
   errAlternative: "",
 }
 
-export const useHandler = (styles: IStyle) => {
-  const [data, setData] = useState<IBank>({
+export const useHandler = (styles: IStyle, details: BankDetailsProp) => {
+  const {refreshQuery} = useReactQuery()
+  const {toggleNotify} = useNotifyPopup()
+  const {toggleSlider} = useSlider()
+
+  const {createBank, updateBank} = useBankController()
+
+  const [data, setData] = useState<IPayloadBank>({
     client_id: "",
     bank_name: "",
     mobile: "",
     contact_person_name: "",
     email: "",
-    alternative: "",
+    alternative_mobile: "",
     designation: "",
   })
 
   const [errState, setErrState] = useState(DEFAULT_ERR_STATE)
 
-  const {bank_name, mobile, contact_person_name, email, designation, alternative} = data
+  const {bank_name, mobile, contact_person_name, email, designation, alternative_mobile} = data
   const {errBankName, errMobile, errContactPerson, errEmail, errDesignation, errAlternative} = errState
+
+  const {mutate: onCreateBank} = useMutation({
+    mutationKey: [QUERY_BANK],
+    mutationFn: createBank,
+    onSuccess: ({result, errorData}) => {
+      if (result) {
+        toggleSlider()
+        toggleNotify({
+          type: "success",
+          title: "Create Bank",
+          description: "Bank created successfully",
+        })
+        refreshQuery(QUERY_BANK)
+      } else {
+        toggleNotify({
+          type: "error",
+          title: "Bank not Created",
+          description: errorData?.message || "Something went wrong",
+        })
+      }
+    },
+  })
+
+  const {mutate: onUpdateBank} = useMutation({
+    mutationKey: [QUERY_BANK_DETAIL],
+    mutationFn: updateBank,
+    onSuccess: ({result, errorData}) => {
+      if (result) {
+        toggleSlider()
+        toggleNotify({
+          type: "success",
+          title: "Update Bank",
+          description: "Bank updated successfully",
+        })
+        refreshQuery(QUERY_BANK_DETAIL)
+      } else {
+        toggleNotify({
+          type: "error",
+          title: "Bank not updated",
+          description: errorData?.message || "Something went wrong",
+        })
+      }
+    },
+  })
 
   const onValidate = () => {
     let errState = {...DEFAULT_ERR_STATE, isClicked: true, isValid: true}
@@ -49,13 +104,22 @@ export const useHandler = (styles: IStyle) => {
     if (!designation) {
       errState = {...errState, errDesignation: "Please enter Designation", isValid: false}
     }
-    if (!alternative) {
+    if (!alternative_mobile) {
       errState = {...errState, errAlternative: "Please enter Alternative Number", isValid: false}
     }
 
     setErrState(errState)
     return errState
   }
+
+  useEffect(() => {
+    if (details) {
+      setData(prev => ({
+        ...prev,
+        ...details,
+      }))
+    }
+  }, [details])
 
   useEffect(() => {
     if (errState.isClicked) {
@@ -68,10 +132,6 @@ export const useHandler = (styles: IStyle) => {
       ...prev,
       ...newData,
     }))
-
-    if (errState.isClicked) {
-      onValidate()
-    }
   }
 
   const formElements: FormSectionProps = {
@@ -116,10 +176,10 @@ export const useHandler = (styles: IStyle) => {
       {
         elementType: "input",
         label: "Alternative Number",
-        name: "alternative",
+        name: "alternative_mobile",
         onChangeValue,
         isRequired: false,
-        value: alternative,
+        value: alternative_mobile,
         error: errAlternative,
       },
       {
@@ -137,7 +197,10 @@ export const useHandler = (styles: IStyle) => {
   const onSubmit = () => {
     const {isValid} = onValidate()
     if (isValid) {
-      const payload: IPayloadBank = {...data}
+      const payload: IPayloadBank = {...data, client_id: data.client_id}
+      if (details) onUpdateBank({...payload})
+      else delete payload.client_id
+      onCreateBank({...payload})
     }
   }
 
