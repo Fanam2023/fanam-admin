@@ -45,8 +45,6 @@ const useNavigationHandler = () => {
   const toggleSubMenu = (index: number) => {
     const item = NAV_ITEMS[index]
 
-    console.log("Toggling Submenu for:", item.label)
-
     if (item.subItems.length === 0) {
       setActiveMenu(item.label)
       setTitle(item.label)
@@ -78,12 +76,9 @@ const useNavigationHandler = () => {
   const handleSubMenuItemClick = (subIndex: number, subPath: string, e: React.MouseEvent) => {
     e.preventDefault()
 
-    console.log("Submenu Item Clicked - Path:", subPath)
-
     setActiveSubMenu(subIndex)
     setTitle(NAV_ITEMS[openMenu!].subItems[subIndex].label)
 
-    console.log("Navigating to:", subPath)
     push(subPath)
   }
 

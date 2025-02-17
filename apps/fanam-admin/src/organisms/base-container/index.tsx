@@ -35,7 +35,6 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
         !subItem.subClick ? styles.submenu_disabled : ""
       }`}
       onClick={e => {
-        console.log("Submenu Item Clicked:", subItem.label)
         if (subItem.subClick) {
           handleSubMenuItemClick(subIndex, subItem.path, e)
         }
