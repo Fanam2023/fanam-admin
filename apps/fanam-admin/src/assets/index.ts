@@ -4,6 +4,7 @@ import ic_compliance from "./icons/ic_compliance.svg"
 import ic_docImg from "./icons/ic_doc.svg"
 import ic_edit from "./icons/ic_edit.svg"
 import ic_icon from "./icons/ic_icon.svg"
+import ic_logout from "./icons/ic_logout.svg"
 import ic_plus from "./icons/ic_plus.svg"
 import ic_send from "./icons/ic_send.svg"
 import img_activeMenu_branch from "./images/img_activeMenu_branch.webp"
@@ -23,7 +24,6 @@ import img_menu_list from "./images/img_menu_list.webp"
 import img_menu_privacy from "./images/img_menu_privacy.webp"
 import img_menu_settings from "./images/img_menu_settings.webp"
 import img_menu_user from "./images/img_menu_user.webp"
-import ic_logout from "./icons/ic_logout.svg"
 
 const assets = {
   ...projectAssets,
@@ -52,7 +52,6 @@ const assets = {
   img_header_profile,
   ic_back_arrow,
   ic_logout,
-
 }
 
 export default assets
