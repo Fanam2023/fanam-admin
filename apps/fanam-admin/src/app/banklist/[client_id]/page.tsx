@@ -27,6 +27,7 @@ const BankDetail = () => {
     onboard_client_id,
     onboard_client_secret,
     authorization_url,
+    sso_url,
   } = bankDetails?.result || {}
   return (
     <>
@@ -88,14 +89,23 @@ const BankDetail = () => {
               <span className={styles.label}>Authentication method</span>
               <span className={`medium ${styles.value}`}>{auth_method}</span>
             </section>
-            <section className={`${styles.detail_item} flex-col`}>
-              <span className={styles.label}>Authorization endpoint</span>
-              <span className={`medium ${styles.value}`}>{authorization_url}</span>
-            </section>
-            <section className={`${styles.detail_item} flex-col`}>
-              <span className={styles.label}>Client secret</span>
-              <span className={`medium ${styles.value}`}>{onboard_client_secret}</span>
-            </section>
+            {auth_method === "Saml" ? (
+              <section className={`${styles.detail_item} flex-col`}>
+                <span className={styles.label}>SsO url</span>
+                <span className={`medium ${styles.value}`}>{sso_url}</span>
+              </section>
+            ) : (
+              <>
+                <section className={`${styles.detail_item} flex-col`}>
+                  <span className={styles.label}>Authorization endpoint</span>
+                  <span className={`medium ${styles.value}`}>{authorization_url}</span>
+                </section>
+                <section className={`${styles.detail_item} flex-col`}>
+                  <span className={styles.label}>Client secret</span>
+                  <span className={`medium ${styles.value}`}>{onboard_client_secret}</span>
+                </section>
+              </>
+            )}
           </section>
         </section>
 

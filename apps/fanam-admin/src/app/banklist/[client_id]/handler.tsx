@@ -23,7 +23,7 @@ export const useBankDetailsHandler = () => {
   const onUpdate = () => {
     if (!bankDetails?.result) return
     toggleSlider({
-      children: <CreateBankDetails details={bankDetails?.result} refetch={refetch} />,
+      children: <CreateBankDetails details={bankDetails?.result} refetch={refetch} clientId={id} />,
       title: "Update Bank",
     })
   }

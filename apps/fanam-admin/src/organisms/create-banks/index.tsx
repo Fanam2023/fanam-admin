@@ -5,8 +5,8 @@ import {BankDetailsProp} from "props"
 import useHandler from "./handler"
 import styles from "./styles.module.sass"
 
-export const CreateBankDetails = ({details, refetch}: BankDetailsProp) => {
-  const {formElements, onSubmit} = useHandler(styles, details, refetch)
+export const CreateBankDetails = ({details, refetch, clientId}: BankDetailsProp) => {
+  const {formElements, onSubmit} = useHandler(styles, details, refetch, clientId)
   return (
     <section>
       <GroupForm formSections={formElements} wrapperClass={styles.main_container} />
