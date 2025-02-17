@@ -74,9 +74,15 @@ export const useLoginHandler = () => {
 
   const onSubmit = async () => {
     const {isValid} = onValidate()
+    const stringToBase64 = (inputString: string) => Buffer.from(inputString).toString("base64")
+    const passwordEncrypted = stringToBase64(password)
 
     if (isValid) {
-      onlogin(data)
+      const payload: IPayloadLogin = {
+        email,
+        password: passwordEncrypted,
+      }
+      onlogin(payload)
     }
   }
 
