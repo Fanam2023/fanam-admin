@@ -1,11 +1,11 @@
 export interface IPayloadLogin {
-  userName: string
+  email: string
   password: string
 }
 
 export interface IResponseLogin {
-  accessToken: string
-  refreshToken: string
+  access_token: string
+  refresh_token: string
 }
 
 export interface ILogOutPayload {

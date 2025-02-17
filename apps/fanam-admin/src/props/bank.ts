@@ -1,3 +1,5 @@
+import {IBank} from "model"
+
 export interface BankDetailsProp {
-  client_id?: string
+  details?: IBank
 }
