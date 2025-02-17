@@ -4,7 +4,7 @@ import {PropsWithChildren, useState} from "react"
 import {SingletonContext} from "contexts"
 import {useAuthController} from "controller"
 import {ISingleton, IUser} from "model"
-import {COOKIE_ACCESS_TOKEN, COOKIE_REFRESH_TOKEN} from "utils"
+import {COOKIE_ACCESS_TOKEN, COOKIE_REFRESH_TOKEN, ROUTE_LOGIN} from "utils"
 
 export const SingletonProvider = ({children}: PropsWithChildren) => {
   const {setCookie, getCookie, removeCookie} = useCookies()
@@ -44,7 +44,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     removeCookie(COOKIE_REFRESH_TOKEN)
     clearQueryCache()
     clearAllStorage()
-    // replace(ROUTE_LOGIN)
+    replace(ROUTE_LOGIN)
   }
 
   const value: ISingleton = {
