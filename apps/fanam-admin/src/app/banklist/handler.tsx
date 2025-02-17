@@ -1,14 +1,16 @@
 import {IAction, TableHeaderProps} from "@fanam-pkg/core-ui-sass"
+import {useRouter} from "next/navigation"
 import {useMemo} from "react"
 import {useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {useBankController} from "controller"
 import {CreateBankDetails} from "organisms"
-import {QUERY_BANK} from "utils"
+import {QUERY_BANK, routeToBankDetail} from "utils"
 
 export const useHandler = () => {
   const {toggleSlider} = useSlider()
   const {getAllBanks} = useBankController()
+  const {push} = useRouter()
 
   const {data: allBanks} = useQuery({
     queryKey: [QUERY_BANK],
@@ -31,11 +33,13 @@ export const useHandler = () => {
     {rowKey: "contact_person_name", title: "Contact person"},
     {rowKey: "action", title: "Action"},
   ]
+  const routeToDetail = (client_id: string) => push(routeToBankDetail(client_id))
 
   const bankData = useMemo(
     () =>
       allBanks?.map((item, index: number) => {
-        const action: IAction[] = [{label: "View", action: "view", onClick: undefined}]
+        const {client_id} = item || {}
+        const action: IAction[] = [{label: "View", action: "view", onClick: routeToDetail.bind(null, client_id)}]
 
         return {
           ...item,

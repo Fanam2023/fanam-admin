@@ -18,10 +18,10 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
 
   const updateUserData = (user: IUser | null) => setUser(user)
 
-  const updateToken = (accessToken: string) => {
-    if (accessToken) setCookie(COOKIE_ACCESS_TOKEN, accessToken)
+  const updateToken = (access_token: string) => {
+    if (access_token) setCookie(COOKIE_ACCESS_TOKEN, access_token)
     else removeCookie(COOKIE_ACCESS_TOKEN)
-    setToken(accessToken)
+    setToken(access_token)
   }
 
   const updateRefreshToken = (token: string) => {

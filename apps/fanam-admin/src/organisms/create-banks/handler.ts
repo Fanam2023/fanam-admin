@@ -6,7 +6,8 @@ import {useSlider} from "@custom/ui"
 import {IStyle} from "@custom/utils"
 import {useBankController} from "controller"
 import {IPayloadBank} from "model"
-import {QUERY_BANK} from "utils"
+import {BankDetailsProp} from "props"
+import {QUERY_BANK, QUERY_BANK_DETAIL} from "utils"
 
 const DEFAULT_ERR_STATE = {
   isClicked: false,
@@ -19,7 +20,7 @@ const DEFAULT_ERR_STATE = {
   errAlternative: "",
 }
 
-export const useHandler = (styles: IStyle, client_id: string) => {
+export const useHandler = (styles: IStyle, details: BankDetailsProp) => {
   const {refreshQuery} = useReactQuery()
   const {toggleNotify} = useNotifyPopup()
   const {toggleSlider} = useSlider()
@@ -64,7 +65,7 @@ export const useHandler = (styles: IStyle, client_id: string) => {
   })
 
   const {mutate: onUpdateBank} = useMutation({
-    mutationKey: [QUERY_BANK],
+    mutationKey: [QUERY_BANK_DETAIL],
     mutationFn: updateBank,
     onSuccess: ({result, errorData}) => {
       if (result) {
@@ -74,7 +75,7 @@ export const useHandler = (styles: IStyle, client_id: string) => {
           title: "Update Bank",
           description: "Bank updated successfully",
         })
-        refreshQuery(QUERY_BANK)
+        refreshQuery(QUERY_BANK_DETAIL)
       } else {
         toggleNotify({
           type: "error",
@@ -84,6 +85,7 @@ export const useHandler = (styles: IStyle, client_id: string) => {
       }
     },
   })
+
   const onValidate = () => {
     let errState = {...DEFAULT_ERR_STATE, isClicked: true, isValid: true}
 
@@ -111,6 +113,15 @@ export const useHandler = (styles: IStyle, client_id: string) => {
   }
 
   useEffect(() => {
+    if (details) {
+      setData(prev => ({
+        ...prev,
+        ...details,
+      }))
+    }
+  }, [details])
+
+  useEffect(() => {
     if (errState.isClicked) {
       onValidate()
     }
@@ -121,10 +132,6 @@ export const useHandler = (styles: IStyle, client_id: string) => {
       ...prev,
       ...newData,
     }))
-
-    if (errState.isClicked) {
-      onValidate()
-    }
   }
 
   const formElements: FormSectionProps = {
@@ -190,9 +197,10 @@ export const useHandler = (styles: IStyle, client_id: string) => {
   const onSubmit = () => {
     const {isValid} = onValidate()
     if (isValid) {
-      const payload: IPayloadBank = {...data}
-      if (client_id) onUpdateBank({...payload, client_id: client_id})
-      else onCreateBank(payload)
+      const payload: IPayloadBank = {...data, client_id: data.client_id}
+      if (details) onUpdateBank({...payload})
+      else delete payload.client_id
+      onCreateBank({...payload})
     }
   }
 
