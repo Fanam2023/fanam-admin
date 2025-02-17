@@ -1,6 +1,6 @@
 "use client"
 
-import {Button, Checkbox, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
+import {Button, ImageView, TextField} from "@fanam-pkg/core-ui-sass"
 import assets from "assets"
 import {useLoginHandler} from "./handler"
 import styles from "./page.module.sass"
@@ -38,10 +38,10 @@ const Login = () => {
               error={errPassword}
               onChangeData={onChangeData}
             />
-            <section className="flex">
+            {/* <section className="flex">
               <Checkbox item={{label: "Remember me"}} />
               <h6 className={styles.forget_txt}>Forgot password ?</h6>
-            </section>
+            </section> */}
             <Button wrapperClass={styles.login_btn} type="submit">
               Login
             </Button>
