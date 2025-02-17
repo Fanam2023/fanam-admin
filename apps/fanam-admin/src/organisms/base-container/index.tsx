@@ -4,6 +4,7 @@ import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {useState} from "react"
 import {useSlider} from "@custom/ui"
 import assets from "assets"
+import {useSingleton} from "hooks"
 import {NAV_ITEMS} from "utils"
 import useNavigationHandler from "./handler"
 import styles from "./style.module.sass"
@@ -13,8 +14,9 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
   const {openMenu, activeMenu, activeSubMenu, title, toggleSubMenu, handleBackButtonClick, handleSubMenuItemClick} =
     useNavigationHandler()
 
-  // Manage hover state
   const [isHovered, setIsHovered] = useState(false)
+
+  const {signOutUser} = useSingleton()
 
   return (
     <section className={`${styles.app_container} ${openMenu !== null ? styles.submenu_open : ""}`}>
@@ -42,7 +44,6 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
           </ul>
         </nav>
       </aside>
-
       {openMenu !== null && (
         <aside className={styles.submenu_sidebar}>
           <section className={styles.submenu_header}>
@@ -65,7 +66,6 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
           </ul>
         </aside>
       )}
-
       <section className={`${styles.main_content} flex-col ${openMenu !== null ? styles.main_content_minimized : ""}`}>
         <header className={`${styles.topbar} ${openMenu !== null ? styles.topbar_minimized : ""}`}>
           <section className={`bold ${styles.header_font}`}>{title}</section>
@@ -75,13 +75,11 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
               <ImageView src={assets.img_header_help} alt="Help Icon" wrapperClass={styles.icon} />
               <span className={styles.help_text}>Help</span>
             </section>
-
             <section
               className={`flex ${styles.profileContainer}`}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}>
               <ImageView src={assets.img_header_profile} alt="User Avatar" wrapperClass={styles.profilePicture} />
-
               {isHovered && (
                 <section className={styles.dropdown}>
                   <section className={`flex ${styles.profileDetails}`}>
@@ -93,14 +91,15 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
                   </section>
                   <section className={`flex ${styles.logoutContainer}`}>
                     <ImageView src={assets.ic_logout} alt="logout" wrapperClass={styles.logoutIcon} />
-                    <button className={styles.logout}>Logout</button>
+                    <button className={styles.logout} onClick={signOutUser}>
+                      Logout
+                    </button>
                   </section>
                 </section>
               )}
             </section>
           </section>
         </header>
-
         <main className={`${styles.main_page}`}>{children}</main>
       </section>
     </section>
