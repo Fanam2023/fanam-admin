@@ -23,6 +23,7 @@ import img_menu_list from "./images/img_menu_list.webp"
 import img_menu_privacy from "./images/img_menu_privacy.webp"
 import img_menu_settings from "./images/img_menu_settings.webp"
 import img_menu_user from "./images/img_menu_user.webp"
+import ic_logout from "./icons/ic_logout.svg"
 
 const assets = {
   ...projectAssets,
@@ -50,6 +51,8 @@ const assets = {
   img_header_help,
   img_header_profile,
   ic_back_arrow,
+  ic_logout,
+
 }
 
 export default assets

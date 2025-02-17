@@ -76,26 +76,31 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
               <span className={styles.help_text}>Help</span>
             </section>
 
-            <section className={styles.topbar_right}>
-              <section
-                className={styles.profileContainer}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}>
-                <ImageView src={assets.img_header_profile} alt="User Avatar" wrapperClass={styles.profilePicture} />
+            <section
+              className={`flex ${styles.profileContainer}`}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}>
+              <ImageView src={assets.img_header_profile} alt="User Avatar" wrapperClass={styles.profilePicture} />
 
-                {isHovered && (
-                  <section className={styles.dropdown}>
+              {isHovered && (
+                <section className={styles.dropdown}>
+                  <section className={`flex ${styles.profileDetails}`}>
                     <ImageView src={assets.img_header_profile} alt="User Avatar" wrapperClass={styles.profilePicture} />
-                    <p className={styles.name}>
-                      John Doe <span className={styles.sub_name}>Admin</span>
-                    </p>
+                    <section className={`flex ${styles.profileText}`}>
+                      <p className={styles.name}>John Doe</p>
+                      <span className={styles.sub_name}>Admin</span>
+                    </section>
+                  </section>
+                  <section className={`flex ${styles.logoutContainer}`}>
+                    <ImageView src={assets.ic_logout} alt="logout" wrapperClass={styles.logoutIcon} />
                     <button className={styles.logout}>Logout</button>
                   </section>
-                )}
-              </section>
+                </section>
+              )}
             </section>
           </section>
         </header>
+
         <main className={`${styles.main_page}`}>{children}</main>
       </section>
     </section>
