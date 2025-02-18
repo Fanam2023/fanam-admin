@@ -24,4 +24,5 @@ export interface IBankDetail extends IBank {
   onboard_client_id: string
   onboard_client_secret: string
   authorization_url: string
+  sso_url: string
 }

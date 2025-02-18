@@ -18,7 +18,7 @@ const DEFAULT_ERR_STATE = {
   errDesignation: "",
 }
 
-export const useHandler = (styles: IStyle, details: IPayloadBank, refetch: () => void) => {
+export const useHandler = (styles: IStyle, details: IPayloadBank, refetch: () => void, clientId: string) => {
   const {refreshQuery} = useReactQuery()
   const {toggleNotify} = useNotifyPopup()
   const {toggleSlider} = useSlider()
@@ -72,7 +72,6 @@ export const useHandler = (styles: IStyle, details: IPayloadBank, refetch: () =>
           title: "Update Bank",
           description: "Bank updated successfully",
         })
-        // refreshQuery(QUERY_BANK_DETAIL)
         refetch()
       } else {
         toggleNotify({
@@ -183,18 +182,34 @@ export const useHandler = (styles: IStyle, details: IPayloadBank, refetch: () =>
   const onSubmit = () => {
     const {isValid} = onValidate()
     if (isValid) {
-      const payload: IPayloadBank = {
-        mobile,
-        designation,
-        bank_name,
-        contact_person_name,
-        email,
-        client_id: details?.onboard_client_id,
-      }
+      const updatedFields: Partial<IPayloadBank> = {}
+
+      if (mobile !== details?.mobile) updatedFields.mobile = mobile
+      if (designation !== details?.designation) updatedFields.designation = designation
+      if (bank_name !== details?.bank_name) updatedFields.bank_name = bank_name
+      if (contact_person_name !== details?.contact_person_name) updatedFields.contact_person_name = contact_person_name
+      if (email !== details?.email) updatedFields.email = email
+
       if (details) {
-        onUpdateBank(payload)
+        updatedFields.client_id = clientId
+
+        if (Object.keys(updatedFields).length > 1) {
+          onUpdateBank(updatedFields as IPayloadBank)
+        } else {
+          toggleNotify({
+            type: "success",
+            title: "No Changes",
+            description: "No updates were made.",
+          })
+        }
       } else {
-        delete payload.client_id
+        const payload: IPayloadBank = {
+          mobile,
+          designation,
+          bank_name,
+          contact_person_name,
+          email,
+        }
         onCreateBank(payload)
       }
     }
