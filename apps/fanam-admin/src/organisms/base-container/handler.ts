@@ -12,6 +12,8 @@ const useNavigationHandler = () => {
   const [lastSubMenuPath, setLastSubMenuPath] = useState<Record<string, string>>({})
 
   useEffect(() => {
+    const wasMenuClosed = localStorage.getItem("submenuClosed")
+
     const activeNav = NAV_ITEMS.find(
       item => item.subItems.some(sub => pathname.startsWith(sub.path)) || pathname === item.path
     )
@@ -24,8 +26,11 @@ const useNavigationHandler = () => {
 
         if (activeSub) {
           setActiveSubMenu(activeNav.subItems.indexOf(activeSub))
-          setOpenMenu(NAV_ITEMS.indexOf(activeNav))
           setTitle(activeSub.label)
+          // Only set openMenu if it wasn't explicitly closed
+          if (!wasMenuClosed) {
+            setOpenMenu(NAV_ITEMS.indexOf(activeNav))
+          }
         } else {
           setActiveSubMenu(null)
           setTitle(activeNav.label)
@@ -43,6 +48,7 @@ const useNavigationHandler = () => {
   }, [pathname])
 
   const toggleSubMenu = (index: number) => {
+    localStorage.removeItem("submenuClosed") // Reset submenu closed state when toggling
     const item = NAV_ITEMS[index]
 
     if (item.subItems.length === 0) {
@@ -62,7 +68,6 @@ const useNavigationHandler = () => {
       } else {
         setActiveSubMenu(0)
         setTitle(item.subItems[0].label)
-
         push(item.subItems[0].path)
       }
     }
@@ -71,6 +76,7 @@ const useNavigationHandler = () => {
   const handleBackButtonClick = (e: React.MouseEvent) => {
     e.preventDefault()
     setOpenMenu(null)
+    localStorage.setItem("submenuClosed", "true") // Remember submenu was closed
   }
 
   const handleSubMenuItemClick = (subIndex: number, subPath: string, e: React.MouseEvent) => {
