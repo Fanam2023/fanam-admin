@@ -2,7 +2,9 @@
 
 import {usePathname, useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
-import {NAV_ITEMS} from "utils"
+import {useQuery} from "@tanstack/react-query"
+import {useAuthController} from "controller"
+import {NAV_ITEMS, QUERY_USER} from "utils"
 
 const useNavigationHandler = () => {
   const pathname = usePathname()
@@ -12,6 +14,9 @@ const useNavigationHandler = () => {
   const [activeSubMenu, setActiveSubMenu] = useState<number | null>(null)
   const [title, setTitle] = useState("")
   const [lastSubMenuPath, setLastSubMenuPath] = useState<Record<string, string>>({})
+  const {getUser} = useAuthController()
+
+  const {data: user, isLoading} = useQuery({queryKey: [QUERY_USER], queryFn: getUser})
 
   useEffect(() => {
     const activeNav = NAV_ITEMS.find(
@@ -120,6 +125,8 @@ const useNavigationHandler = () => {
     handleBackButtonClick,
     handleSubMenuItemClick,
     useProfileHover,
+    user,
+    isLoading,
   }
 }
 
