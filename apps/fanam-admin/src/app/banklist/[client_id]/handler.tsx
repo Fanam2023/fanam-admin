@@ -1,15 +1,20 @@
 "use client"
 
+import {useDialog, usePopup} from "@fanam-pkg/core-ui-sass"
 import {useParams, useRouter} from "next/navigation"
 import {useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {useBankController} from "controller"
+import {useSingleton} from "hooks"
 import {IPayloadBank} from "model"
 import {CreateBankDetails} from "organisms"
 import {BankDetailProps} from "props"
 import {QUERY_BANK, ROUTE_BANK} from "utils"
 
 export const useBankDetailsHandler = () => {
+  const {signOutUser} = useSingleton()
+  const {toggleDialog} = useDialog()
+  const {togglePopup, closable} = usePopup()
   const {push} = useRouter()
   const {toggleSlider} = useSlider()
   const {getBank} = useBankController()
@@ -55,5 +60,31 @@ export const useBankDetailsHandler = () => {
     push(ROUTE_BANK)
   }
 
-  return {getBankDetails, handleBreadcrumb, onUpdate}
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    const onConfirm = () => {
+      push(ROUTE_BANK)
+      toggleDialog()
+    }
+
+    const close = () => toggleDialog()
+
+    toggleDialog({
+      primaryButtonText: "Delete",
+      secondaryButtonText: "Cancel",
+      message: "Are you sure you want to delete?",
+      onClickPrimary: onConfirm,
+      onClickSecondary: close,
+    })
+  }
+
+  return {
+    getBankDetails,
+    handleBreadcrumb,
+    onUpdate,
+    handleDeleteClick,
+    togglePopup,
+  }
 }
