@@ -33,6 +33,7 @@ export const useHandler = () => {
     {rowKey: "contact_person_name", title: "Contact person"},
     {rowKey: "action", title: "Action"},
   ]
+
   const routeToDetail = (client_id: string) => push(routeToBankDetail(client_id))
 
   const bankData = useMemo(
@@ -53,7 +54,6 @@ export const useHandler = () => {
   return {
     TABLE_HEADER,
     bankData,
-
     onAdd,
   }
 }

@@ -2,7 +2,6 @@
 
 import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
 import {useState} from "react"
-import {useSlider} from "@custom/ui"
 import assets from "assets"
 import {useSingleton} from "hooks"
 import {NAV_ITEMS} from "utils"
@@ -10,13 +9,34 @@ import useNavigationHandler from "./handler"
 import styles from "./style.module.sass"
 
 export const BaseContainer = ({children}: {children: React.ReactNode}) => {
-  const {toggleSlider} = useSlider()
+  const [isHovered, setIsHovered] = useState(false)
   const {openMenu, activeMenu, activeSubMenu, title, toggleSubMenu, handleBackButtonClick, handleSubMenuItemClick} =
     useNavigationHandler()
 
-  const [isHovered, setIsHovered] = useState(false)
-
   const {signOutUser} = useSingleton()
+
+  const renderMainMenuItem = (item: any, index: number) => (
+    <li key={index} className={styles.menu_item_container}>
+      <section
+        className={`${styles.menu_item} ${activeMenu === item.label ? styles.menu_item_active : ""} ${!item.click ? styles.menu_item_disabled : ""}`}
+        onClick={() => item.click && toggleSubMenu(index)}>
+        <ImageView
+          src={openMenu === index || activeMenu === item.label ? item.activeIcon.src : item.icon.src}
+          alt={item.label}
+          wrapperClass={styles.menu_icon}
+        />
+      </section>
+    </li>
+  )
+
+  const renderSubMenuItem = (subItem: any, subIndex: number) => (
+    <li
+      key={subIndex}
+      className={`${styles.menu_list_item} ${activeSubMenu === subIndex ? styles.submenu_active : ""} ${!subItem.subClick ? styles.submenu_disabled : ""}`}
+      onClick={e => subItem.subClick && handleSubMenuItemClick(subIndex, subItem.path, e)}>
+      <section>{subItem.label}</section>
+    </li>
+  )
 
   return (
     <section className={`${styles.app_container} ${openMenu !== null ? styles.submenu_open : ""}`}>
@@ -25,23 +45,7 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
           <ImageView src={assets.img_Logo} alt="App Logo" wrapperClass={styles.logo} />
         </section>
         <nav className={styles.sidebar_menu}>
-          <ul>
-            {NAV_ITEMS.map((item, index) => (
-              <li key={index} className={styles.menu_item_container}>
-                <section
-                  className={`${styles.menu_item} ${activeMenu === item.label ? styles.menu_item_active : ""} ${
-                    !item.click ? styles.menu_item_disabled : ""
-                  }`}
-                  onClick={() => item.click && toggleSubMenu(index)}>
-                  <ImageView
-                    src={openMenu === index || activeMenu === item.label ? item.activeIcon.src : item.icon.src}
-                    alt={item.label}
-                    wrapperClass={styles.menu_icon}
-                  />
-                </section>
-              </li>
-            ))}
-          </ul>
+          <ul>{NAV_ITEMS.map(renderMainMenuItem)}</ul>
         </nav>
       </aside>
       {openMenu !== null && (
@@ -52,18 +56,7 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
               <ImageView src={assets.ic_back_arrow} alt="Back Button" wrapperClass={styles.back_icon} />
             </Button>
           </section>
-          <ul className={styles.menu_list}>
-            {NAV_ITEMS[openMenu]?.subItems?.map((subItem, subIndex) => (
-              <li
-                key={subIndex}
-                className={`${styles.menu_list_item} ${activeSubMenu === subIndex ? styles.submenu_active : ""} ${
-                  !subItem.subClick ? styles.submenu_disabled : ""
-                }`}
-                onClick={e => subItem.subClick && handleSubMenuItemClick(subIndex, subItem.path, e)}>
-                <section>{subItem.label}</section>
-              </li>
-            ))}
-          </ul>
+          <ul className={styles.menu_list}>{NAV_ITEMS[openMenu]?.subItems?.map(renderSubMenuItem)}</ul>
         </aside>
       )}
       <section className={`${styles.main_content} flex-col ${openMenu !== null ? styles.main_content_minimized : ""}`}>
