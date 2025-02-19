@@ -1,0 +1,59 @@
+import {useRouter} from "next/navigation"
+import {API_INITIATE_SESSION, apiSession} from "@custom/utils"
+import {useSingleton} from "hooks"
+import {ROUTE_OAUTH} from "utils"
+import {useApi} from "./api"
+
+interface IPayloadInitiateApi {
+  api_key: string
+}
+
+interface IResponseInitiateApi {
+  web_url: string
+  session_id: string
+}
+
+interface IResponseClientDetails {
+  bank_name: string
+  mobile: string
+  contact_person_name: string
+  email: string
+  alternative_mobile: string
+  designation: string
+  auth_method: string
+  onboard_client_id: string
+  onboard_client_secret: string
+  authorization_url: string
+}
+
+export const useInititeSessionController = () => {
+  const {push} = useRouter()
+  const {postRequest, getRequest} = useApi()
+  const {updateBankName} = useSingleton()
+
+  console.log(location.origin.concat(location.pathname), "")
+
+  const getClientData = async (session_id: string) => {
+    const {result, errorData} = await getRequest<IResponseClientDetails>(apiSession(session_id))
+    const {bank_name, onboard_client_id, onboard_client_secret} = result || {}
+    const path = "http://localhost:3000"
+    if (result) {
+      updateBankName(bank_name)
+      push(
+        `${ROUTE_OAUTH}?grant_type=${"client_credentials"}&redirect_uri=${path}&client_id=${onboard_client_id}&client_secret=${onboard_client_secret}&scope=${"read_account+transfer_funds"}&state=${crypto.randomUUID()}`
+      )
+    }
+
+    return {result, errorData}
+  }
+
+  const initiateSession = async (api_key: IPayloadInitiateApi) => {
+    const {result, errorData} = await postRequest<IResponseInitiateApi>(API_INITIATE_SESSION, api_key)
+    return {result, errorData}
+  }
+
+  return {
+    initiateSession,
+    getClientData,
+  }
+}

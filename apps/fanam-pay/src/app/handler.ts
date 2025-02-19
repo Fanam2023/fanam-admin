@@ -1,12 +1,16 @@
 import {useCookies, useDateTime} from "@fanam-pkg/core-utils"
 import {useRouter, useSearchParams} from "next/navigation"
-import {useEffect} from "react"
+import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
 import {useHomeController} from "controller"
 import {useCommon, useSingleton} from "hooks"
 
 const useHandler = () => {
   const {push} = useRouter()
+  const [data, setData] = useState({
+    index_css_file: "",
+    manifest_file: "",
+  })
   const {user, bankName: bank_name, updateToken, updateRefreshToken} = useSingleton()
   const {getClientToken, getClientId} = useHomeController()
   const {getCookie} = useCookies()
@@ -16,6 +20,8 @@ const useHandler = () => {
   const cookieState = getCookie("state")
   const {AZURE_BASE_URL} = useCommon()
   const bankName = searchParams.get("bank_name")
+
+  console.log(data.index_css_file, data.manifest_file)
 
   //get client token api
   const {mutate: fetchClientToken} = useMutation({
@@ -34,30 +40,58 @@ const useHandler = () => {
   const {mutate: fetchClientId} = useMutation({
     mutationKey: ["bank"],
     mutationFn: getClientId,
+    onSuccess: ({result, errorData}) => {
+      if (result) {
+        const {index_css_file, manifest_file} = result || {}
+        setData({
+          index_css_file,
+          manifest_file,
+        })
+      }
+    },
   })
 
+  console.log(bankName, "bankName")
+
   useEffect(() => {
-    const authCode = searchParams.get("authCode")
-    const state = searchParams.get("state")
-    if (bankName) {
-      fetchClientId(bankName)
-    } else if (authCode && state === cookieState) {
-      fetchClientToken({
-        bank_name: bank_name,
-        bankcode_string: authCode,
-      })
-      const cssUrl = `${AZURE_BASE_URL}index.css`
-      const linkCss = document.createElement("link")
-      linkCss.rel = "stylesheet"
-      linkCss.href = cssUrl
-      document.head.appendChild(linkCss)
-      const manifestUrl = `${AZURE_BASE_URL}manifest.json`
-      const linkManifest = document.createElement("link")
-      linkManifest.rel = "manifest"
-      linkManifest.href = manifestUrl
-      document.head.appendChild(linkManifest)
+    if (bank_name) {
+      fetchClientId(bank_name)
     }
-  }, [bankName])
+
+    const cssUrl = data.index_css_file
+    const linkCss = document.createElement("link")
+    linkCss.rel = "stylesheet"
+    linkCss.href = cssUrl
+    document.head.appendChild(linkCss)
+    const manifestUrl = data.manifest_file
+    const linkManifest = document.createElement("link")
+    linkManifest.rel = "manifest"
+    linkManifest.href = manifestUrl
+    document.head.appendChild(linkManifest)
+  }, [bank_name])
+
+  // useEffect(() => {
+  //   const authCode = searchParams.get("authCode")
+  //   const state = searchParams.get("state")
+  //   if (bankName) {
+  //     fetchClientId(bankName)
+  //   } else if (authCode && state === cookieState) {
+  //     fetchClientToken({
+  //       bank_name: bank_name,
+  //       bankcode_string: authCode,
+  //     })
+  //     const cssUrl = `${AZURE_BASE_URL}index.css`
+  //     const linkCss = document.createElement("link")
+  //     linkCss.rel = "stylesheet"
+  //     linkCss.href = cssUrl
+  //     document.head.appendChild(linkCss)
+  //     const manifestUrl = `${AZURE_BASE_URL}manifest.json`
+  //     const linkManifest = document.createElement("link")
+  //     linkManifest.rel = "manifest"
+  //     linkManifest.href = manifestUrl
+  //     document.head.appendChild(linkManifest)
+  //   }
+  // }, [bankName])
 
   const getGreeting = () => {
     if (currentHour >= 5 && currentHour < 12) return "Good Morning"

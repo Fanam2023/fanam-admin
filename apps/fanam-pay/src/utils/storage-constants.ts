@@ -10,7 +10,9 @@ export const QUERY_RECIPIENT = "__FANAM_ACTRYG__"
 export const QUERY_BENEFICIARY = "__FANAM_BCFGGQ__"
 export const QUERY_POPULAR_CORRIDORS = "__FANAM_FEFCRG__"
 export const QUERY_PAN_CARD = "__FANAM_PNHDER__"
-export const QUERY_CANCEL_ORDER = "__FANAM_JDAZXD"
+export const QUERY_CANCEL_ORDER = "__FANAM_JDAZXD__"
+
+export const QUERY_GET_CLIENT = "__FANAM_DFDFVV__"
 
 /* Cookie Storage Constant Keys here */
 export const COOKIE_ACCESS_TOKEN = "__FANAM_YTGUYG__"
