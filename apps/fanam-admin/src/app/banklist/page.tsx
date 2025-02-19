@@ -9,11 +9,14 @@ const BankList = () => {
 
   return (
     <section className={styles.container}>
-      <Button wrapperClass={`flex ${styles.create_btn}`} onClick={onAdd}>
-        + Create
-      </Button>
+      <section className="d-flex gap-3">
+        <Button wrapperClass={`d-flex ${styles.create_btn}`} onClick={onAdd}>
+          + Create
+        </Button>
+      </section>
       <Table tableItems={bankData} tableHeaders={TABLE_HEADER} wrapperClass={styles.table_header} />
     </section>
   )
 }
+
 export default BankList

@@ -1,5 +1,3 @@
-"use client"
-
 import {usePathname, useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useQuery} from "@tanstack/react-query"
@@ -19,6 +17,8 @@ const useNavigationHandler = () => {
   const {data: user, isLoading} = useQuery({queryKey: [QUERY_USER], queryFn: getUser})
 
   useEffect(() => {
+    const wasMenuClosed = localStorage.getItem("submenuClosed")
+
     const activeNav = NAV_ITEMS.find(
       item => item.subItems.some(sub => pathname.startsWith(sub.path)) || pathname === item.path
     )
@@ -31,14 +31,14 @@ const useNavigationHandler = () => {
 
         if (activeSub) {
           setActiveSubMenu(activeNav.subItems.indexOf(activeSub))
-          setOpenMenu(NAV_ITEMS.indexOf(activeNav))
           setTitle(activeSub.label)
+          // Only set openMenu if it wasn't explicitly closed
+          if (!wasMenuClosed) {
+            setOpenMenu(NAV_ITEMS.indexOf(activeNav))
+          }
         } else {
-          const firstSubItem = activeNav.subItems[0]
-          setActiveSubMenu(0)
-          setOpenMenu(NAV_ITEMS.indexOf(activeNav))
-          setTitle(firstSubItem.label)
-          push(firstSubItem.path)
+          setActiveSubMenu(null)
+          setTitle(activeNav.label)
         }
       } else {
         setActiveSubMenu(null)
@@ -53,9 +53,8 @@ const useNavigationHandler = () => {
   }, [pathname])
 
   const toggleSubMenu = (index: number) => {
+    localStorage.removeItem("submenuClosed") // Reset submenu closed state when toggling
     const item = NAV_ITEMS[index]
-
-    if (!item.click) return
 
     if (item.subItems.length === 0) {
       setActiveMenu(item.label)
@@ -66,7 +65,7 @@ const useNavigationHandler = () => {
       setOpenMenu(index)
       setActiveMenu(item.label)
 
-      let activeSubIndex = item.subItems.findIndex(sub => pathname.startsWith(sub.path))
+      const activeSubIndex = item.subItems.findIndex(sub => pathname.startsWith(sub.path))
 
       if (activeSubIndex !== -1) {
         setActiveSubMenu(activeSubIndex)
@@ -82,22 +81,14 @@ const useNavigationHandler = () => {
   const handleBackButtonClick = (e: React.MouseEvent) => {
     e.preventDefault()
     setOpenMenu(null)
+    localStorage.setItem("submenuClosed", "true") // Remember submenu was closed
   }
 
   const handleSubMenuItemClick = (subIndex: number, subPath: string, e: React.MouseEvent) => {
     e.preventDefault()
 
-    const subItem = NAV_ITEMS[openMenu!].subItems[subIndex]
-
-    if (!subItem.subClick) return
-
     setActiveSubMenu(subIndex)
-    setTitle(subItem.label)
-
-    setLastSubMenuPath(prev => ({
-      ...prev,
-      [NAV_ITEMS[openMenu!].label]: subPath,
-    }))
+    setTitle(NAV_ITEMS[openMenu!].subItems[subIndex].label)
 
     push(subPath)
   }

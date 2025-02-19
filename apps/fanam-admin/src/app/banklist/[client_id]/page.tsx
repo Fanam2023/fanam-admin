@@ -6,7 +6,7 @@ import {useBankDetailsHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const BankDetail = () => {
-  const {bankDetails, handleBreadcrumb, onUpdate} = useBankDetailsHandler()
+  const {bankDetails, handleBreadcrumb, onUpdate, handleDeleteClick} = useBankDetailsHandler()
 
   const {
     bank_name,
@@ -45,6 +45,9 @@ const BankDetail = () => {
           <Button wrapperClass={`medium ${styles.edit_button} flex flex-center`}>
             <ImageView wrapperClass={styles.icon} src={assets.ic_edit} alt="Edit" />
             Edit
+          </Button>
+          <Button wrapperClass={`medium ${styles.delete_button} flex flex-center`} onClick={handleDeleteClick}>
+            Delete
           </Button>
         </section>
       </section>
