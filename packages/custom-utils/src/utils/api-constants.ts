@@ -54,3 +54,4 @@ export const API_ADMIN_LOGOUT = `/auth/sso-admin-logout`
 export const API_GET_ALL_BANKS = `/client`
 export const apiBank = (client_id: string) => `${API_GET_ALL_BANKS}/${client_id}`
 export const apiDeleteBank = (id: string) => `${API_GET_ALL_BANKS}/${id}`
+export const API_MY_USER = `/sso-admin/admin-me`

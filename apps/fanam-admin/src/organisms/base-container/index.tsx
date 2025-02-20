@@ -10,10 +10,20 @@ import styles from "./style.module.sass"
 
 export const BaseContainer = ({children}: {children: React.ReactNode}) => {
   const [isHovered, setIsHovered] = useState(false)
-  const {openMenu, activeMenu, activeSubMenu, title, toggleSubMenu, handleBackButtonClick, handleSubMenuItemClick} =
-    useNavigationHandler()
+
+  const {
+    user,
+    openMenu,
+    activeMenu,
+    activeSubMenu,
+    title,
+    toggleSubMenu,
+    handleBackButtonClick,
+    handleSubMenuItemClick,
+  } = useNavigationHandler()
 
   const {signOutUser} = useSingleton()
+  const {email} = user?.result || {}
 
   const renderMainMenuItem = (item: any, index: number) => (
     <li key={index} className={styles.menu_item_container}>
@@ -72,13 +82,13 @@ export const BaseContainer = ({children}: {children: React.ReactNode}) => {
               className={`flex ${styles.profileContainer}`}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}>
-              <ImageView src={assets.img_header_profile} alt="User Avatar" wrapperClass={styles.profilePicture} />
+              <ImageView src={assets.ic_profile} alt="User Avatar" wrapperClass={styles.profilePicture} />
               {isHovered && (
                 <section className={styles.dropdown}>
                   <section className={`flex ${styles.profileDetails}`}>
-                    <ImageView src={assets.img_header_profile} alt="User Avatar" wrapperClass={styles.profilePicture} />
+                    <ImageView src={assets.ic_profile} alt="User Avatar" wrapperClass={styles.profilePicture} />
                     <section className={`flex ${styles.profileText}`}>
-                      <p className={styles.name}>John Doe</p>
+                      <p className={styles.name}>{email}</p>
                       <span className={styles.sub_name}>Admin</span>
                     </section>
                   </section>

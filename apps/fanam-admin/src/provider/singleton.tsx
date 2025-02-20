@@ -1,15 +1,16 @@
 import {useCookies, useReactQuery, useStorage} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
-import {PropsWithChildren, useState} from "react"
+import {PropsWithChildren, useEffect, useState} from "react"
+import {useQuery} from "@tanstack/react-query"
 import {SingletonContext} from "contexts"
 import {useAuthController} from "controller"
 import {ISingleton, IUser} from "model"
-import {COOKIE_ACCESS_TOKEN, COOKIE_REFRESH_TOKEN, ROUTE_LOGIN} from "utils"
+import {COOKIE_ACCESS_TOKEN, COOKIE_REFRESH_TOKEN, QUERY_USER, ROUTE_LOGIN} from "utils"
 
 export const SingletonProvider = ({children}: PropsWithChildren) => {
   const {setCookie, getCookie, removeCookie} = useCookies()
   const {clearQueryCache} = useReactQuery()
-  const {logout} = useAuthController()
+  const {getUser, logout} = useAuthController()
   const {replace} = useRouter()
   const {clearAllStorage} = useStorage()
   const [user, setUser] = useState<IUser | null>(null)
@@ -17,6 +18,12 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   const [refreshToken, setRefreshToken] = useState<string | null>(getCookie<string>(COOKIE_REFRESH_TOKEN))
 
   const updateUserData = (user: IUser | null) => setUser(user)
+
+  const {data: userRes, refetch: refetchMyUser} = useQuery({
+    enabled: !!token && !user,
+    queryKey: [QUERY_USER],
+    queryFn: getUser,
+  })
 
   const updateToken = (access_token: string) => {
     if (access_token) setCookie(COOKIE_ACCESS_TOKEN, access_token)
@@ -30,9 +37,9 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     setRefreshToken(token)
   }
 
-  // useEffect(() => {
-  //   if (userRes) setUser(userRes)
-  // }, [userRes])
+  useEffect(() => {
+    if (userRes) setUser(userRes?.result)
+  }, [userRes])
 
   const signOutUser = async () => {
     await logout({refreshToken})
@@ -54,6 +61,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     updateToken,
     refreshToken,
     updateRefreshToken,
+    refetchMyUser,
   }
 
   return <SingletonContext.Provider value={value}>{children}</SingletonContext.Provider>

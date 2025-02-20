@@ -1,5 +1,5 @@
-import {API_ADMIN_LOGIN, API_ADMIN_LOGOUT, IResponseLogin} from "@custom/utils"
-import {ILogOutPayload, IPayloadLogin} from "model"
+import {API_ADMIN_LOGIN, API_ADMIN_LOGOUT, API_MY_USER, IResponseLogin} from "@custom/utils"
+import {ILogOutPayload, IPayloadLogin, IUser} from "model"
 import {useApi} from "./api"
 
 export const useAuthController = () => {
@@ -10,10 +10,10 @@ export const useAuthController = () => {
     return {result, errorData}
   }
 
-  // const getUser = async () => {
-  //   const {result, errorData} = await getRequest<IUser>(API_MY_USER, {})
-  //   return {result, errorData}
-  // }
+  const getUser = async () => {
+    const {result, errorData} = await getRequest<IUser>(API_MY_USER)
+    return {result, errorData}
+  }
 
   const logout = async (payload: ILogOutPayload) => {
     const {result, errorData} = await postRequest<IResponseLogin>(API_ADMIN_LOGOUT, payload)
@@ -22,7 +22,7 @@ export const useAuthController = () => {
 
   return {
     login,
-    // getUser,
+    getUser,
     logout,
   }
 }
