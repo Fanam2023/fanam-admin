@@ -1,7 +1,7 @@
 import {useRouter} from "next/navigation"
 import {API_INITIATE_SESSION, apiSession} from "@custom/utils"
 import {useSingleton} from "hooks"
-import {ROUTE_OAUTH} from "utils"
+import {ROUTE_OAUTH, ROUTE_SAML} from "utils"
 import {useApi} from "./api"
 
 interface IPayloadInitiateApi {
@@ -31,17 +31,21 @@ export const useInititeSessionController = () => {
   const {postRequest, getRequest} = useApi()
   const {updateBankName} = useSingleton()
 
-  console.log(location.origin.concat(location.pathname), "")
-
   const getClientData = async (session_id: string) => {
     const {result, errorData} = await getRequest<IResponseClientDetails>(apiSession(session_id))
-    const {bank_name, onboard_client_id, onboard_client_secret} = result || {}
+    const {bank_name, onboard_client_id, onboard_client_secret, auth_method} = result || {}
     const path = "http://localhost:3000"
     if (result) {
+      if (auth_method === "Saml") {
+        push(
+          `${ROUTE_SAML}?grant_type=${"client_credentials"}&redirect_uri=${path}&scope=${"read_account+transfer_funds"}&state=${crypto.randomUUID()}`
+        )
+      } else {
+        push(
+          `${ROUTE_OAUTH}?grant_type=${"client_credentials"}&redirect_uri=${path}&client_id=${onboard_client_id}&client_secret=${onboard_client_secret}&scope=${"read_account+transfer_funds"}&state=${crypto.randomUUID()}`
+        )
+      }
       updateBankName(bank_name)
-      push(
-        `${ROUTE_OAUTH}?grant_type=${"client_credentials"}&redirect_uri=${path}&client_id=${onboard_client_id}&client_secret=${onboard_client_secret}&scope=${"read_account+transfer_funds"}&state=${crypto.randomUUID()}`
-      )
     }
 
     return {result, errorData}

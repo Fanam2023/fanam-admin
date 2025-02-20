@@ -39,7 +39,7 @@ export const apiDeleteAttachment = (attachmentId: string) => `/file-upload/${att
 export const API_CANCEL_TRANSACTION = `${API_PAYMENT}/cancelPayout`
 export const apiCancelPayment = (transactionId: string) => `/transaction/cancel/${transactionId}`
 export const apiGetClientDetails = (bank_name: string) => `/auth/clientId/${bank_name}`
-export const API_GET_CLIENT_TOKEN = "/auth/client/login"
+export const API_GET_CLIENT_TOKEN = "/auth/user-client/login"
 
 /* bank integration apis */
 export const API_INITIATE_SESSION = "auth/initiate-session"

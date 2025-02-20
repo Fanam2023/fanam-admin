@@ -19,9 +19,6 @@ const useHandler = () => {
   const currentHour = dayjs().hour()
   const cookieState = getCookie("state")
   const {AZURE_BASE_URL} = useCommon()
-  const bankName = searchParams.get("bank_name")
-
-  console.log(data.index_css_file, data.manifest_file)
 
   //get client token api
   const {mutate: fetchClientToken} = useMutation({
@@ -51,8 +48,6 @@ const useHandler = () => {
     },
   })
 
-  console.log(bankName, "bankName")
-
   useEffect(() => {
     if (bank_name) {
       fetchClientId(bank_name)
@@ -68,7 +63,18 @@ const useHandler = () => {
     linkManifest.rel = "manifest"
     linkManifest.href = manifestUrl
     document.head.appendChild(linkManifest)
-  }, [bank_name])
+  }, [bank_name, data?.index_css_file])
+
+  useEffect(() => {
+    const authCode = searchParams.get("authCode")
+    const state = searchParams.get("state")
+    if (authCode && state === cookieState) {
+      fetchClientToken({
+        bank_name: bank_name,
+        bankcode_string: authCode,
+      })
+    }
+  }, [])
 
   // useEffect(() => {
   //   const authCode = searchParams.get("authCode")
