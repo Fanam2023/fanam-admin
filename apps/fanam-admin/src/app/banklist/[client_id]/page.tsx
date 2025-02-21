@@ -6,7 +6,7 @@ import {useBankDetailsHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const BankDetail = () => {
-  const {bankDetails, handleBreadcrumb, onUpdate, handleDeleteClick} = useBankDetailsHandler()
+  const {id, bankDetails, handleBreadcrumb, onUpdate, handleDeleteClick} = useBankDetailsHandler()
 
   const {
     bank_name,
@@ -29,17 +29,15 @@ const BankDetail = () => {
     authorization_url,
     sso_url,
   } = bankDetails?.result || {}
+
   return (
     <>
       <section className={`${styles.header} flex flex-sb-center`}>
-        <section className={`${styles.left_header} flex flex-col`}>
-          {/* <BreadCrumbs items={bankDetails.breadcrumbValue} /> */}
-          <section className={`bold ${styles.title} flex flex-center`} onClick={handleBreadcrumb}>
-            <section className={styles.left_arrow_container}>
-              <ImageView wrapperClass={styles.logo} src={assets.ic_back_arrow} alt="Arrow Image" />
-            </section>
-            Bank Details
+        <section className={`bold ${styles.title} flex flex-center`} onClick={handleBreadcrumb}>
+          <section className={styles.left_arrow_container}>
+            <ImageView wrapperClass={styles.logo} src={assets.ic_back_arrow} alt="Arrow Image" />
           </section>
+          Bank Details/{id}
         </section>
         <section className={`${styles.right_header} flex flex-center`} onClick={onUpdate}>
           <Button wrapperClass={`medium ${styles.edit_button} flex flex-center`}>
@@ -118,26 +116,12 @@ const BankDetail = () => {
           <section className={styles.white_label_grid}>
             <section className={`${styles.file_upload} flex-col`}>
               <span className={styles.label}>Background Image</span>
-              <section className={`${styles.file} flex`}>
-                <section className={`${styles.file_left_header}`}>
-                  <ImageView wrapperClass={styles.icon} src={assets.ic_docImg} alt="doc" />
-                </section>
-                <section className={`${styles.file_right_header} flex-col`}>
-                  <span>{background_image}</span>
-                  <small>12 Sep, 2024 at 11:30 • 2.8mb</small>
-                </section>
-              </section>
+              <ImageView wrapperClass={styles.icon} src={background_image?.url} alt="doc" />
             </section>
             <section className={`${styles.file_upload} flex-col`}>
               <span className={styles.label}>Uploaded Logo</span>
               <section className={`${styles.file} flex`}>
-                <section className={`${styles.file_left_header}`}>
-                  <ImageView wrapperClass={styles.icon} src={assets.ic_docImg} alt="doc" />
-                </section>
-                <section className={`${styles.file_right_header} flex-col`}>
-                  <span>{logo}</span>
-                  <small>12 Sep, 2024 at 11:30 • 2.8mb</small>
-                </section>
+                <ImageView wrapperClass={styles.icon} src={logo?.url} alt="doc" />
               </section>
             </section>
           </section>
