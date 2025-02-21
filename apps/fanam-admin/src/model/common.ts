@@ -16,3 +16,10 @@ export interface ISingleton extends ISingletonData {
   signOutUser: () => void
   refetchMyUser: () => void
 }
+
+export interface IAttachment {
+  fileName?: string
+  attachment_id?: string
+  mime?: string
+  url: string
+}
