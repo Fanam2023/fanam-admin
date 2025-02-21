@@ -15,6 +15,7 @@
   },
   "private": true,
   "dependencies": {
+    "@custom/ui": "workspace:^",
     "@custom/utils": "workspace:*",
     "@fanam-pkg/core-ui-sass": "^1.0.24",
     "@fanam-pkg/core-utils": "^1.0.4",
