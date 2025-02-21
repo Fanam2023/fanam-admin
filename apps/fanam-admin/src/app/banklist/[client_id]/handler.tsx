@@ -17,7 +17,7 @@ export const useBankDetailsHandler = () => {
   const {toggleSlider} = useSlider()
   const {getBank} = useBankController()
   const params = useParams()
-  const id = params.client_id as string
+  const id = params?.client_id as string
 
   const {data: bankDetails, refetch} = useQuery({
     queryKey: [QUERY_BANK.concat(id)],
