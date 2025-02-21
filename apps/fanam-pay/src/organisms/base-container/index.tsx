@@ -4,7 +4,7 @@ import {Button, ImageView, assets as projectAssets, usePopup} from "@fanam-pkg/c
 import {useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import assets from "assets"
-import {useCommon, useSingleton} from "hooks"
+import {useCommon} from "hooks"
 import {IStepper} from "model"
 import {ProfileDetails, SidePanel} from "organisms"
 import {BaseContainerProps} from "props"
@@ -28,13 +28,15 @@ export const BaseContainer = ({
   isStepper = false,
   disabled = false,
 }: BaseContainerProps) => {
-  const {user, bankName} = useSingleton()
-  const {AZURE_BASE_URL} = useCommon()
-  const {first_name, last_name} = user || {}
   const {isDesktop} = useResize()
   const {back} = useRouter()
   const {togglePopup} = usePopup()
-  const {sideNav, setSideNav} = useHandler()
+  const {sideNav, bankDetails, user, bankName, setSideNav} = useHandler()
+
+  const {accent_color} = bankDetails || {}
+  const {logoVariantons} = bankDetails || {}
+  const {AZURE_BASE_URL} = useCommon()
+  const {first_name, last_name} = user || {}
   const bankStyles = {
     Hdfc_bank: styles.hdfc,
     Yes_bank: styles.yes,
@@ -78,9 +80,9 @@ export const BaseContainer = ({
 
   return (
     <>
-      <header className={`flex-sb-center ${styles.header_wrapper}  ${bankStyles[bankName] || ""}`}>
+      <header className={`flex-sb-center ${styles.header_wrapper}`} style={{background: `${bankName && accent_color}`}}>
         <section className={`flex ${styles.logo_wrapper}`}>
-          <ImageView src={logoUrl} alt={"logo"} imgWidth={isDesktop ? 180 : 120} imgHeight={40} />
+          <ImageView src={logoVariantons} alt={"logo"} imgWidth={isDesktop ? 180 : 120} imgHeight={40} />
         </section>
         <section className={`flex ${styles.language_section}`}>
           <section className={`flex ${styles.language_wrapper}`}>
@@ -101,9 +103,7 @@ export const BaseContainer = ({
               {!bellIcon && <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />}
 
               {!profile && (
-                <section
-                  className={`${styles.profile_wrapper}  ${bankStyles[bankName] || ""}  `}
-                  onClick={handleProfile}>
+                <section className={`${styles.profile_wrapper}`} onClick={handleProfile}>
                   {first_name?.charAt(0).toUpperCase()}
                   {last_name?.charAt(0).toUpperCase()}
                 </section>
@@ -129,7 +129,7 @@ export const BaseContainer = ({
       )}
 
       {(buttonText || skipBtn || cancelBtn || footerChild) && (
-        <footer className={`flex ${styles.footer_wrapper}`}>
+        <footer className={`flex ${styles.footer_wrapper}`} style={{background: `${bankName && accent_color}`}}>
           {footerChild}
           {skipBtn && (
             <Button

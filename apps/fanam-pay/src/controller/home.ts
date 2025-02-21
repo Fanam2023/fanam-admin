@@ -21,13 +21,19 @@ interface IResponseClient {
   secondary_color: string
   background_color: string
   logo: IAttachment
-  background_image: any
+  background_image: IAttachment
   index_css_file: string
   manifest_file: string
-  logo_variations: any
-  onboard_client_id: string
-  onboard_client_secret: string
-  authorization_url: string
+  logo_variations: LogoVariation[]
+  sso_url: string
+  certificate_finger_print: string
+}
+
+export interface LogoVariation {
+  src: string
+  type: string
+  sizes: string
+  purpose: string
 }
 
 interface IPayloadToken {
@@ -51,13 +57,13 @@ export const useHomeController = () => {
 
   const getClientId = async (bankName: string) => {
     const {result, errorData} = await getRequest<IResponseClient>(apiGetClientDetails(bankName))
-    if (result) {
-      const {onboard_client_secret, onboard_client_id, bank_name} = result
-      // updateBankName(bank_name)
-      // push(
-      //   `${ROUTE_OAUTH}?grant_type=${"client_credentials"}&redirect_uri=${location.origin.concat(location.pathname)}&client_id=${client_id}&client_secret=${client_secret}&scope=${"read_account+transfer_funds"}&state=${crypto.randomUUID()}`
-      // )
-    }
+    // if (result) {
+    //   const {onboard_client_secret, onboard_client_id, bank_name} = result
+    //   // updateBankName(bank_name)
+    //   // push(
+    //   //   `${ROUTE_OAUTH}?grant_type=${"client_credentials"}&redirect_uri=${location.origin.concat(location.pathname)}&client_id=${client_id}&client_secret=${client_secret}&scope=${"read_account+transfer_funds"}&state=${crypto.randomUUID()}`
+    //   // )
+    // }
     return {result, errorData}
   }
 

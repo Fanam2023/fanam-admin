@@ -1,17 +1,17 @@
 import {useCookies, useDateTime} from "@fanam-pkg/core-utils"
 import {useRouter, useSearchParams} from "next/navigation"
-import {useEffect, useState} from "react"
+import {useEffect} from "react"
 import {useMutation} from "@tanstack/react-query"
 import {useHomeController} from "controller"
 import {useCommon, useSingleton} from "hooks"
 
 const useHandler = () => {
   const {push} = useRouter()
-  const [data, setData] = useState({
-    index_css_file: "",
-    manifest_file: "",
-  })
-  const {user, bankName: bank_name, updateToken, updateRefreshToken} = useSingleton()
+  // const [data, setData] = useState({
+  //   index_css_file: "",
+  //   manifest_file: "",
+  // })
+  const {user, bankName: bank_name, updateToken, updateRefreshToken, token} = useSingleton()
   const {getClientToken, getClientId} = useHomeController()
   const {getCookie} = useCookies()
   const {dayjs} = useDateTime()
@@ -34,47 +34,47 @@ const useHandler = () => {
   })
 
   //get clientid clientsecert api
-  const {mutate: fetchClientId} = useMutation({
-    mutationKey: ["bank"],
-    mutationFn: getClientId,
-    onSuccess: ({result, errorData}) => {
-      if (result) {
-        const {index_css_file, manifest_file} = result || {}
-        setData({
-          index_css_file,
-          manifest_file,
-        })
-      }
-    },
-  })
+  // const {mutate: fetchClientId} = useMutation({
+  //   mutationKey: ["bank"],
+  //   mutationFn: getClientId,
+  //   onSuccess: ({result, errorData}) => {
+  //     if (result) {
+  //       const {index_css_file, manifest_file, logo_variations} = result || {}
+  //       const logo = logo_variations[2]
+  //       setData({
+  //         index_css_file,
+  //         manifest_file,
+  //       })
+  //     }
+  //   },
+  // })
 
-  useEffect(() => {
-    if (bank_name) {
-      fetchClientId(bank_name)
-    }
+  // useEffect(() => {
+  //   if (bank_name) {
+  //     fetchClientId(bank_name)
+  //   }
 
-    const cssUrl = data.index_css_file
-    const linkCss = document.createElement("link")
-    linkCss.rel = "stylesheet"
-    linkCss.href = cssUrl
-    document.head.appendChild(linkCss)
-    const manifestUrl = data.manifest_file
-    const linkManifest = document.createElement("link")
-    linkManifest.rel = "manifest"
-    linkManifest.href = manifestUrl
-    document.head.appendChild(linkManifest)
-  }, [bank_name, data?.index_css_file])
+  //   const cssUrl = data.index_css_file
+  //   const linkCss = document.createElement("link")
+  //   linkCss.rel = "stylesheet"
+  //   linkCss.href = cssUrl
+  //   document.head.appendChild(linkCss)
+  //   const manifestUrl = data.manifest_file
+  //   const linkManifest = document.createElement("link")
+  //   linkManifest.rel = "manifest"
+  //   linkManifest.href = manifestUrl
+  //   document.head.appendChild(linkManifest)
+  // }, [bank_name, data?.index_css_file])
 
   useEffect(() => {
     const authCode = searchParams.get("authCode")
-    const state = searchParams.get("state")
-    if (authCode && state === cookieState) {
+    if (!token) {
       fetchClientToken({
         bank_name: bank_name,
         bankcode_string: authCode,
       })
     }
-  }, [])
+  }, [token])
 
   // useEffect(() => {
   //   const authCode = searchParams.get("authCode")

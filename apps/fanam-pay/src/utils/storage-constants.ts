@@ -19,6 +19,7 @@ export const COOKIE_ACCESS_TOKEN = "__FANAM_YTGUYG__"
 export const COOKIE_TRANSACTION_ID = "__FANAM_POIQWE__"
 export const COOKIE_REFRESH_TOKEN = "__FANAM_OIUOIA__"
 export const COOKIE_FCM = "__FANAM_HBJHBJ__"
+export const COOKIE_BANK_NAME = "__FANAM_FGFCD__"
 
 /* Local Storage Keys */
 export const LS_WEBAUTHN_CRED_ID = "__FANAM_WEQQFR__"

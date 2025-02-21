@@ -5,6 +5,14 @@ export interface IStepper {
   description: string
 }
 
+export interface IBankDetails {
+  index_css_file: string
+  manifest_file: string
+  logoVariantons: string
+  background_color: string
+  accent_color: string
+}
+
 export interface ISingletonData {
   user?: IUser | null
   token: string | null
@@ -12,6 +20,7 @@ export interface ISingletonData {
   transData: ITransaction | null
   refreshToken: string | null
   bankName: string | null
+  bankDetails: IBankDetails | null
 }
 
 export interface ISingleton extends ISingletonData {

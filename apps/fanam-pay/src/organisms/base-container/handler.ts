@@ -1,9 +1,10 @@
 import {useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
-import {useCommon} from "hooks"
+import {useCommon, useSingleton} from "hooks"
 
 export const useHandler = () => {
+  const {user, bankName, bankDetails} = useSingleton()
   const {back} = useRouter()
   const {getFirstLetter} = useCommon()
   const {isDesktop} = useResize()
@@ -15,6 +16,9 @@ export const useHandler = () => {
 
   return {
     isDesktop,
+    user,
+    bankName,
+    bankDetails,
     goBack,
     getFirstLetter,
     sideNav,

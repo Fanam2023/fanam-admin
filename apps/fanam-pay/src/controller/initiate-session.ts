@@ -1,7 +1,8 @@
+import {useCookies} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {API_INITIATE_SESSION, apiSession} from "@custom/utils"
 import {useSingleton} from "hooks"
-import {ROUTE_OAUTH, ROUTE_SAML} from "utils"
+import {COOKIE_BANK_NAME, ROUTE_OAUTH, ROUTE_SAML} from "utils"
 import {useApi} from "./api"
 
 interface IPayloadInitiateApi {
@@ -28,6 +29,7 @@ interface IResponseClientDetails {
 
 export const useInititeSessionController = () => {
   const {push} = useRouter()
+  const {setCookie, removeCookie} = useCookies()
   const {postRequest, getRequest} = useApi()
   const {updateBankName} = useSingleton()
 
@@ -45,6 +47,9 @@ export const useInititeSessionController = () => {
           `${ROUTE_OAUTH}?grant_type=${"client_credentials"}&redirect_uri=${path}&client_id=${onboard_client_id}&client_secret=${onboard_client_secret}&scope=${"read_account+transfer_funds"}&state=${crypto.randomUUID()}`
         )
       }
+      if (bank_name) setCookie(COOKIE_BANK_NAME, bank_name)
+      else removeCookie(COOKIE_BANK_NAME)
+
       updateBankName(bank_name)
     }
 

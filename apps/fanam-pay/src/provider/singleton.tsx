@@ -1,13 +1,14 @@
 import {useCookies, useReactQuery, useStorage} from "@fanam-pkg/core-utils"
 import {useParams, usePathname, useRouter} from "next/navigation"
 import {PropsWithChildren, useEffect, useState} from "react"
-import {useQuery} from "@tanstack/react-query"
+import {useMutation, useQuery} from "@tanstack/react-query"
 import {ITransaction, IUser, TypeSignOut} from "@custom/utils"
 import {SingletonContext} from "contexts"
-import {useAuthController, useTransactionController} from "controller"
-import {ISingleton} from "model"
+import {useAuthController, useHomeController, useTransactionController} from "controller"
+import {IBankDetails, ISingleton} from "model"
 import {
   COOKIE_ACCESS_TOKEN,
+  COOKIE_BANK_NAME,
   COOKIE_REFRESH_TOKEN,
   COOKIE_TRANSACTION_ID,
   QUERY_TRANSACTION,
@@ -20,6 +21,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   const {setCookie, getCookie, removeCookie} = useCookies()
   const {getUser, logout, logoutAllDevice} = useAuthController()
   const {getTransactionDetails} = useTransactionController()
+  const {getClientId} = useHomeController()
   const {clearQueryCache} = useReactQuery()
   const {replace} = useRouter()
   const {clearAllStorage} = useStorage()
@@ -30,7 +32,8 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   const [token, setToken] = useState<string | null>(getCookie<string>(COOKIE_ACCESS_TOKEN))
   const [transId, setTransId] = useState<string | null>(getCookie<string>(COOKIE_TRANSACTION_ID))
   const [refreshToken, setRefreshToken] = useState<string | null>(getCookie<string>(COOKIE_REFRESH_TOKEN))
-  const [bankName, setBankName] = useState<string | null>()
+  const [bankName, setBankName] = useState<string | null>(getCookie<string>(COOKIE_BANK_NAME))
+  const [bankDetails, setBankDetails] = useState<IBankDetails | null>(null)
   const {data: userRes, refetch: refetchUser} = useQuery({
     enabled: !!token && !user,
     queryKey: [QUERY_USER],
@@ -88,6 +91,41 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
     if (bankName) setBankName(bankName)
   }
 
+  const {mutate: fetchClientId} = useMutation({
+    mutationKey: ["bank"],
+    mutationFn: getClientId,
+    onSuccess: ({result}) => {
+      if (result) {
+        const {index_css_file, manifest_file, logo_variations, background_color, accent_color} = result || {}
+        const logo = logo_variations[2].src
+        setBankDetails({
+          index_css_file,
+          manifest_file,
+          logoVariantons: logo,
+          background_color,
+          accent_color,
+        })
+      }
+    },
+  })
+
+  useEffect(() => {
+    if (bankName) {
+      fetchClientId(bankName)
+    }
+
+    const cssUrl = bankDetails?.index_css_file
+    const linkCss = document.createElement("link")
+    linkCss.rel = "stylesheet"
+    linkCss.href = cssUrl
+    document.head.appendChild(linkCss)
+    const manifestUrl = bankDetails?.manifest_file
+    const linkManifest = document.createElement("link")
+    linkManifest.rel = "manifest"
+    linkManifest.href = manifestUrl
+    document.head.appendChild(linkManifest)
+  }, [bankName, bankDetails?.index_css_file])
+
   const signOutUser = async (action: TypeSignOut = "logout") => {
     if (action === "logout-all") await logoutAllDevice()
     else await logout({refreshToken})
@@ -105,6 +143,7 @@ export const SingletonProvider = ({children}: PropsWithChildren) => {
   }
 
   const value: ISingleton = {
+    bankDetails,
     user,
     token,
     transId,
