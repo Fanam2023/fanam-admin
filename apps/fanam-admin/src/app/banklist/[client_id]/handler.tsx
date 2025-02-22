@@ -1,8 +1,8 @@
 "use client"
 
-import {useDialog} from "@fanam-pkg/core-ui-sass"
+import {useDialog, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
 import {useParams, useRouter} from "next/navigation"
-import {useQuery} from "@tanstack/react-query"
+import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
 import {useBankController} from "controller"
 import {CreateBankDetails} from "organisms"
@@ -12,7 +12,8 @@ export const useBankDetailsHandler = () => {
   const {toggleDialog} = useDialog()
   const {push} = useRouter()
   const {toggleSlider} = useSlider()
-  const {getBank} = useBankController()
+  const {getBank, removeBank} = useBankController()
+  const {toggleNotify} = useNotifyPopup()
   const params = useParams()
   const id = params?.client_id as string
 
@@ -20,6 +21,33 @@ export const useBankDetailsHandler = () => {
     queryKey: [QUERY_BANK.concat(id)],
     queryFn: () => getBank(id),
     enabled: !!id,
+  })
+
+  function onSuccess(title: string, description?: string) {
+    toggleNotify({
+      type: "success",
+      title,
+      description: description || title,
+    })
+  }
+
+  function onFailure(message: string) {
+    toggleNotify({
+      type: "error",
+      title: "Error",
+      description: message,
+    })
+  }
+
+  const {mutate: onBankDelete} = useMutation({
+    mutationFn: removeBank,
+    onSuccess: ({result, errorData}) => {
+      if (result) {
+        onSuccess("Bank Deleted Successfully", "Bank Deleted")
+      } else {
+        onFailure(errorData?.message || "Failed to delete")
+      }
+    },
   })
 
   const onUpdate = () => {
@@ -54,5 +82,5 @@ export const useBankDetailsHandler = () => {
     })
   }
 
-  return {id, bankDetails, handleBreadcrumb, onUpdate, handleDeleteClick}
+  return {id, bankDetails, handleBreadcrumb, onUpdate, onBankDelete}
 }
