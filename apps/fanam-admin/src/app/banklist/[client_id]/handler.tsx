@@ -1,6 +1,6 @@
 "use client"
 
-import {useDialog, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
+import {useDialog, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {useParams, useRouter} from "next/navigation"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import {useSlider} from "@custom/ui"
