@@ -1,6 +1,7 @@
 import {assets as projectAssets} from "@fanam-pkg/core-ui-sass"
 import ic_back_arrow from "./icons/ic_back_arrow.svg"
 import ic_compliance from "./icons/ic_compliance.svg"
+import ic_delete from "./icons/ic_delete.svg"
 import ic_docImg from "./icons/ic_doc.svg"
 import ic_edit from "./icons/ic_edit.svg"
 import ic_icon from "./icons/ic_icon.svg"
@@ -33,6 +34,7 @@ const assets = {
   ic_send,
   ic_edit,
   ic_docImg,
+  ic_delete,
   img_fanam,
   img_Logo,
   img_menu_dashboard,

@@ -1,12 +1,16 @@
 "use client"
 
-import {Button, ImageView} from "@fanam-pkg/core-ui-sass"
+import {Button, ImageView, useDialog} from "@fanam-pkg/core-ui-sass"
+import {useRouter} from "next/navigation"
 import assets from "assets"
+import {ROUTE_BANK} from "utils"
 import {useBankDetailsHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const BankDetail = () => {
-  const {id, bankDetails, handleBreadcrumb, onUpdate, handleDeleteClick} = useBankDetailsHandler()
+  const {id, bankDetails, handleBreadcrumb, onUpdate, onBankDelete} = useBankDetailsHandler()
+  const {toggleDialog} = useDialog()
+  const {push} = useRouter()
 
   const {
     bank_name,
@@ -30,6 +34,20 @@ const BankDetail = () => {
     sso_url,
   } = bankDetails?.result || {}
 
+  const onDeleteBank = () => {
+    toggleDialog({
+      primaryButtonText: "Delete",
+      secondaryButtonText: "Cancel",
+      message: "Are you sure you want to delete this bank account?",
+      onClickPrimary: () => {
+        onBankDelete(id)
+        toggleDialog()
+        push(ROUTE_BANK)
+      },
+      onClickSecondary: () => toggleDialog(),
+    })
+  }
+
   return (
     <>
       <section className={`${styles.header} flex flex-sb-center`}>
@@ -39,12 +57,13 @@ const BankDetail = () => {
           </section>
           Bank Details/{id}
         </section>
-        <section className={`${styles.right_header} flex flex-center`} onClick={onUpdate}>
-          <Button wrapperClass={`medium ${styles.edit_button} flex flex-center`}>
+        <section className={`${styles.right_header} flex flex-center`}>
+          <Button wrapperClass={`medium ${styles.edit_button} flex flex-center`} onClick={onUpdate}>
             <ImageView wrapperClass={styles.icon} src={assets.ic_edit} alt="Edit" />
             Edit
           </Button>
-          <Button wrapperClass={`medium ${styles.delete_button} flex flex-center`} onClick={handleDeleteClick}>
+          <Button wrapperClass={`medium ${styles.delete_button} flex flex-center`} onClick={onDeleteBank}>
+            <ImageView src={assets.ic_delete} alt="delete" imgSize={16} wrapperClass={styles.delete_icon} />
             Delete
           </Button>
         </section>
