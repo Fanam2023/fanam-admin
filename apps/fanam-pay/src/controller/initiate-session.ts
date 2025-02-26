@@ -2,7 +2,7 @@ import {useCookies} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import {API_INITIATE_SESSION, apiSession} from "@custom/utils"
 import {useSingleton} from "hooks"
-import {COOKIE_BANK_NAME, ROUTE_OAUTH, ROUTE_SAML} from "utils"
+import {COOKIE_BANK_NAME, ROUTE_OAUTH} from "utils"
 import {useApi} from "./api"
 
 interface IPayloadInitiateApi {
@@ -22,9 +22,11 @@ interface IResponseClientDetails {
   alternative_mobile: string
   designation: string
   auth_method: string
-  onboard_client_id: string
-  onboard_client_secret: string
-  authorization_url: string
+  onboard_client_id?: string
+  onboard_client_secret?: string
+  authorization_url?: string
+  sso_url?: string
+  certificate_finger_print?: string
 }
 
 export const useInititeSessionController = () => {
@@ -35,12 +37,16 @@ export const useInititeSessionController = () => {
 
   const getClientData = async (session_id: string) => {
     const {result, errorData} = await getRequest<IResponseClientDetails>(apiSession(session_id))
-    const {bank_name, onboard_client_id, onboard_client_secret, auth_method} = result || {}
+    const {bank_name, onboard_client_id, onboard_client_secret, auth_method, sso_url, certificate_finger_print} =
+      result || {}
     const path = "http://localhost:3000"
     if (result) {
-      if (auth_method === "Saml") {
+      if (auth_method === "Saml" && sso_url) {
         push(
-          `${ROUTE_SAML}?grant_type=${"client_credentials"}&redirect_uri=${path}&scope=${"read_account+transfer_funds"}&state=${crypto.randomUUID()}`
+          sso_url
+          // `${ROUTE_SAML}?grant_type=${sso_url}`
+          // `${ROUTE_SAML}?sso_url=${sso_url}`
+          // `${ROUTE_SAML}?grant_type=${"client_credentials"}&redirect_uri=${path}&scope=${"read_account+transfer_funds"}&state=${crypto.randomUUID()}`
         )
       } else {
         push(

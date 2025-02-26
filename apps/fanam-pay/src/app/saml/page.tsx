@@ -3,63 +3,68 @@
 import {useCookies} from "@fanam-pkg/core-utils"
 import {useRouter, useSearchParams} from "next/navigation"
 import {useEffect, useState} from "react"
-import axios from "axios"
 
 const Saml = () => {
   const searchParams = useSearchParams()
   const {replace} = useRouter()
   const {setCookie} = useCookies()
-  const [email, setEmail] = useState<string>("deepikad@cannydigit.com")
-  useEffect(() => {
-    console.log("checking authentication by calling /me")
+  const ssoUrl = searchParams.get("sso_url")
 
-    axios
-      .get("http://localhost:3000", {
-        withCredentials: true,
-      })
-      .then(res => {
-        console.log(res.data.user, "/me")
-
-        /**
-         * if user has no nameID it means that he is not authenticated yet!
-         * redirect to login for Okta auth
-         */
-        if (res.data.user.nameID) {
-          setEmail(res.data.user.nameID)
-        } else {
-          // redirectToLogin()
-        }
-      })
-      .catch(err => {
-        console.log(err)
-        // redirectToLogin()
-      })
-  }, [])
+  const [email, setEmail] = useState<string | null>(null)
 
   useEffect(() => {
-    const grantType = searchParams.get("grant_type")
-    const redirectUri = searchParams.get("redirect_uri")
-    const state = searchParams.get("state")
-    setCookie("state", state)
-    if (grantType !== "client_credentials") {
-      alert("Invalid grant type")
-    } else {
-      setTimeout(() => {
-        const authCode = crypto.randomUUID()
-        replace(`${redirectUri}?authCode=${authCode}&state=${state}`)
-      }, 3000)
-    }
+    redirectToLogin()
+    // axios
+    //   .get("http://localhost:3000/callback", {
+    //     withCredentials: true,
+    //   })
+    //   .then(res => {
+    //     if (res.data.user?.nameID) {
+    //       setEmail(res.data.user.nameID)
+    //     } else {
+    //       redirectToLogin()
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.error("Authentication error:", err)
+    //     redirectToLogin()
+    //   })
   }, [])
 
-  // Redirect to login
   const redirectToLogin = () => {
-    window.location.replace("https://dev-93877242.okta.com/app/dev-93877242_fanampay_1/exknh06kev42wsJgB5d7/sso/saml")
+    if (ssoUrl) {
+      window.location.replace(ssoUrl)
+    } else {
+      console.error("SSO URL is missing, unable to redirect.")
+    }
   }
+
   return (
     <section>
-      <section>Processing...</section>
+      <section>Processing SAML Authentication...</section>
+      {email ? <p>Welcome, {email}!</p> : <p>Redirecting to SAML SSO...</p>}
     </section>
   )
 }
 
 export default Saml
+
+// import {useSearchParams} from "next/navigation"
+// import {useEffect} from "react"
+
+// const SamlLogin = () => {
+//   const searchParams = useSearchParams()
+//   const ssoUrl = searchParams.get("sso_url") // SAML login URL from Okta
+
+//   useEffect(() => {
+//     if (!ssoUrl) {
+//       console.error("No SSO URL provided")
+//       return
+//     }
+//     window.location.href = ssoUrl
+//   }, [ssoUrl])
+
+//   return <p>Redirecting to SAML login...</p>
+// }
+
+// export default SamlLogin
