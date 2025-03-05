@@ -10,8 +10,7 @@ const useHandler = (sessionId: string) => {
     queryFn: () => getClientData(sessionId as string),
     enabled: !!sessionId,
   })
-  console.log(data, ">>>")
-  return {}
+  return {data}
 }
 
 export default useHandler
