@@ -6,7 +6,7 @@ import {useCommon} from "hooks"
 import useHandler from "./handler"
 import styles from "./page.module.sass"
 
-const Htfc = () => {
+const Hdfc = () => {
   const {push} = useRouter()
   const {createParams} = useCommon()
   const {refetchClient} = useHandler()
@@ -32,4 +32,4 @@ const Htfc = () => {
   )
 }
 
-export default Htfc
+export default Hdfc
