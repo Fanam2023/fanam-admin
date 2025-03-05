@@ -1,15 +1,11 @@
-import {ChatBot} from "./chat-bot/page"
 import styles from "./page.module.sass"
 
-export default function Index() {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.scss file.
-   */
+const Dashboard = () => {
   return (
-    <div className={styles.page}>
-      <ChatBot />
-    </div>
+    <section className={styles.page}>
+      <h3>Dashboard Page</h3>
+    </section>
   )
 }
+
+export default Dashboard

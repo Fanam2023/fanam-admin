@@ -143,7 +143,9 @@ export const useAuthController = () => {
           formData.append("kyc", file)
         })
 
-        const response = await putRequest<IUser>(apiSenderKYC(aadhaarKycId), formData)
+        formData.append("kyc_id", aadhaarKycId)
+
+        const response = await postRequest<IUser>(apiSenderKYC(), formData)
         result = {...result, ...response.result}
         errorData = response.errorData
         if (result) updateUserData(result)
@@ -155,7 +157,9 @@ export const useAuthController = () => {
           formData.append("kyc", file)
         })
 
-        const response = await putRequest<IUser>(apiSenderKYC(panKycId), formData)
+        formData.append("kyc_id", panKycId)
+
+        const response = await postRequest<IUser>(apiSenderKYC(), formData)
         result = {...result, ...response.result}
         errorData = response.errorData
         if (result) updateUserData(result)

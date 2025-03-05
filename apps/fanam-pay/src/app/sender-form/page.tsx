@@ -6,8 +6,16 @@ import useHandler from "./handler"
 import styles from "./sender.module.sass"
 
 const SenderForm = () => {
-  const {individualForm, individualKYCElements, businessKYCElements, businessForm, individualType, onSubmit, onBack} =
-    useHandler(styles)
+  const {
+    individualForm,
+    individualKYCElements,
+    businessKYCElements,
+    businessForm,
+    individualType,
+    onSubmit,
+    onBack,
+    t,
+  } = useHandler(styles)
 
   return (
     <BaseContainer
@@ -15,16 +23,16 @@ const SenderForm = () => {
       backIcon={false}
       buttonText="Submit"
       onSubmit={onSubmit}
-      skipBtn="Back"
+      skipBtn={t("Back")}
       // disabled={!isValid}
       stepIndex={0}
       onBack={onBack}>
-      <h4 className={`bold ${styles.title}`}>Update Profile</h4>
+      <h4 className={`bold ${styles.title}`}>{t("Update Profile")}</h4>
       <h6 className={styles.description}>
-        Essential for verification and processing your transactions securely and efficiently.
+        {t("Essential for verification and processing your transactions securely and efficiently.")}
       </h6>
       <section className={styles.sender_form_wrapper}>
-        <h4 className={`semi-bold ${styles.type_wrapper}`}>Sender type</h4>
+        <h4 className={`semi-bold ${styles.type_wrapper}`}>{t("Sender type")}</h4>
         <GroupForm formSections={individualType ? individualForm : businessForm} />
         <GroupForm formSections={individualType ? individualKYCElements : businessKYCElements} />
       </section>

@@ -1,10 +1,18 @@
 import {useCommon as usePkgCommon} from "@fanam-pkg/core-utils"
+import {getExampleNumber} from "libphonenumber-js"
+import examples from "libphonenumber-js/mobile/examples"
+import {CountryCode} from "libphonenumber-js/types"
 import {ICountry} from "@custom/utils"
 import {useSingleton} from "hooks"
 
 export const useCommon = () => {
   const commonHook = usePkgCommon()
   const {bankName} = useSingleton()
+
+  const getNationalNumber = (countryCode: string): string | undefined => {
+    const exampleNumber = getExampleNumber(countryCode as CountryCode, examples)
+    return exampleNumber ? exampleNumber.nationalNumber.toString() : undefined
+  }
 
   const getCountryCode = (country: ICountry | string): string => {
     return typeof country === "string" ? country : country?.iso2?.toUpperCase()
@@ -37,5 +45,6 @@ export const useCommon = () => {
     getFirstLetter,
     createParams,
     AZURE_BASE_URL,
+    getNationalNumber,
   }
 }

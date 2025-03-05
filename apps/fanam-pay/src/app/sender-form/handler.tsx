@@ -1,13 +1,6 @@
 import {Button, FormSectionProps, ImageView, TextField, useNotifyPopup, usePopup} from "@fanam-pkg/core-ui-sass"
-import {
-  IFormData,
-  JSONObject,
-  REG_EMAIL,
-  REG_VALID_NAME,
-  REG_VALID_NUMBER,
-  useCommon,
-  useDateTime,
-} from "@fanam-pkg/core-utils"
+import {IFormData, JSONObject, REG_EMAIL, REG_VALID_NAME, REG_VALID_NUMBER, useDateTime} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQueries} from "@tanstack/react-query"
@@ -29,12 +22,12 @@ import {
 } from "@custom/utils"
 import assets from "assets"
 import {useAuthController, useKYCController, useLocationController, useRecipientController} from "controller"
-import {useSingleton} from "hooks"
-import {PopupAadhaarCaptcha, PopupAadhaarOTP} from "organisms"
+import {useCommon, useSingleton} from "hooks"
+import {CountryFlag, PopupAadhaarCaptcha, PopupAadhaarOTP} from "organisms"
 import {
   ACCOUNT_TYPE,
   BUSINESS_TYPE,
-  ID_PROOFS_INDIA,
+  CONFIG_BUSINESS_PROOF,
   QUERY_CITIES,
   QUERY_COUNTRIES,
   QUERY_PAN_CARD,
@@ -84,7 +77,7 @@ const DEFAULT_ERR_STATE = {
 
 const useHandler = (styles: IStyle) => {
   const {replace, push} = useRouter()
-  const {isValidInputByRegex} = useCommon()
+  const {isValidInputByRegex, getCountryCode} = useCommon()
   const {getAllCountries, getCities, getStates} = useLocationController()
   const {removeAttachment} = useRecipientController()
   const {syncUser} = useAuthController()
@@ -93,8 +86,12 @@ const useHandler = (styles: IStyle) => {
   const {formatDateUTC, formatDate, dayjs} = useDateTime()
   const {toggleNotify} = useNotifyPopup()
   const {togglePopup} = usePopup()
+  const {t} = useTranslation()
   const {user, updateUserData, refetchUser} = useSingleton()
+  const {country: Country} = user || {}
+  console.log(Country, "Aji")
   const currentDate = dayjs().format("YYYY-MM-DD")
+
   const [data, setData] = useState<ISyncUserData>({
     first_name: "",
     last_name: "",
@@ -106,7 +103,6 @@ const useHandler = (styles: IStyle) => {
     state: null,
     zip_code: "",
     city: null,
-    // account_no: "",
     account_type: ACCOUNT_TYPE[0],
     pan: "",
     aadhaarNumber: "",
@@ -115,11 +111,11 @@ const useHandler = (styles: IStyle) => {
     date_of_birth: "",
     kyc_aadhaar: [],
     kyc_pan: [],
-    identity_proof: {id_number: "", id_type: ID_PROOFS_INDIA[0], kyc: []},
-    address_proof: {id_number: "", id_type: ID_PROOFS_INDIA[0], kyc: []},
-    authority_proof: {id_number: "", id_type: ID_PROOFS_INDIA[0], kyc: []},
-    business_proof: {id_number: "", id_type: ID_PROOFS_INDIA[0], kyc: []},
-    partners_proof: [{id_number: "", id_type: ID_PROOFS_INDIA[0], kyc: []}],
+    identity_proof: {id_number: "", id_type: null, kyc: []},
+    address_proof: {id_number: "", id_type: null, kyc: []},
+    authority_proof: {id_number: "", id_type: null, kyc: []},
+    business_proof: {id_number: "", id_type: null, kyc: []},
+    partners_proof: [{id_number: "", id_type: null, kyc: []}],
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
 
@@ -127,7 +123,6 @@ const useHandler = (styles: IStyle) => {
     first_name,
     last_name,
     email,
-    // account_no,
     phone_no,
     country,
     state,
@@ -184,17 +179,58 @@ const useHandler = (styles: IStyle) => {
     errPartnershipProof,
   } = errData
 
+  const businessProofConfig = CONFIG_BUSINESS_PROOF?.[business_type.key] || {}
+
   const isIndividual = account_type.key === "Individual"
   const isSoleProprietor = business_type.key === "Sole_proprietor"
   const isCompanies = business_type.key === "Companies"
   const isLimitedLiabilityPartnership = business_type.key === "Limited_liability_partnership"
   const isPartnershipFirm = business_type.key === "Partnership_firm"
 
+  const idProofOption: IFormData[] = businessProofConfig["identity_proof"] || []
+  const addressProofOption: IFormData[] = businessProofConfig["address_proof"] || []
+  const businessProofOption: IFormData[] = businessProofConfig["business_proof"] || []
+  const authorityProofOption: IFormData[] = businessProofConfig["authority_proof"] || []
+  const partnersProofOption: IFormData[] = businessProofConfig["partners_proof"] || []
+
   const isIdentityProof = isSoleProprietor || isCompanies || isLimitedLiabilityPartnership || isPartnershipFirm
-  const isAddressProof = isSoleProprietor || isCompanies || isLimitedLiabilityPartnership
+  const isAddressProof = isSoleProprietor || isCompanies
   const isBusinessProof = isSoleProprietor
-  const isAuthorityProof = isPartnershipFirm || isCompanies
+  const isAuthorityProof = isPartnershipFirm || isCompanies || isLimitedLiabilityPartnership
   const isPartnersProof = isPartnershipFirm || isCompanies || isLimitedLiabilityPartnership
+
+  useEffect(() => {
+    setData(prev => ({
+      ...prev,
+      identity_proof: {
+        id_number: "",
+        id_type: isIdentityProof ? businessProofConfig["identity_proof"][0] : null,
+        kyc: [],
+      },
+      address_proof: {
+        id_number: "",
+        id_type: isAddressProof ? businessProofConfig["address_proof"][0] : null,
+        kyc: [],
+      },
+      authority_proof: {
+        id_number: "",
+        id_type: isAuthorityProof ? businessProofConfig["authority_proof"][0] : null,
+        kyc: [],
+      },
+      business_proof: {
+        id_number: "",
+        id_type: isBusinessProof ? businessProofConfig["business_proof"][0] : null,
+        kyc: [],
+      },
+      partners_proof: [
+        {
+          id_number: "",
+          id_type: isPartnersProof ? businessProofConfig["partners_proof"][0] : null,
+          kyc: [],
+        },
+      ],
+    }))
+  }, [business_type])
 
   const {id_type: identityIdType, id_number: identityIdNumber, kyc: identityAttachments} = identity_proof || {}
 
@@ -263,6 +299,7 @@ const useHandler = (styles: IStyle) => {
     onSuccess: ({result, errorData}) => {
       const {message} = errorData || {}
       if (result) {
+        refetchUser()
         const {user} = result
         updateUserData({...user, kyc_details: result?.user?.kyc_details})
         toggleNotify({
@@ -345,6 +382,7 @@ const useHandler = (styles: IStyle) => {
     onSuccess: ({result, errorData}) => {
       const {message} = errorData || {}
       if (result) {
+        refetchUser()
         const {user} = result
         updateUserData({...user, kyc_details: result?.user?.kyc_details})
         toggleNotify({
@@ -537,7 +575,7 @@ const useHandler = (styles: IStyle) => {
             id_number: kyc_number,
             kyc_id,
             kyc_type,
-            id_type: ID_PROOFS_INDIA.find(({key}) => key === type),
+            id_type: businessProofConfig["partners_proof"].find(({key}) => key === type),
             kyc: attachments?.map(({url, attachment_id}) => ({
               attachment: {id: attachment_id, url},
               onClickRemove: deleteFile.bind(null, attachment_id),
@@ -624,7 +662,7 @@ const useHandler = (styles: IStyle) => {
     // if (!account_no) errState = {...errState, errAccountNo: "Please enter Account Number", isValid: false}
 
     if (!isValidInputByRegex(email, REG_EMAIL))
-      errState = {...errState, errEmail: "Please Confirm Your E-mail", isValid: false}
+      errState = {...errState, errEmail: "Please Confirm Your Email", isValid: false}
 
     if (!address_line_1) errState = {...errState, errAddress: "Please enter Sender Address", isValid: false}
 
@@ -636,9 +674,9 @@ const useHandler = (styles: IStyle) => {
 
     if (!city) errState = {...errState, errCity: "Please enter City/District", isValid: false}
 
-    if (!zip_code) errState = {...errState, errZipCode: "Please enter PinCode", isValid: false}
+    if (!zip_code) errState = {...errState, errZipCode: "Please enter Pin Code", isValid: false}
 
-    if (!account_type) errState = {...errState, errAccountType: "Please enter account type", isValid: false}
+    if (!account_type) errState = {...errState, errAccountType: "Please enter Account Type", isValid: false}
 
     if (isIndividual) {
       if (!kyc_aadhaar.length)
@@ -648,10 +686,10 @@ const useHandler = (styles: IStyle) => {
 
       if (!date_of_birth) errState = {...errState, errDateOfBirth: "Please enter Date of Birth", isValid: false}
     } else {
-      if (!business_name) errState = {...errState, errBusinessName: "Please enter the company name", isValid: false}
+      if (!business_name) errState = {...errState, errBusinessName: "Please enter the Company Name", isValid: false}
 
       if (!business_type) {
-        errState = {...errState, errBusinessType: "Please choose business type", isValid: false}
+        errState = {...errState, errBusinessType: "Please choose Business Type", isValid: false}
       } else {
         if (isIdentityProof) {
           if (!identityIdType)
@@ -659,7 +697,7 @@ const useHandler = (styles: IStyle) => {
           if (!identityIdNumber)
             errState = {...errState, errIdentityIdNumber: "Please enter identity Id number", isValid: false}
           if (!identityAttachments?.length)
-            errState = {...errState, errIdentityAttachments: "Please choose identity attachments", isValid: false}
+            errState = {...errState, errIdentityAttachments: "Please upload identity attachments", isValid: false}
         }
 
         if (isAddressProof) {
@@ -668,7 +706,7 @@ const useHandler = (styles: IStyle) => {
           if (!addressIdNumber)
             errState = {...errState, errAddressIdNumber: "Please enter address Id number", isValid: false}
           if (!addressAttachments?.length)
-            errState = {...errState, errAddressAttachments: "Please choose address attachments", isValid: false}
+            errState = {...errState, errAddressAttachments: "Please upload address attachments", isValid: false}
         }
 
         if (isBusinessProof) {
@@ -677,7 +715,7 @@ const useHandler = (styles: IStyle) => {
           if (!businessIdNumber)
             errState = {...errState, errBusinessIdNumber: "Please enter business Id number", isValid: false}
           if (!businessAttachments?.length)
-            errState = {...errState, errBusinessAttachments: "Please choose business attachments", isValid: false}
+            errState = {...errState, errBusinessAttachments: "Please upload business attachments", isValid: false}
         }
 
         if (isAuthorityProof) {
@@ -686,7 +724,7 @@ const useHandler = (styles: IStyle) => {
           if (!authorityIdNumber)
             errState = {...errState, errAuthorityIdNumber: "Please enter authority Id number", isValid: false}
           if (!authorityAttachments?.length)
-            errState = {...errState, errAuthorityAttachments: "Please choose authority attachments", isValid: false}
+            errState = {...errState, errAuthorityAttachments: "Please upload authority attachments", isValid: false}
         }
 
         if (isPartnersProof) {
@@ -708,7 +746,7 @@ const useHandler = (styles: IStyle) => {
               if (!kyc?.length) {
                 errPartnershipProof = {
                   ...errPartnershipProof,
-                  errPartnersAttachments: "Please choose partners attachments",
+                  errPartnersAttachments: "Please upload partners attachments",
                 }
                 errState = {...errState, isValid: false}
               }
@@ -742,7 +780,7 @@ const useHandler = (styles: IStyle) => {
     payloadData.partners_proof[index] = {
       ...(payloadData.partners_proof[index] || {
         id_number: "",
-        id_type: ID_PROOFS_INDIA[0],
+        id_type: businessProofConfig["partners_proof"] ? businessProofConfig["partners_proof"][0] : null,
         kyc_type: "Identity_and_address_proof",
         kyc: [],
       }),
@@ -754,7 +792,7 @@ const useHandler = (styles: IStyle) => {
   const onAddPartner = () =>
     setData(prev => ({
       ...prev,
-      partners_proof: [...partners_proof, {id_number: "", id_type: ID_PROOFS_INDIA[0], kyc: []}],
+      partners_proof: [...partners_proof, {id_number: "", id_type: businessProofConfig["partners_proof"][0], kyc: []}],
     }))
 
   const onRemovePartner = (index: number) => {
@@ -802,28 +840,30 @@ const useHandler = (styles: IStyle) => {
   }
 
   const addressForm: FormSectionProps = {
-    title: "Address",
+    title: t("Address"),
     wrapperClassGrid: styles.address_details,
     childElements: [
       {
         elementType: "input",
-        label: "Address Line 1",
+        label: t("Address Line 1"),
         name: "address_line_1",
         error: errAddress,
         value: address_line_1,
+        maxLength: 75,
         onChangeValue,
       },
       {
         elementType: "input",
-        label: "Address Line 2 (Optional)",
+        label: t("Address Line 2 (Optional)"),
         name: "address_line_2",
         value: address_line_2,
         isRequired: false,
+        maxLength: 75,
         onChangeValue,
       },
       {
         elementType: "drop-down",
-        label: "Country",
+        label: t("Country"),
         name: "country",
         options: countries,
         error: errCountry,
@@ -833,7 +873,7 @@ const useHandler = (styles: IStyle) => {
       },
       {
         elementType: "drop-down",
-        label: "State",
+        label: t("State"),
         name: "state",
         options: states,
         error: errState,
@@ -843,7 +883,7 @@ const useHandler = (styles: IStyle) => {
       },
       {
         elementType: "drop-down",
-        label: "City/District",
+        label: t("City/District"),
         name: "city",
         options: cities,
         error: errCity,
@@ -853,7 +893,7 @@ const useHandler = (styles: IStyle) => {
       },
       {
         elementType: "input",
-        label: "PinCode",
+        label: t("Pincode"),
         name: "zip_code",
         value: zip_code,
         inputRegex: REG_VALID_NUMBER,
@@ -870,7 +910,7 @@ const useHandler = (styles: IStyle) => {
         {
           elementType: "drop-down",
           name: "account_type",
-          label: "Select Account type",
+          label: t("Select Account type"),
           options: ACCOUNT_TYPE,
           value: account_type,
           error: errAccountType,
@@ -880,12 +920,12 @@ const useHandler = (styles: IStyle) => {
       ],
     },
     {
-      title: "Personal Information",
+      title: t("Personal Information"),
       wrapperClassGrid: styles.personal_details,
       childElements: [
         {
           elementType: "input",
-          label: "First Name",
+          label: t("First Name"),
           name: "first_name",
           error: errFirstName,
           value: first_name,
@@ -894,7 +934,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Last Name",
+          label: t("Last Name"),
           name: "last_name",
           error: errLastName,
           inputRegex: REG_INPUT_NAME,
@@ -903,7 +943,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "E-mail",
+          label: t("Email"),
           name: "email",
           value: email,
           error: errEmail,
@@ -912,13 +952,27 @@ const useHandler = (styles: IStyle) => {
           onChangeValue,
         },
         {
-          elementType: "input",
-          label: "Phone Number",
-          name: "phone_no",
-          error: errPhoneNo,
-          value: phone_no,
-          disabled: !!user?.phone_no,
-          onChangeValue,
+          childElement: (
+            <section className={`flex-start ${styles.input_wrappers}`}>
+              <section className={`flex ${styles.country_wrapper}`}>
+                <CountryFlag
+                  countryCode={getCountryCode(Country)}
+                  wrapperClass={`${styles.flag} ${Country ? styles.disabled : ""}`}
+                />
+                <h5 className={` ${styles.country_code} ${Country?.phone_code ? styles.disabled : ""}`}>
+                  {Country?.phone_code ? `+${Country?.phone_code}` : "-"}
+                </h5>
+                <TextField
+                  label={t("Phone Number")}
+                  name="phone_no"
+                  value={phone_no}
+                  onChangeData={onChangeValue}
+                  wrapperClass={styles.phone_number}
+                  disabled={!!user?.phone_no}
+                />
+              </section>
+            </section>
+          ),
         },
         // {
         //   elementType: "input",
@@ -933,7 +987,7 @@ const useHandler = (styles: IStyle) => {
           childElement: (
             <TextField
               type="date"
-              label="Date of Birth"
+              label={t("Date of Birth")}
               name="date_of_birth"
               value={formatDate(date_of_birth, DF_INPUT_DATE)}
               error={errDateOfBirth}
@@ -954,7 +1008,7 @@ const useHandler = (styles: IStyle) => {
         {
           elementType: "drop-down",
           name: "account_type",
-          label: "Select Account type",
+          label: t("Select Account type"),
           options: ACCOUNT_TYPE,
           value: account_type,
           error: errAccountType,
@@ -962,7 +1016,7 @@ const useHandler = (styles: IStyle) => {
           onChangeValue,
         },
         {
-          label: "Business type",
+          label: t("Business type"),
           elementType: "drop-down",
           name: "business_type",
           options: BUSINESS_TYPE,
@@ -973,12 +1027,12 @@ const useHandler = (styles: IStyle) => {
       ],
     },
     {
-      title: "Business Details",
+      title: t("Business Details"),
       wrapperClassGrid: styles.personal_details,
       childElements: [
         {
           elementType: "input",
-          label: getBusinessNameLabel(business_type?.key),
+          label: t(getBusinessNameLabel(business_type?.key)),
           name: "business_name",
           error: errBusinessName,
           value: business_name,
@@ -986,7 +1040,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: getBusinessName(business_type?.key, "First name"),
+          label: t(getBusinessName(business_type?.key, t("First Name"))),
           name: "first_name",
           error: errFirstName,
           value: first_name,
@@ -995,7 +1049,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: getBusinessName(business_type.key, "Last Name"),
+          label: t(getBusinessName(business_type.key, t("Last Name"))),
           name: "last_name",
           error: errLastName,
           value: last_name,
@@ -1004,7 +1058,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Company e-mail",
+          label: t("Company e-mail"),
           name: "email",
           value: email,
           error: errEmail,
@@ -1013,13 +1067,28 @@ const useHandler = (styles: IStyle) => {
           onChangeValue,
         },
         {
-          elementType: "input",
-          label: "Company Phone Number",
-          name: "phone_no",
-          error: errPhoneNo,
-          value: phone_no,
-          disabled: !!user?.phone_no,
-          onChangeValue,
+          childElement: (
+            <section className={`flex-start ${styles.input_wrappers}`}>
+              <section className={`flex ${styles.country_wrapper}`}>
+                <CountryFlag
+                  countryCode={getCountryCode(Country)}
+                  wrapperClass={`${styles.flag}  ${user?.country ? styles.disabled : ""}`}
+                />
+                <h5 className={`${styles.country_code} ${user?.country ? styles.disabled : ""}`}>
+                  {Country ? `+${Country?.phone_code}` : "-"}
+                </h5>
+                <TextField
+                  label={t("Company Phone Number")}
+                  name="phone_no"
+                  value={phone_no}
+                  onChangeData={onChangeValue}
+                  wrapperClass={styles.phone_number}
+                  autoComplete="off"
+                  disabled={!!user?.phone_no}
+                />
+              </section>
+            </section>
+          ),
         },
       ],
     },
@@ -1032,14 +1101,14 @@ const useHandler = (styles: IStyle) => {
 
   const individualKYCElements: FormSectionProps = useMemo(() => {
     const elements: FormSectionProps = {
-      title: "Verification",
+      title: t("Verification"),
       wrapperClassGrid: styles.verify_wrapper,
       childElements: [
         {
           childElement: (
             <section className={`flex-start ${styles.pan_wrapper} `}>
               <TextField
-                label="Aadhaar Number"
+                label={t("Aadhaar Number")}
                 name="aadhaarNumber"
                 value={aadhaarNumber}
                 disabled={!!verifiedAadhaar}
@@ -1065,7 +1134,7 @@ const useHandler = (styles: IStyle) => {
     if (verifiedAadhaar) {
       elements.childElements.push({
         elementType: "file-picker",
-        label: "Upload the Aadhaar Document to verify KYC",
+        label: t("Upload the Aadhaar Document to verify KYC"),
         fileType: ["image/*", "application/pdf"],
         wrapperClass: `flex-col ${styles.upload_img_picker}`,
         name: "kyc_aadhaar",
@@ -1082,7 +1151,7 @@ const useHandler = (styles: IStyle) => {
         childElement: verifiedAadhaar && (
           <section className={`flex-start ${styles.pan_verify} ${errKycAadhaar && styles.pan_aadhar_verify}`}>
             <ImageView src={assets.ic_tick} alt="tick-image" imgSize={24} />
-            <h5 className={styles.verified_text}>Aadhaar is Validated</h5>
+            <h5 className={styles.verified_text}>{t("Aadhaar is Validated")}</h5>
           </section>
         ),
       })
@@ -1093,7 +1162,7 @@ const useHandler = (styles: IStyle) => {
         childElement: (
           <section className={`flex-start ${styles.pan_wrapper}`}>
             <TextField
-              label="Pan Number"
+              label={t("Pan Number")}
               name="pan"
               value={pan}
               onChangeData={onChangeValue}
@@ -1116,7 +1185,7 @@ const useHandler = (styles: IStyle) => {
     if (verifiedPAN) {
       elements.childElements.push({
         elementType: "file-picker",
-        label: "Upload the PAN Card Document to verify KYC",
+        label: t("Upload the PAN Card Document to verify KYC"),
         fileType: ["image/*", "application/pdf"],
         wrapperClass: `flex-col ${styles.upload_img_picker}`,
         name: "kyc_pan",
@@ -1133,7 +1202,7 @@ const useHandler = (styles: IStyle) => {
         childElement: verifiedPAN && (
           <section className={`flex-start ${styles.pan_verify} ${errKycPAN && styles.pan_aadhar_verify} `}>
             <ImageView src={assets.ic_tick} alt="tick-image" imgSize={24} />
-            <h5 className={styles.verified_text}>PAN is Validated</h5>
+            <h5 className={styles.verified_text}>{t("PAN is Validated")}</h5>
           </section>
         ),
       })
@@ -1152,14 +1221,14 @@ const useHandler = (styles: IStyle) => {
           elementType: "drop-down",
           label: "Select Anyone",
           name: "id_type",
-          options: ID_PROOFS_INDIA,
+          options: idProofOption,
           error: errIdentityIdType,
           value: identityIdType,
           onChangeValue: onChangeKYC.bind(null, "identity_proof"),
         },
         {
           elementType: "input",
-          label: "Identity Id Number",
+          label: t("Identity Id Number"),
           name: "id_number",
           error: errIdentityIdNumber,
           value: identityIdNumber,
@@ -1168,7 +1237,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "file-picker",
-          label: "Upload the supporting document related to the Identity Proof",
+          label: t("Upload the supporting document related to the Identity Proof"),
           fileType: ["image/*", "application/pdf"],
           wrapperClass: `flex-col ${styles.img_picker}`,
           name: "kyc",
@@ -1190,7 +1259,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "drop-down",
           label: "Select Anyone",
           name: "id_type",
-          options: ID_PROOFS_INDIA,
+          options: addressProofOption,
           error: errAddressIdType,
           value: addressIdType,
           onChangeValue: onChangeKYC.bind(null, "address_proof"),
@@ -1228,7 +1297,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "drop-down",
           label: "Select Anyone",
           name: "id_type",
-          options: ID_PROOFS_INDIA,
+          options: businessProofOption,
           error: errBusinessIdType,
           value: businessIdType,
           onChangeValue: onChangeKYC.bind(null, "business_proof"),
@@ -1266,7 +1335,7 @@ const useHandler = (styles: IStyle) => {
           elementType: "drop-down",
           label: "Select Anyone",
           name: "id_type",
-          options: ID_PROOFS_INDIA,
+          options: authorityProofOption,
           error: errAuthorityIdType,
           value: authorityIdType,
           onChangeValue: onChangeKYC.bind(null, "authority_proof"),
@@ -1316,7 +1385,7 @@ const useHandler = (styles: IStyle) => {
         elementType: "drop-down",
         label: "Select Anyone",
         name: "id_type",
-        options: ID_PROOFS_INDIA,
+        options: partnersProofOption,
         error: errPartnersIdType,
         value: id_type,
         onChangeValue: onChangeBusinessKYC.bind(null, index),
@@ -1448,6 +1517,7 @@ const useHandler = (styles: IStyle) => {
         // account_no,
         account_type: account_type.key,
         business_type: business_type.key,
+        business_name,
         country_id: country.key,
         state_id: state.key,
         city_id: city.key,
@@ -1459,7 +1529,8 @@ const useHandler = (styles: IStyle) => {
 
       if (!individualType) delete payload.date_of_birth
       if (individualType) delete payload.business_type
-
+      if (individualType) delete payload.business_name
+      if (!address_line_2) delete payload.address_line_2
       updateUser(payload)
     }
   }
@@ -1474,6 +1545,7 @@ const useHandler = (styles: IStyle) => {
     individualType,
     onSubmit,
     onBack,
+    t,
   }
 }
 

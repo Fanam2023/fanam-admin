@@ -1,5 +1,6 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {JSONObject, REG_VALID_NUMBER} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useRouter} from "next/navigation"
 import {ChangeEvent, useEffect, useRef, useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
@@ -44,6 +45,7 @@ export const useHandler = () => {
   const [Razorpay] = useRazorpay()
   const {user, transId, transData} = useSingleton()
   const isFetched = useRef(false)
+  const {t} = useTranslation()
   const [data, setData] = useState<ITransactionData>({
     source_amount: "",
     destination_amount: "",
@@ -80,10 +82,9 @@ export const useHandler = () => {
   const {mutate: putTransaction} = useMutation({
     mutationKey: [QUERY_TRANSACTION],
     mutationFn: updateTransaction,
-    onSuccess: ({result, errorData}) => {
+    onSuccess: ({result}) => {
       isFetched.current = true
-
-      if (result) {
+      if (result && result.destination_amount) {
         const {final_amount, destination_amount, source_country, destination_country} = result
         setData({
           source_amount: `${final_amount?.toFixed(2)}`,
@@ -91,12 +92,13 @@ export const useHandler = () => {
           source_country,
           destination_country,
         })
-      } else
+      } else {
         toggleNotify({
-          title: "Error - Initiate transaction",
-          description: errorData?.message || "Something went wrong",
+          title: "Please Enter a Valid Amount",
+          description: "Enter a Valid Amount",
           type: "error",
         })
+      }
     },
   })
 
@@ -294,12 +296,21 @@ export const useHandler = () => {
 
   useEffect(() => {
     if (remainingTime > 0) {
-      const debounceInterval = setInterval(() => setRemainingTime(remainingTime - 1000), 1000)
-
+      const debounceInterval = setInterval(
+        () =>
+          setRemainingTime(prevTime => {
+            const newTime = prevTime - 1000
+            if (newTime <= 0) {
+              onCancelTransaction(transId)
+            }
+            return newTime
+          }),
+        1000
+      )
       return () => {
         clearInterval(debounceInterval)
       }
-    } else if (expiration_time && transfer_time) onCancelTransaction(transId)
+    }
   }, [remainingTime])
 
   useEffect(() => {
@@ -341,12 +352,22 @@ export const useHandler = () => {
       return
     }
 
-    if (name === "destination_amount") payloadData.source_amount = ""
-    else if (name === "source_amount") payloadData.destination_amount = ""
+    if (name === "destination_amount" && value === "") {
+      setRemainingTime(0)
+      payloadData.source_amount = ""
+    } else if (name === "destination_amount") {
+      payloadData.source_amount = ""
+    } else if (name === "source_amount") {
+      payloadData.destination_amount = ""
+    }
 
     payloadData[name] = value
 
     setData({...data, ...payloadData})
+  }
+
+  const onDisable = (value: string) => {
+    return value.trim() === "" || value.trim() === "0"
   }
 
   const onSubmit = () => {
@@ -384,10 +405,12 @@ export const useHandler = () => {
     onChangeValue,
     onSubmit,
     onCancel,
+    onDisable,
     showCountries,
     fxRes,
     onSelect: onUpdateTransaction,
     transfer_time,
     durationTime,
+    t,
   }
 }

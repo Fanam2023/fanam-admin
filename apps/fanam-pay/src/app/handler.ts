@@ -1,4 +1,5 @@
 import {useCookies, useDateTime} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useRouter, useSearchParams} from "next/navigation"
 import {useEffect} from "react"
 import {useMutation} from "@tanstack/react-query"
@@ -16,6 +17,8 @@ const useHandler = () => {
   const {getCookie} = useCookies()
   const {dayjs} = useDateTime()
   const searchParams = useSearchParams()
+  const {t} = useTranslation()
+
   const currentHour = dayjs().hour()
   const cookieState = getCookie("state")
   const {AZURE_BASE_URL} = useCommon()
@@ -100,9 +103,9 @@ const useHandler = () => {
   // }, [bankName])
 
   const getGreeting = () => {
-    if (currentHour >= 5 && currentHour < 12) return "Good Morning"
-    if (currentHour >= 12 && currentHour < 17) return "Good Afternoon"
-    if (currentHour >= 17 && currentHour < 21) return "Good Evening"
+    if (currentHour >= 5 && currentHour < 12) return t("Good Morning")
+    if (currentHour >= 12 && currentHour < 17) return t("Good Afternoon")
+    if (currentHour >= 17 && currentHour < 21) return t("Good Evening")
     return "Good Night"
   }
 
@@ -119,6 +122,7 @@ const useHandler = () => {
     isKYCVerified,
     greeting,
     push,
+    t,
   }
 }
 

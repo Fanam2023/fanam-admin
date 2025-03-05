@@ -5,16 +5,16 @@ import {useHandler} from "./handler"
 import styles from "./page.module.sass"
 
 const RecipientPreview = () => {
-  const {onToggle, onBack, data, errData, isSamePerson, onSubmit, onChangeValue} = useHandler()
+  const {onToggle, onBack, data, errData, isSamePerson, onSubmit, onChangeValue, t} = useHandler()
   const {recipient_relationship, is_same_person} = data
   const {errRelationShip} = errData
 
   return (
     <BaseContainer
       header="Review Recipient Details"
-      buttonText="Next"
+      buttonText={t("Next")}
       childWrapper={styles.page_wrapper}
-      skipBtn="Back"
+      skipBtn={t("Back")}
       stepIndex={0}
       isStepper
       onSubmit={onSubmit}
@@ -26,6 +26,7 @@ const RecipientPreview = () => {
         onChangeData={onChangeValue}
         relation={recipient_relationship}
         error={errRelationShip}
+        isTransactionCompleted
       />
     </BaseContainer>
   )

@@ -1,4 +1,5 @@
 import {JSONObject, useResize} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
@@ -20,10 +21,12 @@ export const useHandler = () => {
   const {toggleSlider} = useSlider()
   const {isDesktop} = useResize()
   const {transData} = useSingleton()
+  const {t} = useTranslation()
   const {syncRecipientAsBeneficiary} = useTransactionController()
   const [data, setData] = useState<IMergeRecipientData>({
     is_same_person: {isSelected: false},
-    recipient_relationship: RELATION_SHIP[0],
+    recipient_relationship:
+      RELATION_SHIP.find(item => item.key === transData?.recipient?.relationship) || RELATION_SHIP[0],
   })
   const [errData, setErrData] = useState(DEFAULT_ERR_STATE)
   const {is_same_person, recipient_relationship} = data
@@ -49,7 +52,7 @@ export const useHandler = () => {
   const onToggle = (recipient_id: string) => {
     toggleSlider({
       children: <CreateRecipientDetails recipient_id={recipient_id} />,
-      title: "Edit Recipient Details",
+      title: t("Edit Recipient Details"),
     })
   }
 
@@ -91,6 +94,7 @@ export const useHandler = () => {
     errData,
     onSubmit,
     onChangeValue,
+    t,
   }
 }
 

@@ -1,16 +1,32 @@
 import {Button, GroupForm} from "@fanam-pkg/core-ui-sass"
+import {CountryPopup} from "organisms/country-popup"
 import {RecipientDetailsProp} from "props"
 import useHandler from "./handler"
 import styles from "./styles.module.sass"
 
 export const CreateRecipientDetails = ({recipient_id}: RecipientDetailsProp) => {
-  const {formElements, onSubmit} = useHandler(styles, recipient_id)
+  const {formElements, onSubmit, showCountry, onSelectCountry, selectedCountry, allCountries, setShowCountry, t} =
+    useHandler(styles, recipient_id)
 
   return (
     <section>
-      <GroupForm formSections={formElements} wrapperClass={styles.input_wrapper} />
-      <Button wrapperClass={styles.btn_wrapper} onClick={onSubmit}>
-        {recipient_id ? "Update Recipient" : "Add Recipient"}
+      {showCountry && (
+        <CountryPopup
+          onSelect={onSelectCountry}
+          selCountry={selectedCountry}
+          countries={allCountries}
+          title="Select Your Country"
+          wrapperClass={styles.main_country_wrapper}
+          showCountry={showCountry}
+          onShowCountry={setShowCountry}
+        />
+      )}
+      <GroupForm
+        formSections={formElements}
+        wrapperClass={`${styles.input_wrapper} ${showCountry ? styles.input_hidden : ""}`}
+      />
+      <Button wrapperClass={`${styles.btn_wrapper} ${showCountry ? styles.input_hidden : ""}`} onClick={onSubmit}>
+        {recipient_id ? t("Update Recipient") : t("Add Recipient")}
       </Button>
     </section>
   )

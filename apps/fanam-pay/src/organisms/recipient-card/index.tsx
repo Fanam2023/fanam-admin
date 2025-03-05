@@ -6,8 +6,16 @@ import {RELATION_SHIP} from "utils"
 import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
-export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation, error}: RecipientCardProps) => {
-  const {recipientDetails, recipient_id, isSamePerson} = useHandler()
+export const RecipientCard = ({
+  onEdit,
+  isSame,
+  isPerson,
+  onChangeData,
+  relation,
+  error,
+  isTransactionCompleted,
+}: RecipientCardProps) => {
+  const {recipientDetails, recipient_id, isSamePerson, t} = useHandler()
 
   const renderRecipientDetails = ({key, label}: IFormData, index: number) => (
     <li className={styles.data_wrapper} key={index}>
@@ -21,10 +29,10 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
 
   return (
     <section className={styles.page_wrapper}>
-      <h5 className={`bold ${styles.heading}`}>Recipient</h5>
+      <h5 className={`bold ${styles.heading}`}>{t("Recipient")}</h5>
       <section className={`flex-col ${styles.details_wrapper}`}>
         <section className={`flex-sb-center ${styles.card_wrapper}`}>
-          <h5 className={styles.title_wrapper}>Recipient Details</h5>
+          <h5 className={styles.title_wrapper}>{t("Recipient Details")}</h5>
           <ImageView
             wrapperClass={styles.edit_icon}
             src={assets.ic_more}
@@ -39,11 +47,11 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
             <>
               <section className={`flex ${styles.check_box_wrapper}`}>
                 <Checkbox item={isPerson} name="is_same_person" onSelectItem={onChangeData} />
-                <h5 className={styles.text}>Are the recipient and the beneficiary the same</h5>
+                <h5 className={styles.content}>{t("Are the recipient and the beneficiary the same")}</h5>
               </section>
               {isSame && (
                 <DropDown
-                  label="Sender's relationship with the Recipient"
+                  label={t("Sender's relationship with the Recipient")}
                   options={RELATION_SHIP}
                   onChangeData={onChangeData}
                   name="recipient_relationship"
@@ -53,6 +61,18 @@ export const RecipientCard = ({onEdit, isSame, isPerson, onChangeData, relation,
                 />
               )}
             </>
+          )}
+          {isSamePerson && isTransactionCompleted && (
+            <DropDown
+              label={t("Sender's relationship with the Recipient")}
+              options={RELATION_SHIP}
+              onChangeData={onChangeData}
+              name="recipient_relationship"
+              selected={relation}
+              disabled
+              wrapperClass={styles.drop_down}
+              error={error}
+            />
           )}
         </section>
       </section>

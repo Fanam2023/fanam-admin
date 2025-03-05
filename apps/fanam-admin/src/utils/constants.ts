@@ -1,0 +1,132 @@
+import assets from "assets"
+import {NavItemProps} from "props"
+
+export const BANK_LIST = [
+  {
+    bankid: "FDB-2025-001",
+    bankname: "Bank of India",
+    email: "contact@gmail.com",
+    mobile: "12345677",
+    contactPerson: "Rosario",
+  },
+  {
+    bankid: "FDB-2025-001",
+    bankname: "Bank of India",
+    email: "contact@gmail.com",
+    mobile: "12345677",
+    contactPerson: "Rosario",
+  },
+  {
+    bankid: "FDB-2025-001",
+    bankname: "Bank of India",
+    email: "contact@gmail.com",
+    mobile: "12345677",
+    contactPerson: "Rosario",
+  },
+  {
+    bankid: "FDB-2025-001",
+    bankname: "Bank of India",
+    email: "contact@gmail.com",
+    mobile: "12345677",
+    contactPerson: "Rosario",
+  },
+  {
+    bankid: "FDB-2025-001",
+    bankname: "Bank of India",
+    email: "contact@gmail.com",
+    mobile: "12345677",
+    contactPerson: "Rosario",
+  },
+  {
+    bankid: "FDB-2025-001",
+    bankname: "Bank of India",
+    email: "contact@gmail.com",
+    mobile: "12345677",
+    contactPerson: "Rosario",
+  },
+  {
+    bankid: "FDB-2025-001",
+    bankname: "Bank of India",
+    email: "contact@gmail.com",
+    mobile: "12345677",
+    contactPerson: "Rosario",
+  },
+  {
+    bankid: "FDB-2025-001",
+    bankname: "Bank of India",
+    email: "contact@gmail.com",
+    mobile: "12345677",
+    contactPerson: "Rosario",
+  },
+  {
+    bankid: "FDB-2025-001",
+    bankname: "Bank of India",
+    email: "contact@gmail.com",
+    mobile: "12345677",
+    contactPerson: "Rosario",
+  },
+  {
+    bankid: "FDB-2025-001",
+    bankname: "Bank of India",
+    email: "contact@gmail.com",
+    mobile: "12345677",
+    contactPerson: "Rosario",
+  },
+]
+
+export const NAV_ITEMS: NavItemProps[] = [
+  {
+    label: "Dashboard",
+    icon: assets.img_menu_dashboard,
+    activeIcon: assets.img_activeMenu_dashboard,
+    path: "/",
+    subItems: [],
+    click: true,
+  },
+  {
+    label: "User",
+    icon: assets.img_menu_user,
+    activeIcon: assets.img_activeMenu_user,
+    click: true,
+    subItems: [
+      {label: "Bank List", path: "/banklist", subClick: true},
+      {label: "Service offered", path: "/service", subClick: true},
+      {label: "Location Details", path: "/location-details", subClick: true},
+      {label: "Contact Details", path: "/contact-details", subClick: true},
+      {label: "Legal Information", path: "/legal-info", subClick: true},
+      {label: "Other options", path: "/other-options", subClick: true},
+    ],
+  },
+  {
+    label: "Branch",
+    icon: assets.img_menu_branch,
+    activeIcon: assets.img_activeMenu_branch,
+    path: "/branch",
+    subItems: [],
+    click: true,
+  },
+  {
+    label: "Privacy",
+    icon: assets.img_menu_privacy,
+    activeIcon: assets.img_activeMenu_privacy,
+    path: "/privacy",
+    subItems: [],
+    click: true,
+  },
+  {
+    label: "List",
+    icon: assets.img_menu_list,
+    activeIcon: assets.img_activeMenu_list,
+    path: "/list",
+    subItems: [],
+    click: true,
+  },
+  {
+    label: "Settings",
+    icon: assets.img_menu_settings,
+    activeIcon: assets.img_activeMenu_settings,
+    path: "/settings",
+    subItems: [],
+    click: true,
+  },
+]

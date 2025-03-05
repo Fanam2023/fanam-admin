@@ -1,5 +1,6 @@
-export * from "./base-conatiner"
+export * from "./base-container"
 export * from "./create-signUp"
 export * from "./create-signUp/forgot-password"
 export * from "./create-signUp/Login"
 export * from "./create-signUp/reset-password"
+export * from "./create-banks"

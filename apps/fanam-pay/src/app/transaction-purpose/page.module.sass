@@ -25,11 +25,20 @@
 
 .text_area
   resize: none
+  flex: 1
   border: none
   color: $black
 
 .text_area, .input
   color: $deep-grey !important
+  margin-top: $size-12px
+
+.text_area_wrapper label
+  margin-top: $size-8px
+
+.text_area_wrapper textarea:focus + label,
+.text_area_wrapper textarea:not(:placeholder-shown) + label
+  font-size: $size-14px
 
 .upload_wrapper
   margin-top: $size-24px

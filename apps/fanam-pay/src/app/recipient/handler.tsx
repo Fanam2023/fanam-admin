@@ -1,3 +1,4 @@
+import {useTranslation} from "react-i18next"
 import {useRouter} from "next/navigation"
 import {useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
@@ -13,6 +14,7 @@ export const useHandler = () => {
   const {initiateTransaction} = useTransactionController()
   const [searchQuery, setSearchQuery] = useState("")
   const [selIndex, setSelIndex] = useState(0)
+  const {t} = useTranslation()
 
   const selectType = ACCOUNT_TYPE[selIndex].key
 
@@ -41,14 +43,14 @@ export const useHandler = () => {
   const onAdd = () => {
     toggleSlider({
       children: <CreateRecipientDetails />,
-      title: "Add Recipient Details",
+      title: t("Add Recipient Details"),
     })
   }
 
   const routeToDetails = (recipient_id: string) => {
     toggleSlider({
       children: <CreateRecipientDetails recipient_id={recipient_id} />,
-      title: "Edit Recipient Details",
+      title: t("Edit Recipient Details"),
     })
   }
 
@@ -62,5 +64,6 @@ export const useHandler = () => {
     linkRecipient,
     setSelIndex,
     back,
+    t,
   }
 }

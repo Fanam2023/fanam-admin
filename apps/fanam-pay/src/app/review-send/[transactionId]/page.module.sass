@@ -54,13 +54,14 @@
   color: $alert-green
 
 .detail
-  text-align: right
-  line-height: 1.4
   text-align: justify
+  word-break: break-word
+  overflow-wrap: break-word
   margin-left: auto
 
 .details_wrapper
   overflow-wrap: anywhere
+  flex: 1
 
 .detail_container
   text-transform: capitalize
@@ -88,3 +89,6 @@
 
   .amount
     font-size: $size-18px
+
+  .payment_wrapper
+    grid-template-columns: 0.7fr 1fr

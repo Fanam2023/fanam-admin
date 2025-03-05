@@ -6,7 +6,7 @@ import {useHandler} from "./handler"
 import styles from "./styles.module.sass"
 
 export const BeneficiaryCard = ({onEdit}: BeneficiaryCardProps) => {
-  const {beneficiaryDetails, beneficiary_id} = useHandler()
+  const {beneficiaryDetails, beneficiary_id, t} = useHandler()
 
   const renderRecipientDetails = ({key, label}: IFormData, index: number) => (
     <li className={styles.data_wrapper} key={index}>
@@ -20,10 +20,10 @@ export const BeneficiaryCard = ({onEdit}: BeneficiaryCardProps) => {
 
   return (
     <section className={styles.page_wrapper}>
-      <h5 className={`bold ${styles.heading}`}>Beneficiary</h5>
+      <h5 className={`bold ${styles.heading}`}>{t("Beneficiary")}</h5>
       <section className={`flex-col ${styles.details_wrapper}`}>
         <section className={`flex-sb-center ${styles.card_wrapper}`}>
-          <h5 className={styles.title_wrapper}>Beneficiary Details</h5>
+          <h5 className={styles.title_wrapper}>{t("Beneficiary Details")}</h5>
           <ImageView
             wrapperClass={styles.edit_icon}
             src={assets.ic_more}

@@ -76,6 +76,9 @@
     right: $size-12px
   background-color: $theme
 
+.upload_img_picker
+  margin-bottom:$size-12px
+
 .btn_container
   gap: $size-12px
   margin-top: $size-20px
@@ -97,6 +100,42 @@
 .recon_wrapper
   margin-top: $size-12px
 
+.phone_number
+  border: none !important
+
+.input_wrappers
+  gap: $size-16px
+
+.country_wrapper
+  border: $size-1px solid $medium-grey
+  width: 100%
+  padding: 0 $size-16px
+  border-radius: $size-10px
+  gap: $size-6px
+
+.country_code
+  white-space: nowrap 
+
+.main_country_wrapper
+  height: 90vh !important
+  width: 94% !important
+  overflow-y: auto!important
+  position: absolute!important
+  z-index: 3!important
+  background-color: white!important
+  padding-bottom: 15%!important
+  padding-right:2% !important
+  margin-top:4% !important
+
+.country_wrapper.error_border
+  border: $size-1px solid $alert-danger
+
+.error_message
+  color: $alert-danger
+
+.input_hidden 
+  display: none !important
+  
 @include mixin-responsive
   .input_wrapper
     margin-top: 6%
@@ -119,3 +158,7 @@
     display: flex
     flex-direction: column
     width: 100%
+
+  .main_country_wrapper
+    width: 88% !important
+    height: 75vh !important

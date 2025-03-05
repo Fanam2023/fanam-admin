@@ -2,6 +2,7 @@
 
 import {FormSectionProps, TextField, usePopup} from "@fanam-pkg/core-ui-sass"
 import {DF_INPUT_DATE, IFormData, JSONObject, useDateTime} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useMemo, useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import {IQueryTransaction, IStyle, TypeOrderStatus} from "@custom/utils"
@@ -12,14 +13,15 @@ import {QUERY_TRANSACTION, TRANSACTION_STATUS_OBJECT} from "utils"
 export const useHandler = (styles: IStyle) => {
   const {getTransaction, getTransactionDetails} = useTransactionController()
   const {togglePopup} = usePopup()
+  const {t} = useTranslation()
   const {formatDate, formatDateUTC, dayjs} = useDateTime()
 
   const formattedStatusOptions: IFormData<TypeOrderStatus | "">[] = useMemo(
     () => [
-      {key: "", label: "All"},
+      {key: "", label: t("All")},
       ...Object.keys(TRANSACTION_STATUS_OBJECT).map(key => ({
         key: key as TypeOrderStatus,
-        label: TRANSACTION_STATUS_OBJECT[key]?.label,
+        label: t(TRANSACTION_STATUS_OBJECT[key]?.label),
       })),
     ],
     []
@@ -77,7 +79,7 @@ export const useHandler = (styles: IStyle) => {
                 type="date"
                 isRequired={false}
                 max={currentDate}
-                label="Start Date"
+                label={t("Start Date")}
                 onKeyDown={e => e.preventDefault()} // Disable typing
               />
               <TextField
@@ -86,7 +88,7 @@ export const useHandler = (styles: IStyle) => {
                 isRequired={false}
                 name="end_date"
                 type="date"
-                label="End Date"
+                label={t("End Date")}
                 min={formatDate(start_date, DF_INPUT_DATE)}
                 max={currentDate}
                 wrapperClass={styles.end_date_wrapper}
@@ -103,5 +105,6 @@ export const useHandler = (styles: IStyle) => {
     transactions,
     formElements,
     fetchTransaction,
+    t,
   }
 }

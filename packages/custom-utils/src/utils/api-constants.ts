@@ -24,7 +24,7 @@ export const API_TRANSACTION = "/transaction"
 export const apiAllTransaction = (status: string, start_date: string, end_date: string) =>
   `${API_TRANSACTION}?status=${status}&start_date=${start_date}&end_date=${end_date}`
 export const apiTransaction = (transaction_id: string) => `${API_TRANSACTION}/${transaction_id}`
-export const apiSenderKYC = (kycId: string) => `/file-upload/sender-kyc/${kycId}`
+export const apiSenderKYC = () => `/file-upload/sender-kyc`
 export const API_RECIPIENT_KYC = "/file-upload/recipient-kyc"
 export const API_INVOICE = "/file-upload/invoice"
 export const API_REGISTER_START = "/passkey/register-start"
@@ -53,3 +53,11 @@ export const API_KYC_AADHAAR_GENERATE_OTP = `/user/generateOtp-aadhaar`
 export const API_KYC_AADHAAR_OTP_VERIFICATION = `/user/aadhaarOtp-verification`
 export const API_KYC_GST_VERIFICATION = `/user/gst-verification`
 export const API_BUSINESS_KYC = `/user/business-kyc`
+
+/*admin api */
+export const API_ADMIN_LOGIN = `/auth/sso-admin-login`
+export const API_ADMIN_LOGOUT = `/auth/sso-admin-logout`
+export const API_GET_ALL_BANKS = `/client`
+export const apiBank = (client_id: string) => `${API_GET_ALL_BANKS}/${client_id}`
+export const apiDeleteBank = (id: string) => `${API_GET_ALL_BANKS}/${id}`
+export const API_MY_USER = `/sso-admin/admin-me`

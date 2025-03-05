@@ -1,5 +1,6 @@
 import {FormSectionProps, useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {JSONObject, REG_VALID_NUMBER, useCommon, useStorage} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useRouter, useSearchParams} from "next/navigation"
 import {useEffect, useState} from "react"
 import {useMutation} from "@tanstack/react-query"
@@ -12,6 +13,7 @@ const useHandler = (styles: IStyle) => {
   const {push} = useRouter()
   const searchParams = useSearchParams()
   const {isValidInputByRegex} = useCommon()
+  const {t} = useTranslation()
   const scope = searchParams.get("scope") as TypeScope
   const [isNextDisabled, setIsNextDisabled] = useState<boolean>(false)
   const [data, setData] = useState<ISignUpPin>({
@@ -36,7 +38,8 @@ const useHandler = (styles: IStyle) => {
       } else if (errorData?.message)
         toggleNotify({
           type: "error",
-          title: errorData?.message || "Something went wrong",
+          title: "User exists",
+          description: errorData?.message,
         })
     },
   })
@@ -48,7 +51,8 @@ const useHandler = (styles: IStyle) => {
       const message = result ? "PIN changed Successfully" : errorData?.message || "Something went wrong"
       toggleNotify({
         type: result ? "success" : "error",
-        title: message,
+        title: result ? "PIN changed" : "Unable to change PIN",
+        description: message,
       })
       if (result) {
         removeStorage(SESSION_SIGNUP)
@@ -64,12 +68,12 @@ const useHandler = (styles: IStyle) => {
   const onValidate = () => {
     let errState = {...DEFAULT_ERR_STATE, isValid: true, isClicked: true}
 
-    if (!newPin) errState = {...errState, errPin: "Please enter valid pin", isValid: false}
-    else if (newPin.length !== 6) errState = {...errState, errPin: "PIN should contain 6 numbers", isValid: false}
+    if (!newPin) errState = {...errState, errPin: t("Please enter valid pin"), isValid: false}
+    else if (newPin.length !== 6) errState = {...errState, errPin: t("PIN should contain 6 numbers"), isValid: false}
 
-    if (!confirmPin) errState = {...errState, errConfirmPin: "Please enter valid pin", isValid: false}
+    if (!confirmPin) errState = {...errState, errConfirmPin: t("Please enter valid pin"), isValid: false}
     else if (confirmPin !== newPin)
-      errState = {...errState, errConfirmPin: "Please ensure your PIN and confirmation PIN match", isValid: false}
+      errState = {...errState, errConfirmPin: t("Please ensure your PIN and confirmation PIN match"), isValid: false}
 
     setErrData(errState)
 
@@ -95,6 +99,11 @@ const useHandler = (styles: IStyle) => {
       toggleNotify({
         type: "error",
         title: !isPinValid ? "Only numbers are allowed" : isPinSequential ? "PIN cannot be a continuous sequence" : "",
+        description: !isPinValid
+          ? "Only numbers are allowed"
+          : isPinSequential
+            ? "PIN cannot be a continuous sequence"
+            : "",
       })
     }
   }
@@ -111,7 +120,7 @@ const useHandler = (styles: IStyle) => {
       childElements: [
         {
           elementType: "input",
-          label: "Pin",
+          label: t("PIN"),
           name: "newPin",
           error: errPin,
           value: newPin,
@@ -121,7 +130,7 @@ const useHandler = (styles: IStyle) => {
         },
         {
           elementType: "input",
-          label: "Confirm Pin",
+          label: t("Confirm PIN"),
           name: "confirmPin",
           error: errConfirmPin,
           type: "password",
@@ -175,6 +184,7 @@ const useHandler = (styles: IStyle) => {
     onSubmit,
     routeToLogin,
     scope,
+    t,
   }
 }
 

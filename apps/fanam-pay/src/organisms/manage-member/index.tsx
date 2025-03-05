@@ -40,7 +40,8 @@ export const ManageMembers = ({title, onEdit, onSelect}: ManageMembersProps) => 
           <h4 className={`bold ${styles.title}`}>{title?.charAt(0)}</h4>
         </section>
       </section>
-      <h6 className={` ellipsis ${styles.user_details} `}>{truncateDescription(title)}</h6>
+      <h6 className={`ellipsis ${styles.user_details}`}>{truncateDescription(title)}</h6>
+      <h6 className={styles.user_name}>{title}</h6>
     </section>
   )
 }

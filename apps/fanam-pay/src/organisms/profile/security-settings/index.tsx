@@ -1,22 +1,33 @@
 import {ImageView, useDialog, usePopup} from "@fanam-pkg/core-ui-sass"
+import {useTranslation} from "react-i18next"
+import {useRouter} from "next/navigation"
 import {TypeSignOut} from "@custom/utils"
 import assets from "assets"
 import {useSingleton} from "hooks"
 import {ProfileNavItemProps} from "props"
-import {SECURITY_ARR} from "utils"
+import {ROUTE_FORGOT_PIN, SECURITY_ARR} from "utils"
 import styles from "./styles.module.sass"
 
 export const SecuritySettings = () => {
   const {toggleDialog} = useDialog()
   const {togglePopup} = usePopup()
   const {signOutUser} = useSingleton()
+  const {replace} = useRouter()
+  const {t} = useTranslation()
 
   const showActionPopup = (actionText: string, message: string, type: TypeSignOut) => {
     toggleDialog({
       primaryButtonText: actionText,
       secondaryButtonText: "Cancel",
       message,
-      onClickPrimary: signOutUser.bind(null, type),
+      onClickPrimary: async () => {
+        if (type === "forgot-pin") {
+          replace(ROUTE_FORGOT_PIN)
+        } else {
+          signOutUser(type)
+        }
+        togglePopup()
+      },
     })
   }
 
@@ -42,7 +53,7 @@ export const SecuritySettings = () => {
   const renderSecurity = ({label, icon}: ProfileNavItemProps, index: number) => (
     <li className={`flex ${styles.wrapper}`} key={index}>
       <ImageView src={icon} imgSize={28} alt={label} wrapperClass={styles.icon_wrapper} />
-      <p className={styles.security_name}>{label}</p>
+      <p className={styles.security_name}>{t(label)}</p>
       <ImageView
         src={assets.ic_blue_arrow}
         imgSize={24}
@@ -55,7 +66,7 @@ export const SecuritySettings = () => {
 
   return (
     <section>
-      <h4 className={`bold ${styles.title}`}>Privacy & Security</h4>
+      <h4 className={`bold ${styles.title}`}>{t("Privacy & Security")}</h4>
       <ul className={`flex-col ${styles.security_wrapper}`}>{SECURITY_ARR.map(renderSecurity)}</ul>
     </section>
   )

@@ -10,7 +10,7 @@ import {useHandler} from "./handler"
 import styles from "./style.module.sass"
 
 export const ListTransaction = () => {
-  const {transactions, formElements, fetchTransaction} = useHandler(styles)
+  const {transactions, formElements, fetchTransaction, t} = useHandler(styles)
   const {formatDate} = useDateTime()
 
   const [showAll, setShowAll] = useState(false)
@@ -101,7 +101,7 @@ export const ListTransaction = () => {
   return (
     <section className={styles.container_wrapper}>
       <section className={`flex ${styles.head_wrapper}`}>
-        <h4 className={`bold ${styles.txt_wrapper}`}>Recent Transaction Activity</h4>
+        <h4 className={`bold ${styles.txt_wrapper}`}>{t("Recent Transaction Activity")}</h4>
         <GroupForm formSections={formElements} wrapperClass={styles.dropDown_wrapper} />
       </section>
       {transactions?.length ? (
@@ -117,7 +117,7 @@ export const ListTransaction = () => {
             wrapperClass={styles.empty_transaction}
           />
           <h5 className={styles.empty_content}>
-            You haven't made any transactions yet. Your history will be displayed here once you do.
+            {t("You haven't made any transactions yet. Your history will be displayed here once you do.")}
           </h5>
         </>
       )}

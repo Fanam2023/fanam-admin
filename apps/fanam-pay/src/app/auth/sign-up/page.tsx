@@ -7,30 +7,30 @@ import useHandler from "./handler"
 import styles from "./page.module.sass"
 
 const SignUp = () => {
-  const {formElements, onSubmit, routeToLogin} = useHandler(styles)
+  const {formElements, onSubmit, t, routeToLogin} = useHandler(styles)
 
   return (
     <BaseContainer profile bellIcon>
       <Auth>
         <section className={`flex-col ${styles.heading}`}>
-          <h4 className={`bold ${styles.sub_heading}`}>Sign Up</h4>
+          <h4 className={`bold ${styles.sub_heading}`}>{t("Sign Up")}</h4>
           <h5 className={styles.description}>
-            Create Account once and seamlessly access your account across all your devices.
+            {t("Create Account once and seamlessly access your account across all your devices.")}
           </h5>
         </section>
         <GroupForm formSections={formElements} wrapperClass={styles.form_wrapper} />
         <section className={`flex ${styles.login_wrapper}`}>
-          <h6 className={styles.login}>Already have an account?</h6>
+          <h6 className={styles.login}>{t("Already have an account?")}</h6>
           <h6 className={`bold ${styles.login}`} onClick={routeToLogin}>
-            Login
+            {t("Login")}
           </h6>
         </section>
         <Button wrapperClass={styles.button_wrapper} onClick={onSubmit}>
-          Next
+          {t("Next")}
         </Button>
         <h6 className={styles.terms_wrapper}>
-          By continuing, you agree to the <label className={`bold ${styles.condition_text}`}>Terms of use</label> and{" "}
-          <label className={`bold ${styles.condition_text}`}>Privacy Policy</label>.
+          {t("By_continuing")} <label className={`bold ${styles.condition_text}`}>{t("terms_of_use")}</label> {t("and")}{" "}
+          <label className={`bold ${styles.condition_text}`}>{t("privacy_policy")}</label>.
         </h6>
       </Auth>
     </BaseContainer>

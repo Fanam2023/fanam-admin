@@ -1,5 +1,5 @@
 import {IFormData} from "@fanam-pkg/core-utils"
-import {TypeAccount, TypeBusiness, TypeKYC, TypeOrderStatus, TypePurpose, TypeRelation} from "@custom/utils"
+import {TypeAccount, TypeBusiness, TypeKYC, TypeOrderStatus, TypeProof, TypePurpose, TypeRelation} from "@custom/utils"
 import assets from "assets"
 import {IStepper} from "model"
 import {BankCartProps, BankListProps, ProfileNavItemProps} from "props"
@@ -201,3 +201,131 @@ export const NOTIFY: IFormData[] = [
   {label: "Suspicious Activity Alert"},
   {label: "Promotions and Offers"},
 ]
+
+export const CONFIG_BUSINESS_PROOF: Record<TypeBusiness, Record<TypeProof, IFormData[]>> = {
+  Sole_proprietor: {
+    identity_proof: [
+      {label: "Passport", key: "Passport"},
+      {label: "Driving License", key: "Driving_License"},
+      {label: "PAN Card", key: "PAN"},
+      {label: "Voter's Identity Card", key: "Voter_id"},
+      {label: "Job Card issued by NREGA", key: "Job_card"},
+      {
+        label: "Letter issued by the National Population Register",
+        key: "NPR_letter",
+      },
+    ],
+    address_proof: [
+      {label: "Passport", key: "Passport"},
+      {label: "Driving License", key: "Driving_License"},
+      {label: "PAN Card", key: "PAN"},
+      {label: "Voter's Identity Card", key: "Voter_id"},
+      {label: "Job Card issued by NREGA", key: "Job_card"},
+      {
+        label: "Letter issued by the National Population Register",
+        key: "NPR_letter",
+      },
+      {label: "Utility Bill", key: "Utility_bill"},
+      {label: "Bank Statement", key: "Bank_statement"},
+    ],
+    business_proof: [
+      {label: "Registration certificate (if registered)", key: "Registration_certificate"},
+      {
+        label: "Certificate/license issued by the municipal authorities under Shop & Establishment Act",
+        key: "Shop_license",
+      },
+      {label: "Sales and income tax returns", key: "Tax_returns"},
+      {label: "CST certificate (provisional/final)", key: "CST"},
+      {label: "VAT certificate (provisional/final)", key: "VAT"},
+      {label: "GST certificate (provisional/final)", key: "GST"},
+      {
+        label: "Certificate/registration document issued by Sales Tax/Service Tax/Professional Tax authorities",
+        key: "Tax_registration",
+      },
+    ],
+    authority_proof: [],
+    partners_proof: [],
+  },
+
+  Companies: {
+    identity_proof: [
+      {label: "Certificate of incorporation", key: "Incorporation_certificate"},
+      {label: "Memorandum and Articles of Association", key: "MOA"},
+    ],
+    address_proof: [
+      {label: "Utility bill", key: "Utility_bill"},
+      {label: "Registered office bank passbook", key: "Passbook"},
+    ],
+    authority_proof: [
+      {
+        label:
+          "A resolution from the Board of Directors and power of attorney granted to managers, officers, or employees to transact on its behalf",
+        key: "Board_resolution",
+      },
+    ],
+    partners_proof: [
+      {
+        label: "PAN",
+        key: "PAN",
+      },
+      {
+        label: "Aadhar",
+        key: "Aadhaar",
+      },
+    ],
+    business_proof: [],
+  },
+
+  Partnership_firm: {
+    identity_proof: [
+      {label: "Registration certificate (if registered)", key: "Registration_certificate"},
+      {label: "Partnership deed", key: "Partnership_deed"},
+    ],
+    authority_proof: [
+      {
+        label: "Power of Attorney granted to a partner or an employee of the firm to transact business on its behalf",
+        key: "Power_of_attorney",
+      },
+    ],
+    partners_proof: [
+      {
+        label: "PAN",
+        key: "PAN",
+      },
+      {
+        label: "Aadhar",
+        key: "Aadhaar",
+      },
+    ],
+    address_proof: [],
+    business_proof: [],
+  },
+
+  Limited_liability_partnership: {
+    identity_proof: [
+      {label: "Incorporation document and LLP Agreement", key: "LLP_agreement"},
+      {
+        label: "Certificate of Registration issued by the Registrar for the LLP",
+        key: "Registration_certificate_of_LLP",
+      },
+    ],
+    authority_proof: [
+      {
+        label: "Power of Attorney granted to a partner or an employee of the firm to transact business on its behalf",
+        key: "Power_of_attorney",
+      },
+    ],
+    partners_proof: [
+      {
+        label: "PAN",
+        key: "PAN",
+      },
+      {
+        label: "Aadhar",
+        key: "Aadhaar",
+      },
+    ],
+    address_proof: [],
+    business_proof: [],
+  },
+}

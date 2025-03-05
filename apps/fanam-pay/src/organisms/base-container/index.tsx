@@ -1,12 +1,13 @@
 "use client"
 
-import {Button, ImageView, assets as projectAssets, usePopup} from "@fanam-pkg/core-ui-sass"
+import {Button, ImageView, usePopup} from "@fanam-pkg/core-ui-sass"
 import {useResize} from "@fanam-pkg/core-utils"
 import {useRouter} from "next/navigation"
 import assets from "assets"
 import {useCommon} from "hooks"
 import {IStepper} from "model"
 import {ProfileDetails, SidePanel} from "organisms"
+import {Language} from "organisms/drop-down"
 import {BaseContainerProps} from "props"
 import {SIDE_BAR} from "utils"
 import {useHandler} from "./handler"
@@ -31,7 +32,7 @@ export const BaseContainer = ({
   const {isDesktop} = useResize()
   const {back} = useRouter()
   const {togglePopup} = usePopup()
-  const {sideNav, bankDetails, user, bankName, setSideNav} = useHandler()
+  const {sideNav, bankDetails, user, bankName, setSideNav, t} = useHandler()
 
   const {accent_color} = bankDetails || {}
   const {logoVariantons} = bankDetails || {}
@@ -71,8 +72,10 @@ export const BaseContainer = ({
           <h5 className={`${styles.stepper} ${isActive || isCompleted ? styles.active : ""}`}>{index + 1}</h5>
         </section>
         <section className={`flex-col ${styles.content}`}>
-          <h5 className={`${isActive || isCompleted ? styles.active_title : styles.inactive_title}`}>{title}</h5>
-          <h6 className={`${isActive || isCompleted ? styles.active_desc : styles.inactive_desc} `}>{description}</h6>
+          <h5 className={`${isActive || isCompleted ? styles.active_title : styles.inactive_title}`}>{t(title)}</h5>
+          <h6 className={`${isActive || isCompleted ? styles.active_desc : styles.inactive_desc} `}>
+            {t(description)}
+          </h6>
         </section>
       </section>
     )
@@ -86,19 +89,20 @@ export const BaseContainer = ({
         </section>
         <section className={`flex ${styles.language_section}`}>
           <section className={`flex ${styles.language_wrapper}`}>
-            <ImageView src={isDesktop ? assets.ic_world : assets.ic_country} alt="world-icon" imgSize={24} />
+            {/* <ImageView src={isDesktop ? assets.ic_world : assets.ic_country} alt="world-icon" imgSize={24} />
             <h5 className={`medium ${styles.language_text}`}>Language</h5>
             <ImageView
               src={isDesktop ? assets.ic_down_arrow : projectAssets.ic_black_arrow}
               alt="down-arrow"
               imgSize={20}
-            />
+            /> */}
+            <Language />
           </section>
           {isDesktop ? (
             <>
               <section className={`flex ${styles.help_wrapper}`}>
                 <ImageView src={assets.ic_help} alt="help-icon" imgSize={24} />
-                <h5 className={`medium ${styles.language_text}`}>Help</h5>
+                <h5 className={`medium ${styles.language_text}`}>{t("Help")}</h5>
               </section>
               {!bellIcon && <ImageView src={assets.ic_alert} alt="help-icon" imgSize={24} />}
 

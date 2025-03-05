@@ -1,0 +1,124 @@
+import {usePathname, useRouter} from "next/navigation"
+import {useEffect, useState} from "react"
+import {useQuery} from "@tanstack/react-query"
+import {useAuthController} from "controller"
+import {NAV_ITEMS, QUERY_USER} from "utils"
+
+const useNavigationHandler = () => {
+  const pathname = usePathname()
+  const {push} = useRouter()
+  const [openMenu, setOpenMenu] = useState<number | null>(null)
+  const [activeMenu, setActiveMenu] = useState("")
+  const [activeSubMenu, setActiveSubMenu] = useState<number | null>(null)
+  const [title, setTitle] = useState("")
+  const [lastSubMenuPath, setLastSubMenuPath] = useState<Record<string, string>>({})
+  const {getUser} = useAuthController()
+
+  const {data: user, isLoading} = useQuery({queryKey: [QUERY_USER], queryFn: getUser})
+
+  useEffect(() => {
+    const wasMenuClosed = localStorage.getItem("submenuClosed")
+
+    const activeNav = NAV_ITEMS.find(
+      item => item.subItems.some(sub => pathname.startsWith(sub.path)) || pathname === item.path
+    )
+
+    if (activeNav) {
+      setActiveMenu(activeNav.label)
+
+      if (activeNav.subItems.length > 0) {
+        const activeSub = activeNav.subItems.find(sub => pathname.startsWith(sub.path))
+
+        if (activeSub) {
+          setActiveSubMenu(activeNav.subItems.indexOf(activeSub))
+          setTitle(activeSub.label)
+          // Only set openMenu if it wasn't explicitly closed
+          if (!wasMenuClosed) {
+            setOpenMenu(NAV_ITEMS.indexOf(activeNav))
+          }
+        } else {
+          setActiveSubMenu(null)
+          setTitle(activeNav.label)
+        }
+      } else {
+        setActiveSubMenu(null)
+        setTitle(activeNav.label)
+      }
+    } else {
+      setActiveMenu("")
+      setActiveSubMenu(null)
+      setTitle("")
+      setOpenMenu(null)
+    }
+  }, [pathname])
+
+  const toggleSubMenu = (index: number) => {
+    localStorage.removeItem("submenuClosed") // Reset submenu closed state when toggling
+    const item = NAV_ITEMS[index]
+
+    if (item.subItems.length === 0) {
+      setActiveMenu(item.label)
+      setTitle(item.label)
+      push(item.path)
+      setOpenMenu(null)
+    } else {
+      setOpenMenu(index)
+      setActiveMenu(item.label)
+
+      const activeSubIndex = item.subItems.findIndex(sub => pathname.startsWith(sub.path))
+
+      if (activeSubIndex !== -1) {
+        setActiveSubMenu(activeSubIndex)
+        setTitle(item.subItems[activeSubIndex].label)
+      } else {
+        setActiveSubMenu(0)
+        setTitle(item.subItems[0].label)
+        push(item.subItems[0].path)
+      }
+    }
+  }
+
+  const handleBackButtonClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setOpenMenu(null)
+    localStorage.setItem("submenuClosed", "true") // Remember submenu was closed
+  }
+
+  const handleSubMenuItemClick = (subIndex: number, subPath: string, e: React.MouseEvent) => {
+    e.preventDefault()
+
+    setActiveSubMenu(subIndex)
+    setTitle(NAV_ITEMS[openMenu!].subItems[subIndex].label)
+
+    push(subPath)
+  }
+
+  const useProfileHover = () => {
+    const [isHoverd, setIsHover] = useState(false)
+
+    const [isHovered, setIsHovered] = useState(false)
+
+    const onMouseEnter = (event: React.MouseEvent<HTMLElement>) => {
+      setIsHovered(true)
+    }
+
+    const onMouseLeave = (event: React.MouseEvent<HTMLElement>) => {
+      setIsHovered(false)
+    }
+  }
+
+  return {
+    openMenu,
+    activeMenu,
+    activeSubMenu,
+    title,
+    toggleSubMenu,
+    handleBackButtonClick,
+    handleSubMenuItemClick,
+    useProfileHover,
+    user,
+    isLoading,
+  }
+}
+
+export default useNavigationHandler

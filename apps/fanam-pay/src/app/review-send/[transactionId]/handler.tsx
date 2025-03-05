@@ -1,10 +1,11 @@
 import {useNotifyPopup} from "@fanam-pkg/core-ui-sass"
 import {IFormData} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useParams, useRouter} from "next/navigation"
 import {useEffect, useMemo, useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
 import {useOrderController, usePaymentController, useTransactionController} from "controller"
-import {QUERY_TRANSACTION, routeToTransactionDetail} from "utils"
+import {QUERY_TRANSACTION, RELATION_SHIP_DATA, routeToTransactionDetail} from "utils"
 
 const useHandler = () => {
   const [remainingTime, setRemainingTime] = useState(0)
@@ -12,6 +13,7 @@ const useHandler = () => {
   const {getTransactionDetails} = useTransactionController()
   const {cancelTransaction} = useOrderController()
   const {sendPayout} = usePaymentController()
+  const {t} = useTranslation()
   const [showDetails, setShowDetails] = useState({
     recipient: false,
     beneficiary: false,
@@ -53,7 +55,7 @@ const useHandler = () => {
     order,
     expiration_time,
     transfer_time,
-    recipient_relationship,
+    recipient_account_type,
   } = transactionDetail || {}
 
   useEffect(() => {
@@ -99,10 +101,12 @@ const useHandler = () => {
       email,
       phone_no,
       bank_account,
+      relationship,
       country,
       state,
       city,
       zip_code,
+      business_name,
     } = recipient || {}
 
     const {country_name} = country || {}
@@ -120,33 +124,34 @@ const useHandler = () => {
       iban_no,
       routing_code,
     } = bank_account || {}
+    const recipientRelationship = RELATION_SHIP_DATA[relationship]?.label
 
     const recipientDetails: IFormData[] = [
-      {key: "First Name", label: first_name},
-      {key: "Last Name", label: last_name},
-      {key: "Email", label: email},
-      {key: "Phone Number", label: phone_no},
-      {key: "Address 1", label: address_line_1},
-      ...(address_line_2 ? [{key: "Address 2", label: address_line_2}] : []),
-      {key: "Country", label: country_name},
-      {key: "State", label: state_name},
-      {key: "City", label: city_name},
-      {key: "Pin Code", label: zip_code},
-      {key: "Account Holder", label: account_holder},
-      {key: "Account Number", label: account_no},
-      {key: "Account Type", label: account_type},
-      {key: "Bank Name", label: bank_name},
-      {key: "Branch Code", label: branch_code},
-      {key: "Branch Address", label: branch_address},
-      ...(recipient_relationship
-        ? [{key: "Sender's relationship with the Recipient", label: recipient_relationship}]
-        : []),
+      {key: t("Recipient type"), label: recipient_account_type},
+      ...(business_name ? [{key: "Business Name", label: business_name}] : []),
+      {key: t("First Name"), label: first_name},
+      {key: t("Last Name"), label: last_name},
+      {key: t("Email"), label: email},
+      {key: t("Phone Number"), label: phone_no},
+      {key: t("Address 1"), label: address_line_1},
+      ...(address_line_2 ? [{key: t("Address 2"), label: address_line_2}] : []),
+      {key: t("Country"), label: country_name},
+      {key: t("State"), label: state_name},
+      {key: t("City"), label: city_name},
+      {key: t("Pincode"), label: zip_code},
+      {key: t("Account Holder"), label: account_holder},
+      {key: t("Account Number"), label: account_no},
+      {key: t("Account Type"), label: account_type},
+      {key: t("Bank Name"), label: bank_name},
+      {key: t("Branch Code"), label: branch_code},
+      {key: t("Branch Address"), label: branch_address},
+      ...(relationship ? [{key: t("Sender's relationship with the Recipient"), label: recipientRelationship}] : []),
     ]
 
-    if (swift_code) recipientDetails.push({key: "Swift Code", label: swift_code})
-    if (bsb_code) recipientDetails.push({key: "BSB Code", label: bsb_code})
-    if (routing_code) recipientDetails.push({key: "Routing Code", label: routing_code})
-    if (iban_no) recipientDetails.push({key: "IBAN Code", label: iban_no})
+    if (swift_code) recipientDetails.push({key: t("Swift Code"), label: swift_code})
+    if (bsb_code) recipientDetails.push({key: t("BSB Code"), label: bsb_code})
+    if (routing_code) recipientDetails.push({key: t("Routing Code"), label: routing_code})
+    if (iban_no) recipientDetails.push({key: t("IBAN Code"), label: iban_no})
 
     return recipientDetails
   }, [transactionDetail])
@@ -169,31 +174,32 @@ const useHandler = () => {
     const {country_name} = country || {}
     const {state_name} = state || {}
     const {city_name} = city || {}
+    const beneficiaryRelationship = RELATION_SHIP_DATA[relationship]?.label
 
     const beneficiaryDetails: IFormData[] = [
-      {key: "First Name", label: first_name},
-      {key: "Last Name", label: last_name},
-      {key: "Address", label: address},
-      {key: "Email", label: email},
-      {key: "Phone Number", label: phone_no},
-      {key: "Country", label: country_name},
-      {key: "State", label: state_name},
-      {key: "City", label: city_name},
-      {key: "Pin Code", label: zip_code},
-      {key: "Sender's Relationship with the Beneficiary", label: relationship},
+      {key: t("First Name"), label: first_name},
+      {key: t("Last Name"), label: last_name},
+      {key: t("Address"), label: address},
+      {key: t("Email"), label: email},
+      {key: t("Phone Number"), label: phone_no},
+      {key: t("Country"), label: country_name},
+      {key: t("State"), label: state_name},
+      {key: t("City"), label: city_name},
+      {key: t("Pin Code"), label: zip_code},
+      {key: t("Sender's Relationship with the Beneficiary"), label: beneficiaryRelationship},
     ]
 
-    if (account_no) beneficiaryDetails.push({key: "Account Number", label: account_no})
-    if (notes) beneficiaryDetails.push({key: "Notes", label: notes})
+    if (account_no) beneficiaryDetails.push({key: t("Account Number"), label: account_no})
+    if (notes) beneficiaryDetails.push({key: t("Notes"), label: notes})
 
     return beneficiaryDetails
   }, [transactionDetail])
 
   const paymentDetails = useMemo(() => {
     const paymentDetails: IFormData[] = [
-      {key: "Exchange Amount", label: `${exchange_amount?.toFixed(2)} ${currency}`},
-      {key: "Others", label: `${(other_fee + markup_fee)?.toFixed(2)} ${currency}`},
-      {key: "Total Fees", label: `${final_amount?.toFixed(2)} ${currency}`},
+      {key: t("Exchange Amount"), label: `${exchange_amount?.toFixed(2)} ${currency}`},
+      {key: t("Others"), label: `${(other_fee + markup_fee)?.toFixed(2)} ${currency}`},
+      {key: t("Total Payment"), label: `${final_amount?.toFixed(2)} ${currency}`},
     ]
 
     return paymentDetails
@@ -220,6 +226,7 @@ const useHandler = () => {
     transfer_time,
     toggleDetails,
     completeTransaction,
+    t,
   }
 }
 

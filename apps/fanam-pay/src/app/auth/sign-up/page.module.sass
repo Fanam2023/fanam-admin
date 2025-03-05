@@ -68,12 +68,17 @@
 .error_message
   color: $alert-danger
   position: absolute
-  margin-top: 5%
+  margin-top: 8%
+  z-index: 10
+  margin-bottom: $size-16px
 
 .mail_wrapper
   margin-top: $size-20px
 
 @include mixin-responsive
+  .error_message
+    margin-top: 28%
+
 .sub_heading
   font-size: $size-20px
 

@@ -1,4 +1,5 @@
 import {useResize} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {useRouter} from "next/navigation"
 import {useMemo, useState} from "react"
 import {useMutation, useQuery} from "@tanstack/react-query"
@@ -14,6 +15,7 @@ export const useHandler = () => {
   const [searchQuery, setSearchQuery] = useState("")
   const {getAllBeneficiary} = useBeneficiaryController()
   const {syncBeneficiary} = useTransactionController()
+  const {t} = useTranslation()
 
   const {mutate: linkBeneficiary} = useMutation({
     mutationKey: [QUERY_TRANSACTION],
@@ -33,7 +35,7 @@ export const useHandler = () => {
   const onNav = () => {
     toggleSlider({
       children: <CreateBeneficiaryDetails />,
-      title: "Add Beneficiary",
+      title: t("Add Beneficiary"),
     })
   }
 
@@ -50,7 +52,7 @@ export const useHandler = () => {
   const routeToDetails = (beneficiaryId: string) => {
     toggleSlider({
       children: <CreateBeneficiaryDetails beneficiary_id={beneficiaryId} />,
-      title: "Edit Beneficiary",
+      title: t("Edit Beneficiary"),
     })
   }
 
@@ -63,5 +65,6 @@ export const useHandler = () => {
     routeToDetails,
     onBack,
     linkBeneficiary,
+    t,
   }
 }

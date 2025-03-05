@@ -1,10 +1,12 @@
 import {FormSectionProps} from "@fanam-pkg/core-ui-sass"
 import {DF_INPUT_DATE, useDateTime} from "@fanam-pkg/core-utils"
+import {useTranslation} from "react-i18next"
 import {REG_INPUT_NAME} from "@custom/utils"
 import {useSingleton} from "hooks"
 
 const useHandler = () => {
   const {user} = useSingleton()
+  const {t} = useTranslation()
 
   const individualType = user?.account_type === "Individual"
 
@@ -14,12 +16,12 @@ const useHandler = () => {
 
   const formElements: FormSectionProps[] = [
     {
-      title: "Personal Information",
+      title: t("Personal Information"),
       childElements: [
         {
           elementType: "input",
           isRequired: false,
-          label: "First Name",
+          label: t("First Name"),
           name: "first_name",
           value: first_name,
           inputRegex: REG_INPUT_NAME,
@@ -28,7 +30,7 @@ const useHandler = () => {
         {
           elementType: "input",
           isRequired: false,
-          label: "Last Name",
+          label: t("Last Name"),
           name: "last_name",
           value: last_name,
           inputRegex: REG_INPUT_NAME,
@@ -38,7 +40,7 @@ const useHandler = () => {
         {
           elementType: "input",
           isRequired: false,
-          label: "Phone Number",
+          label: t("Phone Number"),
           name: "phone_no",
           value: phone_no,
           disabled: !!user?.phone_no,
@@ -54,9 +56,9 @@ const useHandler = () => {
           elementType: "input",
           isRequired: false,
           type: "text",
-          label: "Date of Birth",
+          label: t("Date of Birth"),
           name: "date_of_birth",
-          value: formatDate(date_of_birth, DF_INPUT_DATE),
+          value: date_of_birth ? formatDate(date_of_birth, DF_INPUT_DATE) : "-",
           disabled: !!user?.date_of_birth,
         },
       ],
